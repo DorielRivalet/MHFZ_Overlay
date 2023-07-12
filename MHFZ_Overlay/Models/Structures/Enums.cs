@@ -10,7 +10,7 @@ using System.Text.Json.Serialization;
 public enum GachaCardTypes : uint
 {
     Monster,
-    Endemic_Life,
+    EndemicLife,
     Achievement,
     Item,
     Gear,
@@ -21,10 +21,10 @@ public enum GachaCardTypes : uint
 
 public enum RankTypes : uint
 {
-    Low_Rank,
-    High_Rank,
-    G_Rank,
-    Zenith_Rank,
+    LowRank,
+    HighRank,
+    GRank,
+    ZenithRank,
 }
 
 public enum AchievementRank

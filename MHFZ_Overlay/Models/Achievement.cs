@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Media;
 using MHFZ_Overlay.Models.Mappers;
 using MHFZ_Overlay.Models.Structures;
-using MHFZ_Overlay.Views;
+using MHFZ_Overlay.Views.Windows;
 using Wpf.Ui.Common;
 using Wpf.Ui.Controls;
 using Wpf.Ui.Controls.IconElements;
@@ -47,7 +47,10 @@ public class Achievement
 
         snackbar.Title = this.Title;
         snackbar.Message = this.Objective;
-        snackbar.Icon = new SymbolIcon(SymbolRegular.Trophy32);
+        snackbar.Icon = new SymbolIcon()
+        {
+            Symbol = SymbolRegular.Trophy32,
+        };
         snackbar.Icon.Foreground = brushColor;
         snackbar.Appearance = ControlAppearance.Secondary;
         if (MainWindow.victoryMediaSound != null)

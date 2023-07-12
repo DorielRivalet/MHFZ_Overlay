@@ -21,7 +21,6 @@ using Wpf.Ui.Controls;
 
 public class AchievementManager
 {
-
     public static AchievementManager GetInstance()
     {
         if (instance == null)
@@ -45,9 +44,9 @@ public class AchievementManager
         }
     }
 
-    public async Task CheckForAchievementsAsync(Snackbar snackbar, DataLoader dataLoader, DatabaseManager DatabaseManagerInstance, Settings s)
+    public async Task CheckForAchievementsAsync(Snackbar snackbar, DataLoader dataLoader, DatabaseManager databaseManagerInstance, Settings s)
     {
-        var newAchievements = GetNewlyObtainedAchievements(dataLoader, DatabaseManagerInstance, s);
+        var newAchievements = GetNewlyObtainedAchievements(dataLoader, databaseManagerInstance, s);
 
         if (newAchievements.Count > 0)
         {
@@ -94,7 +93,7 @@ public class AchievementManager
         LoggerInstance.Info($"AchievementManager initialized");
     }
 
-    private List<int> GetNewlyObtainedAchievements(DataLoader dataLoader, DatabaseManager DatabaseManagerInstance, Settings s)
+    private List<int> GetNewlyObtainedAchievements(DataLoader dataLoader, DatabaseManager databaseManagerInstance, Settings s)
     {
         var newAchievements = new List<int>();
 
@@ -104,7 +103,7 @@ public class AchievementManager
             var achievement = kvp.Value;
 
             // Check the specific conditions for obtaining the achievement
-            if (!obtainedAchievements.Contains(achievementID) && CheckConditionsForAchievement(achievementID, dataLoader, DatabaseManagerInstance, s))
+            if (!obtainedAchievements.Contains(achievementID) && CheckConditionsForAchievement(achievementID, dataLoader, databaseManagerInstance, s))
             {
                 newAchievements.Add(achievementID);
             }
@@ -113,7 +112,7 @@ public class AchievementManager
         return newAchievements;
     }
 
-    private bool CheckConditionsForAchievement(int achievementID, DataLoader dataLoader, DatabaseManager DatabaseManagerInstance, Settings s)
+    private bool CheckConditionsForAchievement(int achievementID, DataLoader dataLoader, DatabaseManager databaseManagerInstance, Settings s)
     {
         // Implement your logic here to check the conditions for obtaining the achievement
         // Return true if the conditions are met, false otherwise
@@ -126,9 +125,9 @@ public class AchievementManager
             }
 
             case 0:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4AkuraVashimu);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4AkuraVashimu);
             case 1:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4AkuraVashimu) >= Numbers.RequiredCompletionsMonsterSlayer)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4AkuraVashimu) >= Numbers.RequiredCompletionsMonsterSlayer)
                 {
                     return true;
                 }
@@ -138,7 +137,7 @@ public class AchievementManager
                 }
 
             case 2:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4AkuraVashimu) >= Numbers.RequiredCompletionsMonsterAnnihilator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4AkuraVashimu) >= Numbers.RequiredCompletionsMonsterAnnihilator)
                 {
                     return true;
                 }
@@ -148,7 +147,7 @@ public class AchievementManager
                 }
 
             case 3:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4AkuraVashimu) >= Numbers.RequiredCompletionsMonsterExterminator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4AkuraVashimu) >= Numbers.RequiredCompletionsMonsterExterminator)
                 {
                     return true;
                 }
@@ -158,11 +157,11 @@ public class AchievementManager
                 }
 
             case 4:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4AkuraVashimu && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4AkuraVashimu && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
             case 5:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Anorupatisu);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Anorupatisu);
             case 6:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Anorupatisu) >= Numbers.RequiredCompletionsMonsterSlayer)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Anorupatisu) >= Numbers.RequiredCompletionsMonsterSlayer)
                 {
                     return true;
                 }
@@ -172,7 +171,7 @@ public class AchievementManager
                 }
 
             case 7:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Anorupatisu) >= Numbers.RequiredCompletionsMonsterAnnihilator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Anorupatisu) >= Numbers.RequiredCompletionsMonsterAnnihilator)
                 {
                     return true;
                 }
@@ -182,7 +181,7 @@ public class AchievementManager
                 }
 
             case 8:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Anorupatisu) >= Numbers.RequiredCompletionsMonsterExterminator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Anorupatisu) >= Numbers.RequiredCompletionsMonsterExterminator)
                 {
                     return true;
                 }
@@ -192,11 +191,11 @@ public class AchievementManager
                 }
 
             case 9:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Anorupatisu && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Anorupatisu && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
             case 10:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Blangonga);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Blangonga);
             case 11:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Blangonga) >= Numbers.RequiredCompletionsMonsterSlayer)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Blangonga) >= Numbers.RequiredCompletionsMonsterSlayer)
                 {
                     return true;
                 }
@@ -206,7 +205,7 @@ public class AchievementManager
                 }
 
             case 12:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Blangonga) >= Numbers.RequiredCompletionsMonsterAnnihilator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Blangonga) >= Numbers.RequiredCompletionsMonsterAnnihilator)
                 {
                     return true;
                 }
@@ -216,7 +215,7 @@ public class AchievementManager
                 }
 
             case 13:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Blangonga) >= Numbers.RequiredCompletionsMonsterExterminator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Blangonga) >= Numbers.RequiredCompletionsMonsterExterminator)
                 {
                     return true;
                 }
@@ -226,11 +225,11 @@ public class AchievementManager
                 }
 
             case 14:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Blangonga && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Blangonga && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
             case 15:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4DaimyoHermitaur);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4DaimyoHermitaur);
             case 16:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4DaimyoHermitaur) >= Numbers.RequiredCompletionsMonsterSlayer)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4DaimyoHermitaur) >= Numbers.RequiredCompletionsMonsterSlayer)
                 {
                     return true;
                 }
@@ -240,7 +239,7 @@ public class AchievementManager
                 }
 
             case 17:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4DaimyoHermitaur) >= Numbers.RequiredCompletionsMonsterAnnihilator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4DaimyoHermitaur) >= Numbers.RequiredCompletionsMonsterAnnihilator)
                 {
                     return true;
                 }
@@ -250,7 +249,7 @@ public class AchievementManager
                 }
 
             case 18:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4DaimyoHermitaur) >= Numbers.RequiredCompletionsMonsterExterminator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4DaimyoHermitaur) >= Numbers.RequiredCompletionsMonsterExterminator)
                 {
                     return true;
                 }
@@ -260,11 +259,11 @@ public class AchievementManager
                 }
 
             case 19:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4DaimyoHermitaur && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4DaimyoHermitaur && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
             case 20:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Doragyurosu);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Doragyurosu);
             case 21:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Doragyurosu) >= Numbers.RequiredCompletionsMonsterSlayer)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Doragyurosu) >= Numbers.RequiredCompletionsMonsterSlayer)
                 {
                     return true;
                 }
@@ -274,7 +273,7 @@ public class AchievementManager
                 }
 
             case 22:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Doragyurosu) >= Numbers.RequiredCompletionsMonsterAnnihilator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Doragyurosu) >= Numbers.RequiredCompletionsMonsterAnnihilator)
                 {
                     return true;
                 }
@@ -284,7 +283,7 @@ public class AchievementManager
                 }
 
             case 23:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Doragyurosu) >= Numbers.RequiredCompletionsMonsterExterminator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Doragyurosu) >= Numbers.RequiredCompletionsMonsterExterminator)
                 {
                     return true;
                 }
@@ -294,11 +293,11 @@ public class AchievementManager
                 }
 
             case 24:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Doragyurosu && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Doragyurosu && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
             case 25:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Espinas);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Espinas);
             case 26:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Espinas) >= Numbers.RequiredCompletionsMonsterSlayer)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Espinas) >= Numbers.RequiredCompletionsMonsterSlayer)
                 {
                     return true;
                 }
@@ -308,7 +307,7 @@ public class AchievementManager
                 }
 
             case 27:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Espinas) >= Numbers.RequiredCompletionsMonsterAnnihilator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Espinas) >= Numbers.RequiredCompletionsMonsterAnnihilator)
                 {
                     return true;
                 }
@@ -318,7 +317,7 @@ public class AchievementManager
                 }
 
             case 28:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Espinas) >= Numbers.RequiredCompletionsMonsterExterminator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Espinas) >= Numbers.RequiredCompletionsMonsterExterminator)
                 {
                     return true;
                 }
@@ -328,11 +327,11 @@ public class AchievementManager
                 }
 
             case 29:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Espinas && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Espinas && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
             case 30:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Gasurabazura);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Gasurabazura);
             case 31:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Gasurabazura) >= Numbers.RequiredCompletionsMonsterSlayer)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Gasurabazura) >= Numbers.RequiredCompletionsMonsterSlayer)
                 {
                     return true;
                 }
@@ -342,7 +341,7 @@ public class AchievementManager
                 }
 
             case 32:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Gasurabazura) >= Numbers.RequiredCompletionsMonsterAnnihilator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Gasurabazura) >= Numbers.RequiredCompletionsMonsterAnnihilator)
                 {
                     return true;
                 }
@@ -352,7 +351,7 @@ public class AchievementManager
                 }
 
             case 33:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Gasurabazura) >= Numbers.RequiredCompletionsMonsterExterminator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Gasurabazura) >= Numbers.RequiredCompletionsMonsterExterminator)
                 {
                     return true;
                 }
@@ -362,11 +361,11 @@ public class AchievementManager
                 }
 
             case 34:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Gasurabazura && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Gasurabazura && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
             case 35:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Giaorugu);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Giaorugu);
             case 36:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Giaorugu) >= Numbers.RequiredCompletionsMonsterSlayer)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Giaorugu) >= Numbers.RequiredCompletionsMonsterSlayer)
                 {
                     return true;
                 }
@@ -376,7 +375,7 @@ public class AchievementManager
                 }
 
             case 37:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Giaorugu) >= Numbers.RequiredCompletionsMonsterAnnihilator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Giaorugu) >= Numbers.RequiredCompletionsMonsterAnnihilator)
                 {
                     return true;
                 }
@@ -386,7 +385,7 @@ public class AchievementManager
                 }
 
             case 38:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Giaorugu) >= Numbers.RequiredCompletionsMonsterExterminator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Giaorugu) >= Numbers.RequiredCompletionsMonsterExterminator)
                 {
                     return true;
                 }
@@ -396,11 +395,11 @@ public class AchievementManager
                 }
 
             case 39:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Giaorugu && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Giaorugu && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
             case 40:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Hypnocatrice);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Hypnocatrice);
             case 41:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Hypnocatrice) >= Numbers.RequiredCompletionsMonsterSlayer)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Hypnocatrice) >= Numbers.RequiredCompletionsMonsterSlayer)
                 {
                     return true;
                 }
@@ -410,7 +409,7 @@ public class AchievementManager
                 }
 
             case 42:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Hypnocatrice) >= Numbers.RequiredCompletionsMonsterAnnihilator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Hypnocatrice) >= Numbers.RequiredCompletionsMonsterAnnihilator)
                 {
                     return true;
                 }
@@ -420,7 +419,7 @@ public class AchievementManager
                 }
 
             case 43:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Hypnocatrice) >= Numbers.RequiredCompletionsMonsterExterminator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Hypnocatrice) >= Numbers.RequiredCompletionsMonsterExterminator)
                 {
                     return true;
                 }
@@ -430,11 +429,11 @@ public class AchievementManager
                 }
 
             case 44:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Hypnocatrice && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Hypnocatrice && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
             case 45:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Hyujikiki);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Hyujikiki);
             case 46:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Hyujikiki) >= Numbers.RequiredCompletionsMonsterSlayer)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Hyujikiki) >= Numbers.RequiredCompletionsMonsterSlayer)
                 {
                     return true;
                 }
@@ -444,7 +443,7 @@ public class AchievementManager
                 }
 
             case 47:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Hyujikiki) >= Numbers.RequiredCompletionsMonsterAnnihilator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Hyujikiki) >= Numbers.RequiredCompletionsMonsterAnnihilator)
                 {
                     return true;
                 }
@@ -454,7 +453,7 @@ public class AchievementManager
                 }
 
             case 48:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Hyujikiki) >= Numbers.RequiredCompletionsMonsterExterminator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Hyujikiki) >= Numbers.RequiredCompletionsMonsterExterminator)
                 {
                     return true;
                 }
@@ -464,11 +463,11 @@ public class AchievementManager
                 }
 
             case 49:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Hyujikiki && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Hyujikiki && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
             case 50:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Inagami);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Inagami);
             case 51:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Inagami) >= Numbers.RequiredCompletionsMonsterSlayer)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Inagami) >= Numbers.RequiredCompletionsMonsterSlayer)
                 {
                     return true;
                 }
@@ -478,7 +477,7 @@ public class AchievementManager
                 }
 
             case 52:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Inagami) >= Numbers.RequiredCompletionsMonsterAnnihilator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Inagami) >= Numbers.RequiredCompletionsMonsterAnnihilator)
                 {
                     return true;
                 }
@@ -488,7 +487,7 @@ public class AchievementManager
                 }
 
             case 53:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Inagami) >= Numbers.RequiredCompletionsMonsterExterminator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Inagami) >= Numbers.RequiredCompletionsMonsterExterminator)
                 {
                     return true;
                 }
@@ -498,11 +497,11 @@ public class AchievementManager
                 }
 
             case 54:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Inagami && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Inagami && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
             case 55:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Khezu);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Khezu);
             case 56:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Khezu) >= Numbers.RequiredCompletionsMonsterSlayer)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Khezu) >= Numbers.RequiredCompletionsMonsterSlayer)
                 {
                     return true;
                 }
@@ -512,7 +511,7 @@ public class AchievementManager
                 }
 
             case 57:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Khezu) >= Numbers.RequiredCompletionsMonsterAnnihilator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Khezu) >= Numbers.RequiredCompletionsMonsterAnnihilator)
                 {
                     return true;
                 }
@@ -522,7 +521,7 @@ public class AchievementManager
                 }
 
             case 58:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Khezu) >= Numbers.RequiredCompletionsMonsterExterminator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Khezu) >= Numbers.RequiredCompletionsMonsterExterminator)
                 {
                     return true;
                 }
@@ -532,11 +531,11 @@ public class AchievementManager
                 }
 
             case 59:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Khezu && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Khezu && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
             case 60:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Midogaron);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Midogaron);
             case 61:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Midogaron) >= Numbers.RequiredCompletionsMonsterSlayer)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Midogaron) >= Numbers.RequiredCompletionsMonsterSlayer)
                 {
                     return true;
                 }
@@ -546,7 +545,7 @@ public class AchievementManager
                 }
 
             case 62:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Midogaron) >= Numbers.RequiredCompletionsMonsterAnnihilator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Midogaron) >= Numbers.RequiredCompletionsMonsterAnnihilator)
                 {
                     return true;
                 }
@@ -556,7 +555,7 @@ public class AchievementManager
                 }
 
             case 63:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Midogaron) >= Numbers.RequiredCompletionsMonsterExterminator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Midogaron) >= Numbers.RequiredCompletionsMonsterExterminator)
                 {
                     return true;
                 }
@@ -566,11 +565,11 @@ public class AchievementManager
                 }
 
             case 64:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Midogaron && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Midogaron && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
             case 65:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDHugePlesioth);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDHugePlesioth);
             case 66:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDHugePlesioth) >= Numbers.RequiredCompletionsMonsterSlayer)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDHugePlesioth) >= Numbers.RequiredCompletionsMonsterSlayer)
                 {
                     return true;
                 }
@@ -580,7 +579,7 @@ public class AchievementManager
                 }
 
             case 67:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDHugePlesioth) >= Numbers.RequiredCompletionsMonsterAnnihilator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDHugePlesioth) >= Numbers.RequiredCompletionsMonsterAnnihilator)
                 {
                     return true;
                 }
@@ -590,7 +589,7 @@ public class AchievementManager
                 }
 
             case 68:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDHugePlesioth) >= Numbers.RequiredCompletionsMonsterExterminator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDHugePlesioth) >= Numbers.RequiredCompletionsMonsterExterminator)
                 {
                     return true;
                 }
@@ -600,11 +599,11 @@ public class AchievementManager
                 }
 
             case 69:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDHugePlesioth && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDHugePlesioth && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
             case 70:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Rathalos);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Rathalos);
             case 71:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Rathalos) >= Numbers.RequiredCompletionsMonsterSlayer)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Rathalos) >= Numbers.RequiredCompletionsMonsterSlayer)
                 {
                     return true;
                 }
@@ -614,7 +613,7 @@ public class AchievementManager
                 }
 
             case 72:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Rathalos) >= Numbers.RequiredCompletionsMonsterAnnihilator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Rathalos) >= Numbers.RequiredCompletionsMonsterAnnihilator)
                 {
                     return true;
                 }
@@ -624,7 +623,7 @@ public class AchievementManager
                 }
 
             case 73:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Rathalos) >= Numbers.RequiredCompletionsMonsterExterminator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Rathalos) >= Numbers.RequiredCompletionsMonsterExterminator)
                 {
                     return true;
                 }
@@ -634,11 +633,11 @@ public class AchievementManager
                 }
 
             case 74:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Rathalos && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Rathalos && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
             case 75:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Rukodiora);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Rukodiora);
             case 76:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Rukodiora) >= Numbers.RequiredCompletionsMonsterSlayer)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Rukodiora) >= Numbers.RequiredCompletionsMonsterSlayer)
                 {
                     return true;
                 }
@@ -648,7 +647,7 @@ public class AchievementManager
                 }
 
             case 77:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Rukodiora) >= Numbers.RequiredCompletionsMonsterAnnihilator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Rukodiora) >= Numbers.RequiredCompletionsMonsterAnnihilator)
                 {
                     return true;
                 }
@@ -658,7 +657,7 @@ public class AchievementManager
                 }
 
             case 78:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Rukodiora) >= Numbers.RequiredCompletionsMonsterExterminator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Rukodiora) >= Numbers.RequiredCompletionsMonsterExterminator)
                 {
                     return true;
                 }
@@ -668,11 +667,11 @@ public class AchievementManager
                 }
 
             case 79:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Rukodiora && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Rukodiora && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
             case 80:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Tigrex);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Tigrex);
             case 81:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Tigrex) >= Numbers.RequiredCompletionsMonsterSlayer)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Tigrex) >= Numbers.RequiredCompletionsMonsterSlayer)
                 {
                     return true;
                 }
@@ -682,7 +681,7 @@ public class AchievementManager
                 }
 
             case 82:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Tigrex) >= Numbers.RequiredCompletionsMonsterAnnihilator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Tigrex) >= Numbers.RequiredCompletionsMonsterAnnihilator)
                 {
                     return true;
                 }
@@ -692,7 +691,7 @@ public class AchievementManager
                 }
 
             case 83:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Tigrex) >= Numbers.RequiredCompletionsMonsterExterminator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Tigrex) >= Numbers.RequiredCompletionsMonsterExterminator)
                 {
                     return true;
                 }
@@ -702,11 +701,11 @@ public class AchievementManager
                 }
 
             case 84:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Tigrex && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Tigrex && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
             case 85:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Toridcless);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Toridcless);
             case 86:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Toridcless) >= Numbers.RequiredCompletionsMonsterSlayer)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Toridcless) >= Numbers.RequiredCompletionsMonsterSlayer)
                 {
                     return true;
                 }
@@ -716,7 +715,7 @@ public class AchievementManager
                 }
 
             case 87:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Toridcless) >= Numbers.RequiredCompletionsMonsterAnnihilator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Toridcless) >= Numbers.RequiredCompletionsMonsterAnnihilator)
                 {
                     return true;
                 }
@@ -726,7 +725,7 @@ public class AchievementManager
                 }
 
             case 88:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Toridcless) >= Numbers.RequiredCompletionsMonsterExterminator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Toridcless) >= Numbers.RequiredCompletionsMonsterExterminator)
                 {
                     return true;
                 }
@@ -736,11 +735,11 @@ public class AchievementManager
                 }
 
             case 89:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Toridcless && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Toridcless && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
             case 90:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Baruragaru);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Baruragaru);
             case 91:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Baruragaru) >= Numbers.RequiredCompletionsMonsterSlayer)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Baruragaru) >= Numbers.RequiredCompletionsMonsterSlayer)
                 {
                     return true;
                 }
@@ -750,7 +749,7 @@ public class AchievementManager
                 }
 
             case 92:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Baruragaru) >= Numbers.RequiredCompletionsMonsterAnnihilator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Baruragaru) >= Numbers.RequiredCompletionsMonsterAnnihilator)
                 {
                     return true;
                 }
@@ -760,7 +759,7 @@ public class AchievementManager
                 }
 
             case 93:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Baruragaru) >= Numbers.RequiredCompletionsMonsterExterminator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Baruragaru) >= Numbers.RequiredCompletionsMonsterExterminator)
                 {
                     return true;
                 }
@@ -770,11 +769,11 @@ public class AchievementManager
                 }
 
             case 94:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Baruragaru && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Baruragaru && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
             case 95:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Bogabadorumu);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Bogabadorumu);
             case 96:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Bogabadorumu) >= Numbers.RequiredCompletionsMonsterSlayer)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Bogabadorumu) >= Numbers.RequiredCompletionsMonsterSlayer)
                 {
                     return true;
                 }
@@ -784,7 +783,7 @@ public class AchievementManager
                 }
 
             case 97:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Bogabadorumu) >= Numbers.RequiredCompletionsMonsterAnnihilator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Bogabadorumu) >= Numbers.RequiredCompletionsMonsterAnnihilator)
                 {
                     return true;
                 }
@@ -794,7 +793,7 @@ public class AchievementManager
                 }
 
             case 98:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Bogabadorumu) >= Numbers.RequiredCompletionsMonsterExterminator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Bogabadorumu) >= Numbers.RequiredCompletionsMonsterExterminator)
                 {
                     return true;
                 }
@@ -804,11 +803,11 @@ public class AchievementManager
                 }
 
             case 99:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Bogabadorumu && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Bogabadorumu && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
             case 100:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Gravios);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Gravios);
             case 101:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Gravios) >= Numbers.RequiredCompletionsMonsterSlayer)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Gravios) >= Numbers.RequiredCompletionsMonsterSlayer)
                 {
                     return true;
                 }
@@ -818,7 +817,7 @@ public class AchievementManager
                 }
 
             case 102:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Gravios) >= Numbers.RequiredCompletionsMonsterAnnihilator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Gravios) >= Numbers.RequiredCompletionsMonsterAnnihilator)
                 {
                     return true;
                 }
@@ -828,7 +827,7 @@ public class AchievementManager
                 }
 
             case 103:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Gravios) >= Numbers.RequiredCompletionsMonsterExterminator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Gravios) >= Numbers.RequiredCompletionsMonsterExterminator)
                 {
                     return true;
                 }
@@ -838,11 +837,11 @@ public class AchievementManager
                 }
 
             case 104:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Gravios && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Gravios && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
             case 105:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Harudomerugu);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Harudomerugu);
             case 106:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Harudomerugu) >= Numbers.RequiredCompletionsMonsterSlayer)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Harudomerugu) >= Numbers.RequiredCompletionsMonsterSlayer)
                 {
                     return true;
                 }
@@ -852,7 +851,7 @@ public class AchievementManager
                 }
 
             case 107:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Harudomerugu) >= Numbers.RequiredCompletionsMonsterAnnihilator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Harudomerugu) >= Numbers.RequiredCompletionsMonsterAnnihilator)
                 {
                     return true;
                 }
@@ -862,7 +861,7 @@ public class AchievementManager
                 }
 
             case 108:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Harudomerugu) >= Numbers.RequiredCompletionsMonsterExterminator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4Harudomerugu) >= Numbers.RequiredCompletionsMonsterExterminator)
                 {
                     return true;
                 }
@@ -872,11 +871,11 @@ public class AchievementManager
                 }
 
             case 109:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Harudomerugu && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Harudomerugu && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
             case 110:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4TaikunZamuza);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4TaikunZamuza);
             case 111:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4TaikunZamuza) >= Numbers.RequiredCompletionsMonsterSlayer)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4TaikunZamuza) >= Numbers.RequiredCompletionsMonsterSlayer)
                 {
                     return true;
                 }
@@ -886,7 +885,7 @@ public class AchievementManager
                 }
 
             case 112:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4TaikunZamuza) >= Numbers.RequiredCompletionsMonsterAnnihilator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4TaikunZamuza) >= Numbers.RequiredCompletionsMonsterAnnihilator)
                 {
                     return true;
                 }
@@ -896,7 +895,7 @@ public class AchievementManager
                 }
 
             case 113:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4TaikunZamuza) >= Numbers.RequiredCompletionsMonsterExterminator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDZ4TaikunZamuza) >= Numbers.RequiredCompletionsMonsterExterminator)
                 {
                     return true;
                 }
@@ -906,11 +905,11 @@ public class AchievementManager
                 }
 
             case 114:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4TaikunZamuza && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4TaikunZamuza && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
             case 115:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDLV9999Fatalis);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDLV9999Fatalis);
             case 116:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDLV9999Fatalis) >= Numbers.RequiredCompletionsMonsterSlayer)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDLV9999Fatalis) >= Numbers.RequiredCompletionsMonsterSlayer)
                 {
                     return true;
                 }
@@ -920,7 +919,7 @@ public class AchievementManager
                 }
 
             case 117:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDLV9999Fatalis) >= Numbers.RequiredCompletionsMonsterAnnihilator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDLV9999Fatalis) >= Numbers.RequiredCompletionsMonsterAnnihilator)
                 {
                     return true;
                 }
@@ -930,7 +929,7 @@ public class AchievementManager
                 }
 
             case 118:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDLV9999Fatalis) >= Numbers.RequiredCompletionsMonsterExterminator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDLV9999Fatalis) >= Numbers.RequiredCompletionsMonsterExterminator)
                 {
                     return true;
                 }
@@ -940,11 +939,11 @@ public class AchievementManager
                 }
 
             case 119:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDLV9999Fatalis && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDLV9999Fatalis && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
             case 120:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDLV9999CrimsonFatalis);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDLV9999CrimsonFatalis);
             case 121:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDLV9999CrimsonFatalis) >= Numbers.RequiredCompletionsMonsterSlayer)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDLV9999CrimsonFatalis) >= Numbers.RequiredCompletionsMonsterSlayer)
                 {
                     return true;
                 }
@@ -954,7 +953,7 @@ public class AchievementManager
                 }
 
             case 122:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDLV9999CrimsonFatalis) >= Numbers.RequiredCompletionsMonsterAnnihilator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDLV9999CrimsonFatalis) >= Numbers.RequiredCompletionsMonsterAnnihilator)
                 {
                     return true;
                 }
@@ -964,7 +963,7 @@ public class AchievementManager
                 }
 
             case 123:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDLV9999CrimsonFatalis) >= Numbers.RequiredCompletionsMonsterExterminator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDLV9999CrimsonFatalis) >= Numbers.RequiredCompletionsMonsterExterminator)
                 {
                     return true;
                 }
@@ -974,11 +973,11 @@ public class AchievementManager
                 }
 
             case 124:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDLV9999CrimsonFatalis && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDLV9999CrimsonFatalis && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
             case 125:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDLV9999Shantien);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDLV9999Shantien);
             case 126:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDLV9999Shantien) >= Numbers.RequiredCompletionsMonsterSlayer)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDLV9999Shantien) >= Numbers.RequiredCompletionsMonsterSlayer)
                 {
                     return true;
                 }
@@ -988,7 +987,7 @@ public class AchievementManager
                 }
 
             case 127:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDLV9999Shantien) >= Numbers.RequiredCompletionsMonsterAnnihilator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDLV9999Shantien) >= Numbers.RequiredCompletionsMonsterAnnihilator)
                 {
                     return true;
                 }
@@ -998,7 +997,7 @@ public class AchievementManager
                 }
 
             case 128:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDLV9999Shantien) >= Numbers.RequiredCompletionsMonsterExterminator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDLV9999Shantien) >= Numbers.RequiredCompletionsMonsterExterminator)
                 {
                     return true;
                 }
@@ -1008,11 +1007,11 @@ public class AchievementManager
                 }
 
             case 129:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDLV9999Shantien && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDLV9999Shantien && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
             case 130:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDLV9999Disufiroa);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDLV9999Disufiroa);
             case 131:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDLV9999Disufiroa) >= Numbers.RequiredCompletionsMonsterSlayer)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDLV9999Disufiroa) >= Numbers.RequiredCompletionsMonsterSlayer)
                 {
                     return true;
                 }
@@ -1022,7 +1021,7 @@ public class AchievementManager
                 }
 
             case 132:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDLV9999Disufiroa) >= Numbers.RequiredCompletionsMonsterAnnihilator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDLV9999Disufiroa) >= Numbers.RequiredCompletionsMonsterAnnihilator)
                 {
                     return true;
                 }
@@ -1032,7 +1031,7 @@ public class AchievementManager
                 }
 
             case 133:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDLV9999Disufiroa) >= Numbers.RequiredCompletionsMonsterExterminator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDLV9999Disufiroa) >= Numbers.RequiredCompletionsMonsterExterminator)
                 {
                     return true;
                 }
@@ -1042,11 +1041,11 @@ public class AchievementManager
                 }
 
             case 134:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDLV9999Disufiroa && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDLV9999Disufiroa && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
             case 135:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDUpperShitenUnknown);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDUpperShitenUnknown);
             case 136:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDUpperShitenUnknown) >= Numbers.RequiredCompletionsMonsterSlayer)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDUpperShitenUnknown) >= Numbers.RequiredCompletionsMonsterSlayer)
                 {
                     return true;
                 }
@@ -1056,7 +1055,7 @@ public class AchievementManager
                 }
 
             case 137:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDUpperShitenUnknown) >= Numbers.RequiredCompletionsMonsterAnnihilator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDUpperShitenUnknown) >= Numbers.RequiredCompletionsMonsterAnnihilator)
                 {
                     return true;
                 }
@@ -1066,7 +1065,7 @@ public class AchievementManager
                 }
 
             case 138:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDUpperShitenUnknown) >= Numbers.RequiredCompletionsMonsterExterminator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDUpperShitenUnknown) >= Numbers.RequiredCompletionsMonsterExterminator)
                 {
                     return true;
                 }
@@ -1076,11 +1075,11 @@ public class AchievementManager
                 }
 
             case 139:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDUpperShitenUnknown && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDUpperShitenUnknown && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
             case 140:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDUpperShitenDisufiroa);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDUpperShitenDisufiroa);
             case 141:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDUpperShitenDisufiroa) >= Numbers.RequiredCompletionsMonsterSlayer)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDUpperShitenDisufiroa) >= Numbers.RequiredCompletionsMonsterSlayer)
                 {
                     return true;
                 }
@@ -1090,7 +1089,7 @@ public class AchievementManager
                 }
 
             case 142:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDUpperShitenDisufiroa) >= Numbers.RequiredCompletionsMonsterAnnihilator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDUpperShitenDisufiroa) >= Numbers.RequiredCompletionsMonsterAnnihilator)
                 {
                     return true;
                 }
@@ -1100,7 +1099,7 @@ public class AchievementManager
                 }
 
             case 143:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDUpperShitenDisufiroa) >= Numbers.RequiredCompletionsMonsterExterminator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDUpperShitenDisufiroa) >= Numbers.RequiredCompletionsMonsterExterminator)
                 {
                     return true;
                 }
@@ -1110,11 +1109,11 @@ public class AchievementManager
                 }
 
             case 144:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDUpperShitenDisufiroa && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDUpperShitenDisufiroa && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
             case 145:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDThirstyPariapuria);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDThirstyPariapuria);
             case 146:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDThirstyPariapuria) >= Numbers.RequiredCompletionsMonsterSlayer)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDThirstyPariapuria) >= Numbers.RequiredCompletionsMonsterSlayer)
                 {
                     return true;
                 }
@@ -1124,7 +1123,7 @@ public class AchievementManager
                 }
 
             case 147:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDThirstyPariapuria) >= Numbers.RequiredCompletionsMonsterAnnihilator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDThirstyPariapuria) >= Numbers.RequiredCompletionsMonsterAnnihilator)
                 {
                     return true;
                 }
@@ -1134,7 +1133,7 @@ public class AchievementManager
                 }
 
             case 148:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDThirstyPariapuria) >= Numbers.RequiredCompletionsMonsterExterminator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDThirstyPariapuria) >= Numbers.RequiredCompletionsMonsterExterminator)
                 {
                     return true;
                 }
@@ -1144,11 +1143,11 @@ public class AchievementManager
                 }
 
             case 149:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDThirstyPariapuria && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDThirstyPariapuria && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
             case 150:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDRulingGuanzorumu);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDRulingGuanzorumu);
             case 151:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDRulingGuanzorumu) >= Numbers.RequiredCompletionsMonsterSlayer)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDRulingGuanzorumu) >= Numbers.RequiredCompletionsMonsterSlayer)
                 {
                     return true;
                 }
@@ -1158,7 +1157,7 @@ public class AchievementManager
                 }
 
             case 152:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDRulingGuanzorumu) >= Numbers.RequiredCompletionsMonsterAnnihilator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDRulingGuanzorumu) >= Numbers.RequiredCompletionsMonsterAnnihilator)
                 {
                     return true;
                 }
@@ -1168,7 +1167,7 @@ public class AchievementManager
                 }
 
             case 153:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDRulingGuanzorumu) >= Numbers.RequiredCompletionsMonsterExterminator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDRulingGuanzorumu) >= Numbers.RequiredCompletionsMonsterExterminator)
                 {
                     return true;
                 }
@@ -1178,11 +1177,11 @@ public class AchievementManager
                 }
 
             case 154:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDRulingGuanzorumu && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDRulingGuanzorumu && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
             case 155:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDShiftingMiRu);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDShiftingMiRu);
             case 156:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDShiftingMiRu) >= Numbers.RequiredCompletionsMonsterSlayer)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDShiftingMiRu) >= Numbers.RequiredCompletionsMonsterSlayer)
                 {
                     return true;
                 }
@@ -1192,7 +1191,7 @@ public class AchievementManager
                 }
 
             case 157:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDShiftingMiRu) >= Numbers.RequiredCompletionsMonsterAnnihilator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDShiftingMiRu) >= Numbers.RequiredCompletionsMonsterAnnihilator)
                 {
                     return true;
                 }
@@ -1202,7 +1201,7 @@ public class AchievementManager
                 }
 
             case 158:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDShiftingMiRu) >= Numbers.RequiredCompletionsMonsterExterminator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDShiftingMiRu) >= Numbers.RequiredCompletionsMonsterExterminator)
                 {
                     return true;
                 }
@@ -1212,11 +1211,11 @@ public class AchievementManager
                 }
 
             case 159:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDShiftingMiRu && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDShiftingMiRu && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
             case 160:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDBlinkingNargacugaForest || quest.QuestID == Numbers.QuestIDBlinkingNargacugaHistoric);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDBlinkingNargacugaForest || quest.QuestID == Numbers.QuestIDBlinkingNargacugaHistoric);
             case 161:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDBlinkingNargacugaForest || quest.QuestID == Numbers.QuestIDBlinkingNargacugaHistoric) >= Numbers.RequiredCompletionsMonsterSlayer)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDBlinkingNargacugaForest || quest.QuestID == Numbers.QuestIDBlinkingNargacugaHistoric) >= Numbers.RequiredCompletionsMonsterSlayer)
                 {
                     return true;
                 }
@@ -1226,7 +1225,7 @@ public class AchievementManager
                 }
 
             case 162:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDBlinkingNargacugaForest || quest.QuestID == Numbers.QuestIDBlinkingNargacugaHistoric) >= Numbers.RequiredCompletionsMonsterAnnihilator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDBlinkingNargacugaForest || quest.QuestID == Numbers.QuestIDBlinkingNargacugaHistoric) >= Numbers.RequiredCompletionsMonsterAnnihilator)
                 {
                     return true;
                 }
@@ -1236,7 +1235,7 @@ public class AchievementManager
                 }
 
             case 163:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDBlinkingNargacugaForest || quest.QuestID == Numbers.QuestIDBlinkingNargacugaHistoric) >= Numbers.RequiredCompletionsMonsterExterminator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDBlinkingNargacugaForest || quest.QuestID == Numbers.QuestIDBlinkingNargacugaHistoric) >= Numbers.RequiredCompletionsMonsterExterminator)
                 {
                     return true;
                 }
@@ -1246,11 +1245,11 @@ public class AchievementManager
                 }
 
             case 164:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDBlinkingNargacugaForest || quest.QuestID == Numbers.QuestIDBlinkingNargacugaHistoric && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
+                return databaseManagerInstance.AllQuests.Any(quest => (quest.QuestID == Numbers.QuestIDBlinkingNargacugaForest || quest.QuestID == Numbers.QuestIDBlinkingNargacugaHistoric) && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
             case 165:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDHowlingZinogreForest || quest.QuestID == Numbers.QuestIDHowlingZinogreHistoric);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDHowlingZinogreForest || quest.QuestID == Numbers.QuestIDHowlingZinogreHistoric);
             case 166:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDHowlingZinogreForest || quest.QuestID == Numbers.QuestIDHowlingZinogreHistoric) >= Numbers.RequiredCompletionsMonsterSlayer)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDHowlingZinogreForest || quest.QuestID == Numbers.QuestIDHowlingZinogreHistoric) >= Numbers.RequiredCompletionsMonsterSlayer)
                 {
                     return true;
                 }
@@ -1260,7 +1259,7 @@ public class AchievementManager
                 }
 
             case 167:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDHowlingZinogreForest || quest.QuestID == Numbers.QuestIDHowlingZinogreHistoric) >= Numbers.RequiredCompletionsMonsterAnnihilator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDHowlingZinogreForest || quest.QuestID == Numbers.QuestIDHowlingZinogreHistoric) >= Numbers.RequiredCompletionsMonsterAnnihilator)
                 {
                     return true;
                 }
@@ -1270,7 +1269,7 @@ public class AchievementManager
                 }
 
             case 168:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDHowlingZinogreForest || quest.QuestID == Numbers.QuestIDHowlingZinogreHistoric) >= Numbers.RequiredCompletionsMonsterExterminator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDHowlingZinogreForest || quest.QuestID == Numbers.QuestIDHowlingZinogreHistoric) >= Numbers.RequiredCompletionsMonsterExterminator)
                 {
                     return true;
                 }
@@ -1280,11 +1279,11 @@ public class AchievementManager
                 }
 
             case 169:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDHowlingZinogreForest || quest.QuestID == Numbers.QuestIDHowlingZinogreHistoric && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
+                return databaseManagerInstance.AllQuests.Any(quest => (quest.QuestID == Numbers.QuestIDHowlingZinogreForest || quest.QuestID == Numbers.QuestIDHowlingZinogreHistoric) && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
             case 170:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDStarvingDeviljhoArena || quest.QuestID == Numbers.QuestIDStarvingDeviljhoHistoric);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDStarvingDeviljhoArena || quest.QuestID == Numbers.QuestIDStarvingDeviljhoHistoric);
             case 171:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDStarvingDeviljhoArena || quest.QuestID == Numbers.QuestIDStarvingDeviljhoHistoric) >= Numbers.RequiredCompletionsMonsterSlayer)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDStarvingDeviljhoArena || quest.QuestID == Numbers.QuestIDStarvingDeviljhoHistoric) >= Numbers.RequiredCompletionsMonsterSlayer)
                 {
                     return true;
                 }
@@ -1294,7 +1293,7 @@ public class AchievementManager
                 }
 
             case 172:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDStarvingDeviljhoArena || quest.QuestID == Numbers.QuestIDStarvingDeviljhoHistoric) >= Numbers.RequiredCompletionsMonsterAnnihilator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDStarvingDeviljhoArena || quest.QuestID == Numbers.QuestIDStarvingDeviljhoHistoric) >= Numbers.RequiredCompletionsMonsterAnnihilator)
                 {
                     return true;
                 }
@@ -1304,7 +1303,7 @@ public class AchievementManager
                 }
 
             case 173:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDStarvingDeviljhoArena || quest.QuestID == Numbers.QuestIDStarvingDeviljhoHistoric) >= Numbers.RequiredCompletionsMonsterExterminator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDStarvingDeviljhoArena || quest.QuestID == Numbers.QuestIDStarvingDeviljhoHistoric) >= Numbers.RequiredCompletionsMonsterExterminator)
                 {
                     return true;
                 }
@@ -1314,11 +1313,11 @@ public class AchievementManager
                 }
 
             case 174:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDStarvingDeviljhoArena || quest.QuestID == Numbers.QuestIDStarvingDeviljhoHistoric && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
+                return databaseManagerInstance.AllQuests.Any(quest => (quest.QuestID == Numbers.QuestIDStarvingDeviljhoArena || quest.QuestID == Numbers.QuestIDStarvingDeviljhoHistoric) && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
             case 175:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDSparklingZerureusu || quest.QuestID == Numbers.QuestIDSparklingZerureusuEvent);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDSparklingZerureusu || quest.QuestID == Numbers.QuestIDSparklingZerureusuEvent);
             case 176:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDSparklingZerureusu || quest.QuestID == Numbers.QuestIDSparklingZerureusuEvent) >= Numbers.RequiredCompletionsMonsterSlayer)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDSparklingZerureusu || quest.QuestID == Numbers.QuestIDSparklingZerureusuEvent) >= Numbers.RequiredCompletionsMonsterSlayer)
                 {
                     return true;
                 }
@@ -1328,7 +1327,7 @@ public class AchievementManager
                 }
 
             case 177:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDSparklingZerureusu || quest.QuestID == Numbers.QuestIDSparklingZerureusuEvent) >= Numbers.RequiredCompletionsMonsterAnnihilator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDSparklingZerureusu || quest.QuestID == Numbers.QuestIDSparklingZerureusuEvent) >= Numbers.RequiredCompletionsMonsterAnnihilator)
                 {
                     return true;
                 }
@@ -1338,7 +1337,7 @@ public class AchievementManager
                 }
 
             case 178:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDSparklingZerureusu || quest.QuestID == Numbers.QuestIDSparklingZerureusuEvent) >= Numbers.RequiredCompletionsMonsterExterminator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDSparklingZerureusu || quest.QuestID == Numbers.QuestIDSparklingZerureusuEvent) >= Numbers.RequiredCompletionsMonsterExterminator)
                 {
                     return true;
                 }
@@ -1348,11 +1347,11 @@ public class AchievementManager
                 }
 
             case 179:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDSparklingZerureusu || quest.QuestID == Numbers.QuestIDSparklingZerureusuEvent && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
+                return databaseManagerInstance.AllQuests.Any(quest => (quest.QuestID == Numbers.QuestIDSparklingZerureusu || quest.QuestID == Numbers.QuestIDSparklingZerureusuEvent) && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
             case 180:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDArrogantDuremudira);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDArrogantDuremudira);
             case 181:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDArrogantDuremudira) >= Numbers.RequiredCompletionsMonsterSlayer)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDArrogantDuremudira) >= Numbers.RequiredCompletionsMonsterSlayer)
                 {
                     return true;
                 }
@@ -1362,7 +1361,7 @@ public class AchievementManager
                 }
 
             case 182:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDArrogantDuremudira) >= Numbers.RequiredCompletionsMonsterAnnihilator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDArrogantDuremudira) >= Numbers.RequiredCompletionsMonsterAnnihilator)
                 {
                     return true;
                 }
@@ -1372,7 +1371,7 @@ public class AchievementManager
                 }
 
             case 183:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDArrogantDuremudira) >= Numbers.RequiredCompletionsMonsterExterminator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDArrogantDuremudira) >= Numbers.RequiredCompletionsMonsterExterminator)
                 {
                     return true;
                 }
@@ -1382,11 +1381,11 @@ public class AchievementManager
                 }
 
             case 184:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDArrogantDuremudira && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDArrogantDuremudira && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
             case 185:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDBlitzkriegBogabadorumu);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDBlitzkriegBogabadorumu);
             case 186:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDBlitzkriegBogabadorumu) >= Numbers.RequiredCompletionsMonsterSlayer)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDBlitzkriegBogabadorumu) >= Numbers.RequiredCompletionsMonsterSlayer)
                 {
                     return true;
                 }
@@ -1396,7 +1395,7 @@ public class AchievementManager
                 }
 
             case 187:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDBlitzkriegBogabadorumu) >= Numbers.RequiredCompletionsMonsterAnnihilator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDBlitzkriegBogabadorumu) >= Numbers.RequiredCompletionsMonsterAnnihilator)
                 {
                     return true;
                 }
@@ -1406,7 +1405,7 @@ public class AchievementManager
                 }
 
             case 188:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDBlitzkriegBogabadorumu) >= Numbers.RequiredCompletionsMonsterExterminator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDBlitzkriegBogabadorumu) >= Numbers.RequiredCompletionsMonsterExterminator)
                 {
                     return true;
                 }
@@ -1416,11 +1415,11 @@ public class AchievementManager
                 }
 
             case 189:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDBlitzkriegBogabadorumu && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDBlitzkriegBogabadorumu && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
             case 190:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDBurningFreezingElzelionTower || quest.QuestID == Numbers.QuestIDBurningFreezingElzelionHistoric);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDBurningFreezingElzelionTower || quest.QuestID == Numbers.QuestIDBurningFreezingElzelionHistoric);
             case 191:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDBurningFreezingElzelionTower || quest.QuestID == Numbers.QuestIDBurningFreezingElzelionHistoric) >= Numbers.RequiredCompletionsMonsterSlayer)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDBurningFreezingElzelionTower || quest.QuestID == Numbers.QuestIDBurningFreezingElzelionHistoric) >= Numbers.RequiredCompletionsMonsterSlayer)
                 {
                     return true;
                 }
@@ -1430,7 +1429,7 @@ public class AchievementManager
                 }
 
             case 192:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDBurningFreezingElzelionTower || quest.QuestID == Numbers.QuestIDBurningFreezingElzelionHistoric) >= Numbers.RequiredCompletionsMonsterAnnihilator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDBurningFreezingElzelionTower || quest.QuestID == Numbers.QuestIDBurningFreezingElzelionHistoric) >= Numbers.RequiredCompletionsMonsterAnnihilator)
                 {
                     return true;
                 }
@@ -1440,7 +1439,7 @@ public class AchievementManager
                 }
 
             case 193:
-                if (DatabaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDBurningFreezingElzelionTower || quest.QuestID == Numbers.QuestIDBurningFreezingElzelionHistoric) >= Numbers.RequiredCompletionsMonsterExterminator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDBurningFreezingElzelionTower || quest.QuestID == Numbers.QuestIDBurningFreezingElzelionHistoric) >= Numbers.RequiredCompletionsMonsterExterminator)
                 {
                     return true;
                 }
@@ -1450,11 +1449,11 @@ public class AchievementManager
                 }
 
             case 194:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDBurningFreezingElzelionTower || quest.QuestID == Numbers.QuestIDBurningFreezingElzelionHistoric && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
+                return databaseManagerInstance.AllQuests.Any(quest => (quest.QuestID == Numbers.QuestIDBurningFreezingElzelionTower || quest.QuestID == Numbers.QuestIDBurningFreezingElzelionHistoric) && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
             case 195:
                 // Join quests and player inventories based on RunID
-                var completedQuests = from quest in DatabaseManagerInstance.AllQuests
-                                      join playerInventory in DatabaseManagerInstance.AllPlayerInventories on quest.RunID equals playerInventory.RunID
+                var completedQuests = from quest in databaseManagerInstance.AllQuests
+                                      join playerInventory in databaseManagerInstance.AllPlayerInventories on quest.RunID equals playerInventory.RunID
                                       where quest.QuestID == Numbers.QuestIDThirstyPariapuria &&
                                             (playerInventory.Item1ID == 4943 ||
                                              playerInventory.Item2ID == 4943 ||
@@ -1487,8 +1486,8 @@ public class AchievementManager
                 }
 
             case 196:
-                completedQuests = from quest in DatabaseManagerInstance.AllQuests
-                                  join playerGear in DatabaseManagerInstance.AllPlayerGear on quest.RunID equals playerGear.RunID
+                completedQuests = from quest in databaseManagerInstance.AllQuests
+                                  join playerGear in databaseManagerInstance.AllPlayerGear on quest.RunID equals playerGear.RunID
                                   where quest.QuestID == Numbers.QuestIDRulingGuanzorumu && playerGear.StyleID != 3
                                   select quest;
                 if (completedQuests != null && completedQuests.Any())
@@ -1501,14 +1500,14 @@ public class AchievementManager
                 }
 
             case 197:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDShiftingMiRu && quest.KeyStrokesDictionary != null && JsonConvert.DeserializeObject<Dictionary<int, string>>(quest.KeyStrokesDictionary).Values.First() == "LShiftKey");
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDShiftingMiRu && quest.KeyStrokesDictionary != null && JsonConvert.DeserializeObject<Dictionary<int, string>>(quest.KeyStrokesDictionary).Values.First() == "LShiftKey");
             case 198:
-                return DatabaseManagerInstance.AllQuests.Any(quest => (quest.QuestID == Numbers.QuestIDBlinkingNargacugaForest || quest.QuestID == Numbers.QuestIDBlinkingNargacugaHistoric) && quest.HitsTakenBlockedDictionary != null && JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int, int>>>(quest.HitsTakenBlockedDictionary).Count == 0);
+                return databaseManagerInstance.AllQuests.Any(quest => (quest.QuestID == Numbers.QuestIDBlinkingNargacugaForest || quest.QuestID == Numbers.QuestIDBlinkingNargacugaHistoric) && quest.HitsTakenBlockedDictionary != null && JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int, int>>>(quest.HitsTakenBlockedDictionary).Count == 0);
             case 199:
-                return DatabaseManagerInstance.AllQuests.Any(quest => (quest.QuestID == Numbers.QuestIDHowlingZinogreForest || quest.QuestID == Numbers.QuestIDHowlingZinogreHistoric) && quest.PartySize == 1 && quest.PlayerStaminaDictionary != null && JsonConvert.DeserializeObject<Dictionary<int, int>>(quest.PlayerStaminaDictionary).Values.First() <= 75);
+                return databaseManagerInstance.AllQuests.Any(quest => (quest.QuestID == Numbers.QuestIDHowlingZinogreForest || quest.QuestID == Numbers.QuestIDHowlingZinogreHistoric) && quest.PartySize == 1 && quest.PlayerStaminaDictionary != null && JsonConvert.DeserializeObject<Dictionary<int, int>>(quest.PlayerStaminaDictionary).Values.First() <= 75);
             case 200:
-                completedQuests = from quest in DatabaseManagerInstance.AllQuests
-                                  join activeSkills in DatabaseManagerInstance.AllActiveSkills on quest.RunID equals activeSkills.RunID
+                completedQuests = from quest in databaseManagerInstance.AllQuests
+                                  join activeSkills in databaseManagerInstance.AllActiveSkills on quest.RunID equals activeSkills.RunID
                                   where (quest.QuestID == Numbers.QuestIDBurningFreezingElzelionHistoric || quest.QuestID == Numbers.QuestIDBurningFreezingElzelionTower) &&
                                   (activeSkills.ActiveSkill1ID == 473 || activeSkills.ActiveSkill1ID == 504 ||
                                   activeSkills.ActiveSkill2ID == 473 || activeSkills.ActiveSkill2ID == 504 ||
@@ -1540,8 +1539,8 @@ public class AchievementManager
                 }
 
             case 201:
-                completedQuests = from quest in DatabaseManagerInstance.AllQuests
-                                  join playerInventory in DatabaseManagerInstance.AllPlayerInventories on quest.RunID equals playerInventory.RunID
+                completedQuests = from quest in databaseManagerInstance.AllQuests
+                                  join playerInventory in databaseManagerInstance.AllPlayerInventories on quest.RunID equals playerInventory.RunID
                                   where quest.QuestID == Numbers.QuestIDBlitzkriegBogabadorumu &&
                                         (playerInventory.Item1ID == 93 ||
                                          playerInventory.Item2ID == 93 ||
@@ -1574,8 +1573,8 @@ public class AchievementManager
                 }
 
             case 202:
-                completedQuests = from quest in DatabaseManagerInstance.AllQuests
-                                  join styleRankSkills in DatabaseManagerInstance.AllStyleRankSkills on quest.RunID equals styleRankSkills.RunID
+                completedQuests = from quest in databaseManagerInstance.AllQuests
+                                  join styleRankSkills in databaseManagerInstance.AllStyleRankSkills on quest.RunID equals styleRankSkills.RunID
                                   where quest.QuestID == Numbers.QuestIDArrogantDuremudira &&
                                         (styleRankSkills.StyleRankSkill1ID == 14 || styleRankSkills.StyleRankSkill2ID == 14)
                                   select quest;
@@ -1592,7 +1591,7 @@ public class AchievementManager
                 // Set the target date to February 14th of the current year
                 var targetDate = new DateTime(DateTime.UtcNow.Year, 2, 14);
 
-                if (DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDVeggieElderLove && quest.CreatedAt?.Date == targetDate.Date))
+                if (databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDVeggieElderLove && quest.CreatedAt?.Date == targetDate.Date))
                 {
                     return true;
                 }
@@ -1602,8 +1601,8 @@ public class AchievementManager
                 }
 
             case 204:
-                completedQuests = from quest in DatabaseManagerInstance.AllQuests
-                                  join playerGear in DatabaseManagerInstance.AllPlayerGear on quest.RunID equals playerGear.RunID
+                completedQuests = from quest in databaseManagerInstance.AllQuests
+                                  join playerGear in databaseManagerInstance.AllPlayerGear on quest.RunID equals playerGear.RunID
                                   where (quest.QuestID == Numbers.QuestIDProducerGogomoaHR || quest.QuestID == Numbers.QuestIDProducerGogomoaLR) &&
                                   playerGear.WeaponTypeID == 9
                                   select quest;
@@ -1617,23 +1616,23 @@ public class AchievementManager
                 }
 
             case 205:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDFourHeavenlyKingMale1 || quest.QuestID == Numbers.QuestIDFourHeavenlyKingMale2 || quest.QuestID == Numbers.QuestIDFourHeavenlyKingFemale1 || quest.QuestID == Numbers.QuestIDFourHeavenlyKingFemale2);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDFourHeavenlyKingMale1 || quest.QuestID == Numbers.QuestIDFourHeavenlyKingMale2 || quest.QuestID == Numbers.QuestIDFourHeavenlyKingFemale1 || quest.QuestID == Numbers.QuestIDFourHeavenlyKingFemale2);
             case 206:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDHatsuneMiku);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDHatsuneMiku);
             case 207:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDPSO2);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDPSO2);
             case 208:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDMegaman);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDMegaman);
             case 209:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDHiganjima);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDHiganjima);
             case 210:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDHugePlesioth);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDHugePlesioth);
             case 211:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDSunglassesKutKu);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDSunglassesKutKu);
             case 212:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDMHFQ);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDMHFQ);
             case 213:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDCongalalaCure);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDCongalalaCure);
             case 214:
                 if (dataLoader.model.GZenny() >= 9_999_999)
                 {
@@ -1700,9 +1699,9 @@ public class AchievementManager
                 }
 
             case 221:
-                return DatabaseManagerInstance.AllQuestAttempts.Any(questAttempts => questAttempts.Attempts >= 1_000);
+                return databaseManagerInstance.AllQuestAttempts.Any(questAttempts => questAttempts.Attempts >= 1_000);
             case 222:
-                return DatabaseManagerInstance.AllPersonalBestAttempts.Any(pbAttempts => pbAttempts.Attempts >= 100);
+                return databaseManagerInstance.AllPersonalBestAttempts.Any(pbAttempts => pbAttempts.Attempts >= 100);
             case 223:
                 if (dataLoader.model.SecondDistrictDuremudiraSlays() >= 100)
                 {
@@ -1729,203 +1728,203 @@ public class AchievementManager
             }
 
             case 226:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDTwinheadRajangsHistoric);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDTwinheadRajangsHistoric);
             case 227:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4AkuraVashimu && quest.FinalTimeValue < Numbers.Frames1Minute * 10);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4AkuraVashimu && quest.FinalTimeValue < Numbers.Frames1Minute * 10);
             case 228:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Anorupatisu && quest.FinalTimeValue < Numbers.Frames1Minute * 10);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Anorupatisu && quest.FinalTimeValue < Numbers.Frames1Minute * 10);
             case 229:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Blangonga && quest.FinalTimeValue < Numbers.Frames1Minute * 10);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Blangonga && quest.FinalTimeValue < Numbers.Frames1Minute * 10);
             case 230:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4DaimyoHermitaur && quest.FinalTimeValue < Numbers.Frames1Minute * 10);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4DaimyoHermitaur && quest.FinalTimeValue < Numbers.Frames1Minute * 10);
             case 231:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Doragyurosu && quest.FinalTimeValue < Numbers.Frames1Minute * 10);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Doragyurosu && quest.FinalTimeValue < Numbers.Frames1Minute * 10);
             case 232:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Espinas && quest.FinalTimeValue < Numbers.Frames1Minute * 10);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Espinas && quest.FinalTimeValue < Numbers.Frames1Minute * 10);
             case 233:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Gasurabazura && quest.FinalTimeValue < Numbers.Frames1Minute * 10);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Gasurabazura && quest.FinalTimeValue < Numbers.Frames1Minute * 10);
             case 234:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Giaorugu && quest.FinalTimeValue < Numbers.Frames1Minute * 10);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Giaorugu && quest.FinalTimeValue < Numbers.Frames1Minute * 10);
             case 235:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Hypnocatrice && quest.FinalTimeValue < Numbers.Frames1Minute * 10);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Hypnocatrice && quest.FinalTimeValue < Numbers.Frames1Minute * 10);
             case 236:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Hyujikiki && quest.FinalTimeValue < Numbers.Frames1Minute * 10);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Hyujikiki && quest.FinalTimeValue < Numbers.Frames1Minute * 10);
             case 237:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Inagami && quest.FinalTimeValue < Numbers.Frames1Minute * 10);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Inagami && quest.FinalTimeValue < Numbers.Frames1Minute * 10);
             case 238:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Khezu && quest.FinalTimeValue < Numbers.Frames1Minute * 10);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Khezu && quest.FinalTimeValue < Numbers.Frames1Minute * 10);
             case 239:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Midogaron && quest.FinalTimeValue < Numbers.Frames1Minute * 10);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Midogaron && quest.FinalTimeValue < Numbers.Frames1Minute * 10);
             case 240:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Plesioth && quest.FinalTimeValue < Numbers.Frames1Minute * 10);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Plesioth && quest.FinalTimeValue < Numbers.Frames1Minute * 10);
             case 241:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Rathalos && quest.FinalTimeValue < Numbers.Frames1Minute * 10);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Rathalos && quest.FinalTimeValue < Numbers.Frames1Minute * 10);
             case 242:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Rukodiora && quest.FinalTimeValue < Numbers.Frames1Minute * 10);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Rukodiora && quest.FinalTimeValue < Numbers.Frames1Minute * 10);
             case 243:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Tigrex && quest.FinalTimeValue < Numbers.Frames1Minute * 10);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Tigrex && quest.FinalTimeValue < Numbers.Frames1Minute * 10);
             case 244:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Toridcless && quest.FinalTimeValue < Numbers.Frames1Minute * 10);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Toridcless && quest.FinalTimeValue < Numbers.Frames1Minute * 10);
             case 245:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Baruragaru && quest.FinalTimeValue < Numbers.Frames1Minute * 10);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Baruragaru && quest.FinalTimeValue < Numbers.Frames1Minute * 10);
             case 246:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Bogabadorumu && quest.FinalTimeValue < Numbers.Frames1Minute * 10);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Bogabadorumu && quest.FinalTimeValue < Numbers.Frames1Minute * 10);
             case 247:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Gravios && quest.FinalTimeValue < Numbers.Frames1Minute * 10);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Gravios && quest.FinalTimeValue < Numbers.Frames1Minute * 10);
             case 248:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Harudomerugu && quest.FinalTimeValue < Numbers.Frames1Minute * 10);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Harudomerugu && quest.FinalTimeValue < Numbers.Frames1Minute * 10);
             case 249:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4TaikunZamuza && quest.FinalTimeValue < Numbers.Frames1Minute * 10);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4TaikunZamuza && quest.FinalTimeValue < Numbers.Frames1Minute * 10);
             case 250:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDLV9999Fatalis && quest.FinalTimeValue < Numbers.Frames1Minute * 10);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDLV9999Fatalis && quest.FinalTimeValue < Numbers.Frames1Minute * 10);
             case 251:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDLV9999CrimsonFatalis && quest.FinalTimeValue < Numbers.Frames1Minute * 10);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDLV9999CrimsonFatalis && quest.FinalTimeValue < Numbers.Frames1Minute * 10);
             case 252:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDLV9999Shantien && quest.FinalTimeValue < Numbers.Frames1Minute * 10);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDLV9999Shantien && quest.FinalTimeValue < Numbers.Frames1Minute * 10);
             case 253:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDLV9999Disufiroa && quest.FinalTimeValue < Numbers.Frames1Minute * 10);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDLV9999Disufiroa && quest.FinalTimeValue < Numbers.Frames1Minute * 10);
             case 254:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4AkuraVashimu && quest.FinalTimeValue < Numbers.Frames1Minute * 8);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4AkuraVashimu && quest.FinalTimeValue < Numbers.Frames1Minute * 8);
             case 255:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Anorupatisu && quest.FinalTimeValue < Numbers.Frames1Minute * 8);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Anorupatisu && quest.FinalTimeValue < Numbers.Frames1Minute * 8);
             case 256:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Blangonga && quest.FinalTimeValue < Numbers.Frames1Minute * 8);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Blangonga && quest.FinalTimeValue < Numbers.Frames1Minute * 8);
             case 257:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4DaimyoHermitaur && quest.FinalTimeValue < Numbers.Frames1Minute * 8);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4DaimyoHermitaur && quest.FinalTimeValue < Numbers.Frames1Minute * 8);
             case 258:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Doragyurosu && quest.FinalTimeValue < Numbers.Frames1Minute * 8);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Doragyurosu && quest.FinalTimeValue < Numbers.Frames1Minute * 8);
             case 259:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Espinas && quest.FinalTimeValue < Numbers.Frames1Minute * 8);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Espinas && quest.FinalTimeValue < Numbers.Frames1Minute * 8);
             case 260:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Gasurabazura && quest.FinalTimeValue < Numbers.Frames1Minute * 8);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Gasurabazura && quest.FinalTimeValue < Numbers.Frames1Minute * 8);
             case 261:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Giaorugu && quest.FinalTimeValue < Numbers.Frames1Minute * 8);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Giaorugu && quest.FinalTimeValue < Numbers.Frames1Minute * 8);
             case 262:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Hypnocatrice && quest.FinalTimeValue < Numbers.Frames1Minute * 8);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Hypnocatrice && quest.FinalTimeValue < Numbers.Frames1Minute * 8);
             case 263:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Hyujikiki && quest.FinalTimeValue < Numbers.Frames1Minute * 8);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Hyujikiki && quest.FinalTimeValue < Numbers.Frames1Minute * 8);
             case 264:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Inagami && quest.FinalTimeValue < Numbers.Frames1Minute * 8);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Inagami && quest.FinalTimeValue < Numbers.Frames1Minute * 8);
             case 265:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Khezu && quest.FinalTimeValue < Numbers.Frames1Minute * 8);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Khezu && quest.FinalTimeValue < Numbers.Frames1Minute * 8);
             case 266:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Midogaron && quest.FinalTimeValue < Numbers.Frames1Minute * 8);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Midogaron && quest.FinalTimeValue < Numbers.Frames1Minute * 8);
             case 267:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Plesioth && quest.FinalTimeValue < Numbers.Frames1Minute * 8);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Plesioth && quest.FinalTimeValue < Numbers.Frames1Minute * 8);
             case 268:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Rathalos && quest.FinalTimeValue < Numbers.Frames1Minute * 8);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Rathalos && quest.FinalTimeValue < Numbers.Frames1Minute * 8);
             case 269:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Rukodiora && quest.FinalTimeValue < Numbers.Frames1Minute * 8);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Rukodiora && quest.FinalTimeValue < Numbers.Frames1Minute * 8);
             case 270:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Tigrex && quest.FinalTimeValue < Numbers.Frames1Minute * 8);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Tigrex && quest.FinalTimeValue < Numbers.Frames1Minute * 8);
             case 271:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Toridcless && quest.FinalTimeValue < Numbers.Frames1Minute * 8);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Toridcless && quest.FinalTimeValue < Numbers.Frames1Minute * 8);
             case 272:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Baruragaru && quest.FinalTimeValue < Numbers.Frames1Minute * 8);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Baruragaru && quest.FinalTimeValue < Numbers.Frames1Minute * 8);
             case 273:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Bogabadorumu && quest.FinalTimeValue < Numbers.Frames1Minute * 8);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Bogabadorumu && quest.FinalTimeValue < Numbers.Frames1Minute * 8);
             case 274:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Gravios && quest.FinalTimeValue < Numbers.Frames1Minute * 8);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Gravios && quest.FinalTimeValue < Numbers.Frames1Minute * 8);
             case 275:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Harudomerugu && quest.FinalTimeValue < Numbers.Frames1Minute * 8);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Harudomerugu && quest.FinalTimeValue < Numbers.Frames1Minute * 8);
             case 276:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4TaikunZamuza && quest.FinalTimeValue < Numbers.Frames1Minute * 8);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4TaikunZamuza && quest.FinalTimeValue < Numbers.Frames1Minute * 8);
             case 277:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDLV9999Fatalis && quest.FinalTimeValue < Numbers.Frames1Minute * 8);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDLV9999Fatalis && quest.FinalTimeValue < Numbers.Frames1Minute * 8);
             case 278:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDLV9999CrimsonFatalis && quest.FinalTimeValue < Numbers.Frames1Minute * 8);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDLV9999CrimsonFatalis && quest.FinalTimeValue < Numbers.Frames1Minute * 8);
             case 279:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDLV9999Shantien && quest.FinalTimeValue < Numbers.Frames1Minute * 8);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDLV9999Shantien && quest.FinalTimeValue < Numbers.Frames1Minute * 8);
             case 280:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDLV9999Disufiroa && quest.FinalTimeValue < Numbers.Frames1Minute * 8);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDLV9999Disufiroa && quest.FinalTimeValue < Numbers.Frames1Minute * 8);
             case 281:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4AkuraVashimu && quest.FinalTimeValue < Numbers.Frames1Minute * 5);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4AkuraVashimu && quest.FinalTimeValue < Numbers.Frames1Minute * 5);
             case 282:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Anorupatisu && quest.FinalTimeValue < Numbers.Frames1Minute * 5);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Anorupatisu && quest.FinalTimeValue < Numbers.Frames1Minute * 5);
             case 283:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Blangonga && quest.FinalTimeValue < Numbers.Frames1Minute * 5);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Blangonga && quest.FinalTimeValue < Numbers.Frames1Minute * 5);
             case 284:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4DaimyoHermitaur && quest.FinalTimeValue < Numbers.Frames1Minute * 5);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4DaimyoHermitaur && quest.FinalTimeValue < Numbers.Frames1Minute * 5);
             case 285:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Doragyurosu && quest.FinalTimeValue < Numbers.Frames1Minute * 5);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Doragyurosu && quest.FinalTimeValue < Numbers.Frames1Minute * 5);
             case 286:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Espinas && quest.FinalTimeValue < Numbers.Frames1Minute * 5);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Espinas && quest.FinalTimeValue < Numbers.Frames1Minute * 5);
             case 287:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Gasurabazura && quest.FinalTimeValue < Numbers.Frames1Minute * 5);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Gasurabazura && quest.FinalTimeValue < Numbers.Frames1Minute * 5);
             case 288:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Giaorugu && quest.FinalTimeValue < Numbers.Frames1Minute * 5);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Giaorugu && quest.FinalTimeValue < Numbers.Frames1Minute * 5);
             case 289:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Hypnocatrice && quest.FinalTimeValue < Numbers.Frames1Minute * 5);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Hypnocatrice && quest.FinalTimeValue < Numbers.Frames1Minute * 5);
             case 290:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Hyujikiki && quest.FinalTimeValue < Numbers.Frames1Minute * 5);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Hyujikiki && quest.FinalTimeValue < Numbers.Frames1Minute * 5);
             case 291:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Inagami && quest.FinalTimeValue < Numbers.Frames1Minute * 5);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Inagami && quest.FinalTimeValue < Numbers.Frames1Minute * 5);
             case 292:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Khezu && quest.FinalTimeValue < Numbers.Frames1Minute * 5);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Khezu && quest.FinalTimeValue < Numbers.Frames1Minute * 5);
             case 293:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Midogaron && quest.FinalTimeValue < Numbers.Frames1Minute * 5);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Midogaron && quest.FinalTimeValue < Numbers.Frames1Minute * 5);
             case 294:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Plesioth && quest.FinalTimeValue < Numbers.Frames1Minute * 5);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Plesioth && quest.FinalTimeValue < Numbers.Frames1Minute * 5);
             case 295:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Rathalos && quest.FinalTimeValue < Numbers.Frames1Minute * 5);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Rathalos && quest.FinalTimeValue < Numbers.Frames1Minute * 5);
             case 296:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Rukodiora && quest.FinalTimeValue < Numbers.Frames1Minute * 5);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Rukodiora && quest.FinalTimeValue < Numbers.Frames1Minute * 5);
             case 297:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Tigrex && quest.FinalTimeValue < Numbers.Frames1Minute * 5);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Tigrex && quest.FinalTimeValue < Numbers.Frames1Minute * 5);
             case 298:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Toridcless && quest.FinalTimeValue < Numbers.Frames1Minute * 5);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Toridcless && quest.FinalTimeValue < Numbers.Frames1Minute * 5);
             case 299:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Baruragaru && quest.FinalTimeValue < Numbers.Frames1Minute * 5);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Baruragaru && quest.FinalTimeValue < Numbers.Frames1Minute * 5);
             case 300:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Bogabadorumu && quest.FinalTimeValue < Numbers.Frames1Minute * 5);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Bogabadorumu && quest.FinalTimeValue < Numbers.Frames1Minute * 5);
             case 301:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Gravios && quest.FinalTimeValue < Numbers.Frames1Minute * 5);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Gravios && quest.FinalTimeValue < Numbers.Frames1Minute * 5);
             case 302:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Harudomerugu && quest.FinalTimeValue < Numbers.Frames1Minute * 5);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Harudomerugu && quest.FinalTimeValue < Numbers.Frames1Minute * 5);
             case 303:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4TaikunZamuza && quest.FinalTimeValue < Numbers.Frames1Minute * 5);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4TaikunZamuza && quest.FinalTimeValue < Numbers.Frames1Minute * 5);
             case 304:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDLV9999Fatalis && quest.FinalTimeValue < Numbers.Frames1Minute * 5);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDLV9999Fatalis && quest.FinalTimeValue < Numbers.Frames1Minute * 5);
             case 305:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDLV9999CrimsonFatalis && quest.FinalTimeValue < Numbers.Frames1Minute * 5);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDLV9999CrimsonFatalis && quest.FinalTimeValue < Numbers.Frames1Minute * 5);
             case 306:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDLV9999Shantien && quest.FinalTimeValue < Numbers.Frames1Minute * 5);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDLV9999Shantien && quest.FinalTimeValue < Numbers.Frames1Minute * 5);
             case 307:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDLV9999Disufiroa && quest.FinalTimeValue < Numbers.Frames1Minute * 5);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDLV9999Disufiroa && quest.FinalTimeValue < Numbers.Frames1Minute * 5);
             case 308:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDThirstyPariapuria && quest.FinalTimeValue < Numbers.Frames1Minute * 3);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDThirstyPariapuria && quest.FinalTimeValue < Numbers.Frames1Minute * 3);
             case 309:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDShiftingMiRu && quest.FinalTimeValue < Numbers.Frames1Minute * 5);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDShiftingMiRu && quest.FinalTimeValue < Numbers.Frames1Minute * 5);
             case 310:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDRulingGuanzorumu && quest.FinalTimeValue < Numbers.Frames1Minute * 5);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDRulingGuanzorumu && quest.FinalTimeValue < Numbers.Frames1Minute * 5);
             case 311:
-                return DatabaseManagerInstance.AllQuests.Any(quest => (quest.QuestID == Numbers.QuestIDBlinkingNargacugaForest || quest.QuestID == Numbers.QuestIDBlinkingNargacugaHistoric) && quest.FinalTimeValue < Numbers.Frames1Minute * 7);
+                return databaseManagerInstance.AllQuests.Any(quest => (quest.QuestID == Numbers.QuestIDBlinkingNargacugaForest || quest.QuestID == Numbers.QuestIDBlinkingNargacugaHistoric) && quest.FinalTimeValue < Numbers.Frames1Minute * 7);
             case 312:
-                return DatabaseManagerInstance.AllQuests.Any(quest => (quest.QuestID == Numbers.QuestIDHowlingZinogreForest || quest.QuestID == Numbers.QuestIDHowlingZinogreHistoric) && quest.FinalTimeValue < Numbers.Frames1Minute * 7);
+                return databaseManagerInstance.AllQuests.Any(quest => (quest.QuestID == Numbers.QuestIDHowlingZinogreForest || quest.QuestID == Numbers.QuestIDHowlingZinogreHistoric) && quest.FinalTimeValue < Numbers.Frames1Minute * 7);
             case 313:
-                return DatabaseManagerInstance.AllQuests.Any(quest => (quest.QuestID == Numbers.QuestIDSparklingZerureusu || quest.QuestID == Numbers.QuestIDSparklingZerureusuEvent) && quest.FinalTimeValue < Numbers.Frames1Minute * 9);
+                return databaseManagerInstance.AllQuests.Any(quest => (quest.QuestID == Numbers.QuestIDSparklingZerureusu || quest.QuestID == Numbers.QuestIDSparklingZerureusuEvent) && quest.FinalTimeValue < Numbers.Frames1Minute * 9);
             case 314:
-                return DatabaseManagerInstance.AllQuests.Any(quest => (quest.QuestID == Numbers.QuestIDStarvingDeviljhoArena || quest.QuestID == Numbers.QuestIDStarvingDeviljhoHistoric) && quest.FinalTimeValue < Numbers.Frames1Minute * 9);
+                return databaseManagerInstance.AllQuests.Any(quest => (quest.QuestID == Numbers.QuestIDStarvingDeviljhoArena || quest.QuestID == Numbers.QuestIDStarvingDeviljhoHistoric) && quest.FinalTimeValue < Numbers.Frames1Minute * 9);
             case 315:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDArrogantDuremudira && quest.FinalTimeValue < Numbers.Frames1Minute * 9);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDArrogantDuremudira && quest.FinalTimeValue < Numbers.Frames1Minute * 9);
             case 316:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDBlitzkriegBogabadorumu && quest.FinalTimeValue < Numbers.Frames1Minute * 9);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDBlitzkriegBogabadorumu && quest.FinalTimeValue < Numbers.Frames1Minute * 9);
             case 317:
-                return DatabaseManagerInstance.AllQuests.Any(quest => (quest.QuestID == Numbers.QuestIDBurningFreezingElzelionHistoric || quest.QuestID == Numbers.QuestIDBurningFreezingElzelionTower) && quest.FinalTimeValue < Numbers.Frames1Minute * 9);
+                return databaseManagerInstance.AllQuests.Any(quest => (quest.QuestID == Numbers.QuestIDBurningFreezingElzelionHistoric || quest.QuestID == Numbers.QuestIDBurningFreezingElzelionTower) && quest.FinalTimeValue < Numbers.Frames1Minute * 9);
             case 318:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDUpperShitenUnknown && quest.FinalTimeValue < Numbers.Frames1Minute * 9);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDUpperShitenUnknown && quest.FinalTimeValue < Numbers.Frames1Minute * 9);
             case 319:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDUpperShitenDisufiroa && quest.FinalTimeValue < Numbers.Frames1Minute * 9);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDUpperShitenDisufiroa && quest.FinalTimeValue < Numbers.Frames1Minute * 9);
             case 320:
-                return DatabaseManagerInstance.AllBingo.Any(bingo => bingo.Difficulty == Difficulty.Easy);
+                return databaseManagerInstance.AllBingo.Any(bingo => bingo.Difficulty == Difficulty.Easy);
             case 321:
-                return DatabaseManagerInstance.AllBingo.Any(bingo => bingo.Difficulty == Difficulty.Medium);
+                return databaseManagerInstance.AllBingo.Any(bingo => bingo.Difficulty == Difficulty.Medium);
             case 322:
-                return DatabaseManagerInstance.AllBingo.Any(bingo => bingo.Difficulty == Difficulty.Hard);
+                return databaseManagerInstance.AllBingo.Any(bingo => bingo.Difficulty == Difficulty.Hard);
             case 323:
-                return DatabaseManagerInstance.AllBingo.Any(bingo => bingo.Difficulty == Difficulty.Extreme);
+                return databaseManagerInstance.AllBingo.Any(bingo => bingo.Difficulty == Difficulty.Extreme);
             case 324:
-                if (DatabaseManagerInstance.AllGachaCards.Count >= 1)
+                if (databaseManagerInstance.AllGachaCards.Count >= 1)
                 {
                     return true;
                 }
@@ -1935,7 +1934,7 @@ public class AchievementManager
                 }
 
             case 325:
-                if (DatabaseManagerInstance.AllGachaCards.Count >= 100)
+                if (databaseManagerInstance.AllGachaCards.Count >= 100)
                 {
                     return true;
                 }
@@ -1945,7 +1944,7 @@ public class AchievementManager
                 }
 
             case 326:
-                if (DatabaseManagerInstance.AllGachaCards.Count >= 1000)
+                if (databaseManagerInstance.AllGachaCards.Count >= 1000)
                 {
                     return true;
                 }
@@ -1960,7 +1959,7 @@ public class AchievementManager
             }
 
             case 328:
-                if (DatabaseManagerInstance.AllZenithGauntlets.Count >= 1)
+                if (databaseManagerInstance.AllZenithGauntlets.Count >= 1)
                 {
                     return true;
                 }
@@ -1970,7 +1969,7 @@ public class AchievementManager
                 }
 
             case 329:
-                if (DatabaseManagerInstance.AllZenithGauntlets.Count >= 10)
+                if (databaseManagerInstance.AllZenithGauntlets.Count >= 10)
                 {
                     return true;
                 }
@@ -1980,7 +1979,7 @@ public class AchievementManager
                 }
 
             case 330:
-                if (DatabaseManagerInstance.AllZenithGauntlets.Count >= 25)
+                if (databaseManagerInstance.AllZenithGauntlets.Count >= 25)
                 {
                     return true;
                 }
@@ -1990,12 +1989,12 @@ public class AchievementManager
                 }
 
             case 331:
-                if (DatabaseManagerInstance.AllZenithGauntlets.Count == 0)
+                if (databaseManagerInstance.AllZenithGauntlets.Count == 0)
                 {
                     return false;
                 }
 
-                return DatabaseManagerInstance.AllZenithGauntlets.Any(gauntlet =>
+                return databaseManagerInstance.AllZenithGauntlets.Any(gauntlet =>
                 {
                     if (TimeSpan.TryParse(gauntlet.TotalTimeElapsed, out var timeElapsed))
                     {
@@ -2005,7 +2004,7 @@ public class AchievementManager
                     return false; // Handle invalid TotalTimeElapsed values
                 });
             case 332:
-                if (DatabaseManagerInstance.AllSolsticeGauntlets.Count >= 1)
+                if (databaseManagerInstance.AllSolsticeGauntlets.Count >= 1)
                 {
                     return true;
                 }
@@ -2015,7 +2014,7 @@ public class AchievementManager
                 }
 
             case 333:
-                if (DatabaseManagerInstance.AllSolsticeGauntlets.Count >= 10)
+                if (databaseManagerInstance.AllSolsticeGauntlets.Count >= 10)
                 {
                     return true;
                 }
@@ -2025,7 +2024,7 @@ public class AchievementManager
                 }
 
             case 334:
-                if (DatabaseManagerInstance.AllSolsticeGauntlets.Count >= 25)
+                if (databaseManagerInstance.AllSolsticeGauntlets.Count >= 25)
                 {
                     return true;
                 }
@@ -2035,12 +2034,12 @@ public class AchievementManager
                 }
 
             case 335:
-                if (DatabaseManagerInstance.AllSolsticeGauntlets.Count == 0)
+                if (databaseManagerInstance.AllSolsticeGauntlets.Count == 0)
                 {
                     return false;
                 }
 
-                return DatabaseManagerInstance.AllSolsticeGauntlets.Any(gauntlet =>
+                return databaseManagerInstance.AllSolsticeGauntlets.Any(gauntlet =>
                 {
                     if (TimeSpan.TryParse(gauntlet.TotalTimeElapsed, out var timeElapsed))
                     {
@@ -2050,7 +2049,7 @@ public class AchievementManager
                     return false; // Handle invalid TotalTimeElapsed values
                 });
             case 336:
-                if (DatabaseManagerInstance.AllMusouGauntlets.Count >= 1)
+                if (databaseManagerInstance.AllMusouGauntlets.Count >= 1)
                 {
                     return true;
                 }
@@ -2060,7 +2059,7 @@ public class AchievementManager
                 }
 
             case 337:
-                if (DatabaseManagerInstance.AllMusouGauntlets.Count >= 10)
+                if (databaseManagerInstance.AllMusouGauntlets.Count >= 10)
                 {
                     return true;
                 }
@@ -2070,7 +2069,7 @@ public class AchievementManager
                 }
 
             case 338:
-                if (DatabaseManagerInstance.AllMusouGauntlets.Count >= 25)
+                if (databaseManagerInstance.AllMusouGauntlets.Count >= 25)
                 {
                     return true;
                 }
@@ -2080,12 +2079,12 @@ public class AchievementManager
                 }
 
             case 339:
-                if (DatabaseManagerInstance.AllMusouGauntlets.Count == 0)
+                if (databaseManagerInstance.AllMusouGauntlets.Count == 0)
                 {
                     return false;
                 }
 
-                return DatabaseManagerInstance.AllMusouGauntlets.Any(gauntlet =>
+                return databaseManagerInstance.AllMusouGauntlets.Any(gauntlet =>
                 {
                     if (TimeSpan.TryParse(gauntlet.TotalTimeElapsed, out var timeElapsed))
                     {
@@ -2117,7 +2116,7 @@ public class AchievementManager
                 }
 
             case 343:
-                if (DatabaseManagerInstance.AllPlayerGear.Count(playerGear => playerGear.GuildFoodID != 0) >= 50)
+                if (databaseManagerInstance.AllPlayerGear.Count(playerGear => playerGear.GuildFoodID != 0) >= 50)
                 {
                     return true;
                 }
@@ -2127,7 +2126,7 @@ public class AchievementManager
                 }
 
             case 344:
-                if (DatabaseManagerInstance.AllPlayerGear.Count(playerGear => playerGear.DivaSkillID != 0) >= 50)
+                if (databaseManagerInstance.AllPlayerGear.Count(playerGear => playerGear.DivaSkillID != 0) >= 50)
                 {
                     return true;
                 }
@@ -2152,7 +2151,7 @@ public class AchievementManager
                 }
 
             case 347:
-                if (DatabaseManagerInstance.GetTotalQuestTimeElapsed() >= Numbers.Frames1Hour * 100)
+                if (databaseManagerInstance.GetTotalQuestTimeElapsed() >= Numbers.Frames1Hour * 100)
                 {
                     return true;
                 }
@@ -2166,10 +2165,13 @@ public class AchievementManager
                 EZlion.Mapper.WeaponGunner.IDName.TryGetValue(dataLoader.model.GunnerWeaponID(), out var gunnerWeaponName);
 
                 if (dataLoader.model.GRWeaponLv() == 100 && (
-                    blademasterWeaponName != null && (blademasterWeaponName.Contains("\"Shine\"") || blademasterWeaponName.Contains("\"Clear\"") || blademasterWeaponName.Contains("\"Flash\"") || blademasterWeaponName.Contains("\"Glory\""))
-                     || gunnerWeaponName != null && (gunnerWeaponName.Contains("\"Shine\"") || gunnerWeaponName.Contains("\"Clear\"") || gunnerWeaponName.Contains("\"Flash\"") || gunnerWeaponName.Contains("\"Glory\""))
+                    (
+                        blademasterWeaponName != null && (blademasterWeaponName.Contains("\"Shine\"") || blademasterWeaponName.Contains("\"Clear\"") || blademasterWeaponName.Contains("\"Flash\"") || blademasterWeaponName.Contains("\"Glory\""))
+                    ) ||
+                    (
+                        gunnerWeaponName != null && (gunnerWeaponName.Contains("\"Shine\"") || gunnerWeaponName.Contains("\"Clear\"") || gunnerWeaponName.Contains("\"Flash\"") || gunnerWeaponName.Contains("\"Glory\""))
                     )
-                )
+                ))
                 {
                     return true;
                 }
@@ -2179,11 +2181,11 @@ public class AchievementManager
                 }
 
             case 349:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDMosswineRevenge);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDMosswineRevenge);
             case 350:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDJunglePuzzle);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDJunglePuzzle);
             case 351:
-                if (DatabaseManagerInstance.AllPlayerGear.Count(playerGear => playerGear.PoogieItemID != 0) >= 100)
+                if (databaseManagerInstance.AllPlayerGear.Count(playerGear => playerGear.PoogieItemID != 0) >= 100)
                 {
                     return true;
                 }
@@ -2193,20 +2195,20 @@ public class AchievementManager
                 }
 
             case 352:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDNuclearGypceros);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDNuclearGypceros);
             case 353:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDMosswineDuel);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDMosswineDuel);
             case 354:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDMosswineLastStand);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDMosswineLastStand);
             case 355:
-                return DatabaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDHalloweenSpeedster);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDHalloweenSpeedster);
             case 356:// TODO 1000 bingo points in 1 go
             {
                 return false;
             }
 
             case 357:
-                if (DatabaseManagerInstance.AllBingo.Count >= 1)
+                if (databaseManagerInstance.AllBingo.Count >= 1)
                 {
                     return true;
                 }
@@ -2216,7 +2218,7 @@ public class AchievementManager
                 }
 
             case 358:
-                if (DatabaseManagerInstance.AllBingo.Count >= 10)
+                if (databaseManagerInstance.AllBingo.Count >= 10)
                 {
                     return true;
                 }
@@ -2226,7 +2228,7 @@ public class AchievementManager
                 }
 
             case 359:
-                if (DatabaseManagerInstance.AllBingo.Count >= 25)
+                if (databaseManagerInstance.AllBingo.Count >= 25)
                 {
                     return true;
                 }
@@ -2236,7 +2238,7 @@ public class AchievementManager
                 }
 
             case 360:
-                if (DatabaseManagerInstance.AllBingo.Count >= 50)
+                if (databaseManagerInstance.AllBingo.Count >= 50)
                 {
                     return true;
                 }
@@ -2303,5 +2305,4 @@ public class AchievementManager
             DatabaseManagerInstance.StoreAchievement(achievementID);
         }
     }
-
 }

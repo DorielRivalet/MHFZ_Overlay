@@ -54,5 +54,4 @@ public class ActiveSkills
     public long ActiveSkill18ID { get; set; }
 
     public long ActiveSkill19ID { get; set; }
-
 }

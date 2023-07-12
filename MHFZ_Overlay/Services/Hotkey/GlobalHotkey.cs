@@ -21,7 +21,12 @@ public class GlobalHotKey : IDisposable
     public static bool RegisterHotKey(string aKeyGestureString, Action aAction)
     {
         var c = new KeyGestureConverter();
-        var aKeyGesture = (KeyGesture)c.ConvertFrom(aKeyGestureString);
+        var aKeyGesture = (KeyGesture?)c.ConvertFrom(aKeyGestureString);
+        if (aKeyGesture == null)
+        {
+            return false;
+        }
+
         return RegisterHotKey(aKeyGesture.Modifiers, aKeyGesture.Key, aAction);
     }
 
@@ -88,7 +93,6 @@ public class GlobalHotKey : IDisposable
 
     private class HotKeyWithAction
     {
-
         public HotKeyWithAction(ModifierKeys modifier, Key key, Action action)
         {
             this.Modifier = modifier;

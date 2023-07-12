@@ -3,7 +3,7 @@
 // Use of this source code is governed by a MIT license that can be
 // found in the LICENSE file.
 -->
-    <ui:FluentWindow x:Class="MHFZ_Overlay.Views.SettingsForm"
+    <ui:FluentWindow x:Class="MHFZ_Overlay.Views.Windows.SettingsForm"
                  xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
         BorderBrush="#b4befe"
         ExtendsContentIntoTitleBar="True"

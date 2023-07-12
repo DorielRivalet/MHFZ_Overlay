@@ -2,7 +2,7 @@
 // Use of this source code is governed by a MIT license that can be
 // found in the LICENSE file.
 
-namespace MHFZ_Overlay.ViewModels;
+namespace MHFZ_Overlay.ViewModels.Windows;
 
 using System;
 using System.Collections.Generic;
@@ -143,1060 +143,1060 @@ public abstract class AddressModel : INotifyPropertyChanged
 
     public bool ShowPlayerHitsPerSecondGraph { get; set; } = true;
 
-    abstract public bool IsNotRoad();
+    public abstract bool IsNotRoad();
 
-    abstract public int HitCountInt();
+    public abstract int HitCountInt();
 
-    abstract public int DamageDealt();
+    public abstract int DamageDealt();
 
     //New addresses
-    abstract public int AreaID();
+    public abstract int AreaID();
 
-    abstract public int GRankNumber();
+    public abstract int GRankNumber();
 
-    abstract public int GSR();
+    public abstract int GSR();
 
-    abstract public int RoadFloor();
+    public abstract int RoadFloor();
 
-    abstract public int WeaponStyle();
+    public abstract int WeaponStyle();
 
-    abstract public int QuestID();
+    public abstract int QuestID();
 
-    abstract public int UrukiPachinkoFish();
+    public abstract int UrukiPachinkoFish();
 
-    abstract public int UrukiPachinkoMushroom();
+    public abstract int UrukiPachinkoMushroom();
 
-    abstract public int UrukiPachinkoSeed();
+    public abstract int UrukiPachinkoSeed();
 
-    abstract public int UrukiPachinkoMeat();
+    public abstract int UrukiPachinkoMeat();
 
-    abstract public int UrukiPachinkoChain();
+    public abstract int UrukiPachinkoChain();
 
-    abstract public int UrukiPachinkoScore();
+    public abstract int UrukiPachinkoScore();
 
-    abstract public int UrukiPachinkoBonusScore();
+    public abstract int UrukiPachinkoBonusScore();
 
-    abstract public int NyanrendoScore();
+    public abstract int NyanrendoScore();
 
-    abstract public int DokkanBattleCatsScore();
+    public abstract int DokkanBattleCatsScore();
 
-    abstract public int DokkanBattleCatsScale();
+    public abstract int DokkanBattleCatsScale();
 
-    abstract public int DokkanBattleCatsShell();
+    public abstract int DokkanBattleCatsShell();
 
-    abstract public int DokkanBattleCatsCamp();
+    public abstract int DokkanBattleCatsCamp();
 
-    abstract public int GuukuScoopSmall();
+    public abstract int GuukuScoopSmall();
 
-    abstract public int GuukuScoopMedium();
+    public abstract int GuukuScoopMedium();
 
-    abstract public int GuukuScoopLarge();
+    public abstract int GuukuScoopLarge();
 
-    abstract public int GuukuScoopGolden();
+    public abstract int GuukuScoopGolden();
 
-    abstract public int GuukuScoopScore();
+    public abstract int GuukuScoopScore();
 
-    abstract public int PanicHoneyScore();
+    public abstract int PanicHoneyScore();
 
-    abstract public int Sharpness();
+    public abstract int Sharpness();
 
-    abstract public int CaravanPoints();
+    public abstract int CaravanPoints();
 
-    abstract public int MezeportaFestivalPoints();
+    public abstract int MezeportaFestivalPoints();
 
-    abstract public int DivaBond();
+    public abstract int DivaBond();
 
-    abstract public int DivaItemsGiven();
+    public abstract int DivaItemsGiven();
 
-    abstract public int GCP();
+    public abstract int GCP();
 
-    abstract public int RoadPoints();
+    public abstract int RoadPoints();
 
-    abstract public int ArmorColor();
+    public abstract int ArmorColor();
 
-    abstract public int RaviGg();
+    public abstract int RaviGg();
 
-    abstract public int Ravig();
+    public abstract int Ravig();
 
-    abstract public int GZenny();
+    public abstract int GZenny();
 
-    abstract public int GuildFoodSkill();
+    public abstract int GuildFoodSkill();
 
-    abstract public int GalleryEvaluationScore();
+    public abstract int GalleryEvaluationScore();
 
-    abstract public int PoogiePoints();
+    public abstract int PoogiePoints();
 
-    abstract public int PoogieItemUseID();
+    public abstract int PoogieItemUseID();
 
-    abstract public int PoogieCostume();
+    public abstract int PoogieCostume();
 
     //zero-indexed
-    abstract public int CaravenGemLevel();
+    public abstract int CaravenGemLevel();
 
-    abstract public int RoadMaxStagesMultiplayer();
+    public abstract int RoadMaxStagesMultiplayer();
 
-    abstract public int RoadTotalStagesMultiplayer();
+    public abstract int RoadTotalStagesMultiplayer();
 
-    abstract public int RoadTotalStagesSolo();
+    public abstract int RoadTotalStagesSolo();
 
-    abstract public int RoadMaxStagesSolo();
+    public abstract int RoadMaxStagesSolo();
 
-    abstract public int RoadFatalisSlain();
+    public abstract int RoadFatalisSlain();
 
-    abstract public int RoadFatalisEncounters();
+    public abstract int RoadFatalisEncounters();
 
-    abstract public int FirstDistrictDuremudiraEncounters();
+    public abstract int FirstDistrictDuremudiraEncounters();
 
-    abstract public int FirstDistrictDuremudiraSlays();
+    public abstract int FirstDistrictDuremudiraSlays();
 
-    abstract public int SecondDistrictDuremudiraEncounters();
+    public abstract int SecondDistrictDuremudiraEncounters();
 
-    abstract public int SecondDistrictDuremudiraSlays();
+    public abstract int SecondDistrictDuremudiraSlays();
 
-    abstract public int DeliveryQuestPoints(); //doesn't seem to work
+    public abstract int DeliveryQuestPoints(); //doesn't seem to work
 
     //red is 0
-    abstract public int SharpnessLevel();
+    public abstract int SharpnessLevel();
 
-    abstract public int PartnerLevel();
+    public abstract int PartnerLevel();
 
-    abstract public int ObjectiveType();
+    public abstract int ObjectiveType();
 
-    abstract public int DivaSkillUsesLeft();
+    public abstract int DivaSkillUsesLeft();
 
-    abstract public int HalkFullness();
+    public abstract int HalkFullness();
 
-    abstract public int RankBand();
+    public abstract int RankBand();
 
-    abstract public int PartnyaRankPoints();
+    public abstract int PartnyaRankPoints();
 
     //parts
-    abstract public int Monster1Part1();
+    public abstract int Monster1Part1();
 
-    abstract public int Monster1Part2();
+    public abstract int Monster1Part2();
 
-    abstract public int Monster1Part3();
+    public abstract int Monster1Part3();
 
-    abstract public int Monster1Part4();
+    public abstract int Monster1Part4();
 
-    abstract public int Monster1Part5();
+    public abstract int Monster1Part5();
 
-    abstract public int Monster1Part6();
+    public abstract int Monster1Part6();
 
-    abstract public int Monster1Part7();
+    public abstract int Monster1Part7();
 
-    abstract public int Monster1Part8();
+    public abstract int Monster1Part8();
 
-    abstract public int Monster1Part9();
+    public abstract int Monster1Part9();
 
-    abstract public int Monster1Part10();
+    public abstract int Monster1Part10();
 
-    abstract public int Monster2Part1();
+    public abstract int Monster2Part1();
 
-    abstract public int Monster2Part2();
+    public abstract int Monster2Part2();
 
-    abstract public int Monster2Part3();
+    public abstract int Monster2Part3();
 
-    abstract public int Monster2Part4();
+    public abstract int Monster2Part4();
 
-    abstract public int Monster2Part5();
+    public abstract int Monster2Part5();
 
-    abstract public int Monster2Part6();
+    public abstract int Monster2Part6();
 
-    abstract public int Monster2Part7();
+    public abstract int Monster2Part7();
 
-    abstract public int Monster2Part8();
+    public abstract int Monster2Part8();
 
-    abstract public int Monster2Part9();
+    public abstract int Monster2Part9();
 
-    abstract public int Monster2Part10();
+    public abstract int Monster2Part10();
 
-    abstract public int TimeInt();
+    public abstract int TimeInt();
 
-    abstract public int TimeDefInt();
+    public abstract int TimeDefInt();
 
-    abstract public int WeaponRaw();
+    public abstract int WeaponRaw();
 
-    abstract public int WeaponType();
+    public abstract int WeaponType();
 
-    abstract public int LargeMonster1ID();
+    public abstract int LargeMonster1ID();
 
-    abstract public int LargeMonster2ID();
+    public abstract int LargeMonster2ID();
 
-    abstract public int LargeMonster3ID();
+    public abstract int LargeMonster3ID();
 
-    abstract public int LargeMonster4ID();
+    public abstract int LargeMonster4ID();
 
-    abstract public int Monster1HPInt();
+    public abstract int Monster1HPInt();
 
-    abstract public int Monster2HPInt();
+    public abstract int Monster2HPInt();
 
-    abstract public int Monster3HPInt();
+    public abstract int Monster3HPInt();
 
-    abstract public int Monster4HPInt();
+    public abstract int Monster4HPInt();
 
-    abstract public string Monster1AtkMult();
+    public abstract string Monster1AtkMult();
 
-    abstract public string Monster2AtkMult();
+    public abstract string Monster2AtkMult();
 
-    abstract public decimal Monster1DefMult();
+    public abstract decimal Monster1DefMult();
 
-    abstract public decimal Monster2DefMult();
+    public abstract decimal Monster2DefMult();
 
-    abstract public int Monster1Poison();
+    public abstract int Monster1Poison();
 
-    abstract public int Monster1PoisonNeed();
+    public abstract int Monster1PoisonNeed();
 
-    abstract public int Monster1Sleep();
+    public abstract int Monster1Sleep();
 
-    abstract public int Monster1SleepNeed();
+    public abstract int Monster1SleepNeed();
 
-    abstract public int Monster1Para();
+    public abstract int Monster1Para();
 
-    abstract public int Monster1ParaNeed();
+    public abstract int Monster1ParaNeed();
 
-    abstract public int Monster1Blast();
+    public abstract int Monster1Blast();
 
-    abstract public int Monster1BlastNeed();
+    public abstract int Monster1BlastNeed();
 
-    abstract public int Monster1Stun();
+    public abstract int Monster1Stun();
 
-    abstract public int Monster1StunNeed();
+    public abstract int Monster1StunNeed();
 
-    abstract public string Monster1Size();
+    public abstract string Monster1Size();
 
-    abstract public int Monster2Poison();
+    public abstract int Monster2Poison();
 
-    abstract public int Monster2PoisonNeed();
+    public abstract int Monster2PoisonNeed();
 
-    abstract public int Monster2Sleep();
+    public abstract int Monster2Sleep();
 
-    abstract public int Monster2SleepNeed();
+    public abstract int Monster2SleepNeed();
 
-    abstract public int Monster2Para();
+    public abstract int Monster2Para();
 
-    abstract public int Monster2ParaNeed();
+    public abstract int Monster2ParaNeed();
 
-    abstract public int Monster2Blast();
+    public abstract int Monster2Blast();
 
-    abstract public int Monster2BlastNeed();
+    public abstract int Monster2BlastNeed();
 
-    abstract public int Monster2Stun();
+    public abstract int Monster2Stun();
 
-    abstract public int Monster2StunNeed();
+    public abstract int Monster2StunNeed();
 
-    abstract public string Monster2Size();
+    public abstract string Monster2Size();
 
-    abstract public int Objective1ID();
+    public abstract int Objective1ID();
 
-    abstract public int Objective1Quantity();
+    public abstract int Objective1Quantity();
 
-    abstract public int Objective1CurrentQuantityMonster();
+    public abstract int Objective1CurrentQuantityMonster();
 
-    abstract public int Objective1CurrentQuantityItem();
+    public abstract int Objective1CurrentQuantityItem();
 
     //ravi
-    abstract public int RavienteTriggeredEvent();
+    public abstract int RavienteTriggeredEvent();
 
-    abstract public int GreatSlayingPoints();
+    public abstract int GreatSlayingPoints();
 
-    abstract public int GreatSlayingPointsSaved();
+    public abstract int GreatSlayingPointsSaved();
 
     //normal and violent. berserk support
-    abstract public int RavienteAreaID();
+    public abstract int RavienteAreaID();
 
-    abstract public int RoadSelectedMonster();
+    public abstract int RoadSelectedMonster();
 
     // TODO Yamas and Beru
-    abstract public int AlternativeMonster1HPInt();
+    public abstract int AlternativeMonster1HPInt();
 
-    abstract public int AlternativeMonster1AtkMult();
+    public abstract int AlternativeMonster1AtkMult();
 
-    abstract public int AlternativeMonster1DefMult();
+    public abstract int AlternativeMonster1DefMult();
 
-    abstract public int AlternativeMonster1Size();
+    public abstract int AlternativeMonster1Size();
 
-    abstract public int AlternativeMonster1Poison();
+    public abstract int AlternativeMonster1Poison();
 
-    abstract public int AlternativeMonster1PoisonNeed();
+    public abstract int AlternativeMonster1PoisonNeed();
 
-    abstract public int AlternativeMonster1Sleep();
+    public abstract int AlternativeMonster1Sleep();
 
-    abstract public int AlternativeMonster1SleepNeed();
+    public abstract int AlternativeMonster1SleepNeed();
 
-    abstract public int AlternativeMonster1Para();
+    public abstract int AlternativeMonster1Para();
 
-    abstract public int AlternativeMonster1ParaNeed();
+    public abstract int AlternativeMonster1ParaNeed();
 
-    abstract public int AlternativeMonster1Blast();
+    public abstract int AlternativeMonster1Blast();
 
-    abstract public int AlternativeMonster1BlastNeed();
+    public abstract int AlternativeMonster1BlastNeed();
 
-    abstract public int AlternativeMonster1Stun();
+    public abstract int AlternativeMonster1Stun();
 
-    abstract public int AlternativeMonster1StunNeed();
+    public abstract int AlternativeMonster1StunNeed();
 
-    abstract public int AlternativeMonster1Part1();
+    public abstract int AlternativeMonster1Part1();
 
-    abstract public int AlternativeMonster1Part2();
+    public abstract int AlternativeMonster1Part2();
 
-    abstract public int AlternativeMonster1Part3();
+    public abstract int AlternativeMonster1Part3();
 
-    abstract public int AlternativeMonster1Part4();
+    public abstract int AlternativeMonster1Part4();
 
-    abstract public int AlternativeMonster1Part5();
+    public abstract int AlternativeMonster1Part5();
 
-    abstract public int AlternativeMonster1Part6();
+    public abstract int AlternativeMonster1Part6();
 
-    abstract public int AlternativeMonster1Part7();
+    public abstract int AlternativeMonster1Part7();
 
-    abstract public int AlternativeMonster1Part8();
+    public abstract int AlternativeMonster1Part8();
 
-    abstract public int AlternativeMonster1Part9();
+    public abstract int AlternativeMonster1Part9();
 
-    abstract public int AlternativeMonster1Part10();
+    public abstract int AlternativeMonster1Part10();
 
-    abstract public int DivaSkill();
+    public abstract int DivaSkill();
 
-    abstract public int StarGrades();
+    public abstract int StarGrades();
 
-    abstract public int CaravanSkill1();
+    public abstract int CaravanSkill1();
 
-    abstract public int CaravanSkill2();
+    public abstract int CaravanSkill2();
 
-    abstract public int CaravanSkill3();
+    public abstract int CaravanSkill3();
 
-    abstract public int CurrentFaints();
+    public abstract int CurrentFaints();
 
     //road and normal
-    abstract public int MaxFaints();
+    public abstract int MaxFaints();
 
     //shitens, conquests, pioneer, daily, caravan, interception
-    abstract public int AlternativeMaxFaints();
+    public abstract int AlternativeMaxFaints();
 
-    abstract public int CaravanScore();
+    public abstract int CaravanScore();
 
-    abstract public int CaravanMonster1ID();
+    public abstract int CaravanMonster1ID();
 
     //unsure
-    abstract public int CaravanMonster2ID();
+    public abstract int CaravanMonster2ID();
 
-    abstract public int BlademasterWeaponID();
+    public abstract int BlademasterWeaponID();
 
     //same as melee afaik
-    abstract public int GunnerWeaponID();
+    public abstract int GunnerWeaponID();
 
-    abstract public int WeaponDeco1ID();
+    public abstract int WeaponDeco1ID();
 
-    abstract public int WeaponDeco2ID();
+    public abstract int WeaponDeco2ID();
 
-    abstract public int WeaponDeco3ID();
+    public abstract int WeaponDeco3ID();
 
-    abstract public int ArmorHeadID();
+    public abstract int ArmorHeadID();
 
-    abstract public int ArmorHeadDeco1ID();
+    public abstract int ArmorHeadDeco1ID();
 
-    abstract public int ArmorHeadDeco2ID();
+    public abstract int ArmorHeadDeco2ID();
 
-    abstract public int ArmorHeadDeco3ID();
+    public abstract int ArmorHeadDeco3ID();
 
-    abstract public int ArmorChestID();
+    public abstract int ArmorChestID();
 
-    abstract public int ArmorChestDeco1ID();
+    public abstract int ArmorChestDeco1ID();
 
-    abstract public int ArmorChestDeco2ID();
+    public abstract int ArmorChestDeco2ID();
 
-    abstract public int ArmorChestDeco3ID();
+    public abstract int ArmorChestDeco3ID();
 
-    abstract public int ArmorArmsID();
+    public abstract int ArmorArmsID();
 
-    abstract public int ArmorArmsDeco1ID();
+    public abstract int ArmorArmsDeco1ID();
 
-    abstract public int ArmorArmsDeco2ID();
+    public abstract int ArmorArmsDeco2ID();
 
-    abstract public int ArmorArmsDeco3ID();
+    public abstract int ArmorArmsDeco3ID();
 
-    abstract public int ArmorWaistID();
+    public abstract int ArmorWaistID();
 
-    abstract public int ArmorWaistDeco1ID();
+    public abstract int ArmorWaistDeco1ID();
 
-    abstract public int ArmorWaistDeco2ID();
+    public abstract int ArmorWaistDeco2ID();
 
-    abstract public int ArmorWaistDeco3ID();
+    public abstract int ArmorWaistDeco3ID();
 
-    abstract public int ArmorLegsID();
+    public abstract int ArmorLegsID();
 
-    abstract public int ArmorLegsDeco1ID();
+    public abstract int ArmorLegsDeco1ID();
 
-    abstract public int ArmorLegsDeco2ID();
+    public abstract int ArmorLegsDeco2ID();
 
-    abstract public int ArmorLegsDeco3ID();
+    public abstract int ArmorLegsDeco3ID();
 
-    abstract public int Cuff1ID();
+    public abstract int Cuff1ID();
 
-    abstract public int Cuff2ID();
+    public abstract int Cuff2ID();
 
-    abstract public int TotalDefense();
+    public abstract int TotalDefense();
 
-    abstract public int PouchItem1ID();
+    public abstract int PouchItem1ID();
 
-    abstract public int PouchItem1Qty();
+    public abstract int PouchItem1Qty();
 
-    abstract public int PouchItem2ID();
+    public abstract int PouchItem2ID();
 
-    abstract public int PouchItem2Qty();
+    public abstract int PouchItem2Qty();
 
-    abstract public int PouchItem3ID();
+    public abstract int PouchItem3ID();
 
-    abstract public int PouchItem3Qty();
+    public abstract int PouchItem3Qty();
 
-    abstract public int PouchItem4ID();
+    public abstract int PouchItem4ID();
 
-    abstract public int PouchItem4Qty();
+    public abstract int PouchItem4Qty();
 
-    abstract public int PouchItem5ID();
+    public abstract int PouchItem5ID();
 
-    abstract public int PouchItem5Qty();
+    public abstract int PouchItem5Qty();
 
-    abstract public int PouchItem6ID();
+    public abstract int PouchItem6ID();
 
-    abstract public int PouchItem6Qty();
+    public abstract int PouchItem6Qty();
 
-    abstract public int PouchItem7ID();
+    public abstract int PouchItem7ID();
 
-    abstract public int PouchItem7Qty();
+    public abstract int PouchItem7Qty();
 
-    abstract public int PouchItem8ID();
+    public abstract int PouchItem8ID();
 
-    abstract public int PouchItem8Qty();
+    public abstract int PouchItem8Qty();
 
-    abstract public int PouchItem9ID();
+    public abstract int PouchItem9ID();
 
-    abstract public int PouchItem9Qty();
+    public abstract int PouchItem9Qty();
 
-    abstract public int PouchItem10ID();
+    public abstract int PouchItem10ID();
 
-    abstract public int PouchItem10Qty();
+    public abstract int PouchItem10Qty();
 
-    abstract public int PouchItem11ID();
+    public abstract int PouchItem11ID();
 
-    abstract public int PouchItem11Qty();
+    public abstract int PouchItem11Qty();
 
-    abstract public int PouchItem12ID();
+    public abstract int PouchItem12ID();
 
-    abstract public int PouchItem12Qty();
+    public abstract int PouchItem12Qty();
 
-    abstract public int PouchItem13ID();
+    public abstract int PouchItem13ID();
 
-    abstract public int PouchItem13Qty();
+    public abstract int PouchItem13Qty();
 
-    abstract public int PouchItem14ID();
+    public abstract int PouchItem14ID();
 
-    abstract public int PouchItem14Qty();
+    public abstract int PouchItem14Qty();
 
-    abstract public int PouchItem15ID();
+    public abstract int PouchItem15ID();
 
-    abstract public int PouchItem15Qty();
+    public abstract int PouchItem15Qty();
 
-    abstract public int PouchItem16ID();
+    public abstract int PouchItem16ID();
 
-    abstract public int PouchItem16Qty();
+    public abstract int PouchItem16Qty();
 
-    abstract public int PouchItem17ID();
+    public abstract int PouchItem17ID();
 
-    abstract public int PouchItem17Qty();
+    public abstract int PouchItem17Qty();
 
-    abstract public int PouchItem18ID();
+    public abstract int PouchItem18ID();
 
-    abstract public int PouchItem18Qty();
+    public abstract int PouchItem18Qty();
 
-    abstract public int PouchItem19ID();
+    public abstract int PouchItem19ID();
 
-    abstract public int PouchItem19Qty();
+    public abstract int PouchItem19Qty();
 
-    abstract public int PouchItem20ID();
+    public abstract int PouchItem20ID();
 
-    abstract public int PouchItem20Qty();
+    public abstract int PouchItem20Qty();
 
-    abstract public int AmmoPouchItem1ID();
+    public abstract int AmmoPouchItem1ID();
 
-    abstract public int AmmoPouchItem1Qty();
+    public abstract int AmmoPouchItem1Qty();
 
-    abstract public int AmmoPouchItem2ID();
+    public abstract int AmmoPouchItem2ID();
 
-    abstract public int AmmoPouchItem2Qty();
+    public abstract int AmmoPouchItem2Qty();
 
-    abstract public int AmmoPouchItem3ID();
+    public abstract int AmmoPouchItem3ID();
 
-    abstract public int AmmoPouchItem3Qty();
+    public abstract int AmmoPouchItem3Qty();
 
-    abstract public int AmmoPouchItem4ID();
+    public abstract int AmmoPouchItem4ID();
 
-    abstract public int AmmoPouchItem4Qty();
+    public abstract int AmmoPouchItem4Qty();
 
-    abstract public int AmmoPouchItem5ID();
+    public abstract int AmmoPouchItem5ID();
 
-    abstract public int AmmoPouchItem5Qty();
+    public abstract int AmmoPouchItem5Qty();
 
-    abstract public int AmmoPouchItem6ID();
+    public abstract int AmmoPouchItem6ID();
 
-    abstract public int AmmoPouchItem6Qty();
+    public abstract int AmmoPouchItem6Qty();
 
-    abstract public int AmmoPouchItem7ID();
+    public abstract int AmmoPouchItem7ID();
 
-    abstract public int AmmoPouchItem7Qty();
+    public abstract int AmmoPouchItem7Qty();
 
-    abstract public int AmmoPouchItem8ID();
+    public abstract int AmmoPouchItem8ID();
 
-    abstract public int AmmoPouchItem8Qty();
+    public abstract int AmmoPouchItem8Qty();
 
-    abstract public int AmmoPouchItem9ID();
+    public abstract int AmmoPouchItem9ID();
 
-    abstract public int AmmoPouchItem9Qty();
+    public abstract int AmmoPouchItem9Qty();
 
-    abstract public int AmmoPouchItem10ID();
+    public abstract int AmmoPouchItem10ID();
 
-    abstract public int AmmoPouchItem10Qty();
+    public abstract int AmmoPouchItem10Qty();
 
-    abstract public int ArmorSkill1();
+    public abstract int ArmorSkill1();
 
-    abstract public int ArmorSkill2();
+    public abstract int ArmorSkill2();
 
-    abstract public int ArmorSkill3();
+    public abstract int ArmorSkill3();
 
-    abstract public int ArmorSkill4();
+    public abstract int ArmorSkill4();
 
-    abstract public int ArmorSkill5();
+    public abstract int ArmorSkill5();
 
-    abstract public int ArmorSkill6();
+    public abstract int ArmorSkill6();
 
-    abstract public int ArmorSkill7();
+    public abstract int ArmorSkill7();
 
-    abstract public int ArmorSkill8();
+    public abstract int ArmorSkill8();
 
-    abstract public int ArmorSkill9();
+    public abstract int ArmorSkill9();
 
-    abstract public int ArmorSkill10();
+    public abstract int ArmorSkill10();
 
-    abstract public int ArmorSkill11();
+    public abstract int ArmorSkill11();
 
-    abstract public int ArmorSkill12();
+    public abstract int ArmorSkill12();
 
-    abstract public int ArmorSkill13();
+    public abstract int ArmorSkill13();
 
-    abstract public int ArmorSkill14();
+    public abstract int ArmorSkill14();
 
-    abstract public int ArmorSkill15();
+    public abstract int ArmorSkill15();
 
-    abstract public int ArmorSkill16();
+    public abstract int ArmorSkill16();
 
-    abstract public int ArmorSkill17();
+    public abstract int ArmorSkill17();
 
-    abstract public int ArmorSkill18();
+    public abstract int ArmorSkill18();
 
-    abstract public int ArmorSkill19();
+    public abstract int ArmorSkill19();
 
-    abstract public int BloatedWeaponAttack();
+    public abstract int BloatedWeaponAttack();
 
-    abstract public int ZenithSkill1();
+    public abstract int ZenithSkill1();
 
-    abstract public int ZenithSkill2();
+    public abstract int ZenithSkill2();
 
-    abstract public int ZenithSkill3();
+    public abstract int ZenithSkill3();
 
-    abstract public int ZenithSkill4();
+    public abstract int ZenithSkill4();
 
-    abstract public int ZenithSkill5();
+    public abstract int ZenithSkill5();
 
-    abstract public int ZenithSkill6();
+    public abstract int ZenithSkill6();
 
-    abstract public int ZenithSkill7();
+    public abstract int ZenithSkill7();
 
-    abstract public int AutomaticSkillWeapon();
+    public abstract int AutomaticSkillWeapon();
 
-    abstract public int AutomaticSkillHead();
+    public abstract int AutomaticSkillHead();
 
-    abstract public int AutomaticSkillChest();
+    public abstract int AutomaticSkillChest();
 
-    abstract public int AutomaticSkillArms();
+    public abstract int AutomaticSkillArms();
 
-    abstract public int AutomaticSkillWaist();
+    public abstract int AutomaticSkillWaist();
 
-    abstract public int AutomaticSkillLegs();
+    public abstract int AutomaticSkillLegs();
 
-    abstract public int StyleRank1();
+    public abstract int StyleRank1();
 
-    abstract public int StyleRank2();
+    public abstract int StyleRank2();
 
-    abstract public int GRWeaponLv();
+    public abstract int GRWeaponLv();
 
-    abstract public int GRWeaponLvBowguns();
+    public abstract int GRWeaponLvBowguns();
 
-    abstract public int Sigil1Name1();
+    public abstract int Sigil1Name1();
 
-    abstract public int Sigil1Value1();
+    public abstract int Sigil1Value1();
 
-    abstract public int Sigil1Name2();
+    public abstract int Sigil1Name2();
 
-    abstract public int Sigil1Value2();
+    public abstract int Sigil1Value2();
 
-    abstract public int Sigil1Name3();
+    public abstract int Sigil1Name3();
 
-    abstract public int Sigil1Value3();
+    public abstract int Sigil1Value3();
 
-    abstract public int Sigil2Name1();
+    public abstract int Sigil2Name1();
 
-    abstract public int Sigil2Value1();
+    public abstract int Sigil2Value1();
 
-    abstract public int Sigil2Name2();
+    public abstract int Sigil2Name2();
 
-    abstract public int Sigil2Value2();
+    public abstract int Sigil2Value2();
 
-    abstract public int Sigil2Name3();
+    public abstract int Sigil2Name3();
 
-    abstract public int Sigil2Value3();
+    public abstract int Sigil2Value3();
 
-    abstract public int Sigil3Name1();
+    public abstract int Sigil3Name1();
 
-    abstract public int Sigil3Value1();
+    public abstract int Sigil3Value1();
 
-    abstract public int Sigil3Name2();
+    public abstract int Sigil3Name2();
 
-    abstract public int Sigil3Value2();
+    public abstract int Sigil3Value2();
 
-    abstract public int Sigil3Name3();
+    public abstract int Sigil3Name3();
 
-    abstract public int Sigil3Value3();
+    public abstract int Sigil3Value3();
 
-    abstract public int FelyneHunted();
+    public abstract int FelyneHunted();
 
-    abstract public int MelynxHunted();
+    public abstract int MelynxHunted();
 
-    abstract public int ShakalakaHunted();
+    public abstract int ShakalakaHunted();
 
-    abstract public int VespoidHunted();
+    public abstract int VespoidHunted();
 
-    abstract public int HornetaurHunted();
+    public abstract int HornetaurHunted();
 
-    abstract public int GreatThunderbugHunted();
+    public abstract int GreatThunderbugHunted();
 
-    abstract public int KelbiHunted();
+    public abstract int KelbiHunted();
 
-    abstract public int MosswineHunted();
+    public abstract int MosswineHunted();
 
-    abstract public int AntekaHunted();
+    public abstract int AntekaHunted();
 
-    abstract public int PopoHunted();
+    public abstract int PopoHunted();
 
-    abstract public int AptonothHunted();
+    public abstract int AptonothHunted();
 
-    abstract public int ApcerosHunted();
+    public abstract int ApcerosHunted();
 
-    abstract public int BurukkuHunted();
+    public abstract int BurukkuHunted();
 
-    abstract public int ErupeHunted();
+    public abstract int ErupeHunted();
 
-    abstract public int VelocipreyHunted();
+    public abstract int VelocipreyHunted();
 
-    abstract public int VelocidromeHunted();
+    public abstract int VelocidromeHunted();
 
-    abstract public int GenpreyHunted();
+    public abstract int GenpreyHunted();
 
-    abstract public int GendromeHunted();
+    public abstract int GendromeHunted();
 
-    abstract public int IopreyHunted();
+    public abstract int IopreyHunted();
 
-    abstract public int IodromeHunted();
+    public abstract int IodromeHunted();
 
-    abstract public int GiapreyHunted();
+    public abstract int GiapreyHunted();
 
-    abstract public int YianKutKuHunted();
+    public abstract int YianKutKuHunted();
 
-    abstract public int BlueYianKutKuHunted();
+    public abstract int BlueYianKutKuHunted();
 
-    abstract public int YianGarugaHunted();
+    public abstract int YianGarugaHunted();
 
-    abstract public int GypcerosHunted();
+    public abstract int GypcerosHunted();
 
-    abstract public int PurpleGypcerosHunted();
+    public abstract int PurpleGypcerosHunted();
 
-    abstract public int HypnocHunted();
+    public abstract int HypnocHunted();
 
-    abstract public int BrightHypnocHunted();
+    public abstract int BrightHypnocHunted();
 
-    abstract public int SilverHypnocHunted();
+    public abstract int SilverHypnocHunted();
 
-    abstract public int FarunokkuHunted();
+    public abstract int FarunokkuHunted();
 
-    abstract public int ForokururuHunted();
+    public abstract int ForokururuHunted();
 
-    abstract public int ToridclessHunted();
+    public abstract int ToridclessHunted();
 
-    abstract public int RemobraHunted();
+    public abstract int RemobraHunted();
 
-    abstract public int RathianHunted();
+    public abstract int RathianHunted();
 
-    abstract public int PinkRathianHunted();
+    public abstract int PinkRathianHunted();
 
-    abstract public int GoldRathianHunted();
+    public abstract int GoldRathianHunted();
 
-    abstract public int RathalosHunted();
+    public abstract int RathalosHunted();
 
-    abstract public int AzureRathalosHunted();
+    public abstract int AzureRathalosHunted();
 
-    abstract public int SilverRathalosHunted();
+    public abstract int SilverRathalosHunted();
 
-    abstract public int KhezuHunted();
+    public abstract int KhezuHunted();
 
-    abstract public int RedKhezuHunted();
+    public abstract int RedKhezuHunted();
 
-    abstract public int BasariosHunted();
+    public abstract int BasariosHunted();
 
-    abstract public int GraviosHunted();
+    public abstract int GraviosHunted();
 
-    abstract public int BlackGraviosHunted();
+    public abstract int BlackGraviosHunted();
 
-    abstract public int MonoblosHunted();
+    public abstract int MonoblosHunted();
 
-    abstract public int WhiteMonoblosHunted();
+    public abstract int WhiteMonoblosHunted();
 
-    abstract public int DiablosHunted();
+    public abstract int DiablosHunted();
 
-    abstract public int BlackDiablosHunted();
+    public abstract int BlackDiablosHunted();
 
-    abstract public int TigrexHunted();
+    public abstract int TigrexHunted();
 
-    abstract public int EspinasHunted();
+    public abstract int EspinasHunted();
 
-    abstract public int OrangeEspinasHunted();
+    public abstract int OrangeEspinasHunted();
 
-    abstract public int WhiteEspinasHunted();
+    public abstract int WhiteEspinasHunted();
 
-    abstract public int AkantorHunted();
+    public abstract int AkantorHunted();
 
-    abstract public int BerukyurosuHunted();
+    public abstract int BerukyurosuHunted();
 
-    abstract public int DoragyurosuHunted();
+    public abstract int DoragyurosuHunted();
 
-    abstract public int PariapuriaHunted();
+    public abstract int PariapuriaHunted();
 
-    abstract public int DyuragauaHunted();
+    public abstract int DyuragauaHunted();
 
-    abstract public int GurenzeburuHunted();
+    public abstract int GurenzeburuHunted();
 
-    abstract public int OdibatorasuHunted();
+    public abstract int OdibatorasuHunted();
 
-    abstract public int HyujikikiHunted();
+    public abstract int HyujikikiHunted();
 
-    abstract public int AnorupatisuHunted();
+    public abstract int AnorupatisuHunted();
 
-    abstract public int ZerureusuHunted();
+    public abstract int ZerureusuHunted();
 
-    abstract public int MeraginasuHunted();
+    public abstract int MeraginasuHunted();
 
-    abstract public int DiorexHunted();
+    public abstract int DiorexHunted();
 
-    abstract public int PoborubarumuHunted();
+    public abstract int PoborubarumuHunted();
 
-    abstract public int VarusaburosuHunted();
+    public abstract int VarusaburosuHunted();
 
-    abstract public int GureadomosuHunted();
+    public abstract int GureadomosuHunted();
 
-    abstract public int BariothHunted();
+    public abstract int BariothHunted();
 
-    abstract public int NargacugaHunted();
+    public abstract int NargacugaHunted();
 
-    abstract public int ZenaserisuHunted();
+    public abstract int ZenaserisuHunted();
 
-    abstract public int SeregiosHunted();
+    public abstract int SeregiosHunted();
 
-    abstract public int BogabadorumuHunted();
+    public abstract int BogabadorumuHunted();
 
-    abstract public int CephalosHunted();
+    public abstract int CephalosHunted();
 
-    abstract public int CephadromeHunted();
+    public abstract int CephadromeHunted();
 
-    abstract public int PlesiothHunted();
+    public abstract int PlesiothHunted();
 
-    abstract public int GreenPlesiothHunted();
+    public abstract int GreenPlesiothHunted();
 
-    abstract public int VolganosHunted();
+    public abstract int VolganosHunted();
 
-    abstract public int RedVolganosHunted();
+    public abstract int RedVolganosHunted();
 
-    abstract public int HermitaurHunted();
+    public abstract int HermitaurHunted();
 
-    abstract public int DaimyoHermitaurHunted();
+    public abstract int DaimyoHermitaurHunted();
 
-    abstract public int CeanataurHunted();
+    public abstract int CeanataurHunted();
 
-    abstract public int ShogunCeanataurHunted();
+    public abstract int ShogunCeanataurHunted();
 
-    abstract public int ShenGaorenHunted();
+    public abstract int ShenGaorenHunted();
 
-    abstract public int AkuraVashimuHunted();
+    public abstract int AkuraVashimuHunted();
 
-    abstract public int AkuraJebiaHunted();
+    public abstract int AkuraJebiaHunted();
 
-    abstract public int TaikunZamuzaHunted();
+    public abstract int TaikunZamuzaHunted();
 
-    abstract public int KusubamiHunted();
+    public abstract int KusubamiHunted();
 
-    abstract public int BullfangoHunted();
+    public abstract int BullfangoHunted();
 
-    abstract public int BulldromeHunted();
+    public abstract int BulldromeHunted();
 
-    abstract public int CongaHunted();
+    public abstract int CongaHunted();
 
-    abstract public int CongalalaHunted();
+    public abstract int CongalalaHunted();
 
-    abstract public int BlangoHunted();
+    public abstract int BlangoHunted();
 
-    abstract public int BlangongaHunted();
+    public abstract int BlangongaHunted();
 
-    abstract public int GogomoaHunted();
+    public abstract int GogomoaHunted();
 
-    abstract public int RajangHunted();
+    public abstract int RajangHunted();
 
-    abstract public int KamuOrugaronHunted();
+    public abstract int KamuOrugaronHunted();
 
-    abstract public int NonoOrugaronHunted();
+    public abstract int NonoOrugaronHunted();
 
-    abstract public int MidogaronHunted();
+    public abstract int MidogaronHunted();
 
-    abstract public int GougarfHunted();
+    public abstract int GougarfHunted();
 
-    abstract public int VoljangHunted();
+    public abstract int VoljangHunted();
 
-    abstract public int KirinHunted();
+    public abstract int KirinHunted();
 
-    abstract public int KushalaDaoraHunted();
+    public abstract int KushalaDaoraHunted();
 
-    abstract public int RustedKushalaDaoraHunted();
+    public abstract int RustedKushalaDaoraHunted();
 
-    abstract public int ChameleosHunted();
+    public abstract int ChameleosHunted();
 
-    abstract public int LunastraHunted();
+    public abstract int LunastraHunted();
 
-    abstract public int TeostraHunted();
+    public abstract int TeostraHunted();
 
-    abstract public int LaoShanLungHunted();
+    public abstract int LaoShanLungHunted();
 
-    abstract public int AshenLaoShanLungHunted();
+    public abstract int AshenLaoShanLungHunted();
 
-    abstract public int YamaTsukamiHunted();
+    public abstract int YamaTsukamiHunted();
 
-    abstract public int RukodioraHunted();
+    public abstract int RukodioraHunted();
 
-    abstract public int RebidioraHunted();
+    public abstract int RebidioraHunted();
 
-    abstract public int FatalisHunted();
+    public abstract int FatalisHunted();
 
-    abstract public int ShantienHunted();
+    public abstract int ShantienHunted();
 
-    abstract public int DisufiroaHunted();
+    public abstract int DisufiroaHunted();
 
-    abstract public int GarubaDaoraHunted();
+    public abstract int GarubaDaoraHunted();
 
-    abstract public int InagamiHunted();
+    public abstract int InagamiHunted();
 
-    abstract public int HarudomeruguHunted();
+    public abstract int HarudomeruguHunted();
 
-    abstract public int YamaKuraiHunted();
+    public abstract int YamaKuraiHunted();
 
-    abstract public int ToaTesukatoraHunted();
+    public abstract int ToaTesukatoraHunted();
 
-    abstract public int GuanzorumuHunted();
+    public abstract int GuanzorumuHunted();
 
-    abstract public int KeoaruboruHunted();
+    public abstract int KeoaruboruHunted();
 
-    abstract public int ShagaruMagalaHunted();
+    public abstract int ShagaruMagalaHunted();
 
-    abstract public int ElzelionHunted();
+    public abstract int ElzelionHunted();
 
-    abstract public int AmatsuHunted();
+    public abstract int AmatsuHunted();
 
-    abstract public int AbioruguHunted();
+    public abstract int AbioruguHunted();
 
-    abstract public int GiaoruguHunted();
+    public abstract int GiaoruguHunted();
 
-    abstract public int GasurabazuraHunted();
+    public abstract int GasurabazuraHunted();
 
-    abstract public int DeviljhoHunted();
+    public abstract int DeviljhoHunted();
 
-    abstract public int BrachydiosHunted();
+    public abstract int BrachydiosHunted();
 
-    abstract public int UragaanHunted();
+    public abstract int UragaanHunted();
 
-    abstract public int KuarusepusuHunted();
+    public abstract int KuarusepusuHunted();
 
-    abstract public int PokaraHunted();
+    public abstract int PokaraHunted();
 
-    abstract public int PokaradonHunted();
+    public abstract int PokaradonHunted();
 
-    abstract public int BaruragaruHunted();
+    public abstract int BaruragaruHunted();
 
-    abstract public int ZinogreHunted();
+    public abstract int ZinogreHunted();
 
-    abstract public int StygianZinogreHunted();
+    public abstract int StygianZinogreHunted();
 
-    abstract public int GoreMagalaHunted();
+    public abstract int GoreMagalaHunted();
 
-    abstract public int BlitzkriegBogabadorumuHunted();
+    public abstract int BlitzkriegBogabadorumuHunted();
 
-    abstract public int SparklingZerureusuHunted();
+    public abstract int SparklingZerureusuHunted();
 
-    abstract public int StarvingDeviljhoHunted();
+    public abstract int StarvingDeviljhoHunted();
 
-    abstract public int CrimsonFatalisHunted();
+    public abstract int CrimsonFatalisHunted();
 
-    abstract public int WhiteFatalisHunted();
+    public abstract int WhiteFatalisHunted();
 
-    abstract public int CactusHunted();
+    public abstract int CactusHunted();
 
-    abstract public int ArrogantDuremudiraHunted();// untested
+    public abstract int ArrogantDuremudiraHunted();// untested
 
-    abstract public int MiRuHunted();
+    public abstract int MiRuHunted();
 
-    abstract public int UnknownHunted();
+    public abstract int UnknownHunted();
 
-    abstract public int GoruganosuHunted();
+    public abstract int GoruganosuHunted();
 
-    abstract public int AruganosuHunted();
+    public abstract int AruganosuHunted();
 
-    abstract public int PSO2RappyHunted();
+    public abstract int PSO2RappyHunted();
 
-    abstract public int RocksHunted();
+    public abstract int RocksHunted();
 
-    abstract public int UrukiHunted();
+    public abstract int UrukiHunted();
 
-    abstract public int GorgeObjectsHunted();
+    public abstract int GorgeObjectsHunted();
 
-    abstract public int BlinkingNargacugaHunted();
+    public abstract int BlinkingNargacugaHunted();
 
-    abstract public int KingShakalakaHunted();
+    public abstract int KingShakalakaHunted();
 
-    abstract public int QuestState();
+    public abstract int QuestState();
 
-    abstract public int RoadDureSkill1Name();
+    public abstract int RoadDureSkill1Name();
 
-    abstract public int RoadDureSkill1Level();
+    public abstract int RoadDureSkill1Level();
 
-    abstract public int RoadDureSkill2Name();
+    public abstract int RoadDureSkill2Name();
 
-    abstract public int RoadDureSkill2Level();
+    public abstract int RoadDureSkill2Level();
 
-    abstract public int RoadDureSkill3Name();
+    public abstract int RoadDureSkill3Name();
 
-    abstract public int RoadDureSkill3Level();
+    public abstract int RoadDureSkill3Level();
 
-    abstract public int RoadDureSkill4Name();
+    public abstract int RoadDureSkill4Name();
 
-    abstract public int RoadDureSkill4Level();
+    public abstract int RoadDureSkill4Level();
 
-    abstract public int RoadDureSkill5Name();
+    public abstract int RoadDureSkill5Name();
 
-    abstract public int RoadDureSkill5Level();
+    public abstract int RoadDureSkill5Level();
 
-    abstract public int RoadDureSkill6Name();
+    public abstract int RoadDureSkill6Name();
 
-    abstract public int RoadDureSkill6Level();
+    public abstract int RoadDureSkill6Level();
 
-    abstract public int RoadDureSkill7Name();
+    public abstract int RoadDureSkill7Name();
 
-    abstract public int RoadDureSkill7Level();
+    public abstract int RoadDureSkill7Level();
 
-    abstract public int RoadDureSkill8Name();
+    public abstract int RoadDureSkill8Name();
 
-    abstract public int RoadDureSkill8Level();
+    public abstract int RoadDureSkill8Level();
 
-    abstract public int RoadDureSkill9Name();
+    public abstract int RoadDureSkill9Name();
 
-    abstract public int RoadDureSkill9Level();
+    public abstract int RoadDureSkill9Level();
 
-    abstract public int RoadDureSkill10Name();
+    public abstract int RoadDureSkill10Name();
 
-    abstract public int RoadDureSkill10Level();
+    public abstract int RoadDureSkill10Level();
 
-    abstract public int RoadDureSkill11Name();
+    public abstract int RoadDureSkill11Name();
 
-    abstract public int RoadDureSkill11Level();
+    public abstract int RoadDureSkill11Level();
 
-    abstract public int RoadDureSkill12Name();
+    public abstract int RoadDureSkill12Name();
 
-    abstract public int RoadDureSkill12Level();
+    public abstract int RoadDureSkill12Level();
 
-    abstract public int RoadDureSkill13Name();
+    public abstract int RoadDureSkill13Name();
 
-    abstract public int RoadDureSkill13Level();
+    public abstract int RoadDureSkill13Level();
 
-    abstract public int RoadDureSkill14Name();
+    public abstract int RoadDureSkill14Name();
 
-    abstract public int RoadDureSkill14Level();
+    public abstract int RoadDureSkill14Level();
 
-    abstract public int RoadDureSkill15Name();
+    public abstract int RoadDureSkill15Name();
 
-    abstract public int RoadDureSkill15Level();
+    public abstract int RoadDureSkill15Level();
 
-    abstract public int RoadDureSkill16Name();
+    public abstract int RoadDureSkill16Name();
 
-    abstract public int RoadDureSkill16Level();
+    public abstract int RoadDureSkill16Level();
 
-    abstract public int PartySize();
+    public abstract int PartySize();
 
-    abstract public int PartySizeMax();
+    public abstract int PartySizeMax();
 
-    abstract public uint GSRP();
+    public abstract uint GSRP();
 
-    abstract public uint GRP();
+    public abstract uint GRP();
 
-    abstract public int HunterHP();
+    public abstract int HunterHP();
 
-    abstract public int HunterStamina();
+    public abstract int HunterStamina();
 
-    abstract public int QuestItemsUsed();
+    public abstract int QuestItemsUsed();
 
-    abstract public int AreaHitsTakenBlocked();
+    public abstract int AreaHitsTakenBlocked();
 
-    abstract public int PartnyaBagItem1ID();
+    public abstract int PartnyaBagItem1ID();
 
-    abstract public int PartnyaBagItem1Qty();
+    public abstract int PartnyaBagItem1Qty();
 
-    abstract public int PartnyaBagItem2ID();
+    public abstract int PartnyaBagItem2ID();
 
-    abstract public int PartnyaBagItem2Qty();
+    public abstract int PartnyaBagItem2Qty();
 
-    abstract public int PartnyaBagItem3ID();
+    public abstract int PartnyaBagItem3ID();
 
-    abstract public int PartnyaBagItem3Qty();
+    public abstract int PartnyaBagItem3Qty();
 
-    abstract public int PartnyaBagItem4ID();
+    public abstract int PartnyaBagItem4ID();
 
-    abstract public int PartnyaBagItem4Qty();
+    public abstract int PartnyaBagItem4Qty();
 
-    abstract public int PartnyaBagItem5ID();
+    public abstract int PartnyaBagItem5ID();
 
-    abstract public int PartnyaBagItem5Qty();
+    public abstract int PartnyaBagItem5Qty();
 
-    abstract public int PartnyaBagItem6ID();
+    public abstract int PartnyaBagItem6ID();
 
-    abstract public int PartnyaBagItem6Qty();
+    public abstract int PartnyaBagItem6Qty();
 
-    abstract public int PartnyaBagItem7ID();
+    public abstract int PartnyaBagItem7ID();
 
-    abstract public int PartnyaBagItem7Qty();
+    public abstract int PartnyaBagItem7Qty();
 
-    abstract public int PartnyaBagItem8ID();
+    public abstract int PartnyaBagItem8ID();
 
-    abstract public int PartnyaBagItem8Qty();
+    public abstract int PartnyaBagItem8Qty();
 
-    abstract public int PartnyaBagItem9ID();
+    public abstract int PartnyaBagItem9ID();
 
-    abstract public int PartnyaBagItem9Qty();
+    public abstract int PartnyaBagItem9Qty();
 
-    abstract public int PartnyaBagItem10ID();
+    public abstract int PartnyaBagItem10ID();
 
-    abstract public int PartnyaBagItem10Qty();
+    public abstract int PartnyaBagItem10Qty();
 
     public bool HasMonster1 => CaravanOverride() ? ShowHPBar(CaravanMonster1ID(), Monster1HPInt()) : ShowHPBar(LargeMonster1ID(), Monster1HPInt());
 
@@ -1584,7 +1584,6 @@ TreeScope.Children, condition);
         }
     }
 
-    //
     public bool GetNotRoad()
     {
         var b = roadOverride();
@@ -1673,6 +1672,7 @@ TreeScope.Children, condition);
                 break;
             }
         }
+
         return DeterminePartName(partMonsterGroup, number - 1);
     }
 
@@ -2382,7 +2382,7 @@ TreeScope.Children, condition);
                 return "#f5e0dc";
             }
 
-            var timePercent = int.Parse(PersonalBestTimePercent.Replace("%", ""));
+            var timePercent = int.Parse(PersonalBestTimePercent.Replace("%", string.Empty));
             var monster1HPPercent = (float)Monster1HPInt() / int.Parse(Monster1MaxHP, CultureInfo.InvariantCulture) * 100.0;
 
             if (timePercent >= monster1HPPercent && ShowPersonalBestPaceColor())
@@ -2552,19 +2552,19 @@ TreeScope.Children, condition);
     {
         get
         {
-            //see palettes.md
+            // see palettes.md
             var currentSharpnessLevel = SharpnessLevel();
             return currentSharpnessLevel switch
             {
-                0 => "#c50f3a",//Red
-                1 => "#e85218",//Orange
-                2 => "#f3c832",//Yellow
-                3 => "#5ed300",//Green
-                4 => "#3068ee",//Blue
-                5 => "#f0f0f0",//White
-                6 => "#de7aff",//Purple
-                7 => "#86f4f4",//Cyan
-                _ => "#ffffff",//
+                0 => "#c50f3a",// Red
+                1 => "#e85218",// Orange
+                2 => "#f3c832",// Yellow
+                3 => "#5ed300",// Green
+                4 => "#3068ee",// Blue
+                5 => "#f0f0f0",// White
+                6 => "#de7aff",// Purple
+                7 => "#86f4f4",// Cyan
+                _ => "#ffffff",
             };
         }
     }
@@ -2584,6 +2584,7 @@ TreeScope.Children, condition);
             {
                 return currentSharpness.ToString(CultureInfo.InvariantCulture) + SharpnessPercentNumber;
             }
+
             return "0" + SharpnessPercentNumber;
         }
     }
@@ -2688,9 +2689,9 @@ TreeScope.Children, condition);
     {
         return SelectedMonster switch
         {
-            0 => double.Parse(Monster1Size().Replace("%", ""), CultureInfo.InvariantCulture),
-            1 => double.Parse(Monster2Size().Replace("%", ""), CultureInfo.InvariantCulture),
-            _ => double.Parse(Monster1Size().Replace("%", ""), CultureInfo.InvariantCulture),
+            0 => double.Parse(Monster1Size().Replace("%", string.Empty), CultureInfo.InvariantCulture),
+            1 => double.Parse(Monster2Size().Replace("%", string.Empty), CultureInfo.InvariantCulture),
+            _ => double.Parse(Monster1Size().Replace("%", string.Empty), CultureInfo.InvariantCulture),
         };
     }
 
@@ -3355,6 +3356,7 @@ TreeScope.Children, condition);
                     case 23602:
                         return "Lower Shiten ";
                 }
+
             case 55:
                 switch (QuestID())
                 {
@@ -3365,7 +3367,6 @@ TreeScope.Children, condition);
                 }
 
             // 10m upper shiten/musou true slay
-
             case 56:// twinhead rajang / voljang and rajang
             case 57:// twinhead mi ru / white and brown espi / unknown and zeru / rajang and dorag
                 return "Twinhead ";
@@ -3477,6 +3478,7 @@ TreeScope.Children, condition);
                 {
                     return "Pariapuria";
                 }
+
             case 95:
                 return "Doragyurosu";
             case 106:
@@ -3490,6 +3492,7 @@ TreeScope.Children, condition);
                 {
                     return "Mi Ru";
                 }
+
             case 146:
                 if (RankBand() >= 54 && RankBand() <= 55)
                 {
@@ -3499,6 +3502,7 @@ TreeScope.Children, condition);
                 {
                     return "Zinogre";
                 }
+
             case 154:
                 if (RankBand() >= 54 && RankBand() <= 55)
                 {
@@ -3508,6 +3512,7 @@ TreeScope.Children, condition);
                 {
                     return "Guanzorumu";
                 }
+
             case 155:
                 if (RankBand() == 55)
                 {
@@ -3517,6 +3522,7 @@ TreeScope.Children, condition);
                 {
                     return "Starving Deviljho";
                 }
+
             case 166:
                 if (RankBand() >= 54 && RankBand() <= 55)
                 {
@@ -3526,6 +3532,7 @@ TreeScope.Children, condition);
                 {
                     return "Elzelion";
                 }
+
             default:
                 return "Loading...";
         }
@@ -3733,6 +3740,7 @@ TreeScope.Children, condition);
         13    Magnet Spike
         14    Group
     */
+
     /// <summary>
     /// Gets the multiplier from weapon type.
     /// </summary>
@@ -3778,7 +3786,7 @@ TreeScope.Children, condition);
             12 => "Switch Axe F",
             13 => "Magnet Spike",
             14 => "Group",
-            _ => "",
+            _ => string.Empty,
         };
     }
 
@@ -4209,6 +4217,7 @@ TreeScope.Children, condition);
                 break;
             }
         }
+
         return DetermineGatheringMap(AreaGroup);
     }
 
@@ -4383,11 +4392,11 @@ TreeScope.Children, condition);
             Item.IDName.TryGetValue(Item10, out var ItemName10);
 
             //. also the values have to be skipped if item slot is empty
-            if (ItemName1 == null || ItemName1 == "None" || ItemName1 == "" || AmmoPouchItem1Qty() == 0)
+            if (ItemName1 == null || ItemName1 == "None" || ItemName1 == string.Empty || AmmoPouchItem1Qty() == 0)
             {
                 ItemName1 = "Empty, ";
             }
-            else if (ItemName2 == null || ItemName2 == "None" || ItemName2 == "" || AmmoPouchItem2Qty() == 0)
+            else if (ItemName2 == null || ItemName2 == "None" || ItemName2 == string.Empty || AmmoPouchItem2Qty() == 0)
             {
                 ItemName1 += ", ";
             }
@@ -4396,11 +4405,11 @@ TreeScope.Children, condition);
                 ItemName1 += ", ";
             }
 
-            if (ItemName2 == null || ItemName2 == "None" || ItemName2 == "" || AmmoPouchItem2Qty() == 0)
+            if (ItemName2 == null || ItemName2 == "None" || ItemName2 == string.Empty || AmmoPouchItem2Qty() == 0)
             {
                 ItemName2 = "Empty, ";
             }
-            else if (ItemName3 == null || ItemName3 == "None" || ItemName3 == "" || AmmoPouchItem3Qty() == 0)
+            else if (ItemName3 == null || ItemName3 == "None" || ItemName3 == string.Empty || AmmoPouchItem3Qty() == 0)
             {
                 ItemName2 += ", ";
             }
@@ -4409,11 +4418,11 @@ TreeScope.Children, condition);
                 ItemName2 += ", ";
             }
 
-            if (ItemName3 == null || ItemName3 == "None" || ItemName3 == "" || AmmoPouchItem3Qty() == 0)
+            if (ItemName3 == null || ItemName3 == "None" || ItemName3 == string.Empty || AmmoPouchItem3Qty() == 0)
             {
                 ItemName3 = "Empty, ";
             }
-            else if (ItemName4 == null || ItemName4 == "None" || ItemName4 == "" || AmmoPouchItem4Qty() == 0)
+            else if (ItemName4 == null || ItemName4 == "None" || ItemName4 == string.Empty || AmmoPouchItem4Qty() == 0)
             {
                 ItemName3 += ", ";
             }
@@ -4422,11 +4431,11 @@ TreeScope.Children, condition);
                 ItemName3 += ", ";
             }
 
-            if (ItemName4 == null || ItemName4 == "None" || ItemName4 == "" || AmmoPouchItem4Qty() == 0)
+            if (ItemName4 == null || ItemName4 == "None" || ItemName4 == string.Empty || AmmoPouchItem4Qty() == 0)
             {
                 ItemName4 = "Empty, ";
             }
-            else if (ItemName5 == null || ItemName5 == "None" || ItemName5 == "" || AmmoPouchItem5Qty() == 0)
+            else if (ItemName5 == null || ItemName5 == "None" || ItemName5 == string.Empty || AmmoPouchItem5Qty() == 0)
             {
                 ItemName4 += ", ";
             }
@@ -4435,11 +4444,11 @@ TreeScope.Children, condition);
                 ItemName4 += ", ";
             }
 
-            if (ItemName5 == null || ItemName5 == "None" || ItemName5 == "" || AmmoPouchItem5Qty() == 0)
+            if (ItemName5 == null || ItemName5 == "None" || ItemName5 == string.Empty || AmmoPouchItem5Qty() == 0)
             {
                 ItemName5 = "Empty, \n";
             }
-            else if (ItemName6 == null || ItemName6 == "None" || ItemName6 == "" || AmmoPouchItem6Qty() == 0)
+            else if (ItemName6 == null || ItemName6 == "None" || ItemName6 == string.Empty || AmmoPouchItem6Qty() == 0)
             {
                 ItemName5 += string.Empty;
             }
@@ -4448,11 +4457,11 @@ TreeScope.Children, condition);
                 ItemName5 += "\n";
             }
 
-            if (ItemName6 == null || ItemName6 == "None" || ItemName6 == "" || AmmoPouchItem6Qty() == 0)
+            if (ItemName6 == null || ItemName6 == "None" || ItemName6 == string.Empty || AmmoPouchItem6Qty() == 0)
             {
                 ItemName6 = "Empty, ";
             }
-            else if (ItemName7 == null || ItemName7 == "None" || ItemName7 == "" || AmmoPouchItem7Qty() == 0)
+            else if (ItemName7 == null || ItemName7 == "None" || ItemName7 == string.Empty || AmmoPouchItem7Qty() == 0)
             {
                 ItemName6 += ", ";
             }
@@ -4461,11 +4470,11 @@ TreeScope.Children, condition);
                 ItemName6 += ", ";
             }
 
-            if (ItemName7 == null || ItemName7 == "None" || ItemName7 == "" || AmmoPouchItem7Qty() == 0)
+            if (ItemName7 == null || ItemName7 == "None" || ItemName7 == string.Empty || AmmoPouchItem7Qty() == 0)
             {
                 ItemName7 = "Empty, ";
             }
-            else if (ItemName8 == null || ItemName8 == "None" || ItemName8 == "" || AmmoPouchItem8Qty() == 0)
+            else if (ItemName8 == null || ItemName8 == "None" || ItemName8 == string.Empty || AmmoPouchItem8Qty() == 0)
             {
                 ItemName7 += ", ";
             }
@@ -4474,11 +4483,11 @@ TreeScope.Children, condition);
                 ItemName7 += ", ";
             }
 
-            if (ItemName8 == null || ItemName8 == "None" || ItemName8 == "" || AmmoPouchItem8Qty() == 0)
+            if (ItemName8 == null || ItemName8 == "None" || ItemName8 == string.Empty || AmmoPouchItem8Qty() == 0)
             {
                 ItemName8 = "Empty, ";
             }
-            else if (ItemName9 == null || ItemName9 == "None" || ItemName9 == "" || AmmoPouchItem9Qty() == 0)
+            else if (ItemName9 == null || ItemName9 == "None" || ItemName9 == string.Empty || AmmoPouchItem9Qty() == 0)
             {
                 ItemName8 += ", ";
             }
@@ -4487,11 +4496,11 @@ TreeScope.Children, condition);
                 ItemName8 += ", ";
             }
 
-            if (ItemName9 == null || ItemName9 == "None" || ItemName9 == "" || AmmoPouchItem9Qty() == 0)
+            if (ItemName9 == null || ItemName9 == "None" || ItemName9 == string.Empty || AmmoPouchItem9Qty() == 0)
             {
                 ItemName9 = "Empty, ";
             }
-            else if (ItemName10 == null || ItemName10 == "None" || ItemName10 == "" || AmmoPouchItem10Qty() == 0)
+            else if (ItemName10 == null || ItemName10 == "None" || ItemName10 == string.Empty || AmmoPouchItem10Qty() == 0)
             {
                 ItemName9 += ", ";
             }
@@ -4500,7 +4509,7 @@ TreeScope.Children, condition);
                 ItemName9 += ", ";
             }
 
-            if (ItemName10 == null || ItemName10 == "None" || ItemName10 == "" || AmmoPouchItem10Qty() == 0)
+            if (ItemName10 == null || ItemName10 == "None" || ItemName10 == string.Empty || AmmoPouchItem10Qty() == 0)
             {
                 ItemName10 = "Empty";
             }
@@ -4546,7 +4555,7 @@ TreeScope.Children, condition);
             {
                 if (Item.IDName.TryGetValue(itemIDs[i], out var itemName))
                 {
-                    if (GetTextFormat() == "Markdown" && IsMetaItem(itemIDs[i]) && itemName != null && itemName != "None" && itemName != "")
+                    if (GetTextFormat() == "Markdown" && IsMetaItem(itemIDs[i]) && itemName != null && itemName != "None" && itemName != string.Empty)
                     {
                         itemName = string.Format(CultureInfo.InvariantCulture, "**{0}**", itemName);
                     }
@@ -4586,13 +4595,13 @@ TreeScope.Children, condition);
             var id = items[i];
             if (Item.IDName.TryGetValue(id, out var value))
             {
-                if (value != "None" && value != "")
+                if (value != "None" && value != string.Empty)
                 {
                     sb.Append(value);
                     counter++;
                     if (counter % 5 == 0)
                     {
-                        sb.Append("\n");
+                        sb.Append('\n');
                     }
                     else if (i != items.Length - 1)
                     {
@@ -4617,7 +4626,7 @@ TreeScope.Children, condition);
         for (var i = 0; i < skills.Length; i++)
         {
             var id = skills[i];
-            if (SkillRoadTower.IDName.TryGetValue(id, out var value) && value != "None" && value != "")
+            if (SkillRoadTower.IDName.TryGetValue(id, out var value) && value != "None" && value != string.Empty)
             {
                 name += value;
                 if (i != skills.Length - 1)
@@ -4797,12 +4806,12 @@ TreeScope.Children, condition);
 
         var keyFound = Item.IDName.TryGetValue(id, out DecoName);
 
-        if (GetTextFormat() == "Markdown" && IsMetaItem(id) && DecoName != null && DecoName == "None" && DecoName != "" && keyFound)
+        if (GetTextFormat() == "Markdown" && IsMetaItem(id) && DecoName != null && DecoName == "None" && DecoName != string.Empty && keyFound)
         {
             DecoName = string.Format(CultureInfo.InvariantCulture, "**{0}**", DecoName);
         }
 
-        if (DecoName == null || DecoName == "None" || DecoName == "")
+        if (DecoName == null || DecoName == "None" || DecoName == string.Empty)
         {
             DecoName = "Empty";
         }
@@ -4872,7 +4881,7 @@ TreeScope.Children, condition);
             value3 = (sigilValues[index + 2] > 127 ? sigilValues[index + 2] - 256 : sigilValues[index + 2]).ToString();
         }
 
-        return type1 + (value1 != "" && !value1.Contains("-") ? "+" : "") + value1 + ", " + type2 + (value2 != "" && !value2.Contains("-") ? "+" : "") + value2 + ", " + type3 + (value3 != "" && !value3.Contains("-") ? "+" : "") + value3;
+        return type1 + (value1 != string.Empty && !value1.Contains('-') ? "+" : string.Empty) + value1 + ", " + type2 + (value2 != string.Empty && !value2.Contains('-') ? "+" : string.Empty) + value2 + ", " + type3 + (value3 != string.Empty && !value3.Contains('-') ? "+" : string.Empty) + value3;
     }
 
 
@@ -5032,15 +5041,15 @@ TreeScope.Children, condition);
                 }
             }
 
-            if (caravanSkillName1 == "" || caravanSkillName1 == "None")
+            if (caravanSkillName1 == string.Empty || caravanSkillName1 == "None")
             {
                 return "None";
             }
-            else if (caravanSkillName2 == "" || caravanSkillName2 == "None")
+            else if (caravanSkillName2 == string.Empty || caravanSkillName2 == "None")
             {
                 return caravanSkillName1 + string.Empty;
             }
-            else if (caravanSkillName3 == "" || caravanSkillName3 == "None")
+            else if (caravanSkillName3 == string.Empty || caravanSkillName3 == "None")
             {
                 return caravanSkillName1 + ", " + caravanSkillName2;
             }
@@ -5059,7 +5068,7 @@ TreeScope.Children, condition);
         {
             var skillId = skills[i];
             if (SkillCaravan.IDName.TryGetValue(skillId, out var skillName)
-                && skillName != "None" && skillName != "")
+                && skillName != "None" && skillName != string.Empty)
             {
                 SkillName += skillName;
                 if (i != skills.Length - 1)
@@ -5421,13 +5430,13 @@ TreeScope.Children, condition);
                 }
             }
 
-            var result = string.Join(", ", skills.Where(s => s != "None" && s != "").Take(5));
+            var result = string.Join(", ", skills.Where(s => s != "None" && s != string.Empty).Take(5));
             for (var i = 5; i < 7; i++)
             {
-                if (skills[i] != "None" && skills[i] != "")
+                if (skills[i] != "None" && skills[i] != string.Empty)
                 {
                     result += "\n" + skills[i];
-                    if (i < 6 && skills[i + 1] != "None" && skills[i + 1] != "")
+                    if (i < 6 && skills[i + 1] != "None" && skills[i + 1] != string.Empty)
                     {
                         result += ", ";
                     }
@@ -5448,7 +5457,7 @@ TreeScope.Children, condition);
             var skillId = skills[i];
             if (SkillZenith.IDName.TryGetValue(skillId, out var skillName))
             {
-                if (skillName != "None" && skillName != "")
+                if (skillName != "None" && skillName != string.Empty)
                 {
                     SkillName += skillName;
                     if (i != skills.Length - 1)
@@ -5510,12 +5519,12 @@ TreeScope.Children, condition);
             var result = string.Empty;
             for (var i = 0; i < 19; i++)
             {
-                if (GetTextFormat() == "Markdown" && IsMaxSkillLevel(skills[i]) && skillNames[i] != "" && skillNames[i] != "None")
+                if (GetTextFormat() == "Markdown" && IsMaxSkillLevel(skills[i]) && skillNames[i] != string.Empty && skillNames[i] != "None")
                 {
                     skillNames[i] = string.Format(CultureInfo.InvariantCulture, "**{0}**", skillNames[i]);
                 }
 
-                result += skillNames[i] + (i == 18 ? "" : i % 5 == 4 ? "\n" : ", ");
+                result += skillNames[i] + (i == 18 ? string.Empty : i % 5 == 4 ? "\n" : ", ");
             }
 
             return result;
@@ -5532,7 +5541,7 @@ TreeScope.Children, condition);
             var skillId = skills[i];
             if (SkillArmor.IDName.TryGetValue(skillId, out var skillName))
             {
-                if (skillName != "None" && skillName != "")
+                if (skillName != "None" && skillName != string.Empty)
                 {
                     SkillName += skillName;
                     if (i != skills.Length - 1)
@@ -5575,8 +5584,7 @@ TreeScope.Children, condition);
     /// <returns></returns>
     public string GetItemName(int id)
     {
-        string itemValue1;
-        Item.IDName.TryGetValue(id, out itemValue1);  //returns true
+        Item.IDName.TryGetValue(id, out string? itemValue1);  //returns true
 
         return itemValue1 + string.Empty;
     }
@@ -5589,7 +5597,7 @@ TreeScope.Children, condition);
     public string GetArmorSkill(int id)
     {
         SkillArmor.IDName.TryGetValue(id, out var skillname);
-        if (skillname == "" || skillname == null)
+        if (skillname == string.Empty || skillname == null)
         {
             return "None";
         }
@@ -5607,7 +5615,7 @@ TreeScope.Children, condition);
     public string GetArmorSkillWithNull(int id)
     {
         SkillArmor.IDName.TryGetValue(id, out var skillname);
-        if (skillname == "")
+        if (skillname == string.Empty)
         {
             return "None";
         }
@@ -5745,11 +5753,11 @@ TreeScope.Children, condition);
             SkillArmor.IDName.TryGetValue(AutomaticSkillWaist(), out var SkillName5);
             SkillArmor.IDName.TryGetValue(AutomaticSkillLegs(), out var SkillName6);
 
-            if (SkillName1 == null || SkillName1 == "None" || SkillName1 == "")
+            if (SkillName1 == null || SkillName1 == "None" || SkillName1 == string.Empty)
             {
                 SkillName1 = string.Empty;
             }
-            else if (SkillName2 == null || SkillName2 == "None" || SkillName2 == "")
+            else if (SkillName2 == null || SkillName2 == "None" || SkillName2 == string.Empty)
             {
                 SkillName1 += string.Empty;
             }
@@ -5758,11 +5766,11 @@ TreeScope.Children, condition);
                 SkillName1 += ", ";
             }
 
-            if (SkillName2 == null || SkillName2 == "None" || SkillName2 == "")
+            if (SkillName2 == null || SkillName2 == "None" || SkillName2 == string.Empty)
             {
                 SkillName2 = string.Empty;
             }
-            else if (SkillName3 == null || SkillName3 == "None" || SkillName3 == "")
+            else if (SkillName3 == null || SkillName3 == "None" || SkillName3 == string.Empty)
             {
                 SkillName2 += string.Empty;
             }
@@ -5771,11 +5779,11 @@ TreeScope.Children, condition);
                 SkillName2 += ", ";
             }
 
-            if (SkillName3 == null || SkillName3 == "None" || SkillName3 == "")
+            if (SkillName3 == null || SkillName3 == "None" || SkillName3 == string.Empty)
             {
                 SkillName3 = string.Empty;
             }
-            else if (SkillName4 == null || SkillName4 == "None" || SkillName4 == "")
+            else if (SkillName4 == null || SkillName4 == "None" || SkillName4 == string.Empty)
             {
                 SkillName3 += string.Empty;
             }
@@ -5784,11 +5792,11 @@ TreeScope.Children, condition);
                 SkillName3 += ", ";
             }
 
-            if (SkillName4 == null || SkillName4 == "None" || SkillName4 == "")
+            if (SkillName4 == null || SkillName4 == "None" || SkillName4 == string.Empty)
             {
                 SkillName4 = string.Empty;
             }
-            else if (SkillName5 == null || SkillName5 == "None" || SkillName5 == "")
+            else if (SkillName5 == null || SkillName5 == "None" || SkillName5 == string.Empty)
             {
                 SkillName4 += string.Empty;
             }
@@ -5797,11 +5805,11 @@ TreeScope.Children, condition);
                 SkillName4 += ", ";
             }
 
-            if (SkillName5 == null || SkillName5 == "None" || SkillName5 == "")
+            if (SkillName5 == null || SkillName5 == "None" || SkillName5 == string.Empty)
             {
                 SkillName5 = string.Empty;
             }
-            else if (SkillName6 == null || SkillName6 == "None" || SkillName6 == "")
+            else if (SkillName6 == null || SkillName6 == "None" || SkillName6 == string.Empty)
             {
                 SkillName5 += string.Empty;
             }
@@ -5810,7 +5818,7 @@ TreeScope.Children, condition);
                 SkillName5 += "\n";
             }
 
-            if (SkillName6 == null || SkillName6 == "None" || SkillName6 == "")
+            if (SkillName6 == null || SkillName6 == "None" || SkillName6 == string.Empty)
             {
                 SkillName6 = string.Empty;
             }
@@ -5819,7 +5827,7 @@ TreeScope.Children, condition);
                 SkillName6 += string.Empty;
             }
 
-            if (SkillName1 == "")
+            if (SkillName1 == string.Empty)
             {
                 SkillName1 = "None";
             }
@@ -5837,7 +5845,7 @@ TreeScope.Children, condition);
             var skillId = skills[i];
             if (SkillArmor.IDName.TryGetValue(skillId, out var skillName))
             {
-                if (skillName != "None" && skillName != "")
+                if (skillName != "None" && skillName != string.Empty)
                 {
                     SkillName += skillName;
                     if (i != skills.Length - 1)
@@ -5936,12 +5944,12 @@ TreeScope.Children, condition);
             SkillName1 += string.Empty;
             SkillName2 += string.Empty;
 
-            if (SkillName1 == "")
+            if (SkillName1 == string.Empty)
             {
                 SkillName1 = "Nothing";
             }
 
-            if (SkillName2 == "")
+            if (SkillName2 == string.Empty)
             {
                 SkillName2 = "Nothing";
             }
@@ -5959,22 +5967,22 @@ TreeScope.Children, condition);
             // pls
             if (GetTextFormat() == "Markdown")
             {
-                if (IsMaxGSRSkillValue(SkillName1) && (SkillName1 != null || SkillName1 != "Nothing" || SkillName1 != ""))
+                if (IsMaxGSRSkillValue(SkillName1) && (SkillName1 != null || SkillName1 != "Nothing" || SkillName1 != string.Empty))
                 {
                     SkillName1 = string.Format(CultureInfo.InvariantCulture, "**{0}**", SkillName1);
                 }
 
-                if (IsMaxGSRSkillValue(SkillName2) && (SkillName2 != null || SkillName2 != "Nothing" || SkillName2 != ""))
+                if (IsMaxGSRSkillValue(SkillName2) && (SkillName2 != null || SkillName2 != "Nothing" || SkillName2 != string.Empty))
                 {
                     SkillName2 = string.Format(CultureInfo.InvariantCulture, "**{0}**", SkillName2);
                 }
             }
 
-            if (SkillName1 == null || SkillName1 == "Nothing" || SkillName1 == "")
+            if (SkillName1 == null || SkillName1 == "Nothing" || SkillName1 == string.Empty)
             {
                 SkillName1 = string.Empty;
             }
-            else if (SkillName2 == null || SkillName2 == "Nothing" || SkillName2 == "")
+            else if (SkillName2 == null || SkillName2 == "Nothing" || SkillName2 == string.Empty)
             {
                 SkillName1 += string.Empty;
             }
@@ -5983,7 +5991,7 @@ TreeScope.Children, condition);
                 SkillName1 += ", ";
             }
 
-            if (SkillName2 == null || SkillName2 == "Nothing" || SkillName2 == "")
+            if (SkillName2 == null || SkillName2 == "Nothing" || SkillName2 == string.Empty)
             {
                 SkillName2 = string.Empty;
             }
@@ -6005,7 +6013,7 @@ TreeScope.Children, condition);
             var skillId = skills[i];
             if (SkillStyleRank.IDName.TryGetValue(skillId, out var skillName))
             {
-                if (skillName != "None" && skillName != "")
+                if (skillName != "None" && skillName != string.Empty)
                 {
                     SkillName += skillName;
                     if (i != skills.Length - 1)
@@ -6787,7 +6795,7 @@ TreeScope.Children, condition);
         {
             var s = (Settings)Application.Current.TryFindResource("Settings");
 
-            if (s.GearDescriptionExport != null || s.GearDescriptionExport != "")
+            if (s.GearDescriptionExport != null || s.GearDescriptionExport != string.Empty)
             {
                 return string.Format(CultureInfo.InvariantCulture, "{0}\n", s.GearDescriptionExport);
             }
@@ -7056,82 +7064,82 @@ TreeScope.Children, condition);
             // pls
             if (GetTextFormat() == "Markdown")
             {
-                if (IsMaxRoadDureSkillLevel(Skill1, SkillLevel1) && (SkillName1 != null || SkillName1 != "None" || SkillName1 != ""))
+                if (IsMaxRoadDureSkillLevel(Skill1, SkillLevel1) && (SkillName1 != null || SkillName1 != "None" || SkillName1 != string.Empty))
                 {
                     SkillName1 = string.Format(CultureInfo.InvariantCulture, "**{0}** ", SkillName1);
                 }
 
-                if (IsMaxRoadDureSkillLevel(Skill2, SkillLevel2) && (SkillName2 != null || SkillName2 != "None" || SkillName2 != ""))
+                if (IsMaxRoadDureSkillLevel(Skill2, SkillLevel2) && (SkillName2 != null || SkillName2 != "None" || SkillName2 != string.Empty))
                 {
                     SkillName2 = string.Format(CultureInfo.InvariantCulture, "**{0}** ", SkillName2);
                 }
 
-                if (IsMaxRoadDureSkillLevel(Skill3, SkillLevel3) && (SkillName3 != null || SkillName3 != "None" || SkillName3 != ""))
+                if (IsMaxRoadDureSkillLevel(Skill3, SkillLevel3) && (SkillName3 != null || SkillName3 != "None" || SkillName3 != string.Empty))
                 {
                     SkillName3 = string.Format(CultureInfo.InvariantCulture, "**{0}** ", SkillName3);
                 }
 
-                if (IsMaxRoadDureSkillLevel(Skill4, SkillLevel4) && (SkillName4 != null || SkillName4 != "None" || SkillName4 != ""))
+                if (IsMaxRoadDureSkillLevel(Skill4, SkillLevel4) && (SkillName4 != null || SkillName4 != "None" || SkillName4 != string.Empty))
                 {
                     SkillName4 = string.Format(CultureInfo.InvariantCulture, "**{0}** ", SkillName4);
                 }
 
-                if (IsMaxRoadDureSkillLevel(Skill5, SkillLevel5) && (SkillName5 != null || SkillName5 != "None" || SkillName5 != ""))
+                if (IsMaxRoadDureSkillLevel(Skill5, SkillLevel5) && (SkillName5 != null || SkillName5 != "None" || SkillName5 != string.Empty))
                 {
                     SkillName5 = string.Format(CultureInfo.InvariantCulture, "**{0}** ", SkillName5);
                 }
 
-                if (IsMaxRoadDureSkillLevel(Skill6, SkillLevel6) && (SkillName6 != null || SkillName6 != "None" || SkillName6 != ""))
+                if (IsMaxRoadDureSkillLevel(Skill6, SkillLevel6) && (SkillName6 != null || SkillName6 != "None" || SkillName6 != string.Empty))
                 {
                     SkillName6 = string.Format(CultureInfo.InvariantCulture, "**{0}** ", SkillName6);
                 }
 
-                if (IsMaxRoadDureSkillLevel(Skill7, SkillLevel7) && (SkillName7 != null || SkillName7 != "None" || SkillName7 != ""))
+                if (IsMaxRoadDureSkillLevel(Skill7, SkillLevel7) && (SkillName7 != null || SkillName7 != "None" || SkillName7 != string.Empty))
                 {
                     SkillName7 = string.Format(CultureInfo.InvariantCulture, "**{0}** ", SkillName7);
                 }
 
-                if (IsMaxRoadDureSkillLevel(Skill8, SkillLevel8) && (SkillName8 != null || SkillName8 != "None" || SkillName8 != ""))
+                if (IsMaxRoadDureSkillLevel(Skill8, SkillLevel8) && (SkillName8 != null || SkillName8 != "None" || SkillName8 != string.Empty))
                 {
                     SkillName8 = string.Format(CultureInfo.InvariantCulture, "**{0}** ", SkillName8);
                 }
 
-                if (IsMaxRoadDureSkillLevel(Skill9, SkillLevel9) && (SkillName9 != null || SkillName9 != "None" || SkillName9 != ""))
+                if (IsMaxRoadDureSkillLevel(Skill9, SkillLevel9) && (SkillName9 != null || SkillName9 != "None" || SkillName9 != string.Empty))
                 {
                     SkillName9 = string.Format(CultureInfo.InvariantCulture, "**{0}** ", SkillName9);
                 }
 
-                if (IsMaxRoadDureSkillLevel(Skill10, SkillLevel10) && (SkillName10 != null || SkillName10 != "None" || SkillName10 != ""))
+                if (IsMaxRoadDureSkillLevel(Skill10, SkillLevel10) && (SkillName10 != null || SkillName10 != "None" || SkillName10 != string.Empty))
                 {
                     SkillName10 = string.Format(CultureInfo.InvariantCulture, "**{0}** ", SkillName10);
                 }
 
-                if (IsMaxRoadDureSkillLevel(Skill11, SkillLevel11) && (SkillName11 != null || SkillName11 != "None" || SkillName11 != ""))
+                if (IsMaxRoadDureSkillLevel(Skill11, SkillLevel11) && (SkillName11 != null || SkillName11 != "None" || SkillName11 != string.Empty))
                 {
                     SkillName11 = string.Format(CultureInfo.InvariantCulture, "**{0}** ", SkillName11);
                 }
 
-                if (IsMaxRoadDureSkillLevel(Skill12, SkillLevel12) && (SkillName12 != null || SkillName12 != "None" || SkillName12 != ""))
+                if (IsMaxRoadDureSkillLevel(Skill12, SkillLevel12) && (SkillName12 != null || SkillName12 != "None" || SkillName12 != string.Empty))
                 {
                     SkillName12 = string.Format(CultureInfo.InvariantCulture, "**{0}** ", SkillName12);
                 }
 
-                if (IsMaxRoadDureSkillLevel(Skill13, SkillLevel13) && (SkillName13 != null || SkillName13 != "None" || SkillName13 != ""))
+                if (IsMaxRoadDureSkillLevel(Skill13, SkillLevel13) && (SkillName13 != null || SkillName13 != "None" || SkillName13 != string.Empty))
                 {
                     SkillName13 = string.Format(CultureInfo.InvariantCulture, "**{0}** ", SkillName13);
                 }
 
-                if (IsMaxRoadDureSkillLevel(Skill14, SkillLevel14) && (SkillName14 != null || SkillName14 != "None" || SkillName14 != ""))
+                if (IsMaxRoadDureSkillLevel(Skill14, SkillLevel14) && (SkillName14 != null || SkillName14 != "None" || SkillName14 != string.Empty))
                 {
                     SkillName14 = string.Format(CultureInfo.InvariantCulture, "**{0}** ", SkillName14);
                 }
 
-                if (IsMaxRoadDureSkillLevel(Skill15, SkillLevel15) && (SkillName15 != null || SkillName15 != "None" || SkillName15 != ""))
+                if (IsMaxRoadDureSkillLevel(Skill15, SkillLevel15) && (SkillName15 != null || SkillName15 != "None" || SkillName15 != string.Empty))
                 {
                     SkillName15 = string.Format(CultureInfo.InvariantCulture, "**{0}** ", SkillName15);
                 }
 
-                if (IsMaxRoadDureSkillLevel(Skill16, SkillLevel16) && (SkillName16 != null || SkillName16 != "None" || SkillName16 != ""))
+                if (IsMaxRoadDureSkillLevel(Skill16, SkillLevel16) && (SkillName16 != null || SkillName16 != "None" || SkillName16 != string.Empty))
                 {
                     SkillName16 = string.Format(CultureInfo.InvariantCulture, "**{0}** ", SkillName16);
                 }
@@ -7394,13 +7402,11 @@ TreeScope.Children, condition);
                 }
             }
 
-
-            //
-            if (SkillName1 == null || SkillName1 == "None" || SkillName1 == "")
+            if (SkillName1 == null || SkillName1 == "None" || SkillName1 == string.Empty)
             {
                 SkillName1 = string.Empty;
             }
-            else if (SkillName2 == null || SkillName2 == "None" || SkillName2 == "")
+            else if (SkillName2 == null || SkillName2 == "None" || SkillName2 == string.Empty)
             {
                 SkillName1 += string.Empty;
             }
@@ -7409,11 +7415,11 @@ TreeScope.Children, condition);
                 SkillLevel1 += ", ";
             }
 
-            if (SkillName2 == null || SkillName2 == "None" || SkillName2 == "")
+            if (SkillName2 == null || SkillName2 == "None" || SkillName2 == string.Empty)
             {
                 SkillName2 = string.Empty;
             }
-            else if (SkillName3 == null || SkillName3 == "None" || SkillName3 == "")
+            else if (SkillName3 == null || SkillName3 == "None" || SkillName3 == string.Empty)
             {
                 SkillName2 += string.Empty;
             }
@@ -7422,11 +7428,11 @@ TreeScope.Children, condition);
                 SkillLevel2 += ", ";
             }
 
-            if (SkillName3 == null || SkillName3 == "None" || SkillName3 == "")
+            if (SkillName3 == null || SkillName3 == "None" || SkillName3 == string.Empty)
             {
                 SkillName3 = string.Empty;
             }
-            else if (SkillName4 == null || SkillName4 == "None" || SkillName4 == "")
+            else if (SkillName4 == null || SkillName4 == "None" || SkillName4 == string.Empty)
             {
                 SkillName3 += string.Empty;
             }
@@ -7435,11 +7441,11 @@ TreeScope.Children, condition);
                 SkillLevel3 += ", ";
             }
 
-            if (SkillName4 == null || SkillName4 == "None" || SkillName4 == "")
+            if (SkillName4 == null || SkillName4 == "None" || SkillName4 == string.Empty)
             {
                 SkillName4 = string.Empty;
             }
-            else if (SkillName5 == null || SkillName5 == "None" || SkillName5 == "")
+            else if (SkillName5 == null || SkillName5 == "None" || SkillName5 == string.Empty)
             {
                 SkillName4 += string.Empty;
             }
@@ -7448,11 +7454,11 @@ TreeScope.Children, condition);
                 SkillLevel4 += ", ";
             }
 
-            if (SkillName5 == null || SkillName5 == "None" || SkillName5 == "")
+            if (SkillName5 == null || SkillName5 == "None" || SkillName5 == string.Empty)
             {
                 SkillName5 = string.Empty;
             }
-            else if (SkillName6 == null || SkillName6 == "None" || SkillName6 == "")
+            else if (SkillName6 == null || SkillName6 == "None" || SkillName6 == string.Empty)
             {
                 SkillName5 += string.Empty;
             }
@@ -7461,11 +7467,11 @@ TreeScope.Children, condition);
                 SkillLevel5 += "\n";
             }
 
-            if (SkillName6 == null || SkillName6 == "None" || SkillName6 == "")
+            if (SkillName6 == null || SkillName6 == "None" || SkillName6 == string.Empty)
             {
                 SkillName6 = string.Empty;
             }
-            else if (SkillName7 == null || SkillName7 == "None" || SkillName7 == "")
+            else if (SkillName7 == null || SkillName7 == "None" || SkillName7 == string.Empty)
             {
                 SkillName6 += string.Empty;
             }
@@ -7474,11 +7480,11 @@ TreeScope.Children, condition);
                 SkillLevel6 += ", ";
             }
 
-            if (SkillName7 == null || SkillName7 == "None" || SkillName7 == "")
+            if (SkillName7 == null || SkillName7 == "None" || SkillName7 == string.Empty)
             {
                 SkillName7 = string.Empty;
             }
-            else if (SkillName8 == null || SkillName8 == "None" || SkillName8 == "")
+            else if (SkillName8 == null || SkillName8 == "None" || SkillName8 == string.Empty)
             {
                 SkillName7 += string.Empty;
             }
@@ -7487,11 +7493,11 @@ TreeScope.Children, condition);
                 SkillLevel7 += ", ";
             }
 
-            if (SkillName8 == null || SkillName8 == "None" || SkillName8 == "")
+            if (SkillName8 == null || SkillName8 == "None" || SkillName8 == string.Empty)
             {
                 SkillName8 = string.Empty;
             }
-            else if (SkillName9 == null || SkillName9 == "None" || SkillName9 == "")
+            else if (SkillName9 == null || SkillName9 == "None" || SkillName9 == string.Empty)
             {
                 SkillName8 += string.Empty;
             }
@@ -7500,11 +7506,11 @@ TreeScope.Children, condition);
                 SkillLevel8 += ", ";
             }
 
-            if (SkillName9 == null || SkillName9 == "None" || SkillName9 == "")
+            if (SkillName9 == null || SkillName9 == "None" || SkillName9 == string.Empty)
             {
                 SkillName9 = string.Empty;
             }
-            else if (SkillName10 == null || SkillName10 == "None" || SkillName10 == "")
+            else if (SkillName10 == null || SkillName10 == "None" || SkillName10 == string.Empty)
             {
                 SkillName9 += string.Empty;
             }
@@ -7513,11 +7519,11 @@ TreeScope.Children, condition);
                 SkillLevel9 += ", ";
             }
 
-            if (SkillName10 == null || SkillName10 == "None" || SkillName10 == "")
+            if (SkillName10 == null || SkillName10 == "None" || SkillName10 == string.Empty)
             {
                 SkillName10 = string.Empty;
             }
-            else if (SkillName11 == null || SkillName11 == "None" || SkillName11 == "")
+            else if (SkillName11 == null || SkillName11 == "None" || SkillName11 == string.Empty)
             {
                 SkillName10 += string.Empty;
             }
@@ -7526,11 +7532,11 @@ TreeScope.Children, condition);
                 SkillLevel10 += "\n";
             }
 
-            if (SkillName11 == null || SkillName11 == "None" || SkillName11 == "")
+            if (SkillName11 == null || SkillName11 == "None" || SkillName11 == string.Empty)
             {
                 SkillName11 = string.Empty;
             }
-            else if (SkillName12 == null || SkillName12 == "None" || SkillName12 == "")
+            else if (SkillName12 == null || SkillName12 == "None" || SkillName12 == string.Empty)
             {
                 SkillName11 += string.Empty;
             }
@@ -7539,11 +7545,11 @@ TreeScope.Children, condition);
                 SkillLevel11 += ", ";
             }
 
-            if (SkillName12 == null || SkillName12 == "None" || SkillName12 == "")
+            if (SkillName12 == null || SkillName12 == "None" || SkillName12 == string.Empty)
             {
                 SkillName12 = string.Empty;
             }
-            else if (SkillName13 == null || SkillName13 == "None" || SkillName13 == "")
+            else if (SkillName13 == null || SkillName13 == "None" || SkillName13 == string.Empty)
             {
                 SkillName12 += string.Empty;
             }
@@ -7552,11 +7558,11 @@ TreeScope.Children, condition);
                 SkillLevel12 += ", ";
             }
 
-            if (SkillName13 == null || SkillName13 == "None" || SkillName13 == "")
+            if (SkillName13 == null || SkillName13 == "None" || SkillName13 == string.Empty)
             {
                 SkillName13 = string.Empty;
             }
-            else if (SkillName14 == null || SkillName14 == "None" || SkillName14 == "")
+            else if (SkillName14 == null || SkillName14 == "None" || SkillName14 == string.Empty)
             {
                 SkillName13 += string.Empty;
             }
@@ -7565,11 +7571,11 @@ TreeScope.Children, condition);
                 SkillLevel13 += ", ";
             }
 
-            if (SkillName14 == null || SkillName14 == "None" || SkillName14 == "")
+            if (SkillName14 == null || SkillName14 == "None" || SkillName14 == string.Empty)
             {
                 SkillName14 = string.Empty;
             }
-            else if (SkillName15 == null || SkillName15 == "None" || SkillName15 == "")
+            else if (SkillName15 == null || SkillName15 == "None" || SkillName15 == string.Empty)
             {
                 SkillName14 += string.Empty;
             }
@@ -7578,11 +7584,11 @@ TreeScope.Children, condition);
                 SkillLevel14 += ", ";
             }
 
-            if (SkillName15 == null || SkillName15 == "None" || SkillName15 == "")
+            if (SkillName15 == null || SkillName15 == "None" || SkillName15 == string.Empty)
             {
                 SkillName15 = string.Empty;
             }
-            else if (SkillName16 == null || SkillName16 == "None" || SkillName16 == "")
+            else if (SkillName16 == null || SkillName16 == "None" || SkillName16 == string.Empty)
             {
                 SkillName15 += string.Empty;
             }
@@ -7591,7 +7597,7 @@ TreeScope.Children, condition);
                 SkillLevel15 += "\n";
             }
 
-            if (SkillName16 == null || SkillName16 == "None" || SkillName16 == "")
+            if (SkillName16 == null || SkillName16 == "None" || SkillName16 == string.Empty)
             {
                 SkillName16 = string.Empty;
             }
@@ -7686,7 +7692,6 @@ TreeScope.Children, condition);
 
             // TODO: fix
             // var partnyaBagItems = GetItemsForRunID(new int[] { (int)partnyaBag.Item1ID, (int)partnyaBag.Item2ID, (int)partnyaBag.Item3ID, (int)partnyaBag.Item4ID, (int)partnyaBag.Item5ID, (int)partnyaBag.Item6ID, (int)partnyaBag.Item7ID, (int)partnyaBag.Item8ID, (int)partnyaBag.Item9ID, (int)partnyaBag.Item10ID });
-
             return string.Format(CultureInfo.InvariantCulture,
 @"{0} {1}({2}){3}
 
@@ -10475,6 +10480,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 {
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/fatalis.png";
                 }
+
             case 11:
                 if (RankBand() >= 64 && RankBand() <= 67)
                 {
@@ -10484,6 +10490,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 {
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/rathalos.png";
                 }
+
             case 15:
                 if (RankBand() >= 64 && RankBand() <= 67)
                 {
@@ -10493,6 +10500,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 {
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/khezu.png";
                 }
+
             case 17:
                 if (RankBand() >= 64 && RankBand() <= 67)
                 {
@@ -10502,6 +10510,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 {
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/gravios.png";
                 }
+
             case 21:
                 if (RankBand() >= 64 && RankBand() <= 67)
                 {
@@ -10511,6 +10520,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 {
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/plesioth.png";
                 }
+
             case 36:
                 if (RankBand() == 53)
                 {
@@ -10682,6 +10692,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 {
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/odibatorasu.png";
                 }
+
             case 107:
                 if (RankBand() == 54 || RankBand() == 55)
                 {
@@ -11267,7 +11278,6 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         }
 
         // arrogant duremudira
-
         return DetermineMonsterImage(id);
     }
 
@@ -11430,9 +11440,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         // 3rd district dure 2: 21734
         // UNUSED sky corridor: 21730
         // sky corridor prologue: 21729
-
         // https://stackoverflow.com/questions/4315564/capitalizing-words-in-a-string-using-c-sharp
-
         int id;
 
         if (roadOverride() == false)
@@ -11717,7 +11725,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             };
 
         //check if the folder is named dat and contains dat, emd, and sqd.
-        if (s.GameFolderPath == "" || s.GameFolderPath == null)
+        if (s.GameFolderPath == string.Empty || s.GameFolderPath == null)
         {
             LoggerInstance.Warn(CultureInfo.InvariantCulture, "Game folder path not found");
             MessageBox.Show("Game folder path not found. If you do not want to log quests into the database or see this message, disable the Quest Logging option in Quest Logs section, and click the save button.", Messages.WarningTitle, MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -11725,7 +11733,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             return false;
         }
 
-        if (s.DatabaseFilePath == "" || s.DatabaseFilePath == null)
+        if (s.DatabaseFilePath == string.Empty || s.DatabaseFilePath == null)
         {
             LoggerInstance.Warn(CultureInfo.InvariantCulture, "Database file path not found");
             MessageBox.Show("Database file path not found. If you do not want to log quests into the database or see this message, disable the Quest Logging option in Quest Logs section, and click the save button.", Messages.WarningTitle, MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -12340,7 +12348,6 @@ After all that you’ve unlocked magnet spike! You should get a material to make
     {
         // TODO: the above update process should be simplified. refactoring might be needed
         // in many places, not just this function.
-
         var timeInt = TimeInt();
 
         if (IsRoad() && AreaID() == 459) // Hunter's Road Base Camp
@@ -12502,6 +12509,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         if (playerInventoryDictionary.Values.Any())
         {
             var lastInsertedDictionary = playerInventoryDictionary.Values.Last();
+
             // Sum the values in the list
             lastInventorySum = lastInsertedDictionary.SelectMany(x => x.Values).Sum();
         }
@@ -12702,6 +12710,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 itemIDQuantityDictionary.Add(itemID, itemQty);
                 itemIDsQuantityList.Add(itemIDQuantityDictionary);
             }
+
             try
             {
                 playerAmmoPouchDictionary.Add(TimeInt(), itemIDsQuantityList);
@@ -13337,10 +13346,10 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         get
         {
             var overlayMode = GetOverlayMode();
-            overlayMode = overlayMode.Replace("(", "");
-            overlayMode = overlayMode.Replace(")", "");
+            overlayMode = overlayMode.Replace("(", string.Empty);
+            overlayMode = overlayMode.Replace(")", string.Empty);
             overlayMode = overlayMode.Trim();
-            if (overlayMode == null || overlayMode == "")
+            if (overlayMode == null || overlayMode == string.Empty)
             {
                 overlayMode = "Standard";
             }
@@ -13657,6 +13666,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 break;
             }
         }
+
         return DetermineAreaIcon(AreaGroup);
     }
 
@@ -13699,15 +13709,15 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         SkillCaravan.IDName.TryGetValue(id2, out var caravanSkillName2);
         SkillCaravan.IDName.TryGetValue(id3, out var caravanSkillName3);
 
-        if (caravanSkillName1 == "" || caravanSkillName1 == "None")
+        if (caravanSkillName1 == string.Empty || caravanSkillName1 == "None")
         {
             return "None";
         }
-        else if (caravanSkillName2 == "" || caravanSkillName2 == "None")
+        else if (caravanSkillName2 == string.Empty || caravanSkillName2 == "None")
         {
             return caravanSkillName1 + string.Empty;
         }
-        else if (caravanSkillName3 == "" || caravanSkillName3 == "None")
+        else if (caravanSkillName3 == string.Empty || caravanSkillName3 == "None")
         {
             return caravanSkillName1 + ", " + caravanSkillName2;
         }

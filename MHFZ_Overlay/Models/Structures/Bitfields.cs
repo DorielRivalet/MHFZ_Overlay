@@ -16,7 +16,7 @@ you get a comma separated list of the flags that are set, which can be desirable
 such as JSON or XML.
 
 [Description]: This attribute can be used to provide a string that describes the enum value.
-It can be useful when generating documentation or when displaying the enum values 
+It can be useful when generating documentation or when displaying the enum values
 in a user interface.
 
 [DefaultValue]: This attribute can be used to specify the default value for an enum.
@@ -42,7 +42,7 @@ string printValidity(Status status){
 }
 */
 
-namespace MHFZOverlay.Models.Structures;
+namespace MHFZ_Overlay.Models.Structures;
 
 using System;
 using System.ComponentModel;

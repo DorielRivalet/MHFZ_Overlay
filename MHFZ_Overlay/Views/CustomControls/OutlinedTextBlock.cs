@@ -1,8 +1,8 @@
 // Copyright 2023 The mhfz-overlay developers.
 // Use of this source code is governed by a MIT license that can be
 // found in the LICENSE file.
-//https://stackoverflow.com/questions/93650/apply-stroke-to-a-textblock-in-wpf
 
+//https://stackoverflow.com/questions/93650/apply-stroke-to-a-textblock-in-wpf
 namespace MHFZ_Overlay.Views.CustomControls;
 
 using System;
@@ -12,7 +12,6 @@ using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Markup;
 using System.Windows.Media;
-
 
 [ContentProperty("Text")]
 public class OutlinedTextBlock : FrameworkElement
@@ -27,7 +26,7 @@ public class OutlinedTextBlock : FrameworkElement
             DashCap = PenLineCap.Round,
             EndLineCap = PenLineCap.Round,
             LineJoin = PenLineJoin.Round,
-            StartLineCap = PenLineCap.Round
+            StartLineCap = PenLineCap.Round,
         };
 
         this.InvalidateVisual();
@@ -146,7 +145,9 @@ public class OutlinedTextBlock : FrameworkElement
   new FrameworkPropertyMetadata(TextWrapping.NoWrap, OnFormattedTextUpdated));
 
     private FormattedText? _FormattedText;
+
     private Geometry? _TextGeometry;
+
     private Pen? _Pen;
 
     /// <summary>
@@ -335,7 +336,6 @@ public class OutlinedTextBlock : FrameworkElement
         this.EnsureFormattedText();
 
         // constrain the formatted text according to the available size
-
         var w = availableSize.Width;
         var h = availableSize.Height;
 

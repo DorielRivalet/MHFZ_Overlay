@@ -48,6 +48,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove=".stylecop.json" />
     <None Remove="Assets\Background\1.png" />
     <None Remove="Assets\Background\2.png" />
     <None Remove="Assets\Background\3.png" />
@@ -373,6 +374,7 @@
     <Content Include="NLog.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <AdditionalFiles Include=".stylecop.json" />
     <Resource Include="Assets\Background\1.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
@@ -828,6 +830,12 @@
     <None Update="Update.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Services\Contracts\" />
+    <Folder Include="ViewModels\Pages\" />
+    <Folder Include="Views\Pages\" />
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties _1stylecop_1json__JsonSchema="stylecop" /></VisualStudio></ProjectExtensions>

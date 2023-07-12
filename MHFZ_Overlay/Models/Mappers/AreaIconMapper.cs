@@ -17,9 +17,9 @@ public static class AreaIconMapper
         { new List<int> { 0 }, "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/entrance.png" },
 
         // Jungle areas
-        { new List<int> { 1, 2,3, 4,5, 18, 19, 22, 23, 26, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 212, 213 }, "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/jungle.png" },
+        { new List<int> { 1, 2, 3, 4, 5, 18, 19, 22, 23, 26, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 212, 213 }, "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/jungle.png" },
 
-        //Snowy mountain areas
+        // Snowy mountain areas
         { new List<int> { 6, 15, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 218, 219 }, "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/snowy_mountains.png" },
 
         // Desert areas
@@ -34,17 +34,17 @@ public static class AreaIconMapper
         // Forest and Hills areas
         { new List<int> { 21, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 184, 185, 186, 187, 188, 189, 190, 191, 192, 193, 194, 195, 196 }, "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/forest_and_hills.png" },
 
-        //Great Forest areas
+        // Great Forest areas
         { new List<int> { 224, 225, 226, 227, 228, 229, 230, 231, 232, 233, 234, 235, 236, 237, 238, 239, 240, 241 }, "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/great_forest.png" },
 
         // Highlands areas
-        { new List<int> { 247, 248, 249, 250, 251, 252, 253, 254, 255, 302, 303, 304, 305, 306, 307, 308 }, "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/highlands.png" }, 
+        { new List<int> { 247, 248, 249, 250, 251, 252, 253, 254, 255, 302, 303, 304, 305, 306, 307, 308 }, "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/highlands.png" },
 
         // Tidal Island areas
-        { new List<int> {322, 323, 324, 325, 326, 327, 328, 329, 330, 331, 332, 333, 334, 335, 336, 337, 338, 339 }, "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/tidal_island.png" },
+        { new List<int> { 322, 323, 324, 325, 326, 327, 328, 329, 330, 331, 332, 333, 334, 335, 336, 337, 338, 339 }, "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/tidal_island.png" },
 
         // Polar Sea areas
-        { new List<int> {345, 346, 347, 348, 349, 350, 351, 352, 353, 354, 355, 356, 357, 358 }, "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/polar_sea.png" },
+        { new List<int> { 345, 346, 347, 348, 349, 350, 351, 352, 353, 354, 355, 356, 357, 358 }, "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/polar_sea.png" },
 
         // Flower Field areas
         { new List<int> { 361, 362, 363, 364, 365, 366, 367, 368, 369, 370, 371, 372 }, "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/flower_fields.png" },

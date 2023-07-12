@@ -16,9 +16,9 @@ public static class PlayersList
     public static IReadOnlyDictionary<int, List<string>> PlayerIDs { get; } = new Dictionary<int, List<string>>
     {
         // No Player
-        { 0, new List<string>{ DateTime.UnixEpoch.Date.ToString(CultureInfo.InvariantCulture), "None", "NoGuild", "0", "Unknown", "Japan" } },
+        { 0, new List<string> { DateTime.UnixEpoch.Date.ToString(CultureInfo.InvariantCulture), "None", "NoGuild", "0", "Unknown", "Japan" } },
 
         // Local Player
-        { 1, new List<string>{ DateTime.UtcNow.Date.ToString(CultureInfo.InvariantCulture), "HunterName", "GuildName","0", "Unknown", "Japan" } },
+        { 1, new List<string> { DateTime.UtcNow.Date.ToString(CultureInfo.InvariantCulture), "HunterName", "GuildName","0", "Unknown", "Japan" } },
     };
 }

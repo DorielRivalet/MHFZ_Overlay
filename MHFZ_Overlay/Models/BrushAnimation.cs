@@ -21,18 +21,21 @@ public class BrushAnimation : AnimationTimeline
         }
     }
 
-    public override object GetCurrentValue(object defaultOriginValue,
-                                           object defaultDestinationValue,
-                                           AnimationClock animationClock)
+    public override object GetCurrentValue(
+        object defaultOriginValue,
+        object defaultDestinationValue,
+        AnimationClock animationClock)
     {
-        return GetCurrentValue(defaultOriginValue as Brush,
-                               defaultDestinationValue as Brush,
-                               animationClock);
+        return GetCurrentValue(
+            defaultOriginValue as Brush,
+            defaultDestinationValue as Brush,
+            animationClock);
     }
 
-    public object GetCurrentValue(Brush? defaultOriginValue,
-                                  Brush? defaultDestinationValue,
-                                  AnimationClock animationClock)
+    public object GetCurrentValue(
+        Brush? defaultOriginValue,
+        Brush? defaultDestinationValue,
+        AnimationClock animationClock)
     {
         if (!animationClock.CurrentProgress.HasValue)
         {
@@ -63,7 +66,7 @@ public class BrushAnimation : AnimationTimeline
             {
                 Background = defaultDestinationValue,
                 Opacity = animationClock.CurrentProgress.Value,
-            }
+            },
         });
     }
 

@@ -10,7 +10,7 @@ using System.Globalization;
 using System.Windows;
 using MHFZ_Overlay.Models.Constant;
 using MHFZ_Overlay.Services.DataAccessLayer;
-using MHFZ_Overlay.Views;
+using MHFZ_Overlay.Views.Windows;
 
 /// <summary>
 /// Handles the application's state changes (shutdown, restart, etc.)
@@ -40,7 +40,10 @@ internal sealed class ApplicationManager
     public static void DisposeNotifyIcon()
     {
         if (MainWindow._mainWindowNotifyIcon == null)
+        {
             return;
+        }
+
         MainWindow._mainWindowNotifyIcon.Dispatcher.Invoke(() =>
         {
             MainWindow._mainWindowNotifyIcon.Visibility = Visibility.Collapsed;

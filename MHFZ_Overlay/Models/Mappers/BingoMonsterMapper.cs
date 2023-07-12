@@ -175,6 +175,6 @@ public static class BingoMonsterMapper
             "Upper Shiten Unknown",
             "Upper Shiten Disufiroa",
             }
-        }
+        },
     };
 }

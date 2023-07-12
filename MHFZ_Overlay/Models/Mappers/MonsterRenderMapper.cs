@@ -210,7 +210,6 @@ public static class MonsterRenderMapper
         { "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/starving_deviljho.png", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/render/starving_deviljho.png" },
         { "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/burning_freezing_elzelion.png", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/render/burning_freezing_elzelion.png" },
         { "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/elzelion.png", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/render/elzelion.png" },
-
         { "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/supremacy_pariapuria.gif", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/render/thirsty_pariapuria.png" },
         { "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/supremacy_unknown.gif", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/render/supremacy_unknown.png" },
     };

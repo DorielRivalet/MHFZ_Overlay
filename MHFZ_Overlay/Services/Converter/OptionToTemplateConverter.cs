@@ -12,14 +12,13 @@ public class OptionToTemplateConverter : DataTemplateSelector
 {
     public override DataTemplate? SelectTemplate(object item, DependencyObject container)
     {
-        var option = item as QuestLogsOption;
-        if (option == null)
+        if (item is not QuestLogsOption option)
         {
             return null;
         }
 
         // this only needs run id
-        if (option.Name == "Gear") //gear
+        if (option.Name == "Gear")
         {
             return (DataTemplate)((FrameworkElement)container).FindResource("GearTemplate");
         }

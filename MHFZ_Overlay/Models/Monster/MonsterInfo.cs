@@ -6,7 +6,6 @@ namespace MHFZ_Overlay.Models.Monster;
 
 using System.Collections.Generic;
 
-
 /// <summary>
 /// Unaffected by player stats
 /// </summary>

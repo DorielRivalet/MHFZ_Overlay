@@ -5550,6 +5550,6 @@ public static class AchievementsMapper
             IsSecret = false,
             Hint = string.Empty,
             }
-        }
+        },
     };
 }

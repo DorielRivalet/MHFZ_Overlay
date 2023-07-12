@@ -15,9 +15,7 @@ public class RangeValidationRule : ValidationRule
 
     public override ValidationResult Validate(object value, CultureInfo cultureInfo)
     {
-        var inputValue = 0;
-
-        if (int.TryParse((string)value, out inputValue))
+        if (int.TryParse((string)value, out var inputValue))
         {
             if (inputValue < this.Minimum || inputValue > this.Maximum)
             {

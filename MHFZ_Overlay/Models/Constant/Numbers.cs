@@ -64,7 +64,7 @@ public static class Numbers
     Guanzorumu 55529
     Nargacuga 55534 55922
     Zinogre 55919 55535
-    Elzelion 55936 55714 
+    Elzelion 55936 55714
     Duremudira 23649
     Deviljho 55917 55530
     Bogabadorumu 55949

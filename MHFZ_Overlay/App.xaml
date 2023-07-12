@@ -9,7 +9,7 @@
              xmlns:local="clr-namespace:MHFZ_Overlay"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
-             StartupUri="Views/MainWindow.xaml">
+             StartupUri="./Views/Windows/MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
             <local:Settings x:Key="Settings"/>

@@ -46,6 +46,6 @@ public static class BerserkRavienteTriggerEvents
         {10, "Support 2 Done" },
         {11, "Destruction 6" },
         {12, "Destruction 7" },
-        {13, "Slay Done" }
+        {13, "Slay Done" },
     };
 }

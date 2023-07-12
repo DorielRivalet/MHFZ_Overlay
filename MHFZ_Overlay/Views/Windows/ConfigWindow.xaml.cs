@@ -2,7 +2,7 @@
 // Use of this source code is governed by a MIT license that can be
 // found in the LICENSE file.
 
-namespace MHFZ_Overlay.Views;
+namespace MHFZ_Overlay.Views.Windows;
 
 using System;
 using System.Collections.Generic;
@@ -864,19 +864,29 @@ public partial class ConfigWindow : FluentWindow
     private bool MonsterFilterAll(object obj)
     {
         var FilterObj = obj as MonsterLog;
+        if (FilterObj == null)
+        {
+            return false;
+        }
+
         return FilterObj.IsLarge || !FilterObj.IsLarge;
     }
 
     private bool MonsterFilterLarge(object obj)
     {
         var FilterObj = obj as MonsterLog;
+        if (FilterObj == null)
+        {
+            return false;
+        }
+
         return FilterObj.IsLarge;
     }
 
     private bool MonsterFilterSmall(object obj)
     {
         var FilterObj = obj as MonsterLog;
-        return !FilterObj.IsLarge;
+        return FilterObj != null ? !FilterObj.IsLarge : false;
     }
 
     public Predicate<object> GetFilter()

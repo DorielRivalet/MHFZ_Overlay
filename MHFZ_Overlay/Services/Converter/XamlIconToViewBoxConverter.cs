@@ -26,6 +26,11 @@ sealed class XamlIconToViewBoxConverter : IValueConverter
 
         // Optional:
         // we set Height and Width to "Auto" to let an icon scale, because in the <icon>.xaml file its size is explicitly specified as 16x16
+        if (viewBox == null)
+        {
+            return null;
+        }
+
         viewBox.Height = double.NaN;
         viewBox.Width = double.NaN;
 

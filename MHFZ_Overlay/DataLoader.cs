@@ -52,7 +52,7 @@ using MHFZ_Overlay.Models.Addresses;
 using MHFZ_Overlay.Models.Constant;
 using MHFZ_Overlay.Services.DataAccessLayer;
 using MHFZ_Overlay.Services.Manager;
-using MHFZ_Overlay.ViewModels;
+using MHFZ_Overlay.ViewModels.Windows;
 
 /// <summary>
 /// Responsible for loading data into the application. It has a DatabaseManager object that is used to access and manipulate the database. It also has instances of AddressModelNotHGE and AddressModelHGE classes, which inherit from the AddressModel abstract class. Depending on the state of the game, one of these instances is used to get the hit count value (etc.) from the memory.

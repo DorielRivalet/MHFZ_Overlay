@@ -2,7 +2,7 @@
 // Use of this source code is governed by a MIT license that can be
 // found in the LICENSE file.
 
-namespace MHFZ_Overlay.Views;
+namespace MHFZ_Overlay.Views.Windows;
 
 using System.Windows;
 using System.Windows.Controls;
@@ -13,10 +13,7 @@ using Wpf.Ui.Controls.Window;
 /// </summary>
 public partial class SettingsForm : FluentWindow
 {
-    public SettingsForm()
-    {
-        this.InitializeComponent();
-    }
+    public SettingsForm() => this.InitializeComponent();
 
     public bool IsDefaultSettingsSelected { get; private set; }
 
@@ -42,8 +39,7 @@ public partial class SettingsForm : FluentWindow
             this.IsMonsterHpOnlySelected = true;
 
             // Get the selected ComboBox option
-            var selectedComboBoxItem = this.MonsterHPComboBox.SelectedItem as ComboBoxItem;
-            if (selectedComboBoxItem != null)
+            if (this.MonsterHPComboBox.SelectedItem is ComboBoxItem selectedComboBoxItem)
             {
                 var selectedOption = selectedComboBoxItem.Content.ToString();
 

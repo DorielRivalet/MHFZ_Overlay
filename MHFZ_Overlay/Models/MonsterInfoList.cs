@@ -726,7 +726,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/dolem1_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Duremudira"),
 
@@ -735,7 +735,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/dolem2_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Duremudira"),
 
@@ -744,7 +744,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/abio_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Abiorugu"),
         new MonsterInfo(
@@ -752,7 +752,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/akamu_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Akantor"),
 
@@ -761,7 +761,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/aquraj_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Akura_Jebia"),
         new MonsterInfo(
@@ -769,7 +769,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/aqura_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Akura_Vashimu"),
 
@@ -778,7 +778,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/amatsu_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Amatsu"),
 
@@ -787,7 +787,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/anolu_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Anorupatisu"),
 
@@ -796,7 +796,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/gau_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Anteka"),
 
@@ -805,7 +805,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/apuke_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Apceros"),
 
@@ -814,7 +814,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/apono_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Aptonoth"),
 
@@ -823,7 +823,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/volgin_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Aruganosu"),
 
@@ -832,7 +832,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/raoao_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Ashen_Lao-Shan_Lung"),
 
@@ -841,7 +841,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/reusuao_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Azure_Rathalos"),
 
@@ -850,7 +850,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/berio_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Barioth"),
 
@@ -859,7 +859,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/bal_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Baruragaru"),
 
@@ -868,7 +868,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/basa_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Basarios"),
 
@@ -877,7 +877,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/lavieG_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Berserk_Raviente"),
 
@@ -886,7 +886,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/beru_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Berukyurosu"),
 
@@ -895,7 +895,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/deakuro_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Black_Diablos"),
 
@@ -904,7 +904,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/gurakuro_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Black_Gravios"),
 
@@ -913,7 +913,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/bura_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Blango"),
 
@@ -922,7 +922,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/dodobura_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Blangonga"),
 
@@ -931,7 +931,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/kukkuao_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Blue_Yian_Kut-Ku"),
 
@@ -940,7 +940,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/boga_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Bogabadorumu"),
 
@@ -949,7 +949,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/buraki_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Brachydios"),
 
@@ -958,7 +958,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/hipuao_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Breeding_Season_Hypnocatrice"),
 
@@ -967,7 +967,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/dosburu_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Bulldrome"),
 
@@ -976,7 +976,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/buru_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Bullfango"),
 
@@ -985,7 +985,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/brook_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Burukku"),
 
@@ -994,7 +994,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/yao_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Ceanataur"),
 
@@ -1003,7 +1003,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/dosgare_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Cephadrome"),
 
@@ -1012,7 +1012,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/gare_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Cephalos"),
 
@@ -1021,7 +1021,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/oo_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Chameleos"),
 
@@ -1030,7 +1030,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/konga_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Conga"),
 
@@ -1039,7 +1039,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/babakonga_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Congalala"),
 
@@ -1048,7 +1048,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/miraval_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Crimson_Fatalis"),
 
@@ -1057,7 +1057,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/daimyo_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Daimyo_Hermitaur"),
 
@@ -1066,7 +1066,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/joe_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Deviljho"),
 
@@ -1075,7 +1075,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/dea_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Diablos"),
 
@@ -1084,7 +1084,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/dio_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Diorekkusu"),
 
@@ -1115,7 +1115,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/doragyu_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Doragyurosu"),
 
@@ -1124,7 +1124,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/dura_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Dyuragaua"),
 
@@ -1133,7 +1133,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/egura_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Egyurasu"),
 
@@ -1142,7 +1142,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/elze_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Eruzerion"),
 
@@ -1151,7 +1151,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/erupe_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Erupe"),
 
@@ -1160,7 +1160,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/esp_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Espinas"),
 
@@ -1169,7 +1169,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/faru_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Farunokku"),
 
@@ -1178,7 +1178,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/mira_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Fatalis"),
 
@@ -1187,7 +1187,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/airu_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Felyne"),
 
@@ -1196,7 +1196,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/folo_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Forokururu"),
 
@@ -1205,7 +1205,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/galba_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Garuba_Daora"),
 
@@ -1214,7 +1214,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/gasra_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Gasurabazura"),
 
@@ -1223,7 +1223,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/dosgene_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Gendrome"),
 
@@ -1232,7 +1232,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/gene_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Genprey"),
 
@@ -1241,7 +1241,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/giao_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Giaorugu"),
         new MonsterInfo(
@@ -1249,7 +1249,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/giano_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Giaprey"),
         new MonsterInfo(
@@ -1257,7 +1257,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/gogo_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Gogomoa"),
         new MonsterInfo(
@@ -1265,7 +1265,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/reiakin_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Gold_Rathian"),
         new MonsterInfo(
@@ -1273,7 +1273,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/goa_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Gore_Magala"),
         new MonsterInfo(
@@ -1281,7 +1281,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/volkin_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Goruganosu"),
         new MonsterInfo(
@@ -1289,7 +1289,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/goglf_r_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Ray_Gougarf"),
         new MonsterInfo(
@@ -1297,7 +1297,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/goglf_l_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Lolo_Gougarf"),
         new MonsterInfo(
@@ -1305,7 +1305,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/gura_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Gravios"),
         new MonsterInfo(
@@ -1313,7 +1313,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/raikou_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Great_Thunderbug"),
         new MonsterInfo(
@@ -1321,7 +1321,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/ganomidori_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Green_Plesioth"),
         new MonsterInfo(
@@ -1329,7 +1329,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/guan_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Guanzorumu"),
         new MonsterInfo(
@@ -1337,7 +1337,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/glare_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Gureadomosu"),
         new MonsterInfo(
@@ -1345,7 +1345,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/guren_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Gurenzeburu"),
         new MonsterInfo(
@@ -1353,7 +1353,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/geryo_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Gypceros"),
         new MonsterInfo(
@@ -1361,7 +1361,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/hald_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Harudomerugu"),
         new MonsterInfo(
@@ -1369,7 +1369,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/gami_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Hermitaur"),
         new MonsterInfo(
@@ -1377,7 +1377,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/kanta_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Hornetaur"),
         new MonsterInfo(
@@ -1385,7 +1385,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/hipu_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Hypnocatrice"),
         new MonsterInfo(
@@ -1393,7 +1393,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/hyuji_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Hyujikiki"),
         new MonsterInfo(
@@ -1401,7 +1401,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/ina_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Inagami"),
         new MonsterInfo(
@@ -1409,7 +1409,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/dosios_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Iodrome"),
         new MonsterInfo(
@@ -1417,7 +1417,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/ios_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Ioprey"),
         new MonsterInfo(
@@ -1425,7 +1425,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/olgk_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Kamu_Orugaron"),
         new MonsterInfo(
@@ -1433,7 +1433,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/kerubi_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Kelbi"),
         new MonsterInfo(
@@ -1441,7 +1441,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/keoa_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Keoaruboru"),
         new MonsterInfo(
@@ -1449,7 +1449,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/furu_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Khezu"),
         new MonsterInfo(
@@ -1457,7 +1457,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/cyacyaKing_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/King_Shakalaka"),
         new MonsterInfo(
@@ -1465,7 +1465,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/kirin_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Kirin"),
         new MonsterInfo(
@@ -1473,7 +1473,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/koko_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Gogomoa"),
         new MonsterInfo(
@@ -1481,7 +1481,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/qual_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Kuarusepusu"),
         new MonsterInfo(
@@ -1489,7 +1489,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/kusha_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Kushala_Daora"),
         new MonsterInfo(
@@ -1497,7 +1497,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/kusb_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Kusubami"),
         new MonsterInfo(
@@ -1505,7 +1505,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/rao_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Lao-Shan_Lung"),
         new MonsterInfo(
@@ -1513,7 +1513,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/vol_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Lavasioth"),
         new MonsterInfo(
@@ -1521,7 +1521,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/nana_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Lunastra"),
         new MonsterInfo(
@@ -1529,7 +1529,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/merura_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Melynx"),
         new MonsterInfo(
@@ -1537,7 +1537,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/mera_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Meraginasu"),
         new MonsterInfo(
@@ -1545,7 +1545,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/mi-ru_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Mi_Ru"),
         new MonsterInfo(
@@ -1553,7 +1553,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/mido_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Midogaron"),
         new MonsterInfo(
@@ -1561,7 +1561,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/mono_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Monoblos"),
         new MonsterInfo(
@@ -1569,7 +1569,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/mos_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Mosswine"),
         new MonsterInfo(
@@ -1577,7 +1577,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/nalga_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Nargacuga"),
         new MonsterInfo(
@@ -1585,7 +1585,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/olgn_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Nono_Orugaron"),
         new MonsterInfo(
@@ -1593,7 +1593,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/odiva_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Odibatorasu"),
         new MonsterInfo(
@@ -1601,7 +1601,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/espcya_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Flaming_Espinas"),
         new MonsterInfo(
@@ -1609,7 +1609,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/paria_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Pariapuria"),
         new MonsterInfo(
@@ -1617,7 +1617,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/reiasa_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Pink_Rathian"),
         new MonsterInfo(
@@ -1625,7 +1625,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/gano_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Plesioth"),
         new MonsterInfo(
@@ -1633,7 +1633,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/pobol_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Poborubarumu"),
         new MonsterInfo(
@@ -1641,7 +1641,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/pokara_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Pokara"),
         new MonsterInfo(
@@ -1649,7 +1649,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/pokaradon_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Pokaradon"),
         new MonsterInfo(
@@ -1657,7 +1657,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/popo_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Popo"),
         new MonsterInfo(
@@ -1665,7 +1665,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/lappy_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             rickRoll),
         new MonsterInfo(
@@ -1673,7 +1673,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/geryoao_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Purple_Gypceros"),
         new MonsterInfo(
@@ -1681,7 +1681,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/ra_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Rajang"),
         new MonsterInfo(
@@ -1689,7 +1689,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/reusu_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Rathalos"),
         new MonsterInfo(
@@ -1697,7 +1697,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/reia_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Rathian"),
         new MonsterInfo(
@@ -1705,7 +1705,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/lavie_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Raviente"),
         new MonsterInfo(
@@ -1713,7 +1713,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/levy_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Rebidiora"),
         new MonsterInfo(
@@ -1721,7 +1721,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/furuaka_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Red_Khezu"),
         new MonsterInfo(
@@ -1729,7 +1729,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/volaka_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Red_Volganos"),
         new MonsterInfo(
@@ -1737,7 +1737,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/gabu_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Remobra"),
         new MonsterInfo(
@@ -1745,7 +1745,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/iwa_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             rickRoll),
         new MonsterInfo(
@@ -1753,7 +1753,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/ruco_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Rukodiora"),
         new MonsterInfo(
@@ -1761,7 +1761,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/kushasabi_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Rusted_Kushala_Daora"),
         new MonsterInfo(
@@ -1769,7 +1769,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/sell_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Seregios"),
         new MonsterInfo(
@@ -1777,7 +1777,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/shagal_nh.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Shagaru_Magala"),
         new MonsterInfo(
@@ -1785,7 +1785,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/cyacya_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Shakalaka"),
         new MonsterInfo(
@@ -1793,7 +1793,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/shan_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Shantien"),
         new MonsterInfo(
@@ -1801,7 +1801,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/shen_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Rathian"),
         new MonsterInfo(
@@ -1809,7 +1809,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/syougun_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Shogun_Ceanataur"),
         new MonsterInfo(
@@ -1817,7 +1817,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/hipusiro_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Silver_Hypnocatrice"),
         new MonsterInfo(
@@ -1825,7 +1825,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/reusugin_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Silver_Rathalos"),
         new MonsterInfo(
@@ -1833,7 +1833,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/zingoku_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Stygian_Zinogre"),
         new MonsterInfo(
@@ -1841,7 +1841,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/taikun_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Taikun_Zamuza"),
         new MonsterInfo(
@@ -1849,7 +1849,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/teo_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Teostra"),
         new MonsterInfo(
@@ -1857,7 +1857,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/tiga_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Tigrex"),
         new MonsterInfo(
@@ -1865,7 +1865,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/toa_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Toa_Tesukatora"),
         new MonsterInfo(
@@ -1873,7 +1873,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/torid_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Toridcless"),
         new MonsterInfo(
@@ -1902,7 +1902,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/ura_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Uragaan"),
         new MonsterInfo(
@@ -1910,7 +1910,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/ulky_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Uruki"),
         new MonsterInfo(
@@ -1918,7 +1918,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/valsa_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Varusaburosu"),
         new MonsterInfo(
@@ -1926,7 +1926,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/dosran_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Velocidrome"),
         new MonsterInfo(
@@ -1934,7 +1934,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/ran_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Velociprey"),
         new MonsterInfo(
@@ -1942,7 +1942,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/rango_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Vespoid"),
         new MonsterInfo(
@@ -1950,7 +1950,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/Vau_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Voljang"),
         new MonsterInfo(
@@ -1958,7 +1958,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/espsiro_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Espinas_Rare_Species"),
         new MonsterInfo(
@@ -1966,7 +1966,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/miraru_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/White_Fatalis"),
         new MonsterInfo(
@@ -1974,7 +1974,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/monosiro_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/White_Monoblos"),
         new MonsterInfo(
@@ -1982,7 +1982,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/yamac_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Yama_Kurai"),
         new MonsterInfo(
@@ -1990,7 +1990,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/yama_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Yama_Tsukami"),
         new MonsterInfo(
@@ -1998,7 +1998,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/garuru_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Yian_Garuga"),
         new MonsterInfo(
@@ -2006,7 +2006,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/kukku_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Yian_Kut-Ku"),
         new MonsterInfo(
@@ -2014,7 +2014,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/zena_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Zenaserisu"),
         new MonsterInfo(
@@ -2022,7 +2022,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/zeru_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Zerureusu"),
         new MonsterInfo(
@@ -2030,7 +2030,7 @@ public static class MonsterInfoList
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/zin_n.htm",
             new Dictionary<string, string>()
             {
-                { string.Empty,string.Empty },
+                { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Zinogre"),
         };

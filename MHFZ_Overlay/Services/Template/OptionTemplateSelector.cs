@@ -11,11 +11,9 @@ public class OptionTemplateSelector : DataTemplateSelector
 {
     public override DataTemplate? SelectTemplate(object item, DependencyObject container)
     {
-        var selectedOption = item as string;
-        if (selectedOption != null)
+        if (item is string selectedOption)
         {
-            var element = container as FrameworkElement;
-            if (element != null)
+            if (container is FrameworkElement element)
             {
                 return element.FindResource(selectedOption) as DataTemplate;
             }

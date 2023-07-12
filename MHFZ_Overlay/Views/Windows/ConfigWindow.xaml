@@ -3,21 +3,21 @@
 // Use of this source code is governed by a MIT license that can be
 // found in the LICENSE file.
 -->
-    <ui:FluentWindow x:Class="MHFZ_Overlay.Views.ConfigWindow"
+    <ui:FluentWindow x:Class="MHFZ_Overlay.Views.Windows.ConfigWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:gif="http://wpfanimatedgif.codeplex.com"
         xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
-        d:DataContext="{d:DesignInstance Type=viewmodels:AddressModel}"
+        d:DataContext="{d:DesignInstance Type=windows:AddressModel}"
                  xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
                  xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
                  xmlns:models="clr-namespace:MHFZ_Overlay.Models"
                  xmlns:converter="clr-namespace:MHFZ_Overlay.Services.Converter"
                  xmlns:customcontrols="clr-namespace:MHFZ_Overlay.Views.CustomControls"
                  xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-                xmlns:viewmodels="clr-namespace:MHFZ_Overlay.ViewModels"
+                 xmlns:viewmodels="clr-namespace:MHFZ_Overlay.ViewModels" xmlns:windows="clr-namespace:MHFZ_Overlay.ViewModels.Windows"
                  mc:Ignorable="d"
         x:Name="Config"
         Title="Monster Hunter Frontier Z Overlay Settings"
@@ -887,7 +887,7 @@
             <TabItem ToolTip="General settings" Background="{StaticResource Mantle}" Foreground="{StaticResource Text}">
                 <TabItem.Header>
                     <StackPanel Background="Transparent" Orientation="Horizontal">
-                        <Image Name="generalImg" Source="../Assets/Icons/png/book.png" Width="32" Height="32"/>
+                        <Image Name="generalImg" Source="../../Assets/Icons/png/book.png" Width="32" Height="32"/>
                         <TextBlock Background="Transparent" Text="General" Margin="4,0,0,0" VerticalAlignment="Center" Foreground="#f5e0dc"/>
                     </StackPanel>
                 </TabItem.Header>
@@ -1168,7 +1168,7 @@
                 </TabItem.Resources>
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal" Background="Transparent">
-                        <Image gif:ImageBehavior.AnimatedSource="../Assets/Icons/gif/scroll_rainbow.gif" x:Name="gifScroll" Width="32" Height="32" gif:ImageBehavior.RepeatBehavior="Forever"/>
+                        <Image gif:ImageBehavior.AnimatedSource="../../Assets/Icons/gif/scroll_rainbow.gif" x:Name="gifScroll" Width="32" Height="32" gif:ImageBehavior.RepeatBehavior="Forever"/>
                         <TextBlock Text="Quest Log" Margin="4,0,0,0" VerticalAlignment="Center" Foreground="#94e2d5">
                             <TextBlock.Triggers>
                                 <EventTrigger RoutedEvent="Loaded">
@@ -1328,7 +1328,7 @@
 
                                             <StackPanel Grid.Row="3" Grid.Column="1" Margin="5" Orientation="Vertical">
                                                 <StackPanel Orientation="Horizontal">
-                                                    <Image Source="../Assets/Icons/png/small_sns.png" Width="24" Height="24"/>
+                                                    <Image Source="../../Assets/Icons/png/small_sns.png" Width="24" Height="24"/>
                                                     <TextBlock Text="Sword and Shield" Margin="5,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{StaticResource Open Sans Bold}"/>
                                                 </StackPanel>
                                                 <TextBlock x:Name="SwordAndShieldBestTimeTextBlock" Text="--:--.---" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
@@ -1336,7 +1336,7 @@
                                             </StackPanel>
                                             <StackPanel Grid.Row="3" Grid.Column="2" Margin="5" Orientation="Vertical">
                                                 <StackPanel Orientation="Horizontal">
-                                                    <Image Source="../Assets/Icons/png/small_ds.png" Width="24" Height="24"/>
+                                                    <Image Source="../../Assets/Icons/png/small_ds.png" Width="24" Height="24"/>
                                                     <TextBlock Text="Dual Swords" Margin="5,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{StaticResource Open Sans Bold}"/>
                                                 </StackPanel>
                                                 <TextBlock x:Name="DualSwordsBestTimeTextBlock" Text="--:--.---" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
@@ -1344,7 +1344,7 @@
                                             </StackPanel>
                                             <StackPanel Grid.Row="4" Grid.Column="1" Margin="5" Orientation="Vertical">
                                                 <StackPanel Orientation="Horizontal">
-                                                    <Image Source="../Assets/Icons/png/small_gs.png" Width="24" Height="24"/>
+                                                    <Image Source="../../Assets/Icons/png/small_gs.png" Width="24" Height="24"/>
                                                     <TextBlock Text="Great Sword" Margin="5,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{StaticResource Open Sans Bold}"/>
                                                 </StackPanel>
                                                 <TextBlock x:Name="GreatSwordBestTimeTextBlock" Text="--:--.---" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
@@ -1352,7 +1352,7 @@
                                             </StackPanel>
                                             <StackPanel Grid.Row="4" Grid.Column="2" Margin="5" Orientation="Vertical">
                                                 <StackPanel Orientation="Horizontal">
-                                                    <Image Source="../Assets/Icons/png/small_ls.png" Width="24" Height="24"/>
+                                                    <Image Source="../../Assets/Icons/png/small_ls.png" Width="24" Height="24"/>
                                                     <TextBlock Text="Long Sword" Margin="5,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{StaticResource Open Sans Bold}"/>
                                                 </StackPanel>
                                                 <TextBlock x:Name="LongSwordBestTimeTextBlock" Text="--:--.---" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
@@ -1360,7 +1360,7 @@
                                             </StackPanel>
                                             <StackPanel Grid.Row="5" Grid.Column="1" Margin="5" Orientation="Vertical">
                                                 <StackPanel Orientation="Horizontal">
-                                                    <Image Source="../Assets/Icons/png/small_hammer.png" Width="24" Height="24"/>
+                                                    <Image Source="../../Assets/Icons/png/small_hammer.png" Width="24" Height="24"/>
                                                     <TextBlock Text="Hammer" Margin="5,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{StaticResource Open Sans Bold}"/>
                                                 </StackPanel>
                                                 <TextBlock x:Name="HammerBestTimeTextBlock" Text="--:--.---" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
@@ -1368,7 +1368,7 @@
                                             </StackPanel>
                                             <StackPanel Grid.Row="5" Grid.Column="2" Margin="5" Orientation="Vertical">
                                                 <StackPanel Orientation="Horizontal">
-                                                    <Image Source="../Assets/Icons/png/small_hh.png" Width="24" Height="24"/>
+                                                    <Image Source="../../Assets/Icons/png/small_hh.png" Width="24" Height="24"/>
                                                     <TextBlock Text="Hunting Horn" Margin="5,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{StaticResource Open Sans Bold}"/>
                                                 </StackPanel>
                                                 <TextBlock x:Name="HuntingHornBestTimeTextBlock" Text="--:--.---" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
@@ -1376,7 +1376,7 @@
                                             </StackPanel>
                                             <StackPanel Grid.Row="6" Grid.Column="1" Margin="5" Orientation="Vertical">
                                                 <StackPanel Orientation="Horizontal">
-                                                    <Image Source="../Assets/Icons/png/small_lance.png" Width="24" Height="24"/>
+                                                    <Image Source="../../Assets/Icons/png/small_lance.png" Width="24" Height="24"/>
                                                     <TextBlock Text="Lance" Margin="5,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{StaticResource Open Sans Bold}"/>
                                                 </StackPanel>
                                                 <TextBlock x:Name="LanceBestTimeTextBlock" Text="--:--.---" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
@@ -1384,7 +1384,7 @@
                                             </StackPanel>
                                             <StackPanel Grid.Row="6" Grid.Column="2" Margin="5" Orientation="Vertical">
                                                 <StackPanel Orientation="Horizontal">
-                                                    <Image Source="../Assets/Icons/png/small_gl.png" Width="24" Height="24"/>
+                                                    <Image Source="../../Assets/Icons/png/small_gl.png" Width="24" Height="24"/>
                                                     <TextBlock Text="Gunlance" Margin="5,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{StaticResource Open Sans Bold}"/>
                                                 </StackPanel>
                                                 <TextBlock x:Name="GunlanceBestTimeTextBlock" Text="--:--.---" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
@@ -1392,7 +1392,7 @@
                                             </StackPanel>
                                             <StackPanel Grid.Row="7" Grid.Column="1" Margin="5" Orientation="Vertical">
                                                 <StackPanel Orientation="Horizontal">
-                                                    <Image Source="../Assets/Icons/png/small_tonfa.png" Width="24" Height="24"/>
+                                                    <Image Source="../../Assets/Icons/png/small_tonfa.png" Width="24" Height="24"/>
                                                     <TextBlock Text="Tonfa" Margin="5,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{StaticResource Open Sans Bold}"/>
                                                 </StackPanel>
                                                 <TextBlock x:Name="TonfaBestTimeTextBlock" Text="--:--.---" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
@@ -1400,7 +1400,7 @@
                                             </StackPanel>
                                             <StackPanel Grid.Row="7" Grid.Column="2" Margin="5" Orientation="Vertical">
                                                 <StackPanel Orientation="Horizontal">
-                                                    <Image Source="../Assets/Icons/png/small_saf.png" Width="24" Height="24"/>
+                                                    <Image Source="../../Assets/Icons/png/small_saf.png" Width="24" Height="24"/>
                                                     <TextBlock Text="Switch Axe F" Margin="5,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{StaticResource Open Sans Bold}"/>
                                                 </StackPanel>
                                                 <TextBlock x:Name="SwitchAxeFBestTimeTextBlock" Text="--:--.---" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
@@ -1408,7 +1408,7 @@
                                             </StackPanel>
                                             <StackPanel Grid.Row="8" Grid.Column="1" Margin="5" Orientation="Vertical">
                                                 <StackPanel Orientation="Horizontal">
-                                                    <Image Source="../Assets/Icons/png/small_ms.png" Width="24" Height="24"/>
+                                                    <Image Source="../../Assets/Icons/png/small_ms.png" Width="24" Height="24"/>
                                                     <TextBlock Text="Magnet Spike" Margin="5,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{StaticResource Open Sans Bold}"/>
                                                 </StackPanel>
                                                 <TextBlock x:Name="MagnetSpikeBestTimeTextBlock" Text="--:--.---" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
@@ -1416,7 +1416,7 @@
                                             </StackPanel>
                                             <StackPanel Grid.Row="8" Grid.Column="2" Margin="5" Orientation="Vertical">
                                                 <StackPanel Orientation="Horizontal">
-                                                    <Image Source="../Assets/Icons/png/small_lbg.png" Width="24" Height="24"/>
+                                                    <Image Source="../../Assets/Icons/png/small_lbg.png" Width="24" Height="24"/>
                                                     <TextBlock Text="Light Bowgun" Margin="5,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{StaticResource Open Sans Bold}"/>
                                                 </StackPanel>
                                                 <TextBlock x:Name="LightBowgunBestTimeTextBlock" Text="--:--.---" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
@@ -1424,7 +1424,7 @@
                                             </StackPanel>
                                             <StackPanel Grid.Row="9" Grid.Column="1" Margin="5" Orientation="Vertical">
                                                 <StackPanel Orientation="Horizontal">
-                                                    <Image Source="../Assets/Icons/png/small_hbg.png" Width="24" Height="24"/>
+                                                    <Image Source="../../Assets/Icons/png/small_hbg.png" Width="24" Height="24"/>
                                                     <TextBlock Text="Heavy Bowgun" Margin="5,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{StaticResource Open Sans Bold}"/>
                                                 </StackPanel>
                                                 <TextBlock x:Name="HeavyBowgunBestTimeTextBlock" Text="--:--.---" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
@@ -1432,7 +1432,7 @@
                                             </StackPanel>
                                             <StackPanel Grid.Row="9" Grid.Column="2" Margin="5" Orientation="Vertical">
                                                 <StackPanel Orientation="Horizontal">
-                                                    <Image Source="../Assets/Icons/png/small_bow.png" Width="24" Height="24"/>
+                                                    <Image Source="../../Assets/Icons/png/small_bow.png" Width="24" Height="24"/>
                                                     <TextBlock Text="Bow" Margin="5,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{StaticResource Open Sans Bold}"/>
                                                 </StackPanel>
                                                 <TextBlock x:Name="BowBestTimeTextBlock" Text="--:--.---" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
@@ -1540,7 +1540,7 @@
                                         </Grid>
 
                                         <StackPanel Orientation="Horizontal" Margin="5" Grid.Row="6" Grid.Column="0" ToolTip="If disabled, your nationality will be shown as 'World' in the database, regardless of the nationality selected below.">
-                                            <Image Source="../Assets/Icons/png/world.png" Margin="0,0,5,0"/>
+                                            <Image Source="../../Assets/Icons/png/world.png" Margin="0,0,5,0"/>
                                             <TextBlock Style="{StaticResource ConfigTextBox}" Text="Show Nationality"/>
                                         </StackPanel>
                                         <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="6" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=EnableNationality}"/>
@@ -1556,7 +1556,7 @@
                                             </ComboBox.ItemTemplate>
                                         </ComboBox>
                                         <StackPanel Orientation="Horizontal" Margin="5" Grid.Row="8" Grid.Column="0" ToolTip="Show the current Quest ID in overlay">
-                                            <Image Source="../Assets/Icons/png/quest_host.png" Margin="0,0,5,0"/>
+                                            <Image Source="../../Assets/Icons/png/quest_host.png" Margin="0,0,5,0"/>
                                             <TextBlock Style="{StaticResource ConfigTextBox}" Text="Quest ID" />
                                         </StackPanel>
                                         <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="8" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=QuestIDShown}"/>
@@ -1566,7 +1566,7 @@
                                             <ui:TextBox Margin="5,0,0,0" IsUndoEnabled="False" TextAlignment="Center" PlaceholderText="Y" Text="{Binding Source={StaticResource Settings},Path=QuestIDY}"  PreviewTextInput="ValidateNumber"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Margin="5" Grid.Row="10" Grid.Column="0" ToolTip="Show the personal best of the selected quest with the selected weapon type and overlay mode">
-                                            <Image Source="../Assets/Icons/png/quest_clock.png" Margin="0,0,5,0"/>
+                                            <Image Source="../../Assets/Icons/png/quest_clock.png" Margin="0,0,5,0"/>
                                             <TextBlock Style="{StaticResource ConfigTextBox}" Text="Personal Best"/>
                                         </StackPanel>
                                         <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="10" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=PersonalBestShown}"/>
@@ -1604,7 +1604,7 @@
                                             <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="Y" Margin="5,0,0,0" Text="{Binding Source={StaticResource Settings},Path=PersonalBestTimePercentY}"  PreviewTextInput="ValidateNumber"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Margin="5" Grid.Row="15" Grid.Column="0" ToolTip="Show Personal Best Attempts divided by overlay mode and weapon type. Resets to 0 if a new Personal Best is achieved.">
-                                            <Image Source="../Assets/Icons/png/quest_1.png" Margin="0,0,5,0"/>
+                                            <Image Source="../../Assets/Icons/png/quest_1.png" Margin="0,0,5,0"/>
                                             <TextBlock Style="{StaticResource ConfigTextBox}" Text="(Quest Logging required) Personal Best Attempts" />
                                         </StackPanel>
                                         <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="15" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=PersonalBestAttemptsShown}"/>
@@ -1614,7 +1614,7 @@
                                             <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="Y" Margin="5,0,0,0" Text="{Binding Source={StaticResource Settings},Path=PersonalBestAttemptsY}"  PreviewTextInput="ValidateNumber"/>
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal" Margin="5" Grid.Row="17" Grid.Column="0" ToolTip="Show Quest Attempts divided by overlay mode and weapon type">
-                                            <Image Source="../Assets/Icons/png/ticket.png" Margin="0,0,5,0"/>
+                                            <Image Source="../../Assets/Icons/png/ticket.png" Margin="0,0,5,0"/>
                                             <TextBlock Style="{StaticResource ConfigTextBox}" Text="Quest Attempts" />
                                         </StackPanel>
                                         <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="17" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=QuestAttemptsShown}"/>
@@ -1637,7 +1637,7 @@
             <TabItem ToolTip="Player Settings" Background="{StaticResource Mantle}" Foreground="{StaticResource Text}">
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
-                        <Image Source="../Assets/Icons/png/helm.png" Width="32" Height="32"/>
+                        <Image Source="../../Assets/Icons/png/helm.png" Width="32" Height="32"/>
                         <TextBlock Foreground="#f38ba8" Text="Player Info" Margin="4,0,0,0" VerticalAlignment="Center" />
                     </StackPanel>
                 </TabItem.Header>
@@ -1727,7 +1727,7 @@
                             </Grid.RowDefinitions>
 
                             <StackPanel Margin="5" Orientation="Horizontal" Grid.Row="0" Grid.Column="0" ToolTip="Show Timer">
-                                <Image Source="../Assets/Icons/png/clock.png" Margin="0,0,5,0"/>
+                                <Image Source="../../Assets/Icons/png/clock.png" Margin="0,0,5,0"/>
                                 <TextBlock Style="{StaticResource ConfigTextBox}" Text="Quest Timer"/>
                             </StackPanel>
                             <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="0" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=TimerInfoShown}"/>
@@ -1751,7 +1751,7 @@
                             <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="4" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=EnableQuestPaceColor}"/>
 
                             <StackPanel Margin="5" Orientation="Horizontal" Grid.Row="5" Grid.Column="0" ToolTip="Show Hit Count (doesn't count Ice Age hits)">
-                                <Image Source="../Assets/Icons/png/blue_soul.png" Margin="0,0,5,0"/>
+                                <Image Source="../../Assets/Icons/png/blue_soul.png" Margin="0,0,5,0"/>
                                 <TextBlock Style="{StaticResource ConfigTextBox}" Text="Hit Count (doesn't count Ice Age hits)"/>
                             </StackPanel>
                             <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="5" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=HitCountShown}"/>
@@ -1773,7 +1773,7 @@
         		///<para>Final True  = ((Weapon True + Attack A) * HH Buff + Attack B) * Multipliers + Additional</para>
         		///</summary>-->
                             <StackPanel Margin="5" Orientation="Horizontal" Grid.Row="9" Grid.Column="0" ToolTip="Show Player True Raw">
-                                <Image Source="../Assets/Icons/png/attack_up.png" Margin="0,0,5,0"/>
+                                <Image Source="../../Assets/Icons/png/attack_up.png" Margin="0,0,5,0"/>
                                 <TextBlock Style="{StaticResource ConfigTextBox}" Text="Attack Value" 
                                 ToolTipService.ToolTip="Player True Raw&#x0a;Attack addition is added as either Attack A or Attack B and is before or after Hunting Horn buffs respectively.&#x0a;Values that are known to reside in Attack B are Rush, Stylish Assault, Flash Conversion, Obscurity, Incitement, Rush, Vigorous Up and Partnyaa Attack Buffs.&#x0a;Final True  = ((Weapon True + Attack A) * HH Buff + Attack B) * Multipliers + Additional"/>
                             </StackPanel>
@@ -1788,7 +1788,7 @@
                             <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="11" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableHighestAtkColor}"/>
 
                             <StackPanel Margin="5" Orientation="Horizontal" Grid.Row="12" Grid.Column="0" ToolTip="Show DPS (resets per quest and doesn't calculate hit values over 1000)">
-                                <Image Source="../Assets/Icons/png/burst.png" Margin="0,0,5,0"/>
+                                <Image Source="../../Assets/Icons/png/burst.png" Margin="0,0,5,0"/>
                                 <TextBlock Style="{StaticResource ConfigTextBox}"  Text="DPS Value"/>
                             </StackPanel>
                             <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="12" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=DamagePerSecondShown}"/>
@@ -1802,7 +1802,7 @@
                             <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="14" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableHighestDPSColor}"/>
 
                             <StackPanel Margin="5" Orientation="Horizontal" Grid.Row="15" Grid.Column="0" ToolTip="Show Total Current Sharpness Values">
-                                <Image Source="../Assets/Icons/png/whetstone.png" Margin="0,0,5,0"/>
+                                <Image Source="../../Assets/Icons/png/whetstone.png" Margin="0,0,5,0"/>
                                 <TextBlock Style="{StaticResource ConfigTextBox}" Text="Total Sharpness"/>
                             </StackPanel>
                             <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="15" Grid.Column="1" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableSharpness}"/>
@@ -1815,7 +1815,7 @@
                             <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="17" Grid.Column="1" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableSharpnessPercentage}"/>
 
                             <StackPanel Margin="5" Orientation="Horizontal" Grid.Row="18" Grid.Column="0" ToolTip="Show Total Hits Taken/Blocked">
-                                <Image Source="../Assets/Icons/png/defense_up.png" Margin="0,0,5,0"/>
+                                <Image Source="../../Assets/Icons/png/defense_up.png" Margin="0,0,5,0"/>
                                 <TextBlock Style="{StaticResource ConfigTextBox}" Text="Hits Taken/Blocked"/>
                             </StackPanel>
                             <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="18" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=TotalHitsTakenBlockedShown}"/>
@@ -1832,7 +1832,7 @@
                             <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="21" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=EnableTotalHitsTakenBlockedColor}"/>
 
                             <StackPanel Margin="5" Orientation="Horizontal" Grid.Row="22" Grid.Column="0" ToolTip="Show Player Attack Graph">
-                                <Image Source="../Assets/Icons/png/attack_up_red.png" Margin="0,0,5,0"/>
+                                <Image Source="../../Assets/Icons/png/attack_up_red.png" Margin="0,0,5,0"/>
                                 <TextBlock Style="{StaticResource ConfigTextBox}" Text="Player Attack Graph"/>
                             </StackPanel>
                             <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="22" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=PlayerAttackGraphShown}"/>
@@ -1852,7 +1852,7 @@
                             <TextBlock Margin="5" Style="{StaticResource ConfigTextBox}" Grid.Row="26" Grid.Column="0" Text="Player Attack Graph Background Color"/>
                             <xctk:ColorPicker Grid.Column="1" Grid.Row="26" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=PlayerAttackGraphBackground}"/>
                             <StackPanel Margin="5" Orientation="Horizontal" Grid.Row="27" Grid.Column="0" ToolTip="Show Player DPS Graph">
-                                <Image Source="../Assets/Icons/png/burst_red.png" Margin="0,0,5,0"/>
+                                <Image Source="../../Assets/Icons/png/burst_red.png" Margin="0,0,5,0"/>
                                 <TextBlock Style="{StaticResource ConfigTextBox}" Text="Player DPS Graph"/>
                             </StackPanel>
                             <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="27" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=PlayerDPSGraphShown}"/>
@@ -1872,7 +1872,7 @@
                             <xctk:ColorPicker Grid.Column="1" Grid.Row="31" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=PlayerDPSGraphBackground}"/>
 
                             <StackPanel Margin="5" Orientation="Horizontal" Grid.Row="32" Grid.Column="0" ToolTip="Show Player Hits per Second Graph">
-                                <Image Source="../Assets/Icons/png/red_soul.png" Margin="0,0,5,0"/>
+                                <Image Source="../../Assets/Icons/png/red_soul.png" Margin="0,0,5,0"/>
                                 <TextBlock Margin="5" Style="{StaticResource ConfigTextBox}" Text="Player Hits Per Second Graph"/>
                             </StackPanel>
                             <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="32" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=PlayerHitsPerSecondGraphShown}"/>
@@ -1892,7 +1892,7 @@
                             <xctk:ColorPicker Grid.Column="1" Grid.Row="36" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=PlayerHitsPerSecondGraphBackground}"/>
 
                             <StackPanel Margin="5" Orientation="Horizontal" Grid.Row="37" Grid.Column="0" ToolTip="Show Player Actions per Minute Graph">
-                                <Image Source="../Assets/Icons/png/flame_hc.png" Margin="0,0,5,0"/>
+                                <Image Source="../../Assets/Icons/png/flame_hc.png" Margin="0,0,5,0"/>
                                 <TextBlock Style="{StaticResource ConfigTextBox}" Text="Player Actions per Minute Graph"/>
                             </StackPanel>
                             <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="37" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=PlayerAPMGraphShown}"/>
@@ -1968,7 +1968,7 @@
                             <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="51" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableDamageNumbersFlash}"/>
 
                             <StackPanel Margin="5" Orientation="Horizontal" Grid.Row="52" Grid.Column="0" ToolTip="Show Map">
-                                <Image Source="../Assets/Icons/png/world.png" Margin="0,0,5,0"/>
+                                <Image Source="../../Assets/Icons/png/world.png" Margin="0,0,5,0"/>
                                 <TextBlock Margin="5" Style="{StaticResource ConfigTextBox}"  Text="Location Map"/>
                             </StackPanel>
                             <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="52" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableMap}"/>
@@ -2015,7 +2015,7 @@
                             <TextBlock Margin="5" Style="{StaticResource ConfigTextBox}" Grid.Row="60" Grid.Column="0"  Text="Controller/Gamepad Layout Size"/>
                             <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="60" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=GamepadSize}"  PreviewTextInput="ValidateNumber"/>
                             <StackPanel Margin="5" Orientation="Horizontal" Grid.Row="61" Grid.Column="0" ToolTip="Show Actions Per Minute (actions are defined as the total sum of keystrokes, mouse button presses and gamepad inputs)">
-                                <Image Source="../Assets/Icons/png/flame_ul.png" Margin="0,0,5,0"/>
+                                <Image Source="../../Assets/Icons/png/flame_ul.png" Margin="0,0,5,0"/>
                                 <TextBlock Style="{StaticResource ConfigTextBox}" Text="Actions per Minute"/>
                             </StackPanel>
                             <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="61" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=ActionsPerMinuteShown}"/>
@@ -2049,7 +2049,7 @@
             <TabItem ToolTip="Access a wealth of useful information about hunting" Background="{StaticResource Mantle}" Foreground="{StaticResource Text}">
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
-                        <Image Source="../Assets/Icons/png/study.png" Width="32" Height="32"/>
+                        <Image Source="../../Assets/Icons/png/study.png" Width="32" Height="32"/>
                         <TextBlock Text="Hunter's Notes" Margin="4,0,0,0" VerticalAlignment="Center" Foreground="{StaticResource Text}"/>
                     </StackPanel>
                 </TabItem.Header>
@@ -2306,7 +2306,7 @@ Thunder Clad, Vigorous" Text="{Binding GetActiveSkillsForImage,Mode=OneTime}" Fo
                                     <TabItem ToolTip="View Image" Background="{StaticResource Crust}" Foreground="{StaticResource Text}">
                                         <TabItem.Header>
                                             <StackPanel Orientation="Horizontal">
-                                                <Image Source="../Assets/Icons/png/photo.png" Width="32" Height="32"/>
+                                                <Image Source="../../Assets/Icons/png/photo.png" Width="32" Height="32"/>
                                                 <TextBlock Text="Image" Margin="4,0,0,0" VerticalAlignment="Center" />
                                             </StackPanel>
                                         </TabItem.Header>
@@ -2395,7 +2395,7 @@ Thunder Clad, Vigorous" Text="{Binding GetActiveSkillsForImage,Mode=OneTime}" Fo
                                     <TabItem ToolTip="View Text" Background="{StaticResource Crust}" Foreground="{StaticResource Text}">
                                         <TabItem.Header>
                                             <StackPanel Orientation="Horizontal">
-                                                <Image Source="../Assets/Icons/png/ticket.png" Width="32" Height="32"/>
+                                                <Image Source="../../Assets/Icons/png/ticket.png" Width="32" Height="32"/>
                                                 <TextBlock Text="Text" Margin="4,0,0,0" VerticalAlignment="Center" />
                                             </StackPanel>
                                         </TabItem.Header>
@@ -2410,7 +2410,7 @@ Thunder Clad, Vigorous" Text="{Binding GetActiveSkillsForImage,Mode=OneTime}" Fo
                                     <TabItem ToolTip="View Hunted Monsters" Background="{StaticResource Crust}" Foreground="{StaticResource Text}">
                                         <TabItem.Header>
                                             <StackPanel Orientation="Horizontal">
-                                                <Image Source="../Assets/Icons/png/bone.png" Width="32" Height="32"/>
+                                                <Image Source="../../Assets/Icons/png/bone.png" Width="32" Height="32"/>
                                                 <TextBlock Text="Hunt Log" Margin="4,0,0,0" VerticalAlignment="Center" />
                                             </StackPanel>
                                         </TabItem.Header>
@@ -2491,7 +2491,7 @@ Thunder Clad, Vigorous" Text="{Binding GetActiveSkillsForImage,Mode=OneTime}" Fo
                                     <TabItem ToolTip="View Caravan Skills" Background="{StaticResource Crust}" Foreground="{StaticResource Text}">
                                         <TabItem.Header>
                                             <StackPanel Orientation="Horizontal">
-                                                <Image Source="../Assets/Icons/png/caravan_skills.png" Width="32" Height="32"/>
+                                                <Image Source="../../Assets/Icons/png/caravan_skills.png" Width="32" Height="32"/>
                                                 <TextBlock Text="Caravan" Margin="4,0,0,0" VerticalAlignment="Center" />
                                             </StackPanel>
                                         </TabItem.Header>
@@ -2523,7 +2523,7 @@ Thunder Clad, Vigorous" Text="{Binding GetActiveSkillsForImage,Mode=OneTime}" Fo
                                     <TabItem ToolTip="View Road/Duremudira Skills" Background="{StaticResource Crust}" Foreground="{StaticResource Text}">
                                         <TabItem.Header>
                                             <StackPanel Orientation="Horizontal">
-                                                <Image Source="../Assets/Icons/png/dure2.png" Width="32" Height="32"/>
+                                                <Image Source="../../Assets/Icons/png/dure2.png" Width="32" Height="32"/>
                                                 <TextBlock Text="Road/Duremudira" Margin="4,0,0,0" VerticalAlignment="Center" />
                                             </StackPanel>
                                         </TabItem.Header>
@@ -2538,7 +2538,7 @@ Thunder Clad, Vigorous" Text="{Binding GetActiveSkillsForImage,Mode=OneTime}" Fo
                                     <TabItem ToolTip="View Armor Skills" Background="{StaticResource Crust}" Foreground="{StaticResource Text}">
                                         <TabItem.Header>
                                             <StackPanel Orientation="Horizontal">
-                                                <Image Source="../Assets/Icons/png/armor_skills.png" Width="32" Height="32"/>
+                                                <Image Source="../../Assets/Icons/png/armor_skills.png" Width="32" Height="32"/>
                                                 <TextBlock Text="Armor" Margin="4,0,0,0" VerticalAlignment="Center" />
                                             </StackPanel>
                                         </TabItem.Header>
@@ -2582,7 +2582,7 @@ Thunder Clad, Vigorous" Text="{Binding GetActiveSkillsForImage,Mode=OneTime}" Fo
                                     <TabItem ToolTip="View Zenith Skills" Background="{StaticResource Crust}" Foreground="{StaticResource Text}">
                                         <TabItem.Header>
                                             <StackPanel Orientation="Horizontal">
-                                                <Image Source="../Assets/Icons/png/boggers.png" Width="32" Height="32"/>
+                                                <Image Source="../../Assets/Icons/png/boggers.png" Width="32" Height="32"/>
                                                 <TextBlock Text="Zenith Skills" Margin="4,0,0,0" VerticalAlignment="Center" />
                                             </StackPanel>
                                         </TabItem.Header>
@@ -2597,7 +2597,7 @@ Thunder Clad, Vigorous" Text="{Binding GetActiveSkillsForImage,Mode=OneTime}" Fo
                                     <TabItem ToolTip="View Motion Values" Background="{StaticResource Crust}" Foreground="{StaticResource Text}">
                                         <TabItem.Header>
                                             <StackPanel Orientation="Horizontal">
-                                                <Image Source="../Assets/Icons/png/unknown.png" Width="32" Height="32"/>
+                                                <Image Source="../../Assets/Icons/png/unknown.png" Width="32" Height="32"/>
                                                 <TextBlock Text="Motion Values" Margin="4,0,0,0" VerticalAlignment="Center" />
                                             </StackPanel>
                                         </TabItem.Header>
@@ -2639,7 +2639,7 @@ Thunder Clad, Vigorous" Text="{Binding GetActiveSkillsForImage,Mode=OneTime}" Fo
                                     <!--<TabItem ToolTip="View Hunting Horn Songs" Background="{StaticResource Crust}" Foreground="{StaticResource Text}">
                                     <TabItem.Header>
                                         <StackPanel Orientation="Horizontal">
-                                            <Image Source="../Assets/Icons/png/note_pink.png" Width="32" Height="32"/>
+                                            <Image Source="../../Assets/Icons/png/note_pink.png" Width="32" Height="32"/>
                                             <TextBlock Text="Hunting Horn Songs" Margin="4,0,0,0" VerticalAlignment="Center" />
                                         </StackPanel>
                                     </TabItem.Header>
@@ -2654,7 +2654,7 @@ Thunder Clad, Vigorous" Text="{Binding GetActiveSkillsForImage,Mode=OneTime}" Fo
                                     <TabItem ToolTip="View Weapon Information" Background="{StaticResource Crust}" Foreground="{StaticResource Text}">
                                         <TabItem.Header>
                                             <StackPanel Orientation="Horizontal">
-                                                <Image Source="../Assets/Icons/png/attack.png" Width="32" Height="32"/>
+                                                <Image Source="../../Assets/Icons/png/attack.png" Width="32" Height="32"/>
                                                 <TextBlock Text="Weapons" Margin="4,0,0,0" VerticalAlignment="Center" />
                                             </StackPanel>
                                         </TabItem.Header>
@@ -2706,7 +2706,7 @@ Thunder Clad, Vigorous" Text="{Binding GetActiveSkillsForImage,Mode=OneTime}" Fo
                                     <TabItem ToolTip="View Sigils List" Background="{StaticResource Crust}" Foreground="{StaticResource Text}">
                                         <TabItem.Header>
                                             <StackPanel Orientation="Horizontal">
-                                                <Image Source="../Assets/Icons/png/sigils.png" Width="32" Height="32"/>
+                                                <Image Source="../../Assets/Icons/png/sigils.png" Width="32" Height="32"/>
                                                 <TextBlock Text="Sigils" Margin="4,0,0,0" VerticalAlignment="Center" />
                                             </StackPanel>
                                         </TabItem.Header>
@@ -2721,7 +2721,7 @@ Thunder Clad, Vigorous" Text="{Binding GetActiveSkillsForImage,Mode=OneTime}" Fo
                                     <TabItem ToolTip="View Diva Prayer Gems and Questline" Background="{StaticResource Crust}" Foreground="{StaticResource Text}">
                                         <TabItem.Header>
                                             <StackPanel Orientation="Horizontal">
-                                                <Image Source="../Assets/Icons/png/diva_prayer_gems.png" Width="32" Height="32"/>
+                                                <Image Source="../../Assets/Icons/png/diva_prayer_gems.png" Width="32" Height="32"/>
                                                 <TextBlock Text="Diva" Margin="4,0,0,0" VerticalAlignment="Center" />
                                             </StackPanel>
                                         </TabItem.Header>
@@ -2736,7 +2736,7 @@ Thunder Clad, Vigorous" Text="{Binding GetActiveSkillsForImage,Mode=OneTime}" Fo
                                     <TabItem ToolTip="View Style Rank Upgrades" Background="{StaticResource Crust}" Foreground="{StaticResource Text}">
                                         <TabItem.Header>
                                             <StackPanel Orientation="Horizontal">
-                                                <Image Source="../Assets/Icons/png/knife.png" Width="32" Height="32"/>
+                                                <Image Source="../../Assets/Icons/png/knife.png" Width="32" Height="32"/>
                                                 <TextBlock Text="Style Rank" Margin="4,0,0,0" VerticalAlignment="Center" />
                                             </StackPanel>
                                         </TabItem.Header>
@@ -3023,7 +3023,7 @@ Thunder Clad, Vigorous" Text="{Binding GetActiveSkillsForImage,Mode=OneTime}" Fo
             <TabItem ToolTip="Monster HP settings" Background="{StaticResource Mantle}" Foreground="{StaticResource Text}">
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
-                        <Image Source="../Assets/Icons/png/monster.png" Width="32" Height="32"/>
+                        <Image Source="../../Assets/Icons/png/monster.png" Width="32" Height="32"/>
                         <TextBlock Foreground="#a6e3a1" Text="Monster HP Bars" Margin="4,0,0,0" VerticalAlignment="Center" />
                     </StackPanel>
                 </TabItem.Header>
@@ -3156,7 +3156,7 @@ Thunder Clad, Vigorous" Text="{Binding GetActiveSkillsForImage,Mode=OneTime}" Fo
             <TabItem ToolTip="Monster status settings" Background="{StaticResource Mantle}" Foreground="{StaticResource Text}">
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
-                        <Image Name="statusImg" Source="../Assets/Icons/png/poison.png" Width="32" Height="32"/>
+                        <Image Name="statusImg" Source="../../Assets/Icons/png/poison.png" Width="32" Height="32"/>
                         <TextBlock Foreground="#cba6f7" Text="Monster Status Info" Margin="4,0,0,0" VerticalAlignment="Center" />
                     </StackPanel>
                 </TabItem.Header>
@@ -3206,7 +3206,7 @@ Thunder Clad, Vigorous" Text="{Binding GetActiveSkillsForImage,Mode=OneTime}" Fo
                                 <RowDefinition Height="40"/>
                             </Grid.RowDefinitions>
                             <StackPanel Margin="5" Orientation="Horizontal" Grid.Row="0" Grid.Column="0" ToolTip="Show Monster Attack Multiplier">
-                                <Image Source="../Assets/Icons/png/dure_attack.png" Margin="0,0,5,0"/>
+                                <Image Source="../../Assets/Icons/png/dure_attack.png" Margin="0,0,5,0"/>
                                 <TextBlock Style="{StaticResource ConfigTextBox}" Text="Monster Attack Multiplier"/>
                             </StackPanel>
                             <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="0" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=MonsterAtkMultShown}"/>
@@ -3219,7 +3219,7 @@ Thunder Clad, Vigorous" Text="{Binding GetActiveSkillsForImage,Mode=OneTime}" Fo
                             <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="2" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableHighestMonsterAttackMultiplierColor}"/>
 
                             <StackPanel Margin="5" Orientation="Horizontal" Grid.Row="3" Grid.Column="0" ToolTip="Show Monster Defense Rate (lower = tankier)">
-                                <Image Source="../Assets/Icons/png/dure_defense.png" Margin="0,0,5,0"/>
+                                <Image Source="../../Assets/Icons/png/dure_defense.png" Margin="0,0,5,0"/>
                                 <TextBlock Style="{StaticResource ConfigTextBox}" Text="Monster Defense Rate"/>
                             </StackPanel>
                             <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="3" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=MonsterDefrateShown}"/>
@@ -3232,7 +3232,7 @@ Thunder Clad, Vigorous" Text="{Binding GetActiveSkillsForImage,Mode=OneTime}" Fo
                             <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="5" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableLowestMonsterDefrateColor}"/>
 
                             <StackPanel Margin="5" Orientation="Horizontal" Grid.Row="6" Grid.Column="0" ToolTip="Show Monster Size">
-                                <Image Source="../Assets/Icons/png/study.png" Margin="0,0,5,0"/>
+                                <Image Source="../../Assets/Icons/png/study.png" Margin="0,0,5,0"/>
                                 <TextBlock Style="{StaticResource ConfigTextBox}" Text="Monster Size"/>
                             </StackPanel>
                             <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="6" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=MonsterSizeShown}"/>
@@ -3242,7 +3242,7 @@ Thunder Clad, Vigorous" Text="{Binding GetActiveSkillsForImage,Mode=OneTime}" Fo
                                 <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="Y" Margin="5,0,0,0" Text="{Binding Source={StaticResource Settings},Path=MonsterSizeY}"  PreviewTextInput="ValidateNumber"/>
                             </StackPanel>
                             <StackPanel Margin="5" Orientation="Horizontal" Grid.Row="8" Grid.Column="0" ToolTip="Show Monster Poison Threshold">
-                                <Image Source="../Assets/Icons/png/poison.png" Margin="0,0,5,0"/>
+                                <Image Source="../../Assets/Icons/png/poison.png" Margin="0,0,5,0"/>
                                 <TextBlock Style="{StaticResource ConfigTextBox}" Text="Monster Poison Threshold"/>
                             </StackPanel>
                             <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="8" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=MonsterPoisonShown}"/>
@@ -3256,7 +3256,7 @@ Thunder Clad, Vigorous" Text="{Binding GetActiveSkillsForImage,Mode=OneTime}" Fo
                                       SelectedColor="{Binding Source={StaticResource Settings},Path=MonsterPoisonBarColor}"></xctk:ColorPicker>
 
                             <StackPanel Margin="5" Orientation="Horizontal" Grid.Row="11" Grid.Column="0" ToolTip="Show Monster Sleep Threshold">
-                                <Image Source="../Assets/Icons/png/sleep.png" Margin="0,0,5,0"/>
+                                <Image Source="../../Assets/Icons/png/sleep.png" Margin="0,0,5,0"/>
                                 <TextBlock Style="{StaticResource ConfigTextBox}" Text="Monster Sleep Threshold"/>
                             </StackPanel>
                             <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="11" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=MonsterSleepShown}"/>
@@ -3270,7 +3270,7 @@ Thunder Clad, Vigorous" Text="{Binding GetActiveSkillsForImage,Mode=OneTime}" Fo
                                       SelectedColor="{Binding Source={StaticResource Settings},Path=MonsterSleepBarColor}"></xctk:ColorPicker>
 
                             <StackPanel Margin="5" Orientation="Horizontal" Grid.Row="14" Grid.Column="0" ToolTip="Show Monster Paralysis Threshold">
-                                <Image Source="../Assets/Icons/png/paralysis.png" Margin="0,0,5,0"/>
+                                <Image Source="../../Assets/Icons/png/paralysis.png" Margin="0,0,5,0"/>
                                 <TextBlock Style="{StaticResource ConfigTextBox}" Text="Monster Paralysis Threshold"/>
                             </StackPanel>
                             <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="14" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=MonsterParaShown}"/>
@@ -3284,7 +3284,7 @@ Thunder Clad, Vigorous" Text="{Binding GetActiveSkillsForImage,Mode=OneTime}" Fo
                                       SelectedColor="{Binding Source={StaticResource Settings},Path=MonsterParaBarColor}"></xctk:ColorPicker>
 
                             <StackPanel Margin="5" Orientation="Horizontal" Grid.Row="17" Grid.Column="0" ToolTip="Show Monster Blast Threshold">
-                                <Image Source="../Assets/Icons/png/blast.png" Margin="0,0,5,0"/>
+                                <Image Source="../../Assets/Icons/png/blast.png" Margin="0,0,5,0"/>
                                 <TextBlock Style="{StaticResource ConfigTextBox}" Text="Monster Blast Threshold"/>
                             </StackPanel>
                             <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="17" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=MonsterBlastShown}"/>
@@ -3298,7 +3298,7 @@ Thunder Clad, Vigorous" Text="{Binding GetActiveSkillsForImage,Mode=OneTime}" Fo
                                       SelectedColor="{Binding Source={StaticResource Settings},Path=MonsterBlastBarColor}"></xctk:ColorPicker>
 
                             <StackPanel Margin="5" Orientation="Horizontal" Grid.Row="20" Grid.Column="0" ToolTip="Show Monster Stun Threshold">
-                                <Image Source="../Assets/Icons/png/stun.png" Margin="0,0,5,0"/>
+                                <Image Source="../../Assets/Icons/png/stun.png" Margin="0,0,5,0"/>
                                 <TextBlock Style="{StaticResource ConfigTextBox}" Text="Monster Stun Threshold"/>
                             </StackPanel>
                             <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="20" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=MonsterStunShown}"/>
@@ -3429,7 +3429,7 @@ Thunder Clad, Vigorous" Text="{Binding GetActiveSkillsForImage,Mode=OneTime}" Fo
             <TabItem ToolTip="Monster information" Background="{StaticResource Mantle}" Foreground="{StaticResource Text}">
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
-                        <Image Name="monsterinfoimg" Source="../Assets/Icons/png/monster_info.png" Width="32" Height="32"/>
+                        <Image Name="monsterinfoimg" Source="../../Assets/Icons/png/monster_info.png" Width="32" Height="32"/>
                         <TextBlock Foreground="#fab387" Text="Monster Info" Margin="4,0,0,0" VerticalAlignment="Center" />
                     </StackPanel>
                 </TabItem.Header>

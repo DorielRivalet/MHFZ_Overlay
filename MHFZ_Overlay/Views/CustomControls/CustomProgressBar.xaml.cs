@@ -283,6 +283,7 @@ public partial class CustomProgressBar : UserControl, INotifyPropertyChanged
 
             return ((float)this.NumCurr / (float)this.NumMax) * 100f;
         }
+
         set
         {
             throw new InvalidOperationException();

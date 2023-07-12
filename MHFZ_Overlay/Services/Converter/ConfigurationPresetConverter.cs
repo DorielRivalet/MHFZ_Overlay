@@ -14,18 +14,13 @@ public static class ConfigurationPresetConverter
             return ConfigurationPreset.None;
         }
 
-        switch (input.ToLowerInvariant())
+        return input.ToLowerInvariant() switch
         {
-            case "speedrun":
-                return ConfigurationPreset.Speedrun;
-            case "zen":
-                return ConfigurationPreset.Zen;
-            case "hp only":
-                return ConfigurationPreset.HPOnly;
-            case "all":
-                return ConfigurationPreset.All;
-            default:
-                return ConfigurationPreset.None;
-        }
+            "speedrun" => ConfigurationPreset.Speedrun,
+            "zen" => ConfigurationPreset.Zen,
+            "hp only" => ConfigurationPreset.HPOnly,
+            "all" => ConfigurationPreset.All,
+            _ => ConfigurationPreset.None,
+        };
     }
 }

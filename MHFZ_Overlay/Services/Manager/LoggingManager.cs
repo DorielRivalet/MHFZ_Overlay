@@ -31,7 +31,10 @@ internal sealed class LoggingManager
     {
         var directoryName = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
         if (directoryName == null)
+        {
             return;
+        }
+
         var logFilePath = Path.Combine(directoryName, "logs", "logs.log");
 
         if (!File.Exists(logFilePath))

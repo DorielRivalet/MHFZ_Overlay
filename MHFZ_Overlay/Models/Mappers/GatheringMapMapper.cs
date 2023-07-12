@@ -18,7 +18,7 @@ public static class GatheringMapMapper
         { new List<int> { 0 }, Messages.EmptyImage },
 
         // Jungle areas
-        { new List<int> { 1, 2,3, 4,5, 18, 19, 22, 23, 26, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 212, 213 }, "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/map/jungle_map.png" },
+        { new List<int> { 1, 2, 3, 4, 5, 18, 19, 22, 23, 26, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 212, 213 }, "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/map/jungle_map.png" },
 
         // Snowy mountain areas
         { new List<int> { 6, 15, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 218, 219 }, "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/map/snowy_mountains_map.png" },
@@ -39,7 +39,7 @@ public static class GatheringMapMapper
         { new List<int> { 224, 225, 226, 227, 228, 229, 230, 231, 232, 233, 234, 235, 236, 237, 238, 239, 240, 241 }, "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/map/great_forest_map.png" },
 
         // Highlands areas
-        { new List<int> { 247, 248, 249, 250, 251, 252, 253, 254, 255, 302, 303, 304, 305, 306, 307, 308 }, "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/map/highlands_map.png" }, 
+        { new List<int> { 247, 248, 249, 250, 251, 252, 253, 254, 255, 302, 303, 304, 305, 306, 307, 308 }, "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/map/highlands_map.png" },
 
         // Tidal Island areas
         { new List<int> { 322, 323, 324, 325, 326, 327, 328, 329, 330, 331, 332, 333, 334, 335, 336, 337, 338, 339 }, "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/map/tidal_island_map.png" },

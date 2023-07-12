@@ -2,7 +2,7 @@
 // Use of this source code is governed by a MIT license that can be
 // found in the LICENSE file.
 
-namespace MHFZ_Overlay.Views;
+namespace MHFZ_Overlay.Views.Windows;
 
 using System;
 using System.Collections.Generic;
@@ -2662,7 +2662,7 @@ The process may take some time, as the program attempts to download from GitHub 
 
         if (result == System.Windows.MessageBoxResult.Yes)
         {
-            var settingsForm = new Views.SettingsForm();
+            var settingsForm = new SettingsForm();
             bool? settingsFormResult = settingsForm.ShowDialog();
             if (settingsFormResult == null)
             {
