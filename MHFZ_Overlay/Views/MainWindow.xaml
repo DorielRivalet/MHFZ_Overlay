@@ -72,6 +72,11 @@
                                     <ui:SymbolIcon Symbol="Megaphone24" Foreground="{StaticResource Blue}"/>
                                 </ui:MenuItem.Icon>
                             </ui:MenuItem>
+                            <ui:MenuItem Foreground="{StaticResource Blue}" ToolTip="Go to changelog page" Header="Changelog" Tag="changelog" Click="OptionChangelog_Click">
+                                <ui:MenuItem.Icon>
+                                    <ui:SymbolIcon Symbol="Notebook24" Foreground="{StaticResource Blue}"/>
+                                </ui:MenuItem.Icon>
+                            </ui:MenuItem>
                             <ui:NavigationViewItemSeparator/>
                             <ui:MenuItem Foreground="{StaticResource Rosewater}" ToolTip="Open settings folder" Header="Settings Folder" Tag="settingsfolder" Click="OptionSettingsFolder_Click">
                                 <ui:MenuItem.Icon>

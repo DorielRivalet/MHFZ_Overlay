@@ -130,6 +130,11 @@ public partial class MainWindow : Window
         OpenLink("https://forms.gle/hrAVWMcYS5HEo1v7A");
     }
 
+    private void OptionChangelog_Click(object sender, RoutedEventArgs e)
+    {
+        OpenLink("https://github.com/DorielRivalet/mhfz-overlay/blob/main/CHANGELOG.md");
+    }
+
     private void OptionSettingsFolder_Click(object sender, RoutedEventArgs e)
     {
         try
@@ -265,9 +270,9 @@ public partial class MainWindow : Window
     [DllImport("user32.dll")]
     public static extern int SetWindowLong(IntPtr hwnd, int index, int newStyle);
 
-    public DateTime ProgramStart;
+    private DateTime ProgramStart;
 
-    public DateTime ProgramEnd;
+    private DateTime ProgramEnd;
 
     // Declare a dictionary to map keys to images
     private readonly Dictionary<Keys, Image> _keyImages = new();
@@ -325,7 +330,7 @@ public partial class MainWindow : Window
         LiveCharts.Configure(config =>
         config
 
-        // registers SkiaSharp as the library backend
+            // registers SkiaSharp as the library backend
             // REQUIRED unless you build your own
             .AddSkiaSharp()
 
@@ -465,7 +470,7 @@ public partial class MainWindow : Window
             LineSmoothness = .5,
             GeometrySize = 0,
             Stroke = new SolidColorPaint(new SKColor(this.dataLoader.model.HexColorToDecimal(s.PlayerAttackGraphColor))) { StrokeThickness = 2 },
-            Fill = new LinearGradientPaint(new SKColor(this.dataLoader.model.HexColorToDecimal(s.PlayerAttackGraphColor, "7f")), new SKColor(this.dataLoader.model.HexColorToDecimal(s.PlayerAttackGraphColor, "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1))
+            Fill = new LinearGradientPaint(new SKColor(this.dataLoader.model.HexColorToDecimal(s.PlayerAttackGraphColor, "7f")), new SKColor(this.dataLoader.model.HexColorToDecimal(s.PlayerAttackGraphColor, "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
         });
 
         this.dataLoader.model.damagePerSecondSeries.Add(new LineSeries<ObservablePoint>
@@ -474,7 +479,7 @@ public partial class MainWindow : Window
             LineSmoothness = .5,
             GeometrySize = 0,
             Stroke = new SolidColorPaint(new SKColor(this.dataLoader.model.HexColorToDecimal(s.PlayerDPSGraphColor))) { StrokeThickness = 2 },
-            Fill = new LinearGradientPaint(new SKColor(this.dataLoader.model.HexColorToDecimal(s.PlayerDPSGraphColor, "7f")), new SKColor(this.dataLoader.model.HexColorToDecimal(s.PlayerDPSGraphColor, "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1))
+            Fill = new LinearGradientPaint(new SKColor(this.dataLoader.model.HexColorToDecimal(s.PlayerDPSGraphColor, "7f")), new SKColor(this.dataLoader.model.HexColorToDecimal(s.PlayerDPSGraphColor, "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
         });
 
         this.dataLoader.model.actionsPerMinuteSeries.Add(new LineSeries<ObservablePoint>
@@ -483,7 +488,7 @@ public partial class MainWindow : Window
             LineSmoothness = .5,
             GeometrySize = 0,
             Stroke = new SolidColorPaint(new SKColor(this.dataLoader.model.HexColorToDecimal(s.PlayerAPMGraphColor))) { StrokeThickness = 2 },
-            Fill = new LinearGradientPaint(new SKColor(this.dataLoader.model.HexColorToDecimal(s.PlayerAPMGraphColor, "7f")), new SKColor(this.dataLoader.model.HexColorToDecimal(s.PlayerAPMGraphColor, "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1))
+            Fill = new LinearGradientPaint(new SKColor(this.dataLoader.model.HexColorToDecimal(s.PlayerAPMGraphColor, "7f")), new SKColor(this.dataLoader.model.HexColorToDecimal(s.PlayerAPMGraphColor, "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
         });
 
         this.dataLoader.model.hitsPerSecondSeries.Add(new LineSeries<ObservablePoint>
@@ -492,7 +497,7 @@ public partial class MainWindow : Window
             LineSmoothness = .5,
             GeometrySize = 0,
             Stroke = new SolidColorPaint(new SKColor(this.dataLoader.model.HexColorToDecimal(s.PlayerHitsPerSecondGraphColor))) { StrokeThickness = 2 },
-            Fill = new LinearGradientPaint(new SKColor(this.dataLoader.model.HexColorToDecimal(s.PlayerHitsPerSecondGraphColor, "7f")), new SKColor(this.dataLoader.model.HexColorToDecimal(s.PlayerHitsPerSecondGraphColor, "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1))
+            Fill = new LinearGradientPaint(new SKColor(this.dataLoader.model.HexColorToDecimal(s.PlayerHitsPerSecondGraphColor, "7f")), new SKColor(this.dataLoader.model.HexColorToDecimal(s.PlayerHitsPerSecondGraphColor, "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
         });
     }
 
@@ -544,10 +549,10 @@ The process may take some time, as the program attempts to download from GitHub 
     /// </summary>
     public void CheckGameState()
     {
-        int PID = m.GetProcIdFromName("mhf");
+        int processID = m.GetProcIdFromName("mhf");
 
         // https://stackoverflow.com/questions/12372534/how-to-get-a-process-window-class-name-from-c
-        int pidToSearch = PID;
+        int pidToSearch = processID;
 
         // Init a condition indicating that you want to search by process id.
         var condition = new PropertyCondition(AutomationElementIdentifiers.ProcessIdProperty,
@@ -582,7 +587,6 @@ The process may take some time, as the program attempts to download from GitHub 
             mhfProcess.EnableRaisingEvents = true;
             mhfProcess.Exited += (sender, e) =>
             {
-
                 this.dataLoader.model.closedGame = true;
                 Settings s = (Settings)Application.Current.TryFindResource("Settings");
                 LoggerInstance.Info(CultureInfo.InvariantCulture, "Detected closed game");
@@ -631,7 +635,6 @@ The process may take some time, as the program attempts to download from GitHub 
                 this.dataLoader.model.ValidateGameFolder();
                 showedGameFolderWarning = true;
             }
-
         }
         catch (Exception ex)
         {
@@ -849,11 +852,11 @@ The process may take some time, as the program attempts to download from GitHub 
         AnimateOutlinedTextBlock(locationTextBlock, blackBrush, blueBrush);
     }
 
-    int curNum;
+    int curNum { get; set; }
 
-    int prevNum;
+    int prevNum { get; set; }
 
-    bool isFirstAttack;
+    bool isFirstAttack { get; set; }
 
     public bool IsDragConfigure { get; set; }
 
@@ -908,7 +911,6 @@ The process may take some time, as the program attempts to download from GitHub 
                     try
                     {
                         this.dataLoader.model.damageDealtDictionary.Add(this.dataLoader.model.TimeInt(), curNum);
-
                     }
                     catch (Exception ex)
                     {
@@ -936,6 +938,7 @@ The process may take some time, as the program attempts to download from GitHub 
                 }
             }
         }
+
         prevNum = damage;
     }
 
@@ -1072,7 +1075,6 @@ The process may take some time, as the program attempts to download from GitHub 
         if (!s.EnableDamageNumbersFlash && !s.EnableDamageNumbersSize)
         {
             RemoveDamageNumberLabel(damageOutlinedTextBlock);
-
         }
         else
         {
@@ -1135,7 +1137,6 @@ The process may take some time, as the program attempts to download from GitHub 
                 fadeInIncreaseSizeFlashColorStoryboard.Children.Add(flashWhiteStrokeAnimation);
                 fadeInIncreaseSizeFlashColorStoryboard.Children.Add(flashWhiteFillAnimation);
             }
-
 
             Storyboard decreaseSizeShowColorStoryboard = new Storyboard();
 
@@ -1427,7 +1428,7 @@ The process may take some time, as the program attempts to download from GitHub 
                 s.MapY = (double)(pos.Y - YOffset);
                 break;
 
-                // case "OverlayModeWatermark":
+            // case "OverlayModeWatermark":
             //    s.OverlayModeWatermarkX = (double)(pos.X - XOffset);
             //    s.OverlayModeWatermarkY = (double)(pos.Y - YOffset);
             //    break;
@@ -1519,7 +1520,6 @@ The process may take some time, as the program attempts to download from GitHub 
                 s.Monster1IconY = (double)(pos.Y - YOffset);
                 break;
         }
-
     }
 
     /// <summary>
@@ -1575,7 +1575,7 @@ The process may take some time, as the program attempts to download from GitHub 
         ApplicationManager.HandleRestart();
     }
 
-    ConfigWindow? configWindow;
+    ConfigWindow? configWindow { get; set; }
 
     private void OpenConfigButton_Click(object sender, RoutedEventArgs e)
     {
@@ -1636,7 +1636,6 @@ The process may take some time, as the program attempts to download from GitHub 
         {
             LoggingManager.WriteCrashLog(ex);
         }
-
     }
 
     private void CloseButton_Key()
@@ -1739,7 +1738,6 @@ The process may take some time, as the program attempts to download from GitHub 
 
             // Change the extended window style to include WS_EX_TRANSPARENT         
             SetWindowLong(hwnd, GWL_EXSTYLE, originalStyle);
-
         }
 
         ClickThrough = !ClickThrough;
@@ -2071,7 +2069,6 @@ The process may take some time, as the program attempts to download from GitHub 
         // Register the event handler for button presses
         // TODO: do i really need this kind of interface?
         // m_GlobalHook.KeyDown += HandleHorizontalInput;
-
     }
 
     private void GlobalHookKeyPress(object sender, KeyPressEventArgs e)
@@ -2230,13 +2227,13 @@ The process may take some time, as the program attempts to download from GitHub 
         _gamepadJoystickImages.Add(gamepad.RightJoystick, RJoystickMovement);
     }
 
-    double pressedInputOpacity = 0.5;
+    double pressedInputOpacity { get; set; } = 0.5;
 
-    double unpressedInputOpacity = 0.2;
+    double unpressedInputOpacity { get; set; } = 0.2;
 
-    float triggerActivationThreshold = 0.5f;
+    float triggerActivationThreshold { get; set; } = 0.5f;
 
-    float joystickThreshold = 0.5f;
+    float joystickThreshold { get; set; } = 0.5f;
 
     private void Gamepad_RightTriggerReleased(object? sender, EventArgs e)
     {
@@ -2283,11 +2280,11 @@ The process may take some time, as the program attempts to download from GitHub 
                 UpdateRightStickImage(unpressedInputOpacity);
             }));
         }
-        else if (_gamepadImages.ContainsKey(e.Button))
+        else if (_gamepadImages.TryGetValue(e.Button, out Image? image))
         {
             Dispatcher.BeginInvoke(new Action(() =>
             {
-                _gamepadImages[e.Button].Opacity = unpressedInputOpacity;
+                image.Opacity = unpressedInputOpacity;
             }));
         }
     }
