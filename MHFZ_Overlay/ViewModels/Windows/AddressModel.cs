@@ -11730,6 +11730,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             LoggerInstance.Warn(CultureInfo.InvariantCulture, "Game folder path not found");
             MessageBox.Show("Game folder path not found. If you do not want to log quests into the database or see this message, disable the Quest Logging option in Quest Logs section, and click the save button.", Messages.WarningTitle, MessageBoxButton.OK, MessageBoxImage.Warning);
             s.EnableQuestLogging = false;
+            s.Save();
             return false;
         }
 
@@ -11738,6 +11739,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             LoggerInstance.Warn(CultureInfo.InvariantCulture, "Database file path not found");
             MessageBox.Show("Database file path not found. If you do not want to log quests into the database or see this message, disable the Quest Logging option in Quest Logs section, and click the save button.", Messages.WarningTitle, MessageBoxButton.OK, MessageBoxImage.Warning);
             s.EnableQuestLogging = false;
+            s.Save();
             return false;
         }
 
@@ -11762,6 +11764,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             Messages.WarningTitle, MessageBoxButton.OK, MessageBoxImage.Warning);
             LoggerInstance.Warn(CultureInfo.InvariantCulture, "Missing game files");
             s.EnableQuestLogging = false;
+            s.Save();
             return false;
         }
     }
