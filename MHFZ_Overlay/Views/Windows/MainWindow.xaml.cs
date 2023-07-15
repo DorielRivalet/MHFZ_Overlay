@@ -298,7 +298,7 @@ public partial class MainWindow : Window
         // Start the stopwatch
         stopwatch.Start();
 
-        var splashScreen = new SplashScreen("Assets/Icons/png/loading.png");
+        var splashScreen = new SplashScreen("../../Assets/Icons/png/loading.png");
 
         splashScreen.Show(false);
         this.dataLoader = new DataLoader();

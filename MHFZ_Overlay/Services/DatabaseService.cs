@@ -9880,9 +9880,9 @@ Disabling Quest Logging.",
         return recentRuns;
     }
 
-    public List<WeaponUsageMapper> CalculateTotalWeaponUsage(ConfigWindow configWindow, DataLoader dataLoader, bool isByQuestID = false)
+    public List<WeaponUsage> CalculateTotalWeaponUsage(ConfigWindow configWindow, DataLoader dataLoader, bool isByQuestID = false)
     {
-        var weaponUsageData = new List<WeaponUsageMapper>();
+        var weaponUsageData = new List<WeaponUsage>();
         if (string.IsNullOrEmpty(dataSource))
         {
             logger.Warn(CultureInfo.InvariantCulture, "Cannot calculate total weapon usage. dataSource: {0}", dataSource);
@@ -9960,7 +9960,7 @@ Disabling Quest Logging.",
 
                                         weaponType = WeaponType.IDName[int.Parse(weaponTypeID.ToString())];
                                         style = WeaponStyle.IDName[int.Parse(styleID.ToString())];
-                                        weaponUsageData.Add(new WeaponUsageMapper(weaponType, style, (int)runCount));
+                                        weaponUsageData.Add(new WeaponUsage(weaponType, style, (int)runCount));
                                     }
                                 }
                             }

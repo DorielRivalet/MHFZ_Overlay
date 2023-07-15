@@ -15,10 +15,11 @@ using MHFZ_Overlay.Models;
 using MHFZ_Overlay.Models.Collections;
 using MHFZ_Overlay.Models.Constant;
 using MHFZ_Overlay.Models.Structures;
+using MHFZ_Overlay.Services.Contracts;
 using Newtonsoft.Json;
 using Wpf.Ui.Controls;
 
-public sealed class AchievementService
+public sealed class AchievementService : IAchievementService
 {
     public static AchievementService GetInstance()
     {

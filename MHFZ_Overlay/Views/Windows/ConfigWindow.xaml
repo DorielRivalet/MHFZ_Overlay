@@ -940,17 +940,18 @@
                             </Grid.RowDefinitions>
 
                             <StackPanel Orientation="Horizontal" Margin="5,0,0,0" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
-                                <ui:Button Appearance="Primary"  Content="Settings Folder" ToolTip="Open the settings folder" Click="OpenSettingsFolder_Click">
+                                    <ui:SymbolIcon ToolTip="Open Folder" Symbol="FolderOpen24" FontSize="28" Foreground="{StaticResource Green}" Margin="0,0,5,0"/>
+                                    <ui:Button Appearance="Primary" Content="Settings" ToolTip="Open the settings folder" Click="OpenSettingsFolder_Click">
                                     <ui:Button.Icon>
                                         <ui:SymbolIcon Symbol="Settings20" FontSize="20" />
                                     </ui:Button.Icon>
                                 </ui:Button>
-                                <ui:Button Margin="5,0,0,0" Appearance="Primary"  Content="Logs Folder" ToolTip="Open the logs folder" Click="OpenLogsFolder_Click">
+                                <ui:Button Margin="5,0,0,0" Appearance="Primary"  Content="Logs" ToolTip="Open the logs folder" Click="OpenLogsFolder_Click">
                                     <ui:Button.Icon>
                                         <ui:SymbolIcon Symbol="Document20" FontSize="20"/>
                                     </ui:Button.Icon>
                                 </ui:Button>
-                                <ui:Button Margin="5,0,0,0" Appearance="Primary"  Content="Database Folder" ToolTip="Open the database folder" Click="OpenDatabaseFolder_Click">
+                                <ui:Button Margin="5,0,0,0" Appearance="Primary"  Content="Database" ToolTip="Open the database folder" Click="OpenDatabaseFolder_Click">
                                     <ui:Button.Icon>
                                         <ui:SymbolIcon Symbol="Database20" FontSize="20"/>
                                     </ui:Button.Icon>

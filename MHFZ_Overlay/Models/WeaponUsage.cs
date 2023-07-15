@@ -4,9 +4,9 @@
 
 namespace MHFZ_Overlay.Models;
 
-public sealed class WeaponUsageMapper
+public sealed class WeaponUsage
 {
-    public WeaponUsageMapper(string weaponType, string style, int runCount)
+    public WeaponUsage(string weaponType, string style, int runCount)
     {
         this.WeaponType = weaponType;
         this.Style = style;

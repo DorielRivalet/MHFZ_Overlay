@@ -740,7 +740,7 @@ public partial class ConfigWindow : FluentWindow
         logger.Debug($"ConfigWindow ctor Elapsed Time: {elapsedTimeMs} ms");
     }
 
-    private List<WeaponUsageMapper> weaponUsageData = new();
+    private List<WeaponUsage> weaponUsageData = new();
 
     private void SetWeaponUsageChart(CartesianChart weaponUsageChart)
     {
@@ -1975,7 +1975,7 @@ public partial class ConfigWindow : FluentWindow
         File.WriteAllText(filePath, sb.ToString());
     }
 
-    public void SaveCSVFromWeaponUsage(List<WeaponUsageMapper> weaponUsageData, string filePath)
+    public void SaveCSVFromWeaponUsage(List<WeaponUsage> weaponUsageData, string filePath)
     {
         StringBuilder sb = new StringBuilder();
         sb.AppendLine("Weapon Type,Style,Run Count");

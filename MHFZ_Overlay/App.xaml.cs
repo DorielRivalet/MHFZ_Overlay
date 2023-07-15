@@ -104,7 +104,7 @@ public partial class App : Application
     private static void App_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
     {
         // Log/inspect the inspection here
-        logger.Error("Unhandled exception: {0}\n{1}\n{2}\n{3}\n{4}\n{5}", e.Exception.Message, e.Exception.StackTrace, e.Exception.HelpLink, e.Exception.HResult, e.Exception.Source, e.Exception.TargetSite);
+        logger.Error("Unhandled exception\n\nMessage: {0}\n\nStack Trace: {1}\n\nHelp Link: {2}\n\nHResult: {3}\n\nSource: {4}\n\nTarget Site: {5}", e.Exception.Message, e.Exception.StackTrace, e.Exception.HelpLink, e.Exception.HResult, e.Exception.Source, e.Exception.TargetSite);
     }
 
     private static void SetRenderingMode(string renderingMode)
@@ -218,7 +218,7 @@ MessageBoxImage.Information);
     public static async Task UpdateMyApp()
     {
         isClowdSquirrelUpdating = true;
-        var splashScreen = new SplashScreen("Assets/Icons/png/loading.png");
+        var splashScreen = new SplashScreen("./Assets/Icons/png/loading.png");
         splashScreen.Show(false);
         try
         {
