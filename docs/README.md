@@ -38,38 +38,38 @@ The overlay follows a MVVMS pattern.
 
 The Model layer consists of various elements:
 
-- Memory addresses: Represents the addresses in the game's memory that hold important values.
-- EZLion: A NuGet package providing static game data, such as gear names and monster names.
-- Collections: Data structures sourced from EZLion or the game's source code, used for storing and manipulating data.
-- SQLite database: Stores persistent data related to the application.
+- **Memory addresses**: Represents the addresses in the game's memory that hold important values.
+- **EZLion**: A NuGet package providing static game data, such as gear names and monster names.
+- **Collections**: Data structures sourced from EZLion or the overlay's source code, used for storing and manipulating data.
+- **SQLite database**: Stores persistent data related to the application.
 
 ### ViewModel
 
 The ViewModel layer is responsible for handling the business logic and interaction between the Model and View layers. It performs calculations and transformations on the data to prepare it for presentation.
 
-ViewModels obtain data from Models and Services, and populate data structures used by the Views.
-Services provide assistance to ViewModels in various domains such as database operations, memory address management, achievement tracking, application functionality, Discord integration, file handling, logging, and settings management.
+- ViewModels obtain data from Models and Services, and populate data structures used by the Views.
+- Services provide assistance to ViewModels in various domains such as database operations, memory address management, achievement tracking, application functionality, Discord integration, file handling, logging, and settings management.
 
 ### View
 
 The View layer represents the user interface components of the application.
 
-- User Controls: These are reusable UI components that provide specific functionalities within the application.
-- Configuration Window: A window that allows users to configure settings and preferences.
-- Overlay: The main visual component that provides the in-game overlay to the user.
+- **User Controls**: These are reusable UI components that provide specific functionalities within the application.
+- **Configuration Window**: A window that allows users to configure settings and preferences.
+- **Overlay**: The main visual component that provides the in-game overlay to the user.
 
 ### Service
 
 Services encompass different functionalities required by the application.
 
-- Database Service: Handles SQLite queries and operations for data storage and retrieval.
-- Memory Address Service: Manages the loading and management of memory addresses used by the application.
-- Achievement Service: Tracks and manages achievements earned by the user.
-- Application Service: Provides application-level functionality and management.
-- Discord Service: Integrates with Discord for specific features or interactions.
-- File Service: Handles file-related operations such as reading, writing, and manipulation.
-- Logging Service: Manages logging and error handling within the application.
-- Settings Service: Manages application settings and preferences.
+- **Database Service**: Handles SQLite queries and operations for data storage and retrieval.
+- **Memory Address Service**: Manages the loading and management of memory addresses used by the application.
+- **Achievement Service**: Tracks and manages achievements earned by the user.
+- **Application Service**: Provides application-level functionality and management.
+- **Discord Service**: Integrates with Discord for specific features or interactions.
+- **File Service**: Handles file-related operations such as reading, writing, and manipulation.
+- **Logging Service**: Manages logging and error handling within the application.
+- **Settings Service**: Manages application settings and preferences.
 
 The MVVMS pattern promotes a clear separation of concerns and provides a structured approach to the application's architecture. Models handle the data and its storage, ViewModels handle the logic and preparation of data, Views handle the presentation and user interaction, and Services provide additional functionalities required by the application. This separation enhances maintainability, testability, and flexibility in the application design.
 
