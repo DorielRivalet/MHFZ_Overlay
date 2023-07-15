@@ -129,8 +129,6 @@ flowchart TD
 
 ### Main Loop
 
-Affected by the Refresh Rate setting.
-
 ```mermaid
 flowchart TD
     A(Reload memory addresses values) --> B(Create damage number if hit on quest)
@@ -207,4 +205,4 @@ The application follows an architectural structure based on the MVVM pattern.
 
 It's important to note that this and other documents are a high-level summary of the components and their interactions, is subject to change, and may or may not be outdated. For a more detailed explanation, you can further expand your understanding of each component and its functionality in the technical documentation files, along with reading the docblocks in source code.
 
-We encourage documentation improvements from the community! For more information, see [how to contribute](../CONTRIBUTING.md)
+We encourage documentation improvements from the community! For more information, see [how to contribute](../CONTRIBUTING.md).
