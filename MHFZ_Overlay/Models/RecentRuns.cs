@@ -7,7 +7,7 @@ namespace MHFZ_Overlay.Models;
 using System;
 using MHFZ_Overlay.Models.Constant;
 
-public class RecentRuns
+public sealed class RecentRuns
 {
     public string ObjectiveImage { get; set; } = Messages.MonsterImageNotLoaded;
 

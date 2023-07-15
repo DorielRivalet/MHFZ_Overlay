@@ -1,7 +1,8 @@
 // © 2023 The mhfz-overlay developers.
 // Use of this source code is governed by a MIT license that can be
 // found in the LICENSE file.
-/*https://stackoverflow.com/a/65412682/18859245*/
+
+// https://stackoverflow.com/a/65412682/18859245
 
 namespace MHFZ_Overlay.Services.Hotkey;
 
@@ -10,7 +11,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Windows.Input;
 
-public class GlobalHotKey : IDisposable
+public sealed class GlobalHotKey : IDisposable
 {
     /// <summary>
     /// Registers a global hotkey
@@ -144,7 +145,7 @@ public class GlobalHotKey : IDisposable
             private ModifierKeys _modifier;
             private Key _key;
 
-            internal HotKeyPressedEventArgs(ModifierKeys modifier, Key key)
+            public HotKeyPressedEventArgs(ModifierKeys modifier, Key key)
             {
                 this._modifier = modifier;
                 this._key = key;

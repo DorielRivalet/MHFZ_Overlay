@@ -7,7 +7,7 @@ namespace MHFZ_Overlay.Models;
 using System;
 
 // TODO: ORM
-public class AmmoPouch
+public sealed class AmmoPouch
 {
     public DateTime CreatedAt { get; set; }
 

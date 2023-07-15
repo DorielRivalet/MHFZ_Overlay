@@ -50,14 +50,13 @@ using System.Windows;
 using Memory;
 using MHFZ_Overlay.Models.Addresses;
 using MHFZ_Overlay.Models.Constant;
-using MHFZ_Overlay.Services.DataAccessLayer;
-using MHFZ_Overlay.Services.Manager;
+using MHFZ_Overlay.Services;
 using MHFZ_Overlay.ViewModels.Windows;
 
 /// <summary>
 /// Responsible for loading data into the application. It has a DatabaseManager object that is used to access and manipulate the database. It also has instances of AddressModelNotHGE and AddressModelHGE classes, which inherit from the AddressModel abstract class. Depending on the state of the game, one of these instances is used to get the hit count value (etc.) from the memory.
 /// </summary>
-public class DataLoader
+public sealed class DataLoader
 {
     private static readonly NLog.Logger LoggerInstance = NLog.LogManager.GetCurrentClassLogger();
 
@@ -119,7 +118,7 @@ public class DataLoader
         {
             LoggerInstance.Fatal(CultureInfo.InvariantCulture, "Launch game first");
             System.Windows.MessageBox.Show("Please launch game first", Messages.ErrorTitle, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
-            ApplicationManager.HandleShutdown();
+            ApplicationService.HandleShutdown();
         }
 
         // Stop the stopwatch
@@ -142,7 +141,9 @@ public class DataLoader
 
             Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
             if (s.EnableOutsideMezeportaLoadingWarning)
+            {
                 this.loadedOutsideMezeporta = true;
+            }
         }
     }
 
@@ -152,7 +153,7 @@ public class DataLoader
         {
             LoggerInstance.Fatal(CultureInfo.InvariantCulture, "Loaded overlay inside quest {0}", this.model.QuestID());
             System.Windows.MessageBox.Show("Loaded overlay inside quest. Please load the overlay outside quests.", Messages.FatalTitle, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
-            LoggingManager.WriteCrashLog(new Exception("Loaded overlay inside quest"));
+            LoggingService.WriteCrashLog(new Exception("Loaded overlay inside quest"));
         }
     }
 
@@ -171,7 +172,7 @@ public class DataLoader
                 // The "mhf.exe" process was not found
                 LoggerInstance.Fatal(CultureInfo.InvariantCulture, "mhf.exe not found");
                 MessageBox.Show("The 'mhf.exe' process was not found.", Messages.ErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
-                ApplicationManager.HandleShutdown();
+                ApplicationService.HandleShutdown();
                 return;
             }
 
@@ -186,7 +187,7 @@ public class DataLoader
                 // The "mhf.exe" process was not found
                 LoggerInstance.Fatal(CultureInfo.InvariantCulture, "mhf.exe not found");
                 MessageBox.Show("The 'mhf.exe' process was not found.", Messages.ErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
-                ApplicationManager.HandleShutdown();
+                ApplicationService.HandleShutdown();
                 return;
             }
 
@@ -209,7 +210,7 @@ public class DataLoader
 
             // Check if the version file exists in the database folder
             string previousVersionPath = Path.Combine(databasePath, "previous-version.txt");
-            FileManager.CreateFileIfNotExists(previousVersionPath, "Creating version file at ");
+            FileService.CreateFileIfNotExists(previousVersionPath, "Creating version file at ");
 
             s.PreviousVersionFilePath = previousVersionPath;
 
@@ -220,7 +221,7 @@ public class DataLoader
             // The "mhf.exe" process was not found
             LoggerInstance.Fatal(CultureInfo.InvariantCulture, "mhf.exe not found");
             MessageBox.Show("The 'mhf.exe' process was not found.", Messages.ErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
-            ApplicationManager.HandleShutdown();
+            ApplicationService.HandleShutdown();
         }
     }
 
@@ -299,7 +300,7 @@ public class DataLoader
                 MessageBox.Show($"Close other external programs before opening the overlay ({process.ProcessName} found)", Messages.FatalTitle, MessageBoxButton.OK, MessageBoxImage.Error);
 
                 // Close the overlay program
-                ApplicationManager.HandleShutdown();
+                ApplicationService.HandleShutdown();
             }
 
             if (process.ProcessName == "MHFZ_Overlay")
@@ -320,7 +321,7 @@ public class DataLoader
             MessageBox.Show("Close other instances of the overlay before opening a new one", Messages.FatalTitle, MessageBoxButton.OK, MessageBoxImage.Error);
 
             // Close the overlay program
-            ApplicationManager.HandleShutdown();
+            ApplicationService.HandleShutdown();
         }
 
         if (gameCount > 1)
@@ -330,7 +331,7 @@ public class DataLoader
             MessageBox.Show("Close other instances of the game before opening a new one", Messages.FatalTitle, MessageBoxButton.OK, MessageBoxImage.Error);
 
             // Close the overlay program
-            ApplicationManager.HandleShutdown();
+            ApplicationService.HandleShutdown();
         }
     }
 
@@ -357,7 +358,7 @@ public class DataLoader
                     // The "mhf.exe" process was not found
                     LoggerInstance.Fatal(CultureInfo.InvariantCulture, "mhf.exe not found");
                     MessageBox.Show("The 'mhf.exe' process was not found. You may have closed the game. Closing overlay.", Messages.FatalTitle, MessageBoxButton.OK, MessageBoxImage.Error);
-                    ApplicationManager.HandleShutdown();
+                    ApplicationService.HandleShutdown();
                     return;
                 }
 
@@ -372,7 +373,7 @@ public class DataLoader
                     // The "mhf.exe" process was not found
                     LoggerInstance.Fatal(CultureInfo.InvariantCulture, "mhf.exe not found");
                     MessageBox.Show("The 'mhf.exe' process was not found. You may have closed the game. Closing overlay.", Messages.FatalTitle, MessageBoxButton.OK, MessageBoxImage.Error);
-                    ApplicationManager.HandleShutdown();
+                    ApplicationService.HandleShutdown();
                     return;
                 }
 
@@ -380,19 +381,19 @@ public class DataLoader
                 string[] files = Directory.GetFiles(mhfDirectory, "*", SearchOption.AllDirectories);
                 string[] folders = Directory.GetDirectories(mhfDirectory, "*", SearchOption.AllDirectories);
                 var isFatal = true;
-                FileManager.CheckIfFileExtensionFolderExists(files, folders, this.bannedFiles, this.bannedFileExtensions, this.bannedFolders, isFatal);
+                FileService.CheckIfFileExtensionFolderExists(files, folders, this.bannedFiles, this.bannedFileExtensions, this.bannedFolders, isFatal);
             }
             else
             {
                 // The "mhf.exe" process was not found
                 LoggerInstance.Fatal(CultureInfo.InvariantCulture, "mhf.exe not found");
                 MessageBox.Show("The 'mhf.exe' process was not found. You may have closed the game. Closing overlay.", Messages.FatalTitle, MessageBoxButton.OK, MessageBoxImage.Error);
-                ApplicationManager.HandleShutdown();
+                ApplicationService.HandleShutdown();
             }
         }
         catch (Exception ex)
         {
-            LoggingManager.WriteCrashLog(ex);
+            LoggingService.WriteCrashLog(ex);
         }
     }
 
@@ -413,7 +414,7 @@ public class DataLoader
     /// </value>
     public AddressModel model { get; } // TODO: fix null warning
 
-    private static readonly DatabaseManager databaseManager = DatabaseManager.GetInstance();
+    private static readonly DatabaseService databaseManager = DatabaseService.GetInstance();
 
     /// <summary>
     /// Creates the code cave.
@@ -427,7 +428,7 @@ public class DataLoader
         {
             LoggerInstance.Fatal(CultureInfo.InvariantCulture, "Launch game first");
             System.Windows.MessageBox.Show("Please launch game first", Messages.ErrorTitle, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
-            ApplicationManager.HandleShutdown();
+            ApplicationService.HandleShutdown();
             return;
         }
 
@@ -506,7 +507,7 @@ public class DataLoader
     {
         LoggerInstance.Info(CultureInfo.InvariantCulture, "Loading MHFODLL");
 
-        //Search and get mhfo-hd.dll module base address
+        // Search and get mhfo-hd.dll module base address
         Process proccess = Process.GetProcessById(PID);
         if (proccess == null)
         {
@@ -540,7 +541,7 @@ public class DataLoader
             {
                 LoggerInstance.Fatal(CultureInfo.InvariantCulture, "Could not find game dll");
                 MessageBox.Show("Could not find game dll. Make sure you start the overlay inside Mezeporta.", Messages.FatalTitle, MessageBoxButton.OK, MessageBoxImage.Error);
-                ApplicationManager.HandleShutdown();
+                ApplicationService.HandleShutdown();
             }
         }
 

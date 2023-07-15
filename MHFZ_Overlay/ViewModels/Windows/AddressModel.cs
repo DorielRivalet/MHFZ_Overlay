@@ -23,10 +23,9 @@ using LiveChartsCore.SkiaSharpView.Painting;
 using Memory;
 using MHFZ_Overlay;
 using MHFZ_Overlay.Models;
+using MHFZ_Overlay.Models.Collections;
 using MHFZ_Overlay.Models.Constant;
-using MHFZ_Overlay.Models.Mappers;
-using MHFZ_Overlay.Services.DataAccessLayer;
-using MHFZ_Overlay.Services.Manager;
+using MHFZ_Overlay.Services;
 using RESTCountries.NET.Models;
 using RESTCountries.NET.Services;
 using SkiaSharp;
@@ -40,7 +39,7 @@ public abstract class AddressModel : INotifyPropertyChanged
 {
     private static readonly NLog.Logger LoggerInstance = NLog.LogManager.GetCurrentClassLogger();
 
-    private static readonly DatabaseManager DatabaseManagerInstance = DatabaseManager.GetInstance();
+    private static readonly DatabaseService DatabaseManagerInstance = DatabaseService.GetInstance();
 
     public readonly Mem M;
 
@@ -1338,7 +1337,7 @@ public abstract class AddressModel : INotifyPropertyChanged
     /// <returns></returns>
     public string GetQuestNameFromID(int id)
     {
-        if (!DiscordManager.ShowDiscordQuestNames())
+        if (!DiscordService.ShowDiscordQuestNames())
         {
             return string.Empty;
         }
@@ -2199,12 +2198,12 @@ TreeScope.Children, condition);
         {
             if (WeaponRaw() == HighestAtk && ShowHighestAtkColor())
             {
-                PlayerAttackIcon = "../Assets/Icons/png/attack_up_red.png";
+                PlayerAttackIcon = "../../Assets/Icons/png/attack_up_red.png";
                 return "#f38ba8";
             }
             else
             {
-                PlayerAttackIcon = "../Assets/Icons/png/attack_up.png";
+                PlayerAttackIcon = "../../Assets/Icons/png/attack_up.png";
                 return "#f5e0dc";
             }
         }
@@ -2216,12 +2215,12 @@ TreeScope.Children, condition);
         {
             if (DPS + 10 >= HighestDPS && ShowHighestDPSColor())
             {
-                DPSIcon = "../Assets/Icons/png/burst_red.png";
+                DPSIcon = "../../Assets/Icons/png/burst_red.png";
                 return "#f38ba8";
             }
             else
             {
-                DPSIcon = "../Assets/Icons/png/burst.png";
+                DPSIcon = "../../Assets/Icons/png/burst.png";
                 return "#f5e0dc";
             }
         }
@@ -2233,12 +2232,12 @@ TreeScope.Children, condition);
         {
             if (HitsPerSecond >= GetAverageHitsPerSecond(WeaponType()) && ShowAverageHitsPerSecondColor())
             {
-                HitCountIcon = "../Assets/Icons/png/red_soul.png";
+                HitCountIcon = "../../Assets/Icons/png/red_soul.png";
                 return "#f38ba8";
             }
             else
             {
-                HitCountIcon = "../Assets/Icons/png/blue_soul.png";
+                HitCountIcon = "../../Assets/Icons/png/blue_soul.png";
                 return "#f5e0dc";
             }
         }
@@ -2251,12 +2250,12 @@ TreeScope.Children, condition);
             // get the average hits of a weapon per second, multiply by 60 to get the minutes, multiply by 2 to account for other actions
             if (APM >= GetAverageHitsPerSecond(WeaponType()) * 60 * 2 && ShowAverageAPMColor())
             {
-                APMIcon = "../Assets/Icons/png/flame_hc.png";
+                APMIcon = "../../Assets/Icons/png/flame_hc.png";
                 return "#f38ba8";
             }
             else
             {
-                APMIcon = "../Assets/Icons/png/flame_ul.png";
+                APMIcon = "../../Assets/Icons/png/flame_ul.png";
                 return "#f5e0dc";
             }
         }
@@ -2282,12 +2281,12 @@ TreeScope.Children, condition);
             // for speedrunners to get hit by 1 small bomb at least. and 2 perfect guards to get max obscurity.
             if (!hasReflect && TotalHitsTakenBlocked <= 1 || hasReflect && TotalHitsTakenBlocked <= 3 && ShowHitsTakenBlockedColor())
             {
-                PlayerHitsTakenBlockedIcon = "../Assets/Icons/png/defense_up.png";
+                PlayerHitsTakenBlockedIcon = "../../Assets/Icons/png/defense_up.png";
                 return "#f38ba8";
             }
             else
             {
-                PlayerHitsTakenBlockedIcon = "../Assets/Icons/png/defense_down.png";
+                PlayerHitsTakenBlockedIcon = "../../Assets/Icons/png/defense_down.png";
                 return "#f5e0dc";
             }
         }
@@ -2323,13 +2322,13 @@ TreeScope.Children, condition);
         {
             if (TimeDefInt() == 0 || int.Parse(Monster1MaxHP, CultureInfo.InvariantCulture) <= 1)
             {
-                QuestTimeIcon = "../Assets/Icons/png/sand_clock.png";
+                QuestTimeIcon = "../../Assets/Icons/png/sand_clock.png";
                 return "#f5e0dc";
             }
 
             if (TimeDefInt() < TimeInt())
             {
-                QuestTimeIcon = "../Assets/Icons/png/sand_clock.png";
+                QuestTimeIcon = "../../Assets/Icons/png/sand_clock.png";
                 return "#f5e0dc";
             }
 
@@ -2340,11 +2339,11 @@ TreeScope.Children, condition);
             {
                 if (GetTimerMode() == "Time Left")
                 {
-                    QuestTimeIcon = "../Assets/Icons/png/sand_clock2_red.png";
+                    QuestTimeIcon = "../../Assets/Icons/png/sand_clock2_red.png";
                 }
                 else
                 {
-                    QuestTimeIcon = "../Assets/Icons/png/clock_red.png";
+                    QuestTimeIcon = "../../Assets/Icons/png/clock_red.png";
                 }
 
                 return "#f38ba8";
@@ -2354,11 +2353,11 @@ TreeScope.Children, condition);
             {
                 if (GetTimerMode() == "Time Left")
                 {
-                    QuestTimeIcon = "../Assets/Icons/png/sand_clock2.png";
+                    QuestTimeIcon = "../../Assets/Icons/png/sand_clock2.png";
                 }
                 else
                 {
-                    QuestTimeIcon = "../Assets/Icons/png/clock.png";
+                    QuestTimeIcon = "../../Assets/Icons/png/clock.png";
                 }
 
                 return "#f5e0dc";
@@ -2372,13 +2371,13 @@ TreeScope.Children, condition);
         {
             if (TimeDefInt() == 0 || int.Parse(Monster1MaxHP) <= 1)
             {
-                PersonalBestIcon = "../Assets/Icons/png/quest_clock.png";
+                PersonalBestIcon = "../../Assets/Icons/png/quest_clock.png";
                 return "#f5e0dc";
             }
 
             if (TimeDefInt() < TimeInt())
             {
-                PersonalBestIcon = "../Assets/Icons/png/quest_clock.png";
+                PersonalBestIcon = "../../Assets/Icons/png/quest_clock.png";
                 return "#f5e0dc";
             }
 
@@ -2387,12 +2386,12 @@ TreeScope.Children, condition);
 
             if (timePercent >= monster1HPPercent && ShowPersonalBestPaceColor())
             {
-                PersonalBestIcon = "../Assets/Icons/png/quest_clock_red.png";
+                PersonalBestIcon = "../../Assets/Icons/png/quest_clock_red.png";
                 return "#f38ba8";
             }
             else
             {
-                PersonalBestIcon = "../Assets/Icons/png/quest_clock.png";
+                PersonalBestIcon = "../../Assets/Icons/png/quest_clock.png";
                 return "#f5e0dc";
             }
         }
@@ -2451,12 +2450,12 @@ TreeScope.Children, condition);
         {
             if (AtkMult == HighestAttackMult.ToString(CultureInfo.InvariantCulture) && ShowHighestMonsterAttackMultiplierColor())
             {
-                MonsterAttackMultiplierIcon = "../Assets/Icons/png/dure_attack_red.png";
+                MonsterAttackMultiplierIcon = "../../Assets/Icons/png/dure_attack_red.png";
                 return "#f38ba8";
             }
             else
             {
-                MonsterAttackMultiplierIcon = "../Assets/Icons/png/dure_attack.png";
+                MonsterAttackMultiplierIcon = "../../Assets/Icons/png/dure_attack.png";
                 return "#f5e0dc";
             }
         }
@@ -2468,34 +2467,34 @@ TreeScope.Children, condition);
         {
             if (DefMult == LowestMonsterDefrate.ToString(CultureInfo.InvariantCulture) && ShowLowestMonsterDefrateColor())
             {
-                MonsterDefrateIcon = "../Assets/Icons/png/dure_defense_red.png";
+                MonsterDefrateIcon = "../../Assets/Icons/png/dure_defense_red.png";
                 return "#f38ba8";
             }
             else
             {
-                MonsterDefrateIcon = "../Assets/Icons/png/dure_defense.png";
+                MonsterDefrateIcon = "../../Assets/Icons/png/dure_defense.png";
                 return "#f5e0dc";
             }
         }
     }
 
-    public string MonsterAttackMultiplierIcon { get; set; } = "../Assets/Icons/png/dure_attack.png";
+    public string MonsterAttackMultiplierIcon { get; set; } = "../../Assets/Icons/png/dure_attack.png";
 
-    public string MonsterDefrateIcon { get; set; } = "../Assets/Icons/png/dure_defense.png";
+    public string MonsterDefrateIcon { get; set; } = "../../Assets/Icons/png/dure_defense.png";
 
-    public string DPSIcon { get; set; } = "../Assets/Icons/png/burst.png";
+    public string DPSIcon { get; set; } = "../../Assets/Icons/png/burst.png";
 
-    public string QuestTimeIcon { get; set; } = "../Assets/Icons/png/clock.png";
+    public string QuestTimeIcon { get; set; } = "../../Assets/Icons/png/clock.png";
 
-    public string PlayerAttackIcon { get; set; } = "../Assets/Icons/png/attack_up.png";
+    public string PlayerAttackIcon { get; set; } = "../../Assets/Icons/png/attack_up.png";
 
-    public string PlayerHitsTakenBlockedIcon { get; set; } = "../Assets/Icons/png/defense_up.png";
+    public string PlayerHitsTakenBlockedIcon { get; set; } = "../../Assets/Icons/png/defense_up.png";
 
-    public string HitCountIcon { get; set; } = "../Assets/Icons/png/blue_soul.png";
+    public string HitCountIcon { get; set; } = "../../Assets/Icons/png/blue_soul.png";
 
-    public string APMIcon { get; set; } = "../Assets/Icons/png/flame_ul.png";
+    public string APMIcon { get; set; } = "../../Assets/Icons/png/flame_ul.png";
 
-    public string PersonalBestIcon { get; set; } = "../Assets/Icons/png/quest_clock.png";
+    public string PersonalBestIcon { get; set; } = "../../Assets/Icons/png/quest_clock.png";
 
     ///<summary>
     ///<para>Player true raw</para>
@@ -3447,7 +3446,7 @@ TreeScope.Children, condition);
 
     public string DetermineMonsterName(int id)
     {
-        var keyFound = MonsterNameMapper.MonsterNameID.TryGetValue(id, out var link);
+        var keyFound = MonsterNameCollection.MonsterNameID.TryGetValue(id, out var link);
         if (link == null)
         {
             link = "Loading...";
@@ -3555,7 +3554,7 @@ TreeScope.Children, condition);
             return string.Empty;
         }
 
-        MonsterMapper.MonsterID.TryGetValue(id, out var monstername);
+        MonsterCollection.MonsterID.TryGetValue(id, out var monstername);
 
         if (monstername != null && monstername != RealMonsterName && isFirstMonster)
         {
@@ -3840,10 +3839,10 @@ TreeScope.Children, condition);
 
             if (s.EnableMonsterRenders)
             {
-                var renderFound = MonsterRenderMapper.MonsterRender.ContainsKey(monsterIcon);
+                var renderFound = MonsterRenderCollection.MonsterRender.ContainsKey(monsterIcon);
                 if (renderFound)
                 {
-                    return MonsterRenderMapper.MonsterRender[monsterIcon];
+                    return MonsterRenderCollection.MonsterRender[monsterIcon];
                 }
                 else
                 {
@@ -3866,10 +3865,10 @@ TreeScope.Children, condition);
 
             if (s.EnableMonsterRenders)
             {
-                var renderFound = MonsterRenderMapper.MonsterRender.ContainsKey(monsterIcon);
+                var renderFound = MonsterRenderCollection.MonsterRender.ContainsKey(monsterIcon);
                 if (renderFound)
                 {
-                    return MonsterRenderMapper.MonsterRender[monsterIcon];
+                    return MonsterRenderCollection.MonsterRender[monsterIcon];
                 }
                 else
                 {
@@ -3892,10 +3891,10 @@ TreeScope.Children, condition);
 
             if (s.EnableMonsterRenders)
             {
-                var renderFound = MonsterRenderMapper.MonsterRender.ContainsKey(monsterIcon);
+                var renderFound = MonsterRenderCollection.MonsterRender.ContainsKey(monsterIcon);
                 if (renderFound)
                 {
-                    return MonsterRenderMapper.MonsterRender[monsterIcon];
+                    return MonsterRenderCollection.MonsterRender[monsterIcon];
                 }
                 else
                 {
@@ -3918,10 +3917,10 @@ TreeScope.Children, condition);
 
             if (s.EnableMonsterRenders)
             {
-                var renderFound = MonsterRenderMapper.MonsterRender.ContainsKey(monsterIcon);
+                var renderFound = MonsterRenderCollection.MonsterRender.ContainsKey(monsterIcon);
                 if (renderFound)
                 {
-                    return MonsterRenderMapper.MonsterRender[monsterIcon];
+                    return MonsterRenderCollection.MonsterRender[monsterIcon];
                 }
                 else
                 {
@@ -4010,7 +4009,7 @@ TreeScope.Children, condition);
 
     public string DetermineMonsterImage(int id)
     {
-        var keyFound = MonsterImageMapper.MonsterImageID.TryGetValue(id, out var link);
+        var keyFound = MonsterImageCollection.MonsterImageID.TryGetValue(id, out var link);
         if (link == null)
         {
             link = Messages.UnknownMonsterIcon;
@@ -4053,7 +4052,7 @@ TreeScope.Children, condition);
                 break;
         }
 
-        var keyFound = MonsterColorMapper.MonsterColorID.TryGetValue(monsterID, out var color);
+        var keyFound = MonsterColorCollection.MonsterColorID.TryGetValue(monsterID, out var color);
         if (color == null)
         {
             color = barColorSetting;
@@ -4207,7 +4206,7 @@ TreeScope.Children, condition);
     {
         var AreaGroup = new List<int> { 0 };
 
-        foreach (var kvp in GatheringMapMapper.GatheringMapID)
+        foreach (var kvp in GatheringMapCollection.GatheringMapID)
         {
             var areaIDs = kvp.Key;
 
@@ -4223,14 +4222,14 @@ TreeScope.Children, condition);
 
     private static string DetermineGatheringMap(List<int> key)
     {
-        var gatheringMap = GatheringMapMapper.GatheringMapID.ContainsKey(key);
+        var gatheringMap = GatheringMapCollection.GatheringMapID.ContainsKey(key);
         if (!gatheringMap)
         {
             return Messages.EmptyImage;
         }
         else
         {
-            return GatheringMapMapper.GatheringMapID[key];
+            return GatheringMapCollection.GatheringMapID[key];
         }
     }
 
@@ -8631,7 +8630,7 @@ Session Duration (Highest/Lowest/Average/Median): {111} / {112} / {113} / {114}
     {
         get
         {
-            return "Gunner Skills\n\nSteady Hand\t×\tSteady Hand+2\t20\tNormal/Rapid Up,Pierce/Pierce Up,Pellet/Spread Up and +5 to weakness value with critical distance.\n\nDoes not stack with the individual up skills, determination, precision, sniper or critical shot.\n\nSteady Hand+1\t10\tNormal/Rapid Up,Pierce/Pierce Up and Pellet/Spread Up. Does not stack with the individual skill versions.\n\nGentle Shot\t×\tGentle Shot+3\t30\tLoad Up & Recoil Reduction+3.\n\nGentle Shot+2\t15\tLoad Up & Recoil Reduction+2.\n\nGentle Shot+1\t10\tLoad Up & Recoil Reduction+1.\n\nNormal Shot Up\t×\tNormal/Rapid Up\t10\tNormal S and Rapid Bow Arrows do x1.1damage.\n\nPierce Shot Up\t×\tPierce/Pierce Up\t10\tPierce Shots and Pierce Bow Arrows do x1.1damage.\n\nPellet Shot Up\t×\tPellet/Spread Up\t10\tPellet Shots and Scatter Bow Arrows do x1.3damage.\n\nNormal Shot Add\t×\tNormal S All\t15\tGrants the ability to use all Normal S ammo.\n\nNormal S Lv1\t10\tLv1 Normal bullets can be used\n\nPierce Shot Add\t×\tPierce S All\t20\tGrants the ability to use all Pierce S ammo.\n\nPierce S Lv1&2 Add\t15\tPierce S Lv1&2 bullets can be used\n\nPierce S Lv1 Add\t10\tPierce S Lv1 bullets can be used\n\nPellet Shot Add\t×\tPierce S All\t20\tGrants the ability to use all Pellet S ammo.\n\nPellet S LV1&2 Add\t15\tPellet S Lv1&2 bullets can be used\n\nPellet S LV1 Add\t10\tPellet S Lv1 bullets can be used\n\nCrag Shot Add\t×\tCrag S All\t20\tGrants the ability to use all Crag S ammo.\n\nCrag S Lv1&Lv2 Add\t15\tCrag S Lv1&2 bullets can be used\n\nCrag S Lv1 Add\t10\tCrag S Lv1 bullets can be used\n\nCluster Shot Add\t×\tCluster S All\t20\tGrants the ability to use all Cluster S ammo.\n\nCluster S Lv1&Lv2 Add\t15\tCluster S Lv1&2 bullets can be used\n\nCluster S Lv1 Add\t10\tCluster S Lv1 bullets can be used\n\nLoading\t×\tLoadingＵＰ\t10\t+1 capacity for Bowgun and Gunlance ammo.Extra charge level for Bows.\n\nReload\t○\tReload Speed+3\t20\tBowguns: Reload Speed increases by 3 levels.\n\nBows: Coatings are automatically loaded when they are selected.\n\nReload Speed+2\t15\tBowguns: Reload Speed increases by 2 levels.\n\nBows: Coating loading time is 75% of default time.\n\nReload Speed+1\t10\tBowguns: Reload Speed increases by 1 level.\n\nBows: Coating loading time is 85% of default time.\n\nReload Speed-1\t-10\tBowguns: Reload Speed decreases by 1 level.\n\nBows: Coating loading time is 110% of default time.\n\nRecoil\t○\tRecoil Reduction+3\t30\tBowguns: Recoil is reduced by 6 levels.\n\nGunlance: Can evade after Shelling and Recoil from Wyvern Fire is reduced by 30 frames.\n\nRecoil Reduction+2\t15\tBowguns: Recoil is reduced by 4 levels.\n\nGunlance: Can evade after Shelling and Recoil from Wyvern Fire is reduced by 30 frames.\n\nRecoil Reduction+1\t10\tBowguns: Recoil is reduced by 2 levels.\n\nGunlance: Can evade after Shelling.\n\nCritical Shot\t×\tCritical Shot+3\t20\tAttack Up (Absolute)(True Raw+50) and Sniper (Less shot deviation, +5 to a body part's weakness when hit by a Normal/Pierce/Crag Shot or Bow Attacks at a properly spaced critical distance).\n\nDoes not stack with other Attack skills or Sniper (e.g.Attack Up portion would be overwritten by Strong Attack+4).\n\nStacks with Thunderclad,Acid Shots,HHSonicBomb Debuff and Point Breakthrough with the resulting value being used for Exploit Weakness.\n\nCritical Shot+2\t15\tAttack Up (Very Large)(True Raw+30) and Sniper (Less shot deviation, +5 to a body part's weakness when hit by a Normal/Pierce/Crag Shot or Bow Attacks at a properly spaced critical distance).\n\nDoes not stack with other Attack skills or Sniper (e.g.Attack Up portion would be overwritten by Strong Attack+4).\n\nStacks with Thunderclad,Acid Shots,HHSonicBomb Debuff and Point Breakthrough with the resulting value being used for Exploit Weakness.\n\nCritical Shot+1\t10\tAttack Up (Large)(True Raw+20) and Sniper (Less shot deviation, +5 to a body part's weakness when hit by a Normal/Pierce/Crag Shot or Bow Attacks at a properly spaced critical distance).\n\nDoes not stack with other Attack skills or Sniper (e.g.Attack Up portion would be overwritten by Strong Attack+4).\n\nStacks with Thunderclad,Acid Shots,HHSonicBomb Debuff and Point Breakthrough with the resulting value being used for Exploit Weakness.\n\nRapid Fire\t×\tRapid Fire\t15\tRapid Fire volleys fire one extra round, when loading bullets that can be rapid fired you will load all bullets.(Doesn't apply to Ultra Rapid Fire).\n\nAuto-Reload\t×\tAuto-Reload\t10\tBowguns: Can shoot without having to reload but receive high recoil for all shots.\n\nBows: Charging time is reduced to 85% of the default speed.\n\nAmmo Combiner\t×\tMaximum Bullets\t10\tWhen combining bullets or coatings you will always get the maximum possible back.\n\nBullet Saver\t×\tSaving Expert\t20\tWhen you fire a shot there is a 11/32(34.3%) chance that it will notconsume a shot or coating\n\nProcesses all bullets individually on compression shots (HBG only, any number from zero to all loaded shots can be saved.)\n\nbut does not work with Ultra Rapid Fire (LBG) or Heat Beams (HBG).\n\nSaving Master\t10\tWhen you fire a shot there is a 7/32(21.8%) chance that it will not consume a shot or coating\n\nAlso works with compression (HBG). Does not work with Ultra Rapid Fire (LBG) and Heat Beam (HBG).\n\nPrecision\t○\tPrecision+2\t20\tShot deviation (bullet drift) is decreased. and adds +5 to a bodypart's weakness (i.e. 35>40)\n\nwhen shooting with Normal/Pierce/Crag Shot or Bow Attacks within Critical Distance.\n\nDeviation Down\t10\tShot deviation (bullet drift) is decreased.\n\nDeviation Up\t-10\tShot deviation (bullet drift) is increased.\n\nPoison Coating Add\t×\tPoison Coating Add\t10\tGrants the ability to use Poison Coatings\n\nPara Coating Add\t×\tPara Coating Add\t10\tGrants the ability to use Para Coatings\n\nSleep Coating Add\t×\tSleep Coating Add\t10\tGrants the ability to use Sleep Coatings\n\nMounting\t×\tMounting+3\t30\tLoad Up & Reload Speed+3.\n\nMounting+2\t20\tLoad Up & Reload Speed+2.\n\nMounting+1\t10\tLoad Up & Reload Speed+1.\n\nSniper\t×\tSniper\t10\tAuto-Reload and +5 to weakness value within critical distance. *Should only be used with Bows.*\n\nSpacing\t×\tSpacing\t10\tAlters critical distance for Normal,Pierce,Pellet and Blunt shots to be lower and further increases damage at critical distance.\n\nIf you consistently attack within this critical distance you gain Movement Speed+2 and Evade Distance Up.\n\nLBG and HBG get increased perfect shot(3 Segments) and compression windows (2 segments).Bowgets lowered charge times that stack with Auto-Reload.\n\nDoes not buff attacks without Critical Distance, is added to the buff for the first half of HBG's Critical Distance.\n\nBuff builds an internal meter that fills in much the same way as Thunder Clad and total hits needed will vary with Attack, Affinity, Shot Type, etc. but meter build up is not reset on being launched etc.\n\nHBG Tech\t×\tHBG Tech【Master】\tBoth Hiden\tHBG Tech [Gun Sage]'s attack power increases by 1.4x\n\nGun Sage\t30\tSuper HG Earplugs, Attack x1.3 when wielding a Heavy Bowgun, Power (value) of Element/Status Ammo x1.2,Evade Distance Up\n\nMelee Attacks and Crag/Clust Shots all do 15 KO Damage,Heat Beam does x1.2damage and Perfectly-Timed Compression will result in more Attack Power for that 1 salvo.\n\nHBG Tech (Kaiden)\t20\tAttack x1.1 and Evade Extender when wielding a Heavy Bowgun.\n\nHBG Tech (Expert)\t10\tEvade Extender when wielding a Heavy Bowgun.\n\nHBG Tech (Novice)\t-10\tAttack power x0.8 when wielding a Heavy Bowgun.\n\nLBG Tech\t×\tLBG Tech【Master】\tBoth Hiden\tIncreases attack power of LBG Tech [Gun Prodigy] by 1.4x\n\nGun Prodigy\t30\tSuper HG Earplugs,Attack 1.3 when wielding a Light Bowgun, Probability of Ammo bouncing off Monsters is reduced\n\ncan consume items while the weapon is unsheathed,Perfect Shot added to Just Shot meter that deals additional damage.\n\nLBG Tech (Kaiden)\t20\tAttack x1.1 and the probability of Ammo bouncing off Monsters is reduced when wielding a Light Bowgun.\n\nLBG Tech (Expert)\t10\tThe probability of Ammo bouncing off Monsters is reduced when wielding a Light Bowgun.\n\nLBG Tech (Novice)\t-10\tAttack 0.8x while wielding a Light Bowgun.\n\nBow Tech\t×\tBow Tech【Master】\tBoth Hiden\tBow Tech[Bow Demon]'s attack power increases by 1.4x\n\nBow Demon\t30\tSuper HG Earplugs,Attack x1.3 when wielding a Bow, Arrows cannot be deflected, PowerCoating Modifier increases to x1.6 for normal Bows and to x1.7for Gou (and upgrades)\n\nEvolution (Raviente) and G-Rank Bows and the Arc-Shot can be executed at Charge Lv2.\n\nBow Tech (Kaiden)\t20\tAttack x1.1 and arrows are no longer deflected when wielding a Bow.\n\nBow Tech (Expert)\t10\tArrows are no longer deflected when wielding a Bow.\n\nBow Tech (Novice)\t-10\tAttack 0.8x while wielding a Bow.";
+            return "Gunner Skills\n\nSteady Hand\t×\tSteady Hand+2\t20\tNormal/Rapid Up,Pierce/Pierce Up,Pellet/Spread Up and +5 to weakness value with critical distance.\n\nDoes not stack with the individual up skills, determination, precision, sniper or critical shot.\n\nSteady Hand+1\t10\tNormal/Rapid Up,Pierce/Pierce Up and Pellet/Spread Up. Does not stack with the individual skill versions.\n\nGentle Shot\t×\tGentle Shot+3\t30\tLoad Up & Recoil Reduction+3.\n\nGentle Shot+2\t15\tLoad Up & Recoil Reduction+2.\n\nGentle Shot+1\t10\tLoad Up & Recoil Reduction+1.\n\nNormal Shot Up\t×\tNormal/Rapid Up\t10\tNormal S and Rapid Bow Arrows do x1.1damage.\n\nPierce Shot Up\t×\tPierce/Pierce Up\t10\tPierce Shots and Pierce Bow Arrows do x1.1damage.\n\nPellet Shot Up\t×\tPellet/Spread Up\t10\tPellet Shots and Scatter Bow Arrows do x1.3damage.\n\nNormal Shot Add\t×\tNormal S All\t15\tGrants the ability to use all Normal S ammo.\n\nNormal S Lv1\t10\tLv1 Normal bullets can be used\n\nPierce Shot Add\t×\tPierce S All\t20\tGrants the ability to use all Pierce S ammo.\n\nPierce S Lv1&2 Add\t15\tPierce S Lv1&2 bullets can be used\n\nPierce S Lv1 Add\t10\tPierce S Lv1 bullets can be used\n\nPellet Shot Add\t×\tPierce S All\t20\tGrants the ability to use all Pellet S ammo.\n\nPellet S LV1&2 Add\t15\tPellet S Lv1&2 bullets can be used\n\nPellet S LV1 Add\t10\tPellet S Lv1 bullets can be used\n\nCrag Shot Add\t×\tCrag S All\t20\tGrants the ability to use all Crag S ammo.\n\nCrag S Lv1&Lv2 Add\t15\tCrag S Lv1&2 bullets can be used\n\nCrag S Lv1 Add\t10\tCrag S Lv1 bullets can be used\n\nCluster Shot Add\t×\tCluster S All\t20\tGrants the ability to use all Cluster S ammo.\n\nCluster S Lv1&Lv2 Add\t15\tCluster S Lv1&2 bullets can be used\n\nCluster S Lv1 Add\t10\tCluster S Lv1 bullets can be used\n\nLoading\t×\tLoadingＵＰ\t10\t+1 capacity for Bowgun and Gunlance ammo.Extra charge level for Bows.\n\nReload\t○\tReload Speed+3\t20\tBowguns: Reload Speed increases by 3 levels.\n\nBows: Coatings are automatically loaded when they are selected.\n\nReload Speed+2\t15\tBowguns: Reload Speed increases by 2 levels.\n\nBows: Coating loading time is 75% of default time.\n\nReload Speed+1\t10\tBowguns: Reload Speed increases by 1 level.\n\nBows: Coating loading time is 85% of default time.\n\nReload Speed-1\t-10\tBowguns: Reload Speed decreases by 1 level.\n\nBows: Coating loading time is 110% of default time.\n\nRecoil\t○\tRecoil Reduction+3\t30\tBowguns: Recoil is reduced by 6 levels.\n\nGunlance: Can evade after Shelling and Recoil from Wyvern Fire is reduced by 30 frames.\n\nRecoil Reduction+2\t15\tBowguns: Recoil is reduced by 4 levels.\n\nGunlance: Can evade after Shelling and Recoil from Wyvern Fire is reduced by 30 frames.\n\nRecoil Reduction+1\t10\tBowguns: Recoil is reduced by 2 levels.\n\nGunlance: Can evade after Shelling.\n\nCritical Shot\t×\tCritical Shot+3\t20\tAttack Up (Absolute)(True Raw+50) and Sniper (Less shot deviation, +5 to a body part's weakness when hit by a Normal/Pierce/Crag Shot or Bow Attacks at a properly spaced critical distance).\n\nDoes not stack with other Attack skills or Sniper (e.g.Attack Up portion would be overwritten by Strong Attack+4).\n\nStacks with Thunderclad,Acid Shots,HHSonicBomb Debuff and Point Breakthrough with the resulting value being used for Exploit Weakness.\n\nCritical Shot+2\t15\tAttack Up (Very Large)(True Raw+30) and Sniper (Less shot deviation, +5 to a body part's weakness when hit by a Normal/Pierce/Crag Shot or Bow Attacks at a properly spaced critical distance).\n\nDoes not stack with other Attack skills or Sniper (e.g.Attack Up portion would be overwritten by Strong Attack+4).\n\nStacks with Thunderclad,Acid Shots,HHSonicBomb Debuff and Point Breakthrough with the resulting value being used for Exploit Weakness.\n\nCritical Shot+1\t10\tAttack Up (Large)(True Raw+20) and Sniper (Less shot deviation, +5 to a body part's weakness when hit by a Normal/Pierce/Crag Shot or Bow Attacks at a properly spaced critical distance).\n\nDoes not stack with other Attack skills or Sniper (e.g.Attack Up portion would be overwritten by Strong Attack+4).\n\nStacks with Thunderclad,Acid Shots,HHSonicBomb Debuff and Point Breakthrough with the resulting value being used for Exploit Weakness.\n\nRapid Fire\t×\tRapid Fire\t15\tRapid Fire volleys fire one extra round, when loading bullets that can be rapid fired you will load all bullets.(Doesn't apply to Ultra Rapid Fire).\n\nAuto-Reload\t×\tAuto-Reload\t10\tBowguns: Can shoot without having to reload but receive high recoil for all shots.\n\nBows: Charging time is reduced to 85% of the default speed.\n\nAmmo Combiner\t×\tMaximum Bullets\t10\tWhen combining bullets or coatings you will always get the maximum possible back.\n\nBullet Saver\t×\tSaving Expert\t20\tWhen you fire a shot there is a 11/32(34.3%) chance that it will notconsume a shot or coating\n\nProcesses all bullets individually on compression shots (HBG only, any number from zero to all loaded shots can be saved.)\n\nbut does not work with Ultra Rapid Fire (LBG) or Heat Beams (HBG).\n\nSaving Master\t10\tWhen you fire a shot there is a 7/32(21.8%) chance that it will not consume a shot or coating\n\nAlso works with compression (HBG). Does not work with Ultra Rapid Fire (LBG) and Heat Beam (HBG).\n\nPrecision\t○\tPrecision+2\t20\tShot deviation (bullet drift) is decreased. and adds +5 to a bodypart's weakness (i.e. 35>40)\n\nwhen shooting with Normal/Pierce/Crag Shot or Bow Attacks within Critical Distance.\n\nDeviation Down\t10\tShot deviation (bullet drift) is decreased.\n\nDeviation Up\t-10\tShot deviation (bullet drift) is increased.\n\nPoison Coating Add\t×\tPoison Coating Add\t10\tGrants the ability to use Poison Coatings\n\nPara Coating Add\t×\tPara Coating Add\t10\tGrants the ability to use Para Coatings\n\nSleep Coating Add\t×\tSleep Coating Add\t10\tGrants the ability to use Sleep Coatings\n\nMounting\t×\tMounting+3\t30\tLoad Up & Reload Speed+3.\n\nMounting+2\t20\tLoad Up & Reload Speed+2.\n\nMounting+1\t10\tLoad Up & Reload Speed+1.\n\nSniper\t×\tSniper\t10\tAuto-Reload and +5 to weakness value within critical distance. *Should only be used with Bows.*\n\nSpacing\t×\tSpacing\t10\tAlters critical distance for Normal,Pierce,Pellet and Blunt shots to be lower and further increases damage at critical distance.\n\nIf you consistently attack within this critical distance you gain Movement Speed+2 and Evade Distance Up.\n\nLBG and HBG get increased perfect shot(3 Segments) and compression windows (2 segments).Bowgets lowered charge times that stack with Auto-Reload.\n\nDoes not buff attacks without Critical Distance, is added to the buff for the first half of HBG's Critical Distance.\n\nBuff builds an public meter that fills in much the same way as Thunder Clad and total hits needed will vary with Attack, Affinity, Shot Type, etc. but meter build up is not reset on being launched etc.\n\nHBG Tech\t×\tHBG Tech【Master】\tBoth Hiden\tHBG Tech [Gun Sage]'s attack power increases by 1.4x\n\nGun Sage\t30\tSuper HG Earplugs, Attack x1.3 when wielding a Heavy Bowgun, Power (value) of Element/Status Ammo x1.2,Evade Distance Up\n\nMelee Attacks and Crag/Clust Shots all do 15 KO Damage,Heat Beam does x1.2damage and Perfectly-Timed Compression will result in more Attack Power for that 1 salvo.\n\nHBG Tech (Kaiden)\t20\tAttack x1.1 and Evade Extender when wielding a Heavy Bowgun.\n\nHBG Tech (Expert)\t10\tEvade Extender when wielding a Heavy Bowgun.\n\nHBG Tech (Novice)\t-10\tAttack power x0.8 when wielding a Heavy Bowgun.\n\nLBG Tech\t×\tLBG Tech【Master】\tBoth Hiden\tIncreases attack power of LBG Tech [Gun Prodigy] by 1.4x\n\nGun Prodigy\t30\tSuper HG Earplugs,Attack 1.3 when wielding a Light Bowgun, Probability of Ammo bouncing off Monsters is reduced\n\ncan consume items while the weapon is unsheathed,Perfect Shot added to Just Shot meter that deals additional damage.\n\nLBG Tech (Kaiden)\t20\tAttack x1.1 and the probability of Ammo bouncing off Monsters is reduced when wielding a Light Bowgun.\n\nLBG Tech (Expert)\t10\tThe probability of Ammo bouncing off Monsters is reduced when wielding a Light Bowgun.\n\nLBG Tech (Novice)\t-10\tAttack 0.8x while wielding a Light Bowgun.\n\nBow Tech\t×\tBow Tech【Master】\tBoth Hiden\tBow Tech[Bow Demon]'s attack power increases by 1.4x\n\nBow Demon\t30\tSuper HG Earplugs,Attack x1.3 when wielding a Bow, Arrows cannot be deflected, PowerCoating Modifier increases to x1.6 for normal Bows and to x1.7for Gou (and upgrades)\n\nEvolution (Raviente) and G-Rank Bows and the Arc-Shot can be executed at Charge Lv2.\n\nBow Tech (Kaiden)\t20\tAttack x1.1 and arrows are no longer deflected when wielding a Bow.\n\nBow Tech (Expert)\t10\tArrows are no longer deflected when wielding a Bow.\n\nBow Tech (Novice)\t-10\tAttack 0.8x while wielding a Bow.";
         }
     }
 
@@ -9023,7 +9022,7 @@ Session Duration (Highest/Lowest/Average/Median): {111} / {112} / {113} / {114}
     {
         get
         {
-            return "Pioneering\r\n・You can develop a map by talking to the balloon cat in Parone Caravan.\r\n・By developing it, you will be able to acquire special items.\r\n\u3000Also, by posting a development quest, other hunters will be able to participate in the quest.\r\n\r\nPioneering Procedure\r\n１．Talk to the balloon cat and select a map.\r\n\u3000\u3000(When switching to another map, all developments up to that point will be reset.)\r\n２．Select an area and place a base (gathering, mining, insects, artifacts, defense). Two can be placed in one area.\r\n\u3000\u3000(Materials and CP required for installation are listed separately)\r\nSelecting Migration instead of Restart will keep your levels while migrating to a new map.\r\n３．The base is completed by completing a specified number of quests.\r\n\u3000\u3000(You can fail the quest. Abandoning is not allowed.)\r\n４．By hiring a hired cat, you can accelerate the development speed.\r\n５．After a certain period of time, bases begin to deteriorate. It can be updated just by talking to the balloon cat, and the maintenance fee is free. You can't go below Lv1.\r\n\r\nBase development speed\r\nLV1： Complete 20 quests\r\nLV2： Complete 50 quests\r\nLV3： Complete 100 quests\r\n\r\nEmployed cat effect\r\n\u3000\u3000\u3000\u30000～6000CP： No Change\r\n\u30007000～29000CP： 24 hours, 1.2 times adjustment to the number of required quests\r\n30000～59000CP： 24 hours, 1.5 times adjustment to the number of required quests\r\n60000CP～\u3000\u3000\u3000\u3000： 24 hours, 2.0 times adjustment to the number of required quests\r\n\r\nDevelopment progress\r\nLevel up according to the base LV of each area\r\n11～20： LV1 One flag at the base camp\r\n21～30： LV2 Two flags at the base camp\r\n31～40： LV3 Three flags at the base camp\r\n41～50： LV4 Four flags at the base camp\r\n51～60： LV5 Five flags at the base camp\r\n\r\nPioneer Quest\r\n・Quests can be changed in the public quest settings to change the targets to be defeated and the level of difficulty.\r\n・The specifications of the quest are the same as the caravan, and the color of the beads is added to the color of the participant.\r\n・Collecting from the base is not possible without going on a pioneering quest.\r\n・If a pioneering quest is left open to the public, other hunters can join the quest.\r\n\u3000\u3000(Public settings will be canceled when you log out)\r\n・When the pioneer quest is accepted, when play time (regardless of success or failure) reaches a certain amount, you can receive a public reward from the balloon cat.\r\n\u3000\u3000(Before receiving the materials, you can set the quest for the materials you want and you will receive the materials for that quest.)\r\n・Pioneer quests are randomly selected from the hunter's quests according to the set HR and target monster conditions.\r\n・One worker cat is placed for each type of base in each area, if there is a monster, the cat will perform a support attack with rock throwing and throwing bombs.\r\n・For defensive bases, ballistas are launched from balloons. The number of ballistas fired increases as the base level increases.\r\n・Difficulty\r\n\u3000Weak: Rewards are halved (one piece per frame will be 0), physical strength and attack power are 60%\r\n\u3000Normal: normal rewards\r\n\u3000Strong: 1.5x reward (fractions are rounded down), 1.5x HP and ATK\r\n\u3000Strongest: 2x rewards, 2x health and attack power";
+            return "Pioneering\r\n・You can develop a map by talking to the balloon cat in Parone Caravan.\r\n・By developing it, you will be able to acquire special items.\r\n\u3000Also, by posting a development quest, other hunters will be able to participate in the quest.\r\n\r\nPioneering Procedure\r\n１．Talk to the balloon cat and select a map.\r\n\u3000\u3000(When switching to another map, all developments up to that point will be reset.)\r\n２．Select an area and place a base (gathering, mining, insects, artifacts, defense). Two can be placed in one area.\r\n\u3000\u3000(Materials and CP required for installation are listed separately)\r\nSelecting Migration instead of Restart will keep your levels while migrating to a new map.\r\n３．The base is completed by completing a specified number of quests.\r\n\u3000\u3000(You can fail the quest. Abandoning is not allowed.)\r\n４．By hiring a hired cat, you can accelerate the development speed.\r\n５．After a certain period of time, bases begin to deteriorate. It can be updated just by talking to the balloon cat, and the maintenance fee is free. You can't go below Lv1.\r\n\r\nBase development speed\r\nLV1： Complete 20 quests\r\nLV2： Complete 50 quests\r\nLV3： Complete 100 quests\r\n\r\nEmployed cat effect\r\n\u3000\u3000\u3000\u30000～6000CP： No Change\r\n\u30007000～29000CP： 24 hours, 1.2 times adjustment to the number of required quests\r\n30000～59000CP： 24 hours, 1.5 times adjustment to the number of required quests\r\n60000CP～\u3000\u3000\u3000\u3000： 24 hours, 2.0 times adjustment to the number of required quests\r\n\r\nDevelopment progress\r\nLevel up according to the base LV of each area\r\n11～20： LV1 One flag at the base camp\r\n21～30： LV2 Two flags at the base camp\r\n31～40： LV3 Three flags at the base camp\r\n41～50： LV4 Four flags at the base camp\r\n51～60： LV5 Five flags at the base camp\r\n\r\nPioneer Quest\r\n・Quests can be changed in the public quest settings to change the targets to be defeated and the level of difficulty.\r\n・The specifications of the quest are the same as the caravan, and the color of the beads is added to the color of the participant.\r\n・Collecting from the base is not possible without going on a pioneering quest.\r\n・If a pioneering quest is left open to the public, other hunters can join the quest.\r\n\u3000\u3000(public settings will be canceled when you log out)\r\n・When the pioneer quest is accepted, when play time (regardless of success or failure) reaches a certain amount, you can receive a public reward from the balloon cat.\r\n\u3000\u3000(Before receiving the materials, you can set the quest for the materials you want and you will receive the materials for that quest.)\r\n・Pioneer quests are randomly selected from the hunter's quests according to the set HR and target monster conditions.\r\n・One worker cat is placed for each type of base in each area, if there is a monster, the cat will perform a support attack with rock throwing and throwing bombs.\r\n・For defensive bases, ballistas are launched from balloons. The number of ballistas fired increases as the base level increases.\r\n・Difficulty\r\n\u3000Weak: Rewards are halved (one piece per frame will be 0), physical strength and attack power are 60%\r\n\u3000Normal: normal rewards\r\n\u3000Strong: 1.5x reward (fractions are rounded down), 1.5x HP and ATK\r\n\u3000Strongest: 2x rewards, 2x health and attack power";
         }
     }
 
@@ -9954,7 +9953,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
     {
         get
         {
-            return "Weapons\r\nSP Weapons\r\nFor HR5 and G-rank quests, weapon multiplier +10 and +20% affinity.\r\n\r\nHC Weapons\r\nFor hardcore quests, melee weapons will have their sharpness gauge increased by 1 level. Bowguns/bows will have a +40% affinity boost.\r\n\r\nMaster Mark\r\nThe weapon can be Unsheathed and Sheathed 20% faster. Skill: Equivalent to Weapon Handling\r\n\r\nEvolution Weapons\r\nEvolution Weapons（Melee）\r\nPower Sword Crystals can be set. While equipped, the weapon multiplier is 1.2x, and the consumption of the sharpness gauge is 4x.\r\n\r\nEvolution Weapons（Bow）\r\nCan be equipped with an impact coating. The attack becomes a stun attribute and the damage calculation is calculated based on the hit quality. Melee accumulates 2 stun and 4 for arrows.\r\n\r\nEvolution Weapons（Light Bowgun）\r\nAcid S and Dragon Acid S can be loaded. Each bullet has a +10 part quality effect on the part where it hits, which lasts for 30 seconds. Boss monsters only\r\n\r\nGou Weapons\r\nGou Weapons（Melee）\r\nIf your HP and stamina are at maximum, your attacks will not bounce.\r\n\r\nGou Weapons（Bow）\r\nCan equip explosive coatings. While using the explosive coatings, the original attribute will be overwritten and will not be activated.\r\nAll explosove coating damage is fixed damage, and only the overall defense rate is affected.\r\nWeapons are quicker to deploy and retract.\r\nThe effect of the power coating is changed to 1.6 times.\r\n\r\nGou Weapons（Light Bowgun）\r\n・rapid-fire\r\nIf the user presses the \"fire\" key during rapid-fire, the next rapid-fire will be started in succession. (Each press of the fire key consumes ammunition.)\r\nIn that case, the number of rounds fired in rapid fire increases by one round for each additional input. (In the case of normal bullets, 5 rounds -> 6 rounds -> 7 rounds -> ...)\r\nThe recoil after firing changes with the number of times the weapon is fired rapidly, and naturally, the more times the weapon is fired, the more the recoil. (The recoil can be reduced to some extent with recoil reduction).\r\n\u3000For example, with recoil reduction +2, up to 4 shots will have small recoil, 5 or 6 shots will have medium recoil, and the 7th and subsequent shots will have large recoil.\r\n\u3000\u3000\u3000\u3000\u3000\u3000With recoil reduction +1, up to four shots will have medium recoil, and the fifth and later shots will have Large recoil.\r\n\r\nGou Weapons（Heavy Bowgun）\r\n・Heat Beam\r\nIt can be used by attaching the \"Heat Beam\" to a Gou type heavy bowgun.\r\nEach time a bullet is fired, an \"internal temperature gauge\" accumulates, and when it reaches its maximum, a \"heat beam\" can be fired.\r\n\u3000：Internal Temperature Gauge\r\n\u3000・Base 100/minimum 40/maximum 200. Increases by 10 each time you hit with a heat bomb. Or +10 with Warm Oil, -10 with Cooling Oil.\r\n\u3000・The gauge fills up every time you shoot a bullet. After firing the bullet, reduction starts in 3 seconds, and the gauge decreases by 1 per second.\r\n\u3000・After charging is complete, the gauge will flash. Reduction starts 5 seconds after charging is complete.\r\n\u3000・If you reload the heat bomb, it will stop reducing. (Reloading itself is possible even if not accumulated)\r\n\u3000・1 Hit Fixed 22 + 10 fire damage. 6 Hits per 10 gauge (damage is affected by overall defense ratio).\r\n\u3000\u3000\u3000(Gunnery: 24 + fire 10, Artillery Expert: 26 + fire 10, Artillery God: 28 + fire 10 / HBG Tech [Gun Sage] is multiplied by 1.2 for both fixed and fire)\r\n\u3000\u3000\u3000(For initial gauge: 100 ÷ 10 × 6 × 22 = 1320 + fire 600)\r\n\u3000\u3000\u3000※2 Hit limit for small monsters?\n\n" +
+            return "Weapons\r\nSP Weapons\r\nFor HR5 and G-rank quests, weapon multiplier +10 and +20% affinity.\r\n\r\nHC Weapons\r\nFor hardcore quests, melee weapons will have their sharpness gauge increased by 1 level. Bowguns/bows will have a +40% affinity boost.\r\n\r\nMaster Mark\r\nThe weapon can be Unsheathed and Sheathed 20% faster. Skill: Equivalent to Weapon Handling\r\n\r\nEvolution Weapons\r\nEvolution Weapons（Melee）\r\nPower Sword Crystals can be set. While equipped, the weapon multiplier is 1.2x, and the consumption of the sharpness gauge is 4x.\r\n\r\nEvolution Weapons（Bow）\r\nCan be equipped with an impact coating. The attack becomes a stun attribute and the damage calculation is calculated based on the hit quality. Melee accumulates 2 stun and 4 for arrows.\r\n\r\nEvolution Weapons（Light Bowgun）\r\nAcid S and Dragon Acid S can be loaded. Each bullet has a +10 part quality effect on the part where it hits, which lasts for 30 seconds. Boss monsters only\r\n\r\nGou Weapons\r\nGou Weapons（Melee）\r\nIf your HP and stamina are at maximum, your attacks will not bounce.\r\n\r\nGou Weapons（Bow）\r\nCan equip explosive coatings. While using the explosive coatings, the original attribute will be overwritten and will not be activated.\r\nAll explosove coating damage is fixed damage, and only the overall defense rate is affected.\r\nWeapons are quicker to deploy and retract.\r\nThe effect of the power coating is changed to 1.6 times.\r\n\r\nGou Weapons（Light Bowgun）\r\n・rapid-fire\r\nIf the user presses the \"fire\" key during rapid-fire, the next rapid-fire will be started in succession. (Each press of the fire key consumes ammunition.)\r\nIn that case, the number of rounds fired in rapid fire increases by one round for each additional input. (In the case of normal bullets, 5 rounds -> 6 rounds -> 7 rounds -> ...)\r\nThe recoil after firing changes with the number of times the weapon is fired rapidly, and naturally, the more times the weapon is fired, the more the recoil. (The recoil can be reduced to some extent with recoil reduction).\r\n\u3000For example, with recoil reduction +2, up to 4 shots will have small recoil, 5 or 6 shots will have medium recoil, and the 7th and subsequent shots will have large recoil.\r\n\u3000\u3000\u3000\u3000\u3000\u3000With recoil reduction +1, up to four shots will have medium recoil, and the fifth and later shots will have Large recoil.\r\n\r\nGou Weapons（Heavy Bowgun）\r\n・Heat Beam\r\nIt can be used by attaching the \"Heat Beam\" to a Gou type heavy bowgun.\r\nEach time a bullet is fired, an \"public temperature gauge\" accumulates, and when it reaches its maximum, a \"heat beam\" can be fired.\r\n\u3000：public Temperature Gauge\r\n\u3000・Base 100/minimum 40/maximum 200. Increases by 10 each time you hit with a heat bomb. Or +10 with Warm Oil, -10 with Cooling Oil.\r\n\u3000・The gauge fills up every time you shoot a bullet. After firing the bullet, reduction starts in 3 seconds, and the gauge decreases by 1 per second.\r\n\u3000・After charging is complete, the gauge will flash. Reduction starts 5 seconds after charging is complete.\r\n\u3000・If you reload the heat bomb, it will stop reducing. (Reloading itself is possible even if not accumulated)\r\n\u3000・1 Hit Fixed 22 + 10 fire damage. 6 Hits per 10 gauge (damage is affected by overall defense ratio).\r\n\u3000\u3000\u3000(Gunnery: 24 + fire 10, Artillery Expert: 26 + fire 10, Artillery God: 28 + fire 10 / HBG Tech [Gun Sage] is multiplied by 1.2 for both fixed and fire)\r\n\u3000\u3000\u3000(For initial gauge: 100 ÷ 10 × 6 × 22 = 1320 + fire 600)\r\n\u3000\u3000\u3000※2 Hit limit for small monsters?\n\n" +
                 "Tenran / Supremacy (G-rank Supremacy) Weapon\r\nIf you equip 2 or more pieces of Tenran armor and go to a quest for a gou rank/supremacy rank (G-rank),\r\nMelee weapons will have their sharpness gauge increased by 1 level. Bow guns/bows will have their multiplier at critical distance increased by +0.3.\r\nIn addition, for bows, the effect of the power coating changes to 1.7";
         }
     }
@@ -11128,7 +11127,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
     /// <returns></returns>
     public string GetObjectiveNameFromID(int id, bool isLargeImageText = false)
     {
-        if (DiscordManager.ShowDiscordQuestNames() && !isLargeImageText)
+        if (DiscordService.ShowDiscordQuestNames() && !isLargeImageText)
         {
             return string.Empty;
         }
@@ -11158,7 +11157,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
     /// <returns></returns>
     public string GetObjective1Quantity(bool isLargeImageText = false)
     {
-        if (DiscordManager.ShowDiscordQuestNames() && !isLargeImageText)
+        if (DiscordService.ShowDiscordQuestNames() && !isLargeImageText)
         {
             return string.Empty;
         }
@@ -11189,7 +11188,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
     /// <returns></returns>
     public string GetObjective1CurrentQuantity(bool isLargeImageText = false)
     {
-        if (DiscordManager.ShowDiscordQuestNames() && !isLargeImageText)
+        if (DiscordService.ShowDiscordQuestNames() && !isLargeImageText)
         {
             return string.Empty;
         }
@@ -11226,7 +11225,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
     /// <returns></returns>
     public string GetRankNameFromID(int id, bool isLargeImageText = false)
     {
-        if (DiscordManager.ShowDiscordQuestNames() && !isLargeImageText)
+        if (DiscordService.ShowDiscordQuestNames() && !isLargeImageText)
         {
             return string.Empty;
         }
@@ -11288,7 +11287,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
     /// <returns></returns>
     public string GetStarGrade(bool isLargeImageText = false)
     {
-        if (DiscordManager.ShowDiscordQuestNames() && !isLargeImageText || CaravanOverride())
+        if (DiscordService.ShowDiscordQuestNames() && !isLargeImageText || CaravanOverride())
         {
             return string.Empty;
         }
@@ -11420,7 +11419,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
     /// <returns></returns>
     public string GetRealMonsterName(string iconName, bool isLargeImageText = false)
     {
-        if (DiscordManager.ShowDiscordQuestNames() && !isLargeImageText)
+        if (DiscordService.ShowDiscordQuestNames() && !isLargeImageText)
         {
             return string.Empty;
         }
@@ -11496,7 +11495,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
     /// <returns></returns>
     public string GetObjective1Name(int id, bool isLargeImageText = false)
     {
-        if (DiscordManager.ShowDiscordQuestNames() && !isLargeImageText)
+        if (DiscordService.ShowDiscordQuestNames() && !isLargeImageText)
         {
             return string.Empty;
         }
@@ -13659,7 +13658,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
     {
         var AreaGroup = new List<int> { 0 };
 
-        foreach (var kvp in AreaIconMapper.AreaIconID)
+        foreach (var kvp in AreaIconCollection.AreaIconID)
         {
             var areaIDs = kvp.Key;
 
@@ -13675,14 +13674,14 @@ After all that you’ve unlocked magnet spike! You should get a material to make
 
     public static string DetermineAreaIcon(List<int> key)
     {
-        var areaIcon = AreaIconMapper.AreaIconID.ContainsKey(key);
+        var areaIcon = AreaIconCollection.AreaIconID.ContainsKey(key);
         if (!areaIcon)
         {
             return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/cattleya.png";
         }
         else
         {
-            return AreaIconMapper.AreaIconID[key];
+            return AreaIconCollection.AreaIconID[key];
         }
     }
 

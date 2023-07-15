@@ -29,12 +29,10 @@ using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Painting;
 using LiveChartsCore.SkiaSharpView.WPF;
 using MHFZ_Overlay.Models;
+using MHFZ_Overlay.Models.Collections;
 using MHFZ_Overlay.Models.Constant;
-using MHFZ_Overlay.Models.Mappers;
-using MHFZ_Overlay.Models.Monster;
+using MHFZ_Overlay.Services;
 using MHFZ_Overlay.Services.Converter;
-using MHFZ_Overlay.Services.DataAccessLayer;
-using MHFZ_Overlay.Services.Manager;
 using MHFZ_Overlay.Views.CustomControls;
 using Microsoft.Win32;
 using Octokit;
@@ -70,9 +68,9 @@ public partial class ConfigWindow : FluentWindow
 
     private static string randomMonsterImage = "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/random.png";
 
-    private static readonly DatabaseManager databaseManager = DatabaseManager.GetInstance();
-    private static readonly AchievementManager achievementManager = AchievementManager.GetInstance();
-    private static readonly OverlaySettingsManager overlaySettingsManager = OverlaySettingsManager.GetInstance();
+    private static readonly DatabaseService databaseManager = DatabaseService.GetInstance();
+    private static readonly AchievementService achievementManager = AchievementService.GetInstance();
+    private static readonly OverlaySettingsService overlaySettingsManager = OverlaySettingsService.GetInstance();
 
     public static Uri MonsterInfoLink
     {
@@ -655,7 +653,7 @@ public partial class ConfigWindow : FluentWindow
         }
     }
 
-    private IReadOnlyList<MonsterInfo> monsterInfos = MonsterInfoList.MonsterInfoIDs;
+    private IReadOnlyList<MonsterInfo> monsterInfos = MonsterInfoCollection.MonsterInfoIDs;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ConfigWindow"/> class.
@@ -789,7 +787,7 @@ public partial class ConfigWindow : FluentWindow
         {
             Name = "Earth Style",
             Values = MainWindow.dataLoader.model.weaponUsageEarthStyle,
-            DataLabelsPaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal(CatppuccinMochaColorsMapper.CatppuccinMochaColors["Text"]))),
+            DataLabelsPaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal(CatppuccinMochaColorsCollection.CatppuccinMochaColors["Text"]))),
             DataLabelsSize = 14,
             DataLabelsPosition = DataLabelsPosition.Middle,
             Fill = new LinearGradientPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal(s.PlayerHitsPerSecondGraphColor, "7f")), new SKColor(MainWindow.dataLoader.model.HexColorToDecimal(s.PlayerHitsPerSecondGraphColor, "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
@@ -800,7 +798,7 @@ public partial class ConfigWindow : FluentWindow
         {
             Name = "Heaven Style",
             Values = MainWindow.dataLoader.model.weaponUsageHeavenStyle,
-            DataLabelsPaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal(CatppuccinMochaColorsMapper.CatppuccinMochaColors["Text"]))),
+            DataLabelsPaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal(CatppuccinMochaColorsCollection.CatppuccinMochaColors["Text"]))),
             DataLabelsSize = 14,
             DataLabelsPosition = DataLabelsPosition.Middle,
             Fill = new LinearGradientPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal(s.PlayerHitsPerSecondGraphColor, "7f")), new SKColor(MainWindow.dataLoader.model.HexColorToDecimal(s.PlayerHitsPerSecondGraphColor, "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
@@ -811,7 +809,7 @@ public partial class ConfigWindow : FluentWindow
         {
             Name = "Storm Style",
             Values = MainWindow.dataLoader.model.weaponUsageStormStyle,
-            DataLabelsPaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal(CatppuccinMochaColorsMapper.CatppuccinMochaColors["Text"]))),
+            DataLabelsPaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal(CatppuccinMochaColorsCollection.CatppuccinMochaColors["Text"]))),
             DataLabelsSize = 14,
             DataLabelsPosition = DataLabelsPosition.Middle,
             Fill = new LinearGradientPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal(s.PlayerHitsPerSecondGraphColor, "7f")), new SKColor(MainWindow.dataLoader.model.HexColorToDecimal(s.PlayerHitsPerSecondGraphColor, "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
@@ -822,7 +820,7 @@ public partial class ConfigWindow : FluentWindow
         {
             Name = "Extreme Style",
             Values = MainWindow.dataLoader.model.weaponUsageExtremeStyle,
-            DataLabelsPaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal(CatppuccinMochaColorsMapper.CatppuccinMochaColors["Text"]))),
+            DataLabelsPaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal(CatppuccinMochaColorsCollection.CatppuccinMochaColors["Text"]))),
             DataLabelsSize = 14,
             DataLabelsPosition = DataLabelsPosition.Middle,
             Fill = new LinearGradientPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal(s.PlayerHitsPerSecondGraphColor, "7f")), new SKColor(MainWindow.dataLoader.model.HexColorToDecimal(s.PlayerHitsPerSecondGraphColor, "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
@@ -838,7 +836,7 @@ public partial class ConfigWindow : FluentWindow
                     Padding=new LiveChartsCore.Drawing.Padding(0,0,0,0),
                     ShowSeparatorLines=true,
                     IsVisible=false,
-                    LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal(CatppuccinMochaColorsMapper.CatppuccinMochaColors["Text"]))),
+                    LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal(CatppuccinMochaColorsCollection.CatppuccinMochaColors["Text"]))),
                 }
         };
         weaponUsageChart.YAxes = new List<Axis>
@@ -846,7 +844,7 @@ public partial class ConfigWindow : FluentWindow
                 new Axis
                 {
                     MinStep=1,
-                    LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal(CatppuccinMochaColorsMapper.CatppuccinMochaColors["Text"]))),
+                    LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal(CatppuccinMochaColorsCollection.CatppuccinMochaColors["Text"]))),
                     ShowSeparatorLines=true,
                     TextSize=12
                 }
@@ -1128,7 +1126,7 @@ public partial class ConfigWindow : FluentWindow
             textToSave = MainWindow.dataLoader.model.MarkdownSavedGearStats;
         }
 
-        FileManager.SaveTextFile(textToSave, "GearStats");
+        FileService.SaveTextFile(textToSave, "GearStats");
     }
 
     /// <summary>
@@ -1152,7 +1150,7 @@ public partial class ConfigWindow : FluentWindow
         {
             var previousBackground = GearTextGrid.Background;
             GearTextGrid.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
-            FileManager.CopyUIElementToClipboard(GearTextGrid, ConfigWindowSnackBar);
+            FileService.CopyUIElementToClipboard(GearTextGrid, ConfigWindowSnackBar);
             GearTextGrid.Background = previousBackground;
             return;
         }
@@ -1165,7 +1163,7 @@ public partial class ConfigWindow : FluentWindow
     private void BtnImageFile_Click(object sender, RoutedEventArgs e)
     {
         var fileName = "HunterSet";
-        FileManager.SaveElementAsImageFile(GearImageGrid, fileName, ConfigWindowSnackBar);
+        FileService.SaveElementAsImageFile(GearImageGrid, fileName, ConfigWindowSnackBar);
     }
 
     private void FilterBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -1176,7 +1174,7 @@ public partial class ConfigWindow : FluentWindow
     // on generate csv button click
     protected void BtnLogFile_Click(object sender, EventArgs e)
     {
-        FileManager.SaveMonsterLogRecordsAsCSVFile(Monsters);
+        FileService.SaveMonsterLogRecordsAsCSVFile(Monsters);
     }
 
     private void Config_Closed(object sender, EventArgs e)
@@ -1191,7 +1189,7 @@ public partial class ConfigWindow : FluentWindow
     private void BtnGuildCardFile_Click(object sender, RoutedEventArgs e)
     {
         var fileName = "GuildCard";
-        FileManager.SaveElementAsImageFile(GuildCardGrid, fileName, ConfigWindowSnackBar);
+        FileService.SaveElementAsImageFile(GuildCardGrid, fileName, ConfigWindowSnackBar);
     }
 
     private void ChangeMonsterInfo()
@@ -1868,7 +1866,7 @@ public partial class ConfigWindow : FluentWindow
         var fileName = "Set";
         var beginningFileName = "Run";
         var beginningText = RunIDTextBox.Text.Trim();
-        FileManager.SaveTextFile(textToSave, fileName, beginningFileName, beginningText);
+        FileService.SaveTextFile(textToSave, fileName, beginningFileName, beginningText);
     }
 
     private void QuestLogGearBtnCopyFile_Click(object sender, RoutedEventArgs e)
@@ -1880,7 +1878,7 @@ public partial class ConfigWindow : FluentWindow
 
         var previousBackground = questLogGearStatsTextBlock.Background;
         questLogGearStatsTextBlock.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
-        FileManager.CopyUIElementToClipboard(questLogGearStatsTextBlock, ConfigWindowSnackBar);
+        FileService.CopyUIElementToClipboard(questLogGearStatsTextBlock, ConfigWindowSnackBar);
         questLogGearStatsTextBlock.Background = previousBackground;
     }
 
@@ -1906,7 +1904,7 @@ public partial class ConfigWindow : FluentWindow
         string textToSave = compendiumTextBlock.Text;
         textToSave = string.Format(CultureInfo.InvariantCulture, "```text\n{0}\n```", textToSave);
 
-        FileManager.SaveTextFile(textToSave, "Compendium");
+        FileService.SaveTextFile(textToSave, "Compendium");
     }
 
     private void CompendiumBtnCopyFile_Click(object sender, RoutedEventArgs e)
@@ -1918,7 +1916,7 @@ public partial class ConfigWindow : FluentWindow
 
         var previousBackground = compendiumInformationStackPanel.Background;
         compendiumInformationStackPanel.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
-        FileManager.CopyUIElementToClipboard(compendiumInformationStackPanel, ConfigWindowSnackBar);
+        FileService.CopyUIElementToClipboard(compendiumInformationStackPanel, ConfigWindowSnackBar);
         compendiumInformationStackPanel.Background = previousBackground;
     }
 
@@ -2043,7 +2041,7 @@ public partial class ConfigWindow : FluentWindow
 
         var previousBackground = calendarDataGrid.Background;
         calendarDataGrid.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
-        FileManager.CopyUIElementToClipboard(calendarDataGrid, ConfigWindowSnackBar);
+        FileService.CopyUIElementToClipboard(calendarDataGrid, ConfigWindowSnackBar);
         calendarDataGrid.Background = previousBackground;
     }
 
@@ -2055,7 +2053,7 @@ public partial class ConfigWindow : FluentWindow
         }
 
         var fileName = $"PersonalBest-Quest_{QuestIDTextBox.Text}-{OverlayModeComboBox.Text}-{personalBestSelectedType}-{personalBestSelectedWeapon}".Trim().Replace(" ", "_");
-        FileManager.SaveElementAsImageFile(personalBestMainGrid, fileName, ConfigWindowSnackBar, false);
+        FileService.SaveElementAsImageFile(personalBestMainGrid, fileName, ConfigWindowSnackBar, false);
     }
 
     private void PersonalBestButtonCopyFile_Click(object sender, RoutedEventArgs e)
@@ -2067,7 +2065,7 @@ public partial class ConfigWindow : FluentWindow
 
         var previousBackground = personalBestMainGrid.Background;
         personalBestMainGrid.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
-        FileManager.CopyUIElementToClipboard(personalBestMainGrid, ConfigWindowSnackBar);
+        FileService.CopyUIElementToClipboard(personalBestMainGrid, ConfigWindowSnackBar);
         personalBestMainGrid.Background = previousBackground;
     }
 
@@ -2113,7 +2111,7 @@ public partial class ConfigWindow : FluentWindow
 
         var previousBackground = top20MainGrid.Background;
         top20MainGrid.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
-        FileManager.CopyUIElementToClipboard(top20MainGrid, ConfigWindowSnackBar);
+        FileService.CopyUIElementToClipboard(top20MainGrid, ConfigWindowSnackBar);
         top20MainGrid.Background = previousBackground;
     }
 
@@ -2164,7 +2162,7 @@ public partial class ConfigWindow : FluentWindow
 
         var previousBackground = weaponStatsMainGrid.Background;
         weaponStatsMainGrid.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
-        FileManager.CopyUIElementToClipboard(weaponStatsMainGrid, ConfigWindowSnackBar);
+        FileService.CopyUIElementToClipboard(weaponStatsMainGrid, ConfigWindowSnackBar);
         weaponStatsMainGrid.Background = previousBackground;
     }
 
@@ -2210,7 +2208,7 @@ public partial class ConfigWindow : FluentWindow
 
         var previousBackground = mostRecentRunsDataGrid.Background;
         mostRecentRunsDataGrid.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
-        FileManager.CopyUIElementToClipboard(mostRecentRunsDataGrid, ConfigWindowSnackBar);
+        FileService.CopyUIElementToClipboard(mostRecentRunsDataGrid, ConfigWindowSnackBar);
         mostRecentRunsDataGrid.Background = previousBackground;
     }
 
@@ -2222,7 +2220,7 @@ public partial class ConfigWindow : FluentWindow
         }
 
         var fileName = $"StatsGraphs-{statsGraphsSelectedOption}";
-        FileManager.SaveElementAsImageFile(statsGraphsMainGrid, fileName, ConfigWindowSnackBar, false);
+        FileService.SaveElementAsImageFile(statsGraphsMainGrid, fileName, ConfigWindowSnackBar, false);
     }
 
     private void StatsGraphsButtonCopyFile_Click(object sender, RoutedEventArgs e)
@@ -2234,7 +2232,7 @@ public partial class ConfigWindow : FluentWindow
 
         var previousBackground = statsGraphsMainGrid.Background;
         statsGraphsMainGrid.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
-        FileManager.CopyUIElementToClipboard(statsGraphsMainGrid, ConfigWindowSnackBar);
+        FileService.CopyUIElementToClipboard(statsGraphsMainGrid, ConfigWindowSnackBar);
         statsGraphsMainGrid.Background = previousBackground;
     }
 
@@ -2247,7 +2245,7 @@ public partial class ConfigWindow : FluentWindow
 
         string textToSave = statsTextTextBlock.Text;
         textToSave = string.Format(CultureInfo.InvariantCulture, "```text\n{0}\n```", textToSave);
-        FileManager.SaveTextFile(textToSave, $"StatsText-Run_{RunIDTextBox.Text}-{statsTextSelectedOption}");
+        FileService.SaveTextFile(textToSave, $"StatsText-Run_{RunIDTextBox.Text}-{statsTextSelectedOption}");
     }
 
     private void StatsTextButtonCopyFile_Click(object sender, RoutedEventArgs e)
@@ -2259,7 +2257,7 @@ public partial class ConfigWindow : FluentWindow
 
         var previousBackground = statsTextTextBlock.Background;
         statsTextTextBlock.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
-        FileManager.CopyUIElementToClipboard(statsTextTextBlock, ConfigWindowSnackBar);
+        FileService.CopyUIElementToClipboard(statsTextTextBlock, ConfigWindowSnackBar);
         statsTextTextBlock.Background = previousBackground;
     }
 
@@ -2271,7 +2269,7 @@ public partial class ConfigWindow : FluentWindow
         }
 
         var fileName = $"PersonalBestsOverview-Quest_{QuestIDTextBox.Text}-{DateTime.UtcNow.ToString("yy/MM/dd", CultureInfo.InvariantCulture).Replace("/", "-")}";
-        FileManager.SaveElementAsImageFile(DiscordEmbedWeaponPersonalBest, fileName, ConfigWindowSnackBar, false);
+        FileService.SaveElementAsImageFile(DiscordEmbedWeaponPersonalBest, fileName, ConfigWindowSnackBar, false);
     }
 
     private void PersonalBestsOverviewButtonCopyFile_Click(object sender, RoutedEventArgs e)
@@ -2283,7 +2281,7 @@ public partial class ConfigWindow : FluentWindow
 
         var previousBackground = DiscordEmbedWeaponPersonalBest.Background;
         DiscordEmbedWeaponPersonalBest.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
-        FileManager.CopyUIElementToClipboard(DiscordEmbedWeaponPersonalBest, ConfigWindowSnackBar);
+        FileService.CopyUIElementToClipboard(DiscordEmbedWeaponPersonalBest, ConfigWindowSnackBar);
         DiscordEmbedWeaponPersonalBest.Background = previousBackground;
     }
 

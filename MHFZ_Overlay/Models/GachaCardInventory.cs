@@ -4,7 +4,7 @@
 
 namespace MHFZ_Overlay.Models;
 
-public class GachaCardInventory
+public sealed class GachaCardInventory
 {
     public long GachaCardInventoryID { get; set; }
 

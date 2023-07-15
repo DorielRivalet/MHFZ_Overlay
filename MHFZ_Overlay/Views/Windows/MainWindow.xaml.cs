@@ -34,12 +34,11 @@ using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Painting;
 using Memory;
 using MHFZ_Overlay.Models;
+using MHFZ_Overlay.Models.Collections;
 using MHFZ_Overlay.Models.Constant;
-using MHFZ_Overlay.Models.Mappers;
+using MHFZ_Overlay.Services;
 using MHFZ_Overlay.Services.Converter;
-using MHFZ_Overlay.Services.DataAccessLayer;
 using MHFZ_Overlay.Services.Hotkey;
-using MHFZ_Overlay.Services.Manager;
 using MHFZ_Overlay.Views.CustomControls;
 using Microsoft.Extensions.DependencyModel;
 using Octokit;
@@ -78,13 +77,13 @@ public partial class MainWindow : Window
 
     private static readonly NLog.Logger LoggerInstance = NLog.LogManager.GetCurrentClassLogger();
 
-    private static readonly DatabaseManager DatabaseManagerInstance = DatabaseManager.GetInstance();
+    private static readonly DatabaseService DatabaseManagerInstance = DatabaseService.GetInstance();
 
-    private static readonly AchievementManager AchievementManagerInstance = AchievementManager.GetInstance();
+    private static readonly AchievementService AchievementManagerInstance = AchievementService.GetInstance();
 
-    private static readonly OverlaySettingsManager OverlaySettingsManagerInstance = OverlaySettingsManager.GetInstance();
+    private static readonly OverlaySettingsService OverlaySettingsManagerInstance = OverlaySettingsService.GetInstance();
 
-    private static readonly DiscordManager DiscordManagerInstance = DiscordManager.GetInstance();
+    private static readonly DiscordService DiscordManagerInstance = DiscordService.GetInstance();
 
     private readonly Mem m = new();
 
@@ -318,12 +317,15 @@ public partial class MainWindow : Window
         // memory leak?
         timer.Tick += this.Timer_Tick;
         timer.Start();
+
+        this.dataLoader.model.ValidateGameFolder();
+
         DataContext = this.dataLoader.model;
         GlobalHotKey.RegisterHotKey("Shift + F1", () => this.OpenConfigButton_Key());
         GlobalHotKey.RegisterHotKey("Shift + F5", () => this.ReloadButton_Key());
         GlobalHotKey.RegisterHotKey("Shift + F6", () => this.CloseButton_Key());
 
-        DiscordManager.InitializeDiscordRPC();
+        DiscordService.InitializeDiscordRPC();
         this.CheckGameState();
         _ = this.LoadOctoKit();
 
@@ -392,7 +394,7 @@ public partial class MainWindow : Window
         }
         catch (Exception ex)
         {
-            LoggingManager.WriteCrashLog(ex);
+            LoggingService.WriteCrashLog(ex);
         }
 
         timer1Second.Start();
@@ -573,7 +575,7 @@ The process may take some time, as the program attempts to download from GitHub 
                 LoggerInstance.Error(CultureInfo.InvariantCulture, "Detected game launcher");
                 System.Windows.MessageBox.Show("Detected launcher, please start the overlay when fully loading into Mezeporta. Closing overlay.", Messages.ErrorTitle, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
                 this.dataLoader.model.isInLauncherBool = true;
-                ApplicationManager.HandleShutdown();
+                ApplicationService.HandleShutdown();
             }
             else
             {
@@ -593,14 +595,10 @@ The process may take some time, as the program attempts to download from GitHub 
                 System.Windows.MessageBox.Show("Detected closed game, closing overlay. Please start the overlay when fully loading into Mezeporta.", Messages.InfoTitle, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
 
                 // https://stackoverflow.com/a/9050477/18859245
-                ApplicationManager.HandleShutdown();
+                ApplicationService.HandleShutdown();
             };
         }
     }
-
-    private bool showedNullError = false;
-
-    private bool showedGameFolderWarning = false;
 
     // TODO: optimization
     private async void Timer_Tick(object? obj, EventArgs e)
@@ -624,21 +622,10 @@ The process may take some time, as the program attempts to download from GitHub 
             // TODO should this be here or somewhere else?
             // this is also for database logging
             CheckMezFesScore();
-
-            if (this.dataLoader.model.isInLauncher() == "NULL" && !showedNullError)
-            {
-                showedNullError = true;
-            }
-
-            if (!showedGameFolderWarning)
-            {
-                this.dataLoader.model.ValidateGameFolder();
-                showedGameFolderWarning = true;
-            }
         }
         catch (Exception ex)
         {
-            LoggingManager.WriteCrashLog(ex);
+            LoggingService.WriteCrashLog(ex);
 
             // the flushing is done automatically according to the docs
         }
@@ -656,7 +643,7 @@ The process may take some time, as the program attempts to download from GitHub 
         }
         catch (Exception ex)
         {
-            LoggingManager.WriteCrashLog(ex);
+            LoggingService.WriteCrashLog(ex);
         }
     }
 
@@ -669,7 +656,7 @@ The process may take some time, as the program attempts to download from GitHub 
         }
         catch (Exception ex)
         {
-            LoggingManager.WriteCrashLog(ex);
+            LoggingService.WriteCrashLog(ex);
         }
     }
 
@@ -710,7 +697,7 @@ The process may take some time, as the program attempts to download from GitHub 
         }
         catch (Exception ex)
         {
-            LoggingManager.WriteCrashLog(ex);
+            LoggingService.WriteCrashLog(ex);
         }
     }
 
@@ -1572,7 +1559,7 @@ The process may take some time, as the program attempts to download from GitHub 
 
     private void ReloadButton_Click(object sender, RoutedEventArgs e)
     {
-        ApplicationManager.HandleRestart();
+        ApplicationService.HandleRestart();
     }
 
     ConfigWindow? configWindow { get; set; }
@@ -1590,13 +1577,13 @@ The process may take some time, as the program attempts to download from GitHub 
 
     private void CloseButton_Click(object sender, RoutedEventArgs e)
     {
-        ApplicationManager.HandleShutdown();
+        ApplicationService.HandleShutdown();
     }
 
     // https://stackoverflow.com/questions/4773632/how-do-i-restart-a-wpf-application
     private void ReloadButton_Key()
     {
-        ApplicationManager.HandleRestart();
+        ApplicationService.HandleRestart();
     }
 
     private void OpenConfigButton_Key()
@@ -1634,13 +1621,13 @@ The process may take some time, as the program attempts to download from GitHub 
         }
         catch (Exception ex)
         {
-            LoggingManager.WriteCrashLog(ex);
+            LoggingService.WriteCrashLog(ex);
         }
     }
 
     private void CloseButton_Key()
     {
-        ApplicationManager.HandleShutdown();
+        ApplicationService.HandleShutdown();
     }
 
     private void MainGrid_MouseMove(object sender, MouseEventArgs e)
@@ -1837,7 +1824,7 @@ The process may take some time, as the program attempts to download from GitHub 
     /// </summary>
     private void CheckMezFesScore()
     {
-        if (this.dataLoader.model.QuestID() != 0 || !(this.dataLoader.model.AreaID() == 462 || MezFesMinigameMapper.ID.ContainsKey(this.dataLoader.model.AreaID())))
+        if (this.dataLoader.model.QuestID() != 0 || !(this.dataLoader.model.AreaID() == 462 || MezFesMinigameCollection.ID.ContainsKey(this.dataLoader.model.AreaID())))
         {
             return;
         }
@@ -1845,7 +1832,7 @@ The process may take some time, as the program attempts to download from GitHub 
         int areaID = this.dataLoader.model.AreaID();
 
         // Check if player is in a minigame area
-        if (MezFesMinigameMapper.ID.ContainsKey(areaID))
+        if (MezFesMinigameCollection.ID.ContainsKey(areaID))
         {
             // Check if the player has entered a new minigame area
             if (areaID != this.dataLoader.model.previousMezFesArea)
@@ -2026,8 +2013,8 @@ The process may take some time, as the program attempts to download from GitHub 
             if (this.dataLoader.model.TimeDefInt() - this.dataLoader.model.TimeInt() == 0)
             {
                 LoggerInstance.Fatal(CultureInfo.InvariantCulture, "Illegal quest completion time [ID {0}]", this.dataLoader.model.QuestID());
-                ApplicationManager.HandleGameShutdown();
-                LoggingManager.WriteCrashLog(new Exception($"Illegal quest completion time [ID {this.dataLoader.model.QuestID()}]"));
+                ApplicationService.HandleGameShutdown();
+                LoggingService.WriteCrashLog(new Exception($"Illegal quest completion time [ID {this.dataLoader.model.QuestID()}]"));
             }
 
             this.dataLoader.model.questCleared = true;
@@ -2397,7 +2384,7 @@ The process may take some time, as the program attempts to download from GitHub 
         }
 
         // Get the image path based on the direction
-        string imagePath = JoystickImageMapper.GetImage(direction);
+        string imagePath = JoystickImageCollection.GetImage(direction);
 
         // Get the current image source of the left joystick
         var currentImageSource = LJoystickMovement.Source as BitmapImage;
@@ -2469,7 +2456,7 @@ The process may take some time, as the program attempts to download from GitHub 
         }
 
         // Get the image path based on the direction
-        string imagePath = JoystickImageMapper.GetImage(direction);
+        string imagePath = JoystickImageCollection.GetImage(direction);
 
         // Get the current image source of the left joystick
         var currentImageSource = RJoystickMovement.Source as BitmapImage;
@@ -2556,7 +2543,7 @@ The process may take some time, as the program attempts to download from GitHub 
     private void UpdateRightStickImage(double opacity)
     {
         // Get the image path based on the direction
-        string imagePath = JoystickImageMapper.GetImage(Direction.None);
+        string imagePath = JoystickImageCollection.GetImage(Direction.None);
 
         // Get the current image source of the D-pad
         var currentImageSource = RJoystick.Source as BitmapImage;
@@ -2574,7 +2561,7 @@ The process may take some time, as the program attempts to download from GitHub 
     private void UpdateLeftStickImage(double opacity)
     {
         // Get the image path based on the direction
-        string imagePath = JoystickImageMapper.GetImage(Direction.None);
+        string imagePath = JoystickImageCollection.GetImage(Direction.None);
 
         // Get the current image source of the D-pad
         var currentImageSource = LJoystick.Source as BitmapImage;
@@ -2615,7 +2602,7 @@ The process may take some time, as the program attempts to download from GitHub 
         }
 
         // Get the image path based on the direction
-        string imagePath = DPadImageMapper.GetImage(direction);
+        string imagePath = DPadImageCollection.GetImage(direction);
 
         // Get the current image source of the D-pad
         var currentImageSource = DPad.Source as BitmapImage;
@@ -2651,7 +2638,7 @@ The process may take some time, as the program attempts to download from GitHub 
 
         if (mhfProcess == null)
         {
-            LoggingManager.WriteCrashLog(new Exception("Target process not found"));
+            LoggingService.WriteCrashLog(new Exception("Target process not found"));
         }
     }
 

@@ -5,7 +5,7 @@
 namespace MHFZ_Overlay.Models;
 
 // TODO: ORM
-public class MonsterCompendium
+public sealed class MonsterCompendium
 {
     public double HighestMonsterAttackMultiplier { get; set; }
 

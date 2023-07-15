@@ -4,7 +4,7 @@
 
 namespace MHFZ_Overlay.Models;
 
-public class QuestLogsOption
+public sealed class QuestLogsOption
 {
     public string Name { get; set; } = string.Empty;
 

@@ -7,7 +7,7 @@ namespace MHFZ_Overlay.Models;
 using System;
 using MHFZ_Overlay.Models.Constant;
 
-public class FastestRun
+public sealed class FastestRun
 {
     public string ObjectiveImage { get; set; } = Messages.MonsterImageNotLoaded;
 

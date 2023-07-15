@@ -8,7 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using MHFZ_Overlay.Models;
 
-public class OptionToTemplateConverter : DataTemplateSelector
+public sealed class OptionToTemplateConverter : DataTemplateSelector
 {
     public override DataTemplate? SelectTemplate(object item, DependencyObject container)
     {

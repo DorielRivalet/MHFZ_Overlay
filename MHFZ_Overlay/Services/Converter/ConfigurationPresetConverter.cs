@@ -1,9 +1,10 @@
 // © 2023 The mhfz-overlay developers.
 // Use of this source code is governed by a MIT license that can be
 // found in the LICENSE file.
+
 namespace MHFZ_Overlay.Services.Converter;
 
-using static MHFZ_Overlay.Services.Manager.OverlaySettingsManager;
+using static MHFZ_Overlay.Services.OverlaySettingsService;
 
 public static class ConfigurationPresetConverter
 {

@@ -5,7 +5,7 @@
 namespace MHFZ_Overlay.Models;
 
 // TODO: ORM
-public class MezFesCompendium
+public sealed class MezFesCompendium
 {
     public long MinigamesPlayed { get; set; }
 

@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using MHFZ_Overlay.Models.Structures;
 
 // TODO: ORM
-public class Bingo
+public sealed class Bingo
 {
     public long BingoID { get; set; }
 

@@ -5,7 +5,7 @@
 namespace MHFZ_Overlay.Models;
 
 // TODO: ORM
-public class QuestCompendium
+public sealed class QuestCompendium
 {
     public long MostCompletedQuestRuns { get; set; }
 

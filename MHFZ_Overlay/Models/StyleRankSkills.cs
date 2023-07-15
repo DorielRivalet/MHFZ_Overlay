@@ -7,7 +7,7 @@ namespace MHFZ_Overlay.Models;
 using System;
 
 // TODO: ORM
-public class StyleRankSkills
+public sealed class StyleRankSkills
 {
     public DateTime CreatedAt { get; set; }
 

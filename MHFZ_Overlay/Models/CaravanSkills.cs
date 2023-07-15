@@ -7,7 +7,7 @@ namespace MHFZ_Overlay.Models;
 using System;
 
 // TODO: ORM
-public class CaravanSkills
+public sealed class CaravanSkills
 {
     public DateTime CreatedAt { get; set; }
 

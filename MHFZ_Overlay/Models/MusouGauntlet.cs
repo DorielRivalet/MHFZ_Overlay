@@ -7,7 +7,7 @@ namespace MHFZ_Overlay.Models;
 using System;
 using System.Globalization;
 
-public class MusouGauntlet
+public sealed class MusouGauntlet
 {
     public long MusouGauntletID { get; set; }
 

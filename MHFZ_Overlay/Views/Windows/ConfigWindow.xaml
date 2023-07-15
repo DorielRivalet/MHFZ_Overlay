@@ -13,11 +13,11 @@
         d:DataContext="{d:DesignInstance Type=windows:AddressModel}"
                  xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
                  xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
-                 xmlns:models="clr-namespace:MHFZ_Overlay.Models"
                  xmlns:converter="clr-namespace:MHFZ_Overlay.Services.Converter"
                  xmlns:customcontrols="clr-namespace:MHFZ_Overlay.Views.CustomControls"
+                 xmlns:validationrules="clr-namespace:MHFZ_Overlay.Services.ValidationRule"
                  xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-                 xmlns:viewmodels="clr-namespace:MHFZ_Overlay.ViewModels" xmlns:windows="clr-namespace:MHFZ_Overlay.ViewModels.Windows"
+                 xmlns:viewmodels="clr-namespace:MHFZ_Overlay.ViewModels.Windows" xmlns:windows="clr-namespace:MHFZ_Overlay.ViewModels.Windows"
                  mc:Ignorable="d"
         x:Name="Config"
         Title="Monster Hunter Frontier Z Overlay Settings"
@@ -964,7 +964,7 @@
                                 <ComboBoxItem>Zen</ComboBoxItem>
                                 <ComboBoxItem>HP Only</ComboBoxItem>
                             </ComboBox>
-                            <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="0">
+                            <StackPanel Margin="5" Orientation="Horizontal" Grid.Row="2" Grid.Column="0">
                                 <ui:SymbolIcon Margin="0,0,5,0" Symbol="Fire24" Foreground="{StaticResource Red}" FontSize="28" ToolTip="Significantly affects performance"/>
                                 <TextBlock ToolTip="Recommended to change if your resolution is lower"  Style="{StaticResource ConfigTextBox}" Text="Resolution"/>
                             </StackPanel>
@@ -972,7 +972,7 @@
                                 <ui:TextBox PlaceholderText="Enter Max Resolution Width" IsUndoEnabled="False" TextAlignment="Center" Text="{Binding Source={StaticResource Settings},Path=MaxResolutionWidth}" PreviewTextInput="ValidateNumber"/>
                                 <ui:TextBox Margin="5,0,0,0" x:Name="ResolutionHeightTextBox" PlaceholderText="Enter Max Resolution Height" IsUndoEnabled="False" TextAlignment="Center" Text="{Binding Source={StaticResource Settings},Path=MaxResolutionHeight}"  PreviewTextInput="ValidateNumber"/>
                             </StackPanel>
-                            <StackPanel Grid.Row="3" Grid.Column="0" Margin="5" Orientation="Horizontal">
+                            <StackPanel Margin="5" Grid.Row="3" Grid.Column="0" Orientation="Horizontal">
                                 <ui:SymbolIcon Margin="0,0,5,0" Symbol="Fire24" Foreground="{StaticResource Red}" FontSize="28" ToolTip="Significantly affects performance"/>
                                 <ui:SymbolIcon Margin="0,0,5,0" Symbol="Info28" Foreground="{StaticResource Yellow}" FontSize="28" ToolTip="Overlay Restart Required"/>
                                 <TextBlock Text="Refresh Rate"  ToolTip="Select the Refresh Rate. Lower values might improve performance at the cost of statistics accuracy (including in database). Recommended to leave at 30 for speedruns, but for streams you can set it to 1 just fine." Style="{StaticResource ConfigTextBox}" />
@@ -982,7 +982,7 @@
                                     <TextBox.Text>
                                         <Binding Path="RefreshRate" Source="{StaticResource Settings}" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
-                                                <models:RangeValidationRule Minimum="1" Maximum="30" />
+                                                <validationrules:RangeValidationRule Minimum="1" Maximum="30" />
                                             </Binding.ValidationRules>
                                         </Binding>
                                     </TextBox.Text>
@@ -1004,7 +1004,7 @@
                                     <TextBox.Text>
                                         <Binding Path="PrimaryFontSize" Source="{StaticResource Settings}" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
-                                                <models:RangeValidationRule Minimum="8" Maximum="36" />
+                                                <validationrules:RangeValidationRule Minimum="8" Maximum="36" />
                                             </Binding.ValidationRules>
                                         </Binding>
                                     </TextBox.Text>
@@ -1039,7 +1039,7 @@
                                     <TextBox.Text>
                                         <Binding Path="SecondaryFontSize" Source="{StaticResource Settings}" UpdateSourceTrigger="PropertyChanged">
                                             <Binding.ValidationRules>
-                                                <models:RangeValidationRule Minimum="8" Maximum="36" />
+                                                <validationrules:RangeValidationRule Minimum="8" Maximum="36" />
                                             </Binding.ValidationRules>
                                         </Binding>
                                     </TextBox.Text>
@@ -1064,7 +1064,8 @@
                             <xctk:ColorPicker Grid.Column="1" Grid.Row="10" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}"></xctk:ColorPicker>
                             <TextBlock Margin="5" Foreground="{StaticResource Text}" Grid.Column="0" Grid.Row="11" Text="Text Color" Style="{StaticResource ConfigTextBox}"/>
                             <xctk:ColorPicker Grid.Column="1" Grid.Row="11" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=TextColor}"></xctk:ColorPicker>
-                            <StackPanel Grid.Row="12" Grid.Column="0" Margin="5" Orientation="Horizontal">
+                            <StackPanel Margin="5" Grid.Row="12" Grid.Column="0" Orientation="Horizontal">
+                                <ui:SymbolIcon Margin="0,0,5,0" Symbol="Fire24" Foreground="{StaticResource Red}" FontSize="28" ToolTip="Significantly affects performance"/>
                                 <ui:SymbolIcon Margin="0,0,5,0" Symbol="Info28" Foreground="{StaticResource Yellow}" FontSize="28" ToolTip="Overlay Restart Required"/>
                                 <TextBlock Margin="5" ToolTip="Select the rendering mode. Hardware: The WPF rendering is in hardware, if possible; software otherwise. Software: The WPF rendering is in software only." Style="{StaticResource ConfigTextBox}" Text="Rendering Mode"/>
                             </StackPanel>

@@ -9,7 +9,7 @@ using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Media;
 
-public class TextFormattingModeConverter : IValueConverter
+public sealed class TextFormattingModeConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {

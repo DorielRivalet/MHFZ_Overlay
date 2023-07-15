@@ -7,7 +7,7 @@ namespace MHFZ_Overlay.Models;
 using System;
 
 // TODO: ORM
-public class ZenithSkills
+public sealed class ZenithSkills
 {
     public DateTime CreatedAt { get; set; }
 

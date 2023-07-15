@@ -11,7 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 
 //https://stackoverflow.com/questions/8096852/brush-to-brush-animation
-public class BrushAnimation : AnimationTimeline
+public sealed class BrushAnimation : AnimationTimeline
 {
     public override Type TargetPropertyType
     {

@@ -5,7 +5,7 @@
 namespace MHFZ_Overlay.Models;
 
 // TODO: ORM
-public class MiscellaneousCompendium
+public sealed class MiscellaneousCompendium
 {
     public long TotalOverlaySessions { get; set; }
 

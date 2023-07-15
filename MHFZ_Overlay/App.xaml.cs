@@ -17,7 +17,7 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Threading;
 using MHFZ_Overlay.Models.Constant;
-using MHFZ_Overlay.Services.Manager;
+using MHFZ_Overlay.Services;
 using Squirrel;
 
 /// <summary>
@@ -56,7 +56,7 @@ public partial class App : Application
         stopwatch.Start();
         var loggingRules = NLog.LogManager.Configuration.LoggingRules;
         Settings s = (Settings)Application.Current.TryFindResource("Settings");
-        loggingRules[0].SetLoggingLevels(LoggingManager.GetLogLevel(s.LogLevel), NLog.LogLevel.Fatal);
+        loggingRules[0].SetLoggingLevels(LoggingService.GetLogLevel(s.LogLevel), NLog.LogLevel.Fatal);
         logger.Info(CultureInfo.InvariantCulture, "Started WPF application");
         logger.Trace(CultureInfo.InvariantCulture, "Call stack: {0}", new StackTrace().ToString());
         logger.Debug("OS: {0}, is64BitOS: {1}, is64BitProcess: {2}, CLR version: {3}", Environment.OSVersion, Environment.Is64BitOperatingSystem, Environment.Is64BitProcess, Environment.Version);
@@ -67,7 +67,7 @@ public partial class App : Application
         {
             logger.Fatal(CultureInfo.InvariantCulture, "Program version not found");
             MessageBox.Show("Program version not found", Messages.FatalTitle, MessageBoxButton.OK, MessageBoxImage.Error);
-            LoggingManager.WriteCrashLog(new Exception("Program version not found"));
+            LoggingService.WriteCrashLog(new Exception("Program version not found"));
         }
         else
         {
@@ -104,7 +104,7 @@ public partial class App : Application
     private static void App_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
     {
         // Log/inspect the inspection here
-        logger.Error("Unhandled exception", e.Exception);
+        logger.Error("Unhandled exception: {0}\n{1}\n{2}\n{3}\n{4}\n{5}", e.Exception.Message, e.Exception.StackTrace, e.Exception.HelpLink, e.Exception.HResult, e.Exception.Source, e.Exception.TargetSite);
     }
 
     private static void SetRenderingMode(string renderingMode)
@@ -133,7 +133,7 @@ public partial class App : Application
     {
         string settingsFile = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal).FilePath;
         string destination = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\..\\last.config";
-        FileManager.CopyFileToDestination(settingsFile, destination, true, "Backed up settings", true);
+        FileService.CopyFileToDestination(settingsFile, destination, true, "Backed up settings", true);
     }
 
     /// <summary>
@@ -147,7 +147,7 @@ public partial class App : Application
         string sourceFile = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\..\\last.config";
         var restorationMessage = "Restored settings";
         logger.Info(CultureInfo.InvariantCulture, "Restore our settings backup if any. Destination: {0}. Source: {1}", destFile, sourceFile);
-        FileManager.RestoreFileFromSourceToDestination(destFile, sourceFile, restorationMessage);
+        FileService.RestoreFileFromSourceToDestination(destFile, sourceFile, restorationMessage);
     }
 
     /// <summary>

@@ -7,7 +7,7 @@ namespace MHFZ_Overlay.Models;
 using System;
 
 // TODO: ORM
-public class PartnyaBag
+public sealed class PartnyaBag
 {
     public DateTime CreatedAt { get; set; }
 

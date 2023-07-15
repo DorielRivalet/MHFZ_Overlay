@@ -4,7 +4,7 @@
 
 namespace MHFZ_Overlay.Models;
 
-public class ButtonPress
+public sealed class ButtonPress
 {
     public ButtonPress(string buttonType, int row, int column, string icon, object content)
     {

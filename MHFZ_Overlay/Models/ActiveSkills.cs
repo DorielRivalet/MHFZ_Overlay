@@ -7,7 +7,7 @@ namespace MHFZ_Overlay.Models;
 using System;
 
 // TODO: ORM
-public class ActiveSkills
+public sealed class ActiveSkills
 {
     public DateTime CreatedAt { get; set; }
 

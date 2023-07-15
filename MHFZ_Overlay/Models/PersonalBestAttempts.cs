@@ -4,7 +4,7 @@
 
 namespace MHFZ_Overlay.Models;
 
-public class PersonalBestAttempts
+public sealed class PersonalBestAttempts
 {
     public long PersonalBestAttemptsID { get; set; }
 

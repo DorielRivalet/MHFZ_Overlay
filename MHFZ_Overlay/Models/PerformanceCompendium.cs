@@ -5,7 +5,7 @@
 namespace MHFZ_Overlay.Models;
 
 // TODO: ORM
-public class PerformanceCompendium
+public sealed class PerformanceCompendium
 {
     public double HighestTrueRaw { get; set; }
 

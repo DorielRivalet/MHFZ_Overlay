@@ -7,7 +7,7 @@ namespace MHFZ_Overlay.Models;
 using System;
 
 // TODO: ORM
-public class MezFes
+public sealed class MezFes
 {
     public long MezFesID { get; set; }
 

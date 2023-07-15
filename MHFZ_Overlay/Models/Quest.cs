@@ -8,7 +8,7 @@ using System;
 
 // TODO: ORM
 // get the graphs from here
-public class Quest
+public sealed class Quest
 {
     public string? QuestHash { get; set; } = string.Empty;
 

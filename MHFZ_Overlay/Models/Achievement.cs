@@ -8,7 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Media;
-using MHFZ_Overlay.Models.Mappers;
+using MHFZ_Overlay.Models.Collections;
 using MHFZ_Overlay.Models.Structures;
 using MHFZ_Overlay.Views.Windows;
 using Wpf.Ui.Common;
@@ -18,13 +18,13 @@ using Wpf.Ui.Controls.IconElements;
 /// <summary>
 /// The achievements of the player.
 /// </summary>
-public class Achievement
+public sealed class Achievement
 {
     public static async Task ShowMany(Snackbar snackbar, List<int> achievementsID)
     {
         foreach (var achievementID in achievementsID)
         {
-            if (AchievementsMapper.IDAchievement.TryGetValue(achievementID, out Achievement? achievement))
+            if (AchievementsCollection.IDAchievement.TryGetValue(achievementID, out Achievement? achievement))
             {
                 if (achievement == null)
                 {
@@ -74,7 +74,7 @@ public class Achievement
         {
             if (colorString == null)
             {
-                colorString = CatppuccinMochaColorsMapper.CatppuccinMochaColors["Base"];
+                colorString = CatppuccinMochaColorsCollection.CatppuccinMochaColors["Base"];
             }
 
             var brush = (Brush?)brushConverter.ConvertFromString(colorString);
@@ -82,7 +82,7 @@ public class Achievement
         }
 
         // Default color if rank is not defined
-        return (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColorsMapper.CatppuccinMochaColors["Base"]);
+        return (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColorsCollection.CatppuccinMochaColors["Base"]);
     }
 
     /// <summary>
@@ -152,10 +152,10 @@ public class Achievement
     // Additional properties or methods related to achievements can be added here
     private static readonly Dictionary<AchievementRank, string> RankColors = new Dictionary<AchievementRank, string>
     {
-        { AchievementRank.None, CatppuccinMochaColorsMapper.CatppuccinMochaColors["Base"] },        // Black
-        { AchievementRank.Bronze, CatppuccinMochaColorsMapper.CatppuccinMochaColors["Maroon"] },      // Bronze color
-        { AchievementRank.Silver, CatppuccinMochaColorsMapper.CatppuccinMochaColors["Lavender"] },      // Silver color
-        { AchievementRank.Gold, CatppuccinMochaColorsMapper.CatppuccinMochaColors["Yellow"] },        // Gold color
-        { AchievementRank.Platinum, CatppuccinMochaColorsMapper.CatppuccinMochaColors["Teal"] },     // Platinum color
+        { AchievementRank.None, CatppuccinMochaColorsCollection.CatppuccinMochaColors["Base"] },        // Black
+        { AchievementRank.Bronze, CatppuccinMochaColorsCollection.CatppuccinMochaColors["Maroon"] },      // Bronze color
+        { AchievementRank.Silver, CatppuccinMochaColorsCollection.CatppuccinMochaColors["Lavender"] },      // Silver color
+        { AchievementRank.Gold, CatppuccinMochaColorsCollection.CatppuccinMochaColors["Yellow"] },        // Gold color
+        { AchievementRank.Platinum, CatppuccinMochaColorsCollection.CatppuccinMochaColors["Teal"] },     // Platinum color
     };
 }

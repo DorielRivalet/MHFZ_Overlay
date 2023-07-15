@@ -7,7 +7,7 @@ namespace MHFZ_Overlay.Models;
 using System;
 using System.Globalization;
 
-public class ZenithGauntlet
+public sealed class ZenithGauntlet
 {
     public long ZenithGauntletID { get; set; }
 

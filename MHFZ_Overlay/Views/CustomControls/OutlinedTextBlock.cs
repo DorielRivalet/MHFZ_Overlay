@@ -1,8 +1,8 @@
-// Copyright 2023 The mhfz-overlay developers.
+// © 2023 The mhfz-overlay developers.
 // Use of this source code is governed by a MIT license that can be
 // found in the LICENSE file.
 
-//https://stackoverflow.com/questions/93650/apply-stroke-to-a-textblock-in-wpf
+// https://stackoverflow.com/questions/93650/apply-stroke-to-a-textblock-in-wpf
 namespace MHFZ_Overlay.Views.CustomControls;
 
 using System;
@@ -14,7 +14,7 @@ using System.Windows.Markup;
 using System.Windows.Media;
 
 [ContentProperty("Text")]
-public class OutlinedTextBlock : FrameworkElement
+public sealed class OutlinedTextBlock : FrameworkElement
 {
     /// <summary>
     /// Updates the pen.

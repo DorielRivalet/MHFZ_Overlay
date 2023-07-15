@@ -12,7 +12,7 @@ using MHFZ_Overlay.ViewModels.Windows;
 /// <summary>
 /// Inherits from AddressModel and provides the memory address of the hit count value (etc.) when the game is running in HGE mode.
 /// </summary>
-internal sealed class AddressModelHGE : AddressModel
+public sealed class AddressModelHGE : AddressModel
 {
     public AddressModelHGE(Mem m) : base(m)
     {

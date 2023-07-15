@@ -7,7 +7,7 @@ namespace MHFZ_Overlay.Models;
 using System;
 using System.Globalization;
 
-public class SolsticeGauntlet
+public sealed class SolsticeGauntlet
 {
     public long SolsticeGauntletID { get; set; }
 

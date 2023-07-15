@@ -5,7 +5,7 @@
 namespace MHFZ_Overlay.Models;
 
 // TODO: ORM
-public class GearCompendium
+public sealed class GearCompendium
 {
     public long MostUsedWeaponType { get; set; }
 

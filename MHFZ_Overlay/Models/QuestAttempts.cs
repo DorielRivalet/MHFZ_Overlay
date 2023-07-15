@@ -4,7 +4,7 @@
 
 namespace MHFZ_Overlay.Models;
 
-public class QuestAttempts
+public sealed class QuestAttempts
 {
     public long QuestAttemptsID { get; set; }
 

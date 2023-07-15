@@ -4,7 +4,7 @@
 
 namespace MHFZ_Overlay.Models;
 
-public class OverlaySetting
+public sealed class OverlaySetting
 {
     public string? Value { get; set; } = "null";
 

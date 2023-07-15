@@ -12,7 +12,7 @@ using MHFZ_Overlay.ViewModels.Windows;
 /// <summary>
 /// Inherits from AddressModel and provides the memory address of the hit count value (etc.) when the game is running in non-High Grade Edition (HGE) mode.
 /// </summary>
-public class AddressModelNotHGE : AddressModel
+public sealed class AddressModelNotHGE : AddressModel
 {
     public AddressModelNotHGE(Mem m) : base(m)
     {

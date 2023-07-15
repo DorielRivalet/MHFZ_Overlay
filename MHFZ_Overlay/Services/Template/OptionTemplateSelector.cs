@@ -7,7 +7,7 @@ namespace MHFZ_Overlay.Services.Template;
 using System.Windows;
 using System.Windows.Controls;
 
-public class OptionTemplateSelector : DataTemplateSelector
+public sealed class OptionTemplateSelector : DataTemplateSelector
 {
     public override DataTemplate? SelectTemplate(object item, DependencyObject container)
     {

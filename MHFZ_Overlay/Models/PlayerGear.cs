@@ -7,7 +7,7 @@ namespace MHFZ_Overlay.Models;
 using System;
 
 // TODO: ORM
-public class PlayerGear
+public sealed class PlayerGear
 {
     public string PlayerGearHash { get; set; } = string.Empty;
 

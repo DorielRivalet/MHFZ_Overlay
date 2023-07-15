@@ -7,7 +7,7 @@ namespace MHFZ_Overlay.Models;
 using System;
 
 // TODO: ORM
-public class PlayerInventory
+public sealed class PlayerInventory
 {
     public DateTime? CreatedAt { get; set; }
 

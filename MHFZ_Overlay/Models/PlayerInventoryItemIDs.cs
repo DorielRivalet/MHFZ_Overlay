@@ -7,7 +7,7 @@ namespace MHFZ_Overlay.Models;
 using System.Collections.Generic;
 
 // Create a class to store ItemIDs for each row in PlayerInventory
-public class PlayerInventoryItemIds
+public sealed class PlayerInventoryItemIds
 {
     public long PlayerInventoryID { get; set; }
 
