@@ -12,3 +12,31 @@ updates:
     # Check the npm registry for updates every day (weekdays)
     schedule:
       interval: "daily"
+    # Add reviewers
+    reviewers:
+      - "DorielRivalet"
+    # Raise pull requests for version updates
+    # to npm against the `release` branch
+    target-branch: "release"
+  # Maintain dependencies for GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    # Add reviewers
+    reviewers:
+      - "DorielRivalet"
+    # Raise pull requests for version updates
+    # to Github Actions against the `release` branch
+    target-branch: "release"
+  # Maintain dependencies for NuGet
+  - package-ecosystem: "nuget"
+    directory: "/MHFZ_Overlay/"
+    schedule:
+      interval: "daily"
+    # Add reviewers
+    reviewers:
+      - "DorielRivalet"
+    # Raise pull requests for version updates
+    # to Github Actions against the `release` branch
+    target-branch: "release"
