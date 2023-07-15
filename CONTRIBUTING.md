@@ -25,7 +25,11 @@
 
 ## Contributing workflow
 
-- Decide what you want to contribute
+Please see [the documentation](./docs/deployment.md#repository-branch-structure) to understand the git workflow.
+
+In short:
+
+- Decide what you want to contribute.
 - If you want to implement a new feature, consider a draft pull request before fully jumping into code.
 - After finalizing your work, please follow our commit conventions.
 - Submit a PR if everything is fine.

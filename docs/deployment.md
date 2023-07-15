@@ -5,12 +5,50 @@
 - [Releasifying and Deployment Process](#releasifying-and-deployment-process)
   - [Table of Contents](#table-of-contents)
   - [Overview](#overview)
+    - [Repository branch structure](#repository-branch-structure)
     - [Packaging, Releasifying, Deployment and Distribution Steps](#packaging-releasifying-deployment-and-distribution-steps)
     - [Merging via command line](#merging-via-command-line)
 
 ## Overview
 
 The following steps outline the process for releasing and deploying the software using clowd.squirrel, after making changes and testing in-game.
+
+### Repository branch structure
+
+The default branch for this repo is [`main`](https://github.com/dorielrivalet/mhfz-overlay/tree/main), which is the latest stable release and has tags for the various releases; e.g., see release tag [0.24.1](https://github.com/dorielrivalet/mhfz-overlay/tree/0.24.1).
+
+Branch [`release`](https://github.com/dorielrivalet/mhfz-overlay/tree/release) is where development occurs between releases and all pull requests should be derived from that branch. The `release` branch is merged back into `main` to cut a release and the release state is tagged (e.g., with `4.10-rc1` or `4.10`).
+
+Visually the process looks roughly like this:
+
+```mermaid
+gitGraph
+    commit
+    branch release
+    checkout release
+    commit
+    commit
+    checkout main
+    merge release tag: "1.0.0"
+    checkout release
+    commit
+    branch feature-1
+    branch feature-2
+    checkout feature-1
+    commit
+    checkout feature-2
+    commit
+    checkout release
+    merge feature-1
+    merge feature-2
+    commit
+    checkout main
+    merge release tag: "2.0.0"
+```
+
+The optional feature branches should not be long-lived. Instead, they should be short-lived and their changes be as atomic as possible. Ideally, they are also tested before being merged into `release`, even if `release` does test them later on.
+
+If you are working on fixes, test your fixes before working on something else. This way, even if you are already commited the fix but it doesn't work, you can do `git commit --amend`. This can also apply for features, other types of work or even unfinished work.
 
 ### Packaging, Releasifying, Deployment and Distribution Steps
 
