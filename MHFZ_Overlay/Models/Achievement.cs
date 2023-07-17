@@ -53,9 +53,9 @@ public sealed class Achievement
         };
         snackbar.Icon.Foreground = brushColor;
         snackbar.Appearance = ControlAppearance.Secondary;
-        if (MainWindow.victoryMediaSound != null)
+        if (MainWindow.MainWindowSoundPlayer != null)
         {
-            MainWindow.victoryMediaSound.Play();
+            MainWindow.MainWindowSoundPlayer.Play();
         }
 
         await snackbar.ShowAsync();

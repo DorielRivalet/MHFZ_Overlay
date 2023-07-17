@@ -12,6 +12,7 @@ using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Media;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -26,6 +27,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
+using DiscordRPC;
 using EZlion.Mapper;
 using Gma.System.MouseKeyHook;
 using LiveChartsCore;
@@ -2640,6 +2642,8 @@ The process may take some time, as the program attempts to download from GitHub 
         {
             LoggingService.WriteCrashLog(new Exception("Target process not found"));
         }
+
+        MainWindowSoundPlayer = new SoundPlayer(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Assets\Sounds\victory.wav"));
     }
 
     private void OnboardEndUser()
@@ -2718,21 +2722,7 @@ The process may take some time, as the program attempts to download from GitHub 
         }
     }
 
-    private void victoryMediaElement_MediaEnded(object sender, RoutedEventArgs e)
-    {
-        victoryMediaElement.Stop();
-    }
-
-    public static MediaElement? victoryMediaSound { get; private set; }
-
-    private void victoryMediaElement_Loaded(object sender, RoutedEventArgs e)
-    {
-        MediaElement mediaElement = (MediaElement)sender;
-        if (mediaElement != null)
-        {
-            victoryMediaSound = mediaElement;
-        }
-    }
+    public static SoundPlayer? MainWindowSoundPlayer { get; private set; }
 }
 
 /// <TODO>

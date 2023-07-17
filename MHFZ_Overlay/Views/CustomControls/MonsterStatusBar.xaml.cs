@@ -12,38 +12,14 @@ using System.Windows.Controls;
 using System.Windows.Media;
 
 /// <summary>
-/// Interaction logic for UserControl1.xaml
+/// Interaction logic for MonsterStatusBar.xaml
 /// </summary>
-public partial class CustomProgressBar : UserControl, INotifyPropertyChanged
+public partial class MonsterStatusBar : UserControl, INotifyPropertyChanged
 {
-    public CustomProgressBar()
+    public MonsterStatusBar()
     {
         this.InitializeComponent();
         this.DataContext = this;
-    }
-
-    /// <summary>
-    /// Gets or sets the width of the row1.
-    /// </summary>
-    /// <value>
-    /// The width of the row1.
-    /// </value>
-    public int Row1Width
-    {
-        get { return (int)this.GetValue(Row1WidthProperty); }
-        set { this.SetValue(Row1WidthProperty, value); }
-    }
-
-    /// <summary>
-    /// Gets or sets the width of the row2.
-    /// </summary>
-    /// <value>
-    /// The width of the row2.
-    /// </value>
-    public int Row2Width
-    {
-        get { return (int)this.GetValue(Row2WidthProperty); }
-        set { this.SetValue(Row2WidthProperty, value); }
     }
 
     /// <summary>
@@ -106,38 +82,41 @@ public partial class CustomProgressBar : UserControl, INotifyPropertyChanged
         set { this.SetValue(StrokeColorProperty, value); }
     }
 
+    public Brush BorderColor
+    {
+        get { return (Brush)this.GetValue(BorderColorProperty); }
+        set { this.SetValue(BorderColorProperty, value); }
+    }
+
     public string IconSource
     {
         get { return (string)this.GetValue(IconSourceProperty); }
         set { this.SetValue(IconSourceProperty, value); }
     }
 
-    public static readonly DependencyProperty Row1WidthProperty =
-        DependencyProperty.Register("Row1Width", typeof(int), typeof(CustomProgressBar), new PropertyMetadata(1));
-
-    public static readonly DependencyProperty Row2WidthProperty =
-        DependencyProperty.Register("Row2Width", typeof(int), typeof(CustomProgressBar), new PropertyMetadata(1));
-
     public static readonly DependencyProperty DescriptionProperty =
-        DependencyProperty.Register("Description", typeof(string), typeof(CustomProgressBar), new PropertyMetadata(string.Empty));
+        DependencyProperty.Register("Description", typeof(string), typeof(MonsterStatusBar), new PropertyMetadata(string.Empty));
 
     public static readonly DependencyProperty NumCurrProperty =
-        DependencyProperty.Register("NumCurr", typeof(int), typeof(CustomProgressBar), new PropertyMetadata(0));
+        DependencyProperty.Register("NumCurr", typeof(int), typeof(MonsterStatusBar), new PropertyMetadata(0));
 
     public static readonly DependencyProperty NumMaxProperty =
-        DependencyProperty.Register("NumMax", typeof(int), typeof(CustomProgressBar), new PropertyMetadata(0));
+        DependencyProperty.Register("NumMax", typeof(int), typeof(MonsterStatusBar), new PropertyMetadata(0));
 
     public static readonly DependencyProperty BarColorProperty =
-        DependencyProperty.Register("BarColor", typeof(Brush), typeof(CustomProgressBar), new PropertyMetadata(null));
+        DependencyProperty.Register("BarColor", typeof(Brush), typeof(MonsterStatusBar), new PropertyMetadata(null));
+
+    public static readonly DependencyProperty BorderColorProperty =
+        DependencyProperty.Register("BorderColor", typeof(Brush), typeof(MonsterStatusBar), new PropertyMetadata(null));
 
     public static readonly DependencyProperty IconSourceProperty =
-        DependencyProperty.Register("IconSource", typeof(string), typeof(CustomProgressBar), new PropertyMetadata(string.Empty));
+        DependencyProperty.Register("IconSource", typeof(string), typeof(MonsterStatusBar), new PropertyMetadata(string.Empty));
 
     public static readonly DependencyProperty StrokeColorProperty =
-        DependencyProperty.Register("StrokeColor", typeof(Brush), typeof(CustomProgressBar), new PropertyMetadata(null));
+        DependencyProperty.Register("StrokeColor", typeof(Brush), typeof(MonsterStatusBar), new PropertyMetadata(null));
 
     public static readonly DependencyProperty BarTypeProperty =
-       DependencyProperty.Register("BarType", typeof(string), typeof(CustomProgressBar), new PropertyMetadata(string.Empty));
+       DependencyProperty.Register("BarType", typeof(string), typeof(MonsterStatusBar), new PropertyMetadata(string.Empty));
 
     public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -148,10 +127,6 @@ public partial class CustomProgressBar : UserControl, INotifyPropertyChanged
     {
         this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(null));
     }
-
-    public string Width1 { get => this.Row1Width.ToString(CultureInfo.InvariantCulture) + "*"; }
-
-    public string Width2 { get => this.Row2Width.ToString(CultureInfo.InvariantCulture) + "*"; }
 
     /// <summary>
     /// Shows the current hp percentage?
@@ -195,27 +170,6 @@ public partial class CustomProgressBar : UserControl, INotifyPropertyChanged
     /// The current hp percent
     /// </summary>
     private string CurrentHPPercent = string.Empty;
-
-    /// <summary>
-    /// Gets the descriptor horizontal alignment.
-    /// </summary>
-    /// <value>
-    /// The descriptor horizontal alignment.
-    /// </value>
-    public string DescriptorHorizontalAlignment
-    {
-        get
-        {
-            if (this.Desc == "Poison" || this.Desc == "Sleep" || this.Desc == "Para." || this.Desc == "Blast" || this.Desc == "Stun")
-            {
-                return "Left";
-            }
-            else
-            {
-                return "Right";
-            }
-        }
-    }
 
     /// <summary>
     /// Gets the value text.

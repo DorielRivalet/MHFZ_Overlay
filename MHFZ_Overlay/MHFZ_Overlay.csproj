@@ -770,7 +770,9 @@
     <Resource Include="Assets\Icons\Webbing_Icon_White.xaml" />
     <Resource Include="Assets\Icons\Wing_Icon_White.xaml" />
     <Resource Include="Assets\Icons\Wood_Icon_White.xaml" />
-    <Resource Include="Assets\Sounds\victory.wav" />
+    <Content Include="Assets\Sounds\victory.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Resource Include="Assets\Themes\CatppuccinMocha.xaml" />
   </ItemGroup>
 
@@ -833,7 +835,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Services\Contracts\" />
     <Folder Include="ViewModels\Pages\" />
     <Folder Include="Views\Pages\" />
   </ItemGroup>

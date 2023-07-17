@@ -66,9 +66,6 @@
             </Style>
             <Style x:Key="MyProgressBar"  TargetType="{x:Type ProgressBar}">
                 <Setter Property="Background" Value="#00000000"/>
-                <Setter Property="Margin" Value="5"/>
-                <Setter Property="BorderThickness" Value="0"/>
-                <!--<Setter Property="FontFamily" Value="Source Code Pro"/>-->
             </Style>
             <Style x:Key="ConfigSingleGrid" TargetType="{x:Type Grid}">
                 <Setter Property="Margin" Value="20"/>

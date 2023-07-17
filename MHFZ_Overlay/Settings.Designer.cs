@@ -721,7 +721,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("300")]
+        [global::System.Configuration.DefaultSettingValueAttribute("310")]
         public double MonsterPoisonY {
             get {
                 return ((double)(this["MonsterPoisonY"]));
@@ -757,7 +757,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("330")]
+        [global::System.Configuration.DefaultSettingValueAttribute("350")]
         public double MonsterSleepY {
             get {
                 return ((double)(this["MonsterSleepY"]));
@@ -793,7 +793,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("360")]
+        [global::System.Configuration.DefaultSettingValueAttribute("390")]
         public double MonsterParaY {
             get {
                 return ((double)(this["MonsterParaY"]));
@@ -829,7 +829,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("390")]
+        [global::System.Configuration.DefaultSettingValueAttribute("430")]
         public double MonsterBlastY {
             get {
                 return ((double)(this["MonsterBlastY"]));
@@ -865,7 +865,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("420")]
+        [global::System.Configuration.DefaultSettingValueAttribute("470")]
         public double MonsterStunY {
             get {
                 return ((double)(this["MonsterStunY"]));
@@ -1057,7 +1057,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("800")]
+        [global::System.Configuration.DefaultSettingValueAttribute("900")]
         public double Monster1HealthBarX {
             get {
                 return ((double)(this["Monster1HealthBarX"]));
@@ -1093,7 +1093,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("800")]
+        [global::System.Configuration.DefaultSettingValueAttribute("900")]
         public double Monster2HealthBarX {
             get {
                 return ((double)(this["Monster2HealthBarX"]));
@@ -1105,7 +1105,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("80")]
+        [global::System.Configuration.DefaultSettingValueAttribute("110")]
         public double Monster2HealthBarY {
             get {
                 return ((double)(this["Monster2HealthBarY"]));
@@ -1129,7 +1129,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("800")]
+        [global::System.Configuration.DefaultSettingValueAttribute("900")]
         public double Monster3HealthBarX {
             get {
                 return ((double)(this["Monster3HealthBarX"]));
@@ -1141,7 +1141,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("120")]
+        [global::System.Configuration.DefaultSettingValueAttribute("180")]
         public double Monster3HealthBarY {
             get {
                 return ((double)(this["Monster3HealthBarY"]));
@@ -1165,7 +1165,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("800")]
+        [global::System.Configuration.DefaultSettingValueAttribute("900")]
         public double Monster4HealthBarX {
             get {
                 return ((double)(this["Monster4HealthBarX"]));
@@ -1177,7 +1177,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("160")]
+        [global::System.Configuration.DefaultSettingValueAttribute("250")]
         public double Monster4HealthBarY {
             get {
                 return ((double)(this["Monster4HealthBarY"]));
@@ -3524,6 +3524,174 @@ namespace MHFZ_Overlay {
             }
             set {
                 this["HideOverlayWhenUnfocusedGame"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool MonsterBarHPModeShown {
+            get {
+                return ((bool)(this["MonsterBarHPModeShown"]));
+            }
+            set {
+                this["MonsterBarHPModeShown"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool MonsterBarIconShown {
+            get {
+                return ((bool)(this["MonsterBarIconShown"]));
+            }
+            set {
+                this["MonsterBarIconShown"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool MonsterBarNameShown {
+            get {
+                return ((bool)(this["MonsterBarNameShown"]));
+            }
+            set {
+                this["MonsterBarNameShown"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool MonsterBarNumbersShown {
+            get {
+                return ((bool)(this["MonsterBarNumbersShown"]));
+            }
+            set {
+                this["MonsterBarNumbersShown"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool MonsterBarShown {
+            get {
+                return ((bool)(this["MonsterBarShown"]));
+            }
+            set {
+                this["MonsterBarShown"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("#11111b")]
+        public string Monster1BarBorderColor {
+            get {
+                return ((string)(this["Monster1BarBorderColor"]));
+            }
+            set {
+                this["Monster1BarBorderColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("#11111b")]
+        public string Monster2BarBorderColor {
+            get {
+                return ((string)(this["Monster2BarBorderColor"]));
+            }
+            set {
+                this["Monster2BarBorderColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("#11111b")]
+        public string Monster3BarBorderColor {
+            get {
+                return ((string)(this["Monster3BarBorderColor"]));
+            }
+            set {
+                this["Monster3BarBorderColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("#11111b")]
+        public string Monster4BarBorderColor {
+            get {
+                return ((string)(this["Monster4BarBorderColor"]));
+            }
+            set {
+                this["Monster4BarBorderColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("#11111b")]
+        public string MonsterPoisonBarBorderColor {
+            get {
+                return ((string)(this["MonsterPoisonBarBorderColor"]));
+            }
+            set {
+                this["MonsterPoisonBarBorderColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("#11111b")]
+        public string MonsterParalysisBarBorderColor {
+            get {
+                return ((string)(this["MonsterParalysisBarBorderColor"]));
+            }
+            set {
+                this["MonsterParalysisBarBorderColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("#11111b")]
+        public string MonsterSleepBarBorderColor {
+            get {
+                return ((string)(this["MonsterSleepBarBorderColor"]));
+            }
+            set {
+                this["MonsterSleepBarBorderColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("#11111b")]
+        public string MonsterStunBarBorderColor {
+            get {
+                return ((string)(this["MonsterStunBarBorderColor"]));
+            }
+            set {
+                this["MonsterStunBarBorderColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("#11111b")]
+        public string MonsterBlastBarBorderColor {
+            get {
+                return ((string)(this["MonsterBlastBarBorderColor"]));
+            }
+            set {
+                this["MonsterBlastBarBorderColor"] = value;
             }
         }
     }

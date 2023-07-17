@@ -4084,10 +4084,10 @@ TreeScope.Children, condition);
             case "#1e1e2e":// Base
             case "#181825":// Mantle
             case "#11111b":// Crust
-                color = "#f5e0dc";
+                color = "#f5e0dc"; // Rosewater
                 break;
             default:
-                color = "#1e1e2e";
+                color = "#1e1e2e"; // Base
                 break;
         }
 
@@ -4117,69 +4117,94 @@ TreeScope.Children, condition);
         }
     }
 
-    public string Monster1HPBarColor
+    public string DetermineMonsterBorderColor(int n)
     {
-        get
+        var s = (Settings)Application.Current.TryFindResource("Settings");
+
+        var barColor = DetermineMonsterHPBarColor(n);
+        var colorSetting = string.Empty;
+        var color = string.Empty;
+
+        switch (barColor)
         {
-            return DetermineMonsterHPBarColor(1);
+            case "#313244":// Surface0
+            case "#45475a":// Surface1
+            case "#585b70":// Surface2
+            case "#1e1e2e":// Base
+            case "#181825":// Mantle
+            case "#11111b":// Crust
+                color = "#f5e0dc"; // Rosewater
+                break;
+            default:
+                color = "#11111b"; // Crust
+                break;
+        }
+
+        switch (n)
+        {
+            case 1:
+                colorSetting = s.Monster1BarBorderColor;
+                break;
+            case 2:
+                colorSetting = s.Monster2BarBorderColor;
+                break;
+            case 3:
+                colorSetting = s.Monster3BarBorderColor;
+                break;
+            case 4:
+                colorSetting = s.Monster4BarBorderColor;
+                break;
+        }
+
+        if (s.EnableMonsterHPBarsAutomaticColor)
+        {
+            return color;
+        }
+        else
+        {
+            return colorSetting;
         }
     }
 
-    public string Monster2HPBarColor
+    public string DetermineMonsterHPModeText()
     {
-        get
+        var s = (Settings)Application.Current.TryFindResource("Settings");
+
+        if (s.EnableEHPNumbers)
         {
-            return DetermineMonsterHPBarColor(2);
+            return "EHP";
+        }
+        else
+        {
+            return "THP";
         }
     }
 
-    public string Monster3HPBarColor
-    {
-        get
-        {
-            return DetermineMonsterHPBarColor(3);
-        }
-    }
+    public string Monster1HPBarColor => DetermineMonsterHPBarColor(1);
 
-    public string Monster4HPBarColor
-    {
-        get
-        {
-            return DetermineMonsterHPBarColor(4);
-        }
-    }
+    public string Monster2HPBarColor => DetermineMonsterHPBarColor(2);
 
-    public string Monster1StrokeColor
-    {
-        get
-        {
-            return DetermineMonsterStrokeColor(1);
-        }
-    }
+    public string Monster3HPBarColor => DetermineMonsterHPBarColor(3);
 
-    public string Monster2StrokeColor
-    {
-        get
-        {
-            return DetermineMonsterStrokeColor(2);
-        }
-    }
+    public string Monster4HPBarColor => DetermineMonsterHPBarColor(4);
 
-    public string Monster3StrokeColor
-    {
-        get
-        {
-            return DetermineMonsterStrokeColor(3);
-        }
-    }
+    public string Monster1StrokeColor => DetermineMonsterStrokeColor(1);
 
-    public string Monster4StrokeColor
-    {
-        get
-        {
-            return DetermineMonsterStrokeColor(4);
-        }
-    }
+    public string Monster2StrokeColor => DetermineMonsterStrokeColor(2);
+
+    public string Monster3StrokeColor => DetermineMonsterStrokeColor(3);
+
+    public string Monster4StrokeColor => DetermineMonsterStrokeColor(4);
+
+    public string Monster1BarBorderColor => DetermineMonsterBorderColor(1);
+
+    public string Monster2BarBorderColor => DetermineMonsterBorderColor(2);
+
+    public string Monster3BarBorderColor => DetermineMonsterBorderColor(3);
+
+    public string Monster4BarBorderColor => DetermineMonsterBorderColor(4);
+
+    public string MonsterHPModeText => DetermineMonsterHPModeText();
 
     public string CurrentMap
     {

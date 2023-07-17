@@ -1,4 +1,4 @@
-﻿<?xml version='1.0' encoding='utf-8'?>
+<?xml version='1.0' encoding='utf-8'?>
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="MHFZ_Overlay" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
@@ -177,7 +177,7 @@
       <Value Profile="(Default)">1060</Value>
     </Setting>
     <Setting Name="MonsterPoisonY" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">300</Value>
+      <Value Profile="(Default)">310</Value>
     </Setting>
     <Setting Name="MonsterSleepShown" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
@@ -186,7 +186,7 @@
       <Value Profile="(Default)">1060</Value>
     </Setting>
     <Setting Name="MonsterSleepY" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">330</Value>
+      <Value Profile="(Default)">350</Value>
     </Setting>
     <Setting Name="MonsterParaShown" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
@@ -195,7 +195,7 @@
       <Value Profile="(Default)">1060</Value>
     </Setting>
     <Setting Name="MonsterParaY" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">360</Value>
+      <Value Profile="(Default)">390</Value>
     </Setting>
     <Setting Name="MonsterBlastShown" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
@@ -204,7 +204,7 @@
       <Value Profile="(Default)">1060</Value>
     </Setting>
     <Setting Name="MonsterBlastY" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">390</Value>
+      <Value Profile="(Default)">430</Value>
     </Setting>
     <Setting Name="MonsterStunShown" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
@@ -213,7 +213,7 @@
       <Value Profile="(Default)">1060</Value>
     </Setting>
     <Setting Name="MonsterStunY" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">420</Value>
+      <Value Profile="(Default)">470</Value>
     </Setting>
     <Setting Name="DamageNumbersX" Type="System.Double" Scope="User">
       <Value Profile="(Default)">700</Value>
@@ -261,7 +261,7 @@
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="Monster1HealthBarX" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">800</Value>
+      <Value Profile="(Default)">900</Value>
     </Setting>
     <Setting Name="Monster1HealthBarY" Type="System.Double" Scope="User">
       <Value Profile="(Default)">40</Value>
@@ -270,28 +270,28 @@
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="Monster2HealthBarX" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">800</Value>
+      <Value Profile="(Default)">900</Value>
     </Setting>
     <Setting Name="Monster2HealthBarY" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">80</Value>
+      <Value Profile="(Default)">110</Value>
     </Setting>
     <Setting Name="Monster3HealthBarShown" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="Monster3HealthBarX" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">800</Value>
+      <Value Profile="(Default)">900</Value>
     </Setting>
     <Setting Name="Monster3HealthBarY" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">120</Value>
+      <Value Profile="(Default)">180</Value>
     </Setting>
     <Setting Name="Monster4HealthBarShown" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="Monster4HealthBarX" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">800</Value>
+      <Value Profile="(Default)">900</Value>
     </Setting>
     <Setting Name="Monster4HealthBarY" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">160</Value>
+      <Value Profile="(Default)">250</Value>
     </Setting>
     <Setting Name="TextFormatExport" Type="System.String" Scope="User">
       <Value Profile="(Default)">Image</Value>
@@ -877,6 +877,48 @@
     </Setting>
     <Setting Name="HideOverlayWhenUnfocusedGame" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="MonsterBarHPModeShown" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="MonsterBarIconShown" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="MonsterBarNameShown" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="MonsterBarNumbersShown" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="MonsterBarShown" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="Monster1BarBorderColor" Type="System.String" Scope="User">
+      <Value Profile="(Default)">#11111b</Value>
+    </Setting>
+    <Setting Name="Monster2BarBorderColor" Type="System.String" Scope="User">
+      <Value Profile="(Default)">#11111b</Value>
+    </Setting>
+    <Setting Name="Monster3BarBorderColor" Type="System.String" Scope="User">
+      <Value Profile="(Default)">#11111b</Value>
+    </Setting>
+    <Setting Name="Monster4BarBorderColor" Type="System.String" Scope="User">
+      <Value Profile="(Default)">#11111b</Value>
+    </Setting>
+    <Setting Name="MonsterPoisonBarBorderColor" Type="System.String" Scope="User">
+      <Value Profile="(Default)">#11111b</Value>
+    </Setting>
+    <Setting Name="MonsterParalysisBarBorderColor" Type="System.String" Scope="User">
+      <Value Profile="(Default)">#11111b</Value>
+    </Setting>
+    <Setting Name="MonsterSleepBarBorderColor" Type="System.String" Scope="User">
+      <Value Profile="(Default)">#11111b</Value>
+    </Setting>
+    <Setting Name="MonsterStunBarBorderColor" Type="System.String" Scope="User">
+      <Value Profile="(Default)">#11111b</Value>
+    </Setting>
+    <Setting Name="MonsterBlastBarBorderColor" Type="System.String" Scope="User">
+      <Value Profile="(Default)">#11111b</Value>
     </Setting>
   </Settings>
 </SettingsFile>
