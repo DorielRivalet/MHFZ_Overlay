@@ -5,6 +5,7 @@
 namespace MHFZ_Overlay.Models.Collections;
 
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 ///<summary>
 ///The monster ID list
@@ -12,7 +13,7 @@ using System.Collections.Generic;
 ///</summary>
 public static class MonsterCollection
 {
-    public static IReadOnlyDictionary<int, string> MonsterID { get; } = new Dictionary<int, string>
+    public static ReadOnlyDictionary<int, string> MonsterID { get; } = new (new Dictionary<int, string>
     {
         { 0, "None" },
         { 1, "Rathian" },
@@ -191,5 +192,5 @@ public static class MonsterCollection
         { 174, "Sparkling Zerureusu" },
         { 175, "PSO2 Rappy" },
         { 176, "King Shakalaka" },
-    };
+    });
 }

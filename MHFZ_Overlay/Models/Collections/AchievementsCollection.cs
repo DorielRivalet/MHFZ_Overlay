@@ -21,7 +21,7 @@ public static class AchievementsCollection
     /// <value>
     /// The achievement list.
     /// </value>
-    public static ReadOnlyDictionary<int, Achievement> IDAchievement { get; } = new(new Dictionary<int, Achievement>
+    public static ReadOnlyDictionary<int, Achievement> IDAchievement { get; } = new (new Dictionary<int, Achievement>
     {
         {
             0, new Achievement()

@@ -5,13 +5,14 @@
 namespace MHFZ_Overlay.Models.Collections;
 
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 /// <summary>
 /// The Raviente Trigger Events list
 /// </summary>
 public static class RavienteTriggerEvents
 {
-    public static IReadOnlyDictionary<int, string> RavienteTriggerEventIDs { get; } = new Dictionary<int, string>
+    public static ReadOnlyDictionary<int, string> RavienteTriggerEventIDs { get; } = new (new Dictionary<int, string>
     {
         { 0, "Slay 1" },
         { 1, "Sedation 1" },
@@ -27,5 +28,5 @@ public static class RavienteTriggerEvents
         { 11, "Sedation 7" },
         { 12, "Sedation 8" },
         { 13, "Slay 9" },
-    };
+    });
 }

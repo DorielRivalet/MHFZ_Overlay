@@ -5,13 +5,14 @@
 namespace MHFZ_Overlay.Models.Collections;
 
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 /// <summary>
 /// The Berserk Raviente Practice Trigger Events list
 /// </summary>
 public static class BerserkRavientePracticeTriggerEvents
 {
-    public static IReadOnlyDictionary<int, string> BerserkRavientePracticeTriggerEventIDs { get; } = new Dictionary<int, string>
+    public static ReadOnlyDictionary<int, string> BerserkRavientePracticeTriggerEventIDs { get; } = new (new Dictionary<int, string>
     {
         {0, "Slay 1" },
         {1, "Sedation 1" },
@@ -23,7 +24,7 @@ public static class BerserkRavientePracticeTriggerEvents
         {7, "Sedation 4" },
         {8, "Sedation 5" },
         {9, "Sedation 6" },
-    };
+    });
 }
 
 /// <summary>
@@ -31,7 +32,7 @@ public static class BerserkRavientePracticeTriggerEvents
 /// </summary>
 public static class BerserkRavienteTriggerEvents
 {
-    public static IReadOnlyDictionary<int, string> BerserkRavienteTriggerEventIDs { get; } = new Dictionary<int, string>
+    public static ReadOnlyDictionary<int, string> BerserkRavienteTriggerEventIDs { get; } = new (new Dictionary<int, string>
     {
         {0, "Slay 1" },
         {1, "Sedation 1" },
@@ -47,5 +48,5 @@ public static class BerserkRavienteTriggerEvents
         {11, "Destruction 6" },
         {12, "Destruction 7" },
         {13, "Slay Done" },
-    };
+    });
 }

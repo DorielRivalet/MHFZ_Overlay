@@ -5,13 +5,14 @@
 namespace MHFZ_Overlay.Models.Collections;
 
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 ///<summary>
 ///The weapon average hits per second list
 ///</summary>
 public static class WeaponAverageHitsPerSecond
 {
-    public static IReadOnlyDictionary<int, double> WeaponAverageHitsPerSecondID { get; } = new Dictionary<int, double>
+    public static ReadOnlyDictionary<int, double> WeaponAverageHitsPerSecondID { get; } = new (new Dictionary<int, double>
     {
         { 0, 0.3 },
         { 1, 2.25 },
@@ -27,5 +28,5 @@ public static class WeaponAverageHitsPerSecond
         { 11, 1.95 },
         { 12, 1.5 },
         { 13, 1.6 },
-    };
+    });
 }

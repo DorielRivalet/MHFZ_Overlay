@@ -5,6 +5,7 @@
 namespace MHFZ_Overlay.Models.Collections;
 
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using MHFZ_Overlay.Models.Constant;
 
 ///<summary>
@@ -12,7 +13,7 @@ using MHFZ_Overlay.Models.Constant;
 ///</summary>
 public static class GatheringMapCollection
 {
-    public static IReadOnlyDictionary<List<int>, string> GatheringMapID { get; } = new Dictionary<List<int>, string>
+    public static ReadOnlyDictionary<List<int>, string> GatheringMapID { get; } = new (new Dictionary<List<int>, string>
     {
         // Loading
         { new List<int> { 0 }, Messages.EmptyImage },
@@ -112,5 +113,5 @@ public static class GatheringMapCollection
 
         // MezFes areas
         { new List<int> { 462, 463, 464, 465, 466, 467, 468, 469 }, Messages.EmptyImage },
-    };
+    });
 }

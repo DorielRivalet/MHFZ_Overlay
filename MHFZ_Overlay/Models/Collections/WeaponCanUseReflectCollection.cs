@@ -5,10 +5,11 @@
 namespace MHFZ_Overlay.Models.Collections;
 
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 public static class WeaponCanUseReflect
 {
-    public static IReadOnlyDictionary<int, bool> WeaponTypeID { get; } = new Dictionary<int, bool>
+    public static ReadOnlyDictionary<int, bool> WeaponTypeID { get; } = new (new Dictionary<int, bool>
     {
         { 0, true },
         { 1, false },
@@ -24,5 +25,5 @@ public static class WeaponCanUseReflect
         { 11, true },
         { 12, true },
         { 13, true },
-    };
+    });
 }

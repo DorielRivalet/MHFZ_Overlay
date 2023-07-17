@@ -5,13 +5,14 @@
 namespace MHFZ_Overlay.Models.Collections;
 
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 ///<summary>
 ///The monster render dictionary
 ///</summary>
 public static class MonsterRenderCollection
 {
-    public static IReadOnlyDictionary<string, string> MonsterRender { get; } = new Dictionary<string, string>
+    public static ReadOnlyDictionary<string, string> MonsterRender { get; } = new (new Dictionary<string, string>
     {
         { "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/none.png", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/none.png" },
         { "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/rathian.png", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/render/rathian.png" },
@@ -212,5 +213,5 @@ public static class MonsterRenderCollection
         { "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/elzelion.png", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/render/elzelion.png" },
         { "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/supremacy_pariapuria.gif", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/render/thirsty_pariapuria.png" },
         { "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/supremacy_unknown.gif", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/render/supremacy_unknown.png" },
-    };
+    });
 }

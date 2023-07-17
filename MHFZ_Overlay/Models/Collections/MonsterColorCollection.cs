@@ -5,6 +5,7 @@
 namespace MHFZ_Overlay.Models.Collections;
 
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 ///<summary>
 ///The monster color list
@@ -38,7 +39,7 @@ public static class MonsterColorCollection
     // Base  #1e1e2e  rgb(30, 30, 46)  hsl(240, 21%, 15%)
     // Mantle  #181825  rgb(24, 24, 37)  hsl(240, 21%, 12%)
     // Crust  #11111b  rgb(17, 17, 27)  hsl(240, 23%, 9%)
-    public static IReadOnlyDictionary<int, string> MonsterColorID { get; } = new Dictionary<int, string>
+    public static ReadOnlyDictionary<int, string> MonsterColorID { get; } = new (new Dictionary<int, string>
     {
         { 0, CatppuccinMochaColorsCollection.CatppuccinMochaColors["Rosewater"] },
         { 1, CatppuccinMochaColorsCollection.CatppuccinMochaColors["Green"] },
@@ -217,5 +218,5 @@ public static class MonsterColorCollection
         { 174, CatppuccinMochaColorsCollection.CatppuccinMochaColors["Red"] },
         { 175, CatppuccinMochaColorsCollection.CatppuccinMochaColors["Rosewater"] },
         { 176, CatppuccinMochaColorsCollection.CatppuccinMochaColors["Rosewater"] },
-    };
+    });
 }

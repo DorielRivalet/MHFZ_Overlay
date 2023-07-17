@@ -5,13 +5,14 @@
 namespace MHFZ_Overlay.Models.Collections;
 
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 ///<summary>
 ///The monster image list
 ///</summary>
 public static class MonsterImageCollection
 {
-    public static IReadOnlyDictionary<int, string> MonsterImageID { get; } = new Dictionary<int, string>
+    public static ReadOnlyDictionary<int, string> MonsterImageID { get; } = new (new Dictionary<int, string>
     {
         { 0, "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/none.png" },
         { 1, "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/rathian.png" },
@@ -153,5 +154,5 @@ public static class MonsterImageCollection
         { 174, "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/sparkling_zerureusu.png" },
         { 175, "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/pso2_rappy.png" },
         { 176, "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/king_shakalaka.png" },
-    };
+    });
 }

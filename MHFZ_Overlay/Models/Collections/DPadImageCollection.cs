@@ -5,11 +5,12 @@
 namespace MHFZ_Overlay.Models.Collections;
 
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using MHFZ_Overlay.Models.Structures;
 
 public static class DPadImageCollection
 {
-    private static readonly IReadOnlyDictionary<Direction, string> imagePaths = new Dictionary<Direction, string>
+    private static readonly ReadOnlyDictionary<Direction, string> imagePaths = new (new Dictionary<Direction, string>
     {
         { Direction.None, "../../Assets/Icons/png/gamepad_dpad.png" },
         { Direction.Up, "../../Assets/Icons/png/gamepad_dpad_up.png" },
@@ -20,7 +21,7 @@ public static class DPadImageCollection
         { Direction.DownLeft, "../../Assets/Icons/png/gamepad_dpad_downleft.png" },
         { Direction.Left, "../../Assets/Icons/png/gamepad_dpad_left.png" },
         { Direction.UpLeft, "../../Assets/Icons/png/gamepad_dpad_upleft.png" },
-    };
+    });
 
     public static string GetImage(Direction direction)
     {

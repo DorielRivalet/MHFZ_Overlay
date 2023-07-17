@@ -5,6 +5,7 @@
 namespace MHFZ_Overlay.Models.Collections;
 
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 ///<summary>
 ///The color list
@@ -38,7 +39,7 @@ using System.Collections.Generic;
 // Crust    #11111b    rgb(17, 17, 27)    hsl(240, 23%, 9%)
 public static class CatppuccinMochaColorsCollection
 {
-    public static IReadOnlyDictionary<string, string> CatppuccinMochaColors { get; } = new Dictionary<string, string>
+    public static ReadOnlyDictionary<string, string> CatppuccinMochaColors { get; } = new (new Dictionary<string, string>
     {
         { "Rosewater", "#f5e0dc" },
         { "Flamingo", "#f2cdcd" },
@@ -66,5 +67,5 @@ public static class CatppuccinMochaColorsCollection
         { "Base", "#1e1e2e" },
         { "Mantle", "#181825" },
         { "Crust", "#11111b" },
-    };
+    });
 }

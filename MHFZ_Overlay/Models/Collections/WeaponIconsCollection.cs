@@ -5,13 +5,14 @@
 namespace MHFZ_Overlay.Models.Collections;
 
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 ///<summary>
 ///The weapon icons list
 ///</summary>
 public static class WeaponIcons
 {
-    public static IReadOnlyDictionary<int, string> WeaponIconID { get; } = new Dictionary<int, string>
+    public static ReadOnlyDictionary<int, string> WeaponIconID { get; } = new (new Dictionary<int, string>
     {
         { 0, "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/weapon/gs.png" },
         { 1, "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/weapon/hbg.png" },
@@ -27,5 +28,5 @@ public static class WeaponIcons
         { 11, "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/weapon/tonfa.png" },
         { 12, "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/weapon/saf.png" },
         { 13, "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/weapon/ms.png" },
-    };
+    });
 }

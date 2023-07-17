@@ -5,13 +5,14 @@
 namespace MHFZ_Overlay.Models.Collections;
 
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 ///<summary>
 ///The Mezeporta Festival mini-games list
 ///</summary>
 public static class MezFesMinigameCollection
 {
-    public static IReadOnlyDictionary<int, string> ID { get; } = new Dictionary<int, string>
+    public static ReadOnlyDictionary<int, string> ID { get; } = new (new Dictionary<int, string>
     {
         { 463, "Volpkun Together" }, // TODO
         { 464, "Uruki Pachinko" },
@@ -20,5 +21,5 @@ public static class MezFesMinigameCollection
         { 467, "Nyanrendo" },
         { 468, "Panic Honey" },
         { 469, "Dokkan Battle Cats" },
-    };
+    });
 }

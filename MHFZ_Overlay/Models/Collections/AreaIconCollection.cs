@@ -5,13 +5,14 @@
 namespace MHFZ_Overlay.Models.Collections;
 
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 ///<summary>
 ///The area icon list
 ///</summary>
 public static class AreaIconCollection
 {
-    public static IReadOnlyDictionary<List<int>, string> AreaIconID { get; } = new Dictionary<List<int>, string>
+    public static ReadOnlyDictionary<List<int>, string> AreaIconID { get; } = new (new Dictionary<List<int>, string>
     {
         // Loading
         { new List<int> { 0 }, "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/entrance.png" },
@@ -111,5 +112,5 @@ public static class AreaIconCollection
 
         // MezFes areas
         { new List<int> { 462, 463, 464, 465, 466, 467, 468, 469 }, "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/mezfes.png" },
-    };
+    });
 }

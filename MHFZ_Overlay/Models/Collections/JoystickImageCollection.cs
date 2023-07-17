@@ -5,11 +5,12 @@
 namespace MHFZ_Overlay.Models.Collections;
 
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using MHFZ_Overlay.Models.Structures;
 
 public static class JoystickImageCollection
 {
-    private static readonly IReadOnlyDictionary<Direction, string> imagePaths = new Dictionary<Direction, string>
+    private static readonly ReadOnlyDictionary<Direction, string> imagePaths = new (new Dictionary<Direction, string>
     {
         { Direction.None, "../../Assets/Icons/png/gamepad_joystick.png" },
         { Direction.Up, "../../Assets/Icons/png/gamepad_joystick_up.png" },
@@ -20,7 +21,7 @@ public static class JoystickImageCollection
         { Direction.DownLeft, "../../Assets/Icons/png/gamepad_joystick_downleft.png" },
         { Direction.Left, "../../Assets/Icons/png/gamepad_joystick_left.png" },
         { Direction.UpLeft, "../../Assets/Icons/png/gamepad_joystick_upleft.png" },
-    };
+    });
 
     public static string GetImage(Direction direction)
     {

@@ -5,6 +5,7 @@
 namespace MHFZ_Overlay.Models.Collections;
 
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using MHFZ_Overlay.Models.Structures;
 
 ///<summary>
@@ -12,7 +13,7 @@ using MHFZ_Overlay.Models.Structures;
 ///</summary>
 public static class BingoMonsterCollection
 {
-    public static IReadOnlyDictionary<Difficulty, List<string>> BingoMonsterDifficulty { get; } = new Dictionary<Difficulty, List<string>>
+    public static ReadOnlyDictionary<Difficulty, List<string>> BingoMonsterDifficulty { get; } = new (new Dictionary<Difficulty, List<string>>
     {
         // TODO make a function with input monster name and output dictionary<int, int> monsterID rankbandID
         // TODO i should use questid instead and use monster names as comments
@@ -176,5 +177,5 @@ public static class BingoMonsterCollection
             "Upper Shiten Disufiroa",
             }
         },
-    };
+    });
 }

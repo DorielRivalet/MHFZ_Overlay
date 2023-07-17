@@ -6,6 +6,7 @@ namespace MHFZ_Overlay.Models.Collections;
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Globalization;
 
 ///<summary>
@@ -13,12 +14,12 @@ using System.Globalization;
 ///</summary>
 public static class PlayersList
 {
-    public static IReadOnlyDictionary<int, List<string>> PlayerIDs { get; } = new Dictionary<int, List<string>>
+    public static ReadOnlyDictionary<int, List<string>> PlayerIDs { get; } = new (new Dictionary<int, List<string>>
     {
         // No Player
         { 0, new List<string> { DateTime.UnixEpoch.Date.ToString(CultureInfo.InvariantCulture), "None", "NoGuild", "0", "Unknown", "Japan" } },
 
         // Local Player
         { 1, new List<string> { DateTime.UtcNow.Date.ToString(CultureInfo.InvariantCulture), "HunterName", "GuildName","0", "Unknown", "Japan" } },
-    };
+    });
 }
