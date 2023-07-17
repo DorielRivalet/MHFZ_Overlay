@@ -17,6 +17,7 @@ using MHFZ_Overlay.Models.Constant;
 using MHFZ_Overlay.Models.Structures;
 using MHFZ_Overlay.Services.Contracts;
 using Newtonsoft.Json;
+using NLog;
 using Wpf.Ui.Controls;
 
 public sealed class AchievementService : IAchievementService
@@ -121,6 +122,7 @@ public sealed class AchievementService : IAchievementService
         {
             default:
             {
+                LoggerInstance.Error("Achievement ID {0} not found", achievementID);
                 return false;
             }
 
@@ -2287,6 +2289,9 @@ public sealed class AchievementService : IAchievementService
             case 398:
             case 399:
             case 400:
+            case 401:
+            case 402:
+            case 403:
             {
                 return false;
             }

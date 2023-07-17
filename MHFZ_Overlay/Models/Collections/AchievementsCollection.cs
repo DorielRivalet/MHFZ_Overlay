@@ -5552,5 +5552,44 @@ public static class AchievementsCollection
             Hint = string.Empty,
             }
         },
+        {
+            401, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Solid Determination Up",
+            Description = string.Empty,
+            Rank = AchievementRank.Platinum,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/medal_platinum.jpg",
+            Objective = "Complete a zenith gauntlet without fainting.",
+            IsSecret = false,
+            Hint = string.Empty,
+            }
+        },
+        {
+            402, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Gauntlet Conqueror",
+            Description = string.Empty,
+            Rank = AchievementRank.Platinum,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/medal_platinum.jpg",
+            Objective = "Complete a solstice gauntlet without fainting.",
+            IsSecret = false,
+            Hint = string.Empty,
+            }
+        },
+        {
+            403, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "The Ultimate Gauntlet",
+            Description = string.Empty,
+            Rank = AchievementRank.Platinum,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/medal_platinum.jpg",
+            Objective = "Complete a musou gauntlet without fainting.",
+            IsSecret = false,
+            Hint = string.Empty,
+            }
+        },
     });
 }
