@@ -87,7 +87,7 @@ public partial class MainWindow : Window
 
     private static readonly DiscordService DiscordManagerInstance = DiscordService.GetInstance();
 
-    private readonly Mem m = new();
+    private readonly Mem m = new ();
 
     public static NotifyIcon? _mainWindowNotifyIcon { get; set; }
 
@@ -276,18 +276,18 @@ public partial class MainWindow : Window
     private DateTime ProgramEnd;
 
     // Declare a dictionary to map keys to images
-    private readonly Dictionary<Keys, Image> _keyImages = new();
+    private readonly Dictionary<Keys, Image> _keyImages = new ();
 
-    private readonly Dictionary<MouseButtons, Image> _mouseImages = new();
+    private readonly Dictionary<MouseButtons, Image> _mouseImages = new ();
 
     // TODO
     private readonly XGamepad gamepad;
 
-    private readonly Dictionary<XInputButton, Image> _gamepadImages = new();
+    private readonly Dictionary<XInputButton, Image> _gamepadImages = new ();
 
-    private readonly Dictionary<XInputium.Trigger, Image> _gamepadTriggersImages = new();
+    private readonly Dictionary<XInputium.Trigger, Image> _gamepadTriggersImages = new ();
 
-    private readonly Dictionary<Joystick, Image> _gamepadJoystickImages = new();
+    private readonly Dictionary<Joystick, Image> _gamepadJoystickImages = new ();
 
     /// <summary>
     /// Initializes a new instance of the <see cref="MainWindow"/> class.
@@ -312,7 +312,7 @@ public partial class MainWindow : Window
         this.Left = 0;
         this.Top = 0;
         this.Topmost = true;
-        DispatcherTimer timer = new();
+        DispatcherTimer timer = new ();
         Settings s = (Settings)Application.Current.TryFindResource("Settings");
         timer.Interval = new TimeSpan(0, 0, 0, 0, 1_000 / s.RefreshRate);
 
@@ -322,7 +322,7 @@ public partial class MainWindow : Window
 
         this.dataLoader.model.ValidateGameFolder();
 
-        DataContext = this.dataLoader.model;
+        this.DataContext = this.dataLoader.model;
         GlobalHotKey.RegisterHotKey("Shift + F1", () => this.OpenConfigButton_Key());
         GlobalHotKey.RegisterHotKey("Shift + F5", () => this.ReloadButton_Key());
         GlobalHotKey.RegisterHotKey("Shift + F6", () => this.CloseButton_Key());
@@ -357,7 +357,7 @@ public partial class MainWindow : Window
 
         // TODO unsubscribe
         // TODO gamepad
-        this.gamepad = new();
+        this.gamepad = new ();
         this.gamepad.ButtonPressed += this.Gamepad_ButtonPressed;
         this.gamepad.LeftJoystickMove += this.Gamepad_LeftJoystickMove;
         this.gamepad.RightJoystickMove += this.Gamepad_RightJoystickMove;
@@ -367,7 +367,7 @@ public partial class MainWindow : Window
         this.gamepad.LeftTrigger.ToDigitalButton(this.triggerActivationThreshold).Released += this.Gamepad_LeftTriggerReleased;
         this.gamepad.RightTrigger.ToDigitalButton(this.triggerActivationThreshold).Released += this.Gamepad_RightTriggerReleased;
 
-        DispatcherTimer timer1Frame = new();
+        DispatcherTimer timer1Frame = new ();
         timer1Frame.Interval = new TimeSpan(0, 0, 0, 0, 1_000 / Numbers.FramesPerSecond);
         timer1Frame.Tick += this.Timer1Frame_Tick;
         timer1Frame.Start();
@@ -382,7 +382,7 @@ public partial class MainWindow : Window
 
         this.CreateSystemTrayIcon();
 
-        DispatcherTimer timer1Second = new();
+        DispatcherTimer timer1Second = new ();
         timer1Second.Interval = new TimeSpan(0, 0, 1);
         timer1Second.Tick += this.Timer1Second_Tick;
 
@@ -401,7 +401,7 @@ public partial class MainWindow : Window
 
         timer1Second.Start();
 
-        DispatcherTimer timer10Seconds = new();
+        DispatcherTimer timer10Seconds = new ();
         timer10Seconds.Interval = new TimeSpan(0, 0, 10);
         timer10Seconds.Tick += this.Timer10Seconds_Tick;
         timer10Seconds.Start();
@@ -505,14 +505,14 @@ public partial class MainWindow : Window
         });
     }
 
-    GitHubClient ghClient = new GitHubClient(new ProductHeaderValue("MHFZ_Overlay"));
+    private GitHubClient ghClient = new GitHubClient(new ProductHeaderValue("MHFZ_Overlay"));
 
     /// <summary>
     /// Loads the github api integration.
     /// </summary>
     private async Task LoadOctoKit()
     {
-        var releases = await ghClient.Repository.Release.GetAll("DorielRivalet", "MHFZ_Overlay");
+        var releases = await this.ghClient.Repository.Release.GetAll("DorielRivalet", "MHFZ_Overlay");
         var latest = releases[0];
         var latestRelease = latest.TagName;
         if (latestRelease != App.CurrentProgramVersion)
@@ -553,7 +553,7 @@ The process may take some time, as the program attempts to download from GitHub 
     /// </summary>
     public void CheckGameState()
     {
-        int processID = m.GetProcIdFromName("mhf");
+        int processID = this.m.GetProcIdFromName("mhf");
 
         // https://stackoverflow.com/questions/12372534/how-to-get-a-process-window-class-name-from-c
         int pidToSearch = processID;
@@ -608,22 +608,22 @@ The process may take some time, as the program attempts to download from GitHub 
         try
         {
             this.dataLoader.model.ReloadData();
-            Monster1HPBar.ReloadData();
-            Monster2HPBar.ReloadData();
-            Monster3HPBar.ReloadData();
-            Monster4HPBar.ReloadData();
-            MonsterPoisonBar.ReloadData();
-            MonsterSleepBar.ReloadData();
-            MonsterParaBar.ReloadData();
-            MonsterBlastBar.ReloadData();
-            MonsterStunBar.ReloadData();
+            this.Monster1HPBar.ReloadData();
+            this.Monster2HPBar.ReloadData();
+            this.Monster3HPBar.ReloadData();
+            this.Monster4HPBar.ReloadData();
+            this.MonsterPoisonBar.ReloadData();
+            this.MonsterSleepBar.ReloadData();
+            this.MonsterParaBar.ReloadData();
+            this.MonsterBlastBar.ReloadData();
+            this.MonsterStunBar.ReloadData();
 
-            CreateDamageNumber();
-            await CheckQuestStateForDatabaseLogging();
+            this.CreateDamageNumber();
+            await this.CheckQuestStateForDatabaseLogging();
 
             // TODO should this be here or somewhere else?
             // this is also for database logging
-            CheckMezFesScore();
+            this.CheckMezFesScore();
         }
         catch (Exception ex)
         {
@@ -637,11 +637,11 @@ The process may take some time, as the program attempts to download from GitHub 
     {
         try
         {
-            HideMonsterInfoWhenNotInQuest();
-            HidePlayerInfoWhenNotInQuest();
-            await Task.Run(() => DiscordManagerInstance.UpdateDiscordRPC(dataLoader));
-            CheckIfLocationChanged();
-            CheckIfQuestChanged();
+            this.HideMonsterInfoWhenNotInQuest();
+            this.HidePlayerInfoWhenNotInQuest();
+            await Task.Run(() => DiscordManagerInstance.UpdateDiscordRPC(this.dataLoader));
+            this.CheckIfLocationChanged();
+            this.CheckIfQuestChanged();
         }
         catch (Exception ex)
         {
@@ -653,8 +653,8 @@ The process may take some time, as the program attempts to download from GitHub 
     {
         try
         {
-            dataLoader.CheckForExternalProcesses();
-            dataLoader.CheckForIllegalModifications();
+            this.dataLoader.CheckForExternalProcesses();
+            this.dataLoader.CheckForIllegalModifications();
         }
         catch (Exception ex)
         {
@@ -671,29 +671,29 @@ The process may take some time, as the program attempts to download from GitHub 
     {
         try
         {
-            gamepad.Update();
-            if (!gamepad.IsConnected)
+            this.gamepad.Update();
+            if (!this.gamepad.IsConnected)
             {
-                gamepad.Device = XInputDevice.GetFirstConnectedDevice();
-                if (_gamepadImages.Count > 0)
+                this.gamepad.Device = XInputDevice.GetFirstConnectedDevice();
+                if (this._gamepadImages.Count > 0)
                 {
-                    _gamepadImages.Clear();
+                    this._gamepadImages.Clear();
                 }
 
-                if (_gamepadTriggersImages.Count > 0)
+                if (this._gamepadTriggersImages.Count > 0)
                 {
-                    _gamepadTriggersImages.Clear();
+                    this._gamepadTriggersImages.Clear();
                 }
 
-                if (_gamepadJoystickImages.Count > 0)
+                if (this._gamepadJoystickImages.Count > 0)
                 {
-                    _gamepadJoystickImages.Clear();
+                    this._gamepadJoystickImages.Clear();
                 }
 
-                if (gamepad.IsConnected)
+                if (this.gamepad.IsConnected)
                 {
                     LoggerInstance.Debug("Gamepad reconnected");
-                    AddGamepadImages();
+                    this.AddGamepadImages();
                 }
             }
         }
@@ -708,7 +708,7 @@ The process may take some time, as the program attempts to download from GitHub 
         if (this.dataLoader.model.previousQuestID != this.dataLoader.model.QuestID() && this.dataLoader.model.QuestID() != 0)
         {
             this.dataLoader.model.previousQuestID = this.dataLoader.model.QuestID();
-            ShowQuestName();
+            this.ShowQuestName();
         }
         else if (this.dataLoader.model.QuestID() == 0 && this.dataLoader.model.previousQuestID != 0)
         {
@@ -731,10 +731,10 @@ The process may take some time, as the program attempts to download from GitHub 
             return;
         }
 
-        questNameTextBlock.Text = previousQuestID;
+        this.questNameTextBlock.Text = previousQuestID;
         Brush blackBrush = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
         Brush peachBrush = new SolidColorBrush(Color.FromArgb(0xFF, 0xFA, 0xB3, 0x87));
-        AnimateOutlinedTextBlock(questNameTextBlock, blackBrush, peachBrush);
+        this.AnimateOutlinedTextBlock(this.questNameTextBlock, blackBrush, peachBrush);
     }
 
     /// <summary>
@@ -808,7 +808,7 @@ The process may take some time, as the program attempts to download from GitHub 
 
     private void CheckIfLocationChanged()
     {
-        if (IsInHubAreaID(dataLoader) && this.dataLoader.model.QuestID() == 0)
+        if (this.IsInHubAreaID(this.dataLoader) && this.dataLoader.model.QuestID() == 0)
         {
             this.dataLoader.model.PreviousHubAreaID = this.dataLoader.model.AreaID();
         }
@@ -816,7 +816,7 @@ The process may take some time, as the program attempts to download from GitHub 
         if (this.dataLoader.model.previousGlobalAreaID != this.dataLoader.model.AreaID() && this.dataLoader.model.AreaID() != 0)
         {
             this.dataLoader.model.previousGlobalAreaID = this.dataLoader.model.AreaID();
-            ShowLocationName();
+            this.ShowLocationName();
         }
     }
 
@@ -835,17 +835,17 @@ The process may take some time, as the program attempts to download from GitHub 
             return;
         }
 
-        locationTextBlock.Text = previousGlobalAreaID;
+        this.locationTextBlock.Text = previousGlobalAreaID;
         Brush blackBrush = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
         Brush blueBrush = new SolidColorBrush(Color.FromArgb(0xFF, 0x89, 0xB4, 0xFA));
-        AnimateOutlinedTextBlock(locationTextBlock, blackBrush, blueBrush);
+        this.AnimateOutlinedTextBlock(this.locationTextBlock, blackBrush, blueBrush);
     }
 
-    int curNum { get; set; }
+    private int curNum { get; set; }
 
-    int prevNum { get; set; }
+    private int prevNum { get; set; }
 
-    bool isFirstAttack { get; set; }
+    private bool isFirstAttack { get; set; }
 
     public bool IsDragConfigure { get; set; }
 
@@ -862,22 +862,22 @@ The process may take some time, as the program attempts to download from GitHub 
         int damage = 0;
         if (this.dataLoader.model.HitCountInt() == 0)
         {
-            curNum = 0;
-            prevNum = 0;
-            isFirstAttack = true;
+            this.curNum = 0;
+            this.prevNum = 0;
+            this.isFirstAttack = true;
         }
         else
         {
             damage = this.dataLoader.model.DamageDealt();
         }
 
-        if (prevNum != damage)
+        if (this.prevNum != damage)
         {
-            curNum = damage - prevNum;
-            if (isFirstAttack)
+            this.curNum = damage - this.prevNum;
+            if (this.isFirstAttack)
             {
-                isFirstAttack = false;
-                CreateDamageNumberLabel(damage);
+                this.isFirstAttack = false;
+                this.CreateDamageNumberLabel(damage);
                 if (!this.dataLoader.model.damageDealtDictionary.ContainsKey(this.dataLoader.model.TimeInt()))
                 {
                     try
@@ -890,16 +890,16 @@ The process may take some time, as the program attempts to download from GitHub 
                     }
                 }
             }
-            else if (curNum < 0)
+            else if (this.curNum < 0)
             {
                 // TODO
-                curNum += 1_000;
-                CreateDamageNumberLabel(curNum);
+                this.curNum += 1_000;
+                this.CreateDamageNumberLabel(this.curNum);
                 if (!this.dataLoader.model.damageDealtDictionary.ContainsKey(this.dataLoader.model.TimeInt()))
                 {
                     try
                     {
-                        this.dataLoader.model.damageDealtDictionary.Add(this.dataLoader.model.TimeInt(), curNum);
+                        this.dataLoader.model.damageDealtDictionary.Add(this.dataLoader.model.TimeInt(), this.curNum);
                     }
                     catch (Exception ex)
                     {
@@ -909,14 +909,14 @@ The process may take some time, as the program attempts to download from GitHub 
             }
             else
             {
-                if (curNum != damage)
+                if (this.curNum != damage)
                 {
-                    CreateDamageNumberLabel(curNum);
+                    this.CreateDamageNumberLabel(this.curNum);
                     if (!this.dataLoader.model.damageDealtDictionary.ContainsKey(this.dataLoader.model.TimeInt()))
                     {
                         try
                         {
-                            this.dataLoader.model.damageDealtDictionary.Add(this.dataLoader.model.TimeInt(), curNum);
+                            this.dataLoader.model.damageDealtDictionary.Add(this.dataLoader.model.TimeInt(), this.curNum);
                         }
                         catch
                         (Exception ex)
@@ -928,7 +928,7 @@ The process may take some time, as the program attempts to download from GitHub 
             }
         }
 
-        prevNum = damage;
+        this.prevNum = damage;
     }
 
     /// <summary>
@@ -949,10 +949,10 @@ The process may take some time, as the program attempts to download from GitHub 
     {
         Settings s = (Settings)Application.Current.TryFindResource("Settings");
 
-        Random random = new();
+        Random random = new ();
         double x = random.Next(450);
         double y = random.Next(254);
-        Point newPoint = DamageNumbers.TranslatePoint(new Point(x, y), DamageNumbers);
+        Point newPoint = this.DamageNumbers.TranslatePoint(new Point(x, y), this.DamageNumbers);
 
         // Create a new instance of the OutlinedTextBlock class.
         OutlinedTextBlock damageOutlinedTextBlock = new OutlinedTextBlock();
@@ -1063,7 +1063,7 @@ The process may take some time, as the program attempts to download from GitHub 
 
         if (!s.EnableDamageNumbersFlash && !s.EnableDamageNumbersSize)
         {
-            RemoveDamageNumberLabel(damageOutlinedTextBlock);
+            this.RemoveDamageNumberLabel(damageOutlinedTextBlock);
         }
         else
         {
@@ -1200,7 +1200,7 @@ The process may take some time, as the program attempts to download from GitHub 
             // Set up event handlers to start the next animation in the sequence
             fadeInIncreaseSizeFlashColorStoryboard.Completed += (s, e) => decreaseSizeShowColorStoryboard.Begin();
             decreaseSizeShowColorStoryboard.Completed += (s, e) => fadeOutStoryboard.Begin();
-            fadeOutAnimation.Completed += (s, e) => DamageNumbers.Children.Remove(damageOutlinedTextBlock);
+            fadeOutAnimation.Completed += (s, e) => this.DamageNumbers.Children.Remove(damageOutlinedTextBlock);
 
             // Start the first animation
             fadeInIncreaseSizeFlashColorStoryboard.Begin();
@@ -1213,11 +1213,11 @@ The process may take some time, as the program attempts to download from GitHub 
     /// <param name="tb">The tb.</param>
     private void RemoveDamageNumberLabel(OutlinedTextBlock tb)
     {
-        DispatcherTimer timer = new();
+        DispatcherTimer timer = new ();
         timer.Interval = new TimeSpan(0, 0, 0, 0, 1_000);
 
         // memory leak?
-        timer.Tick += (o, e) => { DamageNumbers.Children.Remove(tb); };
+        timer.Tick += (o, e) => { this.DamageNumbers.Children.Remove(tb); };
         timer.Start();
     }
 
@@ -1229,9 +1229,9 @@ The process may take some time, as the program attempts to download from GitHub 
     private void HideMonsterInfoWhenNotInQuest()
     {
         Settings s = (Settings)Application.Current.FindResource("Settings");
-        bool v = IsGameFocused(s) &&
+        bool v = this.IsGameFocused(s) &&
             (s.AlwaysShowMonsterInfo || this.dataLoader.model.Configuring || this.dataLoader.model.QuestID() != 0);
-        SetMonsterStatsVisibility(v, s);
+        this.SetMonsterStatsVisibility(v, s);
     }
 
     // Import the necessary Win32 functions
@@ -1264,7 +1264,7 @@ The process may take some time, as the program attempts to download from GitHub 
         else
         {
             // Check if the active window belongs to the game process
-            bool isGameProcessActive = (mhfProcess != null && activeWindowHandle == mhfProcess.MainWindowHandle);
+            bool isGameProcessActive = (this.mhfProcess != null && activeWindowHandle == this.mhfProcess.MainWindowHandle);
             return isGameProcessActive;
         }
     }
@@ -1295,9 +1295,9 @@ The process may take some time, as the program attempts to download from GitHub 
     private void HidePlayerInfoWhenNotInQuest()
     {
         Settings s = (Settings)Application.Current.FindResource("Settings");
-        bool v = IsGameFocused(s) &&
+        bool v = this.IsGameFocused(s) &&
             (s.AlwaysShowPlayerInfo || this.dataLoader.model.Configuring || this.dataLoader.model.QuestID() != 0);
-        SetPlayerStatsVisibility(v, s);
+        this.SetPlayerStatsVisibility(v, s);
     }
 
     private void SetPlayerStatsVisibility(bool v, Settings s)
@@ -1339,174 +1339,174 @@ The process may take some time, as the program attempts to download from GitHub 
 
     private void MainGrid_DragOver(object sender, DragEventArgs e)
     {
-        if (MovingObject == null)
+        if (this.MovingObject == null)
         {
             return;
         }
 
         Point pos = e.GetPosition(this);
-        if (XOffset == null || YOffset == null)
+        if (this.XOffset == null || this.YOffset == null)
         {
             return;
         }
 
         Settings s = (Settings)Application.Current.TryFindResource("Settings");
-        switch (MovingObject.Name)
+        switch (this.MovingObject.Name)
         {
             case "TimerInfo":
-                s.TimerX = (double)(pos.X - XOffset);
-                s.TimerY = (double)(pos.Y - YOffset);
+                s.TimerX = (double)(pos.X - this.XOffset);
+                s.TimerY = (double)(pos.Y - this.YOffset);
                 break;
             case "PersonalBestInfo":
-                s.PersonalBestX = (double)(pos.X - XOffset);
-                s.PersonalBestY = (double)(pos.Y - YOffset);
+                s.PersonalBestX = (double)(pos.X - this.XOffset);
+                s.PersonalBestY = (double)(pos.Y - this.YOffset);
                 break;
             case "QuestAttemptsInfo":
-                s.QuestAttemptsX = (double)(pos.X - XOffset);
-                s.QuestAttemptsY = (double)(pos.Y - YOffset);
+                s.QuestAttemptsX = (double)(pos.X - this.XOffset);
+                s.QuestAttemptsY = (double)(pos.Y - this.YOffset);
                 break;
             case "HitCountInfo":
-                s.HitCountX = (double)(pos.X - XOffset);
-                s.HitCountY = (double)(pos.Y - YOffset);
+                s.HitCountX = (double)(pos.X - this.XOffset);
+                s.HitCountY = (double)(pos.Y - this.YOffset);
                 break;
             case "PlayerAtkInfo":
-                s.PlayerAtkX = (double)(pos.X - XOffset);
-                s.PlayerAtkY = (double)(pos.Y - YOffset);
+                s.PlayerAtkX = (double)(pos.X - this.XOffset);
+                s.PlayerAtkY = (double)(pos.Y - this.YOffset);
                 break;
             case "PlayerHitsTakenBlockedInfo":
-                s.TotalHitsTakenBlockedX = (double)(pos.X - XOffset);
-                s.TotalHitsTakenBlockedY = (double)(pos.Y - YOffset);
+                s.TotalHitsTakenBlockedX = (double)(pos.X - this.XOffset);
+                s.TotalHitsTakenBlockedY = (double)(pos.Y - this.YOffset);
                 break;
 
             // TODO graphs
             case "PlayerAttackGraphGrid":
-                s.PlayerAttackGraphX = (double)(pos.X - XOffset);
-                s.PlayerAttackGraphY = (double)(pos.Y - YOffset);
+                s.PlayerAttackGraphX = (double)(pos.X - this.XOffset);
+                s.PlayerAttackGraphY = (double)(pos.Y - this.YOffset);
                 break;
             case "PlayerDPSGraphGrid":
-                s.PlayerDPSGraphX = (double)(pos.X - XOffset);
-                s.PlayerDPSGraphY = (double)(pos.Y - YOffset);
+                s.PlayerDPSGraphX = (double)(pos.X - this.XOffset);
+                s.PlayerDPSGraphY = (double)(pos.Y - this.YOffset);
                 break;
             case "PlayerAPMGraphGrid":
-                s.PlayerAPMGraphX = (double)(pos.X - XOffset);
-                s.PlayerAPMGraphY = (double)(pos.Y - YOffset);
+                s.PlayerAPMGraphX = (double)(pos.X - this.XOffset);
+                s.PlayerAPMGraphY = (double)(pos.Y - this.YOffset);
                 break;
             case "PlayerHitsPerSecondGraphGrid":
-                s.PlayerHitsPerSecondGraphX = (double)(pos.X - XOffset);
-                s.PlayerHitsPerSecondGraphY = (double)(pos.Y - YOffset);
+                s.PlayerHitsPerSecondGraphX = (double)(pos.X - this.XOffset);
+                s.PlayerHitsPerSecondGraphY = (double)(pos.Y - this.YOffset);
                 break;
 
             case "DamagePerSecondInfo":
-                s.PlayerDPSX = (double)(pos.X - XOffset);
-                s.PlayerDPSY = (double)(pos.Y - XOffset);
+                s.PlayerDPSX = (double)(pos.X - this.XOffset);
+                s.PlayerDPSY = (double)(pos.Y - this.YOffset);
                 break;
             case "KBMLayoutGrid":
-                s.KBMLayoutX = (double)(pos.X - XOffset);
-                s.KBMLayoutY = (double)(pos.Y - XOffset);
+                s.KBMLayoutX = (double)(pos.X - this.XOffset);
+                s.KBMLayoutY = (double)(pos.Y - this.YOffset);
                 break;
             case "GamepadGrid":
-                s.GamepadX = (double)(pos.X - XOffset);
-                s.GamepadY = (double)(pos.Y - XOffset);
+                s.GamepadX = (double)(pos.X - this.XOffset);
+                s.GamepadY = (double)(pos.Y - this.YOffset);
                 break;
             case "ActionsPerMinuteInfo":
-                s.ActionsPerMinuteX = (double)(pos.X - XOffset);
-                s.ActionsPerMinuteY = (double)(pos.Y - XOffset);
+                s.ActionsPerMinuteX = (double)(pos.X - this.XOffset);
+                s.ActionsPerMinuteY = (double)(pos.Y - this.YOffset);
                 break;
             case "MapImage":
-                s.MapX = (double)(pos.X - XOffset);
-                s.MapY = (double)(pos.Y - YOffset);
+                s.MapX = (double)(pos.X - this.XOffset);
+                s.MapY = (double)(pos.Y - this.YOffset);
                 break;
 
             // case "OverlayModeWatermark":
-            //    s.OverlayModeWatermarkX = (double)(pos.X - XOffset);
-            //    s.OverlayModeWatermarkY = (double)(pos.Y - YOffset);
+            //    s.OverlayModeWatermarkX = (double)(pos.X - this.XOffset);
+            //    s.OverlayModeWatermarkY = (double)(pos.Y - this.YOffset);
             //    break;
             case "QuestIDGrid":
-                s.QuestIDX = (double)(pos.X - XOffset);
-                s.QuestIDY = (double)(pos.Y - YOffset);
+                s.QuestIDX = (double)(pos.X - this.XOffset);
+                s.QuestIDY = (double)(pos.Y - this.YOffset);
                 break;
             case "SessionTimeInfo":
-                s.SessionTimeX = (double)(pos.X - XOffset);
-                s.SessionTimeY = (double)(pos.Y - XOffset);
+                s.SessionTimeX = (double)(pos.X - this.XOffset);
+                s.SessionTimeY = (double)(pos.Y - this.YOffset);
                 break;
             case "LocationTextInfo":
-                s.LocationTextX = (double)(pos.X - XOffset);
-                s.LocationTextY = (double)(pos.Y - YOffset);
+                s.LocationTextX = (double)(pos.X - this.XOffset);
+                s.LocationTextY = (double)(pos.Y - this.YOffset);
                 break;
             case "QuestNameInfo":
-                s.QuestNameX = (double)(pos.X - XOffset);
-                s.QuestNameY = (double)(pos.Y - YOffset);
+                s.QuestNameX = (double)(pos.X - this.XOffset);
+                s.QuestNameY = (double)(pos.Y - this.YOffset);
                 break;
             case "PersonalBestTimePercentInfo":
-                s.PersonalBestTimePercentX = (double)(pos.X - XOffset);
-                s.PersonalBestTimePercentY = (double)(pos.Y - YOffset);
+                s.PersonalBestTimePercentX = (double)(pos.X - this.XOffset);
+                s.PersonalBestTimePercentY = (double)(pos.Y - this.YOffset);
                 break;
             case "PersonalBestAttemptsInfo":
-                s.PersonalBestAttemptsX = (double)(pos.X - XOffset);
-                s.PersonalBestAttemptsY = (double)(pos.Y - YOffset);
+                s.PersonalBestAttemptsX = (double)(pos.X - this.XOffset);
+                s.PersonalBestAttemptsY = (double)(pos.Y - this.YOffset);
                 break;
 
             // Monster
             case "Monster1HpBar":
-                s.Monster1HealthBarX = (double)(pos.X - XOffset);
-                s.Monster1HealthBarY = (double)(pos.Y - YOffset);
+                s.Monster1HealthBarX = (double)(pos.X - this.XOffset);
+                s.Monster1HealthBarY = (double)(pos.Y - this.YOffset);
                 break;
             case "Monster2HpBar":
-                s.Monster2HealthBarX = (double)(pos.X - XOffset);
-                s.Monster2HealthBarY = (double)(pos.Y - YOffset);
+                s.Monster2HealthBarX = (double)(pos.X - this.XOffset);
+                s.Monster2HealthBarY = (double)(pos.Y - this.YOffset);
                 break;
             case "Monster3HpBar":
-                s.Monster3HealthBarX = (double)(pos.X - XOffset);
-                s.Monster3HealthBarY = (double)(pos.Y - YOffset);
+                s.Monster3HealthBarX = (double)(pos.X - this.XOffset);
+                s.Monster3HealthBarY = (double)(pos.Y - this.YOffset);
                 break;
             case "Monster4HpBar":
-                s.Monster4HealthBarX = (double)(pos.X - XOffset);
-                s.Monster4HealthBarY = (double)(pos.Y - YOffset);
+                s.Monster4HealthBarX = (double)(pos.X - this.XOffset);
+                s.Monster4HealthBarY = (double)(pos.Y - this.YOffset);
                 break;
 
             case "MonsterAtkMultInfo":
-                s.MonsterAtkMultX = (double)(pos.X - XOffset);
-                s.MonsterAtkMultY = (double)(pos.Y - YOffset);
+                s.MonsterAtkMultX = (double)(pos.X - this.XOffset);
+                s.MonsterAtkMultY = (double)(pos.Y - this.YOffset);
                 break;
             case "MonsterDefrateInfo":
-                s.MonsterDefrateX = (double)(pos.X - XOffset);
-                s.MonsterDefrateY = (double)(pos.Y - YOffset);
+                s.MonsterDefrateX = (double)(pos.X - this.XOffset);
+                s.MonsterDefrateY = (double)(pos.Y - this.YOffset);
                 break;
             case "MonsterSizeInfo":
-                s.MonsterSizeX = (double)(pos.X - XOffset);
-                s.MonsterSizeY = (double)(pos.Y - YOffset);
+                s.MonsterSizeX = (double)(pos.X - this.XOffset);
+                s.MonsterSizeY = (double)(pos.Y - this.YOffset);
                 break;
             case "MonsterPoisonInfo":
-                s.MonsterPoisonX = (double)(pos.X - XOffset);
-                s.MonsterPoisonY = (double)(pos.Y - YOffset);
+                s.MonsterPoisonX = (double)(pos.X - this.XOffset);
+                s.MonsterPoisonY = (double)(pos.Y - this.YOffset);
                 break;
             case "MonsterSleepInfo":
-                s.MonsterSleepX = (double)(pos.X - XOffset);
-                s.MonsterSleepY = (double)(pos.Y - YOffset);
+                s.MonsterSleepX = (double)(pos.X - this.XOffset);
+                s.MonsterSleepY = (double)(pos.Y - this.YOffset);
                 break;
             case "MonsterParaInfo":
-                s.MonsterParaX = (double)(pos.X - XOffset);
-                s.MonsterParaY = (double)(pos.Y - YOffset);
+                s.MonsterParaX = (double)(pos.X - this.XOffset);
+                s.MonsterParaY = (double)(pos.Y - this.YOffset);
                 break;
             case "MonsterBlastInfo":
-                s.MonsterBlastX = (double)(pos.X - XOffset);
-                s.MonsterBlastY = (double)(pos.Y - YOffset);
+                s.MonsterBlastX = (double)(pos.X - this.XOffset);
+                s.MonsterBlastY = (double)(pos.Y - this.YOffset);
                 break;
             case "MonsterStunInfo":
-                s.MonsterStunX = (double)(pos.X - XOffset);
-                s.MonsterStunY = (double)(pos.Y - YOffset);
+                s.MonsterStunX = (double)(pos.X - this.XOffset);
+                s.MonsterStunY = (double)(pos.Y - this.YOffset);
                 break;
             case "SharpnessInfo":
-                s.SharpnessInfoX = (double)(pos.X - XOffset);
-                s.SharpnessInfoY = (double)(pos.Y - YOffset);
+                s.SharpnessInfoX = (double)(pos.X - this.XOffset);
+                s.SharpnessInfoY = (double)(pos.Y - this.YOffset);
                 break;
             case "MonsterPartThreshold":
-                s.Monster1PartX = (double)(pos.X - XOffset);
-                s.Monster1PartY = (double)(pos.Y - YOffset);
+                s.Monster1PartX = (double)(pos.X - this.XOffset);
+                s.Monster1PartY = (double)(pos.Y - this.YOffset);
                 break;
             case "Monster1Icon":
-                s.Monster1IconX = (double)(pos.X - XOffset);
-                s.Monster1IconY = (double)(pos.Y - YOffset);
+                s.Monster1IconX = (double)(pos.X - this.XOffset);
+                s.Monster1IconY = (double)(pos.Y - this.YOffset);
                 break;
         }
     }
@@ -1564,7 +1564,7 @@ The process may take some time, as the program attempts to download from GitHub 
         ApplicationService.HandleRestart();
     }
 
-    ConfigWindow? configWindow { get; set; }
+    private ConfigWindow? configWindow { get; set; }
 
     private void OpenConfigButton_Click(object sender, RoutedEventArgs e)
     {
@@ -1715,7 +1715,6 @@ The process may take some time, as the program attempts to download from GitHub 
             // Change the extended window style to include WS_EX_TRANSPARENT         
             int extendedStyle = GetWindowLong(hwnd, GWL_EXSTYLE);
             SetWindowLong(hwnd, GWL_EXSTYLE, extendedStyle | WS_EX_TRANSPARENT);
-
         }
         else
         {
@@ -1826,7 +1825,7 @@ The process may take some time, as the program attempts to download from GitHub 
     /// </summary>
     private void CheckMezFesScore()
     {
-        if (this.dataLoader.model.QuestID() != 0 || !(this.dataLoader.model.AreaID() == 462 || MezFesMinigameCollection.ID.ContainsKey(this.dataLoader.model.AreaID())))
+        if (this.dataLoader.model.QuestID() != 0 || !(this.dataLoader.model.AreaID() == 462 || MezFesMinigames.ID.ContainsKey(this.dataLoader.model.AreaID())))
         {
             return;
         }
@@ -1834,7 +1833,7 @@ The process may take some time, as the program attempts to download from GitHub 
         int areaID = this.dataLoader.model.AreaID();
 
         // Check if player is in a minigame area
-        if (MezFesMinigameCollection.ID.ContainsKey(areaID))
+        if (MezFesMinigames.ID.ContainsKey(areaID))
         {
             // Check if the player has entered a new minigame area
             if (areaID != this.dataLoader.model.previousMezFesArea)
@@ -1997,7 +1996,6 @@ The process may take some time, as the program attempts to download from GitHub 
             this.dataLoader.model.PartnyaBagItem8QuantityAtQuestStart = this.dataLoader.model.PartnyaBagItem1Qty();
             this.dataLoader.model.PartnyaBagItem9QuantityAtQuestStart = this.dataLoader.model.PartnyaBagItem1Qty();
             this.dataLoader.model.PartnyaBagItem10QuantityAtQuestStart = this.dataLoader.model.PartnyaBagItem1Qty();
-
         }
 
         if (this.dataLoader.model.QuestState() == 0)
@@ -2216,13 +2214,13 @@ The process may take some time, as the program attempts to download from GitHub 
         _gamepadJoystickImages.Add(gamepad.RightJoystick, RJoystickMovement);
     }
 
-    double pressedInputOpacity { get; set; } = 0.5;
+    private double pressedInputOpacity { get; set; } = 0.5;
 
-    double unpressedInputOpacity { get; set; } = 0.2;
+    private double unpressedInputOpacity { get; set; } = 0.2;
 
-    float triggerActivationThreshold { get; set; } = 0.5f;
+    private float triggerActivationThreshold { get; set; } = 0.5f;
 
-    float joystickThreshold { get; set; } = 0.5f;
+    private float joystickThreshold { get; set; } = 0.5f;
 
     private void Gamepad_RightTriggerReleased(object? sender, EventArgs e)
     {
@@ -2386,7 +2384,7 @@ The process may take some time, as the program attempts to download from GitHub 
         }
 
         // Get the image path based on the direction
-        string imagePath = JoystickImageCollection.GetImage(direction);
+        string imagePath = JoystickImages.GetImage(direction);
 
         // Get the current image source of the left joystick
         var currentImageSource = LJoystickMovement.Source as BitmapImage;
@@ -2458,7 +2456,7 @@ The process may take some time, as the program attempts to download from GitHub 
         }
 
         // Get the image path based on the direction
-        string imagePath = JoystickImageCollection.GetImage(direction);
+        string imagePath = JoystickImages.GetImage(direction);
 
         // Get the current image source of the left joystick
         var currentImageSource = RJoystickMovement.Source as BitmapImage;
@@ -2545,7 +2543,7 @@ The process may take some time, as the program attempts to download from GitHub 
     private void UpdateRightStickImage(double opacity)
     {
         // Get the image path based on the direction
-        string imagePath = JoystickImageCollection.GetImage(Direction.None);
+        string imagePath = JoystickImages.GetImage(Direction.None);
 
         // Get the current image source of the D-pad
         var currentImageSource = RJoystick.Source as BitmapImage;
@@ -2563,7 +2561,7 @@ The process may take some time, as the program attempts to download from GitHub 
     private void UpdateLeftStickImage(double opacity)
     {
         // Get the image path based on the direction
-        string imagePath = JoystickImageCollection.GetImage(Direction.None);
+        string imagePath = JoystickImages.GetImage(Direction.None);
 
         // Get the current image source of the D-pad
         var currentImageSource = LJoystick.Source as BitmapImage;
@@ -2604,7 +2602,7 @@ The process may take some time, as the program attempts to download from GitHub 
         }
 
         // Get the image path based on the direction
-        string imagePath = DPadImageCollection.GetImage(direction);
+        string imagePath = DPadImages.GetImage(direction);
 
         // Get the current image source of the D-pad
         var currentImageSource = DPad.Source as BitmapImage;
