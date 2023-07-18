@@ -4870,7 +4870,7 @@ TreeScope.Children, condition);
     /// </value>
     public string GetSigilName(int slot)
     {
-        var sigilSkillList = (Dictionary<int, string>)SkillSigil.IDName;
+        var sigilSkillList = (ReadOnlyDictionary<int, string>)SkillSigil.IDName;
         var sigilNames = new int[] { Sigil1Name1(), Sigil1Name2(), Sigil1Name3(), Sigil2Name1(), Sigil2Name2(), Sigil2Name3(), Sigil3Name1(), Sigil3Name2(), Sigil3Name3() };
         var sigilValues = new int[] { Sigil1Value1(), Sigil1Value2(), Sigil1Value3(), Sigil2Value1(), Sigil2Value2(), Sigil2Value3(), Sigil3Value1(), Sigil3Value2(), Sigil3Value3() };
         var sigilTypes = new string[9];
