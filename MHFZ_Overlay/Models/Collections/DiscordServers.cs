@@ -10,7 +10,7 @@ using System.Collections.ObjectModel;
 ///<summary>
 ///The discord servers list
 ///</summary>
-public static class DiscordServersCollection
+public static class DiscordServers
 {
     public static ReadOnlyDictionary<long, string> DiscordServerID { get; } = new (new Dictionary<long, string>
     {

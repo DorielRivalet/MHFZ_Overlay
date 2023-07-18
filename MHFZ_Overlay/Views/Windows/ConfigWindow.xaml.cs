@@ -653,7 +653,7 @@ public partial class ConfigWindow : FluentWindow
         }
     }
 
-    private IReadOnlyList<MonsterInfo> monsterInfos = MonsterInfoCollection.MonsterInfoIDs;
+    private IReadOnlyList<MonsterInfo> monsterInfos = MonsterInfos.MonsterInfoIDs;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ConfigWindow"/> class.
@@ -740,7 +740,7 @@ public partial class ConfigWindow : FluentWindow
         logger.Debug($"ConfigWindow ctor Elapsed Time: {elapsedTimeMs} ms");
     }
 
-    private List<WeaponUsage> weaponUsageData = new();
+    private List<WeaponUsage> weaponUsageData = new ();
 
     private void SetWeaponUsageChart(CartesianChart weaponUsageChart)
     {
@@ -787,44 +787,44 @@ public partial class ConfigWindow : FluentWindow
         {
             Name = "Earth Style",
             Values = MainWindow.dataLoader.model.weaponUsageEarthStyle,
-            DataLabelsPaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal(CatppuccinMochaColorsCollection.CatppuccinMochaColors["Text"]))),
+            DataLabelsPaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal(CatppuccinMochaColors.NameHex["Text"]))),
             DataLabelsSize = 14,
             DataLabelsPosition = DataLabelsPosition.Middle,
             Fill = new LinearGradientPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal(s.PlayerHitsPerSecondGraphColor, "7f")), new SKColor(MainWindow.dataLoader.model.HexColorToDecimal(s.PlayerHitsPerSecondGraphColor, "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
-            Stroke = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal(s.PlayerHitsPerSecondGraphColor))) { StrokeThickness = 2 }
+            Stroke = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal(s.PlayerHitsPerSecondGraphColor))) { StrokeThickness = 2 },
         });
 
         MainWindow.dataLoader.model.weaponUsageSeries.Add(new StackedColumnSeries<long>
         {
             Name = "Heaven Style",
             Values = MainWindow.dataLoader.model.weaponUsageHeavenStyle,
-            DataLabelsPaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal(CatppuccinMochaColorsCollection.CatppuccinMochaColors["Text"]))),
+            DataLabelsPaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal(CatppuccinMochaColors.NameHex["Text"]))),
             DataLabelsSize = 14,
             DataLabelsPosition = DataLabelsPosition.Middle,
             Fill = new LinearGradientPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal(s.PlayerHitsPerSecondGraphColor, "7f")), new SKColor(MainWindow.dataLoader.model.HexColorToDecimal(s.PlayerHitsPerSecondGraphColor, "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
-            Stroke = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal(s.PlayerHitsPerSecondGraphColor))) { StrokeThickness = 2 }
+            Stroke = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal(s.PlayerHitsPerSecondGraphColor))) { StrokeThickness = 2 },
         });
 
         MainWindow.dataLoader.model.weaponUsageSeries.Add(new StackedColumnSeries<long>
         {
             Name = "Storm Style",
             Values = MainWindow.dataLoader.model.weaponUsageStormStyle,
-            DataLabelsPaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal(CatppuccinMochaColorsCollection.CatppuccinMochaColors["Text"]))),
+            DataLabelsPaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal(CatppuccinMochaColors.NameHex["Text"]))),
             DataLabelsSize = 14,
             DataLabelsPosition = DataLabelsPosition.Middle,
             Fill = new LinearGradientPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal(s.PlayerHitsPerSecondGraphColor, "7f")), new SKColor(MainWindow.dataLoader.model.HexColorToDecimal(s.PlayerHitsPerSecondGraphColor, "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
-            Stroke = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal(s.PlayerHitsPerSecondGraphColor))) { StrokeThickness = 2 }
+            Stroke = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal(s.PlayerHitsPerSecondGraphColor))) { StrokeThickness = 2 },
         });
 
         MainWindow.dataLoader.model.weaponUsageSeries.Add(new StackedColumnSeries<long>
         {
             Name = "Extreme Style",
             Values = MainWindow.dataLoader.model.weaponUsageExtremeStyle,
-            DataLabelsPaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal(CatppuccinMochaColorsCollection.CatppuccinMochaColors["Text"]))),
+            DataLabelsPaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal(CatppuccinMochaColors.NameHex["Text"]))),
             DataLabelsSize = 14,
             DataLabelsPosition = DataLabelsPosition.Middle,
             Fill = new LinearGradientPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal(s.PlayerHitsPerSecondGraphColor, "7f")), new SKColor(MainWindow.dataLoader.model.HexColorToDecimal(s.PlayerHitsPerSecondGraphColor, "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
-            Stroke = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal(s.PlayerHitsPerSecondGraphColor))) { StrokeThickness = 2 }
+            Stroke = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal(s.PlayerHitsPerSecondGraphColor))) { StrokeThickness = 2 },
         });
 
         weaponUsageChart.Series = MainWindow.dataLoader.model.weaponUsageSeries;
@@ -836,7 +836,7 @@ public partial class ConfigWindow : FluentWindow
                     Padding=new LiveChartsCore.Drawing.Padding(0,0,0,0),
                     ShowSeparatorLines=true,
                     IsVisible=false,
-                    LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal(CatppuccinMochaColorsCollection.CatppuccinMochaColors["Text"]))),
+                    LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal(CatppuccinMochaColors.NameHex["Text"]))),
                 }
         };
         weaponUsageChart.YAxes = new List<Axis>
@@ -844,9 +844,9 @@ public partial class ConfigWindow : FluentWindow
                 new Axis
                 {
                     MinStep=1,
-                    LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal(CatppuccinMochaColorsCollection.CatppuccinMochaColors["Text"]))),
+                    LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal(CatppuccinMochaColors.NameHex["Text"]))),
                     ShowSeparatorLines=true,
-                    TextSize=12
+                    TextSize=12,
                 }
         };
     }
@@ -1199,9 +1199,9 @@ public partial class ConfigWindow : FluentWindow
             return;
         }
 
-        Dictionary<string, string> MonsterFeriasOptionDictionary = new();
-        Dictionary<string, string> MonsterWikiOptionDictionary = new();
-        Dictionary<string, string> MonsterVideoLinkOptionDictionary = new();
+        Dictionary<string, string> MonsterFeriasOptionDictionary = new ();
+        Dictionary<string, string> MonsterWikiOptionDictionary = new ();
+        Dictionary<string, string> MonsterVideoLinkOptionDictionary = new ();
 
         for (int i = 0; i < monsterInfos.Count; i++)
         {
@@ -1651,7 +1651,7 @@ public partial class ConfigWindow : FluentWindow
         var weaponTypes = new[] { "Sword and Shield", "Dual Swords", "Great Sword", "Long Sword",
                           "Hammer", "Hunting Horn", "Lance", "Gunlance", "Tonfa",
                           "Switch Axe F", "Magnet Spike", "Light Bowgun", "Heavy Bowgun",
-                          "Bow" };
+                          "Bow", };
 
         foreach (var weaponType in weaponTypes)
         {
@@ -2306,7 +2306,7 @@ public partial class ConfigWindow : FluentWindow
             Series[i] = new ColumnSeries<double>
             {
                 Name = entry.Key.ToString(CultureInfo.InvariantCulture),
-                Values = new double[] { entry.Value }
+                Values = new double[] { entry.Value },
             };
 
             i++;
@@ -2321,7 +2321,7 @@ public partial class ConfigWindow : FluentWindow
                 SeparatorsPaint = new SolidColorPaint(new SKColor(200, 200, 200)),
                 TicksPaint = new SolidColorPaint(new SKColor(35, 35, 35)),
                 NamePaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#a6adc8"))),
-                LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#a6adc8")))
+                LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#a6adc8"))),
             }
         };
     }
@@ -2350,7 +2350,7 @@ public partial class ConfigWindow : FluentWindow
                 SeparatorsPaint = new SolidColorPaint(new SKColor(200, 200, 200)),
                 TicksPaint = new SolidColorPaint(new SKColor(35, 35, 35)),
                 NamePaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#a6adc8"))),
-                LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#a6adc8")))
+                LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#a6adc8"))),
             }
         };
     }
@@ -2379,14 +2379,14 @@ public partial class ConfigWindow : FluentWindow
         SeparatorsPaint = new SolidColorPaint(new SKColor(200, 200, 200)),
         TicksPaint = new SolidColorPaint(new SKColor(35, 35, 35)),
         NamePaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#a6adc8"))),
-        LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#a6adc8")))
+        LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#a6adc8"))),
     }
         };
     }
 
     private Dictionary<int, int> GetElapsedTime(Dictionary<int, int> timeAttackDict)
     {
-        Dictionary<int, int> elapsedTimeDict = new();
+        Dictionary<int, int> elapsedTimeDict = new ();
         if (timeAttackDict == null || !timeAttackDict.Any())
         {
             return elapsedTimeDict;
@@ -2403,7 +2403,7 @@ public partial class ConfigWindow : FluentWindow
 
     private Dictionary<int, double> GetElapsedTimeForDictionaryIntDouble(Dictionary<int, double> timeAttackDict)
     {
-        Dictionary<int, double> elapsedTimeDict = new();
+        Dictionary<int, double> elapsedTimeDict = new ();
         if (timeAttackDict == null || !timeAttackDict.Any())
         {
             return elapsedTimeDict;
@@ -2425,8 +2425,8 @@ public partial class ConfigWindow : FluentWindow
             return;
         }
 
-        List<ISeries> series = new();
-        ObservableCollection<ObservablePoint> collection = new();
+        List<ISeries> series = new ();
+        ObservableCollection<ObservablePoint> collection = new ();
 
         Dictionary<int, int> newData = GetElapsedTime(data);
 
@@ -2441,7 +2441,7 @@ public partial class ConfigWindow : FluentWindow
             LineSmoothness = .5,
             GeometrySize = 0,
             Stroke = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#fff38ba8"))) { StrokeThickness = 2 },
-            Fill = new LinearGradientPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#fff38ba8", "7f")), new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#fff38ba8", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1))
+            Fill = new LinearGradientPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#fff38ba8", "7f")), new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#fff38ba8", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
         });
 
         XAxes = new Axis[]
@@ -2479,8 +2479,8 @@ public partial class ConfigWindow : FluentWindow
             return;
         }
 
-        List<ISeries> series = new();
-        ObservableCollection<ObservablePoint> collection = new();
+        List<ISeries> series = new ();
+        ObservableCollection<ObservablePoint> collection = new ();
 
         Dictionary<int, double> newData = GetElapsedTimeForDictionaryIntDouble(data);
 
@@ -2495,7 +2495,7 @@ public partial class ConfigWindow : FluentWindow
             LineSmoothness = .5,
             GeometrySize = 0,
             Stroke = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#fff38ba8"))) { StrokeThickness = 2 },
-            Fill = new LinearGradientPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#fff38ba8", "7f")), new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#fff38ba8", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1))
+            Fill = new LinearGradientPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#fff38ba8", "7f")), new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#fff38ba8", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
         });
 
         XAxes = new Axis[]
@@ -2533,8 +2533,8 @@ public partial class ConfigWindow : FluentWindow
             return;
         }
 
-        List<ISeries> series = new();
-        ObservableCollection<ObservablePoint> collection = new();
+        List<ISeries> series = new ();
+        ObservableCollection<ObservablePoint> collection = new ();
 
         foreach (var entry in data)
         {
@@ -2588,9 +2588,9 @@ public partial class ConfigWindow : FluentWindow
             return;
         }
 
-        List<ISeries> series = new();
+        List<ISeries> series = new ();
 
-        ObservableCollection<DateTimePoint> collection = new();
+        ObservableCollection<DateTimePoint> collection = new ();
 
         DateTime? prevDate = null;
         long? prevTime = null;
@@ -2673,8 +2673,8 @@ public partial class ConfigWindow : FluentWindow
             return;
         }
 
-        List<ISeries> series = new();
-        ObservableCollection<ObservablePoint> collection = new();
+        List<ISeries> series = new ();
+        ObservableCollection<ObservablePoint> collection = new ();
 
         Dictionary<int, int> hitsTakenBlocked = CalculateHitsTakenBlocked(data);
 
@@ -2729,9 +2729,9 @@ public partial class ConfigWindow : FluentWindow
             return;
         }
 
-        List<ISeries> series = new();
-        ObservableCollection<ObservablePoint> healthCollection = new();
-        ObservableCollection<ObservablePoint> staminaCollection = new();
+        List<ISeries> series = new ();
+        ObservableCollection<ObservablePoint> healthCollection = new ();
+        ObservableCollection<ObservablePoint> staminaCollection = new ();
 
         Dictionary<int, int> newHP = GetElapsedTime(hp);
         Dictionary<int, int> newStamina = GetElapsedTime(stamina);
@@ -2754,7 +2754,7 @@ public partial class ConfigWindow : FluentWindow
             TooltipLabelFormatter = (chartPoint) =>
             $"Health: {((long)chartPoint.PrimaryValue)}",
             Stroke = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#ffa6e3a1"))) { StrokeThickness = 2 },
-            Fill = new LinearGradientPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#ffa6e3a1", "7f")), new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#ffa6e3a1", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1))
+            Fill = new LinearGradientPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#ffa6e3a1", "7f")), new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#ffa6e3a1", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
         });
 
         series.Add(new LineSeries<ObservablePoint>
@@ -2765,7 +2765,7 @@ public partial class ConfigWindow : FluentWindow
             TooltipLabelFormatter = (chartPoint) =>
             $"Stamina: {((long)chartPoint.PrimaryValue)}",
             Stroke = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#fff9e2af"))) { StrokeThickness = 2 },
-            Fill = new LinearGradientPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#fff9e2af", "7f")), new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#fff9e2af", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1))
+            Fill = new LinearGradientPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#fff9e2af", "7f")), new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#fff9e2af", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
         });
 
         XAxes = new Axis[]
@@ -2803,8 +2803,8 @@ public partial class ConfigWindow : FluentWindow
             return;
         }
 
-        List<ISeries> series = new();
-        ObservableCollection<ObservablePoint> attackCollection = new();
+        List<ISeries> series = new ();
+        ObservableCollection<ObservablePoint> attackCollection = new ();
 
         Dictionary<int, double> newAttack = GetElapsedTimeForDictionaryIntDouble(attack);
 
@@ -2818,7 +2818,7 @@ public partial class ConfigWindow : FluentWindow
             Values = attackCollection,
             GeometrySize = 0,
             Stroke = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#f38ba8"))) { StrokeThickness = 2 },
-            Fill = new LinearGradientPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#f38ba8", "7f")), new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#f38ba8", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1))
+            Fill = new LinearGradientPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#f38ba8", "7f")), new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#f38ba8", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
         });
 
         XAxes = new Axis[]
@@ -2856,8 +2856,8 @@ public partial class ConfigWindow : FluentWindow
             return;
         }
 
-        List<ISeries> series = new();
-        ObservableCollection<ObservablePoint> defenseCollection = new();
+        List<ISeries> series = new ();
+        ObservableCollection<ObservablePoint> defenseCollection = new ();
 
         Dictionary<int, double> newDefense = GetElapsedTimeForDictionaryIntDouble(defense);
 
@@ -2871,7 +2871,7 @@ public partial class ConfigWindow : FluentWindow
             Values = defenseCollection,
             GeometrySize = 0,
             Stroke = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#74c7ec"))) { StrokeThickness = 2 },
-            Fill = new LinearGradientPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#74c7ec", "7f")), new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#74c7ec", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1))
+            Fill = new LinearGradientPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#74c7ec", "7f")), new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#74c7ec", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
         });
 
         XAxes = new Axis[]
@@ -2909,12 +2909,12 @@ public partial class ConfigWindow : FluentWindow
             return;
         }
 
-        List<ISeries> series = new();
-        ObservableCollection<ObservablePoint> poisonCollection = new();
-        ObservableCollection<ObservablePoint> sleepCollection = new();
-        ObservableCollection<ObservablePoint> paraCollection = new();
-        ObservableCollection<ObservablePoint> blastCollection = new();
-        ObservableCollection<ObservablePoint> stunCollection = new();
+        List<ISeries> series = new ();
+        ObservableCollection<ObservablePoint> poisonCollection = new ();
+        ObservableCollection<ObservablePoint> sleepCollection = new ();
+        ObservableCollection<ObservablePoint> paraCollection = new ();
+        ObservableCollection<ObservablePoint> blastCollection = new ();
+        ObservableCollection<ObservablePoint> stunCollection = new ();
 
         Dictionary<int, int> newPoison = GetElapsedTime(poison);
         Dictionary<int, int> newSleep = GetElapsedTime(sleep);
@@ -2955,7 +2955,7 @@ public partial class ConfigWindow : FluentWindow
             TooltipLabelFormatter = (chartPoint) =>
             $"Poison: {((long)chartPoint.PrimaryValue)}",
             Stroke = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#cba6f7"))) { StrokeThickness = 2 },
-            Fill = new LinearGradientPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#cba6f7", "7f")), new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#cba6f7", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1))
+            Fill = new LinearGradientPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#cba6f7", "7f")), new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#cba6f7", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
         });
 
         series.Add(new LineSeries<ObservablePoint>
@@ -2965,7 +2965,7 @@ public partial class ConfigWindow : FluentWindow
             GeometrySize = 0,
             TooltipLabelFormatter = (chartPoint) => $"Sleep: {((long)chartPoint.PrimaryValue)}",
             Stroke = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#74c7ec"))) { StrokeThickness = 2 },
-            Fill = new LinearGradientPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#74c7ec", "7f")), new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#74c7ec", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1))
+            Fill = new LinearGradientPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#74c7ec", "7f")), new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#74c7ec", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
         });
 
         series.Add(new LineSeries<ObservablePoint>
@@ -2975,7 +2975,7 @@ public partial class ConfigWindow : FluentWindow
             GeometrySize = 0,
             TooltipLabelFormatter = (chartPoint) => $"Paralysis: {((long)chartPoint.PrimaryValue)}",
             Stroke = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#f9e2af"))) { StrokeThickness = 2 },
-            Fill = new LinearGradientPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#f9e2af", "7f")), new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#f9e2af", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1))
+            Fill = new LinearGradientPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#f9e2af", "7f")), new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#f9e2af", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
         });
 
         series.Add(new LineSeries<ObservablePoint>
@@ -2985,7 +2985,7 @@ public partial class ConfigWindow : FluentWindow
             GeometrySize = 0,
             TooltipLabelFormatter = (chartPoint) => $"Blast: {((long)chartPoint.PrimaryValue)}",
             Stroke = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#a6e3a1"))) { StrokeThickness = 2 },
-            Fill = new LinearGradientPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#a6e3a1", "7f")), new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#a6e3a1", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1))
+            Fill = new LinearGradientPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#a6e3a1", "7f")), new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#a6e3a1", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
         });
 
         series.Add(new LineSeries<ObservablePoint>
@@ -2995,7 +2995,7 @@ public partial class ConfigWindow : FluentWindow
             GeometrySize = 0,
             TooltipLabelFormatter = (chartPoint) => $"Stun: {((long)chartPoint.PrimaryValue)}",
             Stroke = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#7f849c"))) { StrokeThickness = 2 },
-            Fill = new LinearGradientPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#7f849c", "7f")), new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#7f849c", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1))
+            Fill = new LinearGradientPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#7f849c", "7f")), new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#7f849c", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
         });
 
         XAxes = new Axis[]
@@ -3077,7 +3077,7 @@ public partial class ConfigWindow : FluentWindow
 
     private Dictionary<int, int> CalculateHitsTakenBlocked(Dictionary<int, Dictionary<int, int>> hitsTakenBlocked)
     {
-        Dictionary<int, int> dictionary = new();
+        Dictionary<int, int> dictionary = new ();
 
         int i = 1;
         foreach (var entry in hitsTakenBlocked)
@@ -3093,7 +3093,7 @@ public partial class ConfigWindow : FluentWindow
 
     private Dictionary<int, int> CalculateMonsterHP(Dictionary<int, Dictionary<int, int>> monsterHP)
     {
-        Dictionary<int, int> dictionary = new();
+        Dictionary<int, int> dictionary = new ();
 
         int i = 1;
         foreach (var entry in monsterHP)
@@ -3111,7 +3111,7 @@ public partial class ConfigWindow : FluentWindow
 
     private Dictionary<int, double> CalculateMonsterMultiplier(Dictionary<int, Dictionary<int, double>> monsterDictionary)
     {
-        Dictionary<int, double> dictionary = new();
+        Dictionary<int, double> dictionary = new ();
 
         int i = 1;
         foreach (var entry in monsterDictionary)
@@ -3129,7 +3129,7 @@ public partial class ConfigWindow : FluentWindow
 
     private Dictionary<int, int> CalculateMonsterStatusAilmentThresholds(Dictionary<int, Dictionary<int, int>> monsterDictionary)
     {
-        Dictionary<int, int> dictionary = new();
+        Dictionary<int, int> dictionary = new ();
 
         int i = 1;
         foreach (var entry in monsterDictionary)
@@ -3152,11 +3152,11 @@ public partial class ConfigWindow : FluentWindow
             return;
         }
 
-        List<ISeries> series = new();
-        ObservableCollection<ObservablePoint> monster1Collection = new();
-        ObservableCollection<ObservablePoint> monster2Collection = new();
-        ObservableCollection<ObservablePoint> monster3Collection = new();
-        ObservableCollection<ObservablePoint> monster4Collection = new();
+        List<ISeries> series = new ();
+        ObservableCollection<ObservablePoint> monster1Collection = new ();
+        ObservableCollection<ObservablePoint> monster2Collection = new ();
+        ObservableCollection<ObservablePoint> monster3Collection = new ();
+        ObservableCollection<ObservablePoint> monster4Collection = new ();
 
         Dictionary<int, int> newMonster1 = GetElapsedTime(monster1);
         Dictionary<int, int> newMonster2 = GetElapsedTime(monster2);
@@ -3198,7 +3198,7 @@ public partial class ConfigWindow : FluentWindow
             LineSmoothness = .5,
             GeometrySize = 0,
             Stroke = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#fff9e2af"))) { StrokeThickness = 2 },
-            Fill = new LinearGradientPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#fff9e2af", "7f")), new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#fff9e2af", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1))
+            Fill = new LinearGradientPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#fff9e2af", "7f")), new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#fff9e2af", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
         });
 
         series.Add(new LineSeries<ObservablePoint>
@@ -3207,7 +3207,7 @@ public partial class ConfigWindow : FluentWindow
             LineSmoothness = .5,
             GeometrySize = 0,
             Stroke = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#ff94e2d5"))) { StrokeThickness = 2 },
-            Fill = new LinearGradientPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#ff94e2d5", "7f")), new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#ff94e2d5", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1))
+            Fill = new LinearGradientPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#ff94e2d5", "7f")), new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#ff94e2d5", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
         });
 
         series.Add(new LineSeries<ObservablePoint>
@@ -3216,7 +3216,7 @@ public partial class ConfigWindow : FluentWindow
             LineSmoothness = .5,
             GeometrySize = 0,
             Stroke = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#ffcba6f7"))) { StrokeThickness = 2 },
-            Fill = new LinearGradientPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#ffcba6f7", "7f")), new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#ffcba6f7", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1))
+            Fill = new LinearGradientPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#ffcba6f7", "7f")), new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#ffcba6f7", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
         });
 
         XAxes = new Axis[]
@@ -3275,8 +3275,8 @@ public partial class ConfigWindow : FluentWindow
             return;
         }
 
-        List<ISeries> series = new();
-        ObservableCollection<double> performanceCollection = new();
+        List<ISeries> series = new ();
+        ObservableCollection<double> performanceCollection = new ();
 
         performanceCollection.Add(performanceCompendium.TrueRawMedian / performanceCompendium.HighestTrueRaw);
         performanceCollection.Add(performanceCompendium.SingleHitDamageMedian / performanceCompendium.HighestSingleHitDamage);
@@ -3295,7 +3295,7 @@ public partial class ConfigWindow : FluentWindow
             GeometryStroke = null,
             TooltipLabelFormatter = value => string.Format(CultureInfo.InvariantCulture, "{0}: {1:0.##}%", GetHunterPerformanceValueType(value.SecondaryValue), value.PrimaryValue * 100),
             Stroke = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#fff38ba8"))) { StrokeThickness = 2 },
-            Fill = new LinearGradientPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#fff38ba8", "7f")), new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#fff38ba8", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1))
+            Fill = new LinearGradientPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#fff38ba8", "7f")), new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#fff38ba8", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
         });
 
         PolarAxis[] RadiusAxes = new PolarAxis[]
@@ -3349,7 +3349,6 @@ public partial class ConfigWindow : FluentWindow
         {
             new Axis
             {
-
                 NamePaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#a6adc8"))),
                 LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#a6adc8"))),
             }
@@ -3358,7 +3357,6 @@ public partial class ConfigWindow : FluentWindow
         {
             new Axis
             {
-
                 NamePaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#a6adc8"))),
                 LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#a6adc8"))),
             }
@@ -3511,7 +3509,7 @@ public partial class ConfigWindow : FluentWindow
 
     private Dictionary<int, List<Dictionary<int, int>>> GetElapsedTimeForInventories(Dictionary<int, List<Dictionary<int, int>>> dictionary)
     {
-        Dictionary<int, List<Dictionary<int, int>>> elapsedTimeDict = new();
+        Dictionary<int, List<Dictionary<int, int>>> elapsedTimeDict = new ();
         if (dictionary == null || !dictionary.Any())
         {
             return elapsedTimeDict;
@@ -3528,7 +3526,7 @@ public partial class ConfigWindow : FluentWindow
 
     private Dictionary<int, int> GetElapsedTimeForDictionaryIntInt(Dictionary<int, int> dictionary)
     {
-        Dictionary<int, int> elapsedTimeDict = new();
+        Dictionary<int, int> elapsedTimeDict = new ();
 
         if (dictionary == null || !dictionary.Any())
         {
@@ -3656,7 +3654,6 @@ public partial class ConfigWindow : FluentWindow
         }
 
         statsTextSelectedOption = selectedOption.Trim().Replace(" ", "_");
-
     }
 
     // TODO: double-check the settings and the conditionals in the other code
@@ -3761,7 +3758,6 @@ public partial class ConfigWindow : FluentWindow
         {
             new Axis
             {
-
                 NamePaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#a6adc8"))),
                 LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#a6adc8"))),
             }
@@ -3770,7 +3766,6 @@ public partial class ConfigWindow : FluentWindow
         {
             new Axis
             {
-
                 NamePaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#a6adc8"))),
                 LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#a6adc8"))),
             }

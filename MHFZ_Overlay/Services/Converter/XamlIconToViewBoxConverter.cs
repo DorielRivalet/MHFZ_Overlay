@@ -11,7 +11,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Markup;
 
-sealed class XamlIconToViewBoxConverter : IValueConverter
+public sealed class XamlIconToViewBoxConverter : IValueConverter
 {
     public object? Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
     {

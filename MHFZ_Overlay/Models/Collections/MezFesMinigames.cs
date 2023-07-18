@@ -10,7 +10,7 @@ using System.Collections.ObjectModel;
 ///<summary>
 ///The Mezeporta Festival mini-games list
 ///</summary>
-public static class MezFesMinigameCollection
+public static class MezFesMinigames
 {
     public static ReadOnlyDictionary<int, string> ID { get; } = new (new Dictionary<int, string>
     {

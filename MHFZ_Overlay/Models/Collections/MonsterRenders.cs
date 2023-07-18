@@ -10,7 +10,7 @@ using System.Collections.ObjectModel;
 ///<summary>
 ///The monster render dictionary
 ///</summary>
-public static class MonsterRenderCollection
+public static class MonsterRenders
 {
     public static ReadOnlyDictionary<string, string> MonsterRender { get; } = new (new Dictionary<string, string>
     {
@@ -136,7 +136,7 @@ public static class MonsterRenderCollection
         { "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/king_shakalaka.png", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/render/king_shakalaka.png" },
 
         // alternate
-        { "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/conquest_fatalis.png" ,"https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/render/conquest_fatalis.png" },
+        { "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/conquest_fatalis.png", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/render/conquest_fatalis.png" },
         { "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/fatalis.png", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/render/fatalis.png" },
         { "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/zenith_rathalos.gif", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/render/zenith_rathalos.png" },
         { "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/rathalos.png", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/render/rathalos.png" },

@@ -17,19 +17,12 @@ using System.Windows.Media;
 public sealed class OutlinedTextBlock : FrameworkElement
 {
     /// <summary>
-    /// Updates the pen.
+    /// Initializes a new instance of the <see cref="OutlinedTextBlock"/> class.
     /// </summary>
-    private void UpdatePen()
+    public OutlinedTextBlock()
     {
-        this._Pen = new Pen(this.Stroke, this.StrokeThickness)
-        {
-            DashCap = PenLineCap.Round,
-            EndLineCap = PenLineCap.Round,
-            LineJoin = PenLineJoin.Round,
-            StartLineCap = PenLineCap.Round,
-        };
-
-        this.InvalidateVisual();
+        this.UpdatePen();
+        this.TextDecorations = new TextDecorationCollection();
     }
 
     /// <summary>
@@ -49,11 +42,6 @@ public sealed class OutlinedTextBlock : FrameworkElement
   typeof(Brush),
   typeof(OutlinedTextBlock),
   new FrameworkPropertyMetadata(Brushes.Black, FrameworkPropertyMetadataOptions.AffectsRender, StrokePropertyChangedCallback));
-
-    private static void StrokePropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
-    {
-        (dependencyObject as OutlinedTextBlock)?.UpdatePen();
-    }
 
     /// <summary>
     /// The stroke thickness property
@@ -144,11 +132,11 @@ public sealed class OutlinedTextBlock : FrameworkElement
   typeof(OutlinedTextBlock),
   new FrameworkPropertyMetadata(TextWrapping.NoWrap, OnFormattedTextUpdated));
 
-    private FormattedText? _FormattedText;
+    private FormattedText? formattedText;
 
-    private Geometry? _TextGeometry;
+    private Geometry? textGeometry;
 
-    private Pen? _Pen;
+    private Pen? pen;
 
     /// <summary>
     /// Gets or sets the fill.
@@ -302,12 +290,24 @@ public sealed class OutlinedTextBlock : FrameworkElement
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="OutlinedTextBlock"/> class.
+    /// Updates the pen.
     /// </summary>
-    public OutlinedTextBlock()
+    private void UpdatePen()
     {
-        this.UpdatePen();
-        this.TextDecorations = new TextDecorationCollection();
+        this.pen = new Pen(this.Stroke, this.StrokeThickness)
+        {
+            DashCap = PenLineCap.Round,
+            EndLineCap = PenLineCap.Round,
+            LineJoin = PenLineJoin.Round,
+            StartLineCap = PenLineCap.Round,
+        };
+
+        this.InvalidateVisual();
+    }
+    
+    private static void StrokePropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
+    {
+        (dependencyObject as OutlinedTextBlock)?.UpdatePen();
     }
 
     /// <summary>
@@ -319,8 +319,8 @@ public sealed class OutlinedTextBlock : FrameworkElement
     {
         this.EnsureGeometry();
 
-        drawingContext.DrawGeometry(null, this._Pen, this._TextGeometry);
-        drawingContext.DrawGeometry(this.Fill, null, this._TextGeometry);
+        drawingContext.DrawGeometry(null, this.pen, this.textGeometry);
+        drawingContext.DrawGeometry(this.Fill, null, this.textGeometry);
     }
 
     /// <summary>
@@ -341,11 +341,11 @@ public sealed class OutlinedTextBlock : FrameworkElement
 
         // the Math.Min call is important - without this constraint (which seems arbitrary, but is the maximum allowable text width), things blow up when availableSize is infinite in both directions
         // the Math.Max call is to ensure we don't hit zero, which will cause MaxTextHeight to throw
-        this._FormattedText.MaxTextWidth = Math.Min(3579139, w);
-        this._FormattedText.MaxTextHeight = Math.Max(0.0001d, h);
+        this.formattedText.MaxTextWidth = Math.Min(3579139, w);
+        this.formattedText.MaxTextHeight = Math.Max(0.0001d, h);
 
         // return the desired size
-        return new Size(Math.Ceiling(this._FormattedText.Width), Math.Ceiling(this._FormattedText.Height));
+        return new Size(Math.Ceiling(this.formattedText.Width), Math.Ceiling(this.formattedText.Height));
     }
 
     /// <summary>
@@ -361,11 +361,11 @@ public sealed class OutlinedTextBlock : FrameworkElement
         this.EnsureFormattedText();
 
         // update the formatted text with the final size
-        this._FormattedText.MaxTextWidth = finalSize.Width;
-        this._FormattedText.MaxTextHeight = Math.Max(0.0001d, finalSize.Height);
+        this.formattedText.MaxTextWidth = finalSize.Width;
+        this.formattedText.MaxTextHeight = Math.Max(0.0001d, finalSize.Height);
 
         // need to re-generate the geometry now that the dimensions have changed
-        this._TextGeometry = null;
+        this.textGeometry = null;
 
         return finalSize;
     }
@@ -379,8 +379,8 @@ public sealed class OutlinedTextBlock : FrameworkElement
   DependencyPropertyChangedEventArgs e)
     {
         var outlinedTextBlock = (OutlinedTextBlock)dependencyObject;
-        outlinedTextBlock._FormattedText = null;
-        outlinedTextBlock._TextGeometry = null;
+        outlinedTextBlock.formattedText = null;
+        outlinedTextBlock.textGeometry = null;
 
         outlinedTextBlock.InvalidateMeasure();
         outlinedTextBlock.InvalidateVisual();
@@ -395,7 +395,7 @@ public sealed class OutlinedTextBlock : FrameworkElement
     {
         var outlinedTextBlock = (OutlinedTextBlock)dependencyObject;
         outlinedTextBlock.UpdateFormattedText();
-        outlinedTextBlock._TextGeometry = null;
+        outlinedTextBlock.textGeometry = null;
 
         outlinedTextBlock.InvalidateMeasure();
         outlinedTextBlock.InvalidateVisual();
@@ -407,12 +407,12 @@ public sealed class OutlinedTextBlock : FrameworkElement
     [Obsolete]
     private void EnsureFormattedText()
     {
-        if (this._FormattedText != null)
+        if (this.formattedText != null)
         {
             return;
         }
 
-        this._FormattedText = new FormattedText(
+        this.formattedText = new FormattedText(
           this.Text ?? string.Empty,
           CultureInfo.CurrentUICulture,
           this.FlowDirection,
@@ -428,21 +428,21 @@ public sealed class OutlinedTextBlock : FrameworkElement
     /// </summary>
     private void UpdateFormattedText()
     {
-        if (this._FormattedText == null)
+        if (this.formattedText == null)
         {
             return;
         }
 
-        this._FormattedText.MaxLineCount = this.TextWrapping == TextWrapping.NoWrap ? 1 : int.MaxValue;
-        _FormattedText.TextAlignment = this.TextAlignment;
-        this._FormattedText.Trimming = this.TextTrimming;
+        this.formattedText.MaxLineCount = this.TextWrapping == TextWrapping.NoWrap ? 1 : int.MaxValue;
+        this.formattedText.TextAlignment = this.TextAlignment;
+        this.formattedText.Trimming = this.TextTrimming;
 
-        this._FormattedText.SetFontSize(this.FontSize);
-        this._FormattedText.SetFontStyle(this.FontStyle);
-        this._FormattedText.SetFontWeight(this.FontWeight);
-        this._FormattedText.SetFontFamily(this.FontFamily);
-        this._FormattedText.SetFontStretch(this.FontStretch);
-        this._FormattedText.SetTextDecorations(this.TextDecorations);
+        this.formattedText.SetFontSize(this.FontSize);
+        this.formattedText.SetFontStyle(this.FontStyle);
+        this.formattedText.SetFontWeight(this.FontWeight);
+        this.formattedText.SetFontFamily(this.FontFamily);
+        this.formattedText.SetFontStretch(this.FontStretch);
+        this.formattedText.SetTextDecorations(this.TextDecorations);
     }
 
     /// <summary>
@@ -451,12 +451,12 @@ public sealed class OutlinedTextBlock : FrameworkElement
     [Obsolete]
     private void EnsureGeometry()
     {
-        if (this._TextGeometry != null)
+        if (this.textGeometry != null)
         {
             return;
         }
 
         this.EnsureFormattedText();
-        this._TextGeometry = this._FormattedText.BuildGeometry(new Point(0, 0));
+        this.textGeometry = this.formattedText.BuildGeometry(new Point(0, 0));
     }
 }

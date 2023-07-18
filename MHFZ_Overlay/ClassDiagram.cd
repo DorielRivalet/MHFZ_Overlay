@@ -188,7 +188,7 @@
       <FileName>Models\Collections\DiscordServersCollection.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="MHFZ_Overlay.Models.Collections.CatppuccinMochaColorsCollection" Collapsed="true">
+  <Class Name="MHFZ_Overlay.Models.Collections.NameHexCollection" Collapsed="true">
     <Position X="16.5" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIA=</HashCode>

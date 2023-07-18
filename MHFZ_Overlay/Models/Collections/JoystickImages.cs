@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using MHFZ_Overlay.Models.Structures;
 
-public static class JoystickImageCollection
+public static class JoystickImages
 {
     private static readonly ReadOnlyDictionary<Direction, string> imagePaths = new (new Dictionary<Direction, string>
     {

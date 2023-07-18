@@ -1271,7 +1271,16 @@ public abstract class AddressModel : INotifyPropertyChanged
     /// <value>
     ///   <c>true</c> if configuring; otherwise, <c>false</c>.
     /// </value>
-    public bool Configuring { get { return _configuring; } set { _configuring = value; ReloadData(); } }
+    public bool Configuring {
+        get
+        {
+            return _configuring;
+        }
+        set
+        {
+            _configuring = value; ReloadData();
+        }
+    }
 
     public static bool IsAlwaysShowingMonsterInfo()
     {
@@ -1365,13 +1374,13 @@ public abstract class AddressModel : INotifyPropertyChanged
     }
 
     // TODO need to create another variable for discordManager. Ideally discordManager state only affects it.
-    public int PreviousHubAreaID;
+    public int PreviousHubAreaID { get; set; }
 
-    public bool closedGame;
+    public bool closedGame { get; set; }
 
-    public bool isInLauncherBool;
+    public bool isInLauncherBool { get; set; }
 
-    readonly Mem m = new();
+    readonly Mem m = new ();
 
     // TODO convert to bool and remove isInLauncherBool?
     public string isInLauncher()
@@ -1414,7 +1423,6 @@ TreeScope.Children, condition);
         if (className == "MHFLAUNCH")
         {
             return "Yes";
-
         }
         else
         {
@@ -1523,7 +1531,6 @@ TreeScope.Children, condition);
         {
             return "(Zen) ";
         }
-
     }
 
     private bool QuestNameContainsAlternativeTitle()
@@ -1976,8 +1983,6 @@ TreeScope.Children, condition);
         }
     }
 
-
-
     /// <summary>
     /// Shows the sharpness percentage.
     /// </summary>
@@ -2089,7 +2094,6 @@ TreeScope.Children, condition);
 
             if (time > 0)
             {
-
                 if (ShowTimeLeftPercentage())
                 {
                     TimeLeftPercent = TimeLeftPercentNumber;
@@ -2347,7 +2351,6 @@ TreeScope.Children, condition);
                 }
 
                 return "#f38ba8";
-
             }
             else
             {
@@ -2761,7 +2764,6 @@ TreeScope.Children, condition);
                 if (result <= int.MaxValue && result >= int.MinValue)
                 {
                     return Convert.ToInt32(result);
-
                 }
                 else
                 {
@@ -2777,7 +2779,6 @@ TreeScope.Children, condition);
                     if (result <= int.MaxValue && result >= int.MinValue)
                     {
                         return Convert.ToInt32(result);
-
                     }
                     else
                     {
@@ -3129,8 +3130,6 @@ TreeScope.Children, condition);
         };
     }
 
-
-
     /// <summary>
     /// Gets the name of Duremudira.
     /// </summary>
@@ -3446,7 +3445,7 @@ TreeScope.Children, condition);
 
     public string DetermineMonsterName(int id)
     {
-        var keyFound = MonsterNameCollection.MonsterNameID.TryGetValue(id, out var link);
+        var keyFound = MonsterNames.MonsterNameID.TryGetValue(id, out var link);
         if (link == null)
         {
             link = "Loading...";
@@ -3554,7 +3553,7 @@ TreeScope.Children, condition);
             return string.Empty;
         }
 
-        MonsterCollection.MonsterID.TryGetValue(id, out var monstername);
+        Monsters.MonsterID.TryGetValue(id, out var monstername);
 
         if (monstername != null && monstername != RealMonsterName && isFirstMonster)
         {
@@ -3789,8 +3788,6 @@ TreeScope.Children, condition);
         };
     }
 
-
-
     /// <summary>
     /// Gets the current monster1 icon.
     /// </summary>
@@ -3839,10 +3836,10 @@ TreeScope.Children, condition);
 
             if (s.EnableMonsterRenders)
             {
-                var renderFound = MonsterRenderCollection.MonsterRender.ContainsKey(monsterIcon);
+                var renderFound = MonsterRenders.MonsterRender.ContainsKey(monsterIcon);
                 if (renderFound)
                 {
-                    return MonsterRenderCollection.MonsterRender[monsterIcon];
+                    return MonsterRenders.MonsterRender[monsterIcon];
                 }
                 else
                 {
@@ -3865,10 +3862,10 @@ TreeScope.Children, condition);
 
             if (s.EnableMonsterRenders)
             {
-                var renderFound = MonsterRenderCollection.MonsterRender.ContainsKey(monsterIcon);
+                var renderFound = MonsterRenders.MonsterRender.ContainsKey(monsterIcon);
                 if (renderFound)
                 {
-                    return MonsterRenderCollection.MonsterRender[monsterIcon];
+                    return MonsterRenders.MonsterRender[monsterIcon];
                 }
                 else
                 {
@@ -3891,10 +3888,10 @@ TreeScope.Children, condition);
 
             if (s.EnableMonsterRenders)
             {
-                var renderFound = MonsterRenderCollection.MonsterRender.ContainsKey(monsterIcon);
+                var renderFound = MonsterRenders.MonsterRender.ContainsKey(monsterIcon);
                 if (renderFound)
                 {
-                    return MonsterRenderCollection.MonsterRender[monsterIcon];
+                    return MonsterRenders.MonsterRender[monsterIcon];
                 }
                 else
                 {
@@ -3917,10 +3914,10 @@ TreeScope.Children, condition);
 
             if (s.EnableMonsterRenders)
             {
-                var renderFound = MonsterRenderCollection.MonsterRender.ContainsKey(monsterIcon);
+                var renderFound = MonsterRenders.MonsterRender.ContainsKey(monsterIcon);
                 if (renderFound)
                 {
-                    return MonsterRenderCollection.MonsterRender[monsterIcon];
+                    return MonsterRenders.MonsterRender[monsterIcon];
                 }
                 else
                 {
@@ -4009,7 +4006,7 @@ TreeScope.Children, condition);
 
     public string DetermineMonsterImage(int id)
     {
-        var keyFound = MonsterImageCollection.MonsterImageID.TryGetValue(id, out var link);
+        var keyFound = MonsterImages.MonsterImageID.TryGetValue(id, out var link);
         if (link == null)
         {
             link = Messages.UnknownMonsterIcon;
@@ -4052,7 +4049,7 @@ TreeScope.Children, condition);
                 break;
         }
 
-        var keyFound = MonsterColorCollection.MonsterColorID.TryGetValue(monsterID, out var color);
+        var keyFound = MonsterColors.MonsterColorID.TryGetValue(monsterID, out var color);
         if (color == null)
         {
             color = barColorSetting;
@@ -4231,7 +4228,7 @@ TreeScope.Children, condition);
     {
         var AreaGroup = new List<int> { 0 };
 
-        foreach (var kvp in GatheringMapCollection.GatheringMapID)
+        foreach (var kvp in GatheringMaps.GatheringMapID)
         {
             var areaIDs = kvp.Key;
 
@@ -4247,14 +4244,14 @@ TreeScope.Children, condition);
 
     private static string DetermineGatheringMap(List<int> key)
     {
-        var gatheringMap = GatheringMapCollection.GatheringMapID.ContainsKey(key);
+        var gatheringMap = GatheringMaps.GatheringMapID.ContainsKey(key);
         if (!gatheringMap)
         {
             return Messages.EmptyImage;
         }
         else
         {
-            return GatheringMapCollection.GatheringMapID[key];
+            return GatheringMaps.GatheringMapID[key];
         }
     }
 
@@ -4308,8 +4305,6 @@ TreeScope.Children, condition);
         return s.GenderExport ?? "Male";
     }
 
-
-
     /// <summary>
     /// Gets the name of the weapon.
     /// </summary>
@@ -4343,7 +4338,6 @@ TreeScope.Children, condition);
                 var address = BlademasterWeaponID().ToString("X4", CultureInfo.InvariantCulture).ToUpperInvariant();  // gives you hex 4 digit "007B"
 
                 return string.Format(CultureInfo.InvariantCulture, "{0}{1} ({2}) | {3}\n{4} | {5} | {6}", wepname, lv, address, style, GetDecoName(WeaponDeco1ID(), 1), GetDecoName(WeaponDeco2ID(), 2), GetDecoName(WeaponDeco3ID(), 3));
-
             }
             else if (className == "Gunner")
             {
@@ -4387,7 +4381,6 @@ TreeScope.Children, condition);
             return "None";
         }
     }
-
 
     public string GetAmmoPouch
     {
@@ -4908,7 +4901,6 @@ TreeScope.Children, condition);
         return type1 + (value1 != string.Empty && !value1.Contains('-') ? "+" : string.Empty) + value1 + ", " + type2 + (value2 != string.Empty && !value2.Contains('-') ? "+" : string.Empty) + value2 + ", " + type3 + (value3 != string.Empty && !value3.Contains('-') ? "+" : string.Empty) + value3;
     }
 
-
     /// <summary>
     /// Gets the name of the first cuff.
     /// </summary>
@@ -4986,7 +4978,6 @@ TreeScope.Children, condition);
     /// </returns>
     public static bool IsMaxCaravanSkill(int id)
     {
-
         switch (id)
         {
             default:
@@ -5470,7 +5461,6 @@ TreeScope.Children, condition);
             return result;
         }
     }
-
 
     public string GetZenithSkillsForRunID(int skill1, int skill2, int skill3, int skill4, int skill5, int skill6, int skill7)
     {
@@ -6412,7 +6402,6 @@ TreeScope.Children, condition);
 
         if (GSR() >= 650)
         {
-
             ConquestAtk += 2;
         }
 
@@ -6583,7 +6572,6 @@ TreeScope.Children, condition);
 
         if (GSR() >= 960)
         {
-
             Def += 2;
         }
 
@@ -9835,7 +9823,6 @@ Session Duration (Highest/Lowest/Average/Median): {111} / {112} / {113} / {114}
         }
     }
 
-
     public string GetGameWeaponInformation
     {
         get
@@ -10207,7 +10194,6 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 var address = BlademasterWeaponID().ToString("X4", CultureInfo.InvariantCulture).ToUpperInvariant();  // gives you hex 4 digit "007B"
 
                 return string.Format(CultureInfo.InvariantCulture, "{0}{1} ({2})", wepname, lv, address);
-
             }
             else if (className == "Gunner")
             {
@@ -10331,7 +10317,6 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             {
                 WeaponBlademaster.IDName.TryGetValue(BlademasterWeaponID(), out var wepname);
                 return string.Format(CultureInfo.InvariantCulture, "{0}{1}", wepname, lv);
-
             }
             else if (className == "Gunner")
             {
@@ -10469,7 +10454,6 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             SkillDiva.IDName.TryGetValue(DivaSkill(), out var divaskillaname);
             return divaskillaname + string.Empty;
         }
-
     }
 
     // GetArmorSkill(GuildFoodSkill()), GetGSRSkills, GetItemPouch, GetAmmoPouch, GetItemName(PoogieItemUseID()), GetRoadDureSkills
@@ -10734,7 +10718,6 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 }
                 else
                 {
-
                     return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/anorupatisu.png";
                 }
 
@@ -10880,8 +10863,6 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         }
     }
 
-
-
     public static string GetGuildCardBackground
     {
         get
@@ -10904,149 +10885,147 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         }
     }
 
-    public ObservableCollection<ObservablePoint> attackBuffCollection = new();
+    public ObservableCollection<ObservablePoint> attackBuffCollection = new ();
 
-    public ObservableCollection<ObservablePoint> damagePerSecondCollection = new();
+    public ObservableCollection<ObservablePoint> damagePerSecondCollection = new ();
 
-    public ObservableCollection<ObservablePoint> actionsPerMinuteCollection = new();
+    public ObservableCollection<ObservablePoint> actionsPerMinuteCollection = new ();
 
-    public ObservableCollection<ObservablePoint> hitsPerSecondCollection = new();
+    public ObservableCollection<ObservablePoint> hitsPerSecondCollection = new ();
 
-    private ObservableCollection<long> weaponUsageSwordAndShieldEarthStyleCollection = new();
+    private ObservableCollection<long> weaponUsageSwordAndShieldEarthStyleCollection = new ();
 
-    private ObservableCollection<long> weaponUsageSwordAndShieldHeavenStyleCollection = new();
+    private ObservableCollection<long> weaponUsageSwordAndShieldHeavenStyleCollection = new ();
 
-    private ObservableCollection<long> weaponUsageSwordAndShieldStormStyleCollection = new();
+    private ObservableCollection<long> weaponUsageSwordAndShieldStormStyleCollection = new ();
 
-    private ObservableCollection<long> weaponUsageSwordAndShieldExtremeStyleCollection = new();
+    private ObservableCollection<long> weaponUsageSwordAndShieldExtremeStyleCollection = new ();
 
-    private ObservableCollection<long> weaponUsageDualSwordsEarthStyleCollection = new();
+    private ObservableCollection<long> weaponUsageDualSwordsEarthStyleCollection = new ();
 
-    private ObservableCollection<long> weaponUsageDualSwordsHeavenStyleCollection = new();
+    private ObservableCollection<long> weaponUsageDualSwordsHeavenStyleCollection = new ();
 
-    private ObservableCollection<long> weaponUsageDualSwordsStormStyleCollection = new();
+    private ObservableCollection<long> weaponUsageDualSwordsStormStyleCollection = new ();
 
-    private ObservableCollection<long> weaponUsageDualSwordsExtremeStyleCollection = new();
+    private ObservableCollection<long> weaponUsageDualSwordsExtremeStyleCollection = new ();
 
-    private ObservableCollection<long> weaponUsageGreatSwordEarthStyleCollection = new();
+    private ObservableCollection<long> weaponUsageGreatSwordEarthStyleCollection = new ();
 
-    private ObservableCollection<long> weaponUsageGreatSwordHeavenStyleCollection = new();
+    private ObservableCollection<long> weaponUsageGreatSwordHeavenStyleCollection = new ();
 
-    private ObservableCollection<long> weaponUsageGreatSwordStormStyleCollection = new();
+    private ObservableCollection<long> weaponUsageGreatSwordStormStyleCollection = new ();
 
-    private ObservableCollection<long> weaponUsageGreatSwordExtremeStyleCollection = new();
+    private ObservableCollection<long> weaponUsageGreatSwordExtremeStyleCollection = new ();
 
+    private ObservableCollection<long> weaponUsageLongSwordEarthStyleCollection = new ();
 
-    private ObservableCollection<long> weaponUsageLongSwordEarthStyleCollection = new();
+    private ObservableCollection<long> weaponUsageLongSwordHeavenStyleCollection = new ();
 
-    private ObservableCollection<long> weaponUsageLongSwordHeavenStyleCollection = new();
+    private ObservableCollection<long> weaponUsageLongSwordStormStyleCollection = new ();
 
-    private ObservableCollection<long> weaponUsageLongSwordStormStyleCollection = new();
+    private ObservableCollection<long> weaponUsageLongSwordExtremeStyleCollection = new ();
 
-    private ObservableCollection<long> weaponUsageLongSwordExtremeStyleCollection = new();
+    private ObservableCollection<long> weaponUsageHammerEarthStyleCollection = new ();
 
-    private ObservableCollection<long> weaponUsageHammerEarthStyleCollection = new();
+    private ObservableCollection<long> weaponUsageHammerHeavenStyleCollection = new ();
 
-    private ObservableCollection<long> weaponUsageHammerHeavenStyleCollection = new();
+    private ObservableCollection<long> weaponUsageHammerStormStyleCollection = new ();
 
-    private ObservableCollection<long> weaponUsageHammerStormStyleCollection = new();
+    private ObservableCollection<long> weaponUsageHammerExtremeStyleCollection = new ();
 
-    private ObservableCollection<long> weaponUsageHammerExtremeStyleCollection = new();
+    private ObservableCollection<long> weaponUsageHuntingHornEarthStyleCollection = new ();
 
+    private ObservableCollection<long> weaponUsageHuntingHornHeavenStyleCollection = new ();
 
-    private ObservableCollection<long> weaponUsageHuntingHornEarthStyleCollection = new();
+    private ObservableCollection<long> weaponUsageHuntingHornStormStyleCollection = new ();
 
-    private ObservableCollection<long> weaponUsageHuntingHornHeavenStyleCollection = new();
+    private ObservableCollection<long> weaponUsageHuntingHornExtremeStyleCollection = new ();
 
-    private ObservableCollection<long> weaponUsageHuntingHornStormStyleCollection = new();
+    private ObservableCollection<long> weaponUsageLanceEarthStyleCollection = new ();
 
-    private ObservableCollection<long> weaponUsageHuntingHornExtremeStyleCollection = new();
+    private ObservableCollection<long> weaponUsageLanceHeavenStyleCollection = new ();
 
-    private ObservableCollection<long> weaponUsageLanceEarthStyleCollection = new();
+    private ObservableCollection<long> weaponUsageLanceStormStyleCollection = new ();
 
-    private ObservableCollection<long> weaponUsageLanceHeavenStyleCollection = new();
+    private ObservableCollection<long> weaponUsageLanceExtremeStyleCollection = new ();
 
-    private ObservableCollection<long> weaponUsageLanceStormStyleCollection = new();
+    private ObservableCollection<long> weaponUsageGunlanceEarthStyleCollection = new ();
 
-    private ObservableCollection<long> weaponUsageLanceExtremeStyleCollection = new();
+    private ObservableCollection<long> weaponUsageGunlanceHeavenStyleCollection = new ();
 
-    private ObservableCollection<long> weaponUsageGunlanceEarthStyleCollection = new();
+    private ObservableCollection<long> weaponUsageGunlanceStormStyleCollection = new ();
 
-    private ObservableCollection<long> weaponUsageGunlanceHeavenStyleCollection = new();
+    private ObservableCollection<long> weaponUsageGunlanceExtremeStyleCollection = new ();
 
-    private ObservableCollection<long> weaponUsageGunlanceStormStyleCollection = new();
+    private ObservableCollection<long> weaponUsageTonfaEarthStyleCollection = new ();
 
-    private ObservableCollection<long> weaponUsageGunlanceExtremeStyleCollection = new();
+    private ObservableCollection<long> weaponUsageTonfaHeavenStyleCollection = new ();
 
-    private ObservableCollection<long> weaponUsageTonfaEarthStyleCollection = new();
+    private ObservableCollection<long> weaponUsageTonfaStormStyleCollection = new ();
 
-    private ObservableCollection<long> weaponUsageTonfaHeavenStyleCollection = new();
+    private ObservableCollection<long> weaponUsageTonfaExtremeStyleCollection = new ();
 
-    private ObservableCollection<long> weaponUsageTonfaStormStyleCollection = new();
+    private ObservableCollection<long> weaponUsageSwitchAxeFEarthStyleCollection = new ();
 
-    private ObservableCollection<long> weaponUsageTonfaExtremeStyleCollection = new();
+    private ObservableCollection<long> weaponUsageSwitchAxeFHeavenStyleCollection = new ();
 
-    private ObservableCollection<long> weaponUsageSwitchAxeFEarthStyleCollection = new();
+    private ObservableCollection<long> weaponUsageSwitchAxeFStormStyleCollection = new ();
 
-    private ObservableCollection<long> weaponUsageSwitchAxeFHeavenStyleCollection = new();
+    private ObservableCollection<long> weaponUsageSwitchAxeFExtremeStyleCollection = new ();
 
-    private ObservableCollection<long> weaponUsageSwitchAxeFStormStyleCollection = new();
+    private ObservableCollection<long> weaponUsageLightBowgunEarthStyleCollection = new ();
 
-    private ObservableCollection<long> weaponUsageSwitchAxeFExtremeStyleCollection = new();
+    private ObservableCollection<long> weaponUsageLightBowgunHeavenStyleCollection = new ();
 
-    private ObservableCollection<long> weaponUsageLightBowgunEarthStyleCollection = new();
+    private ObservableCollection<long> weaponUsageLightBowgunStormStyleCollection = new ();
 
-    private ObservableCollection<long> weaponUsageLightBowgunHeavenStyleCollection = new();
+    private ObservableCollection<long> weaponUsageLightBowgunExtremeStyleCollection = new ();
 
-    private ObservableCollection<long> weaponUsageLightBowgunStormStyleCollection = new();
+    private ObservableCollection<long> weaponUsageHeavyBowgunEarthStyleCollection = new ();
 
-    private ObservableCollection<long> weaponUsageLightBowgunExtremeStyleCollection = new();
+    private ObservableCollection<long> weaponUsageHeavyBowgunHeavenStyleCollection = new ();
 
-    private ObservableCollection<long> weaponUsageHeavyBowgunEarthStyleCollection = new();
+    private ObservableCollection<long> weaponUsageHeavyBowgunStormStyleCollection = new ();
 
-    private ObservableCollection<long> weaponUsageHeavyBowgunHeavenStyleCollection = new();
+    private ObservableCollection<long> weaponUsageHeavyBowgunExtremeStyleCollection = new ();
 
-    private ObservableCollection<long> weaponUsageHeavyBowgunStormStyleCollection = new();
+    private ObservableCollection<long> weaponUsageBowEarthStyleCollection = new ();
 
-    private ObservableCollection<long> weaponUsageHeavyBowgunExtremeStyleCollection = new();
+    private ObservableCollection<long> weaponUsageBowHeavenStyleCollection = new ();
 
-    private ObservableCollection<long> weaponUsageBowEarthStyleCollection = new();
+    private ObservableCollection<long> weaponUsageBowStormStyleCollection = new ();
 
-    private ObservableCollection<long> weaponUsageBowHeavenStyleCollection = new();
+    private ObservableCollection<long> weaponUsageBowExtremeStyleCollection = new ();
 
-    private ObservableCollection<long> weaponUsageBowStormStyleCollection = new();
+    private ObservableCollection<long> weaponUsageMagnetSpikeExtremeStyleCollection = new ();
 
-    private ObservableCollection<long> weaponUsageBowExtremeStyleCollection = new();
+    public ObservableCollection<long> weaponUsageEarthStyle = new ();
 
-    private ObservableCollection<long> weaponUsageMagnetSpikeExtremeStyleCollection = new();
+    public ObservableCollection<long> weaponUsageHeavenStyle = new ();
 
-    public ObservableCollection<long> weaponUsageEarthStyle = new();
+    public ObservableCollection<long> weaponUsageStormStyle = new ();
 
-    public ObservableCollection<long> weaponUsageHeavenStyle = new();
+    public ObservableCollection<long> weaponUsageExtremeStyle = new ();
 
-    public ObservableCollection<long> weaponUsageStormStyle = new();
+    public object attackBuffSync { get; } = new ();
 
-    public ObservableCollection<long> weaponUsageExtremeStyle = new();
+    public object damagePerSecondSync { get; } = new ();
 
-    public object attackBuffSync { get; } = new();
+    public object actionsPerMinuteSync { get; } = new ();
 
-    public object damagePerSecondSync { get; } = new();
+    public object hitsPerSecondSync { get; } = new ();
 
-    public object actionsPerMinuteSync { get; } = new();
+    public object weaponUsageSync { get; set; } = new ();
 
-    public object hitsPerSecondSync { get; } = new();
+    public List<ISeries> attackBuffSeries { get; set; } = new ();
 
-    public object weaponUsageSync { get; set; } = new();
+    public List<ISeries> damagePerSecondSeries { get; set; } = new ();
 
-    public List<ISeries> attackBuffSeries { get; set; } = new();
+    public List<ISeries> actionsPerMinuteSeries { get; set; } = new ();
 
-    public List<ISeries> damagePerSecondSeries { get; set; } = new();
+    public List<ISeries> hitsPerSecondSeries { get; set; } = new ();
 
-    public List<ISeries> actionsPerMinuteSeries { get; set; } = new();
-
-    public List<ISeries> hitsPerSecondSeries { get; set; } = new();
-
-    public List<ISeries> weaponUsageSeries { get; set; } = new();
+    public List<ISeries> weaponUsageSeries { get; set; } = new ();
 
     public string GetTimeElapsed(double frames)
     {
@@ -11566,167 +11545,167 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         }
     }
 
-    public bool loadedItemsAtQuestStart;
+    public bool loadedItemsAtQuestStart { get; set; }
 
-    public int PouchItem1IDAtQuestStart;
+    public int PouchItem1IDAtQuestStart { get; set; }
 
-    public int PouchItem2IDAtQuestStart;
+    public int PouchItem2IDAtQuestStart { get; set; }
 
-    public int PouchItem3IDAtQuestStart;
+    public int PouchItem3IDAtQuestStart { get; set; }
 
-    public int PouchItem4IDAtQuestStart;
+    public int PouchItem4IDAtQuestStart { get; set; }
 
-    public int PouchItem5IDAtQuestStart;
+    public int PouchItem5IDAtQuestStart { get; set; }
 
-    public int PouchItem6IDAtQuestStart;
+    public int PouchItem6IDAtQuestStart { get; set; }
 
-    public int PouchItem7IDAtQuestStart;
+    public int PouchItem7IDAtQuestStart { get; set; }
 
-    public int PouchItem8IDAtQuestStart;
+    public int PouchItem8IDAtQuestStart { get; set; }
 
-    public int PouchItem9IDAtQuestStart;
+    public int PouchItem9IDAtQuestStart { get; set; }
 
-    public int PouchItem10IDAtQuestStart;
+    public int PouchItem10IDAtQuestStart { get; set; }
 
-    public int PouchItem11IDAtQuestStart;
+    public int PouchItem11IDAtQuestStart { get; set; }
 
-    public int PouchItem12IDAtQuestStart;
+    public int PouchItem12IDAtQuestStart { get; set; }
 
-    public int PouchItem13IDAtQuestStart;
+    public int PouchItem13IDAtQuestStart { get; set; }
 
-    public int PouchItem14IDAtQuestStart;
+    public int PouchItem14IDAtQuestStart { get; set; }
 
-    public int PouchItem15IDAtQuestStart;
+    public int PouchItem15IDAtQuestStart { get; set; }
 
-    public int PouchItem16IDAtQuestStart;
+    public int PouchItem16IDAtQuestStart { get; set; }
 
-    public int PouchItem17IDAtQuestStart;
+    public int PouchItem17IDAtQuestStart { get; set; }
 
-    public int PouchItem18IDAtQuestStart;
+    public int PouchItem18IDAtQuestStart { get; set; }
 
-    public int PouchItem19IDAtQuestStart;
+    public int PouchItem19IDAtQuestStart { get; set; }
 
-    public int PouchItem20IDAtQuestStart;
+    public int PouchItem20IDAtQuestStart { get; set; }
 
-    public int PouchItem1QuantityAtQuestStart;
+    public int PouchItem1QuantityAtQuestStart { get; set; }
 
-    public int PouchItem2QuantityAtQuestStart;
+    public int PouchItem2QuantityAtQuestStart { get; set; }
 
-    public int PouchItem3QuantityAtQuestStart;
+    public int PouchItem3QuantityAtQuestStart { get; set; }
 
-    public int PouchItem4QuantityAtQuestStart;
+    public int PouchItem4QuantityAtQuestStart { get; set; }
 
-    public int PouchItem5QuantityAtQuestStart;
+    public int PouchItem5QuantityAtQuestStart { get; set; }
 
-    public int PouchItem6QuantityAtQuestStart;
+    public int PouchItem6QuantityAtQuestStart { get; set; }
 
-    public int PouchItem7QuantityAtQuestStart;
+    public int PouchItem7QuantityAtQuestStart { get; set; }
 
-    public int PouchItem8QuantityAtQuestStart;
+    public int PouchItem8QuantityAtQuestStart { get; set; }
 
-    public int PouchItem9QuantityAtQuestStart;
+    public int PouchItem9QuantityAtQuestStart { get; set; }
 
-    public int PouchItem10QuantityAtQuestStart;
+    public int PouchItem10QuantityAtQuestStart { get; set; }
 
-    public int PouchItem11QuantityAtQuestStart;
+    public int PouchItem11QuantityAtQuestStart { get; set; }
 
-    public int PouchItem12QuantityAtQuestStart;
+    public int PouchItem12QuantityAtQuestStart { get; set; }
 
-    public int PouchItem13QuantityAtQuestStart;
+    public int PouchItem13QuantityAtQuestStart { get; set; }
 
-    public int PouchItem14QuantityAtQuestStart;
+    public int PouchItem14QuantityAtQuestStart { get; set; }
 
-    public int PouchItem15QuantityAtQuestStart;
+    public int PouchItem15QuantityAtQuestStart { get; set; }
 
-    public int PouchItem16QuantityAtQuestStart;
+    public int PouchItem16QuantityAtQuestStart { get; set; }
 
-    public int PouchItem17QuantityAtQuestStart;
+    public int PouchItem17QuantityAtQuestStart { get; set; }
 
-    public int PouchItem18QuantityAtQuestStart;
+    public int PouchItem18QuantityAtQuestStart { get; set; }
 
-    public int PouchItem19QuantityAtQuestStart;
+    public int PouchItem19QuantityAtQuestStart { get; set; }
 
-    public int PouchItem20QuantityAtQuestStart;
+    public int PouchItem20QuantityAtQuestStart { get; set; }
 
-    public int AmmoPouchItem1IDAtQuestStart;
+    public int AmmoPouchItem1IDAtQuestStart { get; set; }
 
-    public int AmmoPouchItem2IDAtQuestStart;
+    public int AmmoPouchItem2IDAtQuestStart { get; set; }
 
-    public int AmmoPouchItem3IDAtQuestStart;
+    public int AmmoPouchItem3IDAtQuestStart { get; set; }
 
-    public int AmmoPouchItem4IDAtQuestStart;
+    public int AmmoPouchItem4IDAtQuestStart { get; set; }
 
-    public int AmmoPouchItem5IDAtQuestStart;
+    public int AmmoPouchItem5IDAtQuestStart { get; set; }
 
-    public int AmmoPouchItem6IDAtQuestStart;
+    public int AmmoPouchItem6IDAtQuestStart { get; set; }
 
-    public int AmmoPouchItem7IDAtQuestStart;
+    public int AmmoPouchItem7IDAtQuestStart { get; set; }
 
-    public int AmmoPouchItem8IDAtQuestStart;
+    public int AmmoPouchItem8IDAtQuestStart { get; set; }
 
-    public int AmmoPouchItem9IDAtQuestStart;
+    public int AmmoPouchItem9IDAtQuestStart { get; set; }
 
-    public int AmmoPouchItem10IDAtQuestStart;
+    public int AmmoPouchItem10IDAtQuestStart { get; set; }
 
-    public int AmmoPouchItem1QuantityAtQuestStart;
+    public int AmmoPouchItem1QuantityAtQuestStart { get; set; }
 
-    public int AmmoPouchItem2QuantityAtQuestStart;
+    public int AmmoPouchItem2QuantityAtQuestStart { get; set; }
 
-    public int AmmoPouchItem3QuantityAtQuestStart;
+    public int AmmoPouchItem3QuantityAtQuestStart { get; set; }
 
-    public int AmmoPouchItem4QuantityAtQuestStart;
+    public int AmmoPouchItem4QuantityAtQuestStart { get; set; }
 
-    public int AmmoPouchItem5QuantityAtQuestStart;
+    public int AmmoPouchItem5QuantityAtQuestStart { get; set; }
 
-    public int AmmoPouchItem6QuantityAtQuestStart;
+    public int AmmoPouchItem6QuantityAtQuestStart { get; set; }
 
-    public int AmmoPouchItem7QuantityAtQuestStart;
+    public int AmmoPouchItem7QuantityAtQuestStart { get; set; }
 
-    public int AmmoPouchItem8QuantityAtQuestStart;
+    public int AmmoPouchItem8QuantityAtQuestStart { get; set; }
 
-    public int AmmoPouchItem9QuantityAtQuestStart;
+    public int AmmoPouchItem9QuantityAtQuestStart { get; set; }
 
-    public int AmmoPouchItem10QuantityAtQuestStart;
+    public int AmmoPouchItem10QuantityAtQuestStart { get; set; }
 
-    public int PartnyaBagItem1IDAtQuestStart;
+    public int PartnyaBagItem1IDAtQuestStart { get; set; }
 
-    public int PartnyaBagItem2IDAtQuestStart;
+    public int PartnyaBagItem2IDAtQuestStart { get; set; }
 
-    public int PartnyaBagItem3IDAtQuestStart;
+    public int PartnyaBagItem3IDAtQuestStart { get; set; }
 
-    public int PartnyaBagItem4IDAtQuestStart;
+    public int PartnyaBagItem4IDAtQuestStart { get; set; }
 
-    public int PartnyaBagItem5IDAtQuestStart;
+    public int PartnyaBagItem5IDAtQuestStart { get; set; }
 
-    public int PartnyaBagItem6IDAtQuestStart;
+    public int PartnyaBagItem6IDAtQuestStart { get; set; }
 
-    public int PartnyaBagItem7IDAtQuestStart;
+    public int PartnyaBagItem7IDAtQuestStart { get; set; }
 
-    public int PartnyaBagItem8IDAtQuestStart;
+    public int PartnyaBagItem8IDAtQuestStart { get; set; }
 
-    public int PartnyaBagItem9IDAtQuestStart;
+    public int PartnyaBagItem9IDAtQuestStart { get; set; }
 
-    public int PartnyaBagItem10IDAtQuestStart;
+    public int PartnyaBagItem10IDAtQuestStart { get; set; }
 
-    public int PartnyaBagItem1QuantityAtQuestStart;
+    public int PartnyaBagItem1QuantityAtQuestStart { get; set; }
 
-    public int PartnyaBagItem2QuantityAtQuestStart;
+    public int PartnyaBagItem2QuantityAtQuestStart { get; set; }
 
-    public int PartnyaBagItem3QuantityAtQuestStart;
+    public int PartnyaBagItem3QuantityAtQuestStart { get; set; }
 
-    public int PartnyaBagItem4QuantityAtQuestStart;
+    public int PartnyaBagItem4QuantityAtQuestStart { get; set; }
 
-    public int PartnyaBagItem5QuantityAtQuestStart;
+    public int PartnyaBagItem5QuantityAtQuestStart { get; set; }
 
-    public int PartnyaBagItem6QuantityAtQuestStart;
+    public int PartnyaBagItem6QuantityAtQuestStart { get; set; }
 
-    public int PartnyaBagItem7QuantityAtQuestStart;
+    public int PartnyaBagItem7QuantityAtQuestStart { get; set; }
 
-    public int PartnyaBagItem8QuantityAtQuestStart;
+    public int PartnyaBagItem8QuantityAtQuestStart { get; set; }
 
-    public int PartnyaBagItem9QuantityAtQuestStart;
+    public int PartnyaBagItem9QuantityAtQuestStart { get; set; }
 
-    public int PartnyaBagItem10QuantityAtQuestStart;
+    public int PartnyaBagItem10QuantityAtQuestStart { get; set; }
 
     public TimeSpan TotalTimeSpent { get; set; }
 
@@ -11796,18 +11775,18 @@ After all that you’ve unlocked magnet spike! You should get a material to make
     // all dictionaries get a new entry every 1 second. freezes on quest state 1, resets on quest id = 0.
     // use modulo
     // int for timeint() which is current quest time, second int for current attack buff
-    public Dictionary<int, int> attackBuffDictionary = new();
+    public Dictionary<int, int> attackBuffDictionary = new ();
 
     // the deserealized are used for displays
     public Dictionary<int, int>? attackBuffDictionaryDeserealized;
 
     // same for this but second is current hit count
-    public Dictionary<int, int> hitCountDictionary = new();
+    public Dictionary<int, int> hitCountDictionary = new ();
 
     public Dictionary<int, int>? hitCountDictionaryDeserealized;
 
     // same but the second int is the damage dealt when hitting monster.
-    public Dictionary<int, int> damageDealtDictionary = new();
+    public Dictionary<int, int> damageDealtDictionary = new ();
 
     public Dictionary<int, int>? damageDealtDictionaryDeserealized;
 
@@ -11900,232 +11879,231 @@ After all that you’ve unlocked magnet spike! You should get a material to make
 
 
     // new entry every second during quest (use this for chart?)
-    public Dictionary<int, double> damagePerSecondDictionary = new();
+    public Dictionary<int, double> damagePerSecondDictionary = new ();
 
     public Dictionary<int, double>? damagePerSecondDictionaryDeserealized;
 
-    public Dictionary<int, int> areaChangesDictionary = new();
+    public Dictionary<int, int> areaChangesDictionary = new ();
 
     public Dictionary<int, int>? areaChangesDictionaryDeserealized;
 
-    public Dictionary<int, int> cartsDictionary = new();
+    public Dictionary<int, int> cartsDictionary = new ();
 
     public Dictionary<int, int>? cartsDictionaryDeserealized;
 
     // time <monsterid, monsterhp>
-    public Dictionary<int, Dictionary<int, int>> monster1HPDictionary = new();
+    public Dictionary<int, Dictionary<int, int>> monster1HPDictionary = new ();
 
-    public Dictionary<int, Dictionary<int, int>> monster2HPDictionary = new();
+    public Dictionary<int, Dictionary<int, int>> monster2HPDictionary = new ();
 
-    public Dictionary<int, Dictionary<int, int>> monster3HPDictionary = new();
+    public Dictionary<int, Dictionary<int, int>> monster3HPDictionary = new ();
 
-    public Dictionary<int, Dictionary<int, int>> monster4HPDictionary = new();
+    public Dictionary<int, Dictionary<int, int>> monster4HPDictionary = new ();
 
-    public Dictionary<int, Dictionary<int, int>>? monster1HPDictionaryDeserealized;
+    public Dictionary<int, Dictionary<int, int>>? monster1HPDictionaryDeserealized { get; set; }
 
-    public Dictionary<int, Dictionary<int, int>>? monster2HPDictionaryDeserealized;
+    public Dictionary<int, Dictionary<int, int>>? monster2HPDictionaryDeserealized { get; set; }
 
-    public Dictionary<int, Dictionary<int, int>>? monster3HPDictionaryDeserealized;
+    public Dictionary<int, Dictionary<int, int>>? monster3HPDictionaryDeserealized { get; set; }
 
-    public Dictionary<int, Dictionary<int, int>>? monster4HPDictionaryDeserealized;
+    public Dictionary<int, Dictionary<int, int>>? monster4HPDictionaryDeserealized { get; set; }
 
     // time, itemid, itemquantity
     // can calculate itemuse by counting rows
     // this is a dicitonary where the first int is the quest time,
     // the second int is the item id and the third int is the item quantity of that id.
     // meaning that this is a dictionary of quest time and a list of item ids and quantities respectively.
-    public Dictionary<int, List<Dictionary<int, int>>> playerInventoryDictionary = new();
+    public Dictionary<int, List<Dictionary<int, int>>> playerInventoryDictionary = new ();
 
-    public Dictionary<int, List<Dictionary<int, int>>>? playerInventoryDictionaryDeserealized;
+    public Dictionary<int, List<Dictionary<int, int>>>? playerInventoryDictionaryDeserealized { get; set; }
 
-    public Dictionary<int, List<Dictionary<int, int>>> playerAmmoPouchDictionary = new();
+    public Dictionary<int, List<Dictionary<int, int>>> playerAmmoPouchDictionary = new ();
 
-    public Dictionary<int, List<Dictionary<int, int>>>? playerAmmoPouchDictionaryDeserealized;
+    public Dictionary<int, List<Dictionary<int, int>>>? playerAmmoPouchDictionaryDeserealized { get; set; }
 
-    public Dictionary<int, List<Dictionary<int, int>>> partnyaBagDictionary = new();
+    public Dictionary<int, List<Dictionary<int, int>>> partnyaBagDictionary = new ();
 
-    public Dictionary<int, List<Dictionary<int, int>>>? partnyaBagDictionaryDeserealized;
+    public Dictionary<int, List<Dictionary<int, int>>>? partnyaBagDictionaryDeserealized { get; set; }
 
     // time, areaid, hitstakenblocked
     // can calculate total hits by area by checking areaid, or in total by all sum.
-    public Dictionary<int, Dictionary<int, int>> hitsTakenBlockedDictionary = new();
+    public Dictionary<int, Dictionary<int, int>> hitsTakenBlockedDictionary = new ();
 
-    public Dictionary<int, Dictionary<int, int>>? hitsTakenBlockedDictionaryDeserealized = new();
+    public Dictionary<int, Dictionary<int, int>>? hitsTakenBlockedDictionaryDeserealized = new ();
 
-    public Dictionary<int, int> playerHPDictionary = new();
+    public Dictionary<int, int> playerHPDictionary = new ();
 
-    public Dictionary<int, int>? playerHPDictionaryDeserealized = new();
+    public Dictionary<int, int>? playerHPDictionaryDeserealized = new ();
 
-    public Dictionary<int, int> playerStaminaDictionary = new();
+    public Dictionary<int, int> playerStaminaDictionary = new ();
 
-    public Dictionary<int, int>? playerStaminaDictionaryDeserealized = new();
+    public Dictionary<int, int>? playerStaminaDictionaryDeserealized = new ();
 
-    public Dictionary<int, double> hitsPerSecondDictionary = new();
+    public Dictionary<int, double> hitsPerSecondDictionary = new ();
 
-    public Dictionary<int, double>? hitsPerSecondDictionaryDeserealized = new();
+    public Dictionary<int, double>? hitsPerSecondDictionaryDeserealized = new ();
 
-    public Dictionary<int, double> hitsTakenBlockedPerSecondDictionary = new();
+    public Dictionary<int, double> hitsTakenBlockedPerSecondDictionary = new ();
 
-    public Dictionary<int, double>? hitsTakenBlockedPerSecondDictionaryDeserealized = new();
+    public Dictionary<int, double>? hitsTakenBlockedPerSecondDictionaryDeserealized = new ();
 
-    public Dictionary<int, string> keystrokesDictionary = new();
+    public Dictionary<int, string> keystrokesDictionary = new ();
 
-    public Dictionary<int, string>? keystrokesDictionaryDeserealized = new();
+    public Dictionary<int, string>? keystrokesDictionaryDeserealized = new ();
 
-    public Dictionary<int, string> gamepadInputDictionary = new();
+    public Dictionary<int, string> gamepadInputDictionary = new ();
 
-    public Dictionary<int, string>? gamepadInputDictionaryDeserealized = new();
+    public Dictionary<int, string>? gamepadInputDictionaryDeserealized = new ();
 
-    public Dictionary<int, string> mouseInputDictionary = new();
+    public Dictionary<int, string> mouseInputDictionary = new ();
 
-    public Dictionary<int, string>? mouseInputDictionaryDeserealized = new();
+    public Dictionary<int, string>? mouseInputDictionaryDeserealized = new ();
 
-    public Dictionary<int, double> actionsPerMinuteDictionary = new();
+    public Dictionary<int, double> actionsPerMinuteDictionary = new ();
 
-    public Dictionary<int, double>? actionsPerMinuteDictionaryDeserealized = new();
+    public Dictionary<int, double>? actionsPerMinuteDictionaryDeserealized = new ();
 
-    public Dictionary<int, string> overlayModeDictionary = new();
+    public Dictionary<int, string> overlayModeDictionary = new ();
 
-    public Dictionary<int, Dictionary<int, double>> monster1AttackMultiplierDictionary = new();
+    public Dictionary<int, Dictionary<int, double>> monster1AttackMultiplierDictionary = new ();
 
-    public Dictionary<int, Dictionary<int, double>> monster1DefenseRateDictionary = new();
+    public Dictionary<int, Dictionary<int, double>> monster1DefenseRateDictionary = new ();
 
-    public Dictionary<int, Dictionary<int, double>> monster1SizeMultiplierDictionary = new();
+    public Dictionary<int, Dictionary<int, double>> monster1SizeMultiplierDictionary = new ();
 
-    public Dictionary<int, Dictionary<int, int>> monster1PoisonThresholdDictionary = new();
+    public Dictionary<int, Dictionary<int, int>> monster1PoisonThresholdDictionary = new ();
 
-    public Dictionary<int, Dictionary<int, int>> monster1SleepThresholdDictionary = new();
+    public Dictionary<int, Dictionary<int, int>> monster1SleepThresholdDictionary = new ();
 
-    public Dictionary<int, Dictionary<int, int>> monster1ParalysisThresholdDictionary = new();
+    public Dictionary<int, Dictionary<int, int>> monster1ParalysisThresholdDictionary = new ();
 
-    public Dictionary<int, Dictionary<int, int>> monster1BlastThresholdDictionary = new();
+    public Dictionary<int, Dictionary<int, int>> monster1BlastThresholdDictionary = new ();
 
-    public Dictionary<int, Dictionary<int, int>> monster1StunThresholdDictionary = new();
+    public Dictionary<int, Dictionary<int, int>> monster1StunThresholdDictionary = new ();
 
-    public Dictionary<int, Dictionary<int, List<int>>> monster1PartThresholdDictionary = new();
+    public Dictionary<int, Dictionary<int, List<int>>> monster1PartThresholdDictionary = new ();
 
-    public Dictionary<int, Dictionary<int, List<int>>> monster2PartThresholdDictionary = new();
+    public Dictionary<int, Dictionary<int, List<int>>> monster2PartThresholdDictionary = new ();
 
-    public Dictionary<int, Dictionary<int, double>>? monster1AttackMultiplierDictionaryDeserealized;
+    public Dictionary<int, Dictionary<int, double>>? monster1AttackMultiplierDictionaryDeserealized { get; set; }
 
-    public Dictionary<int, Dictionary<int, double>>? monster1DefenseRateDictionaryDeserealized;
+    public Dictionary<int, Dictionary<int, double>>? monster1DefenseRateDictionaryDeserealized { get; set; }
 
-    public Dictionary<int, Dictionary<int, double>>? monster1SizeMultiplierDictionaryDeserealized;
+    public Dictionary<int, Dictionary<int, double>>? monster1SizeMultiplierDictionaryDeserealized { get; set; }
 
-    public Dictionary<int, Dictionary<int, int>>? monster1PoisonThresholdDictionaryDeserealized;
+    public Dictionary<int, Dictionary<int, int>>? monster1PoisonThresholdDictionaryDeserealized { get; set; }
 
-    public Dictionary<int, Dictionary<int, int>>? monster1SleepThresholdDictionaryDeserealized;
+    public Dictionary<int, Dictionary<int, int>>? monster1SleepThresholdDictionaryDeserealized { get; set; }
 
-    public Dictionary<int, Dictionary<int, int>>? monster1ParalysisThresholdDictionaryDeserealized;
+    public Dictionary<int, Dictionary<int, int>>? monster1ParalysisThresholdDictionaryDeserealized { get; set; }
 
-    public Dictionary<int, Dictionary<int, int>>? monster1BlastThresholdDictionaryDeserealized;
+    public Dictionary<int, Dictionary<int, int>>? monster1BlastThresholdDictionaryDeserealized { get; set; }
 
-    public Dictionary<int, Dictionary<int, int>>? monster1StunThresholdDictionaryDeserealized;
+    public Dictionary<int, Dictionary<int, int>>? monster1StunThresholdDictionaryDeserealized { get; set; }
 
-    public Dictionary<int, Dictionary<int, List<int>>>? monster1PartThresholdDictionaryDeserialized;
+    public Dictionary<int, Dictionary<int, List<int>>>? monster1PartThresholdDictionaryDeserialized { get; set; }
 
-    public Dictionary<int, Dictionary<int, List<int>>>? monster2PartThresholdDictionaryDeserialized;
+    public Dictionary<int, Dictionary<int, List<int>>>? monster2PartThresholdDictionaryDeserialized { get; set; }
 
-    public int previousTimeInt;
+    public int previousTimeInt { get; set; }
 
-    public int previousAttackBuffInt;
+    public int previousAttackBuffInt { get; set; }
 
-    public int previousHitCountInt;
+    public int previousHitCountInt { get; set; }
 
-    public double previousDPS;
+    public double previousDPS { get; set; }
 
-    public int previousAreaID;
+    public int previousAreaID { get; set; }
 
-    public int previousGlobalAreaID;
+    public int previousGlobalAreaID { get; set; }
 
-    public int previousQuestID;
+    public int previousQuestID { get; set; }
 
-    public int previousCartsInt;
+    public int previousCartsInt { get; set; }
 
-    public int previousMonster1HP;
+    public int previousMonster1HP { get; set; }
 
-    public int previousMonster2HP;
+    public int previousMonster2HP { get; set; }
 
-    public int previousMonster3HP;
+    public int previousMonster3HP { get; set; }
 
-    public int previousMonster4HP;
+    public int previousMonster4HP { get; set; }
 
-    public int previousTotalInventoryItems;
+    public int previousTotalInventoryItems { get; set; }
 
-    public int previousTotalAmmo;
+    public int previousTotalAmmo { get; set; }
 
-    public int previousTotalPartnyaItems;
+    public int previousTotalPartnyaItems { get; set; }
 
+    public int previousHitsTakenBlocked { get; set; }
 
-    public int previousHitsTakenBlocked;
+    public double previousTotalHitsTakenBlockedPerSecond { get; set; }
 
-    public double previousTotalHitsTakenBlockedPerSecond;
+    public int previousPlayerHP { get; set; }
 
-    public int previousPlayerHP;
+    public int previousPlayerStamina { get; set; }
 
-    public int previousPlayerStamina;
+    public double previousHitsPerSecond { get; set; }
 
-    public double previousHitsPerSecond;
+    public double previousActionsPerMinute { get; set; }
 
-    public double previousActionsPerMinute;
+    public string previousOverlayMode { get; set; } = "N/A";
 
-    public string previousOverlayMode = "N/A";
+    public double previousMonster1AttackMultiplier { get; set; }
 
-    public double previousMonster1AttackMultiplier;
+    public double previousMonster1DefenseRate { get; set; }
 
-    public double previousMonster1DefenseRate;
+    public double previousMonster1SizeMultiplier { get; set; }
 
-    public double previousMonster1SizeMultiplier;
+    public int previousMonster1PoisonThreshold { get; set; }
 
-    public int previousMonster1PoisonThreshold;
+    public int previousMonster1SleepThreshold { get; set; }
 
-    public int previousMonster1SleepThreshold;
+    public int previousMonster1ParalysisThreshold { get; set; }
 
-    public int previousMonster1ParalysisThreshold;
+    public int previousMonster1BlastThreshold { get; set; }
 
-    public int previousMonster1BlastThreshold;
+    public int previousMonster1StunThreshold { get; set; }
 
-    public int previousMonster1StunThreshold;
+    public int previousMonster1Part1Threshold { get; set; }
 
-    public int previousMonster1Part1Threshold;
+    public int previousMonster1Part2Threshold { get; set; }
 
-    public int previousMonster1Part2Threshold;
+    public int previousMonster1Part3Threshold { get; set; }
 
-    public int previousMonster1Part3Threshold;
+    public int previousMonster1Part4Threshold { get; set; }
 
-    public int previousMonster1Part4Threshold;
+    public int previousMonster1Part5Threshold { get; set; }
 
-    public int previousMonster1Part5Threshold;
+    public int previousMonster1Part6Threshold { get; set; }
 
-    public int previousMonster1Part6Threshold;
+    public int previousMonster1Part7Threshold { get; set; }
 
-    public int previousMonster1Part7Threshold;
+    public int previousMonster1Part8Threshold { get; set; }
 
-    public int previousMonster1Part8Threshold;
+    public int previousMonster1Part9Threshold { get; set; }
 
-    public int previousMonster1Part9Threshold;
+    public int previousMonster1Part10Threshold { get; set; }
 
-    public int previousMonster1Part10Threshold;
+    public int previousMonster2Part1Threshold { get; set; }
 
-    public int previousMonster2Part1Threshold;
+    public int previousMonster2Part2Threshold { get; set; }
 
-    public int previousMonster2Part2Threshold;
+    public int previousMonster2Part3Threshold { get; set; }
 
-    public int previousMonster2Part3Threshold;
+    public int previousMonster2Part4Threshold { get; set; }
 
-    public int previousMonster2Part4Threshold;
+    public int previousMonster2Part5Threshold { get; set; }
 
-    public int previousMonster2Part5Threshold;
+    public int previousMonster2Part6Threshold { get; set; }
 
-    public int previousMonster2Part6Threshold;
+    public int previousMonster2Part7Threshold { get; set; }
 
-    public int previousMonster2Part7Threshold;
+    public int previousMonster2Part8Threshold { get; set; }
 
-    public int previousMonster2Part8Threshold;
+    public int previousMonster2Part9Threshold { get; set; }
 
-    public int previousMonster2Part9Threshold;
-
-    public int previousMonster2Part10Threshold;
+    public int previousMonster2Part10Threshold { get; set; }
 
     public List<Dictionary<int, int>> InsertInventoryDictionaryIntoList(string inventoryType)
     {
@@ -12147,7 +12125,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         {
             var itemID = 0;
             var itemQty = 0;
-            Dictionary<int, int> itemIDQuantityDictionary = new();
+            Dictionary<int, int> itemIDQuantityDictionary = new ();
 
             if (inventoryType == "Pouch")
             {
@@ -12438,7 +12416,6 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             {
                 LoggerInstance.Warn(ex, "Could not insert into damagePerSecondDictionary");
             }
-
         }
 
         if (previousCartsInt != CurrentFaints() && !cartsDictionary.ContainsKey(TimeInt()))
@@ -12472,7 +12449,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             try
             {
                 previousMonster1HP = Monster1HPInt();
-                Dictionary<int, int> monster1HPDictionaryMonsterInfo = new();
+                Dictionary<int, int> monster1HPDictionaryMonsterInfo = new ();
                 monster1HPDictionaryMonsterInfo.Add(LargeMonster1ID(), Monster1HPInt());
                 monster1HPDictionary.Add(TimeInt(), monster1HPDictionaryMonsterInfo);
             }
@@ -12487,7 +12464,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             try
             {
                 previousMonster2HP = Monster2HPInt();
-                Dictionary<int, int> monster2HPDictionaryMonsterInfo = new();
+                Dictionary<int, int> monster2HPDictionaryMonsterInfo = new ();
                 monster2HPDictionaryMonsterInfo.Add(LargeMonster2ID(), Monster2HPInt());
                 monster2HPDictionary.Add(TimeInt(), monster2HPDictionaryMonsterInfo);
             }
@@ -12502,7 +12479,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             try
             {
                 previousMonster3HP = Monster3HPInt();
-                Dictionary<int, int> monster3HPDictionaryMonsterInfo = new();
+                Dictionary<int, int> monster3HPDictionaryMonsterInfo = new ();
                 monster3HPDictionaryMonsterInfo.Add(LargeMonster3ID(), Monster3HPInt());
                 monster3HPDictionary.Add(TimeInt(), monster3HPDictionaryMonsterInfo);
             }
@@ -12510,7 +12487,6 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             {
                 LoggerInstance.Warn(ex, "Could not insert into monster3HPDictionary");
             }
-
         }
 
         if (previousMonster4HP != Monster4HPInt() && !monster4HPDictionary.ContainsKey(TimeInt()))
@@ -12518,7 +12494,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             try
             {
                 previousMonster4HP = Monster4HPInt();
-                Dictionary<int, int> monster4HPDictionaryMonsterInfo = new();
+                Dictionary<int, int> monster4HPDictionaryMonsterInfo = new ();
                 monster4HPDictionaryMonsterInfo.Add(LargeMonster4ID(), Monster4HPInt());
                 monster4HPDictionary.Add(TimeInt(), monster4HPDictionaryMonsterInfo);
             }
@@ -12554,12 +12530,12 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         }
         else if (loadedItemsAtQuestStart && !playerInventoryDictionary.Values.Any())
         {
-            List<Dictionary<int, int>> itemIDsQuantityList = new();
+            List<Dictionary<int, int>> itemIDsQuantityList = new ();
             for (var i = 1; i <= 20; i++)
             {
                 var itemID = 0;
                 var itemQty = 0;
-                Dictionary<int, int> itemIDQuantityDictionary = new();
+                Dictionary<int, int> itemIDQuantityDictionary = new ();
                 switch (i)
                 {
                     case 1:
@@ -12684,12 +12660,12 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         }
         else if (loadedItemsAtQuestStart && !playerAmmoPouchDictionary.Values.Any())
         {
-            List<Dictionary<int, int>> itemIDsQuantityList = new();
+            List<Dictionary<int, int>> itemIDsQuantityList = new ();
             for (var i = 1; i <= 20; i++)
             {
                 var itemID = 0;
                 var itemQty = 0;
-                Dictionary<int, int> itemIDQuantityDictionary = new();
+                Dictionary<int, int> itemIDQuantityDictionary = new ();
                 switch (i)
                 {
                     case 1:
@@ -12774,12 +12750,12 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         }
         else if (loadedItemsAtQuestStart && !partnyaBagDictionary.Values.Any())
         {
-            List<Dictionary<int, int>> itemIDsQuantityList = new();
+            List<Dictionary<int, int>> itemIDsQuantityList = new ();
             for (var i = 1; i <= 20; i++)
             {
                 var itemID = 0;
                 var itemQty = 0;
-                Dictionary<int, int> itemIDQuantityDictionary = new();
+                Dictionary<int, int> itemIDQuantityDictionary = new ();
                 switch (i)
                 {
                     case 1:
@@ -12843,7 +12819,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             try
             {
                 previousHitsTakenBlocked = AreaHitsTakenBlocked();
-                Dictionary<int, int> hitsAreaPairs = new();
+                Dictionary<int, int> hitsAreaPairs = new ();
                 hitsAreaPairs.Add(AreaID(), AreaHitsTakenBlocked());
                 hitsTakenBlockedDictionary.Add(TimeInt(), hitsAreaPairs);
             }
@@ -12896,7 +12872,6 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             {
                 LoggerInstance.Warn(ex, "Could not insert into hitsPerSecondDictionary");
             }
-
         }
 
         if (previousTotalHitsTakenBlockedPerSecond != TotalHitsTakenBlockedPerSecond && !hitsTakenBlockedPerSecondDictionary.ContainsKey(TimeInt()))
@@ -12949,7 +12924,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             try
             {
                 previousMonster1AttackMultiplier = Monster1AttackMultForDictionary();
-                Dictionary<int, double> monster1AttackMultiplierDictionaryMonsterInfo = new();
+                Dictionary<int, double> monster1AttackMultiplierDictionaryMonsterInfo = new ();
                 monster1AttackMultiplierDictionaryMonsterInfo.Add(LargeMonster1ID(), Monster1AttackMultForDictionary());
                 monster1AttackMultiplierDictionary.Add(TimeInt(), monster1AttackMultiplierDictionaryMonsterInfo);
             }
@@ -12964,7 +12939,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             try
             {
                 previousMonster1DefenseRate = Monster1DefMultForDictionary();
-                Dictionary<int, double> monster1DefenseRateDictionaryMonsterInfo = new();
+                Dictionary<int, double> monster1DefenseRateDictionaryMonsterInfo = new ();
                 monster1DefenseRateDictionaryMonsterInfo.Add(LargeMonster1ID(), Monster1DefMultForDictionary());
                 monster1DefenseRateDictionary.Add(TimeInt(), monster1DefenseRateDictionaryMonsterInfo);
             }
@@ -12979,7 +12954,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             try
             {
                 previousMonster1SizeMultiplier = Monster1SizeMultForDictionary();
-                Dictionary<int, double> monster1SizeMultiplierDictionaryMonsterInfo = new();
+                Dictionary<int, double> monster1SizeMultiplierDictionaryMonsterInfo = new ();
                 monster1SizeMultiplierDictionaryMonsterInfo.Add(LargeMonster1ID(), Monster1SizeMultForDictionary());
                 monster1SizeMultiplierDictionary.Add(TimeInt(), monster1SizeMultiplierDictionaryMonsterInfo);
             }
@@ -12994,7 +12969,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             try
             {
                 previousMonster1PoisonThreshold = Monster1PoisonForDictionary();
-                Dictionary<int, int> monster1PoisonThresholdDictionaryMonsterInfo = new();
+                Dictionary<int, int> monster1PoisonThresholdDictionaryMonsterInfo = new ();
                 monster1PoisonThresholdDictionaryMonsterInfo.Add(LargeMonster1ID(), Monster1PoisonForDictionary());
                 monster1PoisonThresholdDictionary.Add(TimeInt(), monster1PoisonThresholdDictionaryMonsterInfo);
             }
@@ -13009,7 +12984,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             try
             {
                 previousMonster1SleepThreshold = Monster1SleepForDictionary();
-                Dictionary<int, int> monster1SleepThresholdDictionaryMonsterInfo = new();
+                Dictionary<int, int> monster1SleepThresholdDictionaryMonsterInfo = new ();
                 monster1SleepThresholdDictionaryMonsterInfo.Add(LargeMonster1ID(), Monster1SleepForDictionary());
                 monster1SleepThresholdDictionary.Add(TimeInt(), monster1SleepThresholdDictionaryMonsterInfo);
             }
@@ -13024,7 +12999,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             try
             {
                 previousMonster1ParalysisThreshold = Monster1ParalysisForDictionary();
-                Dictionary<int, int> monster1ParalysisThresholdDictionaryMonsterInfo = new();
+                Dictionary<int, int> monster1ParalysisThresholdDictionaryMonsterInfo = new ();
                 monster1ParalysisThresholdDictionaryMonsterInfo.Add(LargeMonster1ID(), Monster1ParalysisForDictionary());
                 monster1ParalysisThresholdDictionary.Add(TimeInt(), monster1ParalysisThresholdDictionaryMonsterInfo);
             }
@@ -13039,7 +13014,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             try
             {
                 previousMonster1BlastThreshold = Monster1BlastForDictionary();
-                Dictionary<int, int> monster1BlastThresholdDictionaryMonsterInfo = new();
+                Dictionary<int, int> monster1BlastThresholdDictionaryMonsterInfo = new ();
                 monster1BlastThresholdDictionaryMonsterInfo.Add(LargeMonster1ID(), Monster1BlastForDictionary());
                 monster1BlastThresholdDictionary.Add(TimeInt(), monster1BlastThresholdDictionaryMonsterInfo);
             }
@@ -13054,7 +13029,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             try
             {
                 previousMonster1StunThreshold = Monster1StunForDictionary();
-                Dictionary<int, int> monster1StunThresholdDictionaryMonsterInfo = new();
+                Dictionary<int, int> monster1StunThresholdDictionaryMonsterInfo = new ();
                 monster1StunThresholdDictionaryMonsterInfo.Add(LargeMonster1ID(), Monster1StunForDictionary());
                 monster1StunThresholdDictionary.Add(TimeInt(), monster1StunThresholdDictionaryMonsterInfo);
             }
@@ -13090,7 +13065,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 previousMonster1Part8Threshold = Monster1Part8();
                 previousMonster1Part9Threshold = Monster1Part9();
                 previousMonster1Part10Threshold = Monster1Part10();
-                Dictionary<int, List<int>> monster1PartThresholdDictionaryMonsterInfo = new();
+                Dictionary<int, List<int>> monster1PartThresholdDictionaryMonsterInfo = new ();
                 var partsList = new List<int>() {
                     Monster1Part1(),
                     Monster1Part2(),
@@ -13137,7 +13112,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 previousMonster2Part8Threshold = Monster2Part8();
                 previousMonster2Part9Threshold = Monster2Part9();
                 previousMonster2Part10Threshold = Monster2Part10();
-                Dictionary<int, List<int>> monster2PartThresholdDictionaryMonsterInfo = new();
+                Dictionary<int, List<int>> monster2PartThresholdDictionaryMonsterInfo = new ();
                 var partsList = new List<int>() {
                     Monster2Part1(),
                     Monster2Part2(),
@@ -13294,7 +13269,6 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         previousMonster2Part8Threshold = 0;
         previousMonster2Part9Threshold = 0;
         previousMonster2Part10Threshold = 0;
-
     }
 
     public void clearQuestInfoDictionaries()
@@ -13393,12 +13367,12 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         }
     }
 
-    public ObservableCollection<RecentRuns> RecentRuns { get; set; } = new();
+    public ObservableCollection<RecentRuns> RecentRuns { get; set; } = new ();
 
     // TODO: the plural/singular is inconsistent
-    public List<FastestRun> FastestRuns { get; set; } = new();
+    public List<FastestRun> FastestRuns { get; set; } = new ();
 
-    public List<RecentRuns> CalendarRuns { get; set; } = new();
+    public List<RecentRuns> CalendarRuns { get; set; } = new ();
 
     public ObservableCollection<QuestLogsOption> QuestLogsSearchOption { get; set; } = new ObservableCollection<QuestLogsOption>()
     {
@@ -13683,7 +13657,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
     {
         var AreaGroup = new List<int> { 0 };
 
-        foreach (var kvp in AreaIconCollection.AreaIconID)
+        foreach (var kvp in AreaIcons.AreaIconID)
         {
             var areaIDs = kvp.Key;
 
@@ -13699,14 +13673,14 @@ After all that you’ve unlocked magnet spike! You should get a material to make
 
     public static string DetermineAreaIcon(List<int> key)
     {
-        var areaIcon = AreaIconCollection.AreaIconID.ContainsKey(key);
+        var areaIcon = AreaIcons.AreaIconID.ContainsKey(key);
         if (!areaIcon)
         {
             return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/cattleya.png";
         }
         else
         {
-            return AreaIconCollection.AreaIconID[key];
+            return AreaIcons.AreaIconID[key];
         }
     }
 

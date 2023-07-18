@@ -27,7 +27,7 @@ public partial class App : Application
 {
     private static readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
-    public static bool isClowdSquirrelUpdating;
+    public static bool isClowdSquirrelUpdating { get; set; }
 
     /// <summary>
     /// The current program version. TODO: put in env var
@@ -174,7 +174,7 @@ public partial class App : Application
         tools.RemoveShortcutForThisExe(ShortcutLocation.StartMenu | ShortcutLocation.Desktop);
     }
 
-    public static bool isFirstRun;
+    public static bool isFirstRun { get; set; }
 
     /// <summary>
     /// Called when [application run].

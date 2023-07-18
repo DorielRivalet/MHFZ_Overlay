@@ -10,7 +10,7 @@ using System.Collections.Generic;
 ///The monster info list
 ///<br>TODO: missing labels</br>
 ///</summary>
-public static class MonsterInfoCollection
+public static class MonsterInfos
 {
     private static string rickRoll = string.Empty;
 

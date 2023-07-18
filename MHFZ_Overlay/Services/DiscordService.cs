@@ -83,15 +83,16 @@ public sealed class DiscordService
                 };
                 presenceTemplate.Buttons = new Button[]
                 {
-                new Button()
-                {
-                    Label = "【MHF-Z】Overlay "+ App.CurrentProgramVersion,
-                    Url = "https://github.com/DorielRivalet/mhfz-overlay",
-                },
-                new Button()
-                {
-                    Label = "Join Discord Server",
-                    Url = string.Format(CultureInfo.InvariantCulture, "https://discord.com/invite/{0}",GetDiscordServerInvite), }
+                    new Button()
+                    {
+                        Label = "【MHF-Z】Overlay "+ App.CurrentProgramVersion,
+                        Url = "https://github.com/DorielRivalet/mhfz-overlay",
+                    },
+                    new Button()
+                    {
+                        Label = "Join Discord Server",
+                        Url = string.Format(CultureInfo.InvariantCulture, "https://discord.com/invite/{0}",GetDiscordServerInvite),
+                    }
                 };
             }
 
@@ -106,13 +107,12 @@ public sealed class DiscordService
         }
     }
 
-    // Dispose client        
     /// <summary>
-    /// Cleanups the Discord RPC instance.
+    /// Cleanups/disposes the Discord RPC instance.
     /// </summary>
     public static void DiscordRPCCleanup()
     {
-        if (discordRPCClient != null)//&& ShowDiscordRPC)
+        if (discordRPCClient != null) //&& ShowDiscordRPC)
         {
             discordRPCClient.Dispose();
             LoggerInstance.Info(CultureInfo.InvariantCulture, "Disposed Discord RPC");
@@ -160,25 +160,25 @@ public sealed class DiscordService
         {
             switch (dataLoader.model.QuestID())
             {
-                case 23527:// Hunter's Road Multiplayer
+                case 23527: // Hunter's Road Multiplayer
                     stateString = string.Format(CultureInfo.InvariantCulture, "Multiplayer Floor: {0} ({1}/{2} Max/Total) | RP: {3} | White Fatalis: {4}/{5} (Slain/Encounters)", dataLoader.model.RoadFloor() + 1, dataLoader.model.RoadMaxStagesMultiplayer(), dataLoader.model.RoadTotalStagesMultiplayer(), dataLoader.model.RoadPoints(), dataLoader.model.RoadFatalisSlain(), dataLoader.model.RoadFatalisEncounters());
                     presenceTemplate.State = stateString.Length <= MaxDiscordRPCStringLength ? stateString : string.Concat(stateString.AsSpan(0, MaxDiscordRPCStringLength - 3), "...");
                     break;
-                case 23628:// solo road
+                case 23628: // solo road
                     stateString = string.Format(CultureInfo.InvariantCulture, "Solo Floor: {0} ({1}/{2} Max/Total) | RP: {3} | White Fatalis: {4}/{5} (Slain/Encounters)", dataLoader.model.RoadFloor() + 1, dataLoader.model.RoadMaxStagesSolo(), dataLoader.model.RoadTotalStagesSolo(), dataLoader.model.RoadPoints(), dataLoader.model.RoadFatalisSlain(), dataLoader.model.RoadFatalisEncounters());
                     presenceTemplate.State = stateString.Length <= MaxDiscordRPCStringLength ? stateString : string.Concat(stateString.AsSpan(0, MaxDiscordRPCStringLength - 3), "...");
                     break;
-                case 21731:// 1st district dure
-                case 21749:// sky corridor version
+                case 21731: // 1st district dure
+                case 21749: // sky corridor version
                     stateString = string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}{3}{4}{5} | Slain: {6} | Encounters: {7}", dataLoader.model.GetQuestNameFromID(dataLoader.model.QuestID()), dataLoader.model.GetObjectiveNameFromID(dataLoader.model.ObjectiveType()), string.Empty, dataLoader.model.GetObjective1Quantity(), dataLoader.model.GetRankNameFromID(dataLoader.model.RankBand()), dataLoader.model.GetRealMonsterName(dataLoader.model.CurrentMonster1Icon), dataLoader.model.FirstDistrictDuremudiraSlays(), dataLoader.model.FirstDistrictDuremudiraEncounters());
                     presenceTemplate.State = stateString.Length <= MaxDiscordRPCStringLength ? stateString : string.Concat(stateString.AsSpan(0, MaxDiscordRPCStringLength - 3), "...");
                     break;
-                case 21746:// 2nd district dure
-                case 21750:// sky corridor version
+                case 21746: // 2nd district dure
+                case 21750: // sky corridor version
                     stateString = string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}{3}{4}{5} | Slain: {6} | Encounters: {7}", dataLoader.model.GetQuestNameFromID(dataLoader.model.QuestID()), dataLoader.model.GetObjectiveNameFromID(dataLoader.model.ObjectiveType()), string.Empty, dataLoader.model.GetObjective1Quantity(), dataLoader.model.GetRankNameFromID(dataLoader.model.RankBand()), dataLoader.model.GetRealMonsterName(dataLoader.model.CurrentMonster1Icon), dataLoader.model.SecondDistrictDuremudiraSlays(), dataLoader.model.SecondDistrictDuremudiraEncounters());
                     presenceTemplate.State = stateString.Length <= MaxDiscordRPCStringLength ? stateString : string.Concat(stateString.AsSpan(0, MaxDiscordRPCStringLength - 3), "...");
                     break;
-                case 62105:// raviente quests
+                case 62105: // raviente quests
                 case 62108:
                 case 62101:
                 case 62104:
@@ -196,7 +196,7 @@ public sealed class DiscordService
                 case 54759:
                 case 54760:
                 case 54761:
-                case 55596:// extreme
+                case 55596: // extreme
                 case 55602:
                 case 55603:
                 case 55604:
@@ -291,35 +291,35 @@ public sealed class DiscordService
                 case 135:
                 case 136:
                 case 200: // Mezeporta
-                case 201:// Hairdresser
-                case 206:// Old Town Areas
+                case 201: // Hairdresser
+                case 206: // Old Town Areas
                 case 207:
-                case 210:// Private Bar
-                case 211:// Rasta Bar
-                case 244:// Code Claiming Room
-                case 282:// Cities Map
-                case 340:// SR Rooms
+                case 210: // Private Bar
+                case 211: // Rasta Bar
+                case 244: // Code Claiming Room
+                case 282: // Cities Map
+                case 340: // SR Rooms
                 case 341:
-                case 397:// Mezeporta Dupe(non-HD)
+                case 397: // Mezeporta Dupe(non-HD)
                     stateString = string.Format(CultureInfo.InvariantCulture, "GR: {0} | GCP: {1} | Guild Food: {2} | Diva Skill: {3} ({4} Left) | Poogie Item: {5}", dataLoader.model.GRankNumber(), dataLoader.model.GCP(), dataLoader.model.GetArmorSkillWithNull(dataLoader.model.GuildFoodSkill()), dataLoader.model.GetDivaSkillNameFromID(dataLoader.model.DivaSkill()), dataLoader.model.DivaSkillUsesLeft(), dataLoader.model.GetItemName(dataLoader.model.PoogieItemUseID()));
                     presenceTemplate.State = stateString.Length <= MaxDiscordRPCStringLength ? stateString : string.Concat(stateString.AsSpan(0, MaxDiscordRPCStringLength - 3), "...");
                     break;
-                case 173:// My House (original)
-                case 175:// My House (MAX)
+                case 173: // My House (original)
+                case 175: // My House (MAX)
                     stateString = string.Format(CultureInfo.InvariantCulture, "GR: {0} | Partner Lv: {1} | Armor Color: {2} | GCP: {3}", dataLoader.model.GRankNumber(), dataLoader.model.PartnerLevel(), dataLoader.model.GetArmorColor(), dataLoader.model.GCP());
                     presenceTemplate.State = stateString.Length <= MaxDiscordRPCStringLength ? stateString : string.Concat(stateString.AsSpan(0, MaxDiscordRPCStringLength - 3), "...");
                     break;
-                case 202:// Guild Halls
+                case 202: // Guild Halls
                 case 203:
                 case 204:
                     stateString = string.Format(CultureInfo.InvariantCulture, "GR: {0} | GCP: {1} | Guild Food: {2} | Poogie Item: {3}", dataLoader.model.GRankNumber(), dataLoader.model.GCP(), dataLoader.model.GetArmorSkill(dataLoader.model.GuildFoodSkill()), dataLoader.model.GetItemName(dataLoader.model.PoogieItemUseID()));
                     presenceTemplate.State = stateString.Length <= MaxDiscordRPCStringLength ? stateString : string.Concat(stateString.AsSpan(0, MaxDiscordRPCStringLength - 3), "...");
                     break;
-                case 205:// Pugi Farm
+                case 205: // Pugi Farm
                     stateString = string.Format(CultureInfo.InvariantCulture, "GR: {0} | Poogie Points: {1} | Poogie Clothes: {2} | Poogie Item: {3}", dataLoader.model.GRankNumber(), dataLoader.model.PoogiePoints(), dataLoader.model.GetPoogieClothes(dataLoader.model.PoogieCostume()), dataLoader.model.GetItemName(dataLoader.model.PoogieItemUseID()));
                     presenceTemplate.State = stateString.Length <= MaxDiscordRPCStringLength ? stateString : string.Concat(stateString.AsSpan(0, MaxDiscordRPCStringLength - 3), "...");
                     break;
-                case 256:// Caravan Areas
+                case 256: // Caravan Areas
                 case 260:
                 case 261:
                 case 262:
@@ -327,54 +327,54 @@ public sealed class DiscordService
                     stateString = string.Format(CultureInfo.InvariantCulture, "CP: {0} | Gg: {1} | g: {2} | Gem Lv: {3} | Great Slaying Points: {4}", dataLoader.model.CaravanPoints(), dataLoader.model.RaviGg(), dataLoader.model.Ravig(), dataLoader.model.CaravenGemLevel() + 1, dataLoader.model.GreatSlayingPointsSaved());
                     presenceTemplate.State = stateString.Length <= MaxDiscordRPCStringLength ? stateString : string.Concat(stateString.AsSpan(0, MaxDiscordRPCStringLength - 3), "...");
                     break;
-                case 257:// Blacksmith
+                case 257: // Blacksmith
                     stateString = string.Format(CultureInfo.InvariantCulture, "GR: {0} | GCP: {1} | Guild Food: {2} | GZenny: {3}", dataLoader.model.GRankNumber(), dataLoader.model.GCP(), dataLoader.model.GetArmorSkill(dataLoader.model.GuildFoodSkill()), dataLoader.model.GZenny());
                     presenceTemplate.State = stateString.Length <= MaxDiscordRPCStringLength ? stateString : string.Concat(stateString.AsSpan(0, MaxDiscordRPCStringLength - 3), "...");
                     break;
-                case 264:// Gallery
+                case 264: // Gallery
                     stateString = string.Format(CultureInfo.InvariantCulture, "GR: {0} | GCP: {1} | Guild Food: {2} | Score: {3}", dataLoader.model.GRankNumber(), dataLoader.model.GCP(), dataLoader.model.GetArmorSkill(dataLoader.model.GuildFoodSkill()), dataLoader.model.GalleryEvaluationScore());
                     presenceTemplate.State = stateString.Length <= MaxDiscordRPCStringLength ? stateString : string.Concat(stateString.AsSpan(0, MaxDiscordRPCStringLength - 3), "...");
                     break;
-                case 265:// Guuku Farm
+                case 265: // Guuku Farm
                     stateString = string.Format(CultureInfo.InvariantCulture, "GR: {0} | GCP: {1} | Guild Food: {2} | Poogie Item: {3}", dataLoader.model.GRankNumber(), dataLoader.model.GCP(), dataLoader.model.GetArmorSkill(dataLoader.model.GuildFoodSkill()), dataLoader.model.GetItemName(dataLoader.model.PoogieItemUseID()));
                     presenceTemplate.State = stateString.Length <= MaxDiscordRPCStringLength ? stateString : string.Concat(stateString.AsSpan(0, MaxDiscordRPCStringLength - 3), "...");
                     break;
-                case 283:// Halk Area TODO partnya lv
+                case 283: // Halk Area TODO partnya lv
                     stateString = string.Format(CultureInfo.InvariantCulture, "GR: {0} | GCP: {1} | PNRP: {2} | Halk Fullness: {3}", dataLoader.model.GRankNumber(), dataLoader.model.GCP(), dataLoader.model.PartnyaRankPoints(), dataLoader.model.HalkFullness());
                     presenceTemplate.State = stateString.Length <= MaxDiscordRPCStringLength ? stateString : string.Concat(stateString.AsSpan(0, MaxDiscordRPCStringLength - 3), "...");
                     break;
-                case 286:// PvP Room
+                case 286: // PvP Room
                     stateString = string.Format(CultureInfo.InvariantCulture, "GR: {0} | GCP: {1} | Guild Food: {2} | Poogie Item: {3}", dataLoader.model.GRankNumber(), dataLoader.model.GCP(), dataLoader.model.GetArmorSkill(dataLoader.model.GuildFoodSkill()), dataLoader.model.GetItemName(dataLoader.model.PoogieItemUseID()));
                     presenceTemplate.State = stateString.Length <= MaxDiscordRPCStringLength ? stateString : string.Concat(stateString.AsSpan(0, MaxDiscordRPCStringLength - 3), "...");
                     break;
-                case 379:// Diva Hall
-                case 445:// Guild Hall (Diva Event)
+                case 379: // Diva Hall
+                case 445: // Guild Hall (Diva Event)
                     stateString = string.Format(CultureInfo.InvariantCulture, "GR: {0} | Diva Skill: {1} ({2} Left) | Diva Bond: {3} | Items Given: {4}", dataLoader.model.GRankNumber(), dataLoader.model.GetDivaSkillNameFromID(dataLoader.model.DivaSkill()), dataLoader.model.DivaSkillUsesLeft(), dataLoader.model.DivaBond(), dataLoader.model.DivaItemsGiven());
                     presenceTemplate.State = stateString.Length <= MaxDiscordRPCStringLength ? stateString : string.Concat(stateString.AsSpan(0, MaxDiscordRPCStringLength - 3), "...");
                     break;
-                case 462:// MezFez Entrance
+                case 462: // MezFez Entrance
                 case 463: // Volpkun Together
-                case 465:// MezFez Minigame
+                case 465: // MezFez Minigame
                     stateString = string.Format(CultureInfo.InvariantCulture, "GR: {0} | MezFes Points: {1} | Guild Food: {2} | Poogie Item: {3}", dataLoader.model.GRankNumber(), dataLoader.model.MezeportaFestivalPoints(), dataLoader.model.GetArmorSkill(dataLoader.model.GuildFoodSkill()), dataLoader.model.GetItemName(dataLoader.model.PoogieItemUseID()));
                     presenceTemplate.State = stateString.Length <= MaxDiscordRPCStringLength ? stateString : string.Concat(stateString.AsSpan(0, MaxDiscordRPCStringLength - 3), "...");
                     break;
-                case 464:// Uruki Pachinko
+                case 464: // Uruki Pachinko
                     stateString = string.Format(CultureInfo.InvariantCulture, "Score: {0} | Chain: {1} | Fish: {2} | Mushroom: {3} | Seed: {4} | Meat: {5}", dataLoader.model.UrukiPachinkoScore() + dataLoader.model.UrukiPachinkoBonusScore(), dataLoader.model.UrukiPachinkoChain(), dataLoader.model.UrukiPachinkoFish(), dataLoader.model.UrukiPachinkoMushroom(), dataLoader.model.UrukiPachinkoSeed(), dataLoader.model.UrukiPachinkoMeat());
                     presenceTemplate.State = stateString.Length <= MaxDiscordRPCStringLength ? stateString : string.Concat(stateString.AsSpan(0, MaxDiscordRPCStringLength - 3), "...");
                     break;
-                case 466:// Guuku Scoop
+                case 466: // Guuku Scoop
                     stateString = string.Format(CultureInfo.InvariantCulture, "Score: {0} | Small Guuku: {1} | Medium Guuku: {2} | Large Guuku: {3} | Golden Guuku: {4}", dataLoader.model.GuukuScoopScore(), dataLoader.model.GuukuScoopSmall(), dataLoader.model.GuukuScoopMedium(), dataLoader.model.GuukuScoopLarge(), dataLoader.model.GuukuScoopGolden());
                     presenceTemplate.State = stateString.Length <= MaxDiscordRPCStringLength ? stateString : string.Concat(stateString.AsSpan(0, MaxDiscordRPCStringLength - 3), "...");
                     break;
-                case 467:// Nyanrendo
+                case 467: // Nyanrendo
                     stateString = string.Format(CultureInfo.InvariantCulture, "Score: {0}", dataLoader.model.NyanrendoScore());
                     presenceTemplate.State = stateString.Length <= MaxDiscordRPCStringLength ? stateString : string.Concat(stateString.AsSpan(0, MaxDiscordRPCStringLength - 3), "...");
                     break;
-                case 468:// Panic Honey
+                case 468: // Panic Honey
                     stateString = string.Format(CultureInfo.InvariantCulture, "Honey: {0}", dataLoader.model.PanicHoneyScore());
                     presenceTemplate.State = stateString.Length <= MaxDiscordRPCStringLength ? stateString : string.Concat(stateString.AsSpan(0, MaxDiscordRPCStringLength - 3), "...");
                     break;
-                case 469:// Dokkan Battle Cats
+                case 469: // Dokkan Battle Cats
                     stateString = string.Format(CultureInfo.InvariantCulture, "Score: {0} | Scale: {1} | Shell: {2} | Camp: {3}", dataLoader.model.DokkanBattleCatsScore(), dataLoader.model.DokkanBattleCatsScale(), dataLoader.model.DokkanBattleCatsShell(), dataLoader.model.DokkanBattleCatsCamp());
                     presenceTemplate.State = stateString.Length <= MaxDiscordRPCStringLength ? stateString : string.Concat(stateString.AsSpan(0, MaxDiscordRPCStringLength - 3), "...");
                     break;
@@ -411,11 +411,11 @@ public sealed class DiscordService
                 switch (this.GetRoadTimerResetMode())
                 {
                     case "Always":
-                        if (dataLoader.model.AreaID() == 458)// Hunter's Road Area 1
+                        if (dataLoader.model.AreaID() == 458) // Hunter's Road Area 1
                         {
                             break;
                         }
-                        else if (dataLoader.model.AreaID() == 459)// Hunter's Road Base Camp
+                        else if (dataLoader.model.AreaID() == 459) // Hunter's Road Base Camp
                         {
                             if (dataLoader.model.RoadFloor() + 1 > dataLoader.model.previousRoadFloor)
                             {
@@ -437,20 +437,20 @@ public sealed class DiscordService
                         }
 
                     case "Never":
-                        if (dataLoader.model.AreaID() == 458)// Hunter's Road Area 1
+                        if (dataLoader.model.AreaID() == 458) // Hunter's Road Area 1
                         {
                             break;
                         }
-                        else if (dataLoader.model.AreaID() == 459)// Hunter's Road Base Camp
+                        else if (dataLoader.model.AreaID() == 459) // Hunter's Road Base Camp
                         {
                             if (dataLoader.model.RoadFloor() + 1 > dataLoader.model.previousRoadFloor)
                             {
                                 // reset values
                                 this.inQuest = false;
 
-                                if (!StartedRoadElapsedTime)
+                                if (!startedRoadElapsedTime)
                                 {
-                                    StartedRoadElapsedTime = true;
+                                    startedRoadElapsedTime = true;
                                     presenceTemplate.Timestamps = Timestamps.Now;
                                 }
                             }
@@ -463,20 +463,20 @@ public sealed class DiscordService
                         }
 
                     default:
-                        if (dataLoader.model.AreaID() == 458)// Hunter's Road Area 1
+                        if (dataLoader.model.AreaID() == 458) // Hunter's Road Area 1
                         {
                             break;
                         }
-                        else if (dataLoader.model.AreaID() == 459)// Hunter's Road Base Camp
+                        else if (dataLoader.model.AreaID() == 459) // Hunter's Road Base Camp
                         {
                             if (dataLoader.model.RoadFloor() + 1 > dataLoader.model.previousRoadFloor)
                             {
                                 // reset values
                                 this.inQuest = false;
 
-                                if (!StartedRoadElapsedTime)
+                                if (!startedRoadElapsedTime)
                                 {
-                                    StartedRoadElapsedTime = true;
+                                    startedRoadElapsedTime = true;
                                     presenceTemplate.Timestamps = Timestamps.Now;
                                 }
                             }
@@ -494,13 +494,13 @@ public sealed class DiscordService
             {
                 switch (dataLoader.model.AreaID())
                 {
-                    case 398:// Duremudira Arena
+                    case 398: // Duremudira Arena
 
                         if (!inDuremudiraArena)
                         {
                             inDuremudiraArena = true;
 
-                            if (dataLoader.model.QuestID() == 23649)// Arrogant Dure Slay
+                            if (dataLoader.model.QuestID() == 23649) // Arrogant Dure Slay
                             {
                                 presenceTemplate.Timestamps = GetDiscordTimerMode() switch
                                 {
@@ -538,7 +538,7 @@ public sealed class DiscordService
         {
             // reset values
             this.inQuest = false;
-            StartedRoadElapsedTime = false;
+            startedRoadElapsedTime = false;
             inDuremudiraArena = false;
             inDuremudiraDoorway = false;
 
@@ -564,7 +564,7 @@ public sealed class DiscordService
 
     private static readonly NLog.Logger LoggerInstance = NLog.LogManager.GetCurrentClassLogger();
 
-    private static bool StartedRoadElapsedTime;
+    private static bool startedRoadElapsedTime;
 
     private static bool inDuremudiraArena;
 
@@ -719,7 +719,7 @@ public sealed class DiscordService
         get
         {
             var s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
-            var serverNameFound = DiscordServersCollection.DiscordServerID.TryGetValue(s.DiscordServerID, out var value);
+            var serverNameFound = DiscordServers.DiscordServerID.TryGetValue(s.DiscordServerID, out var value);
             if (serverNameFound && value != null)
             {
                 return value;
@@ -749,18 +749,18 @@ public sealed class DiscordService
         },
         Buttons = new Button[]
             {
-                new Button() {Label = "【MHF-Z】Overlay "+ App.CurrentProgramVersion, Url = "https://github.com/DorielRivalet/mhfz-overlay" },
+                new Button() { Label = "【MHF-Z】Overlay "+ App.CurrentProgramVersion, Url = "https://github.com/DorielRivalet/mhfz-overlay" },
                 new Button() { Label = "Discord RPC C# Dev Site", Url = "https://lachee.dev/" },
             },
     };
-
-    // dure and road        
+      
     /// <summary>
     /// In the arena?
     /// </summary>
     /// <returns></returns>
     private static bool InArena(DataLoader dataLoader)
     {
+        // dure and road
         if (dataLoader.model.AreaID() == 398 || dataLoader.model.AreaID() == 458)
         {
             return true;
@@ -1160,7 +1160,7 @@ public sealed class DiscordService
             "bow_yellow" => "https://i.imgur.com/ExGTxvl.png",
             "bow_grey" => "https://i.imgur.com/Y5vOofE.png",
             "bow_rainbow" => "https://i.imgur.com/rsEycVk.gif",
-            _ => "https://i.imgur.com/9OkLYAz.png",//transcend
+            _ => "https://i.imgur.com/9OkLYAz.png", // transcend
         };
     }
 
@@ -1199,14 +1199,14 @@ public sealed class DiscordService
     // berserk support 4 54759
     // berserk support 5 54760
     // berserk carve 54761
-    // extreme slay (musou table 54) 55596 
+    // extreme slay (musou table 54) 55596
     // extreme support 1 55602
     // extreme support 2 55603
     // extreme support 3 55604
     // extreme support 4 55605
     // extreme support 5 55606
     // extreme carve 55607
-    const int MaxDiscordRPCStringLength = 127; // or any other maximum length specified by Discord
+    private const int MaxDiscordRPCStringLength = 127; // or any other maximum length specified by Discord
 
     /// <summary>
     /// Gets the road timer reset mode.
@@ -1239,19 +1239,19 @@ public sealed class DiscordService
         {
             switch (dataLoader.model.QuestID())
             {
-                case 23648:// arrogant repel
+                case 23648: // arrogant repel
                     return "Repel Arrogant Duremudira | ";
-                case 23649:// arrogant slay
+                case 23649: // arrogant slay
                     return "Slay Arrogant Duremudira | ";
-                case 23527:// Hunter's Road Multiplayer
+                case 23527: // Hunter's Road Multiplayer
                     return string.Empty;
-                case 23628:// solo road
+                case 23628: // solo road
                     return string.Empty;
-                case 21731:// 1st district dure
-                case 21749:// sky corridor version
+                case 21731: // 1st district dure
+                case 21749: // sky corridor version
                     return "Slay 1st District Duremudira | ";
-                case 21746:// 2nd district dure
-                case 21750:// sky corridor version
+                case 21746: // 2nd district dure
+                case 21750: // sky corridor version
                     return "Slay 2nd District Duremudira | ";
                 default:
                     if ((dataLoader.model.ObjectiveType() == 0x0 || dataLoader.model.ObjectiveType() == 0x02 || dataLoader.model.ObjectiveType() == 0x1002 || dataLoader.model.ObjectiveType() == 0x10) && dataLoader.model.QuestID() != 23527 && dataLoader.model.QuestID() != 23628 && dataLoader.model.QuestID() != 21731 && dataLoader.model.QuestID() != 21749 && dataLoader.model.QuestID() != 21746 && dataLoader.model.QuestID() != 21750)

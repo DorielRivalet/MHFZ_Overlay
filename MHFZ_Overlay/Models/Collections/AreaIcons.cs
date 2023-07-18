@@ -10,7 +10,7 @@ using System.Collections.ObjectModel;
 ///<summary>
 ///The area icon list
 ///</summary>
-public static class AreaIconCollection
+public static class AreaIcons
 {
     public static ReadOnlyDictionary<List<int>, string> AreaIconID { get; } = new (new Dictionary<List<int>, string>
     {

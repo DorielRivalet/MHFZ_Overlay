@@ -11,7 +11,7 @@ using MHFZ_Overlay.Models.Structures;
 ///<summary>
 ///The bingo monster difficulty list
 ///</summary>
-public static class BingoMonsterCollection
+public static class BingoMonsters
 {
     public static ReadOnlyDictionary<Difficulty, List<string>> BingoMonsterDifficulty { get; } = new (new Dictionary<Difficulty, List<string>>
     {

@@ -1532,12 +1532,12 @@ The process may take some time, as the program attempts to download from GitHub 
     /// <param name="e">The <see cref="DragEventArgs"/> instance containing the event data.</param>
     private void MainGrid_Drop(object sender, DragEventArgs e)
     {
-        if (MovingObject != null)
+        if (this.MovingObject != null)
         {
-            MovingObject.IsHitTestVisible = true;
+            this.MovingObject.IsHitTestVisible = true;
         }
 
-        MovingObject = null;
+        this.MovingObject = null;
     }
 
     /// <summary>
@@ -1547,16 +1547,16 @@ The process may take some time, as the program attempts to download from GitHub 
     /// <param name="e">The <see cref="MouseButtonEventArgs"/> instance containing the event data.</param>
     private void ElementMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
-        if (!IsDragConfigure)
+        if (!this.IsDragConfigure)
         {
             return;
         }
 
-        MovingObject = (FrameworkElement)sender;
+        this.MovingObject = (FrameworkElement)sender;
         Point pos = e.GetPosition(this);
-        XOffset = pos.X - Canvas.GetLeft(MovingObject);
-        YOffset = pos.Y - Canvas.GetTop(MovingObject);
-        MovingObject.IsHitTestVisible = false;
+        this.XOffset = pos.X - Canvas.GetLeft(this.MovingObject);
+        this.YOffset = pos.Y - Canvas.GetTop(this.MovingObject);
+        this.MovingObject.IsHitTestVisible = false;
     }
 
     private void ReloadButton_Click(object sender, RoutedEventArgs e)
@@ -1568,12 +1568,12 @@ The process may take some time, as the program attempts to download from GitHub 
 
     private void OpenConfigButton_Click(object sender, RoutedEventArgs e)
     {
-        if (configWindow == null || !configWindow.IsLoaded)
+        if (this.configWindow == null || !this.configWindow.IsLoaded)
         {
-            configWindow = new(this);
+            this.configWindow = new(this);
         }
 
-        configWindow.Show();
+        this.configWindow.Show();
         this.dataLoader.model.Configuring = true;
     }
 
@@ -1590,7 +1590,7 @@ The process may take some time, as the program attempts to download from GitHub 
 
     private void OpenConfigButton_Key()
     {
-        if (IsDragConfigure)
+        if (this.IsDragConfigure)
         {
             return;
         }
@@ -1601,14 +1601,14 @@ The process may take some time, as the program attempts to download from GitHub 
             LoggerInstance.Info(CultureInfo.InvariantCulture, "Detected game launcher while using configuration menu");
         }
 
-        if (configWindow == null || !configWindow.IsLoaded)
+        if (this.configWindow == null || !this.configWindow.IsLoaded)
         {
-            configWindow = new(this);
+            this.configWindow = new(this);
         }
 
         try
         {
-            configWindow.Show();// TODO: memory error?
+            this.configWindow.Show();// TODO: memory error?
             this.dataLoader.model.Configuring = true;
         }
         catch (Exception ex)
@@ -1618,8 +1618,8 @@ The process may take some time, as the program attempts to download from GitHub 
 
         try
         {
-            dataLoader.CheckForExternalProcesses();
-            dataLoader.CheckForIllegalModifications();
+            this.dataLoader.CheckForExternalProcesses();
+            this.dataLoader.CheckForIllegalModifications();
         }
         catch (Exception ex)
         {
@@ -1634,21 +1634,21 @@ The process may take some time, as the program attempts to download from GitHub 
 
     private void MainGrid_MouseMove(object sender, MouseEventArgs e)
     {
-        DoDragDrop(MovingObject);
+        DoDragDrop(this.MovingObject);
     }
 
     public void EnableDragAndDrop()
     {
-        IsDragConfigure = true;
-        ExitDragAndDrop.Visibility = Visibility.Visible;
-        MainGrid.Background = (Brush?)new BrushConverter().ConvertFrom("#01000000");
-        if (configWindow != null)
+        this.IsDragConfigure = true;
+        this.ExitDragAndDrop.Visibility = Visibility.Visible;
+        this.MainGrid.Background = (Brush?)new BrushConverter().ConvertFrom("#01000000");
+        if (this.configWindow != null)
         {
-            configWindow.Visibility = Visibility.Hidden;
+            this.configWindow.Visibility = Visibility.Hidden;
         }
 
-        ToggleClickThrough();
-        ToggleOverlayBorders();
+        this.ToggleClickThrough();
+        this.ToggleOverlayBorders();
     }
 
     // TODO: use a dictionary for looping instead
@@ -1656,58 +1656,58 @@ The process may take some time, as the program attempts to download from GitHub 
     {
         var thickness = new System.Windows.Thickness(0);
 
-        if (IsDragConfigure)
+        if (this.IsDragConfigure)
         {
             thickness = new System.Windows.Thickness(2);
         }
 
-        ActionsPerMinuteInfoBorder.BorderThickness = thickness;
-        DamagePerSecondInfoBorder.BorderThickness = thickness;
-        HitCountInfoBorder.BorderThickness = thickness;
-        LocationTextInfoBorder.BorderThickness = thickness;
-        MonsterAtkMultInfoBorder.BorderThickness = thickness;
-        MonsterBlastInfoBorder.BorderThickness = thickness;
-        MonsterDefrateInfoBorder.BorderThickness = thickness;
-        MonsterParaInfoBorder.BorderThickness = thickness;
-        MonsterPoisonInfoBorder.BorderThickness = thickness;
-        MonsterSizeInfoBorder.BorderThickness = thickness;
-        MonsterSleepInfoBorder.BorderThickness = thickness;
-        MonsterStunInfoBorder.BorderThickness = thickness;
-        PersonalBestInfoBorder.BorderThickness = thickness;
-        PersonalBestTimePercentInfoBorder.BorderThickness = thickness;
-        PlayerAtkInfoBorder.BorderThickness = thickness;
-        PlayerHitsTakenBlockedInfoBorder.BorderThickness = thickness;
-        QuestAttemptsInfoBorder.BorderThickness = thickness;
-        PersonalBestAttemptsInfoBorder.BorderThickness = thickness;
-        QuestNameInfoBorder.BorderThickness = thickness;
-        SessionTimeInfoBorder.BorderThickness = thickness;
-        SharpnessInfoBorder.BorderThickness = thickness;
-        TimerInfoBorder.BorderThickness = thickness;
-        GamepadGridBorder.BorderThickness = thickness;
-        KBMLayoutGridBorder.BorderThickness = thickness;
-        QuestIDGridBorder.BorderThickness = thickness;
-        OverlayModeWatermarkBorder.BorderThickness = thickness;
-        Monster1HpBarBorder.BorderThickness = thickness;
-        Monster2HpBarBorder.BorderThickness = thickness;
-        Monster3HpBarBorder.BorderThickness = thickness;
-        Monster4HpBarBorder.BorderThickness = thickness;
-        MonsterPartThresholdBorder.BorderThickness = thickness;
-        DamageNumbersBorder.BorderThickness = thickness;
-        PlayerAPMGraphGridBorder.BorderThickness = thickness;
-        PlayerAttackGraphGridBorder.BorderThickness = thickness;
-        PlayerDPSGraphGridBorder.BorderThickness = thickness;
-        PlayerHitsPerSecondGraphGridBorder.BorderThickness = thickness;
-        TitleBarBorder.BorderThickness = thickness;
+        this.ActionsPerMinuteInfoBorder.BorderThickness = thickness;
+        this.DamagePerSecondInfoBorder.BorderThickness = thickness;
+        this.HitCountInfoBorder.BorderThickness = thickness;
+        this.LocationTextInfoBorder.BorderThickness = thickness;
+        this.MonsterAtkMultInfoBorder.BorderThickness = thickness;
+        this.MonsterBlastInfoBorder.BorderThickness = thickness;
+        this.MonsterDefrateInfoBorder.BorderThickness = thickness;
+        this.MonsterParaInfoBorder.BorderThickness = thickness;
+        this.MonsterPoisonInfoBorder.BorderThickness = thickness;
+        this.MonsterSizeInfoBorder.BorderThickness = thickness;
+        this.MonsterSleepInfoBorder.BorderThickness = thickness;
+        this.MonsterStunInfoBorder.BorderThickness = thickness;
+        this.PersonalBestInfoBorder.BorderThickness = thickness;
+        this.PersonalBestTimePercentInfoBorder.BorderThickness = thickness;
+        this.PlayerAtkInfoBorder.BorderThickness = thickness;
+        this.PlayerHitsTakenBlockedInfoBorder.BorderThickness = thickness;
+        this.QuestAttemptsInfoBorder.BorderThickness = thickness;
+        this.PersonalBestAttemptsInfoBorder.BorderThickness = thickness;
+        this.QuestNameInfoBorder.BorderThickness = thickness;
+        this.SessionTimeInfoBorder.BorderThickness = thickness;
+        this.SharpnessInfoBorder.BorderThickness = thickness;
+        this.TimerInfoBorder.BorderThickness = thickness;
+        this.GamepadGridBorder.BorderThickness = thickness;
+        this.KBMLayoutGridBorder.BorderThickness = thickness;
+        this.QuestIDGridBorder.BorderThickness = thickness;
+        this.OverlayModeWatermarkBorder.BorderThickness = thickness;
+        this.Monster1HpBarBorder.BorderThickness = thickness;
+        this.Monster2HpBarBorder.BorderThickness = thickness;
+        this.Monster3HpBarBorder.BorderThickness = thickness;
+        this.Monster4HpBarBorder.BorderThickness = thickness;
+        this.MonsterPartThresholdBorder.BorderThickness = thickness;
+        this.DamageNumbersBorder.BorderThickness = thickness;
+        this.PlayerAPMGraphGridBorder.BorderThickness = thickness;
+        this.PlayerAttackGraphGridBorder.BorderThickness = thickness;
+        this.PlayerDPSGraphGridBorder.BorderThickness = thickness;
+        this.PlayerHitsPerSecondGraphGridBorder.BorderThickness = thickness;
+        this.TitleBarBorder.BorderThickness = thickness;
     }
 
     private bool ClickThrough = true;
 
     private void ToggleClickThrough()
     {
-        if (!ClickThrough)
+        if (!this.ClickThrough)
         {
-            IsHitTestVisible = false;
-            Focusable = false;
+            this.IsHitTestVisible = false;
+            this.Focusable = false;
 
             // Get this window's handle         
             IntPtr hwnd = new WindowInteropHelper(this).Handle;
@@ -1718,8 +1718,8 @@ The process may take some time, as the program attempts to download from GitHub 
         }
         else
         {
-            IsHitTestVisible = true;
-            Focusable = true;
+            this.IsHitTestVisible = true;
+            this.Focusable = true;
 
             // Get this window's handle         
             IntPtr hwnd = new WindowInteropHelper(this).Handle;

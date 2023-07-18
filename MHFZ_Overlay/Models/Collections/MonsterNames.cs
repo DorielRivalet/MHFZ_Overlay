@@ -8,12 +8,11 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 ///<summary>
-///The monster ID list
-///is the same as monsternamedictionary seemingly. could use this for something else.
+///The monster name list. Not the full list.
 ///</summary>
-public static class MonsterCollection
+public static class MonsterNames
 {
-    public static ReadOnlyDictionary<int, string> MonsterID { get; } = new (new Dictionary<int, string>
+    public static ReadOnlyDictionary<int, string> MonsterNameID { get; } = new (new Dictionary<int, string>
     {
         { 0, "None" },
         { 1, "Rathian" },
@@ -33,7 +32,7 @@ public static class MonsterCollection
         { 15, "Khezu" },
         { 16, "Velociprey" },
         { 17, "Gravios" },
-        { 18, "Felyne?" },
+        { 18, "Felyne" },
         { 19, "Vespoid" },
         { 20, "Gypceros" },
         { 21, "Plesioth" },
@@ -47,10 +46,10 @@ public static class MonsterCollection
         { 29, "Rocks" },
         { 30, "Ioprey" },
         { 31, "Iodrome" },
-        { 32, "Pugis" },
+        { 32, "Poogie" },
         { 33, "Kirin" },
         { 34, "Cephalos" },
-        { 35, "Giaprey / Giadrome" },
+        { 35, "Giaprey" },
         { 36, "Crimson Fatalis" },
         { 37, "Pink Rathian" },
         { 38, "Blue Yian Kut-Ku" },
@@ -80,7 +79,6 @@ public static class MonsterCollection
         { 62, "Conga" },
         { 63, "Remobra" },
         { 64, "Lunastra" },
-        { 65, "Teostra" },
         { 66, "Hermitaur" },
         { 67, "Shogun Ceanataur" },
         { 68, "Bulldrome" },
@@ -102,15 +100,13 @@ public static class MonsterCollection
         { 84, "Akura Jebia" },
         { 85, "Berukyurosu" },
         { 86, "Cactus" },
-        { 87, "Gorge Objects" },
-        { 88, "Gorge Rocks" },
-        { 89, "Pariapuria" },
+        { 87, "Gorge Object" },
+        { 88, "Gorge Rock" },
         { 90, "White Espinas" },
         { 91, "Kamu Orugaron" },
         { 92, "Nono Orugaron" },
         { 93, "Raviente" },
         { 94, "Dyuragaua" },
-        { 95, "Doragyurosu" },
         { 96, "Gurenzeburu" },
         { 97, "Burukku" },
         { 98, "Erupe" },
@@ -121,14 +117,12 @@ public static class MonsterCollection
         { 103, "Taikun Zamuza" },
         { 104, "Abiorugu" },
         { 105, "Kuarusepusu" },
-        { 106, "Odibatorasu" },
         { 107, "Disufiroa" },
         { 108, "Rebidiora" },
         { 109, "Anorupatisu" },
         { 110, "Hyujikiki" },
         { 111, "Midogaron" },
         { 112, "Giaorugu" },
-        { 113, "Mi Ru" },
         { 114, "Farunokku" },
         { 115, "Pokaradon" },
         { 116, "Shantien" },
@@ -161,7 +155,6 @@ public static class MonsterCollection
         { 143, "Kusubami" },
         { 144, "Yama Kurai" },
         { 145, "3rd Phase Duremudira" },
-        { 146, "Zinogre" },
         { 147, "Deviljho" },
         { 148, "Brachydios" },
         { 149, "Berserk Raviente" },
@@ -169,8 +162,6 @@ public static class MonsterCollection
         { 151, "Barioth" },
         { 152, "Uragaan" },
         { 153, "Stygian Zinogre" },
-        { 154, "Guanzorumu" },
-        { 155, "Starving Deviljho" },
         { 156, "UNK" },
         { 157, "Egyurasu" },
         { 158, "Voljang" },
@@ -181,7 +172,6 @@ public static class MonsterCollection
         { 163, "Blinking Nargacuga" },
         { 164, "Shagaru Magala" },
         { 165, "Amatsu" },
-        { 166, "Elzelion" },
         { 167, "Arrogant Duremudira" },
         { 168, "Rocks" },
         { 169, "Seregios" },

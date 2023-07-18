@@ -171,7 +171,6 @@ public sealed class FileService
                 var visualBrush = new VisualBrush(target);
                 visualBrush.Stretch = Stretch.None;
                 context.DrawRectangle(visualBrush, null, new Rect(new Point(), bounds.Size));
-
             }
 
             renderTarget.Render(visual);
@@ -249,7 +248,7 @@ public sealed class FileService
                 var s = (Settings)Application.Current.TryFindResource("Settings");
 
                 // Create a dictionary to store the user settings
-                Dictionary<string, OverlaySetting> settings = new();
+                Dictionary<string, OverlaySetting> settings = new ();
 
                 // Get a list of the user settings properties sorted alphabetically by name
                 var sortedSettings = s.Properties.Cast<System.Configuration.SettingsProperty>().OrderBy(setting => setting.Name).ToList();
@@ -277,7 +276,7 @@ public sealed class FileService
                         Provider = settingProvider,
                         ProviderName = settingProviderName,
                         ProviderApplicationName = settingProviderApplicationName,
-                        ProviderDescription = settingProviderDescription
+                        ProviderDescription = settingProviderDescription,
                     };
 
                     // Add the key and Setting object to the dictionary
@@ -290,7 +289,6 @@ public sealed class FileService
                 // Save the JSON string to the selected file
                 File.WriteAllText(saveFileDialog.FileName, json);
                 logger.Info(CultureInfo.InvariantCulture, "Saved settings {0}", saveFileDialog.FileName);
-
             }
         }
         catch (Exception ex)
@@ -313,7 +311,9 @@ public sealed class FileService
         File.Copy(file, destination, overwrite);
         logger.Info(CultureInfo.InvariantCulture, "{0}. Original file: {1}, Destination: {2}", logMessage, file, destination);
         if (showMessageBox)
+        {
             MessageBox.Show(string.Format(CultureInfo.InvariantCulture, "{0}. Original file: {1}, Destination: {2}", logMessage, file, destination), Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
+        }
     }
 
     /// <summary>
@@ -343,7 +343,6 @@ public sealed class FileService
             }
 
             Directory.CreateDirectory(destFileDirectoryName);
-
         }
         catch (Exception ex)
         {
@@ -464,7 +463,9 @@ public sealed class FileService
         }
 
         if (illegalFiles.Count > 0)
+        {
             doesExist = true;
+        }
 
         if (doesExist && isFatal)
         {

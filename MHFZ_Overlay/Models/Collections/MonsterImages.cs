@@ -10,7 +10,7 @@ using System.Collections.ObjectModel;
 ///<summary>
 ///The monster image list
 ///</summary>
-public static class MonsterImageCollection
+public static class MonsterImages
 {
     public static ReadOnlyDictionary<int, string> MonsterImageID { get; } = new (new Dictionary<int, string>
     {

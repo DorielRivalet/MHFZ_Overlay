@@ -12,7 +12,7 @@ using System.Globalization;
 ///<summary>
 ///The players list
 ///</summary>
-public static class PlayersList
+public static class Players
 {
     public static ReadOnlyDictionary<int, List<string>> PlayerIDs { get; } = new (new Dictionary<int, List<string>>
     {

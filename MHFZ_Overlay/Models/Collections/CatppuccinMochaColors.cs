@@ -37,9 +37,9 @@ using System.Collections.ObjectModel;
 // Base    #1e1e2e    rgb(30, 30, 46)    hsl(240, 21%, 15%)
 // Mantle    #181825    rgb(24, 24, 37)    hsl(240, 21%, 12%)
 // Crust    #11111b    rgb(17, 17, 27)    hsl(240, 23%, 9%)
-public static class CatppuccinMochaColorsCollection
+public static class CatppuccinMochaColors
 {
-    public static ReadOnlyDictionary<string, string> CatppuccinMochaColors { get; } = new (new Dictionary<string, string>
+    public static ReadOnlyDictionary<string, string> NameHex { get; } = new (new Dictionary<string, string>
     {
         { "Rosewater", "#f5e0dc" },
         { "Flamingo", "#f2cdcd" },

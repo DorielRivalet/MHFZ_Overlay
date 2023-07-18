@@ -225,34 +225,34 @@ public sealed class DataLoader
         }
     }
 
-    private readonly List<string> bannedProcesses = new List<string>()
+    private readonly List<string> bannedProcesses = new ()
     {
-        "displayer","Displayer","cheat","Cheat","overlay","Overlay","Wireshark", "FreeCam"
+        "displayer", "Displayer", "cheat", "Cheat", "overlay", "Overlay", "Wireshark", "FreeCam",
     };
 
-    private readonly List<string> bannedFiles = new List<string>()
+    private readonly List<string> bannedFiles = new ()
     {
-        "d3d8","d3d9","d3d10","d3d11","d3d12","ddraw","dinput","dinput8","dsound",
-        "msacm32","msvfw32","version","wininet","winmm","xlive","bink2w64","bink2w64Hooked",
-        "vorbisFile","vorbisHooked","binkw32","binkw32Hooked"
+        "d3d8", "d3d9", "d3d10", "d3d11", "d3d12", "ddraw", "dinput", "dinput8", "dsound",
+        "msacm32", "msvfw32", "version", "wininet", "winmm", "xlive", "bink2w64", "bink2w64Hooked",
+        "vorbisFile", "vorbisHooked", "binkw32", "binkw32Hooked",
     };
 
-    private readonly List<string> bannedFileExtensions = new List<string>()
+    private readonly List<string> bannedFileExtensions = new ()
     {
-        ".asi"
+        ".asi",
     };
 
-    private readonly List<string> bannedFolders = new List<string>()
+    private readonly List<string> bannedFolders = new ()
     {
-        "scripts","plugins","script","plugin","localize-dat"
+        "scripts", "plugins", "script", "plugin", "localize-dat",
     };
 
-    private readonly List<string> allowedProcesses = new List<string>()
+    private readonly List<string> allowedProcesses = new ()
     {
-        "LogiOverlay" // Logitech Bluetooth for mouse
+        "LogiOverlay", // Logitech Bluetooth for mouse
     };
 
-    private bool steamOverlayWarningShown = false;
+    private bool steamOverlayWarningShown;
 
     // TODO: savvy users know the bypass. Short of making the overlay too involved in the user's machine, 
     // there are currently no workarounds.
@@ -294,7 +294,6 @@ public sealed class DataLoader
 
             if (this.bannedProcesses.Any(s => process.ProcessName.Contains(s)) && process.ProcessName != "MHFZ_Overlay")
             {
-
                 // processName is a substring of one of the banned process strings
                 LoggerInstance.Fatal(CultureInfo.InvariantCulture, "Found banned process {0}", process.ProcessName);
                 MessageBox.Show($"Close other external programs before opening the overlay ({process.ProcessName} found)", Messages.FatalTitle, MessageBoxButton.OK, MessageBoxImage.Error);
@@ -400,11 +399,11 @@ public sealed class DataLoader
     public bool databaseChanged { get; set; }
 
     //needed for getting data
-    readonly Mem m = new();
+    private readonly Mem m = new ();
 
     public bool isHighGradeEdition { get; set; }
 
-    int index;
+    private int index;
 
     /// <summary>
     /// Gets the model.
@@ -454,7 +453,6 @@ public sealed class DataLoader
             this.WriteByteFromAddress(codecaveAddress, proc, this.isHighGradeEdition ? 249263758 : 102223598, 33);
             this.WriteByteFromAddress(codecaveAddress, proc, this.isHighGradeEdition ? 27534020 : 27601756, 51);
             this.WriteByteFromAddress(codecaveAddress, proc, this.isHighGradeEdition ? 2973376 : 2865056, 60);
-
         }
         else
         {
@@ -489,7 +487,7 @@ public sealed class DataLoader
     /// <param name="proc">The proc.</param>
     /// <param name="offset1">The offset1.</param>
     /// <param name="offset2">The offset2.</param>
-    void WriteByteFromAddress(UIntPtr codecaveAddress, Process proc, long offset1, int offset2)
+    private void WriteByteFromAddress(UIntPtr codecaveAddress, Process proc, long offset1, int offset2)
     {
         long address = proc.Modules[this.index].BaseAddress.ToInt32() + offset1;
         string addressString = address.ToString("X8", CultureInfo.InvariantCulture);
@@ -503,7 +501,7 @@ public sealed class DataLoader
     /// </summary>
     /// <param name="PID">The pid.</param>
     /// <returns></returns>
-    Process? LoadMHFODLL(int PID)
+    private Process? LoadMHFODLL(int PID)
     {
         LoggerInstance.Info(CultureInfo.InvariantCulture, "Loading MHFODLL");
 

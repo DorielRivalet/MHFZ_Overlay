@@ -3,7 +3,6 @@
 // found in the LICENSE file.
 
 // https://stackoverflow.com/a/65412682/18859245
-
 namespace MHFZ_Overlay.Services.Hotkey;
 
 using System;

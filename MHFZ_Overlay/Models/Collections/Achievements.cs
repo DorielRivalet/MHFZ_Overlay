@@ -13,7 +13,7 @@ using MHFZ_Overlay.Models.Structures;
 /// <summary>
 /// Achievements dictionary. TODO
 /// </summary>
-public static class AchievementsCollection
+public static class Achievements
 {
     /// <summary>
     /// Gets the achievement list.

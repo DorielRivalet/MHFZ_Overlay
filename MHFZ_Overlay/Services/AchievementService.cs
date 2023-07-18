@@ -41,17 +41,17 @@ public sealed class AchievementService : IAchievementService
 
         foreach (var achievementID in playerAchievements)
         {
-            obtainedAchievements.Add(achievementID);
+            this.obtainedAchievements.Add(achievementID);
         }
     }
 
     public async Task CheckForAchievementsAsync(Snackbar snackbar, DataLoader dataLoader, DatabaseService databaseManagerInstance, Settings s)
     {
-        var newAchievements = GetNewlyObtainedAchievements(dataLoader, databaseManagerInstance, s);
+        var newAchievements = this.GetNewlyObtainedAchievements(dataLoader, databaseManagerInstance, s);
 
         if (newAchievements.Count > 0)
         {
-            UpdatePlayerAchievements(newAchievements);
+            this.UpdatePlayerAchievements(newAchievements);
             await Achievement.ShowMany(snackbar, newAchievements);
             LoggerInstance.Info(CultureInfo.InvariantCulture, "Awarded achievements: {0}", JsonConvert.SerializeObject(newAchievements));
         }
@@ -63,15 +63,15 @@ public sealed class AchievementService : IAchievementService
 
     public async Task RewardAchievement(int achievementID, Snackbar snackbar)
     {
-        AchievementsCollection.IDAchievement.TryGetValue(achievementID, out var achievement);
+        Achievements.IDAchievement.TryGetValue(achievementID, out var achievement);
         if (achievement == null)
         {
             return;
         }
 
-        if (!obtainedAchievements.Contains(achievementID))
+        if (!this.obtainedAchievements.Contains(achievementID))
         {
-            obtainedAchievements.Add(achievementID);
+            this.obtainedAchievements.Add(achievementID);
 
             // Store the achievement in the SQLite PlayerAchievements table
             DatabaseManagerInstance.StoreAchievement(achievementID);
@@ -87,7 +87,7 @@ public sealed class AchievementService : IAchievementService
     private static readonly DatabaseService DatabaseManagerInstance = DatabaseService.GetInstance();
     private static readonly NLog.Logger LoggerInstance = NLog.LogManager.GetCurrentClassLogger();
     private static AchievementService? instance;
-    private HashSet<int> obtainedAchievements = new();
+    private HashSet<int> obtainedAchievements = new ();
 
     private AchievementService()
     {
@@ -98,13 +98,13 @@ public sealed class AchievementService : IAchievementService
     {
         var newAchievements = new List<int>();
 
-        foreach (var kvp in AchievementsCollection.IDAchievement)
+        foreach (var kvp in Achievements.IDAchievement)
         {
             var achievementID = kvp.Key;
             var achievement = kvp.Value;
 
             // Check the specific conditions for obtaining the achievement
-            if (!obtainedAchievements.Contains(achievementID) && CheckConditionsForAchievement(achievementID, dataLoader, databaseManagerInstance, s))
+            if (!this.obtainedAchievements.Contains(achievementID) && this.CheckConditionsForAchievement(achievementID, dataLoader, databaseManagerInstance, s))
             {
                 newAchievements.Add(achievementID);
             }
@@ -2304,7 +2304,7 @@ public sealed class AchievementService : IAchievementService
         // Use the provided database update logic or similar approach
         foreach (var achievementID in achievementsID)
         {
-            obtainedAchievements.Add(achievementID);
+            this.obtainedAchievements.Add(achievementID);
 
             // Store the achievement in the SQLite PlayerAchievements table
             DatabaseManagerInstance.StoreAchievement(achievementID);

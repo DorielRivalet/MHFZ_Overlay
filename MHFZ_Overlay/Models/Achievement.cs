@@ -24,7 +24,7 @@ public sealed class Achievement
     {
         foreach (var achievementID in achievementsID)
         {
-            if (AchievementsCollection.IDAchievement.TryGetValue(achievementID, out Achievement? achievement))
+            if (Achievements.IDAchievement.TryGetValue(achievementID, out Achievement? achievement))
             {
                 if (achievement == null)
                 {
@@ -74,7 +74,7 @@ public sealed class Achievement
         {
             if (colorString == null)
             {
-                colorString = CatppuccinMochaColorsCollection.CatppuccinMochaColors["Base"];
+                colorString = CatppuccinMochaColors.NameHex["Base"];
             }
 
             var brush = (Brush?)brushConverter.ConvertFromString(colorString);
@@ -82,7 +82,7 @@ public sealed class Achievement
         }
 
         // Default color if rank is not defined
-        return (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColorsCollection.CatppuccinMochaColors["Base"]);
+        return (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Base"]);
     }
 
     /// <summary>
@@ -152,10 +152,10 @@ public sealed class Achievement
     // Additional properties or methods related to achievements can be added here
     private static readonly Dictionary<AchievementRank, string> RankColors = new Dictionary<AchievementRank, string>
     {
-        { AchievementRank.None, CatppuccinMochaColorsCollection.CatppuccinMochaColors["Base"] },        // Black
-        { AchievementRank.Bronze, CatppuccinMochaColorsCollection.CatppuccinMochaColors["Maroon"] },      // Bronze color
-        { AchievementRank.Silver, CatppuccinMochaColorsCollection.CatppuccinMochaColors["Lavender"] },      // Silver color
-        { AchievementRank.Gold, CatppuccinMochaColorsCollection.CatppuccinMochaColors["Yellow"] },        // Gold color
-        { AchievementRank.Platinum, CatppuccinMochaColorsCollection.CatppuccinMochaColors["Teal"] },     // Platinum color
+        { AchievementRank.None, CatppuccinMochaColors.NameHex["Base"] },        // Black
+        { AchievementRank.Bronze, CatppuccinMochaColors.NameHex["Maroon"] },      // Bronze color
+        { AchievementRank.Silver, CatppuccinMochaColors.NameHex["Lavender"] },      // Silver color
+        { AchievementRank.Gold, CatppuccinMochaColors.NameHex["Yellow"] },        // Gold color
+        { AchievementRank.Platinum, CatppuccinMochaColors.NameHex["Teal"] },     // Platinum color
     };
 }
