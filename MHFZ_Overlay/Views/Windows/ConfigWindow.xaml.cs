@@ -1730,7 +1730,7 @@ public partial class ConfigWindow : FluentWindow
     private Grid? weaponStatsMainGrid;
     private Grid? statsGraphsMainGrid;
     private Grid? statsTextMainGrid;
-    private ItemsControl? achievementsMenuItemsControl;
+    private ListView? achievementsListView;
 
     private void UpdateYoutubeLink_ButtonClick(object sender, RoutedEventArgs e)
     {
@@ -1775,23 +1775,6 @@ public partial class ConfigWindow : FluentWindow
         youtubeLinkTextBox = (TextBox)sender;
     }
 
-    private void MostRecentRuns_ListViewLoaded(object sender, RoutedEventArgs e)
-    {
-        mostRecentRunsListView = (ListView)sender;
-        MainWindow.dataLoader.model.RecentRuns = databaseManager.GetRecentRuns();
-        mostRecentRunsListView.ItemsSource = MainWindow.dataLoader.model.RecentRuns;
-        mostRecentRunsListView.Items.Refresh();
-    }
-
-    private void Top20Runs_ListViewLoaded(object sender, RoutedEventArgs e)
-    {
-        top20RunsListView = (ListView)sender;
-        MainWindow.dataLoader.model.FastestRuns = databaseManager.GetFastestRuns(this);
-        top20RunsListView.ItemsSource = MainWindow.dataLoader.model.FastestRuns;
-        top20RunsListView.DataContext = MainWindow.dataLoader.model.FastestRuns;
-        top20RunsListView.Items.Refresh();
-    }
-
     private void Top20Runs_DataGridLoaded(object sender, RoutedEventArgs e)
     {
         top20RunsDataGrid = (DataGrid)sender;
@@ -1808,7 +1791,6 @@ public partial class ConfigWindow : FluentWindow
 
     private void weaponListTop20RunsComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        // top20RunsListView = (ListView)sender;
         if (top20RunsDataGrid == null)
         {
             return;
@@ -4068,12 +4050,17 @@ public partial class ConfigWindow : FluentWindow
         storyboard.Begin();
     }
 
-    private void AchievementsMenuItemsControl_Loaded(object sender, RoutedEventArgs e)
+    private void AchievementsListView_Loaded(object sender, RoutedEventArgs e)
     {
-        achievementsMenuItemsControl = (ItemsControl)sender;
+        achievementsListView = (ListView)sender;
         MainWindow.dataLoader.model.PlayerAchievements = databaseManager.GetPlayerAchievements();
-        achievementsMenuItemsControl.ItemsSource = MainWindow.dataLoader.model.PlayerAchievements;
-        achievementsMenuItemsControl.Items.Refresh();
+        achievementsListView.ItemsSource = MainWindow.dataLoader.model.PlayerAchievements;
+        achievementsListView.Items.Refresh();
+    }
+
+    private void AchievementsListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+
     }
 }
 

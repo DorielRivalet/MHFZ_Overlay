@@ -46,6 +46,8 @@
             <converter:OptionToVisibilityConverter x:Key="OptionToVisibilityConverter" />
             <converter:XamlIconToViewBoxConverter x:Key="XamlIconToViewBoxConverter"/>
             <converter:AchievementRankToBrushConverter x:Key="AchievementRankToBrushConverter"/>
+            <converter:CompletionDateToOpacityConverter x:Key="CompletionDateToOpacityConverter"/>
+            <converter:BooleanToOpacityConverter  x:Key="BooleanToOpacityConverter "/>
             <DataTemplate x:Key="DefaultTemplate">
                 <Grid Background="#7f1e1e2e">
                     <TextBlock TextWrapping="Wrap" MaxWidth="500" MaxHeight="500" Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -1654,28 +1656,40 @@
                                             <ColumnDefinition Width="2*"/>
                                             <ColumnDefinition Width="1*"/>
                                         </Grid.ColumnDefinitions>
-                                        <Grid Margin="5" x:Name="AchievementsMenuGrid" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
-                                            <ScrollViewer CanContentScroll="True" IsDeferredScrollingEnabled="True" VerticalScrollBarVisibility="Visible">
-                                                <ItemsControl x:Name="AchievementsMenuItemsControl" Loaded="AchievementsMenuItemsControl_Loaded">
-                                                    <ItemsControl.ItemsPanel>
-                                                        <ItemsPanelTemplate>
-                                                            <WrapPanel Orientation="Horizontal" />
-                                                        </ItemsPanelTemplate>
-                                                    </ItemsControl.ItemsPanel>
-                                                    <ItemsControl.ItemTemplate>
-                                                        <DataTemplate>
-                                                            <Grid Width="192" Height="192" Margin="5">
-                                                                <StackPanel Orientation="Vertical">
-                                                                    <Image Source="{Binding Image}" Width="96" Margin="0,5,0,0"/>
-                                                                    <TextBlock Text="{Binding Title}" Foreground="{Binding Rank, Converter={StaticResource AchievementRankToBrushConverter}}"
-                                                                    Margin="0,5,0,0" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center"/>
-                                                                </StackPanel>
-                                                            </Grid>
-                                                        </DataTemplate>
-                                                    </ItemsControl.ItemTemplate>
-                                                </ItemsControl>
-                                            </ScrollViewer>
-                                        </Grid>
+                                        <ListView x:Name="AchievementsListView" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Loaded="AchievementsListView_Loaded" SelectionChanged="AchievementsListView_SelectionChanged">
+                                            <ListView.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <UniformGrid Columns="4" />
+                                                </ItemsPanelTemplate>
+                                            </ListView.ItemsPanel>
+                                            <ListView.ItemContainerStyle>
+                                                <Style TargetType="ListViewItem">
+                                                    <Setter Property="Template">
+                                                        <Setter.Value>
+                                                            <ControlTemplate TargetType="ListViewItem">
+                                                                <ContentPresenter />
+                                                            </ControlTemplate>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </Style>
+                                            </ListView.ItemContainerStyle>
+                                            <ListView.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Grid Width="192" Height="192" Margin="5">
+                                                        <StackPanel Orientation="Vertical">
+                                                            <Image Source="{Binding Image}" Width="96" Margin="0,5,0,0" Opacity="{Binding CompletionDate, Converter={StaticResource CompletionDateToOpacityConverter}}" />
+                                                            <TextBlock Text="{Binding Title}" Foreground="{Binding Rank, Converter={StaticResource AchievementRankToBrushConverter}}"
+                               Margin="0,5,0,0" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center"
+                               Opacity="{Binding CompletionDate, Converter={StaticResource CompletionDateToOpacityConverter}}" />
+                                                        </StackPanel>
+                                                    </Grid>
+                                                </DataTemplate>
+                                            </ListView.ItemTemplate>
+                                        </ListView>
+
+
+
+
 
                                         <Grid x:Name="Achievements3DPreviewGrid" Grid.Row="0" Grid.Column="2" Loaded="Achievements3DPreviewGrid_Loaded">
                                             <Viewport3D ClipToBounds="False" IsHitTestVisible="False">
