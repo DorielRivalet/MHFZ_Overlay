@@ -35,6 +35,7 @@
     - [Guild Card](#guild-card)
     - [Hunter Sets (Image)](#hunter-sets-image)
     - [Damage Calculator](#damage-calculator)
+    - [Achievements](#achievements)
   - [Features not yet implemented](#features-not-yet-implemented)
   - [Bugs](#bugs)
   - [Frequently Asked Questions](#frequently-asked-questions)
@@ -150,13 +151,10 @@ As an alternative to hotkeys, you can check your system tray options by right-cl
 
 - [x] Monster Effective HP Bars (*e.g.* Burning Freezing Elzelion's 1,000,000 HP!).
 
+You can also see the monster icons or renders, and there is an option for automatic bar colors depending on the monster. You can adjust the font size, color, family and weight; in addition to that you can hide/show any sub-component.
+
 ![Monster HP Bars 1](./demo/hp1.png)
 ![Monster HP Bars 2](./demo/hp2.png)
-
-You can also see the monster icons or renders, and there is an option for automatic bar colors depending on the monster!
-
-![Monster HP Bars 3](./demo/hp3.png)
-![Monster HP Bars 4](./demo/hp4.png)
 
 - [x] Sharpness Numbers (colorized by current sharpness tier!).
 
@@ -276,6 +274,10 @@ These images don't show everything, find out what's missing by pressing `Shift+F
 ### Damage Calculator
 
 ![Config7](./demo/config7.png)
+
+### Achievements
+
+![achievements](./demo/achievements.png)
 
 ## Features not yet implemented
 
