@@ -1724,7 +1724,7 @@
                                                                         <DiffuseMaterial>
                                                                             <DiffuseMaterial.Brush>
                                                                                 <!-- Front side image -->
-                                                                                <ImageBrush ImageSource="../../Assets/Icons/achievement/unknown_white.jpg">
+                                                                                <ImageBrush x:Name="AchievementFrontSide" ImageSource="../../Assets/Icons/achievement/unknown_white.jpg">
                                                                                     <ImageBrush.RelativeTransform>
                                                                                         <ScaleTransform CenterX="0.5" CenterY="0.5" ScaleX="-1" />
                                                                                     </ImageBrush.RelativeTransform>
@@ -1744,7 +1744,7 @@
                                                                         <DiffuseMaterial>
                                                                             <DiffuseMaterial.Brush>
                                                                                 <!-- Back side image -->
-                                                                                <ImageBrush ImageSource="../../Assets/Icons/achievement/unknown_black.jpg">
+                                                                                <ImageBrush x:Name="AchievementBackSide" ImageSource="../../Assets/Icons/achievement/unknown_black.jpg">
                                                                                     <ImageBrush.RelativeTransform>
                                                                                         <RotateTransform CenterX="0.5" CenterY="0.5" Angle="-90" />
                                                                                     </ImageBrush.RelativeTransform>
@@ -1769,8 +1769,6 @@
                                                 </ModelVisual3D>
                                             </Viewport3D>
                                         </Grid>
-
-
                                         <Grid x:Name="AchievementSelectedInfoGrid" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Loaded="AchievementSelectedInfoGrid_Loaded">
                                             <Grid>
                                                 <Grid.ColumnDefinitions>
@@ -1792,8 +1790,8 @@
                                                             Hint = string.Empty,
                                                             -->
                                                             <TextBlock FontWeight="Bold" x:Name="AchievementSelectionInfoTitle" TextWrapping="Wrap" FontSize="24" Text="Select an achievement to view more information"/>
-                                                            <TextBlock Margin="0,5,0,0" x:Name="AchievementSelectionInfoObjective" TextWrapping="Wrap" d:Text="Objective: objectiveeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" FontSize="20"/>
-                                                            <TextBlock Margin="0,5,0,0" x:Name="AchievementSelectionInfoHint" TextWrapping="Wrap" d:Text="Hint: hint" FontSize="16"/>
+                                                            <TextBlock Margin="0,5,0,0" x:Name="AchievementSelectionInfoObjective" TextWrapping="Wrap" Text="Some achievements are currently unobtainable." FontSize="20"/>
+                                                            <TextBlock Margin="0,5,0,0" x:Name="AchievementSelectionInfoHint" TextWrapping="Wrap" Text="There are 5 types of trophies: bronze, silver, gold, platinum and secret." FontSize="16"/>
                                                         </StackPanel>
                                                     </ScrollViewer>
                                                 </Grid>

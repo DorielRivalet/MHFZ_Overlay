@@ -4081,17 +4081,23 @@ public partial class ConfigWindow : FluentWindow
                 AchievementSelectionInfoTitle.Text = $"{selectedAchievement.Title} | {selectedAchievement.CompletionDate.ToString("yy/MM/dd HH:mm:ss")}"; ;
             }
 
+            var brushConverter = new BrushConverter();
+
             if (selectedAchievement.IsSecret && selectedAchievement.CompletionDate == DateTime.UnixEpoch)
             {
                 AchievementSelectionInfoObjective.Text = string.Empty;
+                AchievementSelectionInfoTitle.Foreground = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Text"]);
             }
             else
             {
                 AchievementSelectionInfoObjective.Text = selectedAchievement.Objective;
+                AchievementSelectionInfoTitle.Foreground = selectedAchievement.GetBrushColorFromRank();
             }
 
             AchievementSelectionInfoHint.Text = selectedAchievement.Hint;
-            AchievementSelectionInfoTitle.Foreground = selectedAchievement.GetBrushColorFromRank();
+
+            AchievementFrontSide.ImageSource = new BitmapImage(new Uri($"{selectedAchievement.Image}"));
+            AchievementBackSide.ImageSource = new BitmapImage(new Uri($"{selectedAchievement.GetTrophyImageLinkFromRank()}"));
             // ...
         }
     }

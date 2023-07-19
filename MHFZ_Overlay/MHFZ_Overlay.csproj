@@ -103,6 +103,7 @@
     <None Remove="Assets\Icons\achievement\book_monster.png" />
     <None Remove="Assets\Icons\achievement\book_weapon.png" />
     <None Remove="Assets\Icons\achievement\book_wyvern.png" />
+    <None Remove="Assets\Icons\achievement\bronze_trophy.png" />
     <None Remove="Assets\Icons\achievement\chestplate.jpg" />
     <None Remove="Assets\Icons\achievement\chestplate_gold.jpg" />
     <None Remove="Assets\Icons\achievement\clock.jpg" />
@@ -110,6 +111,7 @@
     <None Remove="Assets\Icons\achievement\diva.jpg" />
     <None Remove="Assets\Icons\achievement\duremudira.jpg" />
     <None Remove="Assets\Icons\achievement\gem.jpg" />
+    <None Remove="Assets\Icons\achievement\gold_trophy.png" />
     <None Remove="Assets\Icons\achievement\guild_blue.jpg" />
     <None Remove="Assets\Icons\achievement\guild_green.jpg" />
     <None Remove="Assets\Icons\achievement\guild_orange.jpg" />
@@ -133,9 +135,12 @@
     <None Remove="Assets\Icons\achievement\monster_white2.jpg" />
     <None Remove="Assets\Icons\achievement\monster_yellow.jpg" />
     <None Remove="Assets\Icons\achievement\plate.png" />
+    <None Remove="Assets\Icons\achievement\platinum_trophy.png" />
     <None Remove="Assets\Icons\achievement\points.jpg" />
     <None Remove="Assets\Icons\achievement\poogie.jpg" />
     <None Remove="Assets\Icons\achievement\scroll.jpg" />
+    <None Remove="Assets\Icons\achievement\secret_trophy.png" />
+    <None Remove="Assets\Icons\achievement\silver_trophy.png" />
     <None Remove="Assets\Icons\achievement\stamp.jpg" />
     <None Remove="Assets\Icons\achievement\switch_axe_f.jpg" />
     <None Remove="Assets\Icons\achievement\sword.jpg" />
@@ -515,6 +520,7 @@
     <Resource Include="Assets\Icons\achievement\book_monster.png" />
     <Resource Include="Assets\Icons\achievement\book_weapon.png" />
     <Resource Include="Assets\Icons\achievement\book_wyvern.png" />
+    <Resource Include="Assets\Icons\achievement\bronze_trophy.png" />
     <Resource Include="Assets\Icons\achievement\chestplate.jpg" />
     <Resource Include="Assets\Icons\achievement\chestplate_gold.jpg" />
     <Resource Include="Assets\Icons\achievement\clock.jpg" />
@@ -522,6 +528,7 @@
     <Resource Include="Assets\Icons\achievement\diva.jpg" />
     <Resource Include="Assets\Icons\achievement\duremudira.jpg" />
     <Resource Include="Assets\Icons\achievement\gem.jpg" />
+    <Resource Include="Assets\Icons\achievement\gold_trophy.png" />
     <Resource Include="Assets\Icons\achievement\guild_blue.jpg" />
     <Resource Include="Assets\Icons\achievement\guild_green.jpg" />
     <Resource Include="Assets\Icons\achievement\guild_orange.jpg" />
@@ -545,9 +552,12 @@
     <Resource Include="Assets\Icons\achievement\monster_white2.jpg" />
     <Resource Include="Assets\Icons\achievement\monster_yellow.jpg" />
     <Resource Include="Assets\Icons\achievement\plate.png" />
+    <Resource Include="Assets\Icons\achievement\platinum_trophy.png" />
     <Resource Include="Assets\Icons\achievement\points.jpg" />
     <Resource Include="Assets\Icons\achievement\poogie.jpg" />
     <Resource Include="Assets\Icons\achievement\scroll.jpg" />
+    <Resource Include="Assets\Icons\achievement\secret_trophy.png" />
+    <Resource Include="Assets\Icons\achievement\silver_trophy.png" />
     <Resource Include="Assets\Icons\achievement\stamp.jpg" />
     <Resource Include="Assets\Icons\achievement\switch_axe_f.jpg" />
     <Resource Include="Assets\Icons\achievement\sword.jpg" />

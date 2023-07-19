@@ -85,6 +85,28 @@ public sealed class Achievement
         return (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Base"]);
     }
 
+    public string GetTrophyImageLinkFromRank()
+    {
+        if (this.IsSecret && this.CompletionDate == DateTime.UnixEpoch)
+        {
+            return "pack://application:,,,/Assets/Icons/achievement/secret_trophy.png";
+        }
+
+        switch(this.Rank)
+        {
+            default:
+                return "pack://application:,,,/Assets/Icons/achievement/bronze_trophy.png";
+            case AchievementRank.Bronze:
+                return "pack://application:,,,/Assets/Icons/achievement/bronze_trophy.png";
+            case AchievementRank.Silver:
+                return "pack://application:,,,/Assets/Icons/achievement/silver_trophy.png";
+            case AchievementRank.Gold:
+                return "pack://application:,,,/Assets/Icons/achievement/gold_trophy.png";
+            case AchievementRank.Platinum:
+                return "pack://application:,,,/Assets/Icons/achievement/platinum_trophy.png";
+        }
+    }
+
     /// <summary>
     /// Gets or sets the completion date.
     /// </summary>
