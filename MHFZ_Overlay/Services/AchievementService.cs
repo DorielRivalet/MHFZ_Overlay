@@ -22,6 +22,23 @@ using Wpf.Ui.Controls;
 
 public sealed class AchievementService : IAchievementService
 {
+    public static AchievementRank ConvertToAchievementRank(long rankValue)
+    {
+        switch (rankValue)
+        {
+            case 1:
+                return AchievementRank.Bronze;
+            case 2:
+                return AchievementRank.Silver;
+            case 3:
+                return AchievementRank.Gold;
+            case 4:
+                return AchievementRank.Platinum;
+            default:
+                return AchievementRank.None;
+        }
+    }
+
     public static AchievementService GetInstance()
     {
         if (instance == null)

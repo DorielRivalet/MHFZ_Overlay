@@ -20,7 +20,9 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
+using System.Windows.Media.Media3D;
 using EZlion.Mapper;
 using LiveChartsCore;
 using LiveChartsCore.Defaults;
@@ -1728,6 +1730,7 @@ public partial class ConfigWindow : FluentWindow
     private Grid? weaponStatsMainGrid;
     private Grid? statsGraphsMainGrid;
     private Grid? statsTextMainGrid;
+    private ItemsControl? achievementsMenuItemsControl;
 
     private void UpdateYoutubeLink_ButtonClick(object sender, RoutedEventArgs e)
     {
@@ -4046,6 +4049,31 @@ public partial class ConfigWindow : FluentWindow
     private async void FumoImage_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
         await achievementManager.RewardAchievement(225, ConfigWindowSnackBar);
+    }
+
+    private void Achievements3DPreviewGrid_Loaded(object sender, RoutedEventArgs e)
+    {
+        Storyboard storyboard = new Storyboard();
+
+        // Animation for rotation
+        DoubleAnimation animation = new DoubleAnimation
+        {
+            From = 0,
+            To = 360,
+            Duration = TimeSpan.FromSeconds(10), // Adjust the duration to control the rotation speed
+            RepeatBehavior = RepeatBehavior.Forever
+        };
+
+        Rotation.BeginAnimation(AxisAngleRotation3D.AngleProperty, animation);
+        storyboard.Begin();
+    }
+
+    private void AchievementsMenuItemsControl_Loaded(object sender, RoutedEventArgs e)
+    {
+        achievementsMenuItemsControl = (ItemsControl)sender;
+        MainWindow.dataLoader.model.PlayerAchievements = databaseManager.GetPlayerAchievements();
+        achievementsMenuItemsControl.ItemsSource = MainWindow.dataLoader.model.PlayerAchievements;
+        achievementsMenuItemsControl.Items.Refresh();
     }
 }
 

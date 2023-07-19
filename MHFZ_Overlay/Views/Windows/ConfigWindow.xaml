@@ -45,6 +45,7 @@
             <converter:OptionToTemplateConverter x:Key="OptionToTemplateConverter" />
             <converter:OptionToVisibilityConverter x:Key="OptionToVisibilityConverter" />
             <converter:XamlIconToViewBoxConverter x:Key="XamlIconToViewBoxConverter"/>
+            <converter:AchievementRankToBrushConverter x:Key="AchievementRankToBrushConverter"/>
             <DataTemplate x:Key="DefaultTemplate">
                 <Grid Background="#7f1e1e2e">
                     <TextBlock TextWrapping="Wrap" MaxWidth="500" MaxHeight="500" Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -1236,232 +1237,6 @@
                             </ControlTemplate>
                         </TabControl.Template>
 
-
-
-                        <TabItem ToolTip="View Quest Statistics" Background="{StaticResource Crust}" Foreground="{StaticResource Text}">
-                            <TabItem.Header>
-                                <StackPanel Orientation="Horizontal">
-                                    <Button BorderThickness="0"  Background="Transparent" Width="48" Height="32">
-                                        <Button.Content>
-                                            <ui:SymbolIcon Symbol="DataBarVertical32" Foreground="{StaticResource Rosewater}" FontSize="24"/>
-                                        </Button.Content>
-                                    </Button>
-                                    <TextBlock Text="Overview" Margin="4,0,0,0" VerticalAlignment="Center" />
-                                </StackPanel>
-                            </TabItem.Header>
-                            <ScrollViewer CanContentScroll="True" IsDeferredScrollingEnabled="True" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Auto">
-                                <Grid Margin="5" Height="Auto" Width="Auto">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="1*"/>
-                                            <ColumnDefinition Width="1*"/>
-                                            <ColumnDefinition Width="1*"/>
-                                            <ColumnDefinition Width="1*"/>
-                                        </Grid.ColumnDefinitions>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="40"/>
-                                            <RowDefinition Height="1*"/>
-                                        </Grid.RowDefinitions>
-                                        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0" ToolTip="Search by Quest ID">
-                                            <TextBlock Padding="10,0,10,0" Text="Quest ID" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                            <ui:Button BorderThickness="0"  Background="Transparent" Width="48" Height="40" Click="QuestIDButton_Click">
-                                                <Button.Content>
-                                                    <ui:SymbolIcon Symbol="Search32" Foreground="{StaticResource Green}" FontSize="24"/>
-                                                </Button.Content>
-                                            </ui:Button>
-                                            <ui:TextBox x:Name="QuestIDTextBox" IsUndoEnabled="False"  Grid.Row="0" Grid.Column="1" Text="0"  PreviewTextInput="ValidateNumber" Width="200" MaxLength="8"/>
-                                        </StackPanel>
-                                        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1" ToolTip="Search by Run ID">
-                                            <TextBlock Padding="10,0,10,0" Text="Run ID" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                            <ui:Button BorderThickness="0"  Background="Transparent" Width="48" Height="40">
-                                                <Button.Content>
-                                                    <ui:SymbolIcon Symbol="Search32" Foreground="{StaticResource Green}" FontSize="24"/>
-                                                </Button.Content>
-                                            </ui:Button>
-                                            <ui:TextBox x:Name="RunIDTextBox" IsUndoEnabled="False"  Grid.Row="0" Grid.Column="1" Text="0"  PreviewTextInput="ValidateNumber" Width="200" MaxLength="8"/>
-                                        </StackPanel>
-                                        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="2" ToolTip="Search Option" 
-                                        ToolTipService.ToolTip="Please view the FAQ to see what the categories are about.&#x0a;VERY IMPORTANT: None of the categories or rules are set in stone.&#x0a;Things that are not currently tracked are: Prayer Gems, Login Boost, Halk Pot, Hunter Aid Attack Multiplier, Diva Defense Weapon Boost, Active Feature, etc.&#x0a;Please make a pull request or send a requested feature issue if you can help track these in the overlay.">
-                                            <TextBlock Style="{StaticResource ConfigTextBox}" Grid.Row="0" Grid.Column="0" Margin="5" Text="Category"/>
-                                            <ComboBox x:Name="OverlayModeComboBox"  Grid.Column="1" Grid.Row="0" Width="230" SelectedIndex="0">
-                                                <ComboBoxItem>Time Attack</ComboBoxItem>
-                                                <ComboBoxItem>Freestyle w/ Secret Tech</ComboBoxItem>
-                                                <ComboBoxItem>Freestyle No Secret Tech</ComboBoxItem>
-                                                <ComboBoxItem>Zen</ComboBoxItem>
-                                                <ComboBoxItem>Standard</ComboBoxItem>
-                                            </ComboBox>
-                                        </StackPanel>
-                                        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="3" ToolTip="Search Option">
-                                            <TextBlock ToolTip="Select option" Style="{StaticResource ConfigTextBox}" Grid.Row="0" Grid.Column="0" Margin="5" Text="Section"/>
-                                            <ComboBox x:Name="OverlayModeOptionComboBox"  Grid.Column="1" Grid.Row="0" Width="240" ItemsSource="{Binding QuestLogsSearchOption}" SelectedItem="{Binding SelectedOption}" DisplayMemberPath="Name" SelectionChanged="QuestLogsSectionComboBox_SelectionChanged"/>
-                                        </StackPanel>
-                                        <Grid x:Name="DiscordEmbedWeaponPersonalBest" Grid.Row="1">
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="Auto" />
-                                                <RowDefinition Height="Auto" />
-                                                <RowDefinition Height="Auto" />
-                                                <RowDefinition Height="Auto" />
-                                                <RowDefinition Height="Auto" />
-                                                <RowDefinition Height="Auto" />
-                                                <RowDefinition Height="Auto" />
-                                                <RowDefinition Height="Auto" />
-                                                <RowDefinition Height="Auto" />
-                                                <RowDefinition Height="Auto" />
-                                                <RowDefinition Height="Auto" />
-                                                <RowDefinition Height="Auto"/>
-                                            </Grid.RowDefinitions>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="Auto" />
-                                                <ColumnDefinition Width="*" />
-                                                <ColumnDefinition Width="*" />
-                                            </Grid.ColumnDefinitions>
-
-                                            <Grid Grid.RowSpan="12" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Background="#7f1e1e2e"/>
-
-                                            <Border CornerRadius="5,0,0,5" Grid.Row="0" Grid.Column="0" Grid.RowSpan="25" Width="5" Margin="0,0,5,0" Background="#f38ba8" />
-
-                                            <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" Margin="5" Grid.ColumnSpan="2">
-                                                <Image x:Name="SelectedQuestObjectiveImage" Source="https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/burning_freezing_elzelion.png" Width="48" Height="48" Margin="0,0,5,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                                                <StackPanel Orientation="Vertical">
-                                                    <TextBlock x:Name="SelectedQuestNameTextBlock" TextWrapping="Wrap" MaxWidth="240" Text="Dark Lord of Fire and Flame" FontFamily="{StaticResource Open Sans Bold}"/>
-                                                    <TextBlock x:Name="SelectedQuestObjectiveTextBlock" TextWrapping="Wrap" MaxWidth="240" Text="Slay 1 Burning Freezing Elzelion" FontFamily="{StaticResource Open Sans Italic}"/>
-                                                </StackPanel>
-                                            </StackPanel>
-
-                                            <StackPanel Grid.Row="3" Grid.Column="1" Margin="5" Orientation="Vertical">
-                                                <StackPanel Orientation="Horizontal">
-                                                    <Image Source="../../Assets/Icons/png/small_sns.png" Width="24" Height="24"/>
-                                                    <TextBlock Text="Sword and Shield" Margin="5,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{StaticResource Open Sans Bold}"/>
-                                                </StackPanel>
-                                                <TextBlock x:Name="SwordAndShieldBestTimeTextBlock" Text="--:--.---" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
-                                                <TextBlock x:Name="SwordAndShieldRunIDTextBlock" Text="Run ID 000001" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
-                                            </StackPanel>
-                                            <StackPanel Grid.Row="3" Grid.Column="2" Margin="5" Orientation="Vertical">
-                                                <StackPanel Orientation="Horizontal">
-                                                    <Image Source="../../Assets/Icons/png/small_ds.png" Width="24" Height="24"/>
-                                                    <TextBlock Text="Dual Swords" Margin="5,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{StaticResource Open Sans Bold}"/>
-                                                </StackPanel>
-                                                <TextBlock x:Name="DualSwordsBestTimeTextBlock" Text="--:--.---" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
-                                                <TextBlock x:Name="DualSwordsRunIDTextBlock" Text="Run ID 000002" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
-                                            </StackPanel>
-                                            <StackPanel Grid.Row="4" Grid.Column="1" Margin="5" Orientation="Vertical">
-                                                <StackPanel Orientation="Horizontal">
-                                                    <Image Source="../../Assets/Icons/png/small_gs.png" Width="24" Height="24"/>
-                                                    <TextBlock Text="Great Sword" Margin="5,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{StaticResource Open Sans Bold}"/>
-                                                </StackPanel>
-                                                <TextBlock x:Name="GreatSwordBestTimeTextBlock" Text="--:--.---" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
-                                                <TextBlock x:Name="GreatSwordRunIDTextBlock" Text="Run ID 000003" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
-                                            </StackPanel>
-                                            <StackPanel Grid.Row="4" Grid.Column="2" Margin="5" Orientation="Vertical">
-                                                <StackPanel Orientation="Horizontal">
-                                                    <Image Source="../../Assets/Icons/png/small_ls.png" Width="24" Height="24"/>
-                                                    <TextBlock Text="Long Sword" Margin="5,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{StaticResource Open Sans Bold}"/>
-                                                </StackPanel>
-                                                <TextBlock x:Name="LongSwordBestTimeTextBlock" Text="--:--.---" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
-                                                <TextBlock x:Name="LongSwordRunIDTextBlock" Text="Run ID 000004" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
-                                            </StackPanel>
-                                            <StackPanel Grid.Row="5" Grid.Column="1" Margin="5" Orientation="Vertical">
-                                                <StackPanel Orientation="Horizontal">
-                                                    <Image Source="../../Assets/Icons/png/small_hammer.png" Width="24" Height="24"/>
-                                                    <TextBlock Text="Hammer" Margin="5,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{StaticResource Open Sans Bold}"/>
-                                                </StackPanel>
-                                                <TextBlock x:Name="HammerBestTimeTextBlock" Text="--:--.---" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
-                                                <TextBlock x:Name="HammerRunIDTextBlock" Text="Run ID 000005" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
-                                            </StackPanel>
-                                            <StackPanel Grid.Row="5" Grid.Column="2" Margin="5" Orientation="Vertical">
-                                                <StackPanel Orientation="Horizontal">
-                                                    <Image Source="../../Assets/Icons/png/small_hh.png" Width="24" Height="24"/>
-                                                    <TextBlock Text="Hunting Horn" Margin="5,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{StaticResource Open Sans Bold}"/>
-                                                </StackPanel>
-                                                <TextBlock x:Name="HuntingHornBestTimeTextBlock" Text="--:--.---" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
-                                                <TextBlock x:Name="HuntingHornRunIDTextBlock" Text="Run ID 000006" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
-                                            </StackPanel>
-                                            <StackPanel Grid.Row="6" Grid.Column="1" Margin="5" Orientation="Vertical">
-                                                <StackPanel Orientation="Horizontal">
-                                                    <Image Source="../../Assets/Icons/png/small_lance.png" Width="24" Height="24"/>
-                                                    <TextBlock Text="Lance" Margin="5,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{StaticResource Open Sans Bold}"/>
-                                                </StackPanel>
-                                                <TextBlock x:Name="LanceBestTimeTextBlock" Text="--:--.---" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
-                                                <TextBlock x:Name="LanceRunIDTextBlock" Text="Run ID 000007" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
-                                            </StackPanel>
-                                            <StackPanel Grid.Row="6" Grid.Column="2" Margin="5" Orientation="Vertical">
-                                                <StackPanel Orientation="Horizontal">
-                                                    <Image Source="../../Assets/Icons/png/small_gl.png" Width="24" Height="24"/>
-                                                    <TextBlock Text="Gunlance" Margin="5,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{StaticResource Open Sans Bold}"/>
-                                                </StackPanel>
-                                                <TextBlock x:Name="GunlanceBestTimeTextBlock" Text="--:--.---" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
-                                                <TextBlock x:Name="GunlanceRunIDTextBlock" Text="Run ID 000008" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
-                                            </StackPanel>
-                                            <StackPanel Grid.Row="7" Grid.Column="1" Margin="5" Orientation="Vertical">
-                                                <StackPanel Orientation="Horizontal">
-                                                    <Image Source="../../Assets/Icons/png/small_tonfa.png" Width="24" Height="24"/>
-                                                    <TextBlock Text="Tonfa" Margin="5,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{StaticResource Open Sans Bold}"/>
-                                                </StackPanel>
-                                                <TextBlock x:Name="TonfaBestTimeTextBlock" Text="--:--.---" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
-                                                <TextBlock x:Name="TonfaRunIDTextBlock" Text="Run ID 000009" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
-                                            </StackPanel>
-                                            <StackPanel Grid.Row="7" Grid.Column="2" Margin="5" Orientation="Vertical">
-                                                <StackPanel Orientation="Horizontal">
-                                                    <Image Source="../../Assets/Icons/png/small_saf.png" Width="24" Height="24"/>
-                                                    <TextBlock Text="Switch Axe F" Margin="5,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{StaticResource Open Sans Bold}"/>
-                                                </StackPanel>
-                                                <TextBlock x:Name="SwitchAxeFBestTimeTextBlock" Text="--:--.---" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
-                                                <TextBlock x:Name="SwitchAxeFRunIDTextBlock" Text="Run ID 000010" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
-                                            </StackPanel>
-                                            <StackPanel Grid.Row="8" Grid.Column="1" Margin="5" Orientation="Vertical">
-                                                <StackPanel Orientation="Horizontal">
-                                                    <Image Source="../../Assets/Icons/png/small_ms.png" Width="24" Height="24"/>
-                                                    <TextBlock Text="Magnet Spike" Margin="5,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{StaticResource Open Sans Bold}"/>
-                                                </StackPanel>
-                                                <TextBlock x:Name="MagnetSpikeBestTimeTextBlock" Text="--:--.---" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
-                                                <TextBlock x:Name="MagnetSpikeRunIDTextBlock" Text="Run ID 000011" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
-                                            </StackPanel>
-                                            <StackPanel Grid.Row="8" Grid.Column="2" Margin="5" Orientation="Vertical">
-                                                <StackPanel Orientation="Horizontal">
-                                                    <Image Source="../../Assets/Icons/png/small_lbg.png" Width="24" Height="24"/>
-                                                    <TextBlock Text="Light Bowgun" Margin="5,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{StaticResource Open Sans Bold}"/>
-                                                </StackPanel>
-                                                <TextBlock x:Name="LightBowgunBestTimeTextBlock" Text="--:--.---" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
-                                                <TextBlock x:Name="LightBowgunRunIDTextBlock" Text="Run ID 000012" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
-                                            </StackPanel>
-                                            <StackPanel Grid.Row="9" Grid.Column="1" Margin="5" Orientation="Vertical">
-                                                <StackPanel Orientation="Horizontal">
-                                                    <Image Source="../../Assets/Icons/png/small_hbg.png" Width="24" Height="24"/>
-                                                    <TextBlock Text="Heavy Bowgun" Margin="5,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{StaticResource Open Sans Bold}"/>
-                                                </StackPanel>
-                                                <TextBlock x:Name="HeavyBowgunBestTimeTextBlock" Text="--:--.---" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
-                                                <TextBlock x:Name="HeavyBowgunRunIDTextBlock" Text="Run ID 000013" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
-                                            </StackPanel>
-                                            <StackPanel Grid.Row="9" Grid.Column="2" Margin="5" Orientation="Vertical">
-                                                <StackPanel Orientation="Horizontal">
-                                                    <Image Source="../../Assets/Icons/png/small_bow.png" Width="24" Height="24"/>
-                                                    <TextBlock Text="Bow" Margin="5,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{StaticResource Open Sans Bold}"/>
-                                                </StackPanel>
-                                                <TextBlock x:Name="BowBestTimeTextBlock" Text="--:--.---" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
-                                                <TextBlock x:Name="BowRunIDTextBlock" Text="Run ID 000014" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
-                                            </StackPanel>
-                                            <StackPanel Grid.Row="10" Grid.Column="1" Grid.ColumnSpan="2" Margin="5" Orientation="Horizontal">
-                                                <TextBlock FontSize="12" x:Name="SpeedrunnerInfoTextBlock" Text="Personal bests by you ·" FontFamily="{StaticResource Open Sans}" Margin="0,0,5,0"/>
-                                                <TextBlock FontSize="12" x:Name="CurrentTimeTextBlock" Text="2019/12/25 00:00" FontFamily="{StaticResource Open Sans}" Margin="0,0,5,0"/>
-                                            </StackPanel>
-                                            <StackPanel Orientation="Horizontal" Grid.Row="11" Grid.Column="1" Grid.ColumnSpan="2" Margin="5">
-                                                <ui:Button Background="Transparent" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTip="Save summary of stats to image file" Click="PersonalBestsOverviewButtonSaveFile_Click">
-                                                    <Button.Content>
-                                                        <ui:SymbolIcon Symbol="ArrowDownload24" FontSize="24" Foreground="{StaticResource Green}"/>
-                                                    </Button.Content>
-                                                </ui:Button>
-                                                    <ui:Button Background="Transparent" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTip="Copy stats to clipboard as image (recommended to maximize configuration window)" Click="PersonalBestsOverviewButtonCopyFile_Click">
-                                                    <Button.Content>
-                                                        <ui:SymbolIcon Symbol="Copy24" Foreground="{StaticResource Sapphire}" FontSize="24"/>
-                                                    </Button.Content>
-                                                </ui:Button>
-                                            </StackPanel>
-                                            </Grid>
-                                        <ContentControl x:Name="QuestLogsContentControl" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Content="{Binding SelectedOption}" ContentTemplateSelector="{StaticResource OptionToTemplateConverter}" />
-                                    </Grid>
-                                </Grid>
-                            </ScrollViewer>
-                        </TabItem>
                         <TabItem ToolTip="Database Settings" Background="{StaticResource Crust}" Foreground="{StaticResource Text}">
                             <TabItem.Header>
                                 <StackPanel Orientation="Horizontal">
@@ -1633,6 +1408,377 @@
                                 <customcontrols:MainConfigurationActions Grid.Row="1" Grid.ColumnSpan="1" Loaded="MainConfigurationActions_Loaded" Unloaded="MainConfigurationActions_Unloaded"/>
                             </Grid>
                         </TabItem>
+                        <TabItem ToolTip="View Quest Statistics" Background="{StaticResource Crust}" Foreground="{StaticResource Text}">
+                            <TabItem.Header>
+                                <StackPanel Orientation="Horizontal">
+                                    <Button BorderThickness="0"  Background="Transparent" Width="48" Height="32">
+                                        <Button.Content>
+                                            <ui:SymbolIcon Symbol="DataBarVertical32" Foreground="{StaticResource Rosewater}" FontSize="24"/>
+                                        </Button.Content>
+                                    </Button>
+                                    <TextBlock Text="Overview" Margin="4,0,0,0" VerticalAlignment="Center" />
+                                </StackPanel>
+                            </TabItem.Header>
+                            <ScrollViewer CanContentScroll="True" IsDeferredScrollingEnabled="True" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Auto">
+                                <Grid Margin="5" Height="Auto" Width="Auto">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="1*"/>
+                                            <ColumnDefinition Width="1*"/>
+                                            <ColumnDefinition Width="1*"/>
+                                            <ColumnDefinition Width="1*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="40"/>
+                                            <RowDefinition Height="1*"/>
+                                        </Grid.RowDefinitions>
+                                        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0" ToolTip="Search by Quest ID">
+                                            <TextBlock Padding="10,0,10,0" Text="Quest ID" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            <ui:Button BorderThickness="0"  Background="Transparent" Width="48" Height="40" Click="QuestIDButton_Click">
+                                                <Button.Content>
+                                                    <ui:SymbolIcon Symbol="Search32" Foreground="{StaticResource Green}" FontSize="24"/>
+                                                </Button.Content>
+                                            </ui:Button>
+                                            <ui:TextBox x:Name="QuestIDTextBox" IsUndoEnabled="False"  Grid.Row="0" Grid.Column="1" Text="0"  PreviewTextInput="ValidateNumber" Width="200" MaxLength="8"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1" ToolTip="Search by Run ID">
+                                            <TextBlock Padding="10,0,10,0" Text="Run ID" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            <ui:Button BorderThickness="0"  Background="Transparent" Width="48" Height="40">
+                                                <Button.Content>
+                                                    <ui:SymbolIcon Symbol="Search32" Foreground="{StaticResource Green}" FontSize="24"/>
+                                                </Button.Content>
+                                            </ui:Button>
+                                            <ui:TextBox x:Name="RunIDTextBox" IsUndoEnabled="False"  Grid.Row="0" Grid.Column="1" Text="0"  PreviewTextInput="ValidateNumber" Width="200" MaxLength="8"/>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="2" ToolTip="Search Option" 
+                                ToolTipService.ToolTip="Please view the FAQ to see what the categories are about.&#x0a;VERY IMPORTANT: None of the categories or rules are set in stone.&#x0a;Things that are not currently tracked are: Prayer Gems, Login Boost, Halk Pot, Hunter Aid Attack Multiplier, Diva Defense Weapon Boost, Active Feature, etc.&#x0a;Please make a pull request or send a requested feature issue if you can help track these in the overlay.">
+                                            <TextBlock Style="{StaticResource ConfigTextBox}" Grid.Row="0" Grid.Column="0" Margin="5" Text="Category"/>
+                                            <ComboBox x:Name="OverlayModeComboBox"  Grid.Column="1" Grid.Row="0" Width="230" SelectedIndex="0">
+                                                <ComboBoxItem>Time Attack</ComboBoxItem>
+                                                <ComboBoxItem>Freestyle w/ Secret Tech</ComboBoxItem>
+                                                <ComboBoxItem>Freestyle No Secret Tech</ComboBoxItem>
+                                                <ComboBoxItem>Zen</ComboBoxItem>
+                                                <ComboBoxItem>Standard</ComboBoxItem>
+                                            </ComboBox>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="3" ToolTip="Search Option">
+                                            <TextBlock ToolTip="Select option" Style="{StaticResource ConfigTextBox}" Grid.Row="0" Grid.Column="0" Margin="5" Text="Section"/>
+                                            <ComboBox x:Name="OverlayModeOptionComboBox"  Grid.Column="1" Grid.Row="0" Width="240" ItemsSource="{Binding QuestLogsSearchOption}" SelectedItem="{Binding SelectedOption}" DisplayMemberPath="Name" SelectionChanged="QuestLogsSectionComboBox_SelectionChanged"/>
+                                        </StackPanel>
+                                        <Grid x:Name="DiscordEmbedWeaponPersonalBest" Grid.Row="1">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto"/>
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+
+                                            <Grid Grid.RowSpan="12" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Background="#7f1e1e2e"/>
+
+                                            <Border CornerRadius="5,0,0,5" Grid.Row="0" Grid.Column="0" Grid.RowSpan="25" Width="5" Margin="0,0,5,0" Background="#f38ba8" />
+
+                                            <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" Margin="5" Grid.ColumnSpan="2">
+                                                <Image x:Name="SelectedQuestObjectiveImage" Source="https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/burning_freezing_elzelion.png" Width="48" Height="48" Margin="0,0,5,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                                                <StackPanel Orientation="Vertical">
+                                                    <TextBlock x:Name="SelectedQuestNameTextBlock" TextWrapping="Wrap" MaxWidth="240" Text="Dark Lord of Fire and Flame" FontFamily="{StaticResource Open Sans Bold}"/>
+                                                    <TextBlock x:Name="SelectedQuestObjectiveTextBlock" TextWrapping="Wrap" MaxWidth="240" Text="Slay 1 Burning Freezing Elzelion" FontFamily="{StaticResource Open Sans Italic}"/>
+                                                </StackPanel>
+                                            </StackPanel>
+
+                                            <StackPanel Grid.Row="3" Grid.Column="1" Margin="5" Orientation="Vertical">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Image Source="../../Assets/Icons/png/small_sns.png" Width="24" Height="24"/>
+                                                    <TextBlock Text="Sword and Shield" Margin="5,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{StaticResource Open Sans Bold}"/>
+                                                </StackPanel>
+                                                <TextBlock x:Name="SwordAndShieldBestTimeTextBlock" Text="--:--.---" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
+                                                <TextBlock x:Name="SwordAndShieldRunIDTextBlock" Text="Run ID 000001" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
+                                            </StackPanel>
+                                            <StackPanel Grid.Row="3" Grid.Column="2" Margin="5" Orientation="Vertical">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Image Source="../../Assets/Icons/png/small_ds.png" Width="24" Height="24"/>
+                                                    <TextBlock Text="Dual Swords" Margin="5,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{StaticResource Open Sans Bold}"/>
+                                                </StackPanel>
+                                                <TextBlock x:Name="DualSwordsBestTimeTextBlock" Text="--:--.---" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
+                                                <TextBlock x:Name="DualSwordsRunIDTextBlock" Text="Run ID 000002" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
+                                            </StackPanel>
+                                            <StackPanel Grid.Row="4" Grid.Column="1" Margin="5" Orientation="Vertical">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Image Source="../../Assets/Icons/png/small_gs.png" Width="24" Height="24"/>
+                                                    <TextBlock Text="Great Sword" Margin="5,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{StaticResource Open Sans Bold}"/>
+                                                </StackPanel>
+                                                <TextBlock x:Name="GreatSwordBestTimeTextBlock" Text="--:--.---" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
+                                                <TextBlock x:Name="GreatSwordRunIDTextBlock" Text="Run ID 000003" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
+                                            </StackPanel>
+                                            <StackPanel Grid.Row="4" Grid.Column="2" Margin="5" Orientation="Vertical">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Image Source="../../Assets/Icons/png/small_ls.png" Width="24" Height="24"/>
+                                                    <TextBlock Text="Long Sword" Margin="5,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{StaticResource Open Sans Bold}"/>
+                                                </StackPanel>
+                                                <TextBlock x:Name="LongSwordBestTimeTextBlock" Text="--:--.---" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
+                                                <TextBlock x:Name="LongSwordRunIDTextBlock" Text="Run ID 000004" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
+                                            </StackPanel>
+                                            <StackPanel Grid.Row="5" Grid.Column="1" Margin="5" Orientation="Vertical">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Image Source="../../Assets/Icons/png/small_hammer.png" Width="24" Height="24"/>
+                                                    <TextBlock Text="Hammer" Margin="5,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{StaticResource Open Sans Bold}"/>
+                                                </StackPanel>
+                                                <TextBlock x:Name="HammerBestTimeTextBlock" Text="--:--.---" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
+                                                <TextBlock x:Name="HammerRunIDTextBlock" Text="Run ID 000005" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
+                                            </StackPanel>
+                                            <StackPanel Grid.Row="5" Grid.Column="2" Margin="5" Orientation="Vertical">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Image Source="../../Assets/Icons/png/small_hh.png" Width="24" Height="24"/>
+                                                    <TextBlock Text="Hunting Horn" Margin="5,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{StaticResource Open Sans Bold}"/>
+                                                </StackPanel>
+                                                <TextBlock x:Name="HuntingHornBestTimeTextBlock" Text="--:--.---" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
+                                                <TextBlock x:Name="HuntingHornRunIDTextBlock" Text="Run ID 000006" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
+                                            </StackPanel>
+                                            <StackPanel Grid.Row="6" Grid.Column="1" Margin="5" Orientation="Vertical">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Image Source="../../Assets/Icons/png/small_lance.png" Width="24" Height="24"/>
+                                                    <TextBlock Text="Lance" Margin="5,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{StaticResource Open Sans Bold}"/>
+                                                </StackPanel>
+                                                <TextBlock x:Name="LanceBestTimeTextBlock" Text="--:--.---" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
+                                                <TextBlock x:Name="LanceRunIDTextBlock" Text="Run ID 000007" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
+                                            </StackPanel>
+                                            <StackPanel Grid.Row="6" Grid.Column="2" Margin="5" Orientation="Vertical">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Image Source="../../Assets/Icons/png/small_gl.png" Width="24" Height="24"/>
+                                                    <TextBlock Text="Gunlance" Margin="5,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{StaticResource Open Sans Bold}"/>
+                                                </StackPanel>
+                                                <TextBlock x:Name="GunlanceBestTimeTextBlock" Text="--:--.---" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
+                                                <TextBlock x:Name="GunlanceRunIDTextBlock" Text="Run ID 000008" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
+                                            </StackPanel>
+                                            <StackPanel Grid.Row="7" Grid.Column="1" Margin="5" Orientation="Vertical">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Image Source="../../Assets/Icons/png/small_tonfa.png" Width="24" Height="24"/>
+                                                    <TextBlock Text="Tonfa" Margin="5,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{StaticResource Open Sans Bold}"/>
+                                                </StackPanel>
+                                                <TextBlock x:Name="TonfaBestTimeTextBlock" Text="--:--.---" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
+                                                <TextBlock x:Name="TonfaRunIDTextBlock" Text="Run ID 000009" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
+                                            </StackPanel>
+                                            <StackPanel Grid.Row="7" Grid.Column="2" Margin="5" Orientation="Vertical">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Image Source="../../Assets/Icons/png/small_saf.png" Width="24" Height="24"/>
+                                                    <TextBlock Text="Switch Axe F" Margin="5,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{StaticResource Open Sans Bold}"/>
+                                                </StackPanel>
+                                                <TextBlock x:Name="SwitchAxeFBestTimeTextBlock" Text="--:--.---" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
+                                                <TextBlock x:Name="SwitchAxeFRunIDTextBlock" Text="Run ID 000010" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
+                                            </StackPanel>
+                                            <StackPanel Grid.Row="8" Grid.Column="1" Margin="5" Orientation="Vertical">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Image Source="../../Assets/Icons/png/small_ms.png" Width="24" Height="24"/>
+                                                    <TextBlock Text="Magnet Spike" Margin="5,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{StaticResource Open Sans Bold}"/>
+                                                </StackPanel>
+                                                <TextBlock x:Name="MagnetSpikeBestTimeTextBlock" Text="--:--.---" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
+                                                <TextBlock x:Name="MagnetSpikeRunIDTextBlock" Text="Run ID 000011" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
+                                            </StackPanel>
+                                            <StackPanel Grid.Row="8" Grid.Column="2" Margin="5" Orientation="Vertical">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Image Source="../../Assets/Icons/png/small_lbg.png" Width="24" Height="24"/>
+                                                    <TextBlock Text="Light Bowgun" Margin="5,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{StaticResource Open Sans Bold}"/>
+                                                </StackPanel>
+                                                <TextBlock x:Name="LightBowgunBestTimeTextBlock" Text="--:--.---" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
+                                                <TextBlock x:Name="LightBowgunRunIDTextBlock" Text="Run ID 000012" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
+                                            </StackPanel>
+                                            <StackPanel Grid.Row="9" Grid.Column="1" Margin="5" Orientation="Vertical">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Image Source="../../Assets/Icons/png/small_hbg.png" Width="24" Height="24"/>
+                                                    <TextBlock Text="Heavy Bowgun" Margin="5,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{StaticResource Open Sans Bold}"/>
+                                                </StackPanel>
+                                                <TextBlock x:Name="HeavyBowgunBestTimeTextBlock" Text="--:--.---" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
+                                                <TextBlock x:Name="HeavyBowgunRunIDTextBlock" Text="Run ID 000013" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
+                                            </StackPanel>
+                                            <StackPanel Grid.Row="9" Grid.Column="2" Margin="5" Orientation="Vertical">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Image Source="../../Assets/Icons/png/small_bow.png" Width="24" Height="24"/>
+                                                    <TextBlock Text="Bow" Margin="5,0,5,0" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="{StaticResource Open Sans Bold}"/>
+                                                </StackPanel>
+                                                <TextBlock x:Name="BowBestTimeTextBlock" Text="--:--.---" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
+                                                <TextBlock x:Name="BowRunIDTextBlock" Text="Run ID 000014" FontFamily="{StaticResource Source Code Pro Bold}" Margin="0,0,5,0"/>
+                                            </StackPanel>
+                                            <StackPanel Grid.Row="10" Grid.Column="1" Grid.ColumnSpan="2" Margin="5" Orientation="Horizontal">
+                                                <TextBlock FontSize="12" x:Name="SpeedrunnerInfoTextBlock" Text="Personal bests by you ·" FontFamily="{StaticResource Open Sans}" Margin="0,0,5,0"/>
+                                                <TextBlock FontSize="12" x:Name="CurrentTimeTextBlock" Text="2019/12/25 00:00" FontFamily="{StaticResource Open Sans}" Margin="0,0,5,0"/>
+                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal" Grid.Row="11" Grid.Column="1" Grid.ColumnSpan="2" Margin="5">
+                                                <ui:Button Background="Transparent" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTip="Save summary of stats to image file" Click="PersonalBestsOverviewButtonSaveFile_Click">
+                                                    <Button.Content>
+                                                        <ui:SymbolIcon Symbol="ArrowDownload24" FontSize="24" Foreground="{StaticResource Green}"/>
+                                                    </Button.Content>
+                                                </ui:Button>
+                                                <ui:Button Background="Transparent" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTip="Copy stats to clipboard as image (recommended to maximize configuration window)" Click="PersonalBestsOverviewButtonCopyFile_Click">
+                                                    <Button.Content>
+                                                        <ui:SymbolIcon Symbol="Copy24" Foreground="{StaticResource Sapphire}" FontSize="24"/>
+                                                    </Button.Content>
+                                                </ui:Button>
+                                            </StackPanel>
+                                        </Grid>
+                                        <ContentControl x:Name="QuestLogsContentControl" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Content="{Binding SelectedOption}" ContentTemplateSelector="{StaticResource OptionToTemplateConverter}" />
+                                    </Grid>
+                                </Grid>
+                            </ScrollViewer>
+                        </TabItem>
+                        <TabItem ToolTip="View Achievements" Background="{StaticResource Crust}" Foreground="{StaticResource Text}">
+                            <TabItem.Header>
+                                <StackPanel Orientation="Horizontal">
+                                    <Button BorderThickness="0" Background="Transparent" Width="48" Height="32">
+                                        <Button.Content>
+                                            <ui:SymbolIcon Symbol="Trophy32" Foreground="{StaticResource Red}" FontSize="24"/>
+                                        </Button.Content>
+                                    </Button>
+                                    <TextBlock Foreground="{StaticResource Text}" Text="Achievements" Margin="4,0,0,0" VerticalAlignment="Center" />
+                                </StackPanel>
+                            </TabItem.Header>
+                            <Grid Background="Transparent" Margin="20">
+                                    <Grid Background="Transparent" Style="{StaticResource ConfigSingleGrid}" Margin="0" Height="Auto" Width="Auto">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="4*"/>
+                                            <RowDefinition Height="1*"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="2*"/>
+                                            <ColumnDefinition Width="2*"/>
+                                            <ColumnDefinition Width="1*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid Margin="5" x:Name="AchievementsMenuGrid" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
+                                            <ScrollViewer CanContentScroll="True" IsDeferredScrollingEnabled="True" VerticalScrollBarVisibility="Visible">
+                                                <ItemsControl x:Name="AchievementsMenuItemsControl" Loaded="AchievementsMenuItemsControl_Loaded">
+                                                    <ItemsControl.ItemsPanel>
+                                                        <ItemsPanelTemplate>
+                                                            <WrapPanel Orientation="Horizontal" />
+                                                        </ItemsPanelTemplate>
+                                                    </ItemsControl.ItemsPanel>
+                                                    <ItemsControl.ItemTemplate>
+                                                        <DataTemplate>
+                                                            <Grid Width="192" Height="192" Margin="5">
+                                                                <StackPanel Orientation="Vertical">
+                                                                    <Image Source="{Binding Image}" Width="96" Margin="0,5,0,0"/>
+                                                                    <TextBlock Text="{Binding Title}" Foreground="{Binding Rank, Converter={StaticResource AchievementRankToBrushConverter}}"
+                                                                    Margin="0,5,0,0" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center"/>
+                                                                </StackPanel>
+                                                            </Grid>
+                                                        </DataTemplate>
+                                                    </ItemsControl.ItemTemplate>
+                                                </ItemsControl>
+                                            </ScrollViewer>
+                                        </Grid>
+
+                                        <Grid x:Name="Achievements3DPreviewGrid" Grid.Row="0" Grid.Column="2" Loaded="Achievements3DPreviewGrid_Loaded">
+                                            <Viewport3D ClipToBounds="False" IsHitTestVisible="False">
+                                            <Viewport3D.Camera>
+                                                <PerspectiveCamera Position="0, 0, 4" LookDirection="0, 0, -1" UpDirection="0, 1, 0" />
+                                            </Viewport3D.Camera>
+
+                                            <ModelVisual3D>
+                                                <ModelVisual3D.Content>
+                                                    <Model3DGroup>
+                                                        <Model3DGroup.Children>
+                                                            <GeometryModel3D>
+                                                                <GeometryModel3D.Geometry>
+                                                                    <MeshGeometry3D Positions="-1,-1,0  1,-1,0  1,1,0  -1,1,0"
+                                            TextureCoordinates="0,1 1,1 1,0 0,0"
+                                            TriangleIndices="0 2 1  0 3 2" />
+                                                                </GeometryModel3D.Geometry>
+                                                                <GeometryModel3D.Material>
+                                                                    <DiffuseMaterial>
+                                                                        <DiffuseMaterial.Brush>
+                                                                            <!-- Front side image -->
+                                                                            <ImageBrush ImageSource="../../Assets/Icons/achievement/award_bronze.png" />
+                                                                        </DiffuseMaterial.Brush>
+                                                                    </DiffuseMaterial>
+                                                                </GeometryModel3D.Material>
+                                                            </GeometryModel3D>
+
+                                                            <GeometryModel3D>
+                                                                <GeometryModel3D.Geometry>
+                                                                    <MeshGeometry3D Positions="-1,-1,0  -1,1,0  1,1,0  1,-1,0"
+                                            TextureCoordinates="1,1 0,1 0,0 1,0"
+                                            TriangleIndices="0 2 1  0 3 2" />
+                                                                </GeometryModel3D.Geometry>
+                                                                <GeometryModel3D.Material>
+                                                                    <DiffuseMaterial>
+                                                                        <DiffuseMaterial.Brush>
+                                                                            <!-- Back side image -->
+                                                                            <ImageBrush ImageSource="../../Assets/Icons/achievement/award_silver.png" />
+                                                                        </DiffuseMaterial.Brush>
+                                                                    </DiffuseMaterial>
+                                                                </GeometryModel3D.Material>
+                                                            </GeometryModel3D>
+
+                                                            <AmbientLight Color="White" />
+                                                        </Model3DGroup.Children>
+
+                                                        <Model3DGroup.Transform>
+                                                            <RotateTransform3D>
+                                                                <RotateTransform3D.Rotation>
+                                                                    <AxisAngleRotation3D x:Name="Rotation" Axis="0, 1, 0" Angle="180" />
+                                                                </RotateTransform3D.Rotation>
+                                                            </RotateTransform3D>
+                                                        </Model3DGroup.Transform>
+                                                    </Model3DGroup>
+                                                </ModelVisual3D.Content>
+                                            </ModelVisual3D>
+                                        </Viewport3D>
+                                    </Grid>
+
+                                        <Grid x:Name="AchievementSelectedInfoGrid" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="1*"/>
+                                                    <ColumnDefinition Width="9*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Image d:Source="../../Assets/Icons/achievement/award_bronze.png"/>
+                                                <Grid Grid.Column="1" Margin="5">
+                                                    <ScrollViewer CanContentScroll="True" IsDeferredScrollingEnabled="True" VerticalScrollBarVisibility="Visible">
+                                                        <StackPanel Orientation="Vertical">
+                                                            <!--
+                                                            CompletionDate = DateTime.UnixEpoch,
+                                                            Title = "Akura Vashimu Slain",
+                                                            Description = string.Empty,
+                                                            Rank = AchievementRank.Bronze,
+                                                            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_red2.jpg",
+                                                            Objective = "Complete 1 Zenith★4 Akura Vashimu quest.",
+                                                            IsSecret = false,
+                                                            Hint = string.Empty,
+                                                            -->
+                                                            <TextBlock TextWrapping="Wrap" d:Text="Title" FontSize="24" d:Foreground="{StaticResource Red}"/>
+                                                            <TextBlock TextWrapping="Wrap" d:Text="Objective: objectiveeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" FontSize="20"/>
+                                                            <TextBlock TextWrapping="Wrap" d:Text="Hint: hint" FontSize="16"/>
+                                                        </StackPanel>
+                                                    </ScrollViewer>
+                                                </Grid>
+                                            </Grid>
+                                        </Grid>
+                                    <Grid x:Name="AchievementsTotalProgressGrid" Grid.Row="1" Grid.Column="2">
+                                            <Grid Margin="5">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="1*"/>
+                                                    <RowDefinition Height="1*"/>
+                                                </Grid.RowDefinitions>
+                                                <StackPanel Orientation="Vertical">
+                                                    <TextBlock Foreground="{StaticResource Text}" Text="Total Progress" HorizontalAlignment="Center"/>
+                                                    <ProgressBar Margin="0,5,0,0" d:Value="50" Foreground="{StaticResource Green}" Background="{StaticResource Crust}"/>
+                                                </StackPanel>
+                                                <TextBlock Foreground="{StaticResource Text}" VerticalAlignment="Center" Grid.Row="2" FontSize="24" d:Text="1000 of 1000 (100%)" HorizontalAlignment="Center"/>
+                                            </Grid>
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+                            </TabItem>
                     </TabControl>
                 </Grid>
             </TabItem>

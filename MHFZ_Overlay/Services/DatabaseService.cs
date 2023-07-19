@@ -71,8 +71,6 @@ public sealed class DatabaseService
 
     private static readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
-    private static readonly AchievementService achievementManager = AchievementService.GetInstance();
-
     private const string BackupFolderName = "backups";
 
     private string? _connectionString;
@@ -9722,6 +9720,82 @@ Disabling Quest Logging.",
         }
 
         return fastestRuns;
+    }
+
+    public List<Achievement> GetPlayerAchievements()
+    {
+        var achievements = new List<Achievement>();
+        if (string.IsNullOrEmpty(dataSource))
+        {
+            logger.Warn(CultureInfo.InvariantCulture, "Cannot get player achievements collection. dataSource: {0}", dataSource);
+            return achievements;
+        }
+
+        using (var conn = new SQLiteConnection(dataSource))
+        {
+            conn.Open();
+            using (var transaction = conn.BeginTransaction())
+            {
+                try
+                {
+                    var sql = @"SELECT 
+                                    pa.CompletionDate, 
+                                    aa.AchievementID, 
+                                    Title, 
+                                    Description, 
+                                    Rank, 
+                                    Objective, 
+                                    Image, 
+                                    IsSecret, 
+                                    Hint
+                                FROM 
+                                    AllAchievements aa
+                                LEFT JOIN 
+                                    PlayerAchievements pa ON aa.AchievementID = pa.AchievementID
+                                ORDER BY 
+                                    aa.AchievementID ASC";
+
+                    using (var cmd = new SQLiteCommand(sql, conn))
+                    {
+                        using (var reader = cmd.ExecuteReader())
+                        {
+                            if (reader == null || !reader.HasRows)
+                            {
+                                return achievements;
+                            }   
+
+                            if (reader.HasRows)
+                            {
+                                while (reader.Read())
+                                {
+                                    achievements.Add(new Achievement
+                                    {
+                                        CompletionDate = reader.IsDBNull(reader.GetOrdinal("CompletionDate"))
+                                    ? DateTime.UnixEpoch
+                                    : DateTime.Parse(reader.GetString(reader.GetOrdinal("CompletionDate"))),
+                                        Title = reader.GetString(reader.GetOrdinal("Title")),
+                                        Description = reader.GetString(reader.GetOrdinal("Description")),
+                                        Rank = AchievementService.ConvertToAchievementRank(reader.GetInt64(reader.GetOrdinal("Rank"))),
+                                        Image = reader.GetString(reader.GetOrdinal("Image")),
+                                        Objective = reader.GetString(reader.GetOrdinal("Objective")),
+                                        IsSecret = reader.GetBoolean(reader.GetOrdinal("IsSecret")),
+                                        Hint = reader.GetString(reader.GetOrdinal("Hint")),
+                                    });
+                                }
+                            }
+                        }
+                    }
+
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    HandleError(transaction, ex);
+                }
+            }
+        }
+
+        return achievements;
     }
 
     public ObservableCollection<RecentRuns> GetRecentRuns()

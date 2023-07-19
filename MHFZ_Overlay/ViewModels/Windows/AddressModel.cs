@@ -13374,6 +13374,8 @@ After all that you’ve unlocked magnet spike! You should get a material to make
 
     public List<RecentRuns> CalendarRuns { get; set; } = new ();
 
+    public List<Achievement> PlayerAchievements { get; set; } = new ();
+
     public ObservableCollection<QuestLogsOption> QuestLogsSearchOption { get; set; } = new ObservableCollection<QuestLogsOption>()
     {
         new QuestLogsOption{Name = "Compendium", IsSelected = false},
