@@ -18,7 +18,10 @@
                  xmlns:validationrules="clr-namespace:MHFZ_Overlay.Services.ValidationRule"
                  xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
                  xmlns:viewmodels="clr-namespace:MHFZ_Overlay.ViewModels.Windows" xmlns:windows="clr-namespace:MHFZ_Overlay.ViewModels.Windows"
-                 mc:Ignorable="d"
+            xmlns:vwp="clr-namespace:WpfToolkit.Controls;assembly=VirtualizingWrapPanel"
+
+
+                     mc:Ignorable="d"
         x:Name="Config"
         Title="Monster Hunter Frontier Z Overlay Settings"
         Height="720" Width="1280" ResizeMode="CanResize"
@@ -1656,10 +1659,10 @@
                                             <ColumnDefinition Width="2*"/>
                                             <ColumnDefinition Width="1*"/>
                                         </Grid.ColumnDefinitions>
-                                        <ListView x:Name="AchievementsListView" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Loaded="AchievementsListView_Loaded" SelectionChanged="AchievementsListView_SelectionChanged">
+                                        <ListView OverridesDefaultStyle="True" Background="Transparent" VirtualizingStackPanel.IsVirtualizing="True" x:Name="AchievementsListView" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Loaded="AchievementsListView_Loaded" SelectionChanged="AchievementsListView_SelectionChanged">
                                             <ListView.ItemsPanel>
-                                                <ItemsPanelTemplate>
-                                                    <UniformGrid Columns="4" />
+                                                <ItemsPanelTemplate >
+                                                    <vwp:VirtualizingWrapPanel SpacingMode="Uniform" StretchItems="False" CanHorizontallyScroll="False" CanVerticallyScroll="True" OverridesDefaultStyle="True" Background="Transparent"/>
                                                 </ItemsPanelTemplate>
                                             </ListView.ItemsPanel>
                                             <ListView.ItemContainerStyle>
@@ -1674,11 +1677,11 @@
                                                 </Style>
                                             </ListView.ItemContainerStyle>
                                             <ListView.ItemTemplate>
-                                                <DataTemplate>
-                                                    <Grid Width="192" Height="192" Margin="5">
-                                                        <StackPanel Orientation="Vertical">
-                                                            <Image Source="{Binding Image}" Width="96" Margin="0,5,0,0" Opacity="{Binding CompletionDate, Converter={StaticResource CompletionDateToOpacityConverter}}" />
-                                                            <TextBlock Text="{Binding Title}" Foreground="{Binding Rank, Converter={StaticResource AchievementRankToBrushConverter}}"
+                                                <DataTemplate >
+                                                    <Grid Width="192" Height="192" Margin="5" OverridesDefaultStyle="True" Background="Transparent">
+                                                        <StackPanel Orientation="Vertical" OverridesDefaultStyle="True" Background="Transparent">
+                                                            <Image OverridesDefaultStyle="True" Source="{Binding Image}" Width="96" Margin="0,5,0,0" Opacity="{Binding CompletionDate, Converter={StaticResource CompletionDateToOpacityConverter}}" />
+                                                            <TextBlock OverridesDefaultStyle="True" Background="Transparent" Text="{Binding Title}" Foreground="{Binding Rank, Converter={StaticResource AchievementRankToBrushConverter}}"
                                Margin="0,5,0,0" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center"
                                Opacity="{Binding CompletionDate, Converter={StaticResource CompletionDateToOpacityConverter}}" />
                                                         </StackPanel>
