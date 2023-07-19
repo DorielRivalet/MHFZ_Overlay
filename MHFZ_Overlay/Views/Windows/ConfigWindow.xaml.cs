@@ -5,6 +5,7 @@
 namespace MHFZ_Overlay.Views.Windows;
 
 using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -21,6 +22,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using System.Windows.Media.Media3D;
 using EZlion.Mapper;
@@ -4057,6 +4059,7 @@ public partial class ConfigWindow : FluentWindow
         MainWindow.dataLoader.model.PlayerAchievements = databaseManager.GetPlayerAchievements();
         achievementsListView.ItemsSource = MainWindow.dataLoader.model.PlayerAchievements;
         achievementsListView.Items.Refresh();
+        UpdateAchievementsProgress();
     }
 
     private void AchievementsListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -4093,6 +4096,67 @@ public partial class ConfigWindow : FluentWindow
             AchievementSelectionInfoTitle.Foreground = selectedAchievement.GetBrushColorFromRank();
             // ...
         }
+    }
+
+    private void UpdateAchievementsProgress()
+    {
+        int totalAchievements = MainWindow.dataLoader.model.PlayerAchievements.Count;
+        int obtainedAchievements = MainWindow.dataLoader.model.PlayerAchievements.Count(a => a.CompletionDate != DateTime.UnixEpoch);
+
+        double progressPercentage = obtainedAchievements * 100.0 / totalAchievements;
+        AchievementsProgressBar.Value = progressPercentage;
+
+        var brushConverter = new BrushConverter();
+
+        if (obtainedAchievements >= 50 && obtainedAchievements < 100) // unlock Bingo + Gacha
+        {
+            AchievementsProgressBar.Foreground = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Maroon"]);
+            AchievementsProgressTextBlock.Foreground = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Maroon"]);
+            AchievementTotalProgressTextBlock.Foreground = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Maroon"]);
+        }
+        else if (obtainedAchievements >= 100 && obtainedAchievements < 150) // unlock zenith gauntlet
+        {
+            AchievementsProgressBar.Foreground = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Lavender"]);
+            AchievementsProgressTextBlock.Foreground = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Lavender"]);
+            AchievementTotalProgressTextBlock.Foreground = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Lavender"]);
+        }
+        else if (obtainedAchievements >= 150 && obtainedAchievements < 200) // unlock solstice gauntlet
+        {
+            AchievementsProgressBar.Foreground = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Yellow"]);
+            AchievementsProgressTextBlock.Foreground = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Yellow"]);
+            AchievementTotalProgressTextBlock.Foreground = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Yellow"]);
+        }
+        else if (obtainedAchievements >= 200 && obtainedAchievements < 300) // unlock musou gauntlet
+        {
+            AchievementsProgressBar.Foreground = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Teal"]);
+            AchievementsProgressTextBlock.Foreground = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Teal"]);
+            AchievementTotalProgressTextBlock.Foreground = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Teal"]);
+        }
+        else if (1 == 1 || obtainedAchievements == totalAchievements) // all
+        {
+            AchievementsProgressBar.Foreground = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Teal"]);
+            AchievementsProgressTextBlock.Foreground = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Teal"]);
+            AchievementTotalProgressTextBlock.Foreground = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Teal"]);
+
+            // Create and apply the DropShadowEffect to the ProgressBar and TextBlock
+            var dropShadowEffect = new DropShadowEffect
+            {
+                Color = (Color)ColorConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Teal"]),
+                ShadowDepth = 0,
+                BlurRadius = 15,
+                Opacity = 1
+            };
+
+            AchievementsProgressBar.Effect = dropShadowEffect;
+            AchievementsProgressTextBlock.Effect = dropShadowEffect;
+            AchievementTotalProgressTextBlock.Effect = dropShadowEffect;
+        }
+        else
+        {
+            AchievementsProgressTextBlock.Foreground = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Text"]);
+        }
+
+        AchievementsProgressTextBlock.Text = $"{obtainedAchievements} of {totalAchievements} ({progressPercentage:F2}%)";
     }
 
     private void AchievementSelectedInfoGrid_Loaded(object sender, RoutedEventArgs e)

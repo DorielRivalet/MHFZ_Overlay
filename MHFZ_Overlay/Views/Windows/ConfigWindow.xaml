@@ -1704,11 +1704,6 @@
                                             </ListView.ItemTemplate>
                                         </ListView>
 
-
-
-
-
-
                                         <Grid x:Name="Achievements3DPreviewGrid" Grid.Row="0" Grid.Column="2" Loaded="Achievements3DPreviewGrid_Loaded">
                                             <Viewport3D ClipToBounds="False" IsHitTestVisible="False">
                                             <Viewport3D.Camera>
@@ -1795,17 +1790,17 @@
                                                 </Grid>
                                             </Grid>
                                         </Grid>
-                                    <Grid x:Name="AchievementsTotalProgressGrid" Grid.Row="1" Grid.Column="2">
+                                        <Grid x:Name="AchievementsTotalProgressGrid" Grid.Row="1" Grid.Column="2">
                                             <Grid Margin="5">
                                                 <Grid.RowDefinitions>
                                                     <RowDefinition Height="1*"/>
                                                     <RowDefinition Height="1*"/>
                                                 </Grid.RowDefinitions>
                                                 <StackPanel Orientation="Vertical">
-                                                    <TextBlock Foreground="{StaticResource Text}" Text="Total Progress" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold"/>
-                                                    <ProgressBar Margin="0,5,0,0" d:Value="50" Foreground="{StaticResource Green}" Background="{StaticResource Crust}"/>
+                                                    <TextBlock x:Name="AchievementTotalProgressTextBlock" Foreground="{StaticResource Text}" Text="Total Progress" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold"/>
+                                                    <ProgressBar x:Name="AchievementsProgressBar" Margin="0,5,0,0" d:Value="50" Foreground="{StaticResource Green}" Background="{StaticResource Crust}"/>
                                                 </StackPanel>
-                                                <TextBlock Foreground="{StaticResource Text}" VerticalAlignment="Center" Grid.Row="2" FontSize="24" FontWeight="Bold" d:Text="1000 of 1000 (100%)" HorizontalAlignment="Center"/>
+                                                <TextBlock x:Name="AchievementsProgressTextBlock" Foreground="{StaticResource Text}" VerticalAlignment="Center" Grid.Row="2" FontSize="24" FontWeight="Bold" d:Text="1000 of 1000 (100%)" HorizontalAlignment="Center"/>
                                             </Grid>
                                         </Grid>
                                     </Grid>
