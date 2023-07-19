@@ -1731,6 +1731,7 @@ public partial class ConfigWindow : FluentWindow
     private Grid? statsGraphsMainGrid;
     private Grid? statsTextMainGrid;
     private ListView? achievementsListView;
+    private Grid? achievementsSelectedInfoGrid;
 
     private void UpdateYoutubeLink_ButtonClick(object sender, RoutedEventArgs e)
     {
@@ -4060,7 +4061,43 @@ public partial class ConfigWindow : FluentWindow
 
     private void AchievementsListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
+        if (achievementsSelectedInfoGrid is null)
+        {
+            return;
+        }
 
+        if (AchievementsListView.SelectedItem is Achievement selectedAchievement)
+        {
+            // Update the other grid's UI elements based on the selected achievement
+            // For example:
+            AchievementSelectionInfoImage.Source = new BitmapImage(new Uri(selectedAchievement.Image));
+            if (selectedAchievement.CompletionDate == DateTime.UnixEpoch)
+            {
+                AchievementSelectionInfoTitle.Text = selectedAchievement.Title;
+            }
+            else
+            {
+                AchievementSelectionInfoTitle.Text = $"{selectedAchievement.Title} | {selectedAchievement.CompletionDate.ToString("yy/MM/dd HH:mm:ss")}"; ;
+            }
+
+            if (selectedAchievement.IsSecret && selectedAchievement.CompletionDate == DateTime.UnixEpoch)
+            {
+                AchievementSelectionInfoObjective.Text = string.Empty;
+            }
+            else
+            {
+                AchievementSelectionInfoObjective.Text = selectedAchievement.Objective;
+            }
+
+            AchievementSelectionInfoHint.Text = selectedAchievement.Hint;
+            AchievementSelectionInfoTitle.Foreground = selectedAchievement.GetBrushColorFromRank();
+            // ...
+        }
+    }
+
+    private void AchievementSelectedInfoGrid_Loaded(object sender, RoutedEventArgs e)
+    {
+        achievementsSelectedInfoGrid = (Grid)sender;
     }
 }
 

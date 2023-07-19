@@ -1659,29 +1659,43 @@
                                             <ColumnDefinition Width="2*"/>
                                             <ColumnDefinition Width="1*"/>
                                         </Grid.ColumnDefinitions>
-                                        <ListView OverridesDefaultStyle="True" Background="Transparent" VirtualizingStackPanel.IsVirtualizing="True" x:Name="AchievementsListView" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Loaded="AchievementsListView_Loaded" SelectionChanged="AchievementsListView_SelectionChanged">
-                                            <ListView.ItemsPanel>
-                                                <ItemsPanelTemplate >
-                                                    <vwp:VirtualizingWrapPanel SpacingMode="Uniform" StretchItems="False" CanHorizontallyScroll="False" CanVerticallyScroll="True" OverridesDefaultStyle="True" Background="Transparent"/>
-                                                </ItemsPanelTemplate>
-                                            </ListView.ItemsPanel>
-                                            <ListView.ItemContainerStyle>
+                                        <ListView Margin="5" x:Name="AchievementsListView" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Loaded="AchievementsListView_Loaded" SelectionChanged="AchievementsListView_SelectionChanged"
+          VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Standard">
+                                            <ListView.Resources>
                                                 <Style TargetType="ListViewItem">
                                                     <Setter Property="Template">
                                                         <Setter.Value>
                                                             <ControlTemplate TargetType="ListViewItem">
-                                                                <ContentPresenter />
+                                                                <Border x:Name="Border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1" Padding="2">
+                                                                    <ContentPresenter />
+                                                                </Border>
+                                                                <ControlTemplate.Triggers>
+                                                                    <Trigger Property="IsSelected" Value="True">
+                                                                        <Setter TargetName="Border" Property="Effect">
+                                                                            <Setter.Value>
+                                                                                <DropShadowEffect Color="{StaticResource PaletteYellowColor}" ShadowDepth="0" BlurRadius="10" Opacity="1" />
+                                                                            </Setter.Value>
+                                                                        </Setter>
+                                                                    </Trigger>
+                                                                </ControlTemplate.Triggers>
                                                             </ControlTemplate>
                                                         </Setter.Value>
                                                     </Setter>
                                                 </Style>
-                                            </ListView.ItemContainerStyle>
+                                            </ListView.Resources>
+
+                                            <ListView.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <vwp:VirtualizingWrapPanel SpacingMode="Uniform" StretchItems="False" CanHorizontallyScroll="False" CanVerticallyScroll="True" />
+                                                </ItemsPanelTemplate>
+                                            </ListView.ItemsPanel>
+
                                             <ListView.ItemTemplate>
-                                                <DataTemplate >
-                                                    <Grid Width="192" Height="192" Margin="5" OverridesDefaultStyle="True" Background="Transparent">
-                                                        <StackPanel Orientation="Vertical" OverridesDefaultStyle="True" Background="Transparent">
-                                                            <Image OverridesDefaultStyle="True" Source="{Binding Image}" Width="96" Margin="0,5,0,0" Opacity="{Binding CompletionDate, Converter={StaticResource CompletionDateToOpacityConverter}}" />
-                                                            <TextBlock OverridesDefaultStyle="True" Background="Transparent" Text="{Binding Title}" Foreground="{Binding Rank, Converter={StaticResource AchievementRankToBrushConverter}}"
+                                                <DataTemplate>
+                                                    <Grid Width="192" Height="192" Margin="5">
+                                                        <StackPanel Orientation="Vertical">
+                                                            <Image Source="{Binding Image}" Width="96" Margin="0,5,0,0" Opacity="{Binding CompletionDate, Converter={StaticResource CompletionDateToOpacityConverter}}" />
+                                                            <TextBlock FontWeight="Bold" Text="{Binding Title}" Foreground="{Binding Rank, Converter={StaticResource AchievementRankToBrushConverter}}"
                                Margin="0,5,0,0" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center"
                                Opacity="{Binding CompletionDate, Converter={StaticResource CompletionDateToOpacityConverter}}" />
                                                         </StackPanel>
@@ -1689,6 +1703,7 @@
                                                 </DataTemplate>
                                             </ListView.ItemTemplate>
                                         </ListView>
+
 
 
 
@@ -1752,16 +1767,16 @@
                                         </Viewport3D>
                                     </Grid>
 
-                                        <Grid x:Name="AchievementSelectedInfoGrid" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
+                                        <Grid x:Name="AchievementSelectedInfoGrid" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Loaded="AchievementSelectedInfoGrid_Loaded">
                                             <Grid>
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="1*"/>
                                                     <ColumnDefinition Width="9*"/>
                                                 </Grid.ColumnDefinitions>
-                                                <Image d:Source="../../Assets/Icons/achievement/award_bronze.png"/>
+                                                <Image x:Name="AchievementSelectionInfoImage" d:Source="../../Assets/Icons/achievement/award_bronze.png"/>
                                                 <Grid Grid.Column="1" Margin="5">
                                                     <ScrollViewer CanContentScroll="True" IsDeferredScrollingEnabled="True" VerticalScrollBarVisibility="Visible">
-                                                        <StackPanel Orientation="Vertical">
+                                                        <StackPanel Orientation="Vertical" Margin="5">
                                                             <!--
                                                             CompletionDate = DateTime.UnixEpoch,
                                                             Title = "Akura Vashimu Slain",
@@ -1772,9 +1787,9 @@
                                                             IsSecret = false,
                                                             Hint = string.Empty,
                                                             -->
-                                                            <TextBlock TextWrapping="Wrap" d:Text="Title" FontSize="24" d:Foreground="{StaticResource Red}"/>
-                                                            <TextBlock TextWrapping="Wrap" d:Text="Objective: objectiveeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" FontSize="20"/>
-                                                            <TextBlock TextWrapping="Wrap" d:Text="Hint: hint" FontSize="16"/>
+                                                            <TextBlock FontWeight="Bold" x:Name="AchievementSelectionInfoTitle" TextWrapping="Wrap" d:Text="Title" FontSize="24" d:Foreground="{StaticResource Red}"/>
+                                                            <TextBlock Margin="0,5,0,0" x:Name="AchievementSelectionInfoObjective" TextWrapping="Wrap" d:Text="Objective: objectiveeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" FontSize="20"/>
+                                                            <TextBlock Margin="0,5,0,0" x:Name="AchievementSelectionInfoHint" TextWrapping="Wrap" d:Text="Hint: hint" FontSize="16"/>
                                                         </StackPanel>
                                                     </ScrollViewer>
                                                 </Grid>
@@ -1787,10 +1802,10 @@
                                                     <RowDefinition Height="1*"/>
                                                 </Grid.RowDefinitions>
                                                 <StackPanel Orientation="Vertical">
-                                                    <TextBlock Foreground="{StaticResource Text}" Text="Total Progress" HorizontalAlignment="Center"/>
+                                                    <TextBlock Foreground="{StaticResource Text}" Text="Total Progress" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold"/>
                                                     <ProgressBar Margin="0,5,0,0" d:Value="50" Foreground="{StaticResource Green}" Background="{StaticResource Crust}"/>
                                                 </StackPanel>
-                                                <TextBlock Foreground="{StaticResource Text}" VerticalAlignment="Center" Grid.Row="2" FontSize="24" d:Text="1000 of 1000 (100%)" HorizontalAlignment="Center"/>
+                                                <TextBlock Foreground="{StaticResource Text}" VerticalAlignment="Center" Grid.Row="2" FontSize="24" FontWeight="Bold" d:Text="1000 of 1000 (100%)" HorizontalAlignment="Center"/>
                                             </Grid>
                                         </Grid>
                                     </Grid>
