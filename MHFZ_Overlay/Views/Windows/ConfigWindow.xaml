@@ -1706,61 +1706,70 @@
 
                                         <Grid x:Name="Achievements3DPreviewGrid" Grid.Row="0" Grid.Column="2" Loaded="Achievements3DPreviewGrid_Loaded">
                                             <Viewport3D ClipToBounds="False" IsHitTestVisible="False">
-                                            <Viewport3D.Camera>
-                                                <PerspectiveCamera Position="0, 0, 4" LookDirection="0, 0, -1" UpDirection="0, 1, 0" />
-                                            </Viewport3D.Camera>
+                                                <Viewport3D.Camera>
+                                                    <PerspectiveCamera Position="0, 0, 4" LookDirection="0, 0, -1" UpDirection="0, 1, 0" />
+                                                </Viewport3D.Camera>
 
-                                            <ModelVisual3D>
-                                                <ModelVisual3D.Content>
-                                                    <Model3DGroup>
-                                                        <Model3DGroup.Children>
-                                                            <GeometryModel3D>
-                                                                <GeometryModel3D.Geometry>
-                                                                    <MeshGeometry3D Positions="-1,-1,0  1,-1,0  1,1,0  -1,1,0"
+                                                <ModelVisual3D>
+                                                    <ModelVisual3D.Content>
+                                                        <Model3DGroup>
+                                                            <Model3DGroup.Children>
+                                                                <GeometryModel3D>
+                                                                    <GeometryModel3D.Geometry>
+                                                                        <MeshGeometry3D Positions="-1,-1,0  1,-1,0  1,1,0  -1,1,0"
                                             TextureCoordinates="0,1 1,1 1,0 0,0"
                                             TriangleIndices="0 2 1  0 3 2" />
-                                                                </GeometryModel3D.Geometry>
-                                                                <GeometryModel3D.Material>
-                                                                    <DiffuseMaterial>
-                                                                        <DiffuseMaterial.Brush>
-                                                                            <!-- Front side image -->
-                                                                            <ImageBrush ImageSource="../../Assets/Icons/achievement/award_bronze.png" />
-                                                                        </DiffuseMaterial.Brush>
-                                                                    </DiffuseMaterial>
-                                                                </GeometryModel3D.Material>
-                                                            </GeometryModel3D>
+                                                                    </GeometryModel3D.Geometry>
+                                                                    <GeometryModel3D.Material>
+                                                                        <DiffuseMaterial>
+                                                                            <DiffuseMaterial.Brush>
+                                                                                <!-- Front side image -->
+                                                                                <ImageBrush ImageSource="../../Assets/Icons/achievement/unknown_white.jpg">
+                                                                                    <ImageBrush.RelativeTransform>
+                                                                                        <ScaleTransform CenterX="0.5" CenterY="0.5" ScaleX="-1" />
+                                                                                    </ImageBrush.RelativeTransform>
+                                                                                </ImageBrush>
+                                                                            </DiffuseMaterial.Brush>
+                                                                        </DiffuseMaterial>
+                                                                    </GeometryModel3D.Material>
+                                                                </GeometryModel3D>
 
-                                                            <GeometryModel3D>
-                                                                <GeometryModel3D.Geometry>
-                                                                    <MeshGeometry3D Positions="-1,-1,0  -1,1,0  1,1,0  1,-1,0"
+                                                                <GeometryModel3D>
+                                                                    <GeometryModel3D.Geometry>
+                                                                        <MeshGeometry3D Positions="-1,-1,0  -1,1,0  1,1,0  1,-1,0"
                                             TextureCoordinates="1,1 0,1 0,0 1,0"
                                             TriangleIndices="0 2 1  0 3 2" />
-                                                                </GeometryModel3D.Geometry>
-                                                                <GeometryModel3D.Material>
-                                                                    <DiffuseMaterial>
-                                                                        <DiffuseMaterial.Brush>
-                                                                            <!-- Back side image -->
-                                                                            <ImageBrush ImageSource="../../Assets/Icons/achievement/award_silver.png" />
-                                                                        </DiffuseMaterial.Brush>
-                                                                    </DiffuseMaterial>
-                                                                </GeometryModel3D.Material>
-                                                            </GeometryModel3D>
+                                                                    </GeometryModel3D.Geometry>
+                                                                    <GeometryModel3D.Material>
+                                                                        <DiffuseMaterial>
+                                                                            <DiffuseMaterial.Brush>
+                                                                                <!-- Back side image -->
+                                                                                <ImageBrush ImageSource="../../Assets/Icons/achievement/unknown_black.jpg">
+                                                                                    <ImageBrush.RelativeTransform>
+                                                                                        <RotateTransform CenterX="0.5" CenterY="0.5" Angle="-90" />
+                                                                                    </ImageBrush.RelativeTransform>
+                                                                                </ImageBrush>
+                                                                            </DiffuseMaterial.Brush>
+                                                                        </DiffuseMaterial>
+                                                                    </GeometryModel3D.Material>
+                                                                </GeometryModel3D>
 
-                                                            <AmbientLight Color="White" />
-                                                        </Model3DGroup.Children>
+                                                                <AmbientLight Color="White" />
+                                                            </Model3DGroup.Children>
 
-                                                        <Model3DGroup.Transform>
-                                                            <RotateTransform3D>
-                                                                <RotateTransform3D.Rotation>
-                                                                    <AxisAngleRotation3D x:Name="Rotation" Axis="0, 1, 0" Angle="180" />
-                                                                </RotateTransform3D.Rotation>
-                                                            </RotateTransform3D>
-                                                        </Model3DGroup.Transform>
-                                                    </Model3DGroup>
-                                                </ModelVisual3D.Content>
-                                            </ModelVisual3D>
-                                        </Viewport3D>
-                                    </Grid>
+                                                            <Model3DGroup.Transform>
+                                                                <RotateTransform3D>
+                                                                    <RotateTransform3D.Rotation>
+                                                                        <AxisAngleRotation3D x:Name="Rotation" Axis="0, 1, 0" Angle="180" />
+                                                                    </RotateTransform3D.Rotation>
+                                                                </RotateTransform3D>
+                                                            </Model3DGroup.Transform>
+                                                        </Model3DGroup>
+                                                    </ModelVisual3D.Content>
+                                                </ModelVisual3D>
+                                            </Viewport3D>
+                                        </Grid>
+
 
                                         <Grid x:Name="AchievementSelectedInfoGrid" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Loaded="AchievementSelectedInfoGrid_Loaded">
                                             <Grid>
@@ -1782,7 +1791,7 @@
                                                             IsSecret = false,
                                                             Hint = string.Empty,
                                                             -->
-                                                            <TextBlock FontWeight="Bold" x:Name="AchievementSelectionInfoTitle" TextWrapping="Wrap" d:Text="Title" FontSize="24" d:Foreground="{StaticResource Red}"/>
+                                                            <TextBlock FontWeight="Bold" x:Name="AchievementSelectionInfoTitle" TextWrapping="Wrap" FontSize="24" Text="Select an achievement to view more information"/>
                                                             <TextBlock Margin="0,5,0,0" x:Name="AchievementSelectionInfoObjective" TextWrapping="Wrap" d:Text="Objective: objectiveeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" FontSize="20"/>
                                                             <TextBlock Margin="0,5,0,0" x:Name="AchievementSelectionInfoHint" TextWrapping="Wrap" d:Text="Hint: hint" FontSize="16"/>
                                                         </StackPanel>

@@ -4038,9 +4038,8 @@ public partial class ConfigWindow : FluentWindow
 
     private void Achievements3DPreviewGrid_Loaded(object sender, RoutedEventArgs e)
     {
+        // Create the rotation animation
         Storyboard storyboard = new Storyboard();
-
-        // Animation for rotation
         DoubleAnimation animation = new DoubleAnimation
         {
             From = 0,
@@ -4048,7 +4047,6 @@ public partial class ConfigWindow : FluentWindow
             Duration = TimeSpan.FromSeconds(10), // Adjust the duration to control the rotation speed
             RepeatBehavior = RepeatBehavior.Forever
         };
-
         Rotation.BeginAnimation(AxisAngleRotation3D.AngleProperty, animation);
         storyboard.Begin();
     }
@@ -4132,7 +4130,7 @@ public partial class ConfigWindow : FluentWindow
             AchievementsProgressTextBlock.Foreground = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Teal"]);
             AchievementTotalProgressTextBlock.Foreground = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Teal"]);
         }
-        else if (1 == 1 || obtainedAchievements == totalAchievements) // all
+        else if (obtainedAchievements == totalAchievements) // all
         {
             AchievementsProgressBar.Foreground = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Teal"]);
             AchievementsProgressTextBlock.Foreground = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Teal"]);
