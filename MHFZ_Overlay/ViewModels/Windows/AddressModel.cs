@@ -62,6 +62,8 @@ public abstract class AddressModel : INotifyPropertyChanged
         M = m;
     }
 
+    public DateTime DateTimeUtcNow { get; set; } = DateTime.UtcNow;
+
     public int SelectedMonster { get; set; }
 
     public bool ShowMonsterAtkMult { get; set; }
