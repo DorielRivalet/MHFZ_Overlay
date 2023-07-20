@@ -304,7 +304,8 @@ public sealed class FileService
 
             if (bounds.Width <= 0 || bounds.Height <= 0)
             {
-                MessageBox.Show("Please load the gear stats by visiting the text tab in the configuration window", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                logger.Error("Visual out of bounds, aborting bitmap creation");
+                MessageBox.Show("Visual out of bounds, aborting bitmap creation", Messages.ErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 

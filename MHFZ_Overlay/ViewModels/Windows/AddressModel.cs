@@ -2743,7 +2743,7 @@ TreeScope.Children, condition);
     /// <param name="monsterhp">The monsterhp.</param>
     /// <param name="monsterdefrate">The monsterdefrate.</param>
     /// <returns></returns>
-    public int DisplayMonsterEHP(decimal monsterDefrate, int monsterHP)
+    public int DisplayMonsterEHP(int monsterSlot, decimal monsterDefrate, int monsterHP)
     {
         if (QuestID() == 0)
         {
@@ -2756,6 +2756,22 @@ TreeScope.Children, condition);
         {
             if (s.MonsterEHPDisplayCorrectorDefrateMinimumThreshold >= s.MonsterEHPDisplayCorrectorDefrateMaximumThreshold)
             {
+                switch (monsterSlot)
+                {
+                    case 1:
+                        Monster1HPModeText = "THP";
+                        break;
+                    case 2:
+                        Monster2HPModeText = "THP";
+                        break;
+                    case 3:
+                        Monster3HPModeText = "THP";
+                        break;
+                    case 4:
+                        Monster4HPModeText = "THP";
+                        break;
+                }
+
                 return monsterHP;
             }
 
@@ -2765,10 +2781,42 @@ TreeScope.Children, condition);
                 var result = Convert.ToDecimal(monsterHP / previousMonsterDefrate);
                 if (result <= int.MaxValue && result >= int.MinValue)
                 {
+                    switch (monsterSlot)
+                    {
+                        case 1:
+                            Monster1HPModeText = "EHP";
+                            break;
+                        case 2:
+                            Monster2HPModeText = "EHP";
+                            break;
+                        case 3:
+                            Monster3HPModeText = "THP";
+                            break;
+                        case 4:
+                            Monster4HPModeText = "THP";
+                            break;
+                    }
+
                     return Convert.ToInt32(result);
                 }
                 else
                 {
+                    switch (monsterSlot)
+                    {
+                        case 1:
+                            Monster1HPModeText = "THP";
+                            break;
+                        case 2:
+                            Monster2HPModeText = "THP";
+                            break;
+                        case 3:
+                            Monster3HPModeText = "THP";
+                            break;
+                        case 4:
+                            Monster4HPModeText = "THP";
+                            break;
+                    }
+
                     return monsterHP;
                 }
             }
@@ -2780,15 +2828,63 @@ TreeScope.Children, condition);
 
                     if (result <= int.MaxValue && result >= int.MinValue)
                     {
+                        switch (monsterSlot)
+                        {
+                            case 1:
+                                Monster1HPModeText = "EHP";
+                                break;
+                            case 2:
+                                Monster2HPModeText = "EHP";
+                                break;
+                            case 3:
+                                Monster3HPModeText = "THP";
+                                break;
+                            case 4:
+                                Monster4HPModeText = "THP";
+                                break;
+                        }
+
                         return Convert.ToInt32(result);
                     }
                     else
                     {
+                        switch (monsterSlot)
+                        {
+                            case 1:
+                                Monster1HPModeText = "THP";
+                                break;
+                            case 2:
+                                Monster2HPModeText = "THP";
+                                break;
+                            case 3:
+                                Monster3HPModeText = "THP";
+                                break;
+                            case 4:
+                                Monster4HPModeText = "THP";
+                                break;
+                        }
+
                         return monsterHP;
                     }
                 }
                 else
                 {
+                    switch (monsterSlot)
+                    {
+                        case 1:
+                            Monster1HPModeText = "THP";
+                            break;
+                        case 2:
+                            Monster2HPModeText = "THP";
+                            break;
+                        case 3:
+                            Monster3HPModeText = "THP";
+                            break;
+                        case 4:
+                            Monster4HPModeText = "THP";
+                            break;
+                    }
+
                     return monsterHP;
                 }
             }
@@ -2801,6 +2897,22 @@ TreeScope.Children, condition);
 
                 if (result <= int.MaxValue && result >= int.MinValue)
                 {
+                    switch (monsterSlot)
+                    {
+                        case 1:
+                            Monster1HPModeText = "EHP";
+                            break;
+                        case 2:
+                            Monster2HPModeText = "EHP";
+                            break;
+                        case 3:
+                            Monster3HPModeText = "THP";
+                            break;
+                        case 4:
+                            Monster4HPModeText = "THP";
+                            break;
+                    }
+
                     return Convert.ToInt32(result);
                 }
                 else
@@ -3579,11 +3691,12 @@ TreeScope.Children, condition);
             {
                 var monsterDefMultiplier = Monster1DefMult();
                 var monsterHP = Monster1HPInt();
-                return DisplayMonsterEHP(monsterDefMultiplier, monsterHP).ToString(CultureInfo.InvariantCulture);
+                return DisplayMonsterEHP(1, monsterDefMultiplier, monsterHP).ToString(CultureInfo.InvariantCulture);
             }
             else
             {
                 var monsterHP = Monster1HPInt();
+                Monster1HPModeText = "THP";
                 return monsterHP.ToString(CultureInfo.InvariantCulture);
             }
         }
@@ -3625,11 +3738,29 @@ TreeScope.Children, condition);
         }
     }
 
-    public string Monster2HP => Configuring ?
-        "0" :
-        ShowMonsterEHP() ?
-            DisplayMonsterEHP(Monster2DefMult(), Monster2HPInt()).ToString(CultureInfo.InvariantCulture) :
-            Monster2HPInt().ToString(CultureInfo.InvariantCulture);
+    public string Monster2HP
+    {
+        get
+        {
+            if (Configuring)
+            {
+                return "0";
+            }
+            else
+            {
+                if (ShowMonsterEHP())
+                {
+                    return DisplayMonsterEHP(2, Monster2DefMult(), Monster2HPInt()).ToString(CultureInfo.InvariantCulture);
+                }
+                else
+                {
+                    Monster2HPModeText = "THP";
+                    return Monster2HPInt().ToString(CultureInfo.InvariantCulture);
+                }
+            }
+        }
+    }
+            
 
     public string Monster2MaxHP
     {
@@ -3663,7 +3794,7 @@ TreeScope.Children, condition);
     public string Monster3HP => Configuring ?
         "0" :
         ShowMonsterEHP() ?
-            DisplayMonsterEHP(1, Monster3HPInt()).ToString(CultureInfo.InvariantCulture) :
+            DisplayMonsterEHP(3, 1, Monster3HPInt()).ToString(CultureInfo.InvariantCulture) :
             Monster3HPInt().ToString(CultureInfo.InvariantCulture);
 
     public string Monster3MaxHP
@@ -3687,7 +3818,7 @@ TreeScope.Children, condition);
     public string Monster4HP => Configuring ?
         "0" :
         ShowMonsterEHP() ?
-            DisplayMonsterEHP(1, Monster4HPInt()).ToString(CultureInfo.InvariantCulture) :
+            DisplayMonsterEHP(4, 1, Monster4HPInt()).ToString(CultureInfo.InvariantCulture) :
             Monster4HPInt().ToString(CultureInfo.InvariantCulture);
 
     public string Monster4MaxHP
@@ -4165,20 +4296,6 @@ TreeScope.Children, condition);
         }
     }
 
-    public string DetermineMonsterHPModeText()
-    {
-        var s = (Settings)Application.Current.TryFindResource("Settings");
-
-        if (s.EnableEHPNumbers)
-        {
-            return "EHP";
-        }
-        else
-        {
-            return "THP";
-        }
-    }
-
     public string Monster1HPBarColor => DetermineMonsterHPBarColor(1);
 
     public string Monster2HPBarColor => DetermineMonsterHPBarColor(2);
@@ -4203,7 +4320,15 @@ TreeScope.Children, condition);
 
     public string Monster4BarBorderColor => DetermineMonsterBorderColor(4);
 
-    public string MonsterHPModeText => DetermineMonsterHPModeText();
+    public string Monster1HPModeText { get; set; } = string.Empty;
+
+    public string Monster2HPModeText { get; set; } = string.Empty;
+
+    // TODO defrate addresses
+    public string Monster3HPModeText { get; set; } = "THP";
+
+    public string Monster4HPModeText { get; set; } = "THP";
+
 
     public string CurrentMap
     {
@@ -13518,7 +13643,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
     /// <returns></returns>
     public int GetMonster1EHP()
     {
-        return DisplayMonsterEHP(Monster1DefMult(), Monster1HPInt());
+        return DisplayMonsterEHP(1, Monster1DefMult(), Monster1HPInt());
     }
 
     /// <summary>

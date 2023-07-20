@@ -375,7 +375,7 @@
             </Grid.RowDefinitions>
             <Border x:Name="Monster1HpBarBorder" BorderBrush="{StaticResource Red}" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" BorderThickness="0"/>
 
-            <customcontrols:MonsterHPBar FontFamily="{StaticResource Source Code Pro Bold}" Foreground="#f5e0dc" x:Name="Monster1HPBar"  Grid.Row="0" Background="{Binding Source={StaticResource Settings},Path=HPBackGroundColor}" IsHitTestVisible="False"
+            <customcontrols:MonsterHPBar MaxWidth="1000" FontFamily="{StaticResource Source Code Pro Bold}" Foreground="#f5e0dc" x:Name="Monster1HPBar"  Grid.Row="0" Background="{Binding Source={StaticResource Settings},Path=HPBackGroundColor}" IsHitTestVisible="False"
                                Visibility="{Binding ElementName=Window, Path=dataLoader.model.HasMonster1, Converter={StaticResource BoolToVis}}"
                                Description="{Binding ElementName=Window, Path=dataLoader.model.Monster1Name}"
                                IconSource="{Binding ElementName=Window, Path=dataLoader.model.CurrentMonster1Image}"
@@ -383,7 +383,7 @@
                                NumMax="{Binding  ElementName=Window, Path=dataLoader.model.Monster1MaxHP}"
                                BarColor="{Binding  ElementName=Window, Path=dataLoader.model.Monster1HPBarColor}" 
                                StrokeColor="{Binding  ElementName=Window, Path=dataLoader.model.Monster1StrokeColor}"
-                               HPMode="{Binding ElementName=Window, Path=dataLoader.model.MonsterHPModeText}"
+                               HPMode="{Binding ElementName=Window, Path=dataLoader.model.Monster1HPModeText}"
                                BorderColor="{Binding ElementName=Window, Path=dataLoader.model.Monster1BarBorderColor}"/>
         </Grid>
         <Grid Background="{Binding Source={StaticResource Settings},Path=HPBackGroundColor}" x:Name="Monster2HpBar" Canvas.Left="{Binding Source={StaticResource Settings},Path=Monster2HealthBarX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=Monster2HealthBarY}" MouseLeftButtonDown="ElementMouseLeftButtonDown"
@@ -393,7 +393,7 @@
             </Grid.RowDefinitions>
             <Border x:Name="Monster2HpBarBorder" BorderBrush="{StaticResource Red}" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" BorderThickness="0"/>
 
-            <customcontrols:MonsterHPBar  FontFamily="{StaticResource Source Code Pro Bold}" Foreground="#f5e0dc" x:Name="Monster2HPBar" Grid.Row="0"  Background="{Binding Source={StaticResource Settings},Path=HPBackGroundColor}" IsHitTestVisible="False"
+                    <customcontrols:MonsterHPBar MaxWidth="1000" FontFamily="{StaticResource Source Code Pro Bold}" Foreground="#f5e0dc" x:Name="Monster2HPBar" Grid.Row="0"  Background="{Binding Source={StaticResource Settings},Path=HPBackGroundColor}" IsHitTestVisible="False"
                                Visibility="{Binding ElementName=Window, Path=dataLoader.model.HasMonster2, Converter={StaticResource BoolToVis}}"
                                IconSource="{Binding ElementName=Window, Path=dataLoader.model.CurrentMonster2Image}"
                                Description="{Binding ElementName=Window, Path=dataLoader.model.Monster2Name}"
@@ -401,7 +401,7 @@
                                NumMax="{Binding  ElementName=Window, Path=dataLoader.model.Monster2MaxHP}"
                                BarColor="{Binding  ElementName=Window, Path=dataLoader.model.Monster2HPBarColor}" 
                                StrokeColor="{Binding  ElementName=Window, Path=dataLoader.model.Monster2StrokeColor}"
-                                HPMode="{Binding ElementName=Window, Path=dataLoader.model.MonsterHPModeText}" BorderColor="{Binding ElementName=Window, Path=dataLoader.model.Monster2BarBorderColor}"
+                                HPMode="{Binding ElementName=Window, Path=dataLoader.model.Monster2HPModeText}" BorderColor="{Binding ElementName=Window, Path=dataLoader.model.Monster2BarBorderColor}"
 />
         </Grid>
         <Grid Background="{Binding Source={StaticResource Settings},Path=HPBackGroundColor}" x:Name="Monster3HpBar" Canvas.Left="{Binding Source={StaticResource Settings},Path=Monster3HealthBarX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=Monster3HealthBarY}" MouseLeftButtonDown="ElementMouseLeftButtonDown"
@@ -411,7 +411,7 @@
             </Grid.RowDefinitions>
             <Border x:Name="Monster3HpBarBorder" BorderBrush="{StaticResource Red}" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" BorderThickness="0"/>
 
-            <customcontrols:MonsterHPBar FontFamily="{StaticResource Source Code Pro Bold}" Foreground="#f5e0dc" x:Name="Monster3HPBar"  Grid.Row="0" Background="{Binding Source={StaticResource Settings},Path=HPBackGroundColor}" IsHitTestVisible="False"
+                    <customcontrols:MonsterHPBar MaxWidth="1000" FontFamily="{StaticResource Source Code Pro Bold}" Foreground="#f5e0dc" x:Name="Monster3HPBar"  Grid.Row="0" Background="{Binding Source={StaticResource Settings},Path=HPBackGroundColor}" IsHitTestVisible="False"
                                Visibility="{Binding ElementName=Window, Path=dataLoader.model.HasMonster3, Converter={StaticResource BoolToVis}}"
                                IconSource="{Binding ElementName=Window, Path=dataLoader.model.CurrentMonster3Image}"
                                Description="{Binding ElementName=Window, Path=dataLoader.model.Monster3Name}"
@@ -419,7 +419,7 @@
                                NumMax="{Binding  ElementName=Window, Path=dataLoader.model.Monster3MaxHP}"
                                BarColor="{Binding  ElementName=Window, Path=dataLoader.model.Monster3HPBarColor}" 
                                StrokeColor="{Binding  ElementName=Window, Path=dataLoader.model.Monster3StrokeColor}"
-                                HPMode="{Binding ElementName=Window, Path=dataLoader.model.MonsterHPModeText}"
+                                HPMode="{Binding ElementName=Window, Path=dataLoader.model.Monster3HPModeText}"
                                 BorderColor="{Binding ElementName=Window, Path=dataLoader.model.Monster3BarBorderColor}"
                             />
         </Grid>
@@ -430,7 +430,7 @@
             </Grid.RowDefinitions>
             <Border x:Name="Monster4HpBarBorder" BorderBrush="{StaticResource Red}" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" BorderThickness="0"/>
 
-            <customcontrols:MonsterHPBar  Foreground="#f5e0dc" x:Name="Monster4HPBar" Grid.Row="0" Background="{Binding Source={StaticResource Settings},Path=HPBackGroundColor}" IsHitTestVisible="False"
+                    <customcontrols:MonsterHPBar MaxWidth="1000" Foreground="#f5e0dc" x:Name="Monster4HPBar" Grid.Row="0" Background="{Binding Source={StaticResource Settings},Path=HPBackGroundColor}" IsHitTestVisible="False"
                                Visibility="{Binding ElementName=Window, Path=dataLoader.model.HasMonster4, Converter={StaticResource BoolToVis}}"
                                IconSource="{Binding ElementName=Window, Path=dataLoader.model.CurrentMonster4Image}"
                                Description="{Binding ElementName=Window, Path=dataLoader.model.Monster4Name}"
@@ -438,7 +438,7 @@
                                NumMax="{Binding  ElementName=Window, Path=dataLoader.model.Monster4MaxHP}"
                                BarColor="{Binding  ElementName=Window, Path=dataLoader.model.Monster4HPBarColor}" 
                                StrokeColor="{Binding  ElementName=Window, Path=dataLoader.model.Monster4StrokeColor}"
-                                HPMode="{Binding ElementName=Window, Path=dataLoader.model.MonsterHPModeText}"
+                                HPMode="{Binding ElementName=Window, Path=dataLoader.model.Monster4HPModeText}"
                                 BorderColor="{Binding ElementName=Window, Path=dataLoader.model.Monster4BarBorderColor}"/>
         </Grid>
         <Grid Background="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}" x:Name="MonsterAtkMultInfo"  Canvas.Left="{Binding Source={StaticResource Settings},Path=MonsterAtkMultX}"  Canvas.Top="{Binding Source={StaticResource Settings},Path=MonsterAtkMultY}" Width="Auto" Height="Auto" MouseLeftButtonDown="ElementMouseLeftButtonDown"
