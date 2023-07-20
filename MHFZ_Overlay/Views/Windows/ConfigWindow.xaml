@@ -52,6 +52,61 @@
             <converter:CompletionDateToOpacityConverter x:Key="CompletionDateToOpacityConverter"/>
             <converter:DateTimeToStringConverter x:Key="DateTimeToStringConverter" />
             <converter:BooleanToOpacityConverter  x:Key="BooleanToOpacityConverter "/>
+            <!-- Define the reusable context menu in a resource dictionary or at a higher level in your XAML hierarchy -->
+            <ContextMenu x:Key="HunterNotesContextMenu" x:Name="HunterNotesContextMenu">
+                <ui:MenuItem x:Name="HunterNotesCopyTextMenuItem" Click="HunterNotesGridMenuItem_Click">
+                    <MenuItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <ui:SymbolIcon Symbol="Copy20"/>
+                            <TextBlock Margin="5,0,0,0" Text="Copy to Clipboard as Text"/>
+                        </StackPanel>
+                    </MenuItem.Header>
+                </ui:MenuItem>
+                <ui:MenuItem x:Name="HunterNotesCopyImageMenuItem" Click="HunterNotesGridMenuItem_Click">
+                    <MenuItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <ui:SymbolIcon Symbol="Copy20"/>
+                            <TextBlock Margin="5,0,0,0" Text="Copy to Clipboard as Image"/>
+                        </StackPanel>
+                    </MenuItem.Header>
+                </ui:MenuItem>
+                <ui:MenuItem x:Name="HunterNotesSaveTextMenuItem" Click="HunterNotesGridMenuItem_Click">
+                    <MenuItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <ui:SymbolIcon Symbol="ArrowDownload20"/>
+                            <TextBlock Margin="5,0,0,0" Text="Save as Text"/>
+                        </StackPanel>
+                    </MenuItem.Header>
+                </ui:MenuItem>
+                <ui:MenuItem x:Name="HunterNotesSaveImageMenuItem" Click="HunterNotesGridMenuItem_Click">
+                    <MenuItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <ui:SymbolIcon Symbol="ArrowDownload20"/>
+                            <TextBlock Margin="5,0,0,0" Text="Save as Image"/>
+                        </StackPanel>
+                    </MenuItem.Header>
+                </ui:MenuItem>
+                <!-- Add more menu items if needed -->
+            </ContextMenu>
+            <ContextMenu x:Key="HunterNotesContextMenuImageOnly" x:Name="HunterNotesContextMenuImageOnly">
+                <ui:MenuItem x:Name="HunterNotesCopyImageMenuItem2" Click="HunterNotesGridMenuItem_Click">
+                    <MenuItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <ui:SymbolIcon Symbol="Copy20"/>
+                            <TextBlock Margin="5,0,0,0" Text="Copy to Clipboard as Image"/>
+                        </StackPanel>
+                    </MenuItem.Header>
+                </ui:MenuItem>
+                <ui:MenuItem x:Name="HunterNotesSaveImageMenuItem2" Click="HunterNotesGridMenuItem_Click">
+                    <MenuItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <ui:SymbolIcon Symbol="ArrowDownload20"/>
+                            <TextBlock Margin="5,0,0,0" Text="Save as Image"/>
+                        </StackPanel>
+                    </MenuItem.Header>
+                </ui:MenuItem>
+                <!-- Add more menu items if needed -->
+            </ContextMenu>
             <DataTemplate x:Key="DefaultTemplate">
                 <Grid Background="#7f1e1e2e">
                     <TextBlock TextWrapping="Wrap" MaxWidth="500" MaxHeight="500" Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -2357,8 +2412,11 @@
                                             </StackPanel>
                                         </TabItem.Header>
                                         <Grid Margin="5">
-                                            <Grid x:Name="GuildCardGrid">
-                                                <Grid.ColumnDefinitions>
+                                                <Grid x:Name="GuildCardGrid" ToolTip="Reopen configuration window in order to update gear. Right-click for more options.">
+                                                    <Grid.ContextMenu>
+                                                        <StaticResource ResourceKey="HunterNotesContextMenu" />
+                                                    </Grid.ContextMenu>
+                                                    <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="600"/>
                                                     <ColumnDefinition Width="600"/>
                                                 </Grid.ColumnDefinitions>
@@ -2386,8 +2444,8 @@
                                                     <RowDefinition Height="20"/>
                                                     <RowDefinition Height="20"/>
                                                 </Grid.RowDefinitions>
-                                                <Image HorizontalAlignment="Left" ToolTip="Reopen configuration window in order to update gear" d:Source="https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/guild_card/abiorugu.png" Source="{Binding GetGuildCardBackground, Mode=OneTime}" Grid.Column="0" Grid.Row="0" Grid.RowSpan="24"/>
-                                                <Image HorizontalAlignment="Right" ToolTip="Reopen configuration window in order to update gear" d:Source="https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/guild_card/abiorugu.png" Source="{Binding GetGuildCardBackground, Mode=OneTime}" Grid.Column="1" Grid.Row="0" Grid.RowSpan="24"/>
+                                                <Image HorizontalAlignment="Left" d:Source="https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/guild_card/abiorugu.png" Source="{Binding GetGuildCardBackground, Mode=OneTime}" Grid.Column="0" Grid.Row="0" Grid.RowSpan="24"/>
+                                                <Image HorizontalAlignment="Right" d:Source="https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/guild_card/abiorugu.png" Source="{Binding GetGuildCardBackground, Mode=OneTime}" Grid.Column="1" Grid.Row="0" Grid.RowSpan="24"/>
 
                                                 <TextBlock Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Bottom" d:Text="MHF-Z Overlay v0.25.0" Text="{Binding SimplifiedCurrentProgramVersion, Mode=OneTime}" FontFamily="MS Gothic Bold" FontSize="16" Margin="55,0,0,0"/>
                                                 <TextBlock Grid.Column="0" Grid.Row="2" HorizontalAlignment="Left" d:Text="Doriel" Text="{Binding GetHunterName, Mode=OneTime}" FontFamily="MS Gothic Bold" FontSize="16" Margin="55,0,0,0" VerticalAlignment="Bottom"/>

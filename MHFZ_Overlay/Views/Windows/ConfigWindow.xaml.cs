@@ -52,6 +52,7 @@ using Clipboard = System.Windows.Clipboard;
 using ComboBox = System.Windows.Controls.ComboBox;
 using DataGrid = Wpf.Ui.Controls.DataGrid;
 using ListView = System.Windows.Controls.ListView;
+using MenuItem = Wpf.Ui.Controls.MenuItem;
 using MessageBox = System.Windows.MessageBox;
 using TextBox = System.Windows.Controls.TextBox;
 
@@ -4075,9 +4076,11 @@ public partial class ConfigWindow : FluentWindow
             if (selectedAchievement.CompletionDate == DateTime.UnixEpoch)
             {
                 AchievementSelectionInfoTitle.Text = selectedAchievement.Title;
+                AchievementSelectionInfoImage.Opacity = .25;
             }
             else
             {
+                AchievementSelectionInfoImage.Opacity = 1;
                 AchievementSelectionInfoTitle.Text = $"{selectedAchievement.Title} | {selectedAchievement.CompletionDate.ToString("yy/MM/dd HH:mm:ss")}"; ;
             }
 
@@ -4166,6 +4169,59 @@ public partial class ConfigWindow : FluentWindow
     private void AchievementSelectedInfoGrid_Loaded(object sender, RoutedEventArgs e)
     {
         achievementsSelectedInfoGrid = (Grid)sender;
+    }
+
+    private void HunterNotesGridMenuItem_Click(object sender, RoutedEventArgs e)
+    {
+        if (sender is MenuItem menuItem)
+        {
+            if (menuItem.Parent is ContextMenu contextMenu)
+            {
+                // Check the Tag property of the ContextMenu to decide which menu items to handle
+                if (contextMenu.Name == "HunterNotesContextMenu")
+                {
+                    if (menuItem.Name == "HunterNotesCopyTextMenuItem")
+                    {
+                        MessageBox.Show("HunterNotesCopyTextMenuItem");
+                    }
+                    else if (menuItem.Name == "HunterNotesSaveTextMenuItem")
+                    {
+                        MessageBox.Show("HunterNotesSaveTextMenuItem");
+                    }
+                    else if (menuItem.Name == "HunterNotesSaveImageMenuItem")
+                    {
+                        MessageBox.Show("HunterNotesSaveImageMenuItem");
+                    }
+                    else if (menuItem.Name == "HunterNotesCopyImageMenuItem")
+                    {
+                        MessageBox.Show("HunterNotesCopyImageMenuItem");
+                    }
+                    else
+                    {
+                        MessageBox.Show($"Invalid Menu Item option: {menuItem}");
+
+                        logger.Warn("Invalid Menu Item option: {0}", menuItem);
+                    }
+                }
+                else if (contextMenu.Name == "HunterNotesContextMenuImageOnly")
+                {
+                    if (menuItem.Name == "HunterNotesSaveImageMenuItem2")
+                    {
+                        MessageBox.Show("HunterNotesSaveImageMenuItem2");
+                    }
+                    else if (menuItem.Name == "HunterNotesCopyImageMenuItem2")
+                    {
+                        MessageBox.Show("HunterNotesCopyImageMenuItem2");
+                    }
+                    else
+                    {
+                        MessageBox.Show($"Invalid Menu Item option: {menuItem}");
+
+                        logger.Warn("Invalid Menu Item option: {0}", menuItem);
+                    }
+                }
+            }
+        }
     }
 }
 
