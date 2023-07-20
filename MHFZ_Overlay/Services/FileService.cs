@@ -48,7 +48,7 @@ public sealed class FileService
         {
             if (copyMode == "Code Block")
             {
-                textToSave = string.Format(CultureInfo.InvariantCulture, "```text\n{0}\n```", textToSave);
+                textToSave = string.Format(CultureInfo.InvariantCulture, "```text\n{0}\n```", tb.Text);
             }
             else if (copyMode == "Image")
             {
@@ -56,7 +56,7 @@ public sealed class FileService
                 tb.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
                 FileService.CopyUIElementToClipboard(tb, snackbar);
                 tb.Background = previousBackground;
-                return textToSave;
+                return tb.Text;
             }
 
             // https://stackoverflow.com/questions/3546016/how-to-copy-data-to-clipboard-in-c-sharp
@@ -77,6 +77,11 @@ public sealed class FileService
     {
         var textToSave = string.Empty;
 
+        if (string.IsNullOrEmpty(fileNamePrefix))
+        {
+            fileNamePrefix = "Element";
+        }
+
         if (element is TextBlock tb)
         {
             textToSave = tb.Text;
@@ -88,7 +93,7 @@ public sealed class FileService
                 dateTime = dateTime.Replace("/", "-");
                 dateTime = dateTime.Replace(" ", "_");
                 dateTime = dateTime.Replace(":", "-");
-                savefile.FileName = $"{fileNamePrefix}-{dateTime}.csv";
+                savefile.FileName = $"{fileNamePrefix}-{dateTime}.md";
                 savefile.Filter = "Markdown file (*.md)|*.md|Text file (*.txt)|*.txt";
                 savefile.Title = "Save as Text File";
                 var s = (Settings)Application.Current.TryFindResource("Settings");
@@ -118,6 +123,11 @@ public sealed class FileService
 
     public static void SaveElementAsImageFile(Snackbar snackbar, FrameworkElement element, string fileNamePrefix)
     {
+        if (string.IsNullOrEmpty(fileNamePrefix))
+        {
+            fileNamePrefix = "Element";
+        }
+
         if (element is TextBlock || element is Grid)
         {
             try
@@ -136,19 +146,13 @@ public sealed class FileService
                 {
                     if (element is TextBlock tb)
                     {
-                        var previousBackground = tb.Background;
-                        tb.Background = new SolidColorBrush(Color.FromArgb(0x00, 0x1E, 0x1E, 0x2E));
                         CreateBitmapFromVisual(tb, savefile.FileName);
-                        tb.Background = previousBackground;
                         logger.Info(CultureInfo.InvariantCulture, "Saved image {0}", savefile.FileName);
                         snackbar.Show(Messages.InfoTitle, $"Saved image {savefile.FileName}", new SymbolIcon(SymbolRegular.CheckmarkCircle20), ControlAppearance.Success);
                     }
                     else if (element is Grid g)
                     {
-                        var previousBackground = g.Background;
-                        g.Background = new SolidColorBrush(Color.FromArgb(0x00, 0x1E, 0x1E, 0x2E));
                         CreateBitmapFromVisual(g, savefile.FileName);
-                        g.Background = previousBackground;
                         logger.Info(CultureInfo.InvariantCulture, "Saved image {0}", savefile.FileName);
                         snackbar.Show(Messages.InfoTitle, $"Saved image {savefile.FileName}", new SymbolIcon(SymbolRegular.CheckmarkCircle20), ControlAppearance.Success);
                     }
@@ -226,7 +230,7 @@ public sealed class FileService
             if (savefile.ShowDialog() == true)
             {
                 var previousBackground = gridToSave.Background;
-                gridToSave.Background = new SolidColorBrush(Color.FromArgb(0x00, 0x1E, 0x1E, 0x2E));
+                gridToSave.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
                 CreateBitmapFromVisual(gridToSave, savefile.FileName);
                 if (copyToClipboard)
                 {
@@ -283,11 +287,11 @@ public sealed class FileService
     }
 
     /// <summary>
-    /// Creates the bitmap from visual.
+    /// Creates the bitmap from visual. Sets dark background as default.
     /// </summary>
     /// <param name="target">The target.</param>
     /// <param name="fileName">Name of the file.</param>
-    public static void CreateBitmapFromVisual(Visual target, string fileName)
+    public static void CreateBitmapFromVisual(Visual target, string fileName, Brush? backgroundBrush = null)
     {
         try
         {
@@ -308,8 +312,15 @@ public sealed class FileService
 
             var visual = new DrawingVisual();
 
+            if (backgroundBrush is null)
+            {
+                backgroundBrush = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
+            }
+
             using (var context = visual.RenderOpen())
             {
+                context.DrawRectangle(backgroundBrush, null, new Rect(new Point(), bounds.Size));
+
                 var visualBrush = new VisualBrush(target);
                 visualBrush.Stretch = Stretch.None;
                 context.DrawRectangle(visualBrush, null, new Rect(new Point(), bounds.Size));

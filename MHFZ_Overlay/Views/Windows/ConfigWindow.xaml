@@ -2441,7 +2441,7 @@
                                         <Grid Margin="5">
                                                 <Grid x:Name="GuildCardGrid" ToolTip="Reopen configuration window in order to update gear. Right-click for more options.">
                                                     <Grid.ContextMenu>
-                                                        <StaticResource ResourceKey="HunterNotesContextMenu" />
+                                                        <StaticResource ResourceKey="HunterNotesContextMenuImageOnly" />
                                                     </Grid.ContextMenu>
                                                     <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="600"/>
@@ -2558,8 +2558,11 @@ Thunder Clad, Vigorous" Text="{Binding GetActiveSkillsForImage,Mode=OneTime}" Fo
                                         </TabItem.Header>
                                         <ScrollViewer CanContentScroll="True" IsDeferredScrollingEnabled="True" VerticalScrollBarVisibility="Visible">
                                             <Grid Margin="5">
-                                                <Grid x:Name="GearImageGrid">
-                                                    <Grid.ColumnDefinitions>
+                                                <Grid x:Name="GearImageGrid" ToolTip="Right-click for more options">
+                                                        <Grid.ContextMenu>
+                                                            <StaticResource ResourceKey="HunterNotesContextMenuImageOnly" />
+                                                        </Grid.ContextMenu>
+                                                        <Grid.ColumnDefinitions>
                                                         <ColumnDefinition Width="40"/>
                                                         <ColumnDefinition Width="1*"/>
                                                         <ColumnDefinition Width="40"/>
@@ -2648,8 +2651,12 @@ Thunder Clad, Vigorous" Text="{Binding GetActiveSkillsForImage,Mode=OneTime}" Fo
                                         <Grid x:Name="GearTextGrid">
                                             <DockPanel Margin="5">
                                                 <ScrollViewer CanContentScroll="True" IsDeferredScrollingEnabled="True" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible">
-                                                    <TextBlock ToolTip="If the values are incorrect, double check your settings, check your guild card and change gear either from sets or manually" Text="{Binding GetGearStats,Mode=OneTime}" Name="GearStats" TextWrapping="Wrap"/>
-                                                </ScrollViewer>
+                                                        <TextBlock ToolTip="Right-click for more options. If the values are incorrect, double check your settings, check your guild card and change gear either from sets or manually." Text="{Binding GetGearStats,Mode=OneTime}" Name="GearStats" TextWrapping="Wrap">
+                                                            <TextBlock.ContextMenu>
+                                                                <StaticResource ResourceKey="HunterNotesContextMenu" />
+                                                            </TextBlock.ContextMenu>
+                                                        </TextBlock>
+                                                    </ScrollViewer>
                                             </DockPanel>
                                         </Grid>
                                     </TabItem>
@@ -2663,13 +2670,16 @@ Thunder Clad, Vigorous" Text="{Binding GetActiveSkillsForImage,Mode=OneTime}" Fo
                                         <Grid>
                                             <DockPanel Margin="5">
                                                 <Grid x:Name="HuntedLogGrid">
-                                                    <Grid.RowDefinitions>
+                                                    <Grid.ContextMenu>
+                                                        <StaticResource ResourceKey="HunterNotesContextMenuImageCSV" />
+                                                    </Grid.ContextMenu>
+                                                        <Grid.RowDefinitions>
                                                         <RowDefinition Height="50"/>
                                                         <RowDefinition Height="1*"/>
                                                     </Grid.RowDefinitions>
                                                     <ComboBox Width="Auto" SelectionChanged="FilterBox_SelectionChanged" Name="FilterBox" SelectedIndex="0"  HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                                                    <ui:DataGrid x:Name="HuntLogDataGrid" Grid.Row="1" HorizontalAlignment="Stretch" AutoGenerateColumns="False" IsReadOnly="True">
-                                                        <DataGrid.ColumnHeaderStyle>
+                                                        <ui:DataGrid ToolTip="Right-click for more options" x:Name="HuntLogDataGrid" Grid.Row="1" HorizontalAlignment="Stretch" AutoGenerateColumns="False" IsReadOnly="True">
+                                                            <DataGrid.ColumnHeaderStyle>
                                                             <StaticResource ResourceKey="DefaultDataGridColumnHeaderStyle"/>
                                                         </DataGrid.ColumnHeaderStyle>
                                                         <DataGrid.Columns>
@@ -2728,8 +2738,13 @@ Thunder Clad, Vigorous" Text="{Binding GetActiveSkillsForImage,Mode=OneTime}" Fo
                                                             <ComboBoxItem>Guild Food</ComboBoxItem>
                                                             <ComboBoxItem>Guild Poogies</ComboBoxItem>
                                                         </ComboBox>
-                                                        <TextBlock Grid.Row="1" Grid.ColumnSpan="2" ToolTip="Guild Information" Text="{Binding GetGameGuildInfo}" TextWrapping="Wrap"/>
-                                                    </Grid>
+                                                            <TextBlock Grid.Row="1" Grid.ColumnSpan="2" ToolTip="Right-click for more options." Text="{Binding GetGameGuildInfo}" TextWrapping="Wrap">
+                                                                <TextBlock.ContextMenu>
+                                                                    <StaticResource ResourceKey="HunterNotesContextMenu" />
+                                                                </TextBlock.ContextMenu>
+                                                            </TextBlock>
+                                                        
+                                                        </Grid>
                                                 </ScrollViewer>
                                             </DockPanel>
                                         </Grid>
@@ -2760,8 +2775,12 @@ Thunder Clad, Vigorous" Text="{Binding GetActiveSkillsForImage,Mode=OneTime}" Fo
                                                             <ComboBoxItem>Quests</ComboBoxItem>
                                                             <ComboBoxItem>Pioneer</ComboBoxItem>
                                                         </ComboBox>
-                                                        <TextBlock Grid.Row="1" Grid.ColumnSpan="2" ToolTip="Caravan Information" Text="{Binding GetGameCaravanInfo}" TextWrapping="Wrap"/>
-                                                    </Grid>
+                                                            <TextBlock Grid.Row="1" Grid.ColumnSpan="2" ToolTip="Right-click for more options" Text="{Binding GetGameCaravanInfo}" TextWrapping="Wrap">
+                                                                <TextBlock.ContextMenu>
+                                                                    <StaticResource ResourceKey="HunterNotesContextMenu" />
+                                                                </TextBlock.ContextMenu>
+                                                            </TextBlock>
+                                                        </Grid>
                                                 </ScrollViewer>
                                             </DockPanel>
                                         </Grid>
@@ -2776,8 +2795,13 @@ Thunder Clad, Vigorous" Text="{Binding GetActiveSkillsForImage,Mode=OneTime}" Fo
                                         <Grid>
                                             <DockPanel Margin="5">
                                                 <ScrollViewer CanContentScroll="True" IsDeferredScrollingEnabled="True" VerticalScrollBarVisibility="Visible">
-                                                    <TextBlock ToolTip="" Text="{Binding GetGameRoadDureInfo}" TextWrapping="Wrap"/>
-                                                </ScrollViewer>
+                                                        <TextBlock ToolTip="Right-click for more options" Text="{Binding GetGameRoadDureInfo}" TextWrapping="Wrap">
+                                                            <TextBlock.ContextMenu>
+                                                                <StaticResource ResourceKey="HunterNotesContextMenu" />
+                                                            </TextBlock.ContextMenu>
+                                                        </TextBlock>
+                                                    
+                                                    </ScrollViewer>
                                             </DockPanel>
                                         </Grid>
                                     </TabItem>
@@ -2819,8 +2843,12 @@ Thunder Clad, Vigorous" Text="{Binding GetActiveSkillsForImage,Mode=OneTime}" Fo
                                                             <ComboBoxItem>Colors</ComboBoxItem>
                                                             <ComboBoxItem>Types</ComboBoxItem>
                                                         </ComboBox>
-                                                        <TextBlock Grid.Row="1" Grid.ColumnSpan="2" ToolTip="(○ = Affected by Goushou Armor buffs)" Text="{Binding GetGameArmorSkills}" TextWrapping="Wrap"/>
-                                                    </Grid>
+                                                            <TextBlock Grid.Row="1" Grid.ColumnSpan="2" ToolTip="Right-click for more options. (○ = Affected by Goushou Armor buffs)" Text="{Binding GetGameArmorSkills}" TextWrapping="Wrap">
+                                                                <TextBlock.ContextMenu>
+                                                                    <StaticResource ResourceKey="HunterNotesContextMenu" />
+                                                                </TextBlock.ContextMenu>
+                                                            </TextBlock>
+                                                        </Grid>
                                                 </ScrollViewer>
                                             </DockPanel>
                                         </Grid>
@@ -2835,8 +2863,12 @@ Thunder Clad, Vigorous" Text="{Binding GetActiveSkillsForImage,Mode=OneTime}" Fo
                                         <Grid>
                                             <DockPanel Margin="5">
                                                 <ScrollViewer CanContentScroll="True" IsDeferredScrollingEnabled="True" VerticalScrollBarVisibility="Visible">
-                                                    <TextBlock ToolTip="" Text="{Binding GetGameZenithSkills}" TextWrapping="Wrap"/>
-                                                </ScrollViewer>
+                                                        <TextBlock ToolTip="Right-click for more options" Text="{Binding GetGameZenithSkills}" TextWrapping="Wrap">
+                                                            <TextBlock.ContextMenu>
+                                                                <StaticResource ResourceKey="HunterNotesContextMenu" />
+                                                            </TextBlock.ContextMenu>
+                                                        </TextBlock>
+                                                    </ScrollViewer>
                                             </DockPanel>
                                         </Grid>
                                     </TabItem>
@@ -2876,8 +2908,12 @@ Thunder Clad, Vigorous" Text="{Binding GetActiveSkillsForImage,Mode=OneTime}" Fo
                                                             <ComboBoxItem>Heavy Bowgun</ComboBoxItem>
                                                             <ComboBoxItem>Bow</ComboBoxItem>
                                                         </ComboBox>
-                                                        <TextBlock Grid.Row="1" Grid.ColumnSpan="2" ToolTip="Motion Values" Text="{Binding GetGameMotionValues}" TextWrapping="Wrap"/>
-                                                    </Grid>
+                                                            <TextBlock Grid.Row="1" Grid.ColumnSpan="2" ToolTip="Right-click for more options" Text="{Binding GetGameMotionValues}" TextWrapping="Wrap">
+                                                                <TextBlock.ContextMenu>
+                                                                    <StaticResource ResourceKey="HunterNotesContextMenu" />
+                                                                </TextBlock.ContextMenu>
+                                                            </TextBlock>
+                                                        </Grid>
                                                 </ScrollViewer>
                                             </DockPanel>
                                         </Grid>
@@ -2943,8 +2979,12 @@ Thunder Clad, Vigorous" Text="{Binding GetActiveSkillsForImage,Mode=OneTime}" Fo
                                                             <ComboBoxItem>Damage Formula</ComboBoxItem>
                                                             <ComboBoxItem>Unlocks</ComboBoxItem>
                                                         </ComboBox>
-                                                        <TextBlock Grid.Row="1" Grid.ColumnSpan="2" ToolTip="Weapon Information" Text="{Binding GetGameWeaponInformation}" TextWrapping="Wrap"/>
-                                                    </Grid>
+                                                            <TextBlock Grid.Row="1" Grid.ColumnSpan="2" ToolTip="Right-click for more options" Text="{Binding GetGameWeaponInformation}" TextWrapping="Wrap">
+                                                                <TextBlock.ContextMenu>
+                                                                    <StaticResource ResourceKey="HunterNotesContextMenu" />
+                                                                </TextBlock.ContextMenu>
+                                                            </TextBlock>
+                                                        </Grid>
                                                 </ScrollViewer>
                                             </DockPanel>
                                         </Grid>
@@ -2959,8 +2999,12 @@ Thunder Clad, Vigorous" Text="{Binding GetActiveSkillsForImage,Mode=OneTime}" Fo
                                         <Grid>
                                             <DockPanel Margin="5">
                                                 <ScrollViewer CanContentScroll="True" IsDeferredScrollingEnabled="True" VerticalScrollBarVisibility="Visible">
-                                                    <TextBlock ToolTip="" Text="{Binding GetGameSigilsInfo}" TextWrapping="Wrap"/>
-                                                </ScrollViewer>
+                                                        <TextBlock ToolTip="Right-click for more options" Text="{Binding GetGameSigilsInfo}" TextWrapping="Wrap">
+                                                            <TextBlock.ContextMenu>
+                                                                <StaticResource ResourceKey="HunterNotesContextMenu" />
+                                                            </TextBlock.ContextMenu>
+                                                        </TextBlock>
+                                                    </ScrollViewer>
                                             </DockPanel>
                                         </Grid>
                                     </TabItem>
@@ -2974,8 +3018,12 @@ Thunder Clad, Vigorous" Text="{Binding GetActiveSkillsForImage,Mode=OneTime}" Fo
                                         <Grid>
                                             <DockPanel Margin="5">
                                                 <ScrollViewer CanContentScroll="True" IsDeferredScrollingEnabled="True" VerticalScrollBarVisibility="Visible">
-                                                    <TextBlock ToolTip="" Text="{Binding GetGameDivaInfo}" TextWrapping="Wrap"/>
-                                                </ScrollViewer>
+                                                        <TextBlock ToolTip="Right-click for more options" Text="{Binding GetGameDivaInfo}" TextWrapping="Wrap">
+                                                            <TextBlock.ContextMenu>
+                                                                <StaticResource ResourceKey="HunterNotesContextMenu" />
+                                                            </TextBlock.ContextMenu>
+                                                        </TextBlock>
+                                                    </ScrollViewer>
                                             </DockPanel>
                                         </Grid>
                                     </TabItem>
@@ -2989,8 +3037,12 @@ Thunder Clad, Vigorous" Text="{Binding GetActiveSkillsForImage,Mode=OneTime}" Fo
                                         <Grid>
                                             <DockPanel Margin="5">
                                                 <ScrollViewer CanContentScroll="True" IsDeferredScrollingEnabled="True" VerticalScrollBarVisibility="Visible">
-                                                    <TextBlock ToolTip="" Text="{Binding GetGameStyleRankInfo}" TextWrapping="Wrap"/>
-                                                </ScrollViewer>
+                                                        <TextBlock ToolTip="Right-click for more options" Text="{Binding GetGameStyleRankInfo}" TextWrapping="Wrap">
+                                                            <TextBlock.ContextMenu>
+                                                                <StaticResource ResourceKey="HunterNotesContextMenu" />
+                                                            </TextBlock.ContextMenu>
+                                                        </TextBlock>
+                                                    </ScrollViewer>
                                             </DockPanel>
                                         </Grid>
                                     </TabItem>
@@ -3021,8 +3073,12 @@ Thunder Clad, Vigorous" Text="{Binding GetActiveSkillsForImage,Mode=OneTime}" Fo
                                                             <ComboBoxItem>Poogie</ComboBoxItem>
                                                             <ComboBoxItem>Halk</ComboBoxItem>
                                                         </ComboBox>
-                                                        <TextBlock Grid.Row="1" Grid.ColumnSpan="2" ToolTip="Companion Information" Text="{Binding GetGameCompanionInfo}" TextWrapping="Wrap"/>
-                                                    </Grid>
+                                                            <TextBlock Grid.Row="1" Grid.ColumnSpan="2" ToolTip="Right-click for more options" Text="{Binding GetGameCompanionInfo}" TextWrapping="Wrap">
+                                                                <TextBlock.ContextMenu>
+                                                                    <StaticResource ResourceKey="HunterNotesContextMenu" />
+                                                                </TextBlock.ContextMenu>
+                                                            </TextBlock>
+                                                        </Grid>
                                                 </ScrollViewer>
                                             </DockPanel>
                                         </Grid>
@@ -3037,8 +3093,12 @@ Thunder Clad, Vigorous" Text="{Binding GetActiveSkillsForImage,Mode=OneTime}" Fo
                                         <Grid>
                                             <DockPanel Margin="5">
                                                 <ScrollViewer CanContentScroll="True" IsDeferredScrollingEnabled="True" VerticalScrollBarVisibility="Visible">
-                                                    <TextBlock ToolTip="" Text="{Binding GetGameItemInfo}" TextWrapping="Wrap"/>
-                                                </ScrollViewer>
+                                                        <TextBlock ToolTip="Right-click for more options" Text="{Binding GetGameItemInfo}" TextWrapping="Wrap">
+                                                            <TextBlock.ContextMenu>
+                                                                <StaticResource ResourceKey="HunterNotesContextMenu" />
+                                                            </TextBlock.ContextMenu>
+                                                        </TextBlock>
+                                                    </ScrollViewer>
                                             </DockPanel>
                                         </Grid>
                                     </TabItem>
@@ -3052,8 +3112,12 @@ Thunder Clad, Vigorous" Text="{Binding GetActiveSkillsForImage,Mode=OneTime}" Fo
                                         <Grid>
                                             <DockPanel Margin="5">
                                                 <ScrollViewer CanContentScroll="True" IsDeferredScrollingEnabled="True" VerticalScrollBarVisibility="Visible">
-                                                    <TextBlock ToolTip="" Text="{Binding GetGameMonsterSizeInfo}" TextWrapping="Wrap"/>
-                                                </ScrollViewer>
+                                                        <TextBlock ToolTip="Right-click for more options" Text="{Binding GetGameMonsterSizeInfo}" TextWrapping="Wrap">
+                                                            <TextBlock.ContextMenu>
+                                                                <StaticResource ResourceKey="HunterNotesContextMenu" />
+                                                            </TextBlock.ContextMenu>
+                                                        </TextBlock>
+                                                    </ScrollViewer>
                                             </DockPanel>
                                         </Grid>
                                     </TabItem>
@@ -3067,8 +3131,12 @@ Thunder Clad, Vigorous" Text="{Binding GetActiveSkillsForImage,Mode=OneTime}" Fo
                                         <Grid>
                                             <DockPanel Margin="5">
                                                 <ScrollViewer CanContentScroll="True" IsDeferredScrollingEnabled="True" VerticalScrollBarVisibility="Visible">
-                                                    <TextBlock ToolTip="" Text="{Binding GetGameRewardInfo}" TextWrapping="Wrap"/>
-                                                </ScrollViewer>
+                                                        <TextBlock ToolTip="Right-click for more options" Text="{Binding GetGameRewardInfo}" TextWrapping="Wrap">
+                                                            <TextBlock.ContextMenu>
+                                                                <StaticResource ResourceKey="HunterNotesContextMenu" />
+                                                            </TextBlock.ContextMenu>
+                                                        </TextBlock>
+                                                    </ScrollViewer>
                                             </DockPanel>
                                         </Grid>
                                     </TabItem>
