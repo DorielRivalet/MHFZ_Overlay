@@ -3396,7 +3396,7 @@ Thunder Clad, Vigorous" Text="{Binding GetActiveSkillsForImage,Mode=OneTime}" Fo
                                 <RowDefinition Height="40"/>
                             </Grid.RowDefinitions>
                             <ui:InfoBar Grid.ColumnSpan="2" Foreground="{StaticResource Text}" Title="How Monster HP Works" 
-                            Message="Effective HP is True HP taking into account the monster's defense rate.&#x0a;Burning Freezing Elzelion has 1,000,000 EHP because his&#x0a;True HP is 30,000 and his defense rate is 0,03.&#x0a;&#x0a;Effective HP = True HP / Defense rate&#x0a;1,000,000 = 30,000 / 0,03&#x0a;&#x0a;True HP is the HP of the monster without taking into account the monster's defense rate." 
+                            Message="Effective HP is the HP taking into account the monster's defense rate.&#x0a;Burning Freezing Elzelion has 1,000,000 EHP because his&#x0a;True HP is 30,000 and his defense rate is 0,03.&#x0a;&#x0a;Effective HP = True HP / Defense rate&#x0a;1,000,000 = 30,000 / 0,03&#x0a;&#x0a;True HP is the HP of the monster without taking into account the monster's defense rate." 
                             IsClosable="False" IsOpen="True" Severity="Informational"/>
                             <TextBlock Margin="5" ToolTip="Show HP Mode (True/Effective)" Style="{StaticResource ConfigTextBox}" Grid.Row="1" Grid.Column="0" Text="Monster HP Mode Label"/>
                             <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="1" Grid.Column="1" IsChecked="{Binding Source={StaticResource Settings}, Path=MonsterBarHPModeShown}"/>
