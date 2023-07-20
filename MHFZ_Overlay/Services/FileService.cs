@@ -17,10 +17,12 @@ using System.Windows.Media.Imaging;
 using CsvHelper;
 using MHFZ_Overlay.Models;
 using MHFZ_Overlay.Models.Constant;
+using MHFZ_Overlay.Views.Windows;
 using Newtonsoft.Json;
 using Wpf.Ui.Common;
 using Wpf.Ui.Controls;
 using Wpf.Ui.Controls.IconElements;
+using Xunit;
 using Clipboard = System.Windows.Clipboard;
 using MessageBox = System.Windows.MessageBox;
 using SaveFileDialog = Microsoft.Win32.SaveFileDialog;
@@ -33,13 +35,146 @@ public sealed class FileService
     private static readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
     /// <summary>
+    /// Copies the text object contents to clipboard
+    /// </summary>
+    /// <param name="textObject"></param>
+    /// <param name="snackbar"></param>
+    /// <returns>The copied text</returns>
+    public static string CopyTextToClipboard(object textObject, Snackbar snackbar, string copyMode = "Code Block")
+    {
+        var textToSave = string.Empty;
+
+        if (textObject is TextBlock tb)
+        {
+            if (copyMode == "Code Block")
+            {
+                textToSave = string.Format(CultureInfo.InvariantCulture, "```text\n{0}\n```", textToSave);
+            }
+            else if (copyMode == "Image")
+            {
+                var previousBackground = tb.Background;
+                tb.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
+                FileService.CopyUIElementToClipboard(tb, snackbar);
+                tb.Background = previousBackground;
+                return textToSave;
+            }
+
+            // https://stackoverflow.com/questions/3546016/how-to-copy-data-to-clipboard-in-c-sharp
+            Clipboard.SetText(textToSave);
+            logger.Info(CultureInfo.InvariantCulture, "Copied text to clipboard");
+            snackbar.Show(Messages.InfoTitle, "Copied text to clipboard", new SymbolIcon(SymbolRegular.Clipboard32), ControlAppearance.Success);
+        }
+        else
+        {
+            logger.Error(CultureInfo.InvariantCulture, "Could not copy text to clipboard: text block not found");
+            snackbar.Show(Messages.ErrorTitle, "Could not copy text to clipboard: text block not found", new SymbolIcon(SymbolRegular.ClipboardError24), ControlAppearance.Danger);
+        }
+
+        return textToSave;
+    }
+
+    public static string SaveTextFile(Snackbar snackbar, FrameworkElement element, string fileNamePrefix)
+    {
+        var textToSave = string.Empty;
+
+        if (element is TextBlock tb)
+        {
+            textToSave = tb.Text;
+
+            try
+            {
+                var savefile = new SaveFileDialog();
+                var dateTime = DateTime.UtcNow.ToString(CultureInfo.InvariantCulture);
+                dateTime = dateTime.Replace("/", "-");
+                dateTime = dateTime.Replace(" ", "_");
+                dateTime = dateTime.Replace(":", "-");
+                savefile.FileName = $"{fileNamePrefix}-{dateTime}.csv";
+                savefile.Filter = "Markdown file (*.md)|*.md|Text file (*.txt)|*.txt";
+                savefile.Title = "Save as Text File";
+                var s = (Settings)Application.Current.TryFindResource("Settings");
+                savefile.InitialDirectory = Path.GetDirectoryName(s.DatabaseFilePath);
+
+                if (savefile.ShowDialog() == true)
+                {
+                    File.WriteAllText(savefile.FileName, textToSave);
+                    logger.Info(CultureInfo.InvariantCulture, "Saved text {0}", savefile.FileName);
+                    snackbar.Show(Messages.InfoTitle, "Saved text", new SymbolIcon(SymbolRegular.CheckmarkCircle20), ControlAppearance.Success);
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex, "Could not save text file");
+                snackbar.Show(Messages.ErrorTitle, "Could not save text file", new SymbolIcon(SymbolRegular.ErrorCircle20), ControlAppearance.Danger);
+            }
+        }
+        else
+        {
+            logger.Error("Could not save text file");
+            snackbar.Show(Messages.ErrorTitle, "Could not save text file", new SymbolIcon(SymbolRegular.ErrorCircle20), ControlAppearance.Danger);
+        }
+
+        return textToSave;
+    }
+
+    public static void SaveElementAsImageFile(Snackbar snackbar, FrameworkElement element, string fileNamePrefix)
+    {
+        if (element is TextBlock || element is Grid)
+        {
+            try
+            {
+                var savefile = new SaveFileDialog();
+                var dateTime = DateTime.UtcNow.ToString(CultureInfo.InvariantCulture);
+                dateTime = dateTime.Replace("/", "-");
+                dateTime = dateTime.Replace(" ", "_");
+                dateTime = dateTime.Replace(":", "-");
+                savefile.FileName = string.Format(CultureInfo.InvariantCulture, "{0}-{1}.png", fileNamePrefix, dateTime);
+                savefile.Filter = "PNG files (*.png)|*.png";
+                savefile.Title = "Save as Image";
+                var s = (Settings)Application.Current.TryFindResource("Settings");
+                savefile.InitialDirectory = Path.GetDirectoryName(s.DatabaseFilePath);
+                if (savefile.ShowDialog() == true)
+                {
+                    if (element is TextBlock tb)
+                    {
+                        var previousBackground = tb.Background;
+                        tb.Background = new SolidColorBrush(Color.FromArgb(0x00, 0x1E, 0x1E, 0x2E));
+                        CreateBitmapFromVisual(tb, savefile.FileName);
+                        tb.Background = previousBackground;
+                        logger.Info(CultureInfo.InvariantCulture, "Saved image {0}", savefile.FileName);
+                        snackbar.Show(Messages.InfoTitle, $"Saved image {savefile.FileName}", new SymbolIcon(SymbolRegular.CheckmarkCircle20), ControlAppearance.Success);
+                    }
+                    else if (element is Grid g)
+                    {
+                        var previousBackground = g.Background;
+                        g.Background = new SolidColorBrush(Color.FromArgb(0x00, 0x1E, 0x1E, 0x2E));
+                        CreateBitmapFromVisual(g, savefile.FileName);
+                        g.Background = previousBackground;
+                        logger.Info(CultureInfo.InvariantCulture, "Saved image {0}", savefile.FileName);
+                        snackbar.Show(Messages.InfoTitle, $"Saved image {savefile.FileName}", new SymbolIcon(SymbolRegular.CheckmarkCircle20), ControlAppearance.Success);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex, "Could not save image file");
+                snackbar.Show(Messages.ErrorTitle, "Could not save image file", new SymbolIcon(SymbolRegular.ErrorCircle20), ControlAppearance.Danger);
+            }
+        }
+        else
+        {
+            logger.Error("Could not save image file");
+            snackbar.Show(Messages.ErrorTitle, "Could not save image file", new SymbolIcon(SymbolRegular.ErrorCircle20), ControlAppearance.Danger);
+        }
+    }
+
+    /// <summary>
     /// Saves the text file.
     /// </summary>
     /// <param name="textToSave">The text to save.</param>
     /// <param name="fileName">Name of the file.</param>
     /// <param name="beginningFileName">Name of the beginning file.</param>
     /// <param name="beginningText">The beginning text.</param>
-    public static void SaveTextFile(string textToSave, string fileName, string beginningFileName = "", string beginningText = "")
+    public static void SaveTextFile(Snackbar snackbar, string textToSave, string fileName, string beginningFileName = "", string beginningText = "")
     {
         try
         {
@@ -53,16 +188,19 @@ public sealed class FileService
             dateTime = dateTime.Replace(":", "-");
             beginningFileName = beginningFileName != string.Empty ? beginningFileName + "-" : string.Empty;
             beginningText = beginningText != string.Empty ? beginningText + "-" : string.Empty;
+            saveFileDialog.Title = "Save as Text File";
             saveFileDialog.FileName = string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}-{3}", beginningFileName, beginningText, fileName, dateTime);
             if (saveFileDialog.ShowDialog() == true)
             {
                 File.WriteAllText(saveFileDialog.FileName, textToSave);
                 logger.Info(CultureInfo.InvariantCulture, "Saved text {0}", saveFileDialog.FileName);
+                snackbar.Show(Messages.InfoTitle, "Saved text", new SymbolIcon(SymbolRegular.CheckmarkCircle20), ControlAppearance.Success);
             }
         }
         catch (Exception ex)
         {
             logger.Error(ex, "Could not save text file");
+            snackbar.Show(Messages.ErrorTitle, "Could not save text file", new SymbolIcon(SymbolRegular.ErrorCircle20), ControlAppearance.Danger);
         }
     }
 
@@ -82,7 +220,7 @@ public sealed class FileService
             dateTime = dateTime.Replace(":", "-");
             savefile.FileName = string.Format(CultureInfo.InvariantCulture, "{0}-{1}.png", fileName, dateTime);
             savefile.Filter = "PNG files (*.png)|*.png";
-            savefile.Title = "Save Image";
+            savefile.Title = "Save as Image";
             var s = (Settings)Application.Current.TryFindResource("Settings");
             savefile.InitialDirectory = Path.GetDirectoryName(s.DatabaseFilePath);
             if (savefile.ShowDialog() == true)
@@ -97,11 +235,13 @@ public sealed class FileService
 
                 gridToSave.Background = previousBackground;
                 logger.Info(CultureInfo.InvariantCulture, "Saved image {0}", savefile.FileName);
+                snackbar.Show(Messages.InfoTitle, $"Saved image {savefile.FileName}", new SymbolIcon(SymbolRegular.CheckmarkCircle20), ControlAppearance.Success);
             }
         }
         catch (Exception ex)
         {
             logger.Error(ex, "Could not save image file");
+            snackbar.Show(Messages.ErrorTitle, "Could not save image file", new SymbolIcon(SymbolRegular.ErrorCircle20), ControlAppearance.Danger);
         }
     }
 
@@ -132,11 +272,13 @@ public sealed class FileService
 
             bmpCopied.Render(dv);
             Clipboard.SetImage(bmpCopied);
+            logger.Info(CultureInfo.InvariantCulture, "Copied image to clipboard");
             snackbar.Show(Messages.InfoTitle, "Copied image to clipboard", new SymbolIcon(SymbolRegular.Clipboard32), ControlAppearance.Success);
         }
         catch (Exception ex)
         {
             logger.Error(ex, "Could not copy UI element to clipboard");
+            snackbar.Show(Messages.InfoTitle, "Could not copy UI element to clipboard", new SymbolIcon(SymbolRegular.ClipboardError24), ControlAppearance.Danger);
         }
     }
 
@@ -191,8 +333,7 @@ public sealed class FileService
     /// <summary>
     /// Saves the class records as CSV file.
     /// </summary>
-    /// <param name="Monsters">The monsters.</param>
-    public static void SaveMonsterLogRecordsAsCSVFile(MonsterLog[] Monsters)
+    public static void SaveRecordsAsCSVFile<T>(T[] records, Snackbar snackbar, string fileNamePrefix)
     {
         try
         {
@@ -201,27 +342,28 @@ public sealed class FileService
             dateTime = dateTime.Replace("/", "-");
             dateTime = dateTime.Replace(" ", "_");
             dateTime = dateTime.Replace(":", "-");
-            savefile.FileName = "HuntedLog-" + dateTime + ".csv";
+            savefile.FileName = $"{fileNamePrefix}-{dateTime}.csv";
             savefile.Filter = "CSV files (*.csv)|*.csv";
-            savefile.Title = "Save Monster Log Records as CSV";
+            savefile.Title = "Save Records as CSV";
             var s = (Settings)Application.Current.TryFindResource("Settings");
             savefile.InitialDirectory = Path.GetDirectoryName(s.DatabaseFilePath);
 
-            //https://stackoverflow.com/questions/11776781/savefiledialog-make-problems-with-streamwriter-in-c-sharp
             if (savefile.ShowDialog() == true)
             {
                 using (var writer = new StreamWriter(savefile.FileName))
                 using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
                 {
-                    csv.WriteRecords(Monsters);
+                    csv.WriteRecords(records);
                 }
 
                 logger.Info(CultureInfo.InvariantCulture, "Saved csv file {0}", savefile.FileName);
+                snackbar.Show(Messages.InfoTitle, "Saved csv file", new SymbolIcon(SymbolRegular.CheckmarkCircle20), ControlAppearance.Success);
             }
         }
         catch (Exception ex)
         {
             logger.Error(ex, "Could not save class records as CSV file");
+            snackbar.Show(Messages.InfoTitle, "Could not save class records as CSV file", new SymbolIcon(SymbolRegular.ErrorCircle20), ControlAppearance.Danger);
         }
     }
 

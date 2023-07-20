@@ -1131,7 +1131,7 @@ public partial class ConfigWindow : FluentWindow
             textToSave = MainWindow.dataLoader.model.MarkdownSavedGearStats;
         }
 
-        FileService.SaveTextFile(textToSave, "GearStats");
+        FileService.SaveTextFile(ConfigWindowSnackBar, textToSave, "GearStats");
     }
 
     /// <summary>
@@ -1165,21 +1165,9 @@ public partial class ConfigWindow : FluentWindow
         ConfigWindowSnackBar.Show(Messages.InfoTitle, "Copied text to clipboard", new SymbolIcon(SymbolRegular.Clipboard32), ControlAppearance.Success);
     }
 
-    private void BtnImageFile_Click(object sender, RoutedEventArgs e)
-    {
-        var fileName = "HunterSet";
-        FileService.SaveElementAsImageFile(GearImageGrid, fileName, ConfigWindowSnackBar);
-    }
-
     private void FilterBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         HuntLogDataGrid.Items.Filter = GetFilter();
-    }
-
-    // on generate csv button click
-    protected void BtnLogFile_Click(object sender, EventArgs e)
-    {
-        FileService.SaveMonsterLogRecordsAsCSVFile(Monsters);
     }
 
     private void Config_Closed(object sender, EventArgs e)
@@ -1189,12 +1177,6 @@ public partial class ConfigWindow : FluentWindow
         s.Reload();
         Close();
         DeletexNames_OnClosed();
-    }
-
-    private void BtnGuildCardFile_Click(object sender, RoutedEventArgs e)
-    {
-        var fileName = "GuildCard";
-        FileService.SaveElementAsImageFile(GuildCardGrid, fileName, ConfigWindowSnackBar);
     }
 
     private void ChangeMonsterInfo()
@@ -1855,7 +1837,7 @@ public partial class ConfigWindow : FluentWindow
         var fileName = "Set";
         var beginningFileName = "Run";
         var beginningText = RunIDTextBox.Text.Trim();
-        FileService.SaveTextFile(textToSave, fileName, beginningFileName, beginningText);
+        FileService.SaveTextFile(ConfigWindowSnackBar, textToSave, fileName, beginningFileName, beginningText);
     }
 
     private void QuestLogGearBtnCopyFile_Click(object sender, RoutedEventArgs e)
@@ -1893,7 +1875,7 @@ public partial class ConfigWindow : FluentWindow
         string textToSave = compendiumTextBlock.Text;
         textToSave = string.Format(CultureInfo.InvariantCulture, "```text\n{0}\n```", textToSave);
 
-        FileService.SaveTextFile(textToSave, "Compendium");
+        FileService.SaveTextFile(ConfigWindowSnackBar, textToSave, "Compendium");
     }
 
     private void CompendiumBtnCopyFile_Click(object sender, RoutedEventArgs e)
@@ -2234,7 +2216,7 @@ public partial class ConfigWindow : FluentWindow
 
         string textToSave = statsTextTextBlock.Text;
         textToSave = string.Format(CultureInfo.InvariantCulture, "```text\n{0}\n```", textToSave);
-        FileService.SaveTextFile(textToSave, $"StatsText-Run_{RunIDTextBox.Text}-{statsTextSelectedOption}");
+        FileService.SaveTextFile(ConfigWindowSnackBar, textToSave, $"StatsText-Run_{RunIDTextBox.Text}-{statsTextSelectedOption}");
     }
 
     private void StatsTextButtonCopyFile_Click(object sender, RoutedEventArgs e)
@@ -4173,53 +4155,82 @@ public partial class ConfigWindow : FluentWindow
 
     private void HunterNotesGridMenuItem_Click(object sender, RoutedEventArgs e)
     {
-        if (sender is MenuItem menuItem)
+        if (sender is MenuItem menuItem && menuItem.Parent is ContextMenu contextMenu && contextMenu.PlacementTarget is FrameworkElement element)
         {
-            if (menuItem.Parent is ContextMenu contextMenu)
+            // Check the Tag property of the ContextMenu to decide which menu items to handle
+            if (contextMenu.Name == "HunterNotesContextMenu")
             {
-                // Check the Tag property of the ContextMenu to decide which menu items to handle
-                if (contextMenu.Name == "HunterNotesContextMenu")
+                if (menuItem.Name == "HunterNotesCopyTextMenuItem")
                 {
-                    if (menuItem.Name == "HunterNotesCopyTextMenuItem")
+                    FileService.CopyTextToClipboard(element, ConfigWindowSnackBar);
+                }
+                else if (menuItem.Name == "HunterNotesSaveTextMenuItem")
+                {
+                    FileService.SaveTextFile(ConfigWindowSnackBar, element, element.Name);
+                }
+                else if (menuItem.Name == "HunterNotesSaveImageMenuItem")
+                {
+                    FileService.SaveElementAsImageFile(ConfigWindowSnackBar, element, element.Name);
+                }
+                else if (menuItem.Name == "HunterNotesCopyImageMenuItem")
+                {
+                    FileService.CopyUIElementToClipboard(element, ConfigWindowSnackBar);
+                }
+                else
+                {
+                    MessageBox.Show($"Invalid Menu Item option: {menuItem}");
+
+                    logger.Error("Invalid Menu Item option: {0}", menuItem);
+                }
+            }
+            else if (contextMenu.Name == "HunterNotesContextMenuImageOnly")
+            {
+                if (menuItem.Name == "HunterNotesSaveImageMenuItem2")
+                {
+                    FileService.SaveElementAsImageFile(ConfigWindowSnackBar, element, element.Name);
+                }
+                else if (menuItem.Name == "HunterNotesCopyImageMenuItem2")
+                {
+                    FileService.CopyUIElementToClipboard(element, ConfigWindowSnackBar);
+                }
+                else
+                {
+                    MessageBox.Show($"Invalid Menu Item option: {menuItem}");
+
+                    logger.Error("Invalid Menu Item option: {0}", menuItem);
+                }
+            }
+            else if (contextMenu.Name == "HunterNotesContextMenuImageCSV")
+            {
+                if (menuItem.Name == "HunterNotesSaveImageMenuItem3")
+                {
+                    FileService.SaveElementAsImageFile(ConfigWindowSnackBar, element, element.Name);
+                }
+                else if (menuItem.Name == "HunterNotesCopyImageMenuItem3")
+                {
+                    FileService.CopyUIElementToClipboard(element, ConfigWindowSnackBar);
+                }
+                else if (menuItem.Name == "HunterNotesSaveCSVMenuItem")
+                {
+                    if (element.Name == "HuntedLogGrid")
                     {
-                        MessageBox.Show("HunterNotesCopyTextMenuItem");
-                    }
-                    else if (menuItem.Name == "HunterNotesSaveTextMenuItem")
-                    {
-                        MessageBox.Show("HunterNotesSaveTextMenuItem");
-                    }
-                    else if (menuItem.Name == "HunterNotesSaveImageMenuItem")
-                    {
-                        MessageBox.Show("HunterNotesSaveImageMenuItem");
-                    }
-                    else if (menuItem.Name == "HunterNotesCopyImageMenuItem")
-                    {
-                        MessageBox.Show("HunterNotesCopyImageMenuItem");
+                        FileService.SaveRecordsAsCSVFile(Monsters, ConfigWindowSnackBar, "HuntedLog");
                     }
                     else
                     {
-                        MessageBox.Show($"Invalid Menu Item option: {menuItem}");
-
-                        logger.Warn("Invalid Menu Item option: {0}", menuItem);
+                        logger.Error("Unhandled csv class records: {0}", element.Name);
                     }
                 }
-                else if (contextMenu.Name == "HunterNotesContextMenuImageOnly")
+                else
                 {
-                    if (menuItem.Name == "HunterNotesSaveImageMenuItem2")
-                    {
-                        MessageBox.Show("HunterNotesSaveImageMenuItem2");
-                    }
-                    else if (menuItem.Name == "HunterNotesCopyImageMenuItem2")
-                    {
-                        MessageBox.Show("HunterNotesCopyImageMenuItem2");
-                    }
-                    else
-                    {
-                        MessageBox.Show($"Invalid Menu Item option: {menuItem}");
+                    MessageBox.Show($"Invalid Menu Item option: {menuItem}");
 
-                        logger.Warn("Invalid Menu Item option: {0}", menuItem);
-                    }
+                    logger.Error("Invalid Menu Item option: {0}", menuItem);
                 }
+            }
+            else
+            {
+                logger.Error("Unhandled Context Menu found: {0}", contextMenu.Name);
             }
         }
     }

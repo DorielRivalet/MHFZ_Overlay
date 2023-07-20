@@ -107,6 +107,33 @@
                 </ui:MenuItem>
                 <!-- Add more menu items if needed -->
             </ContextMenu>
+            <ContextMenu x:Key="HunterNotesContextMenuImageCSV" x:Name="HunterNotesContextMenuImageCSV">
+                <ui:MenuItem x:Name="HunterNotesSaveCSVMenuItem" Click="HunterNotesGridMenuItem_Click">
+                    <MenuItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <ui:SymbolIcon Symbol="DocumentBulletList20"/>
+                            <TextBlock Margin="5,0,0,0" Text="Save as CSV"/>
+                        </StackPanel>
+                    </MenuItem.Header>
+                </ui:MenuItem>
+                <ui:MenuItem x:Name="HunterNotesCopyImageMenuItem3" Click="HunterNotesGridMenuItem_Click">
+                    <MenuItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <ui:SymbolIcon Symbol="Copy20"/>
+                            <TextBlock Margin="5,0,0,0" Text="Copy to Clipboard as Image"/>
+                        </StackPanel>
+                    </MenuItem.Header>
+                </ui:MenuItem>
+                <ui:MenuItem x:Name="HunterNotesSaveImageMenuItem3" Click="HunterNotesGridMenuItem_Click">
+                    <MenuItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <ui:SymbolIcon Symbol="ArrowDownload20"/>
+                            <TextBlock Margin="5,0,0,0" Text="Save as Image"/>
+                        </StackPanel>
+                    </MenuItem.Header>
+                </ui:MenuItem>
+                <!-- Add more menu items if needed -->
+            </ContextMenu>
             <DataTemplate x:Key="DefaultTemplate">
                 <Grid Background="#7f1e1e2e">
                     <TextBlock TextWrapping="Wrap" MaxWidth="500" MaxHeight="500" Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -2517,7 +2544,7 @@ Thunder Clad, Vigorous" Text="{Binding GetActiveSkillsForImage,Mode=OneTime}" Fo
                                                 <TextBlock Grid.Column="1" Grid.Row="17" HorizontalAlignment="Left" VerticalAlignment="Center" Text="{Binding GetArmorLegDecos,Mode=OneTime}" FontFamily="MS Gothic Bold" FontSize="14" Margin="60,0,0,0"/>
 
                                                 <Image Grid.Column="1" Grid.Row="18" HorizontalAlignment="Left" VerticalAlignment="Top" Source="https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/my_tore.png" Margin="35,0,0,0" Width="20" Height="20"/>
-                                                <TextBlock Foreground="#fafa50" Grid.Column="1" Grid.RowSpan="2" TextWrapping="Wrap" d:Text="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" Grid.Row="18" HorizontalAlignment="Left" VerticalAlignment="Center" Text="{Binding GetCuffs,Mode=OneTime}" FontFamily="MS Gothic Bold" FontSize="16" Margin="60,0,0,0"/>
+                                                <TextBlock Foreground="#fafa50" Grid.Column="1" Grid.RowSpan="2" TextWrapping="Wrap" d:Text="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" Grid.Row="18" HorizontalAlignment="Left" VerticalAlignment="Top" Text="{Binding GetCuffs,Mode=OneTime}" FontFamily="MS Gothic Bold" FontSize="16" Margin="60,0,0,0"/>
                                             </Grid>
                                         </Grid>
                                     </TabItem>
