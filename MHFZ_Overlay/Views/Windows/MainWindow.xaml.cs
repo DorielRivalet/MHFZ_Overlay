@@ -2193,11 +2193,13 @@ The process may take some time, as the program attempts to download from GitHub 
             return;
         }
 
+        LoggerInstance.Debug("Gamepad found");
         AddGamepadImages();
     }
 
     private void AddGamepadImages()
     {
+        LoggerInstance.Debug("Adding images. images count: {0}, triggers count: {1}, joystick count: {2}", _gamepadImages.Count, _gamepadTriggersImages.Count, _gamepadJoystickImages.Count);
         _gamepadImages.Add(gamepad.Buttons.A, ButtonA);
         _gamepadImages.Add(gamepad.Buttons.B, ButtonB);
         _gamepadImages.Add(gamepad.Buttons.X, ButtonX);
@@ -2212,6 +2214,7 @@ The process may take some time, as the program attempts to download from GitHub 
         _gamepadTriggersImages.Add(gamepad.RightTrigger, ButtonR2);
         _gamepadJoystickImages.Add(gamepad.LeftJoystick, LJoystickMovement);
         _gamepadJoystickImages.Add(gamepad.RightJoystick, RJoystickMovement);
+        LoggerInstance.Debug("Added images. images count: {0}, triggers count: {1}, joystick count: {2}", _gamepadImages.Count, _gamepadTriggersImages.Count, _gamepadJoystickImages.Count);
     }
 
     private double pressedInputOpacity { get; set; } = 0.5;
