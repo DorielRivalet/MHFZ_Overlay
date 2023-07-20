@@ -278,7 +278,7 @@ public sealed class FileService
         catch (Exception ex)
         {
             logger.Error(ex, "Could not copy UI element to clipboard");
-            snackbar.Show(Messages.InfoTitle, "Could not copy UI element to clipboard", new SymbolIcon(SymbolRegular.ClipboardError24), ControlAppearance.Danger);
+            snackbar.Show(Messages.ErrorTitle, "Could not copy UI element to clipboard", new SymbolIcon(SymbolRegular.ClipboardError24), ControlAppearance.Danger);
         }
     }
 
@@ -363,7 +363,7 @@ public sealed class FileService
         catch (Exception ex)
         {
             logger.Error(ex, "Could not save class records as CSV file");
-            snackbar.Show(Messages.InfoTitle, "Could not save class records as CSV file", new SymbolIcon(SymbolRegular.ErrorCircle20), ControlAppearance.Danger);
+            snackbar.Show(Messages.ErrorTitle, "Could not save class records as CSV file", new SymbolIcon(SymbolRegular.ErrorCircle20), ControlAppearance.Danger);
         }
     }
 

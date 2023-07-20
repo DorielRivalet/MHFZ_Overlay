@@ -4178,9 +4178,8 @@ public partial class ConfigWindow : FluentWindow
                 }
                 else
                 {
-                    MessageBox.Show($"Invalid Menu Item option: {menuItem}");
-
                     logger.Error("Invalid Menu Item option: {0}", menuItem);
+                    ConfigWindowSnackBar.Show(Messages.ErrorTitle, $"Invalid Menu Item option: {menuItem}", new SymbolIcon(SymbolRegular.ErrorCircle20), ControlAppearance.Danger);
                 }
             }
             else if (contextMenu.Name == "HunterNotesContextMenuImageOnly")
@@ -4195,9 +4194,8 @@ public partial class ConfigWindow : FluentWindow
                 }
                 else
                 {
-                    MessageBox.Show($"Invalid Menu Item option: {menuItem}");
-
                     logger.Error("Invalid Menu Item option: {0}", menuItem);
+                    ConfigWindowSnackBar.Show(Messages.ErrorTitle, $"Invalid Menu Item option: {menuItem}", new SymbolIcon(SymbolRegular.ErrorCircle20), ControlAppearance.Danger);
                 }
             }
             else if (contextMenu.Name == "HunterNotesContextMenuImageCSV")
@@ -4219,13 +4217,13 @@ public partial class ConfigWindow : FluentWindow
                     else
                     {
                         logger.Error("Unhandled csv class records: {0}", element.Name);
+                        ConfigWindowSnackBar.Show(Messages.ErrorTitle, "Could not save class records as CSV file: unhandled element", new SymbolIcon(SymbolRegular.ErrorCircle20), ControlAppearance.Danger);
                     }
                 }
                 else
                 {
-                    MessageBox.Show($"Invalid Menu Item option: {menuItem}");
-
                     logger.Error("Invalid Menu Item option: {0}", menuItem);
+                    ConfigWindowSnackBar.Show(Messages.ErrorTitle, $"Invalid Menu Item option: {menuItem}", new SymbolIcon(SymbolRegular.ErrorCircle20), ControlAppearance.Danger);
                 }
             }
             else
