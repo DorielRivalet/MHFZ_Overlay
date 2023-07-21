@@ -726,9 +726,9 @@ The process may take some time, as the program attempts to download from GitHub 
         }
 
         EZlion.Mapper.Quest.IDName.TryGetValue(this.dataLoader.model.previousQuestID, out string? previousQuestID);
-        if (previousQuestID == null)
+        if (string.IsNullOrEmpty(previousQuestID))
         {
-            return;
+            previousQuestID = string.Format("{0} {1}", Messages.CustomQuestName, dataLoader.model.QuestID());
         }
 
         this.questNameTextBlock.Text = previousQuestID;

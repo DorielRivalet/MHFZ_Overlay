@@ -44,4 +44,6 @@ public static class Messages
     public const string UnknownMonsterIcon = "https://i.imgur.com/3pQEtzw.png";
 
     public const string EmptyImage = "https://i.imgur.com/aAcPJGb.png";
+
+    public const string CustomQuestName = "Custom Quest";
 }
