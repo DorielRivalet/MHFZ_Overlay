@@ -19,6 +19,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Forms;
 using System.Windows.Media.Imaging;
 using EZlion.Mapper;
 using MHFZ_Overlay;
@@ -13909,7 +13910,7 @@ Updating the database structure may take some time, it will transport all of you
 
             logger.Debug("Views affected: {0}", viewSqlsModified.Count);
 
-            logger.Info(CultureInfo.InvariantCulture, "Altered Quests table successfully");
+            logger.Info(CultureInfo.InvariantCulture, "Altered table {0} successfully", tableName);
         }
         catch (Exception ex)
         {
@@ -13918,7 +13919,7 @@ Updating the database structure may take some time, it will transport all of you
         }
     }
 
-    private void AlterTablePersonalBestAttempts(SQLiteConnection connection, string newSchema, string updateQuery)
+    private void AlterTablePersonalBestAttempts(SQLiteConnection connection, string newSchema)
     {
         logger.Info(CultureInfo.InvariantCulture, "Altering PersonalBestAttempts table");
 
@@ -13926,34 +13927,6 @@ Updating the database structure may take some time, it will transport all of you
 
         try
         {
-            // 3. Remember the format of all indexes, triggers, and views associated with table X. This information will be needed in step 8 below. One way to do this is to run a query like the following: SELECT type, sql FROM sqlite_schema WHERE tbl_name='X'.
-            // Remember the format of all indexes, triggers, and views associated with table X
-            var rememberFormat = new SQLiteCommand("SELECT type, sql FROM sqlite_schema WHERE tbl_name=@tableName;", connection);
-            rememberFormat.Parameters.AddWithValue("@tableName", tableName);
-            var reader = rememberFormat.ExecuteReader();
-            var indexSqls = new List<string>();
-            var triggerSqls = new List<string>();
-            var viewSqls = new List<string>();
-            while (reader.Read())
-            {
-                var type = reader.GetString(0);
-                var sql = reader.GetString(1);
-                if (type == "index")
-                {
-                    indexSqls.Add(sql);
-                }
-                else if (type == "trigger")
-                {
-                    triggerSqls.Add(sql);
-                }
-                else if (type == "view")
-                {
-                    viewSqls.Add(sql);
-                }
-            }
-
-            reader.Close();
-
             // 4. Use CREATE TABLE to construct a new table "new_X" that is in the desired revised format of table X. Make sure that the name "new_X" does not collide with any existing table name, of course.
             // Use CREATE TABLE to construct a new table "new_X" that is in the desired revised format of table X
             using (var createTable = new SQLiteCommand(newSchema, connection))
@@ -13966,31 +13939,12 @@ Updating the database structure may take some time, it will transport all of you
             // 5. Transfer content from X into new_X using a statement like: INSERT INTO new_X SELECT ... FROM X.
             // Transfer content from X into new_X using a statement like: INSERT INTO new_X SELECT ... FROM X
 
-            // Get the number of rows in the PersonalBestAttempts table
-            var countQuery = "SELECT COUNT(*) FROM PersonalBestAttempts";
-            using (var command = new SQLiteCommand(countQuery, connection))
+            // Transfer data from the old table "PersonalBestAttempts" to the new table "new_PersonalBestAttempts".
+            var transferDataSql = @"INSERT INTO new_PersonalBestAttempts (QuestID, WeaponTypeID, ActualOverlayMode, Attempts)
+                                SELECT QuestID, WeaponTypeID, ActualOverlayMode, Attempts FROM PersonalBestAttempts;";
+            using (var transferDataCmd = new SQLiteCommand(transferDataSql, connection))
             {
-                var rowCount = Convert.ToInt32(command.ExecuteScalar());
-
-                logger.Debug("Inserting default values into new_PersonalBestAttempts");
-
-                // Insert rows with default values into new_PersonalBestAttempts
-                var insertQuery = $"INSERT INTO new_PersonalBestAttempts DEFAULT VALUES";
-                for (var i = 0; i < rowCount; i++)
-                {
-                    using (var insertCommand = new SQLiteCommand(insertQuery, connection))
-                    {
-                        insertCommand.ExecuteNonQuery();
-                    }
-                }
-
-                logger.Debug("Inserted default values into new_PersonalBestAttempts");
-
-                // Update values from Quests to new_PersonalBestAttempts
-                using (var updateCommand = new SQLiteCommand(updateQuery, connection))
-                {
-                    updateCommand.ExecuteNonQuery();
-                }
+                transferDataCmd.ExecuteNonQuery();
             }
 
             logger.Debug("Transferred data from {0} to new_{1}", tableName, tableName);
@@ -14014,73 +13968,22 @@ Updating the database structure may take some time, it will transport all of you
             logger.Debug("Renamed new_{0} to {1}", tableName, tableName);
 
             // 8. Use CREATE INDEX, CREATE TRIGGER, and CREATE VIEW to reconstruct indexes, triggers, and views associated with table X. Perhaps use the old format of the triggers, indexes, and views saved from step 3 above as a guide, making changes as appropriate for the alteration.
-            // Use CREATE INDEX, CREATE TRIGGER, and CREATE VIEW to reconstruct indexes, triggers, and views associated with table X
-            foreach (var indexSql in indexSqls)
-            {
-                using (var createIndex = new SQLiteCommand(indexSql, connection))
-                {
-                    createIndex.ExecuteNonQuery();
-                }
-            }
-
-            foreach (var triggerSql in triggerSqls)
-            {
-                using (var createTrigger = new SQLiteCommand(triggerSql, connection))
-                {
-                    createTrigger.ExecuteNonQuery();
-                }
-            }
-
-            foreach (var viewSql in viewSqls)
-            {
-                using (var createView = new SQLiteCommand(viewSql, connection))
-                {
-                    createView.ExecuteNonQuery();
-                }
-            }
-
-            logger.Debug("Indexes: {0}, Triggers: {1}, Views: {2}", indexSqls.Count, triggerSqls.Count, viewSqls.Count);
+            // Recreate indexes, triggers, and views associated with the original table "QuestAttempts".
+            // (Assuming you have stored the CREATE statements for indexes, triggers, and views separately)
 
             // TODO: since im not using any views this still needs testing in case i make views someday.
             // 9. If any views refer to table X in a way that is affected by the schema change, then drop those views using DROP VIEW and recreate them with whatever changes are necessary to accommodate the schema change using CREATE VIEW.
             //using (SQLite
             // Check if any views refer to table X in a way that is affected by the schema change
-            var findViews = new SQLiteCommand("SELECT name, sql FROM sqlite_master WHERE type='view' AND sql LIKE '% " + tableName + " %';", connection);
-            var viewReader = findViews.ExecuteReader();
-            var viewNames = new List<string>();
-            var viewSqlsModified = new List<string>();
-            while (viewReader.Read())
-            {
-                viewNames.Add(viewReader.GetString(0));
-                var viewSql = viewReader.GetString(1);
-                viewSql = viewSql.Replace(tableName, "new_" + tableName);
-                viewSqlsModified.Add(viewSql);
-            }
 
-            viewReader.Close();
 
             // Drop those views using DROP VIEW
-            foreach (var viewName in viewNames)
-            {
-                using (var dropView = new SQLiteCommand("DROP VIEW " + viewName + ";", connection))
-                {
-                    dropView.ExecuteNonQuery();
-                }
-            }
+
 
             // TODO: test
             // Recreate views with whatever changes are necessary to accommodate the schema change using CREATE VIEW
-            for (var i = 0; i < viewNames.Count; i++)
-            {
-                using (var createView = new SQLiteCommand(viewSqlsModified[i], connection))
-                {
-                    createView.ExecuteNonQuery();
-                }
-            }
 
-            logger.Debug("Views affected: {0}", viewSqlsModified.Count);
-
-            logger.Info(CultureInfo.InvariantCulture, "Altered PersonalBestAttempts table successfully");
+            logger.Info(CultureInfo.InvariantCulture, "Altered table {0} successfully", tableName);
         }
         catch (Exception ex)
         {
@@ -14090,7 +13993,7 @@ Updating the database structure may take some time, it will transport all of you
         }
     }
 
-    private void AlterTableQuestAttempts(SQLiteConnection connection, string newSchema, string updateQuery)
+    private void AlterTableQuestAttempts(SQLiteConnection connection, string newSchema)
     {
         logger.Info(CultureInfo.InvariantCulture, "Altering QuestAttempts table");
 
@@ -14098,34 +14001,6 @@ Updating the database structure may take some time, it will transport all of you
 
         try
         {
-            // 3. Remember the format of all indexes, triggers, and views associated with table X. This information will be needed in step 8 below. One way to do this is to run a query like the following: SELECT type, sql FROM sqlite_schema WHERE tbl_name='X'.
-            // Remember the format of all indexes, triggers, and views associated with table X
-            var rememberFormat = new SQLiteCommand("SELECT type, sql FROM sqlite_schema WHERE tbl_name=@tableName;", connection);
-            rememberFormat.Parameters.AddWithValue("@tableName", tableName);
-            var reader = rememberFormat.ExecuteReader();
-            var indexSqls = new List<string>();
-            var triggerSqls = new List<string>();
-            var viewSqls = new List<string>();
-            while (reader.Read())
-            {
-                var type = reader.GetString(0);
-                var sql = reader.GetString(1);
-                if (type == "index")
-                {
-                    indexSqls.Add(sql);
-                }
-                else if (type == "trigger")
-                {
-                    triggerSqls.Add(sql);
-                }
-                else if (type == "view")
-                {
-                    viewSqls.Add(sql);
-                }
-            }
-
-            reader.Close();
-
             // 4. Use CREATE TABLE to construct a new table "new_X" that is in the desired revised format of table X. Make sure that the name "new_X" does not collide with any existing table name, of course.
             // Use CREATE TABLE to construct a new table "new_X" that is in the desired revised format of table X
             using (var createTable = new SQLiteCommand(newSchema, connection))
@@ -14138,31 +14013,12 @@ Updating the database structure may take some time, it will transport all of you
             // 5. Transfer content from X into new_X using a statement like: INSERT INTO new_X SELECT ... FROM X.
             // Transfer content from X into new_X using a statement like: INSERT INTO new_X SELECT ... FROM X
 
-            // Get the number of rows in the QuestAttempts table
-            var countQuery = "SELECT COUNT(*) FROM QuestAttempts";
-            using (var command = new SQLiteCommand(countQuery, connection))
+            // Transfer data from the old table "QuestAttempts" to the new table "new_QuestAttempts".
+            var transferDataSql = @"INSERT INTO new_QuestAttempts (QuestID, WeaponTypeID, ActualOverlayMode, Attempts)
+                                SELECT QuestID, WeaponTypeID, ActualOverlayMode, Attempts FROM QuestAttempts;";
+            using (var transferDataCmd = new SQLiteCommand(transferDataSql, connection))
             {
-                var rowCount = Convert.ToInt32(command.ExecuteScalar());
-
-                logger.Debug("Inserting default values into new_QuestAttempts");
-
-                // Insert rows with default values into new_QuestAttempts
-                var insertQuery = $"INSERT INTO new_QuestAttempts DEFAULT VALUES";
-                for (var i = 0; i < rowCount; i++)
-                {
-                    using (var insertCommand = new SQLiteCommand(insertQuery, connection))
-                    {
-                        insertCommand.ExecuteNonQuery();
-                    }
-                }
-
-                logger.Debug("Inserted default values into new_QuestAttempts");
-
-                // Update values from Quests to new_QuestAttempts
-                using (var updateCommand = new SQLiteCommand(updateQuery, connection))
-                {
-                    updateCommand.ExecuteNonQuery();
-                }
+                transferDataCmd.ExecuteNonQuery();
             }
 
             logger.Debug("Transferred data from {0} to new_{1}", tableName, tableName);
@@ -14186,73 +14042,22 @@ Updating the database structure may take some time, it will transport all of you
             logger.Debug("Renamed new_{0} to {1}", tableName, tableName);
 
             // 8. Use CREATE INDEX, CREATE TRIGGER, and CREATE VIEW to reconstruct indexes, triggers, and views associated with table X. Perhaps use the old format of the triggers, indexes, and views saved from step 3 above as a guide, making changes as appropriate for the alteration.
-            // Use CREATE INDEX, CREATE TRIGGER, and CREATE VIEW to reconstruct indexes, triggers, and views associated with table X
-            foreach (var indexSql in indexSqls)
-            {
-                using (var createIndex = new SQLiteCommand(indexSql, connection))
-                {
-                    createIndex.ExecuteNonQuery();
-                }
-            }
-
-            foreach (var triggerSql in triggerSqls)
-            {
-                using (var createTrigger = new SQLiteCommand(triggerSql, connection))
-                {
-                    createTrigger.ExecuteNonQuery();
-                }
-            }
-
-            foreach (var viewSql in viewSqls)
-            {
-                using (var createView = new SQLiteCommand(viewSql, connection))
-                {
-                    createView.ExecuteNonQuery();
-                }
-            }
-
-            logger.Debug("Indexes: {0}, Triggers: {1}, Views: {2}", indexSqls.Count, triggerSqls.Count, viewSqls.Count);
+            // Recreate indexes, triggers, and views associated with the original table "QuestAttempts".
+            // (Assuming you have stored the CREATE statements for indexes, triggers, and views separately)
 
             // TODO: since im not using any views this still needs testing in case i make views someday.
             // 9. If any views refer to table X in a way that is affected by the schema change, then drop those views using DROP VIEW and recreate them with whatever changes are necessary to accommodate the schema change using CREATE VIEW.
             //using (SQLite
             // Check if any views refer to table X in a way that is affected by the schema change
-            var findViews = new SQLiteCommand("SELECT name, sql FROM sqlite_master WHERE type='view' AND sql LIKE '% " + tableName + " %';", connection);
-            var viewReader = findViews.ExecuteReader();
-            var viewNames = new List<string>();
-            var viewSqlsModified = new List<string>();
-            while (viewReader.Read())
-            {
-                viewNames.Add(viewReader.GetString(0));
-                var viewSql = viewReader.GetString(1);
-                viewSql = viewSql.Replace(tableName, "new_" + tableName);
-                viewSqlsModified.Add(viewSql);
-            }
 
-            viewReader.Close();
 
             // Drop those views using DROP VIEW
-            foreach (var viewName in viewNames)
-            {
-                using (var dropView = new SQLiteCommand("DROP VIEW " + viewName + ";", connection))
-                {
-                    dropView.ExecuteNonQuery();
-                }
-            }
+
 
             // TODO: test
             // Recreate views with whatever changes are necessary to accommodate the schema change using CREATE VIEW
-            for (var i = 0; i < viewNames.Count; i++)
-            {
-                using (var createView = new SQLiteCommand(viewSqlsModified[i], connection))
-                {
-                    createView.ExecuteNonQuery();
-                }
-            }
 
-            logger.Debug("Views affected: {0}", viewSqlsModified.Count);
-
-            logger.Info(CultureInfo.InvariantCulture, "Altered QuestAttempts table successfully");
+            logger.Info(CultureInfo.InvariantCulture, "Altered table {0} successfully", tableName);
         }
         catch (Exception ex)
         {
@@ -14439,7 +14244,7 @@ Updating the database structure may take some time, it will transport all of you
 
             logger.Debug("Views affected: {0}", viewSqlsModified.Count);
 
-            logger.Info(CultureInfo.InvariantCulture, "Altered GameFolder table successfully");
+            logger.Info(CultureInfo.InvariantCulture, "Altered table {0} successfully", tableName);
         }
         catch (Exception ex)
         {
@@ -14829,20 +14634,15 @@ Updating the database structure may take some time, it will transport all of you
             cmd.ExecuteNonQuery();
         }
 
-        updateQuery = @"
-        UPDATE new_QuestAttempts
-        SET QuestID = (SELECT QuestID FROM QuestAttempts WHERE QuestAttempts.QuestAttemptsID = new_QuestAttempts.QuestAttemptsID),
-            WeaponTypeID = (SELECT WeaponTypeID FROM QuestAttempts WHERE QuestAttempts.QuestAttemptsID = new_QuestAttempts.QuestAttemptsID),
-            ActualOverlayMode = (SELECT ActualOverlayMode FROM QuestAttempts WHERE QuestAttempts.QuestAttemptsID = new_QuestAttempts.QuestAttemptsID),
-            Attempts = (SELECT Attempts FROM QuestAttempts WHERE QuestAttempts.QuestAttemptsID = new_QuestAttempts.QuestAttemptsID)
-            WHERE EXISTS (SELECT 1 FROM QuestAttempts WHERE QuestAttempts.QuestAttemptsID = new_QuestAttempts.QuestAttemptsID)"
-               ;
-
-        AlterTableQuestAttempts(connection, sql, updateQuery);
+        AlterTableQuestAttempts(connection, sql);
 
         sql = @"ALTER TABLE QuestAttempts
         ADD CONSTRAINT Unique_QuestWeaponMode
         UNIQUE (QuestID, WeaponTypeID, ActualOverlayMode)";
+        using (var cmd = new SQLiteCommand(sql, connection))
+        {
+            cmd.ExecuteNonQuery();
+        }
 
         sql = @"CREATE TABLE IF NOT EXISTS new_PersonalBestAttempts(
                     PersonalBestAttemptsID INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -14858,20 +14658,15 @@ Updating the database structure may take some time, it will transport all of you
             cmd.ExecuteNonQuery();
         }
 
-        updateQuery = @"
-        UPDATE new_PersonalBestAttempts
-        SET QuestID = (SELECT QuestID FROM PersonalBestAttempts WHERE PersonalBestAttempts.PersonalBestAttemptsID = new_PersonalBestAttempts.PersonalBestAttemptsID),
-            WeaponTypeID = (SELECT WeaponTypeID FROM PersonalBestAttempts WHERE PersonalBestAttempts.PersonalBestAttemptsID = new_PersonalBestAttempts.PersonalBestAttemptsID),
-            ActualOverlayMode = (SELECT ActualOverlayMode FROM PersonalBestAttempts WHERE PersonalBestAttempts.PersonalBestAttemptsID = new_PersonalBestAttempts.PersonalBestAttemptsID),
-            Attempts = (SELECT Attempts FROM PersonalBestAttempts WHERE PersonalBestAttempts.PersonalBestAttemptsID = new_PersonalBestAttempts.PersonalBestAttemptsID)
-            WHERE EXISTS (SELECT 1 FROM PersonalBestAttempts WHERE PersonalBestAttempts.PersonalBestAttemptsID = new_PersonalBestAttempts.PersonalBestAttemptsID)"
-               ;
-
-        AlterTablePersonalBestAttempts(connection, sql, updateQuery);
+        AlterTablePersonalBestAttempts(connection, sql);
 
         sql = @"ALTER TABLE PersonalBestAttempts
         ADD CONSTRAINT Unique_QuestWeaponMode
         UNIQUE (QuestID, WeaponTypeID, ActualOverlayMode)";
+        using (var cmd = new SQLiteCommand(sql, connection))
+        {
+            cmd.ExecuteNonQuery();
+        }
 
         sql = @"DROP TABLE GachaCard";
         using (var cmd = new SQLiteCommand(sql, connection))
