@@ -3988,6 +3988,6 @@ Thunder Clad, Vigorous" Text="{Binding GetActiveSkillsForImage,Mode=OneTime}" Fo
             </TabItem>
         </TabControl>
     </Grid>
-        <ui:Snackbar Grid.ZIndex="2" Timeout="10000" x:Name="ConfigWindowSnackBar" Style="{StaticResource CatppuccinMochaSnackBar}"/>
+        <ui:Snackbar Grid.ZIndex="2" Timeout="5000" x:Name="ConfigWindowSnackBar" Style="{StaticResource CatppuccinMochaSnackBar}"/>
     </Grid>
 </ui:FluentWindow>

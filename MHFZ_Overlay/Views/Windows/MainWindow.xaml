@@ -715,7 +715,7 @@
         
     </Grid>
         <!--https://stackoverflow.com/questions/5450985/how-to-make-overlay-control-above-all-other-controls-->
-        <ui:Snackbar Grid.ZIndex="2" Timeout="10000" x:Name="MainWindowSnackBar" Style="{StaticResource CatppuccinMochaSnackBar}"/>
+        <ui:Snackbar Grid.ZIndex="2" Timeout="5000" x:Name="MainWindowSnackBar" Style="{StaticResource CatppuccinMochaSnackBar}"/>
     </Grid>
     <Window.InputBindings>
     <KeyBinding Key="Esc" Command="{StaticResource ESC}"/>

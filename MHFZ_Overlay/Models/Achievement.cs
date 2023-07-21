@@ -6,6 +6,7 @@ namespace MHFZ_Overlay.Models;
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using MHFZ_Overlay.Models.Collections;
@@ -22,18 +23,23 @@ public sealed class Achievement
 {
     public static async Task ShowMany(Snackbar snackbar, List<int> achievementsID)
     {
-        foreach (var achievementID in achievementsID)
-        {
-            if (Achievements.IDAchievement.TryGetValue(achievementID, out Achievement? achievement))
-            {
-                if (achievement == null)
-                {
-                    continue;
-                }
+        const int maxAchievementsToShow = 5;
+        var shownAchievements = 0;
+        var remainingAchievements = achievementsID.Count - maxAchievementsToShow;
 
+        foreach (var achievementID in achievementsID.Take(maxAchievementsToShow))
+        {
+            if (Achievements.IDAchievement.TryGetValue(achievementID, out Achievement? achievement) && achievement != null)
+            {
                 await achievement.Show(snackbar);
                 await Task.Delay(TimeSpan.FromSeconds(2)); // Delay between each achievement
+                shownAchievements++;
             }
+        }
+
+        if (remainingAchievements > 0)
+        {
+            await ShowAchievementsTabInfo(snackbar, remainingAchievements);
         }
     }
 
@@ -58,6 +64,23 @@ public sealed class Achievement
             MainWindow.MainWindowSoundPlayer.Play();
         }
 
+        await snackbar.ShowAsync();
+        await Task.Delay(TimeSpan.FromSeconds(1)); // Delay for a certain duration
+        snackbar.Hide(); // Hide the snackbar
+    }
+
+    public static async Task ShowAchievementsTabInfo(Snackbar snackbar, int remainingAchievements)
+    {
+        var brushConverter = new BrushConverter();
+        var brushColor = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Crust"]);
+        snackbar.Title = "Too many achievements!";
+        snackbar.Message = $"To see the rest of the achievements unlocked ({remainingAchievements} left), see the Achievements tab in the Quests Logs section.";
+        snackbar.Icon = new SymbolIcon()
+        {
+            Symbol = SymbolRegular.Info28,
+        };
+        snackbar.Icon.Foreground = brushColor ?? Brushes.Black;
+        snackbar.Appearance = ControlAppearance.Info;
         await snackbar.ShowAsync();
         await Task.Delay(TimeSpan.FromSeconds(1)); // Delay for a certain duration
         snackbar.Hide(); // Hide the snackbar
