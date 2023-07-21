@@ -14086,6 +14086,7 @@ Updating the database structure may take some time, it will transport all of you
         {
             // Roll back the transaction if any errors occur
             logger.Error(ex, "Could not alter table {0}", tableName);
+            LoggingService.WriteCrashLog(ex, string.Format("Could not alter table {0}", tableName));
         }
     }
 
@@ -14257,6 +14258,7 @@ Updating the database structure may take some time, it will transport all of you
         {
             // Roll back the transaction if any errors occur
             logger.Error(ex, "Could not alter table {0}", tableName);
+            LoggingService.WriteCrashLog(ex, string.Format("Could not alter table {0}", tableName));
         }
     }
 
@@ -14443,6 +14445,7 @@ Updating the database structure may take some time, it will transport all of you
         {
             // Roll back the transaction if any errors occur
             logger.Error(ex, "Could not alter table {0}", tableName);
+            LoggingService.WriteCrashLog(ex, string.Format("Could not alter table {0}", tableName));
         }
     }
 
@@ -14596,6 +14599,7 @@ Updating the database structure may take some time, it will transport all of you
         {
             // Roll back the transaction if any errors occur
             logger.Error(ex, "Could not alter table {0}", tableName);
+            LoggingService.WriteCrashLog(ex, string.Format("Could not alter table {0}", tableName));
         }
     }
 
@@ -14817,8 +14821,7 @@ Updating the database structure may take some time, it will transport all of you
                     WeaponTypeID INTEGER NOT NULL,
                     ActualOverlayMode TEXT NOT NULL,
                     Attempts INTEGER NOT NULL,
-                    FOREIGN KEY(WeaponTypeID) REFERENCES WeaponType(WeaponTypeID),
-                    UNIQUE (QuestID, WeaponTypeID, ActualOverlayMode)
+                    FOREIGN KEY(WeaponTypeID) REFERENCES WeaponType(WeaponTypeID)
                     )
                     ";
         using (var cmd = new SQLiteCommand(sql, connection))
@@ -14837,14 +14840,17 @@ Updating the database structure may take some time, it will transport all of you
 
         AlterTableQuestAttempts(connection, sql, updateQuery);
 
+        sql = @"ALTER TABLE QuestAttempts
+        ADD CONSTRAINT Unique_QuestWeaponMode
+        UNIQUE (QuestID, WeaponTypeID, ActualOverlayMode)";
+
         sql = @"CREATE TABLE IF NOT EXISTS new_PersonalBestAttempts(
                     PersonalBestAttemptsID INTEGER PRIMARY KEY AUTOINCREMENT,
                     QuestID INTEGER NOT NULL,
                     WeaponTypeID INTEGER NOT NULL,
                     ActualOverlayMode TEXT NOT NULL,
                     Attempts INTEGER NOT NULL,
-                    FOREIGN KEY(WeaponTypeID) REFERENCES WeaponType(WeaponTypeID),
-                    UNIQUE (QuestID, WeaponTypeID, ActualOverlayMode)
+                    FOREIGN KEY(WeaponTypeID) REFERENCES WeaponType(WeaponTypeID)
                     )
                     ";
         using (var cmd = new SQLiteCommand(sql, connection))
@@ -14862,6 +14868,10 @@ Updating the database structure may take some time, it will transport all of you
                ;
 
         AlterTablePersonalBestAttempts(connection, sql, updateQuery);
+
+        sql = @"ALTER TABLE PersonalBestAttempts
+        ADD CONSTRAINT Unique_QuestWeaponMode
+        UNIQUE (QuestID, WeaponTypeID, ActualOverlayMode)";
 
         sql = @"DROP TABLE GachaCard";
         using (var cmd = new SQLiteCommand(sql, connection))
