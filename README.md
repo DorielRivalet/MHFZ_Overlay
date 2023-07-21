@@ -395,8 +395,10 @@ We recommend consulting the appropriate documentation file based on your needs. 
 - The theme and color palette used for the application is [*Catppuccin Mocha*](https://github.com/catppuccin/catppuccin).
 - The design and icons used in this project are part of [*Segoe Fluent Icons*](https://learn.microsoft.com/en-us/windows/apps/design/style/segoe-fluent-icons-font) and [WPF UI](https://github.com/lepoco/wpfui).
 - The fonts used is the in-game one, *MS Gothic*. For monospaced, the application uses Source Code Pro and MesloLGM NF. This project also uses Font Awesome's fonts. The Monster Hunter font made by XMitsarugiX comes from [here](https://www.deviantart.com/xmitsarugix/art/Monster-Hunter-Font-Type-1-and-2-380816151).
+- Thanks to Kairi for extensive beta testing and early support. [YouTube channel](https://www.youtube.com/@kairi_mhfz).
 
 <a href="https://github.com/suzaku01"><img style="border-radius: 50% !important;" alt="Avatar" src="https://avatars.githubusercontent.com/u/89909040?v=4" width="64px" height="auto" ></a>
 <a href="https://github.com/Imulion"><img style="border-radius: 50% !important;" alt="Avatar" src="https://avatars.githubusercontent.com/u/27354834?v=4" width="64px" height="auto" ></a>
 <a href="https://github.com/Catppuccin"><img style="border-radius: 50% !important;" alt="Avatar" src="https://raw.githubusercontent.com/catppuccin/catppuccin/main/assets/logos/exports/1544x1544_circle.png" width="64px" height="auto" ></a>
 <a href="https://github.com/lepoco/wpfui"><img style="background-color:#eff1f5" alt="Avatar" src="https://avatars.githubusercontent.com/u/87412094?s=200&v=4" width="64px" height="auto" ></a>
+<a href="https://www.youtube.com/@kairi_mhfz"><img style="border-radius: 50% !important;" alt="Avatar" src="https://yt3.googleusercontent.com/ytc/AOPolaQWKx3GIOgWWRu9YCHBI7lrkFjT2NxLP45IlnSM=s176-c-k-c0x00ffffff-no-rj" width="64px" height="auto" ></a>
