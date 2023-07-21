@@ -14626,7 +14626,8 @@ Updating the database structure may take some time, it will transport all of you
                     WeaponTypeID INTEGER NOT NULL,
                     ActualOverlayMode TEXT NOT NULL,
                     Attempts INTEGER NOT NULL,
-                    FOREIGN KEY(WeaponTypeID) REFERENCES WeaponType(WeaponTypeID)
+                    FOREIGN KEY(WeaponTypeID) REFERENCES WeaponType(WeaponTypeID),
+                    UNIQUE (QuestID, WeaponTypeID, ActualOverlayMode)
                     )
                     ";
         using (var cmd = new SQLiteCommand(sql, connection))
@@ -14636,21 +14637,14 @@ Updating the database structure may take some time, it will transport all of you
 
         AlterTableQuestAttempts(connection, sql);
 
-        sql = @"ALTER TABLE QuestAttempts
-        ADD CONSTRAINT Unique_QuestWeaponMode
-        UNIQUE (QuestID, WeaponTypeID, ActualOverlayMode)";
-        using (var cmd = new SQLiteCommand(sql, connection))
-        {
-            cmd.ExecuteNonQuery();
-        }
-
         sql = @"CREATE TABLE IF NOT EXISTS new_PersonalBestAttempts(
                     PersonalBestAttemptsID INTEGER PRIMARY KEY AUTOINCREMENT,
                     QuestID INTEGER NOT NULL,
                     WeaponTypeID INTEGER NOT NULL,
                     ActualOverlayMode TEXT NOT NULL,
                     Attempts INTEGER NOT NULL,
-                    FOREIGN KEY(WeaponTypeID) REFERENCES WeaponType(WeaponTypeID)
+                    FOREIGN KEY(WeaponTypeID) REFERENCES WeaponType(WeaponTypeID),
+                    UNIQUE (QuestID, WeaponTypeID, ActualOverlayMode)
                     )
                     ";
         using (var cmd = new SQLiteCommand(sql, connection))
@@ -14659,14 +14653,6 @@ Updating the database structure may take some time, it will transport all of you
         }
 
         AlterTablePersonalBestAttempts(connection, sql);
-
-        sql = @"ALTER TABLE PersonalBestAttempts
-        ADD CONSTRAINT Unique_QuestWeaponMode
-        UNIQUE (QuestID, WeaponTypeID, ActualOverlayMode)";
-        using (var cmd = new SQLiteCommand(sql, connection))
-        {
-            cmd.ExecuteNonQuery();
-        }
 
         sql = @"DROP TABLE GachaCard";
         using (var cmd = new SQLiteCommand(sql, connection))
