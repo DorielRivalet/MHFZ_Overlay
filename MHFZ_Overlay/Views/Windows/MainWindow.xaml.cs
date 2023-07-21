@@ -352,12 +352,11 @@ public partial class MainWindow : Window
         // Calculate the total time spent and update the TotalTimeSpent property
         this.dataLoader.model.TotalTimeSpent = DatabaseManagerInstance.CalculateTotalTimeSpent();
 
-        this.MapPlayerInputImages();
-        this.Subscribe();
-
         // TODO unsubscribe
         // TODO gamepad
         this.gamepad = new ();
+        this.MapPlayerInputImages();
+        this.Subscribe();
         this.gamepad.ButtonPressed += this.Gamepad_ButtonPressed;
         this.gamepad.LeftJoystickMove += this.Gamepad_LeftJoystickMove;
         this.gamepad.RightJoystickMove += this.Gamepad_RightJoystickMove;
@@ -2187,7 +2186,7 @@ The process may take some time, as the program attempts to download from GitHub 
         _mouseImages.Add(MouseButtons.Right, MouseRightClick);
 
         // TODO
-        if (gamepad == null)
+        if (!gamepad.IsConnected)
         {
             LoggerInstance.Debug("Gamepad not found");
             return;
