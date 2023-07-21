@@ -2934,14 +2934,26 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
                             insertCommand.Parameters.AddWithValue("@endTime", ProgramEnd);
                             insertCommand.Parameters.AddWithValue("@sessionDuration", sessionDuration);
 
-                            // Execute the INSERT statement
-                            insertCommand.ExecuteNonQuery();
+                            // Check if the database is busy or locked before executing the INSERT statement
+                            if (IsDatabaseLocked(connection))
+                            {
+                                // Database is locked, skip storing the time
+                                logger.Warn(CultureInfo.InvariantCulture, "Database is locked. Skipping storing session time.");
+                            }
+                            else
+                            {
+                                // Execute the INSERT statement
+                                insertCommand.ExecuteNonQuery();
+                            }
                         }
 
                         // Commit the transaction
                         transaction.Commit();
 
-                        logger.Info(CultureInfo.InvariantCulture, "Stored session time. Duration: {0}", TimeSpan.FromSeconds(sessionDuration).ToString(TimeFormats.HoursMinutesSecondsMilliseconds, CultureInfo.InvariantCulture));
+                        if (!IsDatabaseLocked(connection))
+                        {
+                            logger.Info(CultureInfo.InvariantCulture, "Stored session time. Duration: {0}", TimeSpan.FromSeconds(sessionDuration).ToString(TimeFormats.HoursMinutesSecondsMilliseconds, CultureInfo.InvariantCulture));
+                        }
                     }
                     catch (SQLiteException ex)
                     {
@@ -2965,7 +2977,7 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
             // Handle a SQL exception
             logger.Error(ex, "An error occurred while accessing the database");
             MessageBox.Show(string.Format(
-@"An error occurred while accessing the database.
+            @"An error occurred while accessing the database.
 
 SQL State: {0}
 
@@ -2982,8 +2994,8 @@ Stack Trace: {5}
 Data: {6}
 
 Message: {7}",
-ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace, JsonConvert.SerializeObject(ex.Data), ex.Message),
-                Messages.ErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
+            ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace, JsonConvert.SerializeObject(ex.Data), ex.Message),
+                            Messages.ErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
         }
         catch (IOException ex)
         {
@@ -2998,6 +3010,25 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
             MessageBox.Show("An error occurred: " + ex.Message + "\n\n" + ex.StackTrace + "\n\n" + ex.Source + "\n\n" + ex.Data.ToString(), Messages.ErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
+
+    private bool IsDatabaseLocked(SQLiteConnection connection)
+    {
+        // Query the database to check if it's locked
+        using (var cmd = new SQLiteCommand("SELECT 1", connection))
+        {
+            try
+            {
+                cmd.ExecuteNonQuery();
+                return false; // Database is not locked
+            }
+            catch (SQLiteException ex)
+            {
+                // Check if the error code indicates a busy or locked database
+                return ex.ResultCode == SQLiteErrorCode.Busy || ex.ResultCode == SQLiteErrorCode.Locked;
+            }
+        }
+    }
+
 
     private readonly List<string> _validTableNames = new List<string>
     {
