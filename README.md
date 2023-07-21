@@ -92,8 +92,8 @@ If you record and/or stream with the overlay, the recommended RAM is 16 GB and t
 2. [Download the latest version from the *Releases*](https://github.com/DorielRivalet/mhfz-overlay/releases/latest/download/MHFZ_OverlaySetup.exe).
 3. Make sure *Windows* or your antivirus did not delete the file (because it reads the game's memory, *Windows* might detect it as a trojan, so you might have to get it out of quarantine).
 4. Run `MHFZ_OverlaySetup.exe` **as Administrator**.
-5. [Bonk monsters!](https://c.tenor.com/60Tr3Zeg6RkAAAAd/fumo-bonk.gif).
-6. [Be sure to leave some feedback here!](https://forms.gle/hrAVWMcYS5HEo1v7A).
+5. [Bonk monsters!](https://c.tenor.com/60Tr3Zeg6RkAAAAd/fumo-bonk.gif)
+6. [Be sure to leave some feedback here!](https://forms.gle/hrAVWMcYS5HEo1v7A)
 
 **It's recommended to start the overlay when you are done loading into Mezeporta.**
 
