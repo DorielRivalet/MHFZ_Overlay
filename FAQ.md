@@ -156,6 +156,8 @@ Also keep in mind that when you update the overlay from the program itself, the 
 
 This way, there are no lost settings when updating, and you don't have to make the backup manually.
 
+The location of any previous settings are in the subfolders of `%LocalAppData%/Doriel_Rivalet`. Recommended to sort by date modified.
+
 ## How to check the downloaded file hashes?
 
 ### Graphical User Interface
