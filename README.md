@@ -171,9 +171,11 @@ Includes icons!
 
 ![Player Stats Icons](./demo/playerstat2.png)
 
-- [x] Player Input (KBM).
+- [x] Player Input (KBM + Gamepad).
 
 ![Player Input](./demo/kbm.gif)
+
+![Gamepad Input](./demo/gamepad.png)
 
 - [x] Player Stats Graphs (Actions per Minute, Damage Per Second, Hits per Second and True Raw!).
 
