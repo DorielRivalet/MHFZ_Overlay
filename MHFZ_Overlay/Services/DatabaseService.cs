@@ -29,6 +29,7 @@ using MHFZ_Overlay.Models.Structures;
 using MHFZ_Overlay.Views.Windows;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Octokit;
 using Wpf.Ui.Common;
 using Wpf.Ui.Controls;
 using Wpf.Ui.Controls.IconElements;
@@ -88,7 +89,7 @@ public sealed class DatabaseService
     {
         if (mainWindowDataLoader.databaseChanged)
         {
-            var s = (Settings)Application.Current.TryFindResource("Settings");
+            var s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
             logger.Warn(CultureInfo.InvariantCulture, "Database structure needs update");
             MessageBox.Show("Please update the database structure", Messages.WarningTitle, MessageBoxButton.OK, MessageBoxImage.Warning);
             s.EnableQuestLogging = false;
@@ -98,7 +99,7 @@ public sealed class DatabaseService
     // TODO test
     public void CheckIfUserSetDatabasePath()
     {
-        var s = (Settings)Application.Current.TryFindResource("Settings");
+        var s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
 
         if (string.IsNullOrEmpty(s.DatabaseFilePath) || !Directory.Exists(Path.GetDirectoryName(s.DatabaseFilePath)))
         {
@@ -379,7 +380,7 @@ public sealed class DatabaseService
         var actualOverlayMode = string.Empty;
         dataLoader.model.ShowSaveIcon = true;
 
-        var s = (Settings)Application.Current.TryFindResource("Settings");
+        var s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
 
         if (!dataLoader.model.ValidateGameFolder() || !s.EnableQuestLogging || !dataLoader.model.questCleared)
         {
@@ -2921,6 +2922,13 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
                 // Open the connection
                 connection.Open();
 
+                // Check if the database is busy or locked before proceeding
+                if (IsDatabaseLocked(connection))
+                {
+                    logger.Warn(CultureInfo.InvariantCulture, "Database is locked. Skipping storing session time.");
+                    return; // Skip storing session time for this transaction
+                }
+
                 // Begin a transaction
                 using (var transaction = connection.BeginTransaction())
                 {
@@ -2934,26 +2942,14 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
                             insertCommand.Parameters.AddWithValue("@endTime", ProgramEnd);
                             insertCommand.Parameters.AddWithValue("@sessionDuration", sessionDuration);
 
-                            // Check if the database is busy or locked before executing the INSERT statement
-                            if (IsDatabaseLocked(connection))
-                            {
-                                // Database is locked, skip storing the time
-                                logger.Warn(CultureInfo.InvariantCulture, "Database is locked. Skipping storing session time.");
-                            }
-                            else
-                            {
-                                // Execute the INSERT statement
-                                insertCommand.ExecuteNonQuery();
-                            }
+                            // Execute the INSERT statement
+                            insertCommand.ExecuteNonQuery();
                         }
 
                         // Commit the transaction
                         transaction.Commit();
 
-                        if (!IsDatabaseLocked(connection))
-                        {
-                            logger.Info(CultureInfo.InvariantCulture, "Stored session time. Duration: {0}", TimeSpan.FromSeconds(sessionDuration).ToString(TimeFormats.HoursMinutesSecondsMilliseconds, CultureInfo.InvariantCulture));
-                        }
+                        logger.Info(CultureInfo.InvariantCulture, "Stored session time. Duration: {0}", TimeSpan.FromSeconds(sessionDuration).ToString(TimeFormats.HoursMinutesSecondsMilliseconds, CultureInfo.InvariantCulture));
                     }
                     catch (SQLiteException ex)
                     {
@@ -3010,6 +3006,7 @@ Message: {7}",
             MessageBox.Show("An error occurred: " + ex.Message + "\n\n" + ex.StackTrace + "\n\n" + ex.Source + "\n\n" + ex.Data.ToString(), Messages.ErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
+
 
     private bool IsDatabaseLocked(SQLiteConnection connection)
     {
@@ -3290,7 +3287,7 @@ Message: {7}",
         // Check if the schema has changed
         if (schemaChanged)
         {
-            var s = (Settings)Application.Current.TryFindResource("Settings");
+            var s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
             logger.Error(CultureInfo.InvariantCulture, "Invalid database schema");
             MessageBox.Show(
 @"The database schema got updated in the latest version. 
@@ -3387,7 +3384,7 @@ Disabling Quest Logging.",
 
                         if (playerID == 1)
                         {
-                            var s = (Settings)Application.Current.TryFindResource("Settings");
+                            var s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
                             playerName = s.HunterName;
                             guildName = s.GuildName;
                             discordServerID = s.DiscordServerID;
@@ -13253,6 +13250,27 @@ Disabling Quest Logging.",
         }
     }
 
+    /// <summary>
+    /// Run as last update step
+    /// </summary>
+    /// <param name="connection"></param>
+    private void EnforceForeignKeys(SQLiteConnection connection)
+    {
+        var foreignKeysViolations = CheckForeignKeys(connection);
+
+        // 10. If foreign key constraints were originally enabled then run PRAGMA foreign_key_check to verify that the schema change did not break any foreign key constraints.
+        if (foreignKeysViolations != string.Empty)
+        {
+            logger.Fatal(CultureInfo.InvariantCulture, "Foreign keys violations detected, closing program. Violations: {0}", foreignKeysViolations);
+            MessageBox.Show("Foreign keys violations detected, closing program.", Messages.ErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
+            ApplicationService.HandleShutdown();
+        }
+        else
+        {
+            logger.Debug("No foreign keys violations found");
+        }
+    }
+
     // TODO: i dont like using goto, but it seems to make code more succinct in this case.
     // https://stackoverflow.com/questions/550662/database-schema-updates
     // https://stackoverflow.com/questions/989558/best-practices-for-in-app-database-migration-for-sqlite
@@ -13350,6 +13368,7 @@ Disabling Quest Logging.",
                            // sqlite3_exec(db, "ALTER TABLE entries ADD COLUMN touched_at TEXT;", NULL, NULL, NULL);
                     {
                         PerformUpdateToVersion_0_25_0(conn);
+                        EnforceForeignKeys(conn);
                         newVersion++;
                         logger.Info(CultureInfo.InvariantCulture, "Updated schema to version v0.25.0. newVersion {0}", newVersion);
                         break;
@@ -13412,7 +13431,7 @@ Disabling Quest Logging.",
     */
     private void CheckDatabaseVersion(SQLiteConnection connection, DataLoader dataLoader)
     {
-        var s = (Settings)Application.Current.TryFindResource("Settings");
+        var s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
 
         using (var transaction = connection.BeginTransaction())
         {
@@ -13573,7 +13592,6 @@ Updating the database structure may take some time, it will transport all of you
                     Monster2PartThresholdDictionary TEXT NOT NULL DEFAULT '{}',
                     IsHighGradeEdition INTEGER NOT NULL CHECK (IsHighGradeEdition IN (0, 1)) DEFAULT 0,
                     RefreshRate INTEGER NOT NULL CHECK (RefreshRate >= 1 AND RefreshRate <= 30) DEFAULT 30,
-                    
                     FOREIGN KEY(ObjectiveTypeID) REFERENCES ObjectiveType(ObjectiveTypeID)
                     -- FOREIGN KEY(RankNameID) REFERENCES RankName(RankNameID)
                     )";
@@ -13891,20 +13909,6 @@ Updating the database structure may take some time, it will transport all of you
 
             logger.Debug("Views affected: {0}", viewSqlsModified.Count);
 
-            var foreignKeysViolations = CheckForeignKeys(connection);
-
-            // 10. If foreign key constraints were originally enabled then run PRAGMA foreign_key_check to verify that the schema change did not break any foreign key constraints.
-            if (foreignKeysViolations != string.Empty)
-            {
-                logger.Fatal(CultureInfo.InvariantCulture, "Foreign keys violations detected, closing program. Violations: {0}", foreignKeysViolations);
-                MessageBox.Show("Foreign keys violations detected, closing program.", Messages.ErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
-                ApplicationService.HandleShutdown();
-            }
-            else
-            {
-                logger.Debug("No foreign keys violations found");
-            }
-
             logger.Info(CultureInfo.InvariantCulture, "Altered Quests table successfully");
         }
         catch (Exception ex)
@@ -14076,20 +14080,6 @@ Updating the database structure may take some time, it will transport all of you
 
             logger.Debug("Views affected: {0}", viewSqlsModified.Count);
 
-            var foreignKeysViolations = CheckForeignKeys(connection);
-
-            // 10. If foreign key constraints were originally enabled then run PRAGMA foreign_key_check to verify that the schema change did not break any foreign key constraints.
-            if (foreignKeysViolations != string.Empty)
-            {
-                logger.Fatal(CultureInfo.InvariantCulture, "Foreign keys violations detected, closing program. Violations: {0}", foreignKeysViolations);
-                MessageBox.Show("Foreign keys violations detected, closing program.", Messages.ErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
-                ApplicationService.HandleShutdown();
-            }
-            else
-            {
-                logger.Debug("No foreign keys violations found");
-            }
-
             logger.Info(CultureInfo.InvariantCulture, "Altered PersonalBestAttempts table successfully");
         }
         catch (Exception ex)
@@ -14260,20 +14250,6 @@ Updating the database structure may take some time, it will transport all of you
             }
 
             logger.Debug("Views affected: {0}", viewSqlsModified.Count);
-
-            var foreignKeysViolations = CheckForeignKeys(connection);
-
-            // 10. If foreign key constraints were originally enabled then run PRAGMA foreign_key_check to verify that the schema change did not break any foreign key constraints.
-            if (foreignKeysViolations != string.Empty)
-            {
-                logger.Fatal(CultureInfo.InvariantCulture, "Foreign keys violations detected, closing program. Violations: {0}", foreignKeysViolations);
-                MessageBox.Show("Foreign keys violations detected, closing program.", Messages.ErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
-                ApplicationService.HandleShutdown();
-            }
-            else
-            {
-                logger.Debug("No foreign keys violations found");
-            }
 
             logger.Info(CultureInfo.InvariantCulture, "Altered QuestAttempts table successfully");
         }
@@ -14461,20 +14437,6 @@ Updating the database structure may take some time, it will transport all of you
 
             logger.Debug("Views affected: {0}", viewSqlsModified.Count);
 
-            var foreignKeysViolations = CheckForeignKeys(connection);
-
-            // 10. If foreign key constraints were originally enabled then run PRAGMA foreign_key_check to verify that the schema change did not break any foreign key constraints.
-            if (foreignKeysViolations != string.Empty)
-            {
-                logger.Fatal(CultureInfo.InvariantCulture, "Foreign keys violations detected, closing program. Violations: {0}", foreignKeysViolations);
-                MessageBox.Show("Foreign keys violations detected, closing program.", Messages.ErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
-                ApplicationService.HandleShutdown();
-            }
-            else
-            {
-                logger.Debug("No foreign keys violations found");
-            }
-
             logger.Info(CultureInfo.InvariantCulture, "Altered GameFolder table successfully");
         }
         catch (Exception ex)
@@ -14627,20 +14589,6 @@ Updating the database structure may take some time, it will transport all of you
             }
 
             logger.Debug("Views affected: {0}", viewSqlsModified.Count);
-
-            var foreignKeysViolations = CheckForeignKeys(connection);
-
-            // 10. If foreign key constraints were originally enabled then run PRAGMA foreign_key_check to verify that the schema change did not break any foreign key constraints.
-            if (foreignKeysViolations != string.Empty)
-            {
-                logger.Fatal(CultureInfo.InvariantCulture, "Foreign keys violations detected, closing program. Violations: {0}", foreignKeysViolations);
-                MessageBox.Show("Foreign keys violations detected, closing program.", "MHF-Z Overlay Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                ApplicationService.HandleShutdown();
-            }
-            else
-            {
-                logger.Debug("No foreign keys violations found");
-            }
 
             logger.Info(CultureInfo.InvariantCulture, "Altered table {0} successfully", tableName);
         }
@@ -14968,7 +14916,7 @@ Updating the database structure may take some time, it will transport all of you
     // TODO: should i put this in FileManager?
     private void CheckPreviousVersionFile()
     {
-        var s = (Settings)Application.Current.TryFindResource("Settings");
+        var s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
         var previousVersionFilePath = s.PreviousVersionFilePath.Trim();
         var logMessage = "Error with version file";
 
@@ -15009,7 +14957,7 @@ Updating the database structure may take some time, it will transport all of you
     // TODO: test
     private void WriteNewVersionToFile()
     {
-        var s = (Settings)Application.Current.TryFindResource("Settings");
+        var s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
         var previousVersionFilePath = s.PreviousVersionFilePath.Trim();
         var logMessage = "Error with version file";
         try
