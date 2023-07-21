@@ -24,7 +24,6 @@ public sealed class Achievement
     public static async Task ShowMany(Snackbar snackbar, List<int> achievementsID)
     {
         const int maxAchievementsToShow = 5;
-        var shownAchievements = 0;
         var remainingAchievements = achievementsID.Count - maxAchievementsToShow;
 
         foreach (var achievementID in achievementsID.Take(maxAchievementsToShow))
@@ -33,7 +32,6 @@ public sealed class Achievement
             {
                 await achievement.Show(snackbar);
                 await Task.Delay(TimeSpan.FromSeconds(2)); // Delay between each achievement
-                shownAchievements++;
             }
         }
 
