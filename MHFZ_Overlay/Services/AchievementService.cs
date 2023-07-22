@@ -10,6 +10,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Media;
 using MHFZ_Overlay;
 using MHFZ_Overlay.Models;
 using MHFZ_Overlay.Models.Collections;
@@ -18,7 +19,9 @@ using MHFZ_Overlay.Models.Structures;
 using MHFZ_Overlay.Services.Contracts;
 using Newtonsoft.Json;
 using NLog;
+using Wpf.Ui.Common;
 using Wpf.Ui.Controls;
+using Wpf.Ui.Controls.IconElements;
 
 public sealed class AchievementService : IAchievementService
 {
@@ -37,6 +40,49 @@ public sealed class AchievementService : IAchievementService
             default:
                 return AchievementRank.None;
         }
+    }
+
+    public static List<Achievement> FilterAchievementsToCompletedOnly(List<Achievement> achievements)
+    {
+        List<Achievement> filteredAchievements = achievements.Where(a => a.CompletionDate != DateTime.UnixEpoch).ToList();
+        return filteredAchievements;
+    }
+
+    public static async Task ShowMany(Snackbar snackbar, List<int> achievementsID)
+    {
+        const int maxAchievementsToShow = 5;
+        var remainingAchievements = achievementsID.Count - maxAchievementsToShow;
+
+        foreach (var achievementID in achievementsID.Take(maxAchievementsToShow))
+        {
+            if (Achievements.IDAchievement.TryGetValue(achievementID, out Achievement? achievement) && achievement != null)
+            {
+                await achievement.Show(snackbar);
+                await Task.Delay(TimeSpan.FromSeconds(2)); // Delay between each achievement
+            }
+        }
+
+        if (remainingAchievements > 0)
+        {
+            await ShowAchievementsTabInfo(snackbar, remainingAchievements);
+        }
+    }
+
+    public static async Task ShowAchievementsTabInfo(Snackbar snackbar, int remainingAchievements)
+    {
+        var brushConverter = new BrushConverter();
+        var brushColor = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Crust"]);
+        snackbar.Title = "Too many achievements!";
+        snackbar.Message = $"To see the rest of the achievements unlocked ({remainingAchievements} left), see the Achievements tab in the Quests Logs section.";
+        snackbar.Icon = new SymbolIcon()
+        {
+            Symbol = SymbolRegular.Info28,
+        };
+        snackbar.Icon.Foreground = brushColor ?? Brushes.Black;
+        snackbar.Appearance = ControlAppearance.Info;
+        await snackbar.ShowAsync();
+        await Task.Delay(TimeSpan.FromSeconds(1)); // Delay for a certain duration
+        snackbar.Hide(); // Hide the snackbar
     }
 
     public static AchievementService GetInstance()
@@ -69,7 +115,7 @@ public sealed class AchievementService : IAchievementService
         if (newAchievements.Count > 0)
         {
             this.UpdatePlayerAchievements(newAchievements);
-            await Achievement.ShowMany(snackbar, newAchievements);
+            await ShowMany(snackbar, newAchievements);
             LoggerInstance.Info(CultureInfo.InvariantCulture, "Awarded achievements: {0}", JsonConvert.SerializeObject(newAchievements));
         }
         else

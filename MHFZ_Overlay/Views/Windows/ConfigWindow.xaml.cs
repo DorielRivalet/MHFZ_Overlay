@@ -4216,7 +4216,10 @@ public partial class ConfigWindow : FluentWindow
                     }
                     else if (element.Name == "AchievementsGrid")
                     {
-                        FileService.SaveRecordsAsCSVFile(MainWindow.dataLoader.model.PlayerAchievements.ToArray(), ConfigWindowSnackBar, "Achievements");
+                        FileService.SaveRecordsAsCSVFile(
+                            AchievementService.FilterAchievementsToCompletedOnly(
+                                MainWindow.dataLoader.model.PlayerAchievements
+                                ).ToArray(), ConfigWindowSnackBar, "Achievements");
                     }
                     else
                     {
