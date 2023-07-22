@@ -1731,7 +1731,7 @@
                                     <TextBlock Foreground="{StaticResource Text}" Text="Achievements" Margin="4,0,0,0" VerticalAlignment="Center" />
                                 </StackPanel>
                             </TabItem.Header>
-                            <Grid Background="Transparent" Margin="20" x:Name="AchievementsGrid">
+                            <Grid Background="Transparent" Margin="20" x:Name="AchievementsGrid" ToolTip="Right-click for more options">
                                     <Grid.ContextMenu>
                                         <StaticResource ResourceKey="HunterNotesContextMenuImageCSV" />
                                     </Grid.ContextMenu>
