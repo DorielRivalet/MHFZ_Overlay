@@ -1731,7 +1731,10 @@
                                     <TextBlock Foreground="{StaticResource Text}" Text="Achievements" Margin="4,0,0,0" VerticalAlignment="Center" />
                                 </StackPanel>
                             </TabItem.Header>
-                            <Grid Background="Transparent" Margin="20">
+                            <Grid Background="Transparent" Margin="20" x:Name="AchievementsGrid">
+                                    <Grid.ContextMenu>
+                                        <StaticResource ResourceKey="HunterNotesContextMenuImageCSV" />
+                                    </Grid.ContextMenu>
                                     <Grid Background="Transparent" Style="{StaticResource ConfigSingleGrid}" Margin="0" Height="Auto" Width="Auto">
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="4*"/>
@@ -2680,8 +2683,8 @@ Thunder Clad, Vigorous" Text="{Binding GetActiveSkillsForImage,Mode=OneTime}" Fo
                                                     <ComboBox Width="Auto" SelectionChanged="FilterBox_SelectionChanged" Name="FilterBox" SelectedIndex="0"  HorizontalAlignment="Left" VerticalAlignment="Top"/>
                                                         <ui:DataGrid ToolTip="Right-click for more options" x:Name="HuntLogDataGrid" Grid.Row="1" HorizontalAlignment="Stretch" AutoGenerateColumns="False" IsReadOnly="True">
                                                             <DataGrid.ColumnHeaderStyle>
-                                                            <StaticResource ResourceKey="DefaultDataGridColumnHeaderStyle"/>
-                                                        </DataGrid.ColumnHeaderStyle>
+                                                                <StaticResource ResourceKey="DefaultDataGridColumnHeaderStyle"/>
+                                                            </DataGrid.ColumnHeaderStyle>
                                                         <DataGrid.Columns>
                                                             <DataGridTextColumn Header="ID" Binding="{Binding ID}"/>
                                                             <DataGridTemplateColumn Header="Image">

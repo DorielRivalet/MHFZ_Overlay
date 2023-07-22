@@ -4214,6 +4214,10 @@ public partial class ConfigWindow : FluentWindow
                     {
                         FileService.SaveRecordsAsCSVFile(Monsters, ConfigWindowSnackBar, "HuntedLog");
                     }
+                    else if (element.Name == "AchievementsGrid")
+                    {
+                        FileService.SaveRecordsAsCSVFile(MainWindow.dataLoader.model.PlayerAchievements.ToArray(), ConfigWindowSnackBar, "Achievements");
+                    }
                     else
                     {
                         logger.Error("Unhandled csv class records: {0}", element.Name);
