@@ -688,12 +688,12 @@ The process may take some time, as the program attempts to download from GitHub 
                 {
                     this._gamepadJoystickImages.Clear();
                 }
+            }
 
-                if (this.gamepad.IsConnected)
-                {
-                    LoggerInstance.Debug("Gamepad reconnected");
-                    this.AddGamepadImages();
-                }
+            if (this.gamepad.IsConnected && _gamepadImages.Count == 0 && _gamepadTriggersImages.Count == 0 && _gamepadJoystickImages.Count == 0)
+            {
+                this.AddGamepadImages();
+                LoggerInstance.Debug("Gamepad reconnected");
             }
         }
         catch (Exception ex)
