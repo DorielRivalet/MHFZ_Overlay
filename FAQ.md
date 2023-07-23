@@ -202,6 +202,8 @@ If you are using an XBox controller or similar, you only need to enable the cont
 2. You want to look for the Output Controller option and select Xbox 360.
 3. Apply changes and restart overlay.
 
+If DS4Windows does not work for you, you can search for alternatives, but it is not known whether those alternatives are compatible with the overlay. If you find an alternative that is compatible with the overlay, you can communicate with us about it so we can add it here.
+
 ## How does this overlay compare to other Monster Hunter overlays?
 
 |    | mhf-z overlay v0.25.0 (DorielRivalet) | MHFZ_Overlay v0.1.0 (Imulion) | mhf_displayer v1.6.2 (suzaku01) |
