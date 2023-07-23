@@ -4142,7 +4142,7 @@ public partial class ConfigWindow : FluentWindow
             AchievementTotalProgressTextBlock.Fill = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Teal"]);
             AchievementTotalProgressPercentTextBlock.Fill = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Teal"]);
         }
-        else if (true || obtainedAchievements == totalAchievements) // all
+        else if (obtainedAchievements == totalAchievements) // all
         {
             AchievementsProgressBar.Foreground = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Teal"]);
             AchievementsProgressTextBlock.Fill = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Teal"]);

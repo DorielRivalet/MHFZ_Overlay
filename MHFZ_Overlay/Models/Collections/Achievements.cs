@@ -5560,7 +5560,7 @@ public static class Achievements
             Description = string.Empty,
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/medal_platinum.png",
-            Objective = "Complete a zenith gauntlet without fainting.",
+            Objective = "Complete a Zenith Gauntlet without fainting.",
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -5573,7 +5573,7 @@ public static class Achievements
             Description = string.Empty,
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/medal_platinum.png",
-            Objective = "Complete a solstice gauntlet without fainting.",
+            Objective = "Complete a Solstice Gauntlet without fainting.",
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -5586,7 +5586,7 @@ public static class Achievements
             Description = string.Empty,
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/medal_platinum.png",
-            Objective = "Complete a musou gauntlet without fainting.",
+            Objective = "Complete a Musou Gauntlet without fainting.",
             IsSecret = false,
             Hint = string.Empty,
             }

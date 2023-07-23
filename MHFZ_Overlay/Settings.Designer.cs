@@ -3694,5 +3694,113 @@ namespace MHFZ_Overlay {
                 this["MonsterBlastBarBorderColor"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double GauntletProgressX {
+            get {
+                return ((double)(this["GauntletProgressX"]));
+            }
+            set {
+                this["GauntletProgressX"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double GauntletProgressY {
+            get {
+                return ((double)(this["GauntletProgressY"]));
+            }
+            set {
+                this["GauntletProgressY"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double GauntletProgressWidth {
+            get {
+                return ((double)(this["GauntletProgressWidth"]));
+            }
+            set {
+                this["GauntletProgressWidth"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double GauntletProgressHeight {
+            get {
+                return ((double)(this["GauntletProgressHeight"]));
+            }
+            set {
+                this["GauntletProgressHeight"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double BingoProgressX {
+            get {
+                return ((double)(this["BingoProgressX"]));
+            }
+            set {
+                this["BingoProgressX"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double BingoProgressY {
+            get {
+                return ((double)(this["BingoProgressY"]));
+            }
+            set {
+                this["BingoProgressY"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double BingoProgressSize {
+            get {
+                return ((double)(this["BingoProgressSize"]));
+            }
+            set {
+                this["BingoProgressSize"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool GauntletProgressShown {
+            get {
+                return ((bool)(this["GauntletProgressShown"]));
+            }
+            set {
+                this["GauntletProgressShown"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool BingoProgressShown {
+            get {
+                return ((bool)(this["BingoProgressShown"]));
+            }
+            set {
+                this["BingoProgressShown"] = value;
+            }
+        }
     }
 }

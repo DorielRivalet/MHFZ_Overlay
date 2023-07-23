@@ -30,15 +30,24 @@ public sealed class Challenge
     public DataTemplateKey? ChallengeDataTemplateKey { get; set; }
 
     /// <summary>
-    /// The amount of achievements required in order to unlock the challenge
+    /// The amount of bronze achievements required in order to unlock the challenge
     /// </summary>
-    public int AchievementsRequired { get; set; }
+    public int AchievementsBronzeRequired { get; set; }
 
     /// <summary>
-    /// The rank of the achievements required in order to unlock the challenge.
-    /// If set to none, it does not require any particular achievement type and any achievement counts for the requirement.
+    /// The amount of silver achievements required in order to unlock the challenge
     /// </summary>
-    public AchievementRank AchievementRankRequired { get; set; }
+    public int AchievementsSilverRequired { get; set; }
+
+    /// <summary>
+    /// The amount of gold achievements required in order to unlock the challenge
+    /// </summary>
+    public int AchievementsGoldRequired { get; set; }
+
+    /// <summary>
+    /// The amount of platinum achievements required in order to unlock the challenge
+    /// </summary>
+    public int AchievementsPlatinumRequired { get; set; }
 
     /// <summary>
     /// The achievement ID required (e.g. to unlock zenith gauntlet, you should beat gasura solo first). It should be a valid ID.

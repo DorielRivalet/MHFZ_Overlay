@@ -1915,7 +1915,32 @@
                                     </Grid>
                                 </Grid>
                             </TabItem>
-                    </TabControl>
+                            <TabItem ToolTip="View Challenges" Background="{StaticResource Crust}" Foreground="{StaticResource Text}">
+                                <TabItem.Header>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Source="../../Assets/Icons/png/transcend.png" Width="32" Height="32"/>
+                                        <TextBlock Foreground="{StaticResource Text}" Text="Challenges" Margin="4,0,0,0" VerticalAlignment="Center" />
+                                    </StackPanel>
+                                </TabItem.Header>
+                                <Grid Background="Transparent" Margin="20" x:Name="ChallengesGrid" ToolTip="Right-click for more options">
+                                    <Grid.ContextMenu>
+                                        <StaticResource ResourceKey="HunterNotesContextMenuImageCSV" />
+                                    </Grid.ContextMenu>
+                                    <Grid Background="Transparent" Style="{StaticResource ConfigSingleGrid}" Margin="0" Height="Auto" Width="Auto">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="1*"/>
+                                            <RowDefinition Height="3*"/>
+                                            <RowDefinition Height="1*"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="2*"/>
+                                            <ColumnDefinition Width="2*"/>
+                                            <ColumnDefinition Width="1*"/>
+                                        </Grid.ColumnDefinitions>
+                                    </Grid>
+                                </Grid>
+                            </TabItem>
+</TabControl>
                 </Grid>
             </TabItem>
             <TabItem ToolTip="Player Settings" Background="{StaticResource Mantle}" Foreground="{StaticResource Text}">
