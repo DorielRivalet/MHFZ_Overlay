@@ -295,6 +295,7 @@
     <None Remove="Assets\Icons\png\study.png" />
     <None Remove="Assets\Icons\png\stun.png" />
     <None Remove="Assets\Icons\png\ticket.png" />
+    <None Remove="Assets\Icons\png\transcend.png" />
     <None Remove="Assets\Icons\png\unknown.png" />
     <None Remove="Assets\Icons\png\whetstone.png" />
     <None Remove="Assets\Icons\png\world.png" />
@@ -760,6 +761,7 @@
     <Resource Include="Assets\Icons\png\study.png" />
     <Resource Include="Assets\Icons\png\stun.png" />
     <Resource Include="Assets\Icons\png\ticket.png" />
+    <Resource Include="Assets\Icons\png\transcend.png" />
     <Resource Include="Assets\Icons\png\unknown.png" />
     <Resource Include="Assets\Icons\png\whetstone.png" />
     <Resource Include="Assets\Icons\png\world.png" />

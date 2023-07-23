@@ -1927,16 +1927,11 @@
                                         <StaticResource ResourceKey="HunterNotesContextMenuImageCSV" />
                                     </Grid.ContextMenu>
                                     <Grid Background="Transparent" Style="{StaticResource ConfigSingleGrid}" Margin="0" Height="Auto" Width="Auto">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="1*"/>
-                                            <RowDefinition Height="3*"/>
-                                            <RowDefinition Height="1*"/>
-                                        </Grid.RowDefinitions>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="2*"/>
-                                            <ColumnDefinition Width="2*"/>
-                                            <ColumnDefinition Width="1*"/>
-                                        </Grid.ColumnDefinitions>
+                                        <StackPanel Orientation="Vertical">
+                                            <ui:InfoBar Grid.ColumnSpan="2" Foreground="{StaticResource Text}" Title="What are Challenges?" 
+                                Message="CURRENTLY IN DEVELOPMENT. Challenges are an optional endeavor where you are presented with various kinds of objectives.&#x0a;&#x0a;To start a challenge you need to have unlocked the challenge first.&#x0a;&#x0a;In order to unlock a challenge, check the required amount of trophies in the bottom right corner of each challenge section,&#x0a;along with having obtained the specific achievement needed by the challenge.&#x0a;&#x0a;Happy Hunting!" 
+                                IsClosable="True" IsOpen="True" Severity="Informational"/>
+                                        </StackPanel>
                                     </Grid>
                                 </Grid>
                             </TabItem>
