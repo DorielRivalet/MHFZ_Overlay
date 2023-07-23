@@ -35,6 +35,7 @@ using LiveChartsCore.SkiaSharpView.WPF;
 using MHFZ_Overlay.Models;
 using MHFZ_Overlay.Models.Collections;
 using MHFZ_Overlay.Models.Constant;
+using MHFZ_Overlay.Models.Structures;
 using MHFZ_Overlay.Services;
 using MHFZ_Overlay.Services.Converter;
 using MHFZ_Overlay.Views.CustomControls;
@@ -4071,12 +4072,12 @@ public partial class ConfigWindow : FluentWindow
             if (selectedAchievement.IsSecret && selectedAchievement.CompletionDate == DateTime.UnixEpoch)
             {
                 AchievementSelectionInfoObjective.Text = string.Empty;
-                AchievementSelectionInfoTitle.Foreground = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Text"]);
+                AchievementSelectionInfoTitle.Fill = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Text"]);
             }
             else
             {
                 AchievementSelectionInfoObjective.Text = selectedAchievement.Objective;
-                AchievementSelectionInfoTitle.Foreground = selectedAchievement.GetBrushColorFromRank();
+                AchievementSelectionInfoTitle.Fill = selectedAchievement.GetBrushColorFromRank();
             }
 
             AchievementSelectionInfoHint.Text = selectedAchievement.Hint;
@@ -4089,43 +4090,64 @@ public partial class ConfigWindow : FluentWindow
 
     private void UpdateAchievementsProgress()
     {
-        int totalAchievements = MainWindow.dataLoader.model.PlayerAchievements.Count;
+        int totalAchievements = MainWindow.dataLoader.model.PlayerAchievements.Count(a => a.IsSecret == false);
         int obtainedAchievements = MainWindow.dataLoader.model.PlayerAchievements.Count(a => a.CompletionDate != DateTime.UnixEpoch);
-
-        double progressPercentage = obtainedAchievements * 100.0 / totalAchievements;
+        int obtainedSecretAchievements = MainWindow.dataLoader.model.PlayerAchievements.Count(a => a.CompletionDate != DateTime.UnixEpoch && a.IsSecret == true);
+        double progressPercentage = (obtainedAchievements * 100.0 / totalAchievements) + obtainedSecretAchievements;
         AchievementsProgressBar.Value = progressPercentage;
+
+        int totalBronzeAchievements = MainWindow.dataLoader.model.PlayerAchievements.Count(a => a.IsSecret == false && a.Rank == AchievementRank.Bronze);
+        int totalSilverAchievements = MainWindow.dataLoader.model.PlayerAchievements.Count(a => a.IsSecret == false && a.Rank == AchievementRank.Silver);
+        int totalGoldAchievements = MainWindow.dataLoader.model.PlayerAchievements.Count(a => a.IsSecret == false && a.Rank == AchievementRank.Gold);
+        int totalPlatinumAchievements = MainWindow.dataLoader.model.PlayerAchievements.Count(a => a.IsSecret == false && a.Rank == AchievementRank.Platinum);
+
+        int obtainedBronzeAchievements = MainWindow.dataLoader.model.PlayerAchievements.Count(a => a.CompletionDate != DateTime.UnixEpoch && a.Rank == AchievementRank.Bronze);
+        int obtainedSilverAchievements = MainWindow.dataLoader.model.PlayerAchievements.Count(a => a.CompletionDate != DateTime.UnixEpoch && a.Rank == AchievementRank.Silver);
+        int obtainedGoldAchievements = MainWindow.dataLoader.model.PlayerAchievements.Count(a => a.CompletionDate != DateTime.UnixEpoch && a.Rank == AchievementRank.Gold);
+        int obtainedPlatinumAchievements = MainWindow.dataLoader.model.PlayerAchievements.Count(a => a.CompletionDate != DateTime.UnixEpoch && a.Rank == AchievementRank.Platinum);
+
+        TrophyBronzeCountTextBlock.Text = $"{obtainedBronzeAchievements}/{totalBronzeAchievements}";
+        TrophySilverCountTextBlock.Text = $"{obtainedSilverAchievements}/{totalSilverAchievements}";
+        TrophyGoldCountTextBlock.Text = $"{obtainedGoldAchievements}/{totalGoldAchievements}";
+        TrophyPlatinumCountTextBlock.Text = $"{obtainedPlatinumAchievements}/{totalPlatinumAchievements}";
 
         var brushConverter = new BrushConverter();
 
         if (obtainedAchievements >= 50 && obtainedAchievements < 100) // unlock Bingo + Gacha
         {
             AchievementsProgressBar.Foreground = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Maroon"]);
-            AchievementsProgressTextBlock.Foreground = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Maroon"]);
-            AchievementTotalProgressTextBlock.Foreground = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Maroon"]);
+            AchievementsProgressTextBlock.Fill = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Maroon"]);
+            AchievementTotalProgressTextBlock.Fill = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Maroon"]);
+            AchievementTotalProgressPercentTextBlock.Fill = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Maroon"]);
         }
         else if (obtainedAchievements >= 100 && obtainedAchievements < 150) // unlock zenith gauntlet
         {
             AchievementsProgressBar.Foreground = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Lavender"]);
-            AchievementsProgressTextBlock.Foreground = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Lavender"]);
-            AchievementTotalProgressTextBlock.Foreground = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Lavender"]);
+            AchievementsProgressTextBlock.Fill = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Lavender"]);
+            AchievementTotalProgressTextBlock.Fill = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Lavender"]);
+            AchievementTotalProgressPercentTextBlock.Fill = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Lavender"]);
+
         }
         else if (obtainedAchievements >= 150 && obtainedAchievements < 200) // unlock solstice gauntlet
         {
             AchievementsProgressBar.Foreground = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Yellow"]);
-            AchievementsProgressTextBlock.Foreground = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Yellow"]);
-            AchievementTotalProgressTextBlock.Foreground = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Yellow"]);
+            AchievementsProgressTextBlock.Fill = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Yellow"]);
+            AchievementTotalProgressTextBlock.Fill = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Yellow"]);
+            AchievementTotalProgressPercentTextBlock.Fill = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Yellow"]);
         }
         else if (obtainedAchievements >= 200 && obtainedAchievements < 300) // unlock musou gauntlet
         {
             AchievementsProgressBar.Foreground = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Teal"]);
-            AchievementsProgressTextBlock.Foreground = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Teal"]);
-            AchievementTotalProgressTextBlock.Foreground = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Teal"]);
+            AchievementsProgressTextBlock.Fill = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Teal"]);
+            AchievementTotalProgressTextBlock.Fill = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Teal"]);
+            AchievementTotalProgressPercentTextBlock.Fill = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Teal"]);
         }
-        else if (obtainedAchievements == totalAchievements) // all
+        else if (true || obtainedAchievements == totalAchievements) // all
         {
             AchievementsProgressBar.Foreground = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Teal"]);
-            AchievementsProgressTextBlock.Foreground = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Teal"]);
-            AchievementTotalProgressTextBlock.Foreground = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Teal"]);
+            AchievementsProgressTextBlock.Fill = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Teal"]);
+            AchievementTotalProgressTextBlock.Fill = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Teal"]);
+            AchievementTotalProgressPercentTextBlock.Fill = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Teal"]);
 
             // Create and apply the DropShadowEffect to the ProgressBar and TextBlock
             var dropShadowEffect = new DropShadowEffect
@@ -4139,13 +4161,17 @@ public partial class ConfigWindow : FluentWindow
             AchievementsProgressBar.Effect = dropShadowEffect;
             AchievementsProgressTextBlock.Effect = dropShadowEffect;
             AchievementTotalProgressTextBlock.Effect = dropShadowEffect;
+            AchievementTotalProgressPercentTextBlock.Effect = dropShadowEffect;
         }
         else
         {
-            AchievementsProgressTextBlock.Foreground = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Text"]);
+            AchievementsProgressTextBlock.Fill = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Text"]);
+            AchievementTotalProgressTextBlock.Fill = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Text"]);
+            AchievementTotalProgressPercentTextBlock.Fill = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Text"]);
         }
 
-        AchievementsProgressTextBlock.Text = $"{obtainedAchievements} of {totalAchievements} ({progressPercentage:F2}%)";
+        AchievementsProgressTextBlock.Text = $"{obtainedAchievements}/{totalAchievements}";
+        AchievementTotalProgressPercentTextBlock.Text = $"{progressPercentage:F2}%";
     }
 
     private void AchievementSelectedInfoGrid_Loaded(object sender, RoutedEventArgs e)
@@ -4238,6 +4264,11 @@ public partial class ConfigWindow : FluentWindow
                 logger.Error("Unhandled Context Menu found: {0}", contextMenu.Name);
             }
         }
+    }
+
+    private void AchievementsTropyRankCount_Loaded(object sender, RoutedEventArgs e)
+    {
+
     }
 }
 

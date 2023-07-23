@@ -1737,7 +1737,8 @@
                                     </Grid.ContextMenu>
                                     <Grid Background="Transparent" Style="{StaticResource ConfigSingleGrid}" Margin="0" Height="Auto" Width="Auto">
                                         <Grid.RowDefinitions>
-                                            <RowDefinition Height="4*"/>
+                                            <RowDefinition Height="1*"/>
+                                            <RowDefinition Height="3*"/>
                                             <RowDefinition Height="1*"/>
                                         </Grid.RowDefinitions>
                                         <Grid.ColumnDefinitions>
@@ -1745,7 +1746,7 @@
                                             <ColumnDefinition Width="2*"/>
                                             <ColumnDefinition Width="1*"/>
                                         </Grid.ColumnDefinitions>
-                                        <ListView Margin="5" x:Name="AchievementsListView" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Loaded="AchievementsListView_Loaded" SelectionChanged="AchievementsListView_SelectionChanged"
+                                        <ListView Margin="5" x:Name="AchievementsListView" Grid.RowSpan="2" Grid.ColumnSpan="2" Loaded="AchievementsListView_Loaded" SelectionChanged="AchievementsListView_SelectionChanged"
           VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Standard">
                                             <ListView.Resources>
                                                 <Style TargetType="ListViewItem">
@@ -1789,13 +1790,49 @@
                                                 </DataTemplate>
                                             </ListView.ItemTemplate>
                                         </ListView>
-
-                                        <Grid x:Name="Achievements3DPreviewGrid" Grid.Row="0" Grid.Column="2" Loaded="Achievements3DPreviewGrid_Loaded">
+                                        <Grid x:Name="AchievementSelectedInfoGrid" Grid.Row="2" Grid.ColumnSpan="2" Loaded="AchievementSelectedInfoGrid_Loaded">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="1*"/>
+                                                    <ColumnDefinition Width="9*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Image x:Name="AchievementSelectionInfoImage" d:Source="../../Assets/Icons/achievement/award_bronze.png"/>
+                                                <Grid Grid.Column="1" Margin="5">
+                                                    <ScrollViewer CanContentScroll="True" IsDeferredScrollingEnabled="True" VerticalScrollBarVisibility="Visible">
+                                                        <StackPanel Orientation="Vertical" Margin="5">
+                                                            <!--
+                                                            CompletionDate = DateTime.UnixEpoch,
+                                                            Title = "Akura Vashimu Slain",
+                                                            Description = string.Empty,
+                                                            Rank = AchievementRank.Bronze,
+                                                            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_red2.jpg",
+                                                            Objective = "Complete 1 Zenith★4 Akura Vashimu quest.",
+                                                            IsSecret = false,
+                                                            Hint = string.Empty,
+                                                            -->
+                                                            <customcontrols:OutlinedTextBlock Fill="{StaticResource Text}" Stroke="{StaticResource Crust}" StrokeThickness="2" FontWeight="Bold" x:Name="AchievementSelectionInfoTitle" TextWrapping="Wrap" FontSize="24" Text="Select an achievement to view more information"/>
+                                                            <TextBlock Margin="0,5,0,0" x:Name="AchievementSelectionInfoObjective" TextWrapping="Wrap" Text="Some achievements are currently unobtainable." FontSize="20"/>
+                                                            <TextBlock Margin="0,5,0,0" x:Name="AchievementSelectionInfoHint" TextWrapping="Wrap" Text="There are 5 types of trophies: bronze, silver, gold, platinum and secret. For every secret trophy you find, you gain 1% more progress." FontSize="16"/>
+                                                        </StackPanel>
+                                                    </ScrollViewer>
+                                                </Grid>
+                                            </Grid>
+                                        </Grid>
+                                        <Grid Margin="5" x:Name="AchievementsTotalProgressGrid" Grid.Column="2">
+                                            <StackPanel Orientation="Vertical">
+                                                <Grid>
+                                                    <customcontrols:OutlinedTextBlock x:Name="AchievementTotalProgressTextBlock" Fill="{StaticResource Text}" Text="Progress" HorizontalAlignment="Left" FontSize="28" FontWeight="Bold" StrokeThickness="2" Stroke="{StaticResource Crust}" FontFamily="{StaticResource Monster hunter}"/>
+                                                    <customcontrols:OutlinedTextBlock x:Name="AchievementTotalProgressPercentTextBlock" Fill="{StaticResource Text}" d:Text="120.54%" HorizontalAlignment="Right" FontSize="32" FontWeight="Bold" StrokeThickness="2" Stroke="{StaticResource Crust}" FontFamily="{StaticResource Monster hunter}"/>
+                                                </Grid>
+                                                <ProgressBar x:Name="AchievementsProgressBar" Margin="0,10,0,0" d:Value="50" Foreground="{StaticResource Green}" Background="{StaticResource Crust}"/>
+                                                <customcontrols:OutlinedTextBlock Margin="0,5,0,0" Stroke="{StaticResource Crust}" StrokeThickness="2" x:Name="AchievementsProgressTextBlock" Fill="{StaticResource Text}" VerticalAlignment="Center" Grid.Row="2" FontSize="24" FontWeight="Bold" d:Text="1000/1000" HorizontalAlignment="Center" FontFamily="{StaticResource Monster hunter}"/>
+                                            </StackPanel>
+                                        </Grid>
+                                        <Grid x:Name="Achievements3DPreviewGrid" Loaded="Achievements3DPreviewGrid_Loaded" Grid.Row="1" Grid.Column="2">
                                             <Viewport3D ClipToBounds="False" IsHitTestVisible="False">
                                                 <Viewport3D.Camera>
                                                     <PerspectiveCamera Position="0, 0, 4" LookDirection="0, 0, -1" UpDirection="0, 1, 0" />
                                                 </Viewport3D.Camera>
-
                                                 <ModelVisual3D>
                                                     <ModelVisual3D.Content>
                                                         <Model3DGroup>
@@ -1855,46 +1892,25 @@
                                                 </ModelVisual3D>
                                             </Viewport3D>
                                         </Grid>
-                                        <Grid x:Name="AchievementSelectedInfoGrid" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Loaded="AchievementSelectedInfoGrid_Loaded">
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="1*"/>
-                                                    <ColumnDefinition Width="9*"/>
-                                                </Grid.ColumnDefinitions>
-                                                <Image x:Name="AchievementSelectionInfoImage" d:Source="../../Assets/Icons/achievement/award_bronze.png"/>
-                                                <Grid Grid.Column="1" Margin="5">
-                                                    <ScrollViewer CanContentScroll="True" IsDeferredScrollingEnabled="True" VerticalScrollBarVisibility="Visible">
-                                                        <StackPanel Orientation="Vertical" Margin="5">
-                                                            <!--
-                                                            CompletionDate = DateTime.UnixEpoch,
-                                                            Title = "Akura Vashimu Slain",
-                                                            Description = string.Empty,
-                                                            Rank = AchievementRank.Bronze,
-                                                            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_red2.jpg",
-                                                            Objective = "Complete 1 Zenith★4 Akura Vashimu quest.",
-                                                            IsSecret = false,
-                                                            Hint = string.Empty,
-                                                            -->
-                                                            <TextBlock FontWeight="Bold" x:Name="AchievementSelectionInfoTitle" TextWrapping="Wrap" FontSize="24" Text="Select an achievement to view more information"/>
-                                                            <TextBlock Margin="0,5,0,0" x:Name="AchievementSelectionInfoObjective" TextWrapping="Wrap" Text="Some achievements are currently unobtainable." FontSize="20"/>
-                                                            <TextBlock Margin="0,5,0,0" x:Name="AchievementSelectionInfoHint" TextWrapping="Wrap" Text="There are 5 types of trophies: bronze, silver, gold, platinum and secret." FontSize="16"/>
-                                                        </StackPanel>
-                                                    </ScrollViewer>
-                                                </Grid>
-                                            </Grid>
-                                        </Grid>
-                                        <Grid x:Name="AchievementsTotalProgressGrid" Grid.Row="1" Grid.Column="2">
-                                            <Grid Margin="5">
-                                                <Grid.RowDefinitions>
-                                                    <RowDefinition Height="1*"/>
-                                                    <RowDefinition Height="1*"/>
-                                                </Grid.RowDefinitions>
-                                                <StackPanel Orientation="Vertical">
-                                                    <TextBlock x:Name="AchievementTotalProgressTextBlock" Foreground="{StaticResource Text}" Text="Total Progress" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold"/>
-                                                    <ProgressBar x:Name="AchievementsProgressBar" Margin="0,5,0,0" d:Value="50" Foreground="{StaticResource Green}" Background="{StaticResource Crust}"/>
-                                                </StackPanel>
-                                                <TextBlock x:Name="AchievementsProgressTextBlock" Foreground="{StaticResource Text}" VerticalAlignment="Center" Grid.Row="2" FontSize="24" FontWeight="Bold" d:Text="1000 of 1000 (100%)" HorizontalAlignment="Center"/>
-                                            </Grid>
+                                        <Grid x:Name="AchievementsTropyRankCount" Loaded="AchievementsTropyRankCount_Loaded" Grid.Row="2" Grid.Column="2">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="1*"/>
+                                                <ColumnDefinition Width="1*"/>
+                                                <ColumnDefinition Width="1*"/>
+                                                <ColumnDefinition Width="1*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="1*"/>
+                                                <RowDefinition Height="1*"/>
+                                            </Grid.RowDefinitions>
+                                            <Image Source="../../Assets/icons/achievement/bronze_trophy.png" Grid.Row="0" Grid.Column="0"/>
+                                            <Image Source="../../Assets/icons/achievement/silver_trophy.png" Grid.Row="0" Grid.Column="1"/>
+                                            <Image Source="../../Assets/icons/achievement/gold_trophy.png" Grid.Row="0" Grid.Column="2"/>
+                                            <Image Source="../../Assets/icons/achievement/platinum_trophy.png" Grid.Row="0" Grid.Column="3"/>
+                                            <customcontrols:OutlinedTextBlock d:Text="100/200" FontSize="22" FontFamily="{StaticResource Monster hunter}" FontWeight="Bold" Fill="{StaticResource Maroon}" Stroke="{StaticResource Crust}" StrokeThickness="2" x:Name="TrophyBronzeCountTextBlock" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            <customcontrols:OutlinedTextBlock d:Text="100/200" FontSize="22" FontFamily="{StaticResource Monster hunter}" FontWeight="Bold" x:Name="TrophySilverCountTextBlock" Fill="{StaticResource Lavender}" Stroke="{StaticResource Crust}" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            <customcontrols:OutlinedTextBlock d:Text="100/200" FontSize="22" FontFamily="{StaticResource Monster hunter}" FontWeight="Bold" x:Name="TrophyGoldCountTextBlock" Fill="{StaticResource Yellow}" Stroke="{StaticResource Crust}" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            <customcontrols:OutlinedTextBlock d:Text="100/200" FontSize="22" FontFamily="{StaticResource Monster hunter}" FontWeight="Bold" x:Name="TrophyPlatinumCountTextBlock" Fill="{StaticResource Teal}" Stroke="{StaticResource Crust}" Grid.Row="1" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                         </Grid>
                                     </Grid>
                                 </Grid>
@@ -2477,7 +2493,7 @@
                                                 <Image HorizontalAlignment="Left" d:Source="https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/guild_card/abiorugu.png" Source="{Binding GetGuildCardBackground, Mode=OneTime}" Grid.Column="0" Grid.Row="0" Grid.RowSpan="24"/>
                                                 <Image HorizontalAlignment="Right" d:Source="https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/guild_card/abiorugu.png" Source="{Binding GetGuildCardBackground, Mode=OneTime}" Grid.Column="1" Grid.Row="0" Grid.RowSpan="24"/>
 
-                                                <TextBlock Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Bottom" d:Text="MHF-Z Overlay v0.25.0" Text="{Binding SimplifiedCurrentProgramVersion, Mode=OneTime}" FontFamily="MS Gothic Bold" FontSize="16" Margin="55,0,0,0"/>
+                                                <TextBlock Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Bottom" d:Text="MHF-Z Overlay vx.yy.z" Text="{Binding SimplifiedCurrentProgramVersion, Mode=OneTime}" FontFamily="MS Gothic Bold" FontSize="16" Margin="55,0,0,0"/>
                                                 <TextBlock Grid.Column="0" Grid.Row="2" HorizontalAlignment="Left" d:Text="Doriel" Text="{Binding GetHunterName, Mode=OneTime}" FontFamily="MS Gothic Bold" FontSize="16" Margin="55,0,0,0" VerticalAlignment="Bottom"/>
 
                                                     <TextBlock Grid.Column="0" Grid.Row="2" HorizontalAlignment="Left" d:Text="YYYY/MM/DD" Text="{Binding DateTimeUtcNow, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter='yyyy/MM/dd', Mode=OneTime}" FontFamily="MS Gothic Bold" FontSize="16" Margin="400,0,0,0" VerticalAlignment="Top"/>
@@ -2506,7 +2522,7 @@ Thunder Clad, Vigorous" Text="{Binding GetActiveSkillsForImage,Mode=OneTime}" Fo
                                                     <TextBlock Foreground="#fafa50" Grid.Column="0" Grid.Row="18" HorizontalAlignment="Left" Text="Comment:" FontFamily="MS Gothic Bold" FontSize="16" Margin="35,0,0,0"/>
 
                                                     <TextBlock TextWrapping="Wrap" Margin="110,0,0,0" Grid.Row="18" Grid.RowSpan="2" HorizontalAlignment="Left" Text="{Binding GetGearDescription,Mode=OneTime}" FontFamily="MS Gothic Bold" FontSize="16" d:Text="Comment about your gear or what it is used for. What is your gear for? A hunter set. Come on big guy!"/>
-                                                <TextBlock Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Bottom" d:Text="MHF-Z Overlay v0.25.0" Text="{Binding SimplifiedCurrentProgramVersion, Mode=OneTime}" FontFamily="MS Gothic Bold" FontSize="16" Margin="55,0,0,0"/>
+                                                <TextBlock Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Bottom" d:Text="MHF-Z Overlay vx.yy.z" Text="{Binding SimplifiedCurrentProgramVersion, Mode=OneTime}" FontFamily="MS Gothic Bold" FontSize="16" Margin="55,0,0,0"/>
                                                 <TextBlock Grid.Column="1" Grid.Row="2" VerticalAlignment="Bottom" HorizontalAlignment="Left" d:Text="Doriel" Text="{Binding GetHunterName, Mode=OneTime}" FontFamily="MS Gothic Bold" FontSize="16" Margin="55,0,0,0"/>
                                                     <TextBlock Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" d:Text="hh:mm:ss" Text="{Binding DateTimeUtcNow, Converter={StaticResource DateTimeToStringConverter}, ConverterParameter='HH:mm:ss', Mode=OneTime}" FontFamily="MS Gothic Bold" FontSize="16" Margin="400,0,0,0" VerticalAlignment="Top"/>
 
