@@ -1737,16 +1737,20 @@
                                     </Grid.ContextMenu>
                                     <Grid Background="Transparent" Style="{StaticResource ConfigSingleGrid}" Margin="0" Height="Auto" Width="Auto">
                                         <Grid.RowDefinitions>
-                                            <RowDefinition Height="1*"/>
-                                            <RowDefinition Height="3*"/>
-                                            <RowDefinition Height="1*"/>
+                                            <RowDefinition Height="40"/>
+                                            <RowDefinition Height="2*"/>
+                                            <RowDefinition Height="4*"/>
+                                            <RowDefinition Height="2*"/>
                                         </Grid.RowDefinitions>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="2*"/>
                                             <ColumnDefinition Width="2*"/>
                                             <ColumnDefinition Width="1*"/>
                                         </Grid.ColumnDefinitions>
-                                        <ListView Margin="5" x:Name="AchievementsListView" Grid.RowSpan="2" Grid.ColumnSpan="2" Loaded="AchievementsListView_Loaded" SelectionChanged="AchievementsListView_SelectionChanged"
+                                        <Grid Grid.Column="3">
+                                            <ui:AutoSuggestBox TextChanged="AchievementsAutoSuggestBox_TextChanged" DisplayMemberPath="Title" x:Name="AchievementsAutoSuggestBox" PlaceholderText="Search achievement title..." SuggestionChosen="AchievementsAutoSuggestBox_SuggestionChosen" OriginalItemsSource="{Binding PlayerAchievements}"/>
+                                        </Grid>
+                                        <ListView Margin="5" x:Name="AchievementsListView" Grid.RowSpan="3" Grid.ColumnSpan="2" Loaded="AchievementsListView_Loaded" SelectionChanged="AchievementsListView_SelectionChanged"
           VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Standard">
                                             <ListView.Resources>
                                                 <Style TargetType="ListViewItem">
@@ -1790,7 +1794,7 @@
                                                 </DataTemplate>
                                             </ListView.ItemTemplate>
                                         </ListView>
-                                        <Grid x:Name="AchievementSelectedInfoGrid" Grid.Row="2" Grid.ColumnSpan="2" Loaded="AchievementSelectedInfoGrid_Loaded">
+                                        <Grid x:Name="AchievementSelectedInfoGrid" Grid.Row="3" Grid.ColumnSpan="2" Loaded="AchievementSelectedInfoGrid_Loaded">
                                             <Grid>
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="1*"/>
@@ -1818,7 +1822,7 @@
                                                 </Grid>
                                             </Grid>
                                         </Grid>
-                                        <Grid Margin="5" x:Name="AchievementsTotalProgressGrid" Grid.Column="2">
+                                        <Grid Margin="5" x:Name="AchievementsTotalProgressGrid" Grid.Row="1" Grid.Column="2">
                                             <StackPanel Orientation="Vertical">
                                                 <Grid>
                                                     <customcontrols:OutlinedTextBlock x:Name="AchievementTotalProgressTextBlock" Fill="{StaticResource Text}" Text="Progress" HorizontalAlignment="Left" FontSize="28" FontWeight="Bold" StrokeThickness="2" Stroke="{StaticResource Crust}" FontFamily="{StaticResource Monster hunter}"/>
@@ -1828,7 +1832,7 @@
                                                 <customcontrols:OutlinedTextBlock Margin="0,5,0,0" Stroke="{StaticResource Crust}" StrokeThickness="2" x:Name="AchievementsProgressTextBlock" Fill="{StaticResource Text}" VerticalAlignment="Center" Grid.Row="2" FontSize="24" FontWeight="Bold" d:Text="1000/1000" HorizontalAlignment="Center" FontFamily="{StaticResource Monster hunter}"/>
                                             </StackPanel>
                                         </Grid>
-                                        <Grid x:Name="Achievements3DPreviewGrid" Loaded="Achievements3DPreviewGrid_Loaded" Grid.Row="1" Grid.Column="2">
+                                        <Grid x:Name="Achievements3DPreviewGrid" Loaded="Achievements3DPreviewGrid_Loaded" Grid.Row="2" Grid.Column="2">
                                             <Viewport3D ClipToBounds="False" IsHitTestVisible="False">
                                                 <Viewport3D.Camera>
                                                     <PerspectiveCamera Position="0, 0, 4" LookDirection="0, 0, -1" UpDirection="0, 1, 0" />
@@ -1892,7 +1896,7 @@
                                                 </ModelVisual3D>
                                             </Viewport3D>
                                         </Grid>
-                                        <Grid x:Name="AchievementsTropyRankCount" Loaded="AchievementsTropyRankCount_Loaded" Grid.Row="2" Grid.Column="2">
+                                        <Grid x:Name="AchievementsTropyRankCount" Grid.Row="3" Grid.Column="2">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="1*"/>
                                                 <ColumnDefinition Width="1*"/>

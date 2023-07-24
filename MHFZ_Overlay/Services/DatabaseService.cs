@@ -9748,6 +9748,10 @@ Disabling Quest Logging.",
         return fastestRuns;
     }
 
+    /// <summary>
+    /// Get a list of all achievements where the completion date is set or not by the player.
+    /// </summary>
+    /// <returns></returns>
     public List<Achievement> GetPlayerAchievements()
     {
         var achievements = new List<Achievement>();

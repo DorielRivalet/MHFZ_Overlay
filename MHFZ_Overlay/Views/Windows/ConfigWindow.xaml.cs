@@ -45,6 +45,7 @@ using SkiaSharp;
 using Wpf.Ui.Common;
 using Wpf.Ui.Contracts;
 using Wpf.Ui.Controls;
+using Wpf.Ui.Controls.AutoSuggestBoxControl;
 using Wpf.Ui.Controls.IconElements;
 using Wpf.Ui.Controls.Window;
 using Wpf.Ui.Services;
@@ -4266,9 +4267,69 @@ public partial class ConfigWindow : FluentWindow
         }
     }
 
-    private void AchievementsTropyRankCount_Loaded(object sender, RoutedEventArgs e)
+    private void AchievementsAutoSuggestBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
     {
+        if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput)
+        {
+            // Get the user input from the AutoSuggestBox
+            string userInput = sender.Text;
 
+            // Filter the achievements based on the user input
+            List<Achievement> filteredAchievements = MainWindow.dataLoader.model.PlayerAchievements
+                .Where(achievement => achievement.Title.Contains(userInput, StringComparison.OrdinalIgnoreCase))
+                .ToList();
+
+            // Update the ItemsSource of the AutoSuggestBox with the filtered achievements
+            sender.ItemsSource = filteredAchievements;
+        }
+
+        // Check if the text in the AutoSuggestBox is empty
+        if (string.IsNullOrWhiteSpace(AchievementsAutoSuggestBox.Text))
+        {
+            // If the text is empty, show the original list in the ListView
+            AchievementsListView.ItemsSource = MainWindow.dataLoader.model.PlayerAchievements;
+        }
+        else
+        {
+            // If the text is not empty, set the ItemsSource to null temporarily to clear the ListView
+            AchievementsListView.ItemsSource = null;
+
+            // Then, set the ItemsSource back to the filtered achievements list based on the user's input
+            string userInput = AchievementsAutoSuggestBox.Text;
+            List<Achievement> filteredAchievements = MainWindow.dataLoader.model.PlayerAchievements
+                .Where(achievement => achievement.Title.Contains(userInput, StringComparison.OrdinalIgnoreCase))
+                .ToList();
+            AchievementsListView.ItemsSource = filteredAchievements;
+        }
+    }
+
+    private void AchievementsAutoSuggestBox_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
+    {
+        // This event is fired when the user selects an item from the suggestions list.
+        // You can access the selected item using args.SelectedItem, which will be of type Achievement.
+        // For example, you can do something like:
+        Achievement? selectedAchievement = args.SelectedItem as Achievement;
+        if (selectedAchievement != null)
+        {
+            // Do something with the selected achievement, if needed.
+            // For example, display more details about the selected achievement.
+            AchievementsListView.ItemsSource = new List<Achievement>()
+            {
+                {
+                    new Achievement
+                    {
+                        Title = selectedAchievement.Title,
+                        Hint = selectedAchievement.Hint,
+                        CompletionDate = selectedAchievement.CompletionDate,
+                        Description = selectedAchievement.Description,
+                        IsSecret = selectedAchievement.IsSecret,
+                        Image = selectedAchievement.Image,
+                        Objective = selectedAchievement.Objective,
+                        Rank = selectedAchievement.Rank,
+                    }
+                },
+            };
+        }
     }
 }
 
