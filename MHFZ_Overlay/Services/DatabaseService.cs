@@ -33,9 +33,11 @@ using Newtonsoft.Json.Linq;
 using Octokit;
 using Wpf.Ui.Common;
 using Wpf.Ui.Controls;
-using Wpf.Ui.Controls.IconElements;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using Formatting = Newtonsoft.Json.Formatting;
 using MessageBox = System.Windows.MessageBox;
+using MessageBoxButton = System.Windows.MessageBoxButton;
+using MessageBoxResult = System.Windows.MessageBoxResult;
 using Quest = Models.Quest;
 
 /// <summary>
@@ -68,6 +70,8 @@ public sealed class DatabaseService
     public HashSet<GachaCardInventory> AllGachaCards { get; set; }
 
     public HashSet<PlayerInventory> AllPlayerInventories { get; set; }
+
+    public TimeSpan SnackbarTimeOut { get; set; } = TimeSpan.FromSeconds(5);
 
     private static DatabaseService? instance;
 
@@ -10139,7 +10143,14 @@ Disabling Quest Logging.",
                             if (!reader.HasRows)
                             {
                                 var message = string.Format(CultureInfo.InvariantCulture, "Quest ID not found. Please use the Quest ID option in Settings and go into a quest in order to view the ID needed to search. You may also not have completed any runs for the selected Quest ID or for the selected category.\n\nQuest ID: {0}\nOverlay Mode: {1}\n{2}", questID, selectedOverlayMode, reader.ToString());
-                                configWindow.ConfigWindowSnackBar.ShowAsync(Messages.ErrorTitle, message, new SymbolIcon(SymbolRegular.ErrorCircle24), ControlAppearance.Danger);
+                                var snackbar = new Snackbar(configWindow.ConfigWindowSnackBarPresenter);
+                                snackbar.Style = (Style)configWindow.FindResource("CatppuccinMochaSnackBar");
+                                snackbar.Title = Messages.ErrorTitle;
+                                snackbar.Content = message;
+                                snackbar.Icon = new SymbolIcon(SymbolRegular.ErrorCircle24);
+                                snackbar.Appearance = ControlAppearance.Danger;
+                                snackbar.Timeout = SnackbarTimeOut;
+                                snackbar.Show();
                                 return;
                             }
                             else
@@ -10181,7 +10192,14 @@ Disabling Quest Logging.",
                             if (!reader.HasRows)
                             {
                                 var message = string.Format(CultureInfo.InvariantCulture, "Quest ID not found. Please use the Quest ID option in Settings and go into a quest in order to view the ID needed to search. You may also not have completed any runs for the selected Quest ID or for the selected category.\n\nQuest ID: {0}\nOverlay Mode: {1}\n{2}", questID, selectedOverlayMode, reader.ToString());
-                                configWindow.ConfigWindowSnackBar.ShowAsync(Messages.ErrorTitle, message, new SymbolIcon(SymbolRegular.ErrorCircle24), ControlAppearance.Danger);
+                                var snackbar = new Snackbar(configWindow.ConfigWindowSnackBarPresenter);
+                                snackbar.Style = (Style)configWindow.FindResource("CatppuccinMochaSnackBar");
+                                snackbar.Title = Messages.ErrorTitle;
+                                snackbar.Content = message;
+                                snackbar.Icon = new SymbolIcon(SymbolRegular.ErrorCircle24);
+                                snackbar.Appearance = ControlAppearance.Danger;
+                                snackbar.Timeout = SnackbarTimeOut;
+                                snackbar.Show();
                                 return;
                             }
 

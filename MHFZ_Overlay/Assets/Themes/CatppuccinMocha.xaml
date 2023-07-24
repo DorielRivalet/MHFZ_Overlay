@@ -1,4 +1,4 @@
-﻿<!--
+<!--
 // © 2023 The mhfz-overlay developers.
 // Use of this source code is governed by a MIT license that can be
 // found in the LICENSE file.
@@ -535,13 +535,13 @@
     </Style>-->
     <!-- ... Add more styles using the color resources ... -->
         <!-- Snackbar-->
-    <Style TargetType="{x:Type ui:Snackbar}" x:Key="CatppuccinMochaSnackBar">
+    <Style TargetType="{x:Type ui:Snackbar}"  x:Key="CatppuccinMochaSnackBar">
         <Setter Property="Foreground">
             <Setter.Value>
-                <SolidColorBrush Color="{StaticResource TextFillColorPrimary}" />
+                <SolidColorBrush Color="{StaticResource TextFillColorSecondary}" />
             </Setter.Value>
         </Setter>
-        <Setter Property="MessageForeground">
+        <Setter Property="ContentForeground">
             <Setter.Value>
                 <SolidColorBrush Color="{StaticResource TextFillColorSecondary}" />
             </Setter.Value>
@@ -599,30 +599,47 @@
                                     Margin="0,0,12,0"
                                     VerticalAlignment="Center"
                                     Content="{TemplateBinding Icon}"
-                                    TextElement.FontSize="26"
+                                    TextElement.FontSize="32"
                                     TextElement.Foreground="{TemplateBinding Foreground}" />
 
-                                <StackPanel
-                                    Grid.Column="1"
-                                    VerticalAlignment="Center"
-                                    SnapsToDevicePixels="True">
-                                    <TextBlock
-                                        x:Name="TitleText"
-                                        Margin="0,0,0,4"
-                                        VerticalAlignment="Center"
-                                        FontWeight="Medium"
-                                        Foreground="{TemplateBinding Foreground}"
-                                        Text="{TemplateBinding Title}"
-                                        TextWrapping="Wrap" />
-                                    <TextBlock
-                                        FontSize="11"
-                                        Foreground="{TemplateBinding MessageForeground}"
-                                        Text="{TemplateBinding Message}"
-                                        TextWrapping="Wrap" />
-                                </StackPanel>
+                                <Grid Grid.Column="1">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
 
-                                <!--  We assume that Content is presented instead of Title and Message.  -->
-                                <ContentPresenter Grid.Column="1" />
+                                    <ContentPresenter
+                                        x:Name="TitleContentPresenter"
+                                        Grid.Row="0"
+                                        Margin="0,0,0,4"
+                                        Content="{TemplateBinding Title}"
+                                        ContentTemplate="{TemplateBinding TitleTemplate}"
+                                        TextElement.FontSize="20"
+                                        TextElement.FontWeight="SemiBold"
+                                        TextElement.Foreground="{TemplateBinding Foreground}">
+                                        <ContentPresenter.Resources>
+                                            <Style BasedOn="{StaticResource {x:Type TextBlock}}" TargetType="{x:Type TextBlock}">
+                                                <Setter Property="TextWrapping" Value="WrapWithOverflow" />
+                                            </Style>
+                                        </ContentPresenter.Resources>
+                                    </ContentPresenter>
+
+                                    <ContentPresenter
+                                        Grid.Row="1"
+                                        Content="{TemplateBinding Content}"
+                                        ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                        ContentTemplate="{TemplateBinding ContentTemplate}"
+                                        ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                        TextElement.FontSize="14"
+                                        TextElement.FontWeight="Regular"
+                                        TextElement.Foreground="{TemplateBinding ContentForeground}">
+                                        <ContentPresenter.Resources>
+                                            <Style BasedOn="{StaticResource {x:Type TextBlock}}" TargetType="{x:Type TextBlock}">
+                                                <Setter Property="TextWrapping" Value="WrapWithOverflow" />
+                                            </Style>
+                                        </ContentPresenter.Resources>
+                                    </ContentPresenter>
+                                </Grid>
 
                                 <ui:Button
                                     x:Name="CloseButton"
@@ -643,7 +660,7 @@
                         <Trigger Property="Icon" Value="{x:Null}">
                             <Setter TargetName="CardIcon" Property="Margin" Value="0" />
                         </Trigger>
-                        <Trigger Property="CloseButtonEnabled" Value="False">
+                        <Trigger Property="IsCloseButtonEnabled" Value="False">
                             <Setter TargetName="CloseButton" Property="Visibility" Value="Collapsed" />
                             <Setter TargetName="CloseButton" Property="Margin" Value="0" />
                         </Trigger>
@@ -703,9 +720,9 @@
                         <SolidColorBrush Color="{StaticResource TextOnAccentFillColorPrimary}" />
                     </Setter.Value>
                 </Setter>
-                <Setter Property="MessageForeground">
+                <Setter Property="ContentForeground">
                     <Setter.Value>
-                        <SolidColorBrush Color="#313244" />
+                        <SolidColorBrush Color="{StaticResource TextOnAccentFillColorPrimary}" />
                     </Setter.Value>
                 </Setter>
                 <Setter Property="Background">
@@ -720,9 +737,9 @@
                         <SolidColorBrush Color="{StaticResource TextFillColorLightPrimary}" />
                     </Setter.Value>
                 </Setter>
-                <Setter Property="MessageForeground">
+                <Setter Property="ContentForeground">
                     <Setter.Value>
-                        <SolidColorBrush Color="#87cdd6f4" />
+                        <SolidColorBrush Color="{StaticResource TextFillColorLightPrimary}" />
                     </Setter.Value>
                 </Setter>
                 <Setter Property="Background">
@@ -734,29 +751,29 @@
             <Trigger Property="Appearance" Value="Light">
                 <Setter Property="Foreground">
                     <Setter.Value>
-                        <SolidColorBrush Color="#E41e1e2e" />
+                        <SolidColorBrush Color="#11111b" />
                     </Setter.Value>
                 </Setter>
-                <Setter Property="MessageForeground">
+                <Setter Property="ContentForeground">
                     <Setter.Value>
-                        <SolidColorBrush Color="#9E1e1e2e" />
+                        <SolidColorBrush Color="#11111b" />
                     </Setter.Value>
                 </Setter>
                 <Setter Property="Background">
                     <Setter.Value>
-                        <SolidColorBrush Color="#cdd6f4" />
+                        <SolidColorBrush Color="{StaticResource TextFillColorLightPrimary}" />
                     </Setter.Value>
                 </Setter>
             </Trigger>
             <Trigger Property="Appearance" Value="Info">
                 <Setter Property="Foreground">
                     <Setter.Value>
-                        <SolidColorBrush Color="#1e1e2e" />
+                        <SolidColorBrush Color="#11111b" />
                     </Setter.Value>
                 </Setter>
-                <Setter Property="MessageForeground">
+                <Setter Property="ContentForeground">
                     <Setter.Value>
-                        <SolidColorBrush Color="#313244" />
+                        <SolidColorBrush Color="#11111b" />
                     </Setter.Value>
                 </Setter>
                 <Setter Property="Background">
@@ -768,12 +785,12 @@
             <Trigger Property="Appearance" Value="Danger">
                 <Setter Property="Foreground">
                     <Setter.Value>
-                        <SolidColorBrush Color="#1e1e2e" />
+                        <SolidColorBrush Color="#11111b" />
                     </Setter.Value>
                 </Setter>
-                <Setter Property="MessageForeground">
+                <Setter Property="ContentForeground">
                     <Setter.Value>
-                        <SolidColorBrush Color="#313244" />
+                        <SolidColorBrush Color="#11111b" />
                     </Setter.Value>
                 </Setter>
                 <Setter Property="Background">
@@ -785,12 +802,12 @@
             <Trigger Property="Appearance" Value="Success">
                 <Setter Property="Foreground">
                     <Setter.Value>
-                        <SolidColorBrush Color="#1e1e2e" />
+                        <SolidColorBrush Color="#11111b" />
                     </Setter.Value>
                 </Setter>
-                <Setter Property="MessageForeground">
+                <Setter Property="ContentForeground">
                     <Setter.Value>
-                        <SolidColorBrush Color="#313244" />
+                        <SolidColorBrush Color="#11111b" />
                     </Setter.Value>
                 </Setter>
                 <Setter Property="Background">
@@ -802,17 +819,17 @@
             <Trigger Property="Appearance" Value="Caution">
                 <Setter Property="Foreground">
                     <Setter.Value>
-                        <SolidColorBrush Color="#1e1e2e" />
+                        <SolidColorBrush Color="#11111b" />
                     </Setter.Value>
                 </Setter>
-                <Setter Property="MessageForeground">
+                <Setter Property="ContentForeground">
                     <Setter.Value>
-                        <SolidColorBrush Color="#313244" />
+                        <SolidColorBrush Color="#11111b" />
                     </Setter.Value>
                 </Setter>
                 <Setter Property="Background">
                     <Setter.Value>
-                        <SolidColorBrush Color="{StaticResource PaletteDeepOrangeColor}" />
+                        <SolidColorBrush Color="{StaticResource PaletteOrangeColor}" />
                     </Setter.Value>
                 </Setter>
             </Trigger>

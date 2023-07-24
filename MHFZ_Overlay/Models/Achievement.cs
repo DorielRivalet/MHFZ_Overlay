@@ -14,7 +14,6 @@ using MHFZ_Overlay.Models.Structures;
 using MHFZ_Overlay.Views.Windows;
 using Wpf.Ui.Common;
 using Wpf.Ui.Controls;
-using Wpf.Ui.Controls.IconElements;
 
 /// <summary>
 /// The achievements of the player.
@@ -30,7 +29,7 @@ public sealed class Achievement
         }
 
         snackbar.Title = this.Title;
-        snackbar.Message = this.Objective;
+        snackbar.Content = this.Objective;
         snackbar.Icon = new SymbolIcon()
         {
             Symbol = SymbolRegular.Trophy32,
@@ -41,11 +40,12 @@ public sealed class Achievement
         {
             MainWindow.MainWindowSoundPlayer.Play();
         }
-
-        await snackbar.ShowAsync();
+        snackbar.Timeout = SnackbarTimeOut;
+        snackbar.Show();
         await Task.Delay(TimeSpan.FromSeconds(1)); // Delay for a certain duration
-        snackbar.Hide(); // Hide the snackbar
     }
+
+    public TimeSpan SnackbarTimeOut { get; set; } = TimeSpan.FromSeconds(5);
 
     /// <summary>
     /// Gets the color for title and icon from rank.

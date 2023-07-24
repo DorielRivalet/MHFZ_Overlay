@@ -48,7 +48,6 @@ using SkiaSharp;
 using Wpf.Ui.Common;
 using Wpf.Ui.Contracts;
 using Wpf.Ui.Controls;
-using Wpf.Ui.Controls.IconElements;
 using Wpf.Ui.Services;
 using XInputium;
 using XInputium.XInput;
@@ -63,6 +62,8 @@ using DragDropEffects = System.Windows.DragDropEffects;
 using DragEventArgs = System.Windows.DragEventArgs;
 using Image = System.Windows.Controls.Image;
 using Label = System.Windows.Controls.Label;
+using MessageBoxButton = System.Windows.MessageBoxButton;
+using MessageBoxResult = System.Windows.MessageBoxResult;
 using MouseEventArgs = System.Windows.Input.MouseEventArgs;
 using NotifyIcon = Wpf.Ui.Controls.NotifyIcon;
 using Point = System.Windows.Point;
@@ -137,6 +138,8 @@ public partial class MainWindow : Window
         OpenLink("https://github.com/DorielRivalet/mhfz-overlay/blob/main/CHANGELOG.md");
     }
 
+    public TimeSpan MainWindowSnackbarTimeOut { get; set; } = TimeSpan.FromSeconds(5);
+
     private void OptionSettingsFolder_Click(object sender, RoutedEventArgs e)
     {
         try
@@ -146,7 +149,14 @@ public partial class MainWindow : Window
             if (!Directory.Exists(settingsFileDirectoryName))
             {
                 LoggerInstance.Error(CultureInfo.InvariantCulture, "Could not open settings folder");
-                this.MainWindowSnackBar.ShowAsync(Messages.ErrorTitle, "Could not open settings folder", new SymbolIcon(SymbolRegular.ErrorCircle24), ControlAppearance.Danger);
+                var snackbar = new Snackbar(MainWindowSnackBarPresenter);
+                snackbar.Style = (Style)FindResource("CatppuccinMochaSnackBar");
+                snackbar.Title = Messages.ErrorTitle;
+                snackbar.Content = "Could not open settings folder";
+                snackbar.Icon = new SymbolIcon(SymbolRegular.ErrorCircle24);
+                snackbar.Appearance = ControlAppearance.Danger;
+                snackbar.Timeout = MainWindowSnackbarTimeOut;
+                snackbar.Show();
                 return;
             }
 
@@ -158,7 +168,14 @@ public partial class MainWindow : Window
         catch (Exception ex)
         {
             LoggerInstance.Error(ex);
-            this.MainWindowSnackBar.ShowAsync(Messages.ErrorTitle, "Could not open settings folder", new SymbolIcon(SymbolRegular.ErrorCircle24), ControlAppearance.Danger);
+            var snackbar = new Snackbar(MainWindowSnackBarPresenter);
+            snackbar.Style = (Style)FindResource("CatppuccinMochaSnackBar");
+            snackbar.Title = Messages.ErrorTitle;
+            snackbar.Content = "Could not open settings folder";
+            snackbar.Icon = new SymbolIcon(SymbolRegular.ErrorCircle24);
+            snackbar.Appearance = ControlAppearance.Danger;
+            snackbar.Timeout = MainWindowSnackbarTimeOut;
+            snackbar.Show();
         }
     }
 
@@ -414,7 +431,7 @@ public partial class MainWindow : Window
         ISnackbarService snackbarService = new SnackbarService();
 
         // Replace 'snackbarControl' with your actual snackbar control instance
-        snackbarService.SetSnackbarControl(this.MainWindowSnackBar);
+        snackbarService.SetSnackbarPresenter(this.MainWindowSnackBarPresenter);
 
         splashScreen.Close(TimeSpan.FromSeconds(0.1));
 
@@ -765,7 +782,7 @@ The process may take some time, as the program attempts to download from GitHub 
 
         Storyboard fadeInStoryboard = new Storyboard();
         Storyboard.SetTarget(fadeIn, outlinedTextBlock);
-        Storyboard.SetTargetProperty(fadeIn, new PropertyPath(TextBlock.OpacityProperty));
+        Storyboard.SetTargetProperty(fadeIn, new PropertyPath(OutlinedTextBlock.OpacityProperty));
         Storyboard.SetTarget(colorInAnimation, outlinedTextBlock);
         Storyboard.SetTargetProperty(colorInAnimation, new PropertyPath(OutlinedTextBlock.FillProperty));
         fadeInStoryboard.Children.Add(fadeIn);
@@ -773,7 +790,7 @@ The process may take some time, as the program attempts to download from GitHub 
 
         Storyboard fadeOutStoryboard = new Storyboard();
         Storyboard.SetTarget(fadeOut, outlinedTextBlock);
-        Storyboard.SetTargetProperty(fadeOut, new PropertyPath(TextBlock.OpacityProperty));
+        Storyboard.SetTargetProperty(fadeOut, new PropertyPath(OutlinedTextBlock.OpacityProperty));
         Storyboard.SetTarget(colorOutAnimation, outlinedTextBlock);
         Storyboard.SetTargetProperty(colorOutAnimation, new PropertyPath(OutlinedTextBlock.FillProperty));
         fadeOutStoryboard.Children.Add(fadeOut);
@@ -2033,7 +2050,9 @@ The process may take some time, as the program attempts to download from GitHub 
 
             // TODO: add logging check requirement in case the user needs the hash sets.
             // We await since we are dealing with database
-            await AchievementManagerInstance.CheckForAchievementsAsync(MainWindowSnackBar, dataLoader, DatabaseManagerInstance, s);
+            var snackbar = new Snackbar(MainWindowSnackBarPresenter);
+            snackbar.Style = (Style)FindResource("CatppuccinMochaSnackBar");
+            await AchievementManagerInstance.CheckForAchievementsAsync(snackbar, dataLoader, DatabaseManagerInstance, s);
         }
     }
 
@@ -2666,7 +2685,14 @@ The process may take some time, as the program attempts to download from GitHub 
 
         if (dataLoader.loadedOutsideMezeporta)
         {
-            MainWindowSnackBar.ShowAsync(Messages.WarningTitle, "It is not recommended to load the overlay outside of Mezeporta", new SymbolIcon(SymbolRegular.Warning28), ControlAppearance.Caution);
+            var snackbar = new Snackbar(MainWindowSnackBarPresenter);
+            snackbar.Style = (Style)FindResource("CatppuccinMochaSnackBar");
+            snackbar.Title = Messages.WarningTitle;
+            snackbar.Content = "It is not recommended to load the overlay outside of Mezeporta";
+            snackbar.Icon = new SymbolIcon(SymbolRegular.Warning28);
+            snackbar.Appearance = ControlAppearance.Caution;
+            snackbar.Timeout = MainWindowSnackbarTimeOut;
+            snackbar.Show();
         }
 
         DatabaseManagerInstance.LoadDatabaseDataIntoHashSets(SaveIconGrid, dataLoader);

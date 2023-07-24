@@ -6,7 +6,7 @@ namespace MHFZ_Overlay.Views.Windows;
 
 using System.Windows;
 using System.Windows.Controls;
-using Wpf.Ui.Controls.Window;
+using Wpf.Ui.Controls;
 
 /// <summary>
 /// Interaction logic for SettingsForm.xaml

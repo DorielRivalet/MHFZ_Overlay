@@ -19,6 +19,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
@@ -45,9 +46,6 @@ using SkiaSharp;
 using Wpf.Ui.Common;
 using Wpf.Ui.Contracts;
 using Wpf.Ui.Controls;
-using Wpf.Ui.Controls.AutoSuggestBoxControl;
-using Wpf.Ui.Controls.IconElements;
-using Wpf.Ui.Controls.Window;
 using Wpf.Ui.Services;
 using Application = System.Windows.Application;
 using Clipboard = System.Windows.Clipboard;
@@ -56,6 +54,9 @@ using DataGrid = Wpf.Ui.Controls.DataGrid;
 using ListView = System.Windows.Controls.ListView;
 using MenuItem = Wpf.Ui.Controls.MenuItem;
 using MessageBox = System.Windows.MessageBox;
+using MessageBoxButton = System.Windows.MessageBoxButton;
+using MessageBoxResult = System.Windows.MessageBoxResult;
+using TextBlock = System.Windows.Controls.TextBlock;
 using TextBox = System.Windows.Controls.TextBox;
 
 /// <summary>
@@ -735,7 +736,7 @@ public partial class ConfigWindow : FluentWindow
         ISnackbarService snackbarService = new SnackbarService();
 
         // Replace 'snackbarControl' with your actual snackbar control instance
-        snackbarService.SetSnackbarControl(ConfigWindowSnackBar);
+        snackbarService.SetSnackbarPresenter(ConfigWindowSnackBarPresenter);
 
         // Stop the stopwatch
         stopwatch.Stop();
@@ -1133,7 +1134,8 @@ public partial class ConfigWindow : FluentWindow
             textToSave = MainWindow.dataLoader.model.MarkdownSavedGearStats;
         }
 
-        FileService.SaveTextFile(ConfigWindowSnackBar, textToSave, "GearStats");
+        var snackbar = new Snackbar(ConfigWindowSnackBarPresenter);
+        FileService.SaveTextFile(snackbar, textToSave, "GearStats");
     }
 
     /// <summary>
@@ -1157,15 +1159,26 @@ public partial class ConfigWindow : FluentWindow
         {
             var previousBackground = GearTextGrid.Background;
             GearTextGrid.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
-            FileService.CopyUIElementToClipboard(GearTextGrid, ConfigWindowSnackBar);
+            var snackbar = new Snackbar(ConfigWindowSnackBarPresenter);
+            snackbar.Style = (Style)FindResource("CatppuccinMochaSnackBar");
+            FileService.CopyUIElementToClipboard(GearTextGrid, snackbar);
             GearTextGrid.Background = previousBackground;
             return;
         }
 
         // https://stackoverflow.com/questions/3546016/how-to-copy-data-to-clipboard-in-c-sharp
         Clipboard.SetText(textToSave);
-        ConfigWindowSnackBar.Show(Messages.InfoTitle, "Copied text to clipboard", new SymbolIcon(SymbolRegular.Clipboard32), ControlAppearance.Success);
+        var snackbarSuccess = new Snackbar(ConfigWindowSnackBarPresenter);
+        snackbarSuccess.Style = (Style)FindResource("CatppuccinMochaSnackBar");
+        snackbarSuccess.Title = Messages.InfoTitle;
+        snackbarSuccess.Content = "Copied text to clipboard";
+        snackbarSuccess.Appearance = ControlAppearance.Success;
+        snackbarSuccess.Icon = new SymbolIcon(SymbolRegular.Clipboard32);
+        snackbarSuccess.Timeout = SnackbarTimeOut;
+        snackbarSuccess.Show();
     }
+
+    public TimeSpan SnackbarTimeOut { get; set; } = TimeSpan.FromSeconds(5);
 
     private void FilterBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
@@ -1383,7 +1396,14 @@ public partial class ConfigWindow : FluentWindow
             if (!Directory.Exists(settingsFileDirectoryName))
             {
                 logger.Error(CultureInfo.InvariantCulture, "Could not open settings folder");
-                ConfigWindowSnackBar.ShowAsync(Messages.ErrorTitle, "Could not open settings folder", new SymbolIcon(SymbolRegular.ErrorCircle24), ControlAppearance.Danger);
+                var snackbar = new Snackbar(ConfigWindowSnackBarPresenter);
+                snackbar.Style = (Style)FindResource("CatppuccinMochaSnackBar");
+                snackbar.Title = Messages.ErrorTitle;
+                snackbar.Content = "Could not open settings folder";
+                snackbar.Appearance = ControlAppearance.Danger;
+                snackbar.Icon = new SymbolIcon(SymbolRegular.ErrorCircle24);
+                snackbar.Timeout = SnackbarTimeOut;
+                snackbar.Show();
                 return;
             }
 
@@ -1395,7 +1415,14 @@ public partial class ConfigWindow : FluentWindow
         catch (Exception ex)
         {
             logger.Error(ex);
-            ConfigWindowSnackBar.ShowAsync(Messages.ErrorTitle, "Could not open settings folder", new SymbolIcon(SymbolRegular.ErrorCircle24), ControlAppearance.Danger);
+            var snackbar = new Snackbar(ConfigWindowSnackBarPresenter);
+            snackbar.Style = (Style)FindResource("CatppuccinMochaSnackBar");
+            snackbar.Title = Messages.ErrorTitle;
+            snackbar.Content = "Could not open settings folder";
+            snackbar.Appearance = ControlAppearance.Danger;
+            snackbar.Icon = new SymbolIcon(SymbolRegular.ErrorCircle24);
+            snackbar.Timeout = SnackbarTimeOut;
+            snackbar.Show();
         }
     }
 
@@ -1732,11 +1759,25 @@ public partial class ConfigWindow : FluentWindow
         string youtubeLink = youtubeLinkTextBox.Text.Trim();
         if (databaseManager.UpdateYoutubeLink(sender, e, runID, youtubeLink))
         {
-            ConfigWindowSnackBar.ShowAsync(Messages.InfoTitle, string.Format(CultureInfo.InvariantCulture, "Updated run {0} with link https://youtube.com/watch?v={1}", runID, youtubeLink), new SymbolIcon(SymbolRegular.Video32), ControlAppearance.Success);
+            var snackbar = new Snackbar(ConfigWindowSnackBarPresenter);
+            snackbar.Style = (Style)FindResource("CatppuccinMochaSnackBar");
+            snackbar.Title = Messages.InfoTitle;
+            snackbar.Content = string.Format(CultureInfo.InvariantCulture, "Updated run {0} with link https://youtube.com/watch?v={1}", runID, youtubeLink);
+            snackbar.Appearance = ControlAppearance.Success;
+            snackbar.Icon = new SymbolIcon(SymbolRegular.Video32);
+            snackbar.Timeout = SnackbarTimeOut;
+            snackbar.Show();
         }
         else
         {
-            ConfigWindowSnackBar.ShowAsync(Messages.ErrorTitle, string.Format(CultureInfo.InvariantCulture, "Could not update run {0} with link https://youtube.com/watch?v={1}. The link may have already been set to the same value, or the run ID and link input are invalid.", runID, youtubeLink), new SymbolIcon(SymbolRegular.Video32), ControlAppearance.Danger);
+            var snackbar = new Snackbar(ConfigWindowSnackBarPresenter);
+            snackbar.Style = (Style)FindResource("CatppuccinMochaSnackBar");
+            snackbar.Title = Messages.ErrorTitle;
+            snackbar.Content = string.Format(CultureInfo.InvariantCulture, "Could not update run {0} with link https://youtube.com/watch?v={1}. The link may have already been set to the same value, or the run ID and link input are invalid.", runID, youtubeLink);
+            snackbar.Appearance = ControlAppearance.Danger;
+            snackbar.Icon = new SymbolIcon(SymbolRegular.Video32);
+            snackbar.Timeout = SnackbarTimeOut;
+            snackbar.Show();
         }
     }
 
@@ -1839,7 +1880,9 @@ public partial class ConfigWindow : FluentWindow
         var fileName = "Set";
         var beginningFileName = "Run";
         var beginningText = RunIDTextBox.Text.Trim();
-        FileService.SaveTextFile(ConfigWindowSnackBar, textToSave, fileName, beginningFileName, beginningText);
+        var snackbar = new Snackbar(ConfigWindowSnackBarPresenter);
+        snackbar.Style = (Style)FindResource("CatppuccinMochaSnackBar");
+        FileService.SaveTextFile(snackbar, textToSave, fileName, beginningFileName, beginningText);
     }
 
     private void QuestLogGearBtnCopyFile_Click(object sender, RoutedEventArgs e)
@@ -1851,7 +1894,9 @@ public partial class ConfigWindow : FluentWindow
 
         var previousBackground = questLogGearStatsTextBlock.Background;
         questLogGearStatsTextBlock.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
-        FileService.CopyUIElementToClipboard(questLogGearStatsTextBlock, ConfigWindowSnackBar);
+        var snackbar = new Snackbar(ConfigWindowSnackBarPresenter);
+        snackbar.Style = (Style)FindResource("CatppuccinMochaSnackBar");
+        FileService.CopyUIElementToClipboard(questLogGearStatsTextBlock, snackbar);
         questLogGearStatsTextBlock.Background = previousBackground;
     }
 
@@ -1876,8 +1921,9 @@ public partial class ConfigWindow : FluentWindow
 
         string textToSave = compendiumTextBlock.Text;
         textToSave = string.Format(CultureInfo.InvariantCulture, "```text\n{0}\n```", textToSave);
-
-        FileService.SaveTextFile(ConfigWindowSnackBar, textToSave, "Compendium");
+        var snackbar = new Snackbar(ConfigWindowSnackBarPresenter);
+        snackbar.Style = (Style)FindResource("CatppuccinMochaSnackBar");
+        FileService.SaveTextFile(snackbar, textToSave, "Compendium");
     }
 
     private void CompendiumBtnCopyFile_Click(object sender, RoutedEventArgs e)
@@ -1889,7 +1935,9 @@ public partial class ConfigWindow : FluentWindow
 
         var previousBackground = compendiumInformationStackPanel.Background;
         compendiumInformationStackPanel.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
-        FileService.CopyUIElementToClipboard(compendiumInformationStackPanel, ConfigWindowSnackBar);
+        var snackbar = new Snackbar(ConfigWindowSnackBarPresenter);
+        snackbar.Style = (Style)FindResource("CatppuccinMochaSnackBar");
+        FileService.CopyUIElementToClipboard(compendiumInformationStackPanel, snackbar);
         compendiumInformationStackPanel.Background = previousBackground;
     }
 
@@ -2014,7 +2062,9 @@ public partial class ConfigWindow : FluentWindow
 
         var previousBackground = calendarDataGrid.Background;
         calendarDataGrid.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
-        FileService.CopyUIElementToClipboard(calendarDataGrid, ConfigWindowSnackBar);
+        var snackbar = new Snackbar(ConfigWindowSnackBarPresenter);
+        snackbar.Style = (Style)FindResource("CatppuccinMochaSnackBar");
+        FileService.CopyUIElementToClipboard(calendarDataGrid, snackbar);
         calendarDataGrid.Background = previousBackground;
     }
 
@@ -2026,7 +2076,9 @@ public partial class ConfigWindow : FluentWindow
         }
 
         var fileName = $"PersonalBest-Quest_{QuestIDTextBox.Text}-{OverlayModeComboBox.Text}-{personalBestSelectedType}-{personalBestSelectedWeapon}".Trim().Replace(" ", "_");
-        FileService.SaveElementAsImageFile(personalBestMainGrid, fileName, ConfigWindowSnackBar, false);
+        var snackbar = new Snackbar(ConfigWindowSnackBarPresenter);
+        snackbar.Style = (Style)FindResource("CatppuccinMochaSnackBar");
+        FileService.SaveElementAsImageFile(personalBestMainGrid, fileName, snackbar, false);
     }
 
     private void PersonalBestButtonCopyFile_Click(object sender, RoutedEventArgs e)
@@ -2038,7 +2090,9 @@ public partial class ConfigWindow : FluentWindow
 
         var previousBackground = personalBestMainGrid.Background;
         personalBestMainGrid.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
-        FileService.CopyUIElementToClipboard(personalBestMainGrid, ConfigWindowSnackBar);
+        var snackbar = new Snackbar(ConfigWindowSnackBarPresenter);
+        snackbar.Style = (Style)FindResource("CatppuccinMochaSnackBar");
+        FileService.CopyUIElementToClipboard(personalBestMainGrid, snackbar);
         personalBestMainGrid.Background = previousBackground;
     }
 
@@ -2084,7 +2138,9 @@ public partial class ConfigWindow : FluentWindow
 
         var previousBackground = top20MainGrid.Background;
         top20MainGrid.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
-        FileService.CopyUIElementToClipboard(top20MainGrid, ConfigWindowSnackBar);
+        var snackbar = new Snackbar(ConfigWindowSnackBarPresenter);
+        snackbar.Style = (Style)FindResource("CatppuccinMochaSnackBar");
+        FileService.CopyUIElementToClipboard(top20MainGrid, snackbar);
         top20MainGrid.Background = previousBackground;
     }
 
@@ -2135,7 +2191,9 @@ public partial class ConfigWindow : FluentWindow
 
         var previousBackground = weaponStatsMainGrid.Background;
         weaponStatsMainGrid.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
-        FileService.CopyUIElementToClipboard(weaponStatsMainGrid, ConfigWindowSnackBar);
+        var snackbar = new Snackbar(ConfigWindowSnackBarPresenter);
+        snackbar.Style = (Style)FindResource("CatppuccinMochaSnackBar");
+        FileService.CopyUIElementToClipboard(weaponStatsMainGrid, snackbar);
         weaponStatsMainGrid.Background = previousBackground;
     }
 
@@ -2181,7 +2239,9 @@ public partial class ConfigWindow : FluentWindow
 
         var previousBackground = mostRecentRunsDataGrid.Background;
         mostRecentRunsDataGrid.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
-        FileService.CopyUIElementToClipboard(mostRecentRunsDataGrid, ConfigWindowSnackBar);
+        var snackbar = new Snackbar(ConfigWindowSnackBarPresenter);
+        snackbar.Style = (Style)FindResource("CatppuccinMochaSnackBar");
+        FileService.CopyUIElementToClipboard(mostRecentRunsDataGrid, snackbar);
         mostRecentRunsDataGrid.Background = previousBackground;
     }
 
@@ -2193,7 +2253,9 @@ public partial class ConfigWindow : FluentWindow
         }
 
         var fileName = $"StatsGraphs-{statsGraphsSelectedOption}";
-        FileService.SaveElementAsImageFile(statsGraphsMainGrid, fileName, ConfigWindowSnackBar, false);
+        var snackbar = new Snackbar(ConfigWindowSnackBarPresenter);
+        snackbar.Style = (Style)FindResource("CatppuccinMochaSnackBar");
+        FileService.SaveElementAsImageFile(statsGraphsMainGrid, fileName, snackbar, false);
     }
 
     private void StatsGraphsButtonCopyFile_Click(object sender, RoutedEventArgs e)
@@ -2205,7 +2267,9 @@ public partial class ConfigWindow : FluentWindow
 
         var previousBackground = statsGraphsMainGrid.Background;
         statsGraphsMainGrid.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
-        FileService.CopyUIElementToClipboard(statsGraphsMainGrid, ConfigWindowSnackBar);
+        var snackbar = new Snackbar(ConfigWindowSnackBarPresenter);
+        snackbar.Style = (Style)FindResource("CatppuccinMochaSnackBar");
+        FileService.CopyUIElementToClipboard(statsGraphsMainGrid, snackbar);
         statsGraphsMainGrid.Background = previousBackground;
     }
 
@@ -2218,7 +2282,9 @@ public partial class ConfigWindow : FluentWindow
 
         string textToSave = statsTextTextBlock.Text;
         textToSave = string.Format(CultureInfo.InvariantCulture, "```text\n{0}\n```", textToSave);
-        FileService.SaveTextFile(ConfigWindowSnackBar, textToSave, $"StatsText-Run_{RunIDTextBox.Text}-{statsTextSelectedOption}");
+        var snackbar = new Snackbar(ConfigWindowSnackBarPresenter);
+        snackbar.Style = (Style)FindResource("CatppuccinMochaSnackBar");
+        FileService.SaveTextFile(snackbar, textToSave, $"StatsText-Run_{RunIDTextBox.Text}-{statsTextSelectedOption}");
     }
 
     private void StatsTextButtonCopyFile_Click(object sender, RoutedEventArgs e)
@@ -2230,7 +2296,9 @@ public partial class ConfigWindow : FluentWindow
 
         var previousBackground = statsTextTextBlock.Background;
         statsTextTextBlock.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
-        FileService.CopyUIElementToClipboard(statsTextTextBlock, ConfigWindowSnackBar);
+        var snackbar = new Snackbar(ConfigWindowSnackBarPresenter);
+        snackbar.Style = (Style)FindResource("CatppuccinMochaSnackBar");
+        FileService.CopyUIElementToClipboard(statsTextTextBlock, snackbar);
         statsTextTextBlock.Background = previousBackground;
     }
 
@@ -2242,7 +2310,9 @@ public partial class ConfigWindow : FluentWindow
         }
 
         var fileName = $"PersonalBestsOverview-Quest_{QuestIDTextBox.Text}-{DateTime.UtcNow.ToString("yy/MM/dd", CultureInfo.InvariantCulture).Replace("/", "-")}";
-        FileService.SaveElementAsImageFile(DiscordEmbedWeaponPersonalBest, fileName, ConfigWindowSnackBar, false);
+        var snackbar = new Snackbar(ConfigWindowSnackBarPresenter);
+        snackbar.Style = (Style)FindResource("CatppuccinMochaSnackBar");
+        FileService.SaveElementAsImageFile(DiscordEmbedWeaponPersonalBest, fileName, snackbar, false);
     }
 
     private void PersonalBestsOverviewButtonCopyFile_Click(object sender, RoutedEventArgs e)
@@ -2254,7 +2324,9 @@ public partial class ConfigWindow : FluentWindow
 
         var previousBackground = DiscordEmbedWeaponPersonalBest.Background;
         DiscordEmbedWeaponPersonalBest.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
-        FileService.CopyUIElementToClipboard(DiscordEmbedWeaponPersonalBest, ConfigWindowSnackBar);
+        var snackbar = new Snackbar(ConfigWindowSnackBarPresenter);
+        snackbar.Style = (Style)FindResource("CatppuccinMochaSnackBar");
+        FileService.CopyUIElementToClipboard(DiscordEmbedWeaponPersonalBest, snackbar);
         DiscordEmbedWeaponPersonalBest.Background = previousBackground;
     }
 
@@ -4018,7 +4090,9 @@ public partial class ConfigWindow : FluentWindow
 
     private async void FumoImage_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
-        await achievementManager.RewardAchievement(225, ConfigWindowSnackBar);
+        var snackbar = new Snackbar(ConfigWindowSnackBarPresenter);
+        snackbar.Style = (Style)FindResource("CatppuccinMochaSnackBar");
+        await achievementManager.RewardAchievement(225, snackbar);
     }
 
     private void Achievements3DPreviewGrid_Loaded(object sender, RoutedEventArgs e)
@@ -4184,80 +4258,103 @@ public partial class ConfigWindow : FluentWindow
     {
         if (sender is MenuItem menuItem && menuItem.Parent is ContextMenu contextMenu && contextMenu.PlacementTarget is FrameworkElement element)
         {
+            var snackbar = new Snackbar(ConfigWindowSnackBarPresenter);
+            snackbar.Style = (Style)FindResource("CatppuccinMochaSnackBar");
+
             // Check the Tag property of the ContextMenu to decide which menu items to handle
             if (contextMenu.Name == "HunterNotesContextMenu")
             {
                 if (menuItem.Name == "HunterNotesCopyTextMenuItem")
                 {
-                    FileService.CopyTextToClipboard(element, ConfigWindowSnackBar);
+                    FileService.CopyTextToClipboard(element, snackbar);
                 }
                 else if (menuItem.Name == "HunterNotesSaveTextMenuItem")
                 {
-                    FileService.SaveTextFile(ConfigWindowSnackBar, element, element.Name);
+                    FileService.SaveTextFile(snackbar, element, element.Name);
                 }
                 else if (menuItem.Name == "HunterNotesSaveImageMenuItem")
                 {
-                    FileService.SaveElementAsImageFile(ConfigWindowSnackBar, element, element.Name);
+                    FileService.SaveElementAsImageFile(snackbar, element, element.Name);
                 }
                 else if (menuItem.Name == "HunterNotesCopyImageMenuItem")
                 {
-                    FileService.CopyUIElementToClipboard(element, ConfigWindowSnackBar);
+                    FileService.CopyUIElementToClipboard(element, snackbar);
                 }
                 else
                 {
                     logger.Error("Invalid Menu Item option: {0}", menuItem);
-                    ConfigWindowSnackBar.Show(Messages.ErrorTitle, $"Invalid Menu Item option: {menuItem}", new SymbolIcon(SymbolRegular.ErrorCircle20), ControlAppearance.Danger);
+                    snackbar.Title = Messages.ErrorTitle;
+                    snackbar.Content = $"Invalid Menu Item option: {menuItem}";
+                    snackbar.Appearance = ControlAppearance.Danger;
+                    snackbar.Icon = new SymbolIcon(SymbolRegular.ErrorCircle20);
+                    snackbar.Timeout = SnackbarTimeOut;
+                    snackbar.Show();
                 }
             }
             else if (contextMenu.Name == "HunterNotesContextMenuImageOnly")
             {
                 if (menuItem.Name == "HunterNotesSaveImageMenuItem2")
                 {
-                    FileService.SaveElementAsImageFile(ConfigWindowSnackBar, element, element.Name);
+                    FileService.SaveElementAsImageFile(snackbar, element, element.Name);
                 }
                 else if (menuItem.Name == "HunterNotesCopyImageMenuItem2")
                 {
-                    FileService.CopyUIElementToClipboard(element, ConfigWindowSnackBar);
+                    FileService.CopyUIElementToClipboard(element, snackbar);
                 }
                 else
                 {
                     logger.Error("Invalid Menu Item option: {0}", menuItem);
-                    ConfigWindowSnackBar.Show(Messages.ErrorTitle, $"Invalid Menu Item option: {menuItem}", new SymbolIcon(SymbolRegular.ErrorCircle20), ControlAppearance.Danger);
+                    snackbar.Title = Messages.ErrorTitle;
+                    snackbar.Content = $"Invalid Menu Item option: {menuItem}";
+                    snackbar.Appearance = ControlAppearance.Danger;
+                    snackbar.Icon = new SymbolIcon(SymbolRegular.ErrorCircle20);
+                    snackbar.Timeout = SnackbarTimeOut;
+                    snackbar.Show();
                 }
             }
             else if (contextMenu.Name == "HunterNotesContextMenuImageCSV")
             {
                 if (menuItem.Name == "HunterNotesSaveImageMenuItem3")
                 {
-                    FileService.SaveElementAsImageFile(ConfigWindowSnackBar, element, element.Name);
+                    FileService.SaveElementAsImageFile(snackbar, element, element.Name);
                 }
                 else if (menuItem.Name == "HunterNotesCopyImageMenuItem3")
                 {
-                    FileService.CopyUIElementToClipboard(element, ConfigWindowSnackBar);
+                    FileService.CopyUIElementToClipboard(element, snackbar);
                 }
                 else if (menuItem.Name == "HunterNotesSaveCSVMenuItem")
                 {
                     if (element.Name == "HuntedLogGrid")
                     {
-                        FileService.SaveRecordsAsCSVFile(Monsters, ConfigWindowSnackBar, "HuntedLog");
+                        FileService.SaveRecordsAsCSVFile(Monsters, snackbar, "HuntedLog");
                     }
                     else if (element.Name == "AchievementsGrid")
                     {
                         FileService.SaveRecordsAsCSVFile(
                             AchievementService.FilterAchievementsToCompletedOnly(
                                 MainWindow.dataLoader.model.PlayerAchievements
-                                ).ToArray(), ConfigWindowSnackBar, "Achievements");
+                                ).ToArray(), snackbar, "Achievements");
                     }
                     else
                     {
                         logger.Error("Unhandled csv class records: {0}", element.Name);
-                        ConfigWindowSnackBar.Show(Messages.ErrorTitle, "Could not save class records as CSV file: unhandled element", new SymbolIcon(SymbolRegular.ErrorCircle20), ControlAppearance.Danger);
+                        snackbar.Title = Messages.ErrorTitle;
+                        snackbar.Content = "Could not save class records as CSV file: unhandled element";
+                        snackbar.Appearance = ControlAppearance.Danger;
+                        snackbar.Icon = new SymbolIcon(SymbolRegular.ErrorCircle20);
+                        snackbar.Timeout = SnackbarTimeOut;
+                        snackbar.Show();
                     }
                 }
                 else
                 {
                     logger.Error("Invalid Menu Item option: {0}", menuItem);
-                    ConfigWindowSnackBar.Show(Messages.ErrorTitle, $"Invalid Menu Item option: {menuItem}", new SymbolIcon(SymbolRegular.ErrorCircle20), ControlAppearance.Danger);
+                    snackbar.Title = Messages.ErrorTitle;
+                    snackbar.Content = $"Invalid Menu Item option: {menuItem}";
+                    snackbar.Appearance = ControlAppearance.Danger;
+                    snackbar.Icon = new SymbolIcon(SymbolRegular.ErrorCircle20);
+                    snackbar.Timeout = SnackbarTimeOut;
+                    snackbar.Show();
                 }
             }
             else

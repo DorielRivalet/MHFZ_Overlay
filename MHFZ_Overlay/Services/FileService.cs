@@ -12,6 +12,7 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Forms;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using CsvHelper;
@@ -19,13 +20,16 @@ using MHFZ_Overlay.Models;
 using MHFZ_Overlay.Models.Constant;
 using MHFZ_Overlay.Views.Windows;
 using Newtonsoft.Json;
+using Octokit;
 using Wpf.Ui.Common;
 using Wpf.Ui.Controls;
-using Wpf.Ui.Controls.IconElements;
 using Xunit;
+using Application = System.Windows.Application;
 using Clipboard = System.Windows.Clipboard;
 using MessageBox = System.Windows.MessageBox;
+using MessageBoxButton = System.Windows.MessageBoxButton;
 using SaveFileDialog = Microsoft.Win32.SaveFileDialog;
+using TextBlock = System.Windows.Controls.TextBlock;
 
 /// <summary>
 /// Handles file creation, copying and deletion. Also handles the clipboard (TODO: might want another class for this).
@@ -62,12 +66,22 @@ public sealed class FileService
             // https://stackoverflow.com/questions/3546016/how-to-copy-data-to-clipboard-in-c-sharp
             Clipboard.SetText(textToSave);
             logger.Info(CultureInfo.InvariantCulture, "Copied text to clipboard");
-            snackbar.Show(Messages.InfoTitle, "Copied text to clipboard", new SymbolIcon(SymbolRegular.Clipboard32), ControlAppearance.Success);
+            snackbar.Title = Messages.InfoTitle;
+            snackbar.Content = "Copied text to clipboard";
+            snackbar.Icon = new SymbolIcon(SymbolRegular.Clipboard32);
+            snackbar.Appearance = ControlAppearance.Success;
+            snackbar.Timeout = SnackbarTimeOut;
+            snackbar.Show();
         }
         else
         {
             logger.Error(CultureInfo.InvariantCulture, "Could not copy text to clipboard: text block not found");
-            snackbar.Show(Messages.ErrorTitle, "Could not copy text to clipboard: text block not found", new SymbolIcon(SymbolRegular.ClipboardError24), ControlAppearance.Danger);
+            snackbar.Title = Messages.ErrorTitle;
+            snackbar.Content = "Could not copy text to clipboard: text block not found";
+            snackbar.Icon = new SymbolIcon(SymbolRegular.ClipboardError24);
+            snackbar.Appearance = ControlAppearance.Danger;
+            snackbar.Timeout = SnackbarTimeOut;
+            snackbar.Show();
         }
 
         return textToSave;
@@ -103,19 +117,34 @@ public sealed class FileService
                 {
                     File.WriteAllText(savefile.FileName, textToSave);
                     logger.Info(CultureInfo.InvariantCulture, "Saved text {0}", savefile.FileName);
-                    snackbar.Show(Messages.InfoTitle, "Saved text", new SymbolIcon(SymbolRegular.CheckmarkCircle20), ControlAppearance.Success);
+                    snackbar.Title = Messages.InfoTitle;
+                    snackbar.Content = "Saved text";
+                    snackbar.Icon = new SymbolIcon(SymbolRegular.CheckmarkCircle20);
+                    snackbar.Appearance = ControlAppearance.Success;
+                    snackbar.Timeout = SnackbarTimeOut;
+                    snackbar.Show();
                 }
             }
             catch (Exception ex)
             {
                 logger.Error(ex, "Could not save text file");
-                snackbar.Show(Messages.ErrorTitle, "Could not save text file", new SymbolIcon(SymbolRegular.ErrorCircle20), ControlAppearance.Danger);
+                snackbar.Title = Messages.ErrorTitle;
+                snackbar.Content = "Could not save text file";
+                snackbar.Icon = new SymbolIcon(SymbolRegular.ErrorCircle20);
+                snackbar.Appearance = ControlAppearance.Danger;
+                snackbar.Timeout = SnackbarTimeOut;
+                snackbar.Show();
             }
         }
         else
         {
             logger.Error("Could not save text file");
-            snackbar.Show(Messages.ErrorTitle, "Could not save text file", new SymbolIcon(SymbolRegular.ErrorCircle20), ControlAppearance.Danger);
+            snackbar.Title = Messages.ErrorTitle;
+            snackbar.Content = "Could not save text file";
+            snackbar.Icon = new SymbolIcon(SymbolRegular.ErrorCircle20);
+            snackbar.Appearance = ControlAppearance.Danger;
+            snackbar.Timeout = SnackbarTimeOut;
+            snackbar.Show();
         }
 
         return textToSave;
@@ -148,26 +177,47 @@ public sealed class FileService
                     {
                         CreateBitmapFromVisual(tb, savefile.FileName);
                         logger.Info(CultureInfo.InvariantCulture, "Saved image {0}", savefile.FileName);
-                        snackbar.Show(Messages.InfoTitle, $"Saved image {savefile.FileName}", new SymbolIcon(SymbolRegular.CheckmarkCircle20), ControlAppearance.Success);
+                        snackbar.Title = Messages.InfoTitle;
+                        snackbar.Content = $"Saved image {savefile.FileName}";
+                        snackbar.Icon = new SymbolIcon(SymbolRegular.CheckmarkCircle20);
+                        snackbar.Appearance = ControlAppearance.Success;
+                        snackbar.Timeout = SnackbarTimeOut;
+                        snackbar.Show();
                     }
                     else if (element is Grid g)
                     {
                         CreateBitmapFromVisual(g, savefile.FileName);
                         logger.Info(CultureInfo.InvariantCulture, "Saved image {0}", savefile.FileName);
-                        snackbar.Show(Messages.InfoTitle, $"Saved image {savefile.FileName}", new SymbolIcon(SymbolRegular.CheckmarkCircle20), ControlAppearance.Success);
+                        snackbar.Title = Messages.InfoTitle;
+                        snackbar.Content = $"Saved image {savefile.FileName}";
+                        snackbar.Icon = new SymbolIcon(SymbolRegular.CheckmarkCircle20);
+                        snackbar.Appearance = ControlAppearance.Success;
+                        snackbar.Timeout = SnackbarTimeOut;
+                        snackbar.Show();
                     }
                 }
             }
             catch (Exception ex)
             {
                 logger.Error(ex, "Could not save image file");
-                snackbar.Show(Messages.ErrorTitle, "Could not save image file", new SymbolIcon(SymbolRegular.ErrorCircle20), ControlAppearance.Danger);
+
+                snackbar.Title = Messages.ErrorTitle;
+                snackbar.Content = "Could not save image file";
+                snackbar.Icon = new SymbolIcon(SymbolRegular.ErrorCircle20);
+                snackbar.Appearance = ControlAppearance.Danger;
+                snackbar.Timeout = SnackbarTimeOut;
+                snackbar.Show();
             }
         }
         else
         {
             logger.Error("Could not save image file");
-            snackbar.Show(Messages.ErrorTitle, "Could not save image file", new SymbolIcon(SymbolRegular.ErrorCircle20), ControlAppearance.Danger);
+            snackbar.Title = Messages.ErrorTitle;
+            snackbar.Content = "Could not save image file";
+            snackbar.Icon = new SymbolIcon(SymbolRegular.ErrorCircle20);
+            snackbar.Appearance = ControlAppearance.Danger;
+            snackbar.Timeout = SnackbarTimeOut;
+            snackbar.Show();
         }
     }
 
@@ -198,13 +248,23 @@ public sealed class FileService
             {
                 File.WriteAllText(saveFileDialog.FileName, textToSave);
                 logger.Info(CultureInfo.InvariantCulture, "Saved text {0}", saveFileDialog.FileName);
-                snackbar.Show(Messages.InfoTitle, "Saved text", new SymbolIcon(SymbolRegular.CheckmarkCircle20), ControlAppearance.Success);
+                snackbar.Title = Messages.InfoTitle;
+                snackbar.Content = "Saved text";
+                snackbar.Icon = new SymbolIcon(SymbolRegular.CheckmarkCircle20);
+                snackbar.Appearance = ControlAppearance.Success;
+                snackbar.Timeout = SnackbarTimeOut;
+                snackbar.Show();
             }
         }
         catch (Exception ex)
         {
             logger.Error(ex, "Could not save text file");
-            snackbar.Show(Messages.ErrorTitle, "Could not save text file", new SymbolIcon(SymbolRegular.ErrorCircle20), ControlAppearance.Danger);
+            snackbar.Title = Messages.ErrorTitle;
+            snackbar.Content = "Could not save text file";
+            snackbar.Icon = new SymbolIcon(SymbolRegular.ErrorCircle20);
+            snackbar.Appearance = ControlAppearance.Danger;
+            snackbar.Timeout = SnackbarTimeOut;
+            snackbar.Show();
         }
     }
 
@@ -239,15 +299,27 @@ public sealed class FileService
 
                 gridToSave.Background = previousBackground;
                 logger.Info(CultureInfo.InvariantCulture, "Saved image {0}", savefile.FileName);
-                snackbar.Show(Messages.InfoTitle, $"Saved image {savefile.FileName}", new SymbolIcon(SymbolRegular.CheckmarkCircle20), ControlAppearance.Success);
+                snackbar.Title = Messages.InfoTitle;
+                snackbar.Content = $"Saved image {savefile.FileName}";
+                snackbar.Icon = new SymbolIcon(SymbolRegular.CheckmarkCircle20);
+                snackbar.Appearance = ControlAppearance.Success;
+                snackbar.Timeout = SnackbarTimeOut;
+                snackbar.Show();
             }
         }
         catch (Exception ex)
         {
             logger.Error(ex, "Could not save image file");
-            snackbar.Show(Messages.ErrorTitle, "Could not save image file", new SymbolIcon(SymbolRegular.ErrorCircle20), ControlAppearance.Danger);
+            snackbar.Title = Messages.ErrorTitle;
+            snackbar.Content = "Could not save image file";
+            snackbar.Icon = new SymbolIcon(SymbolRegular.ErrorCircle20);
+            snackbar.Appearance = ControlAppearance.Danger;
+            snackbar.Timeout = SnackbarTimeOut;
+            snackbar.Show();
         }
     }
+
+    public static TimeSpan SnackbarTimeOut { get; set; } = TimeSpan.FromSeconds(5);
 
     /// <summary>
     /// Copies a UI element to the clipboard as an image.
@@ -277,12 +349,22 @@ public sealed class FileService
             bmpCopied.Render(dv);
             Clipboard.SetImage(bmpCopied);
             logger.Info(CultureInfo.InvariantCulture, "Copied image to clipboard");
-            snackbar.Show(Messages.InfoTitle, "Copied image to clipboard", new SymbolIcon(SymbolRegular.Clipboard32), ControlAppearance.Success);
+            snackbar.Title = Messages.InfoTitle;
+            snackbar.Content = "Copied image to clipboard";
+            snackbar.Icon = new SymbolIcon(SymbolRegular.Clipboard32);
+            snackbar.Appearance = ControlAppearance.Success;
+            snackbar.Timeout = SnackbarTimeOut;
+            snackbar.Show();
         }
         catch (Exception ex)
         {
             logger.Error(ex, "Could not copy UI element to clipboard");
-            snackbar.Show(Messages.ErrorTitle, "Could not copy UI element to clipboard", new SymbolIcon(SymbolRegular.ClipboardError24), ControlAppearance.Danger);
+            snackbar.Title = Messages.ErrorTitle;
+            snackbar.Content = "Could not copy UI element to clipboard";
+            snackbar.Icon = new SymbolIcon(SymbolRegular.ClipboardError24);
+            snackbar.Appearance = ControlAppearance.Danger;
+            snackbar.Timeout = SnackbarTimeOut;
+            snackbar.Show();
         }
     }
 
@@ -369,13 +451,23 @@ public sealed class FileService
                 }
 
                 logger.Info(CultureInfo.InvariantCulture, "Saved csv file {0}", savefile.FileName);
-                snackbar.Show(Messages.InfoTitle, "Saved csv file", new SymbolIcon(SymbolRegular.CheckmarkCircle20), ControlAppearance.Success);
+                snackbar.Title = Messages.InfoTitle;
+                snackbar.Content = "Saved csv file";
+                snackbar.Icon = new SymbolIcon(SymbolRegular.CheckmarkCircle20);
+                snackbar.Appearance = ControlAppearance.Success;
+                snackbar.Timeout = SnackbarTimeOut;
+                snackbar.Show();
             }
         }
         catch (Exception ex)
         {
             logger.Error(ex, "Could not save class records as CSV file");
-            snackbar.Show(Messages.ErrorTitle, "Could not save class records as CSV file", new SymbolIcon(SymbolRegular.ErrorCircle20), ControlAppearance.Danger);
+            snackbar.Title = Messages.ErrorTitle;
+            snackbar.Content = "Could not save class records as CSV file";
+            snackbar.Icon = new SymbolIcon(SymbolRegular.ErrorCircle20);
+            snackbar.Appearance = ControlAppearance.Danger;
+            snackbar.Timeout = SnackbarTimeOut;
+            snackbar.Show();
         }
     }
 

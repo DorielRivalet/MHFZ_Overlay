@@ -21,7 +21,6 @@ using Newtonsoft.Json;
 using NLog;
 using Wpf.Ui.Common;
 using Wpf.Ui.Controls;
-using Wpf.Ui.Controls.IconElements;
 
 public sealed class AchievementService : IAchievementService
 {
@@ -68,21 +67,23 @@ public sealed class AchievementService : IAchievementService
         }
     }
 
+    public static TimeSpan SnackbarTimeOut { get; set; } = TimeSpan.FromSeconds(5);
+
     public static async Task ShowAchievementsTabInfo(Snackbar snackbar, int remainingAchievements)
     {
         var brushConverter = new BrushConverter();
         var brushColor = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Crust"]);
         snackbar.Title = "Too many achievements!";
-        snackbar.Message = $"To see the rest of the achievements unlocked ({remainingAchievements} left), see the Achievements tab in the Quests Logs section.";
+        snackbar.Content = $"To see the rest of the achievements unlocked ({remainingAchievements} left), see the Achievements tab in the Quests Logs section.";
         snackbar.Icon = new SymbolIcon()
         {
             Symbol = SymbolRegular.Info28,
         };
         snackbar.Icon.Foreground = brushColor ?? Brushes.Black;
         snackbar.Appearance = ControlAppearance.Info;
-        await snackbar.ShowAsync();
+        snackbar.Timeout = SnackbarTimeOut;
+        snackbar.Show();
         await Task.Delay(TimeSpan.FromSeconds(1)); // Delay for a certain duration
-        snackbar.Hide(); // Hide the snackbar
     }
 
     public static AchievementService GetInstance()
