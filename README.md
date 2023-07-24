@@ -36,6 +36,7 @@
     - [Hunter Sets (Image)](#hunter-sets-image)
     - [Damage Calculator](#damage-calculator)
     - [Achievements](#achievements)
+    - [Context Menus](#context-menus)
   - [Features not yet implemented](#features-not-yet-implemented)
   - [Bugs](#bugs)
   - [Frequently Asked Questions](#frequently-asked-questions)
@@ -280,6 +281,17 @@ These images don't show everything, find out what's missing by pressing `Shift+F
 ### Achievements
 
 ![achievements](./demo/achievements.png)
+
+### Context Menus
+
+Some sections have context menus where you can save the section contents to a file or copy to clipboard as either an image or text. In order to view the context menus you have to right click on the section contents. To see if a section has these context menus, hover over the section contents and a tooltip will show, saying "Right-click for more options".
+
+![contextmenu1](./demo/contextmenu1.png)
+![contextmenu2](./demo/contextmenu2.png)
+
+![contextmenu3](./demo/contextmenu3.png)
+![contextmenu4](./demo/contextmenu4.png)
+![contextmenu5](./demo/contextmenu5.png)
 
 ## Features not yet implemented
 
