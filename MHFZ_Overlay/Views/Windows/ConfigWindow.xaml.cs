@@ -4364,24 +4364,10 @@ public partial class ConfigWindow : FluentWindow
         }
     }
 
-    private void AchievementsAutoSuggestBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
+    private void AchievementsSearchButton_Click(object sender, RoutedEventArgs e)
     {
-        if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput)
-        {
-            // Get the user input from the AutoSuggestBox
-            string userInput = sender.Text;
-
-            // Filter the achievements based on the user input
-            List<Achievement> filteredAchievements = MainWindow.dataLoader.model.PlayerAchievements
-                .Where(achievement => achievement.Title.Contains(userInput, StringComparison.OrdinalIgnoreCase))
-                .ToList();
-
-            // Update the ItemsSource of the AutoSuggestBox with the filtered achievements
-            sender.ItemsSource = filteredAchievements;
-        }
-
         // Check if the text in the AutoSuggestBox is empty
-        if (string.IsNullOrWhiteSpace(AchievementsAutoSuggestBox.Text))
+        if (string.IsNullOrWhiteSpace(AchievementsSearchComboBox.Text))
         {
             // If the text is empty, show the original list in the ListView
             AchievementsListView.ItemsSource = MainWindow.dataLoader.model.PlayerAchievements;
@@ -4392,40 +4378,11 @@ public partial class ConfigWindow : FluentWindow
             AchievementsListView.ItemsSource = null;
 
             // Then, set the ItemsSource back to the filtered achievements list based on the user's input
-            string userInput = AchievementsAutoSuggestBox.Text;
+            string userInput = AchievementsSearchComboBox.Text;
             List<Achievement> filteredAchievements = MainWindow.dataLoader.model.PlayerAchievements
                 .Where(achievement => achievement.Title.Contains(userInput, StringComparison.OrdinalIgnoreCase))
                 .ToList();
             AchievementsListView.ItemsSource = filteredAchievements;
-        }
-    }
-
-    private void AchievementsAutoSuggestBox_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
-    {
-        // This event is fired when the user selects an item from the suggestions list.
-        // You can access the selected item using args.SelectedItem, which will be of type Achievement.
-        // For example, you can do something like:
-        Achievement? selectedAchievement = args.SelectedItem as Achievement;
-        if (selectedAchievement != null)
-        {
-            // Do something with the selected achievement, if needed.
-            // For example, display more details about the selected achievement.
-            AchievementsListView.ItemsSource = new List<Achievement>()
-            {
-                {
-                    new Achievement
-                    {
-                        Title = selectedAchievement.Title,
-                        Hint = selectedAchievement.Hint,
-                        CompletionDate = selectedAchievement.CompletionDate,
-                        Description = selectedAchievement.Description,
-                        IsSecret = selectedAchievement.IsSecret,
-                        Image = selectedAchievement.Image,
-                        Objective = selectedAchievement.Objective,
-                        Rank = selectedAchievement.Rank,
-                    }
-                },
-            };
         }
     }
 }

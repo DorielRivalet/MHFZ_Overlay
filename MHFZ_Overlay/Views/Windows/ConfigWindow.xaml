@@ -1748,7 +1748,18 @@
                                             <ColumnDefinition Width="1*"/>
                                         </Grid.ColumnDefinitions>
                                         <Grid Grid.Column="3">
-                                            <ui:AutoSuggestBox TextChanged="AchievementsAutoSuggestBox_TextChanged" DisplayMemberPath="Title" x:Name="AchievementsAutoSuggestBox" PlaceholderText="Search achievement title..." SuggestionChosen="AchievementsAutoSuggestBox_SuggestionChosen" OriginalItemsSource="{Binding PlayerAchievements}"/>
+                                            <Grid ToolTip="Search achievement title">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="1*"/>
+                                                    <ColumnDefinition Width="4*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <ui:Button x:Name="AchievementsSearchButton" Grid.Column="0" BorderThickness="0"  Background="Transparent" Width="48" Height="40" Click="AchievementsSearchButton_Click">
+                                                    <Button.Content>
+                                                        <ui:SymbolIcon Symbol="Search32" Foreground="{StaticResource Green}" FontSize="24"/>
+                                                    </Button.Content>
+                                                </ui:Button>
+                                                <ComboBox DisplayMemberPath="Title" IsTextSearchEnabled="True" IsTextSearchCaseSensitive="False" Grid.Column="1" x:Name="AchievementsSearchComboBox" ItemsSource="{Binding PlayerAchievements, Mode=OneWay}" IsEditable="True" Text="Search achievement title..."/>
+                                            </Grid>
                                         </Grid>
                                         <ListView Margin="5" x:Name="AchievementsListView" Grid.RowSpan="3" Grid.ColumnSpan="2" Loaded="AchievementsListView_Loaded" SelectionChanged="AchievementsListView_SelectionChanged"
           VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Standard">
@@ -4031,6 +4042,6 @@ Thunder Clad, Vigorous" Text="{Binding GetActiveSkillsForImage,Mode=OneTime}" Fo
             </TabItem>
         </TabControl>
     </Grid>
-        <ui:SnackbarPresenter Grid.ZIndex="2" x:Name="ConfigWindowSnackBarPresenter"/>
+        <ui:SnackbarPresenter Grid.ZIndex="2" x:Name="ConfigWindowSnackBarPresenter" d:Visibility="Hidden"/>
     </Grid>
 </ui:FluentWindow>
