@@ -52,6 +52,7 @@ using Wpf.Ui.Controls.IconElements;
 using Wpf.Ui.Services;
 using XInputium;
 using XInputium.XInput;
+using static System.Net.Mime.MediaTypeNames;
 using Application = System.Windows.Application;
 using Brush = System.Windows.Media.Brush;
 using Color = System.Windows.Media.Color;
@@ -687,13 +688,14 @@ The process may take some time, as the program attempts to download from GitHub 
                 if (this._gamepadJoystickImages.Count > 0)
                 {
                     this._gamepadJoystickImages.Clear();
+                    LoggerInstance.Debug("Gamepad disconnected");
                 }
             }
 
             if (this.gamepad.IsConnected && _gamepadImages.Count == 0 && _gamepadTriggersImages.Count == 0 && _gamepadJoystickImages.Count == 0)
             {
                 this.AddGamepadImages();
-                LoggerInstance.Debug("Gamepad reconnected");
+                LoggerInstance.Debug("Gamepad connected");
             }
         }
         catch (Exception ex)
@@ -2184,16 +2186,6 @@ The process may take some time, as the program attempts to download from GitHub 
         _mouseImages.Add(MouseButtons.Left, MouseLeftClick);
         _mouseImages.Add(MouseButtons.Middle, MouseMiddleClick);
         _mouseImages.Add(MouseButtons.Right, MouseRightClick);
-
-        // TODO
-        if (!gamepad.IsConnected)
-        {
-            LoggerInstance.Debug("Gamepad not found");
-            return;
-        }
-
-        LoggerInstance.Debug("Gamepad found");
-        AddGamepadImages();
     }
 
     private void AddGamepadImages()
@@ -2288,7 +2280,7 @@ The process may take some time, as the program attempts to download from GitHub 
             {
                 try
                 {
-                    this.dataLoader.model.gamepadInputDictionary.Add(this.dataLoader.model.TimeInt(), gamepad.RightTrigger.ToString());
+                    this.dataLoader.model.gamepadInputDictionary.Add(this.dataLoader.model.TimeInt(), $"R2 {gamepad.RightTrigger.ToString()}");
                 }
                 catch (Exception ex)
                 {
@@ -2313,7 +2305,7 @@ The process may take some time, as the program attempts to download from GitHub 
             {
                 try
                 {
-                    this.dataLoader.model.gamepadInputDictionary.Add(this.dataLoader.model.TimeInt(), gamepad.LeftTrigger.ToString());
+                    this.dataLoader.model.gamepadInputDictionary.Add(this.dataLoader.model.TimeInt(), $"L2 {gamepad.LeftTrigger.ToString()}");
                 }
                 catch (Exception ex)
                 {
@@ -2330,10 +2322,30 @@ The process may take some time, as the program attempts to download from GitHub 
 
     private void Gamepad_LeftJoystickMove(object? sender, EventArgs e)
     {
-        UpdateLeftJoystickImage();
+        var direction = UpdateLeftJoystickImage();
+        if (direction != Direction.None)
+        {
+            Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
+
+            if (s.EnableInputLogging && !this.dataLoader.model.gamepadInputDictionary.ContainsKey(this.dataLoader.model.TimeInt()) && this.dataLoader.model.QuestID() != 0 && this.dataLoader.model.TimeInt() != this.dataLoader.model.TimeDefInt() && this.dataLoader.model.QuestState() == 0 && this.dataLoader.model.previousTimeInt != this.dataLoader.model.TimeInt())
+            {
+                try
+                {
+                    this.dataLoader.model.gamepadInputDictionary.Add(this.dataLoader.model.TimeInt(), $"LS {direction.ToString()}");
+                }
+                catch (Exception ex)
+                {
+                    LoggerInstance.Warn(ex, "Could not insert into gamepadInputDictionary");
+                }
+            }
+        }
     }
 
-    private void UpdateLeftJoystickImage()
+    /// <summary>
+    /// Updates the left joystick image
+    /// </summary>
+    /// <returns>The direction of the joystick</returns>
+    private Direction UpdateLeftJoystickImage()
     {
         // Get the joystick's X and Y positions
         float x = gamepad.LeftJoystick.X;
@@ -2398,14 +2410,36 @@ The process may take some time, as the program attempts to download from GitHub 
             LJoystickMovement.Source = new BitmapImage(new Uri(imagePath, UriKind.Relative));
             LJoystickMovement.Opacity = opacity;
         }
+
+        return direction;
     }
 
     private void Gamepad_RightJoystickMove(object? sender, EventArgs e)
     {
-        UpdateRightJoystickImage();
+        var direction = UpdateRightJoystickImage();
+        if (direction != Direction.None)
+        {
+            Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
+
+            if (s.EnableInputLogging && !this.dataLoader.model.gamepadInputDictionary.ContainsKey(this.dataLoader.model.TimeInt()) && this.dataLoader.model.QuestID() != 0 && this.dataLoader.model.TimeInt() != this.dataLoader.model.TimeDefInt() && this.dataLoader.model.QuestState() == 0 && this.dataLoader.model.previousTimeInt != this.dataLoader.model.TimeInt())
+            {
+                try
+                {
+                    this.dataLoader.model.gamepadInputDictionary.Add(this.dataLoader.model.TimeInt(), $"RS {direction.ToString()}");
+                }
+                catch (Exception ex)
+                {
+                    LoggerInstance.Warn(ex, "Could not insert into gamepadInputDictionary");
+                }
+            }
+        }
     }
 
-    private void UpdateRightJoystickImage()
+    /// <summary>
+    /// Updates the right joystick image
+    /// </summary>
+    /// <returns>The direction of the joystick</returns>
+    private Direction UpdateRightJoystickImage()
     {
         // Get the joystick's X and Y positions
         float x = gamepad.RightJoystick.X;
@@ -2470,6 +2504,8 @@ The process may take some time, as the program attempts to download from GitHub 
             RJoystickMovement.Source = new BitmapImage(new Uri(imagePath, UriKind.Relative));
             RJoystickMovement.Opacity = opacity;
         }
+
+        return direction;
     }
 
     private void Gamepad_DPadPressed(XInputButton button)
