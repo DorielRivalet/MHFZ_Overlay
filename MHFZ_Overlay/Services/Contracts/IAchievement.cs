@@ -6,13 +6,14 @@ namespace MHFZ_Overlay.Services.Contracts;
 
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Windows;
 using Wpf.Ui.Controls;
 
 public interface IAchievementService
 {
     void LoadPlayerAchievements();
 
-    Task CheckForAchievementsAsync(Snackbar snackbar, DataLoader dataLoader, DatabaseService databaseManagerInstance, Settings s);
+    void CheckForAchievements(SnackbarPresenter snackbarPresenter, DataLoader dataLoader, DatabaseService databaseManagerInstance, Settings s, Style style);
 
-    Task RewardAchievement(int achievementID, Snackbar snackbar);
+    void RewardAchievement(int achievementID, Snackbar snackbar, Style style);
 }

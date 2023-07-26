@@ -83,7 +83,7 @@ public partial class MainWindow : Window
 
     private static readonly DatabaseService DatabaseManagerInstance = DatabaseService.GetInstance();
 
-    private static readonly AchievementService AchievementManagerInstance = AchievementService.GetInstance();
+    private static readonly AchievementService AchievementServiceInstance = AchievementService.GetInstance();
 
     private static readonly OverlaySettingsService OverlaySettingsManagerInstance = OverlaySettingsService.GetInstance();
 
@@ -2049,10 +2049,8 @@ The process may take some time, as the program attempts to download from GitHub 
             this.dataLoader.model.questRewardsGiven = true;
 
             // TODO: add logging check requirement in case the user needs the hash sets.
-            // We await since we are dealing with database
-            var snackbar = new Snackbar(MainWindowSnackBarPresenter);
-            snackbar.Style = (Style)FindResource("CatppuccinMochaSnackBar");
-            await AchievementManagerInstance.CheckForAchievementsAsync(snackbar, dataLoader, DatabaseManagerInstance, s);
+            // We await since we are dealing with database?
+            AchievementServiceInstance.CheckForAchievements(MainWindowSnackBarPresenter, dataLoader, DatabaseManagerInstance, s, (Style)FindResource("CatppuccinMochaSnackBar"));
         }
     }
 
@@ -2696,7 +2694,7 @@ The process may take some time, as the program attempts to download from GitHub 
         }
 
         DatabaseManagerInstance.LoadDatabaseDataIntoHashSets(SaveIconGrid, dataLoader);
-        AchievementManagerInstance.LoadPlayerAchievements();
+        AchievementServiceInstance.LoadPlayerAchievements();
 
         mhfProcess = System.Diagnostics.Process.GetProcessesByName("mhf").First();
 

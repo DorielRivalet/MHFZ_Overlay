@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Media;
 using MHFZ_Overlay.Models.Collections;
 using MHFZ_Overlay.Models.Structures;
@@ -20,14 +21,14 @@ using Wpf.Ui.Controls;
 /// </summary>
 public sealed class Achievement
 {
-    public async Task Show(Snackbar snackbar)
+    public void Show(Snackbar snackbar, Style style)
     {
         var brushColor = this.GetBrushColorFromRank();
         if (brushColor == null)
         {
             brushColor = Brushes.Black;
         }
-
+        snackbar.Style = style;
         snackbar.Title = this.Title;
         snackbar.Content = this.Objective;
         snackbar.Icon = new SymbolIcon()
@@ -42,7 +43,6 @@ public sealed class Achievement
         }
         snackbar.Timeout = SnackbarTimeOut;
         snackbar.Show();
-        await Task.Delay(TimeSpan.FromSeconds(1)); // Delay for a certain duration
     }
 
     public TimeSpan SnackbarTimeOut { get; set; } = TimeSpan.FromSeconds(5);

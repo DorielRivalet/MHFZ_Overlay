@@ -4088,11 +4088,11 @@ public partial class ConfigWindow : FluentWindow
         }
     }
 
-    private async void FumoImage_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+    private void FumoImage_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
         var snackbar = new Snackbar(ConfigWindowSnackBarPresenter);
         snackbar.Style = (Style)FindResource("CatppuccinMochaSnackBar");
-        await achievementManager.RewardAchievement(225, snackbar);
+        achievementManager.RewardAchievement(225, snackbar, (Style)FindResource("CatppuccinMochaSnackBar"));
     }
 
     private void Achievements3DPreviewGrid_Loaded(object sender, RoutedEventArgs e)

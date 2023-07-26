@@ -5,6 +5,7 @@
 namespace MHFZ_Overlay.Services;
 
 using System;
+using System.Windows;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
@@ -17,6 +18,7 @@ using MHFZ_Overlay.Models.Collections;
 using MHFZ_Overlay.Models.Constant;
 using MHFZ_Overlay.Models.Structures;
 using MHFZ_Overlay.Services.Contracts;
+using MHFZ_Overlay.Views.Windows;
 using Newtonsoft.Json;
 using NLog;
 using Wpf.Ui.Common;
@@ -47,8 +49,13 @@ public sealed class AchievementService : IAchievementService
         return filteredAchievements;
     }
 
-    public static async Task ShowMany(Snackbar snackbar, List<int> achievementsID)
+    public static void ShowMany(SnackbarPresenter snackbarPresenter, List<int> achievementsID, Style style)
     {
+        if (MainWindow.MainWindowSoundPlayer != null)
+        {
+            MainWindow.MainWindowSoundPlayer.Play();
+        }
+
         const int maxAchievementsToShow = 5;
         var remainingAchievements = achievementsID.Count - maxAchievementsToShow;
 
@@ -56,20 +63,53 @@ public sealed class AchievementService : IAchievementService
         {
             if (Achievements.IDAchievement.TryGetValue(achievementID, out Achievement? achievement) && achievement != null)
             {
-                await achievement.Show(snackbar);
-                await Task.Delay(TimeSpan.FromSeconds(2)); // Delay between each achievement
+                var brushColor = achievement.GetBrushColorFromRank();
+                if (brushColor == null)
+                {
+                    brushColor = Brushes.Black;
+                }
+
+                snackbarPresenter.AddToQue(new Snackbar(snackbarPresenter)
+                {
+                    Style = style,
+                    Title = achievement.Title,
+                    Content = achievement.Objective,
+                    Icon = new SymbolIcon()
+                    {
+                        Symbol = SymbolRegular.Trophy32,
+                        Foreground = brushColor,
+                    },
+                    Appearance = ControlAppearance.Secondary,
+                    Timeout = SnackbarTimeOut,
+                });
             }
         }
 
         if (remainingAchievements > 0)
         {
-            await ShowAchievementsTabInfo(snackbar, remainingAchievements);
+            var brushConverter = new BrushConverter();
+            var brushColor = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Crust"]);
+            var snackbar = new Snackbar(snackbarPresenter)
+            {
+
+                Title = "Too many achievements!",
+                Content = $"To see the rest of the achievements unlocked ({remainingAchievements} left), see the Achievements tab in the Quests Logs section.",
+                Icon = new SymbolIcon()
+                {
+                    Symbol = SymbolRegular.Info28,
+                    Foreground = brushColor ?? Brushes.Black,
+                },
+                Appearance = ControlAppearance.Info,
+                Timeout = SnackbarTimeOut,
+                Style = style,
+            };
+            snackbarPresenter.AddToQue(snackbar);
         }
     }
 
     public static TimeSpan SnackbarTimeOut { get; set; } = TimeSpan.FromSeconds(5);
 
-    public static async Task ShowAchievementsTabInfo(Snackbar snackbar, int remainingAchievements)
+    public static void ShowAchievementsTabInfo(Snackbar snackbar, int remainingAchievements)
     {
         var brushConverter = new BrushConverter();
         var brushColor = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Crust"]);
@@ -83,7 +123,6 @@ public sealed class AchievementService : IAchievementService
         snackbar.Appearance = ControlAppearance.Info;
         snackbar.Timeout = SnackbarTimeOut;
         snackbar.Show();
-        await Task.Delay(TimeSpan.FromSeconds(1)); // Delay for a certain duration
     }
 
     public static AchievementService GetInstance()
@@ -109,14 +148,14 @@ public sealed class AchievementService : IAchievementService
         }
     }
 
-    public async Task CheckForAchievementsAsync(Snackbar snackbar, DataLoader dataLoader, DatabaseService databaseManagerInstance, Settings s)
+    public void CheckForAchievements(SnackbarPresenter snackbarPresenter, DataLoader dataLoader, DatabaseService databaseManagerInstance, Settings s, Style style)
     {
         var newAchievements = this.GetNewlyObtainedAchievements(dataLoader, databaseManagerInstance, s);
 
         if (newAchievements.Count > 0)
         {
             this.UpdatePlayerAchievements(newAchievements);
-            await ShowMany(snackbar, newAchievements);
+            ShowMany(snackbarPresenter, newAchievements, style);
             LoggerInstance.Info(CultureInfo.InvariantCulture, "Awarded achievements: {0}", JsonConvert.SerializeObject(newAchievements));
         }
         else
@@ -125,7 +164,7 @@ public sealed class AchievementService : IAchievementService
         }
     }
 
-    public async Task RewardAchievement(int achievementID, Snackbar snackbar)
+    public void RewardAchievement(int achievementID, Snackbar snackbar, Style style)
     {
         Achievements.IDAchievement.TryGetValue(achievementID, out var achievement);
         if (achievement == null)
@@ -139,7 +178,7 @@ public sealed class AchievementService : IAchievementService
 
             // Store the achievement in the SQLite PlayerAchievements table
             DatabaseManagerInstance.StoreAchievement(achievementID);
-            await achievement.Show(snackbar);
+            achievement.Show(snackbar, style);
             LoggerInstance.Info(CultureInfo.InvariantCulture, "Awarded achievement ID {0}", achievementID);
         }
         else
