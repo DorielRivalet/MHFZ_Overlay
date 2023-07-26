@@ -1,5 +1,33 @@
 
 
+## [0.26.0](https://github.com/DorielRivalet/MHFZ_Overlay/compare/v0.25.7...v0.26.0) (2023-07-26)
+
+
+### Features
+
+* add achievement rank count ([c6416dc](https://github.com/DorielRivalet/MHFZ_Overlay/commit/c6416dc8dc6bcc6f3315d262c40eac111e0d445b))
+* add achievement title search ([5717efe](https://github.com/DorielRivalet/MHFZ_Overlay/commit/5717efee74a95c44b7aed24ff65370f865453a51))
+* add challenge information to configuration window ([f0563a5](https://github.com/DorielRivalet/MHFZ_Overlay/commit/f0563a51f33cf6439fcd1dd91f373fb410500c0e))
+* add challenges collection ([5640f0e](https://github.com/DorielRivalet/MHFZ_Overlay/commit/5640f0ebedeec5eb173f94d5339a031afca4d0a6))
+* add gamepad sticks information ([255cd3a](https://github.com/DorielRivalet/MHFZ_Overlay/commit/255cd3a47a1dc96d89c204560427945d2e40a841))
+* add more achievements ([e94bc34](https://github.com/DorielRivalet/MHFZ_Overlay/commit/e94bc34e4c0fa60f554b392c96795eebbc4213d4))
+
+
+### Bug Fixes
+
+* achievements search ([28c9102](https://github.com/DorielRivalet/MHFZ_Overlay/commit/28c9102cabc3b327a565cf531b6284cfd4848583))
+* converter key names ([4d66304](https://github.com/DorielRivalet/MHFZ_Overlay/commit/4d663049c2e73cb415bfcba5a780227677f5bc7d))
+
+
+### For Developers
+
+* bump version ([a2dde4e](https://github.com/DorielRivalet/MHFZ_Overlay/commit/a2dde4e74baf6fcf74cfb5105f9f7554eb8b7fd8))
+* bump version ([43427b4](https://github.com/DorielRivalet/MHFZ_Overlay/commit/43427b47905cb3d3135130ee2f98c59873366d86))
+* change achievements layout ([7848dc6](https://github.com/DorielRivalet/MHFZ_Overlay/commit/7848dc60fa7f002c8d97d97fcc93fe72b7484bab))
+* **README:** add context menu section ([009fd52](https://github.com/DorielRivalet/MHFZ_Overlay/commit/009fd52087ff333d8bb0ff73deea356d087fcf20))
+* snackbar ([45b5b49](https://github.com/DorielRivalet/MHFZ_Overlay/commit/45b5b49ac162bc39ef87bb81503ed0550c4f3c25))
+* update FAQ.md ([2e0e2d6](https://github.com/DorielRivalet/MHFZ_Overlay/commit/2e0e2d676c3725b02c328031918acff409c75326))
+
 ## [0.25.7](https://github.com/DorielRivalet/MHFZ_Overlay/compare/v0.24.1...v0.25.7) (2023-07-22)
 
 
