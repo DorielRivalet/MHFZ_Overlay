@@ -17,6 +17,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Transactions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
@@ -2976,9 +2977,18 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
         catch (SQLiteException ex)
         {
             // Handle a SQL exception
-            logger.Error(ex, "An error occurred while accessing the database");
-            MessageBox.Show(string.Format(
-            @"An error occurred while accessing the database.
+            if (ex.ResultCode == SQLiteErrorCode.Busy)
+            {
+                // Database is locked, skip storing the time
+                logger.Warn(CultureInfo.InvariantCulture, "Database is locked. Skipping storing session time.");
+            }
+            else
+            {
+                // Other SQLite exception occurred, handle the error
+                // Handle a SQL exception
+                logger.Error(ex, "An error occurred while accessing the database");
+                MessageBox.Show(string.Format(
+                @"An error occurred while accessing the database.
 
 SQL State: {0}
 
@@ -2995,8 +3005,9 @@ Stack Trace: {5}
 Data: {6}
 
 Message: {7}",
-            ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace, JsonConvert.SerializeObject(ex.Data), ex.Message),
-                            Messages.ErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
+                ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace, JsonConvert.SerializeObject(ex.Data), ex.Message),
+                                Messages.ErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
         catch (IOException ex)
         {
