@@ -4168,7 +4168,8 @@ public partial class ConfigWindow : FluentWindow
         int totalAchievements = MainWindow.dataLoader.model.PlayerAchievements.Count(a => a.IsSecret == false);
         int obtainedAchievements = MainWindow.dataLoader.model.PlayerAchievements.Count(a => a.CompletionDate != DateTime.UnixEpoch);
         int obtainedSecretAchievements = MainWindow.dataLoader.model.PlayerAchievements.Count(a => a.CompletionDate != DateTime.UnixEpoch && a.IsSecret == true);
-        double progressPercentage = (obtainedAchievements * 100.0 / totalAchievements) + obtainedSecretAchievements;
+        int totalSecretAchievements = MainWindow.dataLoader.model.PlayerAchievements.Count(a => a.IsSecret == true);
+        double progressPercentage = (obtainedAchievements * 100.0 / totalAchievements) == 100 ? (obtainedAchievements * 100.0 / totalAchievements) + (obtainedSecretAchievements / totalSecretAchievements) : (obtainedAchievements * 100.0 / totalAchievements);
         AchievementsProgressBar.Value = progressPercentage;
 
         int totalBronzeAchievements = MainWindow.dataLoader.model.PlayerAchievements.Count(a => a.IsSecret == false && a.Rank == AchievementRank.Bronze);
@@ -4247,6 +4248,7 @@ public partial class ConfigWindow : FluentWindow
 
         AchievementsProgressTextBlock.Text = $"{obtainedAchievements}/{totalAchievements}";
         AchievementTotalProgressPercentTextBlock.Text = $"{progressPercentage:F2}%";
+        AchievementSelectionInfoHint.Text = $"There are 5 types of trophies: bronze, silver, gold, platinum and secret. For every secret trophy you find, you gain {(1.0 / (double)totalSecretAchievements):F2}% more progress if you have already obtained every non-secret achievement already. You have obtained {obtainedSecretAchievements} out of {totalSecretAchievements} secret trophies ({(obtainedSecretAchievements * 100.0 / totalSecretAchievements):F2}%).";
     }
 
     private void AchievementSelectedInfoGrid_Loaded(object sender, RoutedEventArgs e)
