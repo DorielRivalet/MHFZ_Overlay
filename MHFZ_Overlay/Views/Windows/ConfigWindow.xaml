@@ -4008,8 +4008,17 @@ Thunder Clad, Vigorous" Text="{Binding GetActiveSkillsForImage,Mode=OneTime}" Fo
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="1*"/>
                             </Grid.RowDefinitions>
-                            <DockPanel>
-                                <wv2:WebView2 Name="webViewFerias"
+                                <DockPanel>
+                                    <DockPanel DockPanel.Dock="Top">
+                                        <ui:Button Appearance="Secondary" DockPanel.Dock="Left" Click="GameInfoNavigationCommandsBrowseBack" Content="Back"/>
+                                        <ui:Button Appearance="Secondary" DockPanel.Dock="Left" Click="GameInfoNavigationCommandsBrowseForward" Content="Forward"/>
+                                        <ui:Button Appearance="Secondary" DockPanel.Dock="Left" Click="GameInfoNavigationCommandsRefresh" Content="Reload"/>
+                                        <ui:Button Appearance="Secondary" DockPanel.Dock="Left" Click="GameInfoNavigationCommandsBrowseStop" Content="Cancel"/>
+                                        <ui:Button Appearance="Primary" DockPanel.Dock="Right" Click="GameInfoNavigationCommandsGoToPage" Content="Go"/>
+                                        <!-- We want the address bar to update based on the WebView's Source, but we don't want the WebView to navigate just from the user typing into the address bar.   Therefore we use the OneWay binding mode. -->
+                                        <ui:TextBox x:Name="GameInfoURL" Text="{Binding ElementName=webViewFerias,Path=Source,Mode=OneWay}"/>
+                                    </DockPanel>
+                                    <wv2:WebView2 Name="webViewFerias"
                   					Source="{Binding GetCurrentFeriasVersion, Mode=OneTime}" DefaultBackgroundColor="#f5e0dc"/>
                             </DockPanel>
                         </Grid>

@@ -4404,6 +4404,41 @@ public partial class ConfigWindow : FluentWindow
             listBox.SelectedItem = null;
         }
     }
+
+    private void GameInfoNavigationCommandsBrowseBack(object sender, RoutedEventArgs e)
+    {
+        webViewFerias.GoBack();
+    }
+
+    private void GameInfoNavigationCommandsBrowseForward(object sender, RoutedEventArgs e)
+    {
+        webViewFerias.GoForward();
+    }
+
+    private void GameInfoNavigationCommandsRefresh(object sender, RoutedEventArgs e)
+    {
+        webViewFerias.Reload();
+    }
+
+    private void GameInfoNavigationCommandsBrowseStop(object sender, RoutedEventArgs e)
+    {
+        webViewFerias.Stop();
+    }
+
+    private void GameInfoNavigationCommandsGoToPage(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            if (webViewFerias != null && webViewFerias.CoreWebView2 != null)
+            {
+                webViewFerias.CoreWebView2.Navigate(GameInfoURL.Text);
+            }
+        }
+        catch
+        {
+            logger.Error("Could not navigate in WebView2");
+        }
+    }
 }
 
 /* LoadConfig on startup
