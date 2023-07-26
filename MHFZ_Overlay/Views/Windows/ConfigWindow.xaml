@@ -50,8 +50,9 @@
             <converter:XamlIconToViewBoxConverter x:Key="XamlIconToViewBoxConverter"/>
             <converter:AchievementRankToBrushConverter x:Key="AchievementRankToBrushConverter"/>
             <converter:CompletionDateToOpacityConverter x:Key="CompletionDateToOpacityConverter"/>
-            <converter:DateTimeToStringConverter x:Key="DateTimeToStringConverter" />
-            <converter:BooleanToOpacityConverter  x:Key="BooleanToOpacityConverter "/>
+            <converter:DateTimeToStringConverter x:Key="DateTimeToStringConverter"/>
+            <converter:BooleanToOpacityConverter x:Key="BooleanToOpacityConverter"/>
+            <converter:AchievementToColorConverter x:Key="AchievementToColorConverter"/>
             <!-- Define the reusable context menu in a resource dictionary or at a higher level in your XAML hierarchy -->
             <ContextMenu x:Key="HunterNotesContextMenu" x:Name="HunterNotesContextMenu">
                 <ui:MenuItem x:Name="HunterNotesCopyTextMenuItem" Click="HunterNotesGridMenuItem_Click">
@@ -1797,7 +1798,7 @@
                                                     <Grid Width="192" Height="192" Margin="5">
                                                         <StackPanel Orientation="Vertical">
                                                             <Image Source="{Binding Image}" Width="96" Margin="0,5,0,0" Opacity="{Binding CompletionDate, Converter={StaticResource CompletionDateToOpacityConverter}}" />
-                                                            <TextBlock FontWeight="Bold" Text="{Binding Title}" Foreground="{Binding Rank, Converter={StaticResource AchievementRankToBrushConverter}}"
+                                                            <TextBlock FontWeight="Bold" Text="{Binding Title}" Foreground="{Binding Converter={StaticResource AchievementToColorConverter }}"
                                Margin="0,5,0,0" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center"
                                Opacity="{Binding CompletionDate, Converter={StaticResource CompletionDateToOpacityConverter}}" />
                                                         </StackPanel>
@@ -1813,18 +1814,8 @@
                                                 </Grid.ColumnDefinitions>
                                                 <Image x:Name="AchievementSelectionInfoImage" d:Source="../../Assets/Icons/achievement/award_bronze.png"/>
                                                 <Grid Grid.Column="1" Margin="5">
-                                                    <ScrollViewer CanContentScroll="True" IsDeferredScrollingEnabled="True" VerticalScrollBarVisibility="Visible">
+                                                    <ScrollViewer VerticalScrollBarVisibility="Auto">
                                                         <StackPanel Orientation="Vertical" Margin="5">
-                                                            <!--
-                                                            CompletionDate = DateTime.UnixEpoch,
-                                                            Title = "Akura Vashimu Slain",
-                                                            Description = string.Empty,
-                                                            Rank = AchievementRank.Bronze,
-                                                            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_red2.jpg",
-                                                            Objective = "Complete 1 Zenith★4 Akura Vashimu quest.",
-                                                            IsSecret = false,
-                                                            Hint = string.Empty,
-                                                            -->
                                                             <customcontrols:OutlinedTextBlock Fill="{StaticResource Text}" Stroke="{StaticResource Crust}" StrokeThickness="2" FontWeight="Bold" x:Name="AchievementSelectionInfoTitle" TextWrapping="Wrap" FontSize="24" Text="Select an achievement to view more information"/>
                                                             <TextBlock Margin="0,5,0,0" x:Name="AchievementSelectionInfoObjective" TextWrapping="Wrap" Text="Some achievements are currently unobtainable." FontSize="20"/>
                                                             <TextBlock Margin="0,5,0,0" x:Name="AchievementSelectionInfoHint" TextWrapping="Wrap" Text="There are 5 types of trophies: bronze, silver, gold, platinum and secret. For every secret trophy you find, you gain 1% more progress." FontSize="16"/>
