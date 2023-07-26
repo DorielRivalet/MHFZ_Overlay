@@ -2397,6 +2397,7 @@ public sealed class AchievementService : IAchievementService
             case 403:
             case 404:
             case 405:
+            case 406:
             {
                 return false;
             }
