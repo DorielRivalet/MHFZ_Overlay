@@ -32,7 +32,7 @@ public static class Achievements
                 Rank = AchievementRank.Bronze,
                 Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_red2.jpg",
                 Objective = "Complete 1 Zenith★4 Akura Vashimu quest.",
-                IsSecret = false,
+            IsSecret = false,
                 Hint = string.Empty,
             }
         },
@@ -45,7 +45,7 @@ public static class Achievements
                 Rank = AchievementRank.Silver,
                 Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_white2.jpg",
                 Objective = "Complete 10 Zenith★4 Akura Vashimu quests.",
-                IsSecret = false,
+            IsSecret = false,
                 Hint = string.Empty,
             }
         },
@@ -58,7 +58,7 @@ public static class Achievements
                 Rank = AchievementRank.Gold,
                 Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_yellow.jpg",
                 Objective = "Complete 25 Zenith★4 Akura Vashimu quests.",
-                IsSecret = false,
+            IsSecret = false,
                 Hint = string.Empty,
             }
         },
@@ -448,7 +448,6 @@ public static class Achievements
             Rank = AchievementRank.Gold,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_yellow.jpg",
             Objective = "Complete 25 Zenith★4 Gasurabazura quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -462,7 +461,6 @@ public static class Achievements
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_blue2.jpg",
             Objective = "Complete 50 Zenith★4 Gasurabazura quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -476,7 +474,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_white2.jpg",
             Objective = "Complete 1 Zenith★4 Gasurabazura quest solo (Speedrun/Zen).",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -490,7 +487,6 @@ public static class Achievements
             Rank = AchievementRank.Bronze,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_red2.jpg",
             Objective = "Complete 1 Zenith★4 Giaorugu quest.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -504,7 +500,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_white2.jpg",
             Objective = "Complete 10 Zenith★4 Giaorugu quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -518,7 +513,6 @@ public static class Achievements
             Rank = AchievementRank.Gold,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_yellow.jpg",
             Objective = "Complete 25 Zenith★4 Giaorugu quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -532,7 +526,6 @@ public static class Achievements
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_blue2.jpg",
             Objective = "Complete 50 Zenith★4 Giaorugu quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -546,7 +539,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_white2.jpg",
             Objective = "Complete 1 Zenith★4 Giaorugu quest solo (Speedrun/Zen).",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -560,7 +552,6 @@ public static class Achievements
             Rank = AchievementRank.Bronze,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_red2.jpg",
             Objective = "Complete 1 Zenith★4 Hypnocatrice quest.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -574,7 +565,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_white2.jpg",
             Objective = "Complete 10 Zenith★4 Hypnocatrice quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -588,7 +578,6 @@ public static class Achievements
             Rank = AchievementRank.Gold,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_yellow.jpg",
             Objective = "Complete 25 Zenith★4 Hypnocatrice quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -602,7 +591,6 @@ public static class Achievements
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_blue2.jpg",
             Objective = "Complete 50 Zenith★4 Hypnocatrice quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -616,7 +604,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_white2.jpg",
             Objective = "Complete 1 Zenith★4 Hypnocatrice quest solo (Speedrun/Zen).",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -630,7 +617,6 @@ public static class Achievements
             Rank = AchievementRank.Bronze,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_red2.jpg",
             Objective = "Complete 1 Zenith★4 Hyujikiki quest.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -644,7 +630,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_white2.jpg",
             Objective = "Complete 10 Zenith★4 Hyujikiki quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -658,7 +643,6 @@ public static class Achievements
             Rank = AchievementRank.Gold,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_yellow.jpg",
             Objective = "Complete 25 Zenith★4 Hyujikiki quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -672,7 +656,6 @@ public static class Achievements
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_blue2.jpg",
             Objective = "Complete 50 Zenith★4 Hyujikiki quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -686,7 +669,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_white2.jpg",
             Objective = "Complete 1 Zenith★4 Hyujikiki quest solo (Speedrun/Zen).",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -700,7 +682,6 @@ public static class Achievements
             Rank = AchievementRank.Bronze,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_red2.jpg",
             Objective = "Complete 1 Zenith★4 Inagami quest.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -714,7 +695,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_white2.jpg",
             Objective = "Complete 10 Zenith★4 Inagami quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -728,7 +708,6 @@ public static class Achievements
             Rank = AchievementRank.Gold,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_yellow.jpg",
             Objective = "Complete 25 Zenith★4 Inagami quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -742,7 +721,6 @@ public static class Achievements
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_blue2.jpg",
             Objective = "Complete 50 Zenith★4 Inagami quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -756,7 +734,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_white2.jpg",
             Objective = "Complete 1 Zenith★4 Inagami quest solo (Speedrun/Zen).",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -770,7 +747,6 @@ public static class Achievements
             Rank = AchievementRank.Bronze,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_red2.jpg",
             Objective = "Complete 1 Zenith★4 Khezu quest.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -784,7 +760,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_white2.jpg",
             Objective = "Complete 10 Zenith★4 Khezu quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -798,7 +773,6 @@ public static class Achievements
             Rank = AchievementRank.Gold,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_yellow.jpg",
             Objective = "Complete 25 Zenith★4 Khezu quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -812,7 +786,6 @@ public static class Achievements
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_blue2.jpg",
             Objective = "Complete 50 Zenith★4 Khezu quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -826,7 +799,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_white2.jpg",
             Objective = "Complete 1 Zenith★4 Khezu quest solo (Speedrun/Zen).",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -840,7 +812,6 @@ public static class Achievements
             Rank = AchievementRank.Bronze,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_red2.jpg",
             Objective = "Complete 1 Zenith★4 Midogaron quest.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -854,7 +825,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_white2.jpg",
             Objective = "Complete 10 Zenith★4 Midogaron quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -868,7 +838,6 @@ public static class Achievements
             Rank = AchievementRank.Gold,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_yellow.jpg",
             Objective = "Complete 25 Zenith★4 Midogaron quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -882,7 +851,6 @@ public static class Achievements
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_blue2.jpg",
             Objective = "Complete 50 Zenith★4 Midogaron quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -896,7 +864,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_white2.jpg",
             Objective = "Complete 1 Zenith★4 Midogaron quest solo (Speedrun/Zen).",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -910,7 +877,6 @@ public static class Achievements
             Rank = AchievementRank.Bronze,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_red2.jpg",
             Objective = "Complete 1 Zenith★4 Plesioth quest.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -924,7 +890,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_white2.jpg",
             Objective = "Complete 10 Zenith★4 Plesioth quest.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -938,7 +903,6 @@ public static class Achievements
             Rank = AchievementRank.Gold,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_yellow.jpg",
             Objective = "Complete 25 Zenith★4 Plesioth quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -952,7 +916,6 @@ public static class Achievements
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_blue2.jpg",
             Objective = "Complete 50 Zenith★4 Plesioth quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -966,7 +929,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_white2.jpg",
             Objective = "Complete 1 Zenith★4 Plesioth quest solo (Speedrun/Zen).",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -980,7 +942,6 @@ public static class Achievements
             Rank = AchievementRank.Bronze,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_red2.jpg",
             Objective = "Complete 1 Zenith★4 Rathalos quest.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -994,7 +955,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_white2.jpg",
             Objective = "Complete 10 Zenith★4 Rathalos quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -1008,7 +968,6 @@ public static class Achievements
             Rank = AchievementRank.Gold,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_yellow.jpg",
             Objective = "Complete 25 Zenith★4 Rathalos quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -1022,7 +981,6 @@ public static class Achievements
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_blue2.jpg",
             Objective = "Complete 50 Zenith★4 Rathalos quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -1036,7 +994,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_white2.jpg",
             Objective = "Complete 1 Zenith★4 Rathalos quest solo (Speedrun/Zen).",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -1050,7 +1007,6 @@ public static class Achievements
             Rank = AchievementRank.Bronze,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_red2.jpg",
             Objective = "Complete 1 Zenith★4 Rukodiora quest.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -1064,7 +1020,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_white2.jpg",
             Objective = "Complete 10 Zenith★4 Rukodiora quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -1078,7 +1033,6 @@ public static class Achievements
             Rank = AchievementRank.Gold,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_yellow.jpg",
             Objective = "Complete 25 Zenith★4 Rukodiora quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -1092,7 +1046,6 @@ public static class Achievements
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_blue2.jpg",
             Objective = "Complete 50 Zenith★4 Rukodiora quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -1106,7 +1059,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_white2.jpg",
             Objective = "Complete 1 Zenith★4 Rukodiora quest solo (Speedrun/Zen).",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -1120,7 +1072,6 @@ public static class Achievements
             Rank = AchievementRank.Bronze,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_red2.jpg",
             Objective = "Complete 1 Zenith★4 Tigrex quest.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -1134,7 +1085,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_white2.jpg",
             Objective = "Complete 10 Zenith★4 Tigrex quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -1148,7 +1098,6 @@ public static class Achievements
             Rank = AchievementRank.Gold,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_yellow.jpg",
             Objective = "Complete 25 Zenith★4 Tigrex quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -1162,7 +1111,6 @@ public static class Achievements
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_blue2.jpg",
             Objective = "Complete 50 Zenith★4 Tigrex quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -1176,7 +1124,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_white2.jpg",
             Objective = "Complete 1 Zenith★4 Tigrex quest solo (Speedrun/Zen).",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -1190,7 +1137,6 @@ public static class Achievements
             Rank = AchievementRank.Bronze,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_red2.jpg",
             Objective = "Complete 1 Zenith★4 Toridcless quest.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -1204,7 +1150,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_white2.jpg",
             Objective = "Complete 10 Zenith★4 Toridcless quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -1218,7 +1163,6 @@ public static class Achievements
             Rank = AchievementRank.Gold,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_yellow.jpg",
             Objective = "Complete 25 Zenith★4 Toridcless quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -1232,7 +1176,6 @@ public static class Achievements
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_blue2.jpg",
             Objective = "Complete 50 Zenith★4 Toridcless quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -1246,7 +1189,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_white2.jpg",
             Objective = "Complete 1 Zenith★4 Toridcless quest solo (Speedrun/Zen).",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -1260,7 +1202,6 @@ public static class Achievements
             Rank = AchievementRank.Bronze,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_red2.jpg",
             Objective = "Complete 1 Zenith★4 Baruragaru quest.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -1274,7 +1215,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_white2.jpg",
             Objective = "Complete 10 Zenith★4 Baruragaru quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -1288,7 +1228,6 @@ public static class Achievements
             Rank = AchievementRank.Gold,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_yellow.jpg",
             Objective = "Complete 25 Zenith★4 Baruragaru quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -1302,7 +1241,6 @@ public static class Achievements
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_blue2.jpg",
             Objective = "Complete 50 Zenith★4 Baruragaru quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -1316,7 +1254,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_white2.jpg",
             Objective = "Complete 1 Zenith★4 Baruragaru quest solo (Speedrun/Zen).",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -1330,7 +1267,6 @@ public static class Achievements
             Rank = AchievementRank.Bronze,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_red2.jpg",
             Objective = "Complete 1 Zenith★4 Bogabadorumu quest.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -1344,7 +1280,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_white2.jpg",
             Objective = "Complete 10 Zenith★4 Bogabadorumu quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -1358,7 +1293,6 @@ public static class Achievements
             Rank = AchievementRank.Gold,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_yellow.jpg",
             Objective = "Complete 25 Zenith★4 Bogabadorumu quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -1372,7 +1306,6 @@ public static class Achievements
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_blue2.jpg",
             Objective = "Complete 50 Zenith★4 Bogabadorumu quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -1386,7 +1319,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_white2.jpg",
             Objective = "Complete 1 Zenith★4 Bogabadorumu quest solo (Speedrun/Zen).",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -1400,7 +1332,6 @@ public static class Achievements
             Rank = AchievementRank.Bronze,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_red2.jpg",
             Objective = "Complete 1 Zenith★4 Gravios quest.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -1414,7 +1345,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_white2.jpg",
             Objective = "Complete 10 Zenith★4 Gravios quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -1428,7 +1358,6 @@ public static class Achievements
             Rank = AchievementRank.Gold,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_yellow.jpg",
             Objective = "Complete 25 Zenith★4 Gravios quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -1442,7 +1371,6 @@ public static class Achievements
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_blue2.jpg",
             Objective = "Complete 50 Zenith★4 Gravios quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -1456,7 +1384,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_white2.jpg",
             Objective = "Complete 1 Zenith★4 Gravios quest solo (Speedrun/Zen).",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -1470,7 +1397,6 @@ public static class Achievements
             Rank = AchievementRank.Bronze,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_red2.jpg",
             Objective = "Complete 1 Zenith★4 Harudomerugu quest.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -1484,7 +1410,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_white2.jpg",
             Objective = "Complete 10 Zenith★4 Harudomerugu quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -1498,7 +1423,6 @@ public static class Achievements
             Rank = AchievementRank.Gold,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_yellow.jpg",
             Objective = "Complete 25 Zenith★4 Harudomerugu quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -1512,7 +1436,6 @@ public static class Achievements
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_blue2.jpg",
             Objective = "Complete 50 Zenith★4 Harudomerugu quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -1526,7 +1449,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_white2.jpg",
             Objective = "Complete 1 Zenith★4 Harudomerugu quest solo (Speedrun/Zen).",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -1540,7 +1462,6 @@ public static class Achievements
             Rank = AchievementRank.Bronze,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_red2.jpg",
             Objective = "Complete 1 Zenith★4 Taikun Zamuza quest.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -1554,7 +1475,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_white2.jpg",
             Objective = "Complete 10 Zenith★4 Taikun Zamuza quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -1568,7 +1488,6 @@ public static class Achievements
             Rank = AchievementRank.Gold,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_yellow.jpg",
             Objective = "Complete 25 Zenith★4 Taikun Zamuza quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -1582,7 +1501,6 @@ public static class Achievements
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_blue2.jpg",
             Objective = "Complete 50 Zenith★4 Taikun Zamuza quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -1596,7 +1514,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_white2.jpg",
             Objective = "Complete 1 Zenith★4 Taikun Zamuza quest solo (Speedrun/Zen).",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -1610,7 +1527,6 @@ public static class Achievements
             Rank = AchievementRank.Bronze,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_red2.jpg",
             Objective = "Complete 1 Lv9999 Fatalis quest.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -1624,7 +1540,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_white2.jpg",
             Objective = "Complete 10 Lv9999 Fatalis quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -1638,7 +1553,6 @@ public static class Achievements
             Rank = AchievementRank.Gold,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_yellow.jpg",
             Objective = "Complete 25 Lv9999 Fatalis quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -1652,7 +1566,6 @@ public static class Achievements
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_blue2.jpg",
             Objective = "Complete 50 Lv9999 Fatalis quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -1666,7 +1579,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_white2.jpg",
             Objective = "Complete 1 Lv9999 Fatalis quest solo (Speedrun/Zen).",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -1680,7 +1592,6 @@ public static class Achievements
             Rank = AchievementRank.Bronze,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_red2.jpg",
             Objective = "Complete 1 Lv9999 Crimson Fatalis quest.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -1694,7 +1605,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_white2.jpg",
             Objective = "Complete 10 Lv9999 Crimson Fatalis quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -1708,7 +1618,6 @@ public static class Achievements
             Rank = AchievementRank.Gold,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_yellow.jpg",
             Objective = "Complete 25 Lv9999 Crimson Fatalis quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -1722,7 +1631,6 @@ public static class Achievements
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_blue2.jpg",
             Objective = "Complete 50 Lv9999 Crimson Fatalis quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -1736,7 +1644,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_white2.jpg",
             Objective = "Complete 1 Lv9999 Crimson Fatalis quest solo (Speedrun/Zen).",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -1750,7 +1657,6 @@ public static class Achievements
             Rank = AchievementRank.Bronze,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_red2.jpg",
             Objective = "Complete 1 Lv9999 Shantien quest.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -1764,7 +1670,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_white2.jpg",
             Objective = "Complete 10 Lv9999 Shantien quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -1778,7 +1683,6 @@ public static class Achievements
             Rank = AchievementRank.Gold,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_yellow.jpg",
             Objective = "Complete 25 Lv9999 Shantien quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -1792,7 +1696,6 @@ public static class Achievements
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_blue2.jpg",
             Objective = "Complete 50 Lv9999 Shantien quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -1806,7 +1709,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_white2.jpg",
             Objective = "Complete 1 Lv9999 Shantien quest solo (Speedrun/Zen).",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -1820,7 +1722,6 @@ public static class Achievements
             Rank = AchievementRank.Bronze,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_red2.jpg",
             Objective = "Complete 1 Lv9999 Disufiroa quest.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -1834,7 +1735,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_white2.jpg",
             Objective = "Complete 10 Lv9999 Disufiroa quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -1848,7 +1748,6 @@ public static class Achievements
             Rank = AchievementRank.Gold,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_yellow.jpg",
             Objective = "Complete 25 Lv9999 Disufiroa quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -1862,7 +1761,6 @@ public static class Achievements
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_blue2.jpg",
             Objective = "Complete 50 Lv9999 Disufiroa quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -1876,7 +1774,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_white2.jpg",
             Objective = "Complete 1 Lv9999 Disufiroa quest solo (Speedrun/Zen).",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -1890,7 +1787,6 @@ public static class Achievements
             Rank = AchievementRank.Bronze,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_red2.jpg",
             Objective = "Complete 1 Upper Shiten Unknown quest.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -1904,7 +1800,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_white2.jpg",
             Objective = "Complete 10 Upper Shiten Unknown quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -1918,7 +1813,6 @@ public static class Achievements
             Rank = AchievementRank.Gold,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_yellow.jpg",
             Objective = "Complete 25 Upper Shiten Unknown quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -1932,7 +1826,6 @@ public static class Achievements
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_blue2.jpg",
             Objective = "Complete 50 Upper Shiten Unknown quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -1946,7 +1839,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_white2.jpg",
             Objective = "Complete 1 Upper Shiten Unknown quest solo (Speedrun/Zen).",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -1960,7 +1852,6 @@ public static class Achievements
             Rank = AchievementRank.Bronze,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_red2.jpg",
             Objective = "Complete 1 Upper Shiten Disufiroa quest.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -1974,7 +1865,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_white2.jpg",
             Objective = "Complete 10 Upper Shiten Disufiroa quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -1988,7 +1878,6 @@ public static class Achievements
             Rank = AchievementRank.Gold,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_yellow.jpg",
             Objective = "Complete 25 Upper Shiten Disufiroa quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -2002,7 +1891,6 @@ public static class Achievements
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_blue2.jpg",
             Objective = "Complete 50 Upper Shiten Disufiroa quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -2016,7 +1904,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_white2.jpg",
             Objective = "Complete 1 Upper Shiten Disufiroa quest solo (Speedrun/Zen).",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -2030,7 +1917,6 @@ public static class Achievements
             Rank = AchievementRank.Bronze,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_red2.jpg",
             Objective = "Complete 1 Thirsty Pariapuria quest.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -2044,7 +1930,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_white2.jpg",
             Objective = "Complete 10 Thirsty Pariapuria quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -2058,7 +1943,6 @@ public static class Achievements
             Rank = AchievementRank.Gold,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_yellow.jpg",
             Objective = "Complete 25 Thirsty Pariapuria quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -2072,7 +1956,6 @@ public static class Achievements
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_blue2.jpg",
             Objective = "Complete 50 Thirsty Pariapuria quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -2086,7 +1969,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_white2.jpg",
             Objective = "Complete 1 Thirsty Pariapuria quest solo (Speedrun/Zen).",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -2100,7 +1982,6 @@ public static class Achievements
             Rank = AchievementRank.Bronze,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_red2.jpg",
             Objective = "Complete 1 Ruling Guanzorumu True Slay quest.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -2114,7 +1995,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_white2.jpg",
             Objective = "Complete 10 Ruling Guanzorumu True Slay quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -2128,7 +2008,6 @@ public static class Achievements
             Rank = AchievementRank.Gold,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_yellow.jpg",
             Objective = "Complete 25 Ruling Guanzorumu True Slay quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -2142,7 +2021,6 @@ public static class Achievements
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_blue2.jpg",
             Objective = "Complete 50 Ruling Guanzorumu True Slay quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -2156,7 +2034,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_white2.jpg",
             Objective = "Complete 1 Ruling Guanzorumu True Slay quest solo (Speedrun/Zen).",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -2170,7 +2047,6 @@ public static class Achievements
             Rank = AchievementRank.Bronze,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_red2.jpg",
             Objective = "Complete 1 Shifting Mi Ru quest.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -2184,7 +2060,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_white2.jpg",
             Objective = "Complete 10 Shifting Mi Ru quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -2198,7 +2073,6 @@ public static class Achievements
             Rank = AchievementRank.Gold,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_yellow.jpg",
             Objective = "Complete 25 Shifting Mi Ru quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -2212,7 +2086,6 @@ public static class Achievements
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_blue2.jpg",
             Objective = "Complete 50 Shifting Mi Ru quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -2226,7 +2099,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_white2.jpg",
             Objective = "Complete 1 Shifting Mi Ru quest solo (Speedrun/Zen).",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -2240,7 +2112,6 @@ public static class Achievements
             Rank = AchievementRank.Bronze,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_red2.jpg",
             Objective = "Complete 1 Blinking Nargacuga True Slay quest.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -2254,7 +2125,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_white2.jpg",
             Objective = "Complete 10 Blinking Nargacuga True Slay quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -2268,7 +2138,6 @@ public static class Achievements
             Rank = AchievementRank.Gold,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_yellow.jpg",
             Objective = "Complete 25 Blinking Nargacuga True Slay quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -2282,7 +2151,6 @@ public static class Achievements
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_blue2.jpg",
             Objective = "Complete 50 Blinking Nargacuga True Slay quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -2296,7 +2164,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_white2.jpg",
             Objective = "Complete 1 Blinking Nargacuga True Slay quest solo (Speedrun/Zen).",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -2310,7 +2177,6 @@ public static class Achievements
             Rank = AchievementRank.Bronze,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_red2.jpg",
             Objective = "Complete 1 Howling Zinogre True Slay quest.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -2324,7 +2190,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_white2.jpg",
             Objective = "Complete 10 Howling Zinogre True Slay quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -2338,7 +2203,6 @@ public static class Achievements
             Rank = AchievementRank.Gold,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_yellow.jpg",
             Objective = "Complete 25 Howling Zinogre True Slay quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -2352,7 +2216,6 @@ public static class Achievements
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_blue2.jpg",
             Objective = "Complete 50 Howling Zinogre True Slay quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -2366,7 +2229,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_white2.jpg",
             Objective = "Complete 1 Howling Zinogre True Slay quest solo (Speedrun/Zen).",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -2380,7 +2242,6 @@ public static class Achievements
             Rank = AchievementRank.Bronze,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_red2.jpg",
             Objective = "Complete 1 Starving Deviljho True Slay quest.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -2394,7 +2255,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_white2.jpg",
             Objective = "Complete 10 Starving Deviljho True Slay quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -2408,7 +2268,6 @@ public static class Achievements
             Rank = AchievementRank.Gold,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_yellow.jpg",
             Objective = "Complete 25 Starving Deviljho True Slay quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -2422,7 +2281,6 @@ public static class Achievements
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_blue2.jpg",
             Objective = "Complete 50 Starving Deviljho True Slay quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -2436,7 +2294,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_white2.jpg",
             Objective = "Complete 1 Starving Deviljho True Slay quest solo (Speedrun/Zen).",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -2450,7 +2307,6 @@ public static class Achievements
             Rank = AchievementRank.Bronze,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_red2.jpg",
             Objective = "Complete 1 Sparkling Zerureusu True Slay quest.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -2464,7 +2320,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_white2.jpg",
             Objective = "Complete 10 Sparkling Zerureusu True Slay quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -2478,7 +2333,6 @@ public static class Achievements
             Rank = AchievementRank.Gold,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_yellow.jpg",
             Objective = "Complete 25 Sparkling Zerureusu True Slay quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -2492,7 +2346,6 @@ public static class Achievements
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_blue2.jpg",
             Objective = "Complete 50 Sparkling Zerureusu True Slay quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -2506,7 +2359,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_white2.jpg",
             Objective = "Complete 1 Sparkling Zerureusu True Slay quest solo (Speedrun/Zen).",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -2520,7 +2372,6 @@ public static class Achievements
             Rank = AchievementRank.Bronze,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_red2.jpg",
             Objective = "Complete 1 Arrogant Duremudira True Slay quest.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -2534,7 +2385,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_white2.jpg",
             Objective = "Complete 10 Arrogant Duremudira True Slay quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -2548,7 +2398,6 @@ public static class Achievements
             Rank = AchievementRank.Gold,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_yellow.jpg",
             Objective = "Complete 25 Arrogant Duremudira True Slay quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -2562,7 +2411,6 @@ public static class Achievements
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_blue2.jpg",
             Objective = "Complete 50 Arrogant Duremudira True Slay quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -2576,7 +2424,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_white2.jpg",
             Objective = "Complete 1 Arrogant Duremudira True Slay quest solo (Speedrun/Zen).",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -2590,7 +2437,6 @@ public static class Achievements
             Rank = AchievementRank.Bronze,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_red2.jpg",
             Objective = "Complete 1 Blitzkrieg Bogabadorumu True Slay quest.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -2604,7 +2450,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_white2.jpg",
             Objective = "Complete 10 Blitzkrieg Bogabadorumu True Slay quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -2618,7 +2463,6 @@ public static class Achievements
             Rank = AchievementRank.Gold,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_yellow.jpg",
             Objective = "Complete 25 Blitzkrieg Bogabadorumu True Slay quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -2632,7 +2476,6 @@ public static class Achievements
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_blue2.jpg",
             Objective = "Complete 50 Blitzkrieg Bogabadorumu True Slay quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -2646,7 +2489,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_white2.jpg",
             Objective = "Complete 1 Blitzkrieg Bogabadorumu True Slay quest solo (Speedrun/Zen).",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -2660,7 +2502,6 @@ public static class Achievements
             Rank = AchievementRank.Bronze,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_red2.jpg",
             Objective = "Complete 1 Burning Freezing Elzelion True Slay quest.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -2674,7 +2515,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_white2.jpg",
             Objective = "Complete 10 Burning Freezing Elzelion True Slay quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -2688,7 +2528,6 @@ public static class Achievements
             Rank = AchievementRank.Gold,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_yellow.jpg",
             Objective = "Complete 25 Burning Freezing Elzelion True Slay quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -2702,7 +2541,6 @@ public static class Achievements
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_blue2.jpg",
             Objective = "Complete 50 Burning Freezing Elzelion True Slay quests.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -2716,7 +2554,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_white2.jpg",
             Objective = "Complete 1 Burning Freezing Elzelion True Slay quest solo (Speedrun/Zen).",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -2730,7 +2567,6 @@ public static class Achievements
             Rank = AchievementRank.Bronze,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_red2.jpg",
             Objective = "Complete a Thirsty Pariapuria quest with a Serious Drink Affinity in your inventory.",
-
             IsSecret = true,
             Hint = "I wish I had something to drink...seriously!",
             }
@@ -2744,7 +2580,6 @@ public static class Achievements
             Rank = AchievementRank.Gold,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_yellow.jpg",
             Objective = "Complete a Ruling Guanzorumu True Slay quest with a non-extreme style.",
-
             IsSecret = true,
             Hint = "Do I really need to run to beat this monster?",
             }
@@ -2758,7 +2593,6 @@ public static class Achievements
             Rank = AchievementRank.Bronze,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_red2.jpg",
             Objective = "Complete a Shifting Mi Ru quest while having pressed Shift at the start.",
-
             IsSecret = true,
             Hint = "What if the hunter is also shifting?",
             }
@@ -2772,7 +2606,6 @@ public static class Achievements
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_blue2.jpg",
             Objective = "Complete a Blinking Nargacuga True Slay quest without getting hit (including blocks)",
-
             IsSecret = true,
             Hint = "Do you have the instinct to dodge everything?",
             }
@@ -2786,7 +2619,6 @@ public static class Achievements
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_blue2.jpg",
             Objective = "Complete a Howling Zinogre True Slay quest solo with 40 max stamina.",
-
             IsSecret = true,
             Hint = "I'm starving and lonely.",
             }
@@ -2800,7 +2632,6 @@ public static class Achievements
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_blue2.jpg",
             Objective = "Complete a Burning Freezing Elzelion True Slay quest with Blazing Majesty and Ice Age",
-
             IsSecret = true,
             Hint = "Fire and flame? No, ice and blaze!",
             }
@@ -2814,7 +2645,6 @@ public static class Achievements
             Rank = AchievementRank.Bronze,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_red2.jpg",
             Objective = "Complete a Blitzkrieg Bogabadorumu True Slay quest with a Large Barrel Bomb in your inventory.",
-
             IsSecret = true,
             Hint = "We are going to need bigger bombs for this guy...",
             }
@@ -2828,7 +2658,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_white2.jpg",
             Objective = "Complete an Arrogant Duremudira True Slay quest with Soul Revival equipped.",
-
             IsSecret = true,
             Hint = "This thunder brings oblivion! Unless...",
             }
@@ -2842,7 +2671,6 @@ public static class Achievements
             Rank = AchievementRank.Bronze,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/unknown_red.jpg",
             Objective = "Complete a certain quest on February 14th.",
-
             IsSecret = true,
             Hint = "Veggie Elder! How I missed you...",
             }
@@ -2856,7 +2684,6 @@ public static class Achievements
             Rank = AchievementRank.Bronze,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_red2.jpg",
             Objective = "Defeat Producer Gogomoa with a Gunlance",
-
             IsSecret = true,
             Hint = "If he uses a Gunlance, so do I!",
             }
@@ -2870,7 +2697,6 @@ public static class Achievements
             Rank = AchievementRank.Bronze,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_red2.jpg",
             Objective = "Complete a Four Heavenly King Deviljho quest.",
-
             IsSecret = true,
             Hint = "Slay an emperor of fire.",
             }
@@ -2884,7 +2710,6 @@ public static class Achievements
             Rank = AchievementRank.Bronze,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/unknown_red.jpg",
             Objective = "Complete a Hatsune Miku quest.",
-
             IsSecret = true,
             Hint = "Erupe thinks we should dance!",
             }
@@ -2898,7 +2723,6 @@ public static class Achievements
             Rank = AchievementRank.Bronze,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/unknown_red.jpg",
             Objective = "Complete a PSO2 quest.",
-
             IsSecret = true,
             Hint = "Rappy thinks we should sing!",
             }
@@ -2912,7 +2736,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/unknown_white.jpg",
             Objective = "Complete a Megaman quest.",
-
             IsSecret = true,
             Hint = "Obtain the Gears of Destiny.",
             }
@@ -2926,7 +2749,6 @@ public static class Achievements
             Rank = AchievementRank.Bronze,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/unknown_red.jpg",
             Objective = "Complete a Higanjima quest.",
-
             IsSecret = true,
             Hint = "Higanjima.",
             }
@@ -2940,7 +2762,6 @@ public static class Achievements
             Rank = AchievementRank.Bronze,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_red2.jpg",
             Objective = "Defeat the huge Plesioth.",
-
             IsSecret = true,
             Hint = "Don't let the Plesioth grow.",
             }
@@ -2954,7 +2775,6 @@ public static class Achievements
             Rank = AchievementRank.Bronze,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_red2.jpg",
             Objective = "Defeat Sunglasses Kut-Ku.",
-
             IsSecret = true,
             Hint = "I need a new pair of sunglasses...",
             }
@@ -2968,9 +2788,8 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/unknown_white.jpg",
             Objective = "Complete 1 MHF-Q quest.",
-
             IsSecret = true,
-            Hint = "You need an extreme amount of knowledge to complete this quest.",
+            Hint = "You need an extreme amount of knowledge in order to complete this quest.",
             }
         },
         {
@@ -2982,7 +2801,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_white2.jpg",
             Objective = "Complete a certain Congalala quest.",
-
             IsSecret = true,
             Hint = "See no evil, hear no evil, speak no evil.",
             }
@@ -2996,7 +2814,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/zenny.jpg",
             Objective = "Get the maximum amount of GZenny",
-
             IsSecret = true,
             Hint = "I should probably hunt a Zenith Hypnoc.",
             }
@@ -3010,7 +2827,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/diva.jpg",
             Objective = "Get the maximum amount of Diva Bond",
-
             IsSecret = true,
             Hint = "Do you like fluffy cakes?",
             }
@@ -3024,7 +2840,6 @@ public static class Achievements
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/medal_stamp.jpg",
             Objective = "Obtain S Rank in all single-player MezFes minigames",
-
             IsSecret = true,
             Hint = "Do you like minigames?",
             }
@@ -3038,7 +2853,6 @@ public static class Achievements
             Rank = AchievementRank.Gold,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/points.jpg",
             Objective = "Obtain the maximum Caravan points.",
-
             IsSecret = true,
             Hint = "Carry me Caravan take me away",
             }
@@ -3052,7 +2866,6 @@ public static class Achievements
             Rank = AchievementRank.Gold,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/tower.jpg",
             Objective = "Get to Multiplayer Road Floor 50.",
-
             IsSecret = true,
             Hint = "A long road ahead...",
             }
@@ -3066,7 +2879,6 @@ public static class Achievements
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/tower.jpg",
             Objective = "Get to Multiplayer Road Floor 100.",
-
             IsSecret = true,
             Hint = "End of the road?",
             }
@@ -3080,7 +2892,6 @@ public static class Achievements
             Rank = AchievementRank.Gold,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/hunters.jpg",
             Objective = "Obtain a Max Level partner.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -3094,7 +2905,6 @@ public static class Achievements
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/ticket_silver.jpg",
             Objective = "Attempt a quest 1000 times.",
-
             IsSecret = true,
             Hint = "You need a strong determination for doing this quest this many times.",
             }
@@ -3108,7 +2918,6 @@ public static class Achievements
             Rank = AchievementRank.Gold,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/ticket_gold.jpg",
             Objective = "Attempt a personal best 100 times.",
-
             IsSecret = true,
             Hint = "You haven't gotten a new record yet, hopefully this cheers you up.",
             }
@@ -3122,7 +2931,6 @@ public static class Achievements
             Rank = AchievementRank.Bronze,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/duremudira.jpg",
             Objective = "Defeat 2nd District duremudira 100 times.",
-
             IsSecret = true,
             Hint = "You killed that many monsters?!",
             }
@@ -3136,7 +2944,6 @@ public static class Achievements
             Rank = AchievementRank.Bronze,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/tower.jpg",
             Objective = "Defeat Road Fatalis 100 times.",
-
             IsSecret = true,
             Hint = "How many times will this monster roar?!",
             }
@@ -3150,7 +2957,6 @@ public static class Achievements
             Rank = AchievementRank.Bronze,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/unknown_red.jpg",
             Objective = "Click a Fumo.",
-
             IsSecret = true,
             Hint = "Fumo.",
             }
@@ -3164,7 +2970,6 @@ public static class Achievements
             Rank = AchievementRank.Bronze,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_red2.jpg",
             Objective = "Defeat the Twinhead Rajangs.",
-
             IsSecret = true,
             Hint = "You will need to go even further beyond in order to beat this quest.",
             }
@@ -3178,7 +2983,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/award_silver.png",
             Objective = "Complete 1 Zenith★4 Akura Vashimu quest under 10 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -3192,7 +2996,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/award_silver.png",
             Objective = "Complete 1 Zenith★4 Anorupatisu quest under 10 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -3206,7 +3009,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/award_silver.png",
             Objective = "Complete 1 Zenith★4 Blangonga quest under 10 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -3220,7 +3022,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/award_silver.png",
             Objective = "Complete 1 Zenith★4 Daimyo Hermitaur quest under 10 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -3234,7 +3035,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/award_silver.png",
             Objective = "Complete 1 Zenith★4 Doragyurosu quest under 10 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -3248,7 +3048,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/award_silver.png",
             Objective = "Complete 1 Zenith★4 Espinas quest under 10 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -3262,7 +3061,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/award_silver.png",
             Objective = "Complete 1 Zenith★4 Gasurabazura quest under 10 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -3276,7 +3074,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/award_silver.png",
             Objective = "Complete 1 Zenith★4 Giaorugu quest under 10 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -3290,7 +3087,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/award_silver.png",
             Objective = "Complete 1 Zenith★4 Hypnocatrice quest under 10 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -3304,7 +3100,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/award_silver.png",
             Objective = "Complete 1 Zenith★4 Hyujikiki quest under 10 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -3318,7 +3113,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/award_silver.png",
             Objective = "Complete 1 Zenith★4 Inagami quest under 10 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -3332,7 +3126,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/award_silver.png",
             Objective = "Complete 1 Zenith★4 Khezu quest under 10 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -3346,7 +3139,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/award_silver.png",
             Objective = "Complete 1 Zenith★4 Midogaron quest under 10 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -3360,7 +3152,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/award_silver.png",
             Objective = "Complete 1 Zenith★4 Plesioth quest under 10 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -3374,7 +3165,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/award_silver.png",
             Objective = "Complete 1 Zenith★4 Rathalos quest under 10 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -3388,7 +3178,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/award_silver.png",
             Objective = "Complete 1 Zenith★4 Rukodiora quest under 10 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -3402,7 +3191,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/award_silver.png",
             Objective = "Complete 1 Zenith★4 Tigrex quest under 10 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -3416,7 +3204,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/award_silver.png",
             Objective = "Complete 1 Zenith★4 Toridcless quest under 10 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -3430,7 +3217,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/award_silver.png",
             Objective = "Complete 1 Zenith★4 Baruragaru quest under 10 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -3444,7 +3230,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/award_silver.png",
             Objective = "Complete 1 Zenith★4 Bogabadorumu quest under 10 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -3458,7 +3243,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/award_silver.png",
             Objective = "Complete 1 Zenith★4 Gravios quest under 10 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -3472,7 +3256,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/award_silver.png",
             Objective = "Complete 1 Zenith★4 Harudomerugu quest under 10 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -3486,7 +3269,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/award_silver.png",
             Objective = "Complete 1 Zenith★4 Taikun Zamuza quest under 10 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -3500,7 +3282,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/award_silver.png",
             Objective = "Complete 1 Lv9999 Fatalis quest under 10 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -3514,7 +3295,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/award_silver.png",
             Objective = "Complete 1 Lv9999 Crimson Fatalis quest under 10 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -3528,7 +3308,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/award_silver.png",
             Objective = "Complete 1 Lv9999 Shantien quest under 10 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -3542,7 +3321,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/award_silver.png",
             Objective = "Complete 1 Lv9999 Disufiroa quest under 10 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -3556,7 +3334,6 @@ public static class Achievements
             Rank = AchievementRank.Gold,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/award_gold.png",
             Objective = "Complete 1 Zenith★4 Akura Vashimu quest under 8 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -3570,7 +3347,6 @@ public static class Achievements
             Rank = AchievementRank.Gold,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/award_gold.png",
             Objective = "Complete 1 Zenith★4 Anorupatisu quest under 8 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -3584,7 +3360,6 @@ public static class Achievements
             Rank = AchievementRank.Gold,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/award_gold.png",
             Objective = "Complete 1 Zenith★4 Blangonga quest under 8 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -3598,7 +3373,6 @@ public static class Achievements
             Rank = AchievementRank.Gold,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/award_gold.png",
             Objective = "Complete 1 Zenith★4 Daimyo Hermitaur quest under 8 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -3612,7 +3386,6 @@ public static class Achievements
             Rank = AchievementRank.Gold,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/award_gold.png",
             Objective = "Complete 1 Zenith★4 Doragyurosu quest under 8 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -3626,7 +3399,6 @@ public static class Achievements
             Rank = AchievementRank.Gold,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/award_gold.png",
             Objective = "Complete 1 Zenith★4 Espinas quest under 8 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -3640,7 +3412,6 @@ public static class Achievements
             Rank = AchievementRank.Gold,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/award_gold.png",
             Objective = "Complete 1 Zenith★4 Gasurabazura quest under 8 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -3654,7 +3425,6 @@ public static class Achievements
             Rank = AchievementRank.Gold,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/award_gold.png",
             Objective = "Complete 1 Zenith★4 Giaorugu quest under 8 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -3668,7 +3438,6 @@ public static class Achievements
             Rank = AchievementRank.Gold,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/award_gold.png",
             Objective = "Complete 1 Zenith★4 Hypnocatrice quest under 8 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -3682,7 +3451,6 @@ public static class Achievements
             Rank = AchievementRank.Gold,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/award_gold.png",
             Objective = "Complete 1 Zenith★4 Hyujikiki quest under 8 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -3696,7 +3464,6 @@ public static class Achievements
             Rank = AchievementRank.Gold,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/award_gold.png",
             Objective = "Complete 1 Zenith★4 Inagami quest under 8 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -3710,7 +3477,6 @@ public static class Achievements
             Rank = AchievementRank.Gold,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/award_gold.png",
             Objective = "Complete 1 Zenith★4 Khezu quest under 8 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -3724,7 +3490,6 @@ public static class Achievements
             Rank = AchievementRank.Gold,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/award_gold.png",
             Objective = "Complete 1 Zenith★4 Midogaron quest under 8 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -3738,7 +3503,6 @@ public static class Achievements
             Rank = AchievementRank.Gold,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/award_gold.png",
             Objective = "Complete 1 Zenith★4 Plesioth quest under 8 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -3752,7 +3516,6 @@ public static class Achievements
             Rank = AchievementRank.Gold,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/award_gold.png",
             Objective = "Complete 1 Zenith★4 Rathalos quest under 8 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -3766,7 +3529,6 @@ public static class Achievements
             Rank = AchievementRank.Gold,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/award_gold.png",
             Objective = "Complete 1 Zenith★4 Rukodiora quest under 8 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -3780,7 +3542,6 @@ public static class Achievements
             Rank = AchievementRank.Gold,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/award_gold.png",
             Objective = "Complete 1 Zenith★4 Tigrex quest under 8 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -3794,7 +3555,6 @@ public static class Achievements
             Rank = AchievementRank.Gold,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/award_gold.png",
             Objective = "Complete 1 Zenith★4 Toridcless quest under 8 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -3808,7 +3568,6 @@ public static class Achievements
             Rank = AchievementRank.Gold,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/award_gold.png",
             Objective = "Complete 1 Zenith★4 Baruragaru quest under 8 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -3822,7 +3581,6 @@ public static class Achievements
             Rank = AchievementRank.Gold,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/award_gold.png",
             Objective = "Complete 1 Zenith★4 Bogabadorumu quest under 8 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -3836,7 +3594,6 @@ public static class Achievements
             Rank = AchievementRank.Gold,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/award_gold.png",
             Objective = "Complete 1 Zenith★4 Gravios quest under 8 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -3850,7 +3607,6 @@ public static class Achievements
             Rank = AchievementRank.Gold,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/award_gold.png",
             Objective = "Complete 1 Zenith★4 Harudomerugu quest under 8 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -3864,7 +3620,6 @@ public static class Achievements
             Rank = AchievementRank.Gold,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/award_gold.png",
             Objective = "Complete 1 Zenith★4 Taikun Zamuza quest under 8 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -3878,7 +3633,6 @@ public static class Achievements
             Rank = AchievementRank.Gold,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/award_gold.png",
             Objective = "Complete 1 Lv9999 Fatalis quest under 8 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -3892,7 +3646,6 @@ public static class Achievements
             Rank = AchievementRank.Gold,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/award_gold.png",
             Objective = "Complete 1 Lv9999 Crimson Fatalis quest under 8 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -3906,7 +3659,6 @@ public static class Achievements
             Rank = AchievementRank.Gold,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/award_gold.png",
             Objective = "Complete 1 Lv9999 Shantien quest under 8 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -3920,7 +3672,6 @@ public static class Achievements
             Rank = AchievementRank.Gold,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/award_gold.png",
             Objective = "Complete 1 Lv9999 Disufiroa quest under 8 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -3934,7 +3685,6 @@ public static class Achievements
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/clock.jpg",
             Objective = "Complete 1 Zenith★4 Akura Vashimu quest under 5 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -3948,7 +3698,6 @@ public static class Achievements
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/clock.jpg",
             Objective = "Complete 1 Zenith★4 Anorupatisu quest under 5 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -3962,7 +3711,6 @@ public static class Achievements
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/clock.jpg",
             Objective = "Complete 1 Zenith★4 Blangonga quest under 5 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -3976,7 +3724,6 @@ public static class Achievements
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/clock.jpg",
             Objective = "Complete 1 Zenith★4 Daimyo Hermitaur quest under 5 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -3990,7 +3737,6 @@ public static class Achievements
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/clock.jpg",
             Objective = "Complete 1 Zenith★4 Doragyurosu quest under 5 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -4004,7 +3750,6 @@ public static class Achievements
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/clock.jpg",
             Objective = "Complete 1 Zenith★4 Espinas quest under 5 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -4018,7 +3763,6 @@ public static class Achievements
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/clock.jpg",
             Objective = "Complete 1 Zenith★4 Gasurabazura quest under 5 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -4032,7 +3776,6 @@ public static class Achievements
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/clock.jpg",
             Objective = "Complete 1 Zenith★4 Giaorugu quest under 5 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -4046,7 +3789,6 @@ public static class Achievements
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/clock.jpg",
             Objective = "Complete 1 Zenith★4 Hypnocatrice quest under 5 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -4060,7 +3802,6 @@ public static class Achievements
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/clock.jpg",
             Objective = "Complete 1 Zenith★4 Hyujikiki quest under 5 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -4074,7 +3815,6 @@ public static class Achievements
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/clock.jpg",
             Objective = "Complete 1 Zenith★4 Inagami quest under 5 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -4088,7 +3828,6 @@ public static class Achievements
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/clock.jpg",
             Objective = "Complete 1 Zenith★4 Khezu quest under 5 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -4102,7 +3841,6 @@ public static class Achievements
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/clock.jpg",
             Objective = "Complete 1 Zenith★4 Midogaron quest under 5 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -4116,7 +3854,6 @@ public static class Achievements
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/clock.jpg",
             Objective = "Complete 1 Zenith★4 Plesioth quest under 5 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -4130,7 +3867,6 @@ public static class Achievements
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/clock.jpg",
             Objective = "Complete 1 Zenith★4 Rathalos quest under 5 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -4144,7 +3880,6 @@ public static class Achievements
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/clock.jpg",
             Objective = "Complete 1 Zenith★4 Rukodiora quest under 5 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -4158,7 +3893,6 @@ public static class Achievements
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/clock.jpg",
             Objective = "Complete 1 Zenith★4 Tigrex quest under 5 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -4172,7 +3906,6 @@ public static class Achievements
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/clock.jpg",
             Objective = "Complete 1 Zenith★4 Toridcless quest under 5 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -4186,7 +3919,6 @@ public static class Achievements
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/clock.jpg",
             Objective = "Complete 1 Zenith★4 Baruragaru quest under 5 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -4200,7 +3932,6 @@ public static class Achievements
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/clock.jpg",
             Objective = "Complete 1 Zenith★4 Bogabadorumu quest under 5 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -4214,7 +3945,6 @@ public static class Achievements
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/clock.jpg",
             Objective = "Complete 1 Zenith★4 Gravios quest under 5 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -4228,7 +3958,6 @@ public static class Achievements
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/clock.jpg",
             Objective = "Complete 1 Zenith★4 Harudomerugu quest under 5 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -4242,7 +3971,6 @@ public static class Achievements
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/clock.jpg",
             Objective = "Complete 1 Zenith★4 Taikun Zamuza quest under 5 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -4256,7 +3984,6 @@ public static class Achievements
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/clock.jpg",
             Objective = "Complete 1 Lv9999 Fatalis quest under 5 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -4270,7 +3997,6 @@ public static class Achievements
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/clock.jpg",
             Objective = "Complete 1 Lv9999 Crimson Fatalis quest under 5 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -4284,7 +4010,6 @@ public static class Achievements
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/clock.jpg",
             Objective = "Complete 1 Lv9999 Shantien quest under 5 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -4298,7 +4023,6 @@ public static class Achievements
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/clock.jpg",
             Objective = "Complete 1 Lv9999 Disufiroa quest under 5 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -4312,7 +4036,6 @@ public static class Achievements
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/clock.jpg",
             Objective = "Complete 1 Thirsty Pariapuria quest under 3 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -4326,7 +4049,6 @@ public static class Achievements
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/clock.jpg",
             Objective = "Complete 1 Shifting Mi Ru quest under 5 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -4340,7 +4062,6 @@ public static class Achievements
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/clock.jpg",
             Objective = "Complete 1 Ruling Guanzorumu True Slay quest under 5 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -4354,7 +4075,6 @@ public static class Achievements
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/clock.jpg",
             Objective = "Complete 1 Blinking Nargacuga True Slay quest under 7 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -4368,7 +4088,6 @@ public static class Achievements
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/clock.jpg",
             Objective = "Complete 1 Howling Zinogre True Slay quest under 7 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -4382,7 +4101,6 @@ public static class Achievements
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/clock.jpg",
             Objective = "Complete 1 Sparkling Zerureusu True Slay quest under 9 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -4396,7 +4114,6 @@ public static class Achievements
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/clock.jpg",
             Objective = "Complete 1 Starving Deviljho True Slay quest under 9 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -4410,7 +4127,6 @@ public static class Achievements
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/clock.jpg",
             Objective = "Complete 1 Arrogant Duremudira True Slay quest under 9 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -4424,7 +4140,6 @@ public static class Achievements
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/clock.jpg",
             Objective = "Complete 1 Blitzkrieg Bogabadorumu True Slay quest under 9 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -4438,7 +4153,6 @@ public static class Achievements
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/clock.jpg",
             Objective = "Complete 1 Burning Freezing Elzelion True Slay quest under 9 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -4452,7 +4166,6 @@ public static class Achievements
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/clock.jpg",
             Objective = "Complete 1 Upper Shiten Unknown quest under 9 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -4466,7 +4179,6 @@ public static class Achievements
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/clock.jpg",
             Objective = "Complete 1 Upper Shiten Disufiroa quest under 9 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -4480,7 +4192,6 @@ public static class Achievements
             Rank = AchievementRank.Bronze,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/stamp.jpg",
             Objective = "Complete Bingo (Easy).",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -4494,7 +4205,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/stamp.jpg",
             Objective = "Complete Bingo (Medium).",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -4508,7 +4218,6 @@ public static class Achievements
             Rank = AchievementRank.Gold,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/stamp.jpg",
             Objective = "Complete Bingo (Hard).",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -4522,7 +4231,6 @@ public static class Achievements
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/stamp.jpg",
             Objective = "Complete Bingo (Extreme).",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -4536,7 +4244,6 @@ public static class Achievements
             Rank = AchievementRank.Bronze,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/book_guild.png",
             Objective = "Obtain a Gacha Card.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -4550,7 +4257,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/book_guild.png",
             Objective = "Obtain 100 Gacha Cards.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -4564,7 +4270,6 @@ public static class Achievements
             Rank = AchievementRank.Gold,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/book_guild.png",
             Objective = "Obtain 1000 Gacha Cards.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -4578,7 +4283,6 @@ public static class Achievements
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/book_guild.png",
             Objective = "Obtain all Gacha Cards.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -4592,7 +4296,6 @@ public static class Achievements
             Rank = AchievementRank.Bronze,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/hunter.jpg",
             Objective = "Complete 1 Zenith Gauntlet.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -4606,7 +4309,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/medal_silver.png",
             Objective = "Complete 10 Zenith Gauntlets.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -4620,7 +4322,6 @@ public static class Achievements
             Rank = AchievementRank.Gold,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/medal_gold.png",
             Objective = "Complete 25 Zenith Gauntlets.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -4634,7 +4335,6 @@ public static class Achievements
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/medal_platinum.png",
             Objective = "Complete a Zenith Gauntlet under 4 hours.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -4648,7 +4348,6 @@ public static class Achievements
             Rank = AchievementRank.Bronze,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/hunter.jpg",
             Objective = "Complete 1 Solstice Gauntlet.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -4662,7 +4361,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/medal_silver.png",
             Objective = "Complete 10 Solstice Gauntlets.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -4676,7 +4374,6 @@ public static class Achievements
             Rank = AchievementRank.Gold,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/medal_gold.png",
             Objective = "Complete 25 Solstice Gauntlets.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -4690,7 +4387,6 @@ public static class Achievements
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/medal_platinum.png",
             Objective = "Complete a Solstice Gauntlet under an hour.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -4704,7 +4400,6 @@ public static class Achievements
             Rank = AchievementRank.Bronze,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/hunter.jpg",
             Objective = "Complete 1 Musou Gauntlet.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -4718,7 +4413,6 @@ public static class Achievements
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/medal_silver.png",
             Objective = "Complete 10 Musou Gauntlets.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -4732,7 +4426,6 @@ public static class Achievements
             Rank = AchievementRank.Bronze,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/medal_gold.png",
             Objective = "Complete 25 Musou Gauntlets.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -4746,7 +4439,6 @@ public static class Achievements
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/medal_platinum.png",
             Objective = "Complete a Musou Gauntlet under 100 minutes.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -4760,7 +4452,6 @@ public static class Achievements
             Rank = AchievementRank.Bronze,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/transcend.jpg",
             Objective = "Enable Discord Rich Presence",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -4774,7 +4465,6 @@ public static class Achievements
             Rank = AchievementRank.Bronze,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/transcend.jpg",
             Objective = "Enable Zen mode",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -4788,7 +4478,6 @@ public static class Achievements
             Rank = AchievementRank.Bronze,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/transcend.jpg",
             Objective = "Enable one of the Speedrun modes",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -4802,7 +4491,6 @@ public static class Achievements
             Rank = AchievementRank.Bronze,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/plate.png",
             Objective = "Complete 50 quests with Guild Food",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -4816,7 +4504,6 @@ public static class Achievements
             Rank = AchievementRank.Bronze,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/diva.jpg",
             Objective = "Complete 50 quests with a Diva Skill",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -4830,7 +4517,6 @@ public static class Achievements
             Rank = AchievementRank.Gold,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/gem.jpg",
             Objective = "Earn 100,000 or more evaluation points in the gallery competition in My Gallery.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -4844,7 +4530,6 @@ public static class Achievements
             Rank = AchievementRank.Gold,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/book_monster.png",
             Objective = "Hunt 1000 Large Monsters.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -4858,7 +4543,6 @@ public static class Achievements
             Rank = AchievementRank.Gold,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/book_weapon.png",
             Objective = "Have a total hunt time of 100 hours.",
-
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -5589,6 +5273,44 @@ public static class Achievements
             Objective = "Complete a Musou Gauntlet without fainting.",
             IsSecret = false,
             Hint = string.Empty,
+            }
+        },
+        {
+            404, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "The Embodiment of Scarlet Devil",
+            Description = string.Empty,
+            Rank = AchievementRank.Platinum,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/Element_Crimson_Demon.png",
+            Objective = "Defeat Lv9999 Crimson Fatalis solo without using Terrain Res.",
+            IsSecret = true,
+            Hint =
+@"Eternity cutting through the hot wind,
+Immortal flares swaying, wrapped in flames in a dimension that
+transcends the boundary between life and death,
+the journey of rebirth repeats itself
+
+Into the Lava
+Burned by scorching flames
+that beautiful bird regains its brilliance
+
+Dive Again It's the soul that endured pain many times,
+It's the soul that can grasp eternity,
+Just now, reduced to ashes",
+            }
+        },
+        {
+            405, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Crushing Palms",
+            Description = string.Empty,
+            Rank = AchievementRank.Platinum,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/extreme_poison.png",
+            Objective = "Defeat Zenith★4 Gasurabazura solo without Poison Cure.",
+            IsSecret = true,
+            Hint = "No cures allowed! But your halk is allowed to help.",
             }
         },
     });

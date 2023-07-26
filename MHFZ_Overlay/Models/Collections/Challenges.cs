@@ -18,21 +18,28 @@ public static class Challenges
         {
             new Challenge()
             {
+                BannerImageLink = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/award_gold.png",
                 Name = "Bingo",
                 AchievementIDRequired = 214, // Zenny Galore
+                AchievementNameRequired = Achievements.IDAchievement[214].Title,
                 AchievementsBronzeRequired = 10,
                 AchievementsSilverRequired = 5,
                 AchievementsGoldRequired = 1,
                 AchievementsPlatinumRequired = 0,
                 ChallengeDataTemplateKey = null,
-                Description = "CURRENTLY UNAVAILABLE. You are presented with a variable sized grid depending on the bingo difficulty. In each grid is a monster icon which upon hunting marks the square as completed. Try to complete a fully diagonal, vertical or horizontal line in order to finish the game, and strive for the maximum bingo points!",
+                Description =
+@"CURRENTLY UNAVAILABLE. You are presented with a variable sized grid depending on the bingo difficulty. In each grid is a monster icon which upon hunting marks the square as completed.
+
+Try to complete a fully diagonal, vertical or horizontal line in order to finish the challenge, and strive for the maximum bingo points!",
             }
         },
         {
             new Challenge()
             {
+                BannerImageLink = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/award_gold.png",
                 Name = "Gacha",
-                AchievementIDRequired = 218, // Road Champion
+                AchievementIDRequired = 212, // Quiz Time!
+                AchievementNameRequired = Achievements.IDAchievement[212].Title,
                 AchievementsBronzeRequired = 20,
                 AchievementsSilverRequired = 10,
                 AchievementsGoldRequired = 5,
@@ -43,9 +50,10 @@ public static class Challenges
         },
         {
             new Challenge()
-            {
+            {BannerImageLink = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/award_gold.png",
                 Name = "Zenith Gauntlet",
-                AchievementIDRequired = 34, // Gasura nightmare
+                AchievementIDRequired = 405, // Crushing Palms
+                AchievementNameRequired = Achievements.IDAchievement[405].Title,
                 AchievementsBronzeRequired = 50,
                 AchievementsSilverRequired = 20,
                 AchievementsGoldRequired = 10,
@@ -56,9 +64,10 @@ public static class Challenges
         },
         {
             new Challenge()
-            {
+            {BannerImageLink = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/award_gold.png",
                 Name = "Solstice Gauntlet",
-                AchievementIDRequired = 319, // Bloodthirsty Moon
+                AchievementIDRequired = 404, // The Embodiment of Scarlet Devil
+                AchievementNameRequired = Achievements.IDAchievement[404].Title,
                 AchievementsBronzeRequired = 60,
                 AchievementsSilverRequired = 50,
                 AchievementsGoldRequired = 20,
@@ -69,15 +78,19 @@ public static class Challenges
         },
         {
             new Challenge()
-            {
+            {BannerImageLink = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/award_gold.png",
                 Name = "Musou Gauntlet",
-                AchievementIDRequired = 317, // Elze bane
+                AchievementIDRequired = 195, // Seriously Thirsty
+                AchievementNameRequired = Achievements.IDAchievement[195].Title,
                 AchievementsBronzeRequired = 70,
                 AchievementsSilverRequired = 60,
                 AchievementsGoldRequired = 50,
                 AchievementsPlatinumRequired = 20,
                 ChallengeDataTemplateKey = null,
-                Description = "CURRENTLY UNAVAILABLE. Embark on a herculean trial that pushes hunters to the brink of their abilities. This challenge commands the defeat of all Musou monsters in an unyielding, consecutive battle. This merciless gauntlet demands more than mere strength; it calls for tactical finesse and the will to triumph against insurmountable odds. Only those who can surmount this grueling challenge shall earn the title of Unstoppable, showcasing their prowess to the world.",
+                Description =
+@"CURRENTLY UNAVAILABLE. Embark on a herculean trial that pushes hunters to the brink of their abilities. This challenge commands the defeat of all Musou monsters in an unyielding, consecutive battle.
+
+This merciless gauntlet demands more than mere strength; it calls for tactical finesse and the will to triumph against insurmountable odds. Only those who can surmount this grueling challenge shall earn the title of Unstoppable, showcasing their prowess to the world.",
             }
         },
     };

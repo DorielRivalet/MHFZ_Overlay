@@ -11,17 +11,17 @@
         xmlns:gif="http://wpfanimatedgif.codeplex.com"
         xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
         d:DataContext="{d:DesignInstance Type=windows:AddressModel}"
-                 xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
-                 xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
-                 xmlns:converter="clr-namespace:MHFZ_Overlay.Services.Converter"
-                 xmlns:customcontrols="clr-namespace:MHFZ_Overlay.Views.CustomControls"
-                 xmlns:validationrules="clr-namespace:MHFZ_Overlay.Services.ValidationRule"
-                 xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-                 xmlns:viewmodels="clr-namespace:MHFZ_Overlay.ViewModels.Windows" xmlns:windows="clr-namespace:MHFZ_Overlay.ViewModels.Windows"
-            xmlns:vwp="clr-namespace:WpfToolkit.Controls;assembly=VirtualizingWrapPanel"
-
-
-                     mc:Ignorable="d"
+        xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
+        xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+        xmlns:converter="clr-namespace:MHFZ_Overlay.Services.Converter"
+        xmlns:customcontrols="clr-namespace:MHFZ_Overlay.Views.CustomControls"
+        xmlns:validationrules="clr-namespace:MHFZ_Overlay.Services.ValidationRule"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:viewmodels="clr-namespace:MHFZ_Overlay.ViewModels.Windows"
+        xmlns:collections="clr-namespace:MHFZ_Overlay.Models.Collections"
+        xmlns:windows="clr-namespace:MHFZ_Overlay.ViewModels.Windows"
+        xmlns:vwp="clr-namespace:WpfToolkit.Controls;assembly=VirtualizingWrapPanel"
+        mc:Ignorable="d"
         x:Name="Config"
         Title="Monster Hunter Frontier Z Overlay Settings"
         Height="720" Width="1280" ResizeMode="CanResize"
@@ -1761,7 +1761,7 @@
                                                 <ComboBox DisplayMemberPath="Title" IsTextSearchEnabled="True" IsTextSearchCaseSensitive="False" Grid.Column="1" x:Name="AchievementsSearchComboBox" ItemsSource="{Binding PlayerAchievements, Mode=OneWay}" IsEditable="True" Text="Search achievement title..."/>
                                             </Grid>
                                         </Grid>
-                                        <ListView Margin="5" x:Name="AchievementsListView" Grid.RowSpan="3" Grid.ColumnSpan="2" Loaded="AchievementsListView_Loaded" SelectionChanged="AchievementsListView_SelectionChanged"
+                                        <ListView SelectionMode="Single" Margin="5" x:Name="AchievementsListView" Grid.RowSpan="3" Grid.ColumnSpan="2" Loaded="AchievementsListView_Loaded" SelectionChanged="AchievementsListView_SelectionChanged"
           VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Standard">
                                             <ListView.Resources>
                                                 <Style TargetType="ListViewItem">
@@ -1941,16 +1941,85 @@
                                     <Grid.ContextMenu>
                                         <StaticResource ResourceKey="HunterNotesContextMenuImageCSV" />
                                     </Grid.ContextMenu>
-                                    <Grid Background="Transparent" Style="{StaticResource ConfigSingleGrid}" Margin="0" Height="Auto" Width="Auto">
-                                        <StackPanel Orientation="Vertical">
-                                            <ui:InfoBar Grid.ColumnSpan="2" Foreground="{StaticResource Text}" Title="What are Challenges?" 
-                                Message="CURRENTLY IN DEVELOPMENT. Challenges are an optional endeavor where you are presented with various kinds of objectives.&#x0a;&#x0a;To start a challenge you need to have unlocked the challenge first.&#x0a;&#x0a;In order to unlock a challenge, check the required amount of trophies in the bottom right corner of each challenge section,&#x0a;along with having obtained the specific achievement needed by the challenge.&#x0a;&#x0a;Happy Hunting!" 
-                                IsClosable="True" IsOpen="True" Severity="Informational"/>
-                                        </StackPanel>
-                                    </Grid>
+                                    <ScrollViewer IsDeferredScrollingEnabled="True" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Disabled">
+
+                                        <Grid Background="Transparent" Style="{StaticResource ConfigSingleGrid}" Margin="0" Height="Auto" Width="Auto">
+                                            <StackPanel Orientation="Vertical">
+                                                <ui:InfoBar x:Name="ChallengesInfoBar" Grid.ColumnSpan="2" Foreground="{StaticResource Text}" Title="What are Challenges?" 
+                                Message="CURRENTLY IN DEVELOPMENT. Challenges are an optional endeavor where you are presented with various kinds of objectives.&#x0a;&#x0a;To start a challenge you need to have unlocked the challenge first.&#x0a;&#x0a;In order to unlock a challenge, check the required amount of trophies in the bottom right corner of each challenge section,&#x0a;along with having obtained the secret achievement needed by the challenge.&#x0a;&#x0a;Happy Hunting!" 
+                                IsClosable="True" IsOpen="True" Severity="Informational" MouseDoubleClick="ChallengesInfoBar_MouseDoubleClick"/>
+                                                <ListBox SizeChanged="ChallengesListBox_SizeChanged" x:Name="ChallengesListBox" SelectionChanged="ChallengesListBox_SelectionChanged" ItemsSource="{Binding Source={x:Static collections:Challenges.ChallengeList}}" SelectionMode="Single">
+                                                <ListBox.ItemTemplate>
+                                                    <DataTemplate>
+                                                            <Grid Background="#7f1e1e2e">
+                                                                <Grid.RowDefinitions>
+                                                                    <RowDefinition Height="*"/>
+                                                                    <RowDefinition Height="Auto"/>
+                                                                    <!-- Add as many RowDefinitions as you need -->
+                                                                </Grid.RowDefinitions>
+                                                                <ui:Image CornerRadius="4" Height="256" Grid.Row="0" Source="{Binding BannerImageLink}"/>
+
+                                                                <Expander Grid.Row="1" ExpandDirection="Down" MaxHeight="256">
+                                                        <Expander.Header>
+                                                                        <Grid>
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="1*"/>
+                                                                    <ColumnDefinition Width="1*"/>
+                                                                </Grid.ColumnDefinitions>
+                                                                <TextBlock Text="{Binding Name}" FontFamily="{StaticResource Monster hunter}" HorizontalAlignment="Left" d:Text="Bingo" FontWeight="SemiBold" FontSize="28"/>
+                                                                <Grid Grid.Column="1" Height="48" HorizontalAlignment="Right">
+                                                                    <Grid.ColumnDefinitions>
+                                                                        <ColumnDefinition Width="1*"/>
+                                                                        <ColumnDefinition Width="1*"/>
+                                                                        <ColumnDefinition Width="1*"/>
+                                                                        <ColumnDefinition Width="1*"/>
+                                                                    </Grid.ColumnDefinitions>
+                                                                    <StackPanel Orientation="Horizontal" Grid.Column="0">
+                                                                        <Image Source="../../Assets/icons/achievement/bronze_trophy.png" />
+                                                                        <customcontrols:OutlinedTextBlock Text="{Binding AchievementsBronzeRequired}" d:Text="100/200" FontSize="22" FontFamily="{StaticResource Monster hunter}" FontWeight="Bold" Fill="{StaticResource Maroon}" Stroke="{StaticResource Crust}" StrokeThickness="2" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                                    </StackPanel>
+                                                                    <StackPanel Orientation="Horizontal" Grid.Column="1">
+                                                                        <Image Source="../../Assets/icons/achievement/silver_trophy.png" />
+                                                                        <customcontrols:OutlinedTextBlock Text="{Binding AchievementsSilverRequired}" d:Text="100/200" FontSize="22" FontFamily="{StaticResource Monster hunter}" FontWeight="Bold" Fill="{StaticResource Lavender}" Stroke="{StaticResource Crust}" StrokeThickness="2" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                                    </StackPanel>
+                                                                    <StackPanel Orientation="Horizontal" Grid.Column="2">
+                                                                        <Image Source="../../Assets/icons/achievement/gold_trophy.png" />
+                                                                        <customcontrols:OutlinedTextBlock Text="{Binding AchievementsGoldRequired}" d:Text="100/200" FontSize="22" FontFamily="{StaticResource Monster hunter}" FontWeight="Bold" Fill="{StaticResource Yellow}" Stroke="{StaticResource Crust}" StrokeThickness="2" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                                    </StackPanel>
+                                                                    <StackPanel Orientation="Horizontal" Grid.Column="3">
+                                                                        <Image Source="../../Assets/icons/achievement/platinum_trophy.png" />
+                                                                        <customcontrols:OutlinedTextBlock Text="{Binding AchievementsPlatinumRequired}" d:Text="100/200" FontSize="22" FontFamily="{StaticResource Monster hunter}" FontWeight="Bold" Fill="{StaticResource Teal}" Stroke="{StaticResource Crust}" StrokeThickness="2" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                                    </StackPanel>
+                                                                </Grid>
+                                                            </Grid>
+                                                        </Expander.Header>
+                                                        <Expander.Content>
+                                                            <Grid>
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="512"/>
+                                                                    <ColumnDefinition Width="1*"/>
+                                                                </Grid.ColumnDefinitions>
+                                                                <TextBlock Grid.Column="0" Text="{Binding Description}" TextWrapping="Wrap" MaxWidth="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=Expander}}" HorizontalAlignment="Left" d:Text="CURRENTLY UNAVAILABLE. You are presented with a variable sized grid depending on the bingo difficulty. In each grid is a monster icon which upon hunting marks the square as completed. Try to complete a fully diagonal, vertical or horizontal line in order to finish the challenge, and strive for the maximum bingo points!"/>
+                                                                <Grid Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                                    <StackPanel Orientation="Vertical">
+                                                                        <ui:Image HorizontalAlignment="Center" Margin="0,10,0,0" Width="32" Source="../../Assets/Icons/achievement/secret_trophy.png"/>
+                                                                        <ui:TextBlock HorizontalAlignment="Center" Margin="0,10,0,0" d:Text="Zenny Galore" Text="{Binding AchievementNameRequired}" TextWrapping="Wrap"/>
+                                                                        <ui:Button Margin="0,10,0,0" HorizontalAlignment="Center" Content="Unlock" Appearance="Primary" IsEnabled="False"/>
+                                                                    </StackPanel>
+                                                                </Grid>
+                                                            </Grid>
+                                                        </Expander.Content>
+                                                    </Expander>
+                                                </Grid>
+                                                </DataTemplate>
+                                                </ListBox.ItemTemplate>
+                                            </ListBox>
+                                            </StackPanel>
+                                        </Grid>
+                                    </ScrollViewer>
                                 </Grid>
                             </TabItem>
-</TabControl>
+                    </TabControl>
                 </Grid>
             </TabItem>
             <TabItem ToolTip="Player Settings" Background="{StaticResource Mantle}" Foreground="{StaticResource Text}">

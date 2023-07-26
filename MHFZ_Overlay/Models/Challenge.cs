@@ -6,6 +6,7 @@ namespace MHFZ_Overlay.Models;
 
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,6 +15,11 @@ using MHFZ_Overlay.Models.Structures;
 
 public sealed class Challenge
 {
+    /// <summary>
+    /// The link to the banner image.
+    /// </summary>
+    public string BannerImageLink { get; set; } = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/award_gold.png";
+
     /// <summary>
     /// The name of the challenge (Bingo, Gacha, Gauntlets)
     /// </summary>
@@ -53,4 +59,9 @@ public sealed class Challenge
     /// The achievement ID required (e.g. to unlock zenith gauntlet, you should beat gasura solo first). It should be a valid ID.
     /// </summary>
     public int AchievementIDRequired { get; set; }
+
+    /// <summary>
+    /// The name of the achievement id required
+    /// </summary>
+    public string AchievementNameRequired { get; set;} = string.Empty;
 }

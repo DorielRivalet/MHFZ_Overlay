@@ -49,48 +49,48 @@
                             <ui:NavigationViewItemSeparator/>
                             <ui:MenuItem Foreground="{StaticResource Blue}" ToolTip="Go to Frequently Asked Questions page" Header="Help" Tag="help" Click="OptionHelp_Click">
                                 <ui:MenuItem.Icon>
-                                    <ui:SymbolIcon Symbol="Question24" Foreground="{StaticResource Blue}"/>
+                                    <ui:SymbolIcon Symbol="Open24" Foreground="{StaticResource Blue}"/>
                                 </ui:MenuItem.Icon>
                             </ui:MenuItem>
                             <ui:MenuItem Foreground="{StaticResource Blue}" ToolTip="Go to documentation page" Header="Documentation" Tag="documentation" Click="OptionDocumentation_Click">
                                 <ui:MenuItem.Icon>
-                                    <ui:SymbolIcon Symbol="Book24" Foreground="{StaticResource Blue}"/>
+                                        <ui:SymbolIcon Symbol="Open24" Foreground="{StaticResource Blue}"/>
                                 </ui:MenuItem.Icon>
                             </ui:MenuItem>
                             <ui:MenuItem Foreground="{StaticResource Blue}" ToolTip="Go to report bug page" Header="Report Bug" Tag="reportbug" Click="OptionReportBug_Click">
                                 <ui:MenuItem.Icon>
-                                    <ui:SymbolIcon Symbol="Bug24" Foreground="{StaticResource Blue}"/>
+                                        <ui:SymbolIcon Symbol="Open24" Foreground="{StaticResource Blue}"/>
                                 </ui:MenuItem.Icon>
                             </ui:MenuItem>
                             <ui:MenuItem Foreground="{StaticResource Blue}" ToolTip="Go to request feature page" Header="Request Feature"  Tag="requestfeature" Click="OptionRequestFeature_Click">
                                 <ui:MenuItem.Icon>
-                                    <ui:SymbolIcon Symbol="Lightbulb24" Foreground="{StaticResource Blue}"/>
+                                        <ui:SymbolIcon Symbol="Open24" Foreground="{StaticResource Blue}"/>
                                 </ui:MenuItem.Icon>
                             </ui:MenuItem>
                             <ui:MenuItem Foreground="{StaticResource Blue}" ToolTip="Go to feedback page" Header="Send Feedback" Tag="sendfeedback" Click="OptionSendFeedback_Click">
                                 <ui:MenuItem.Icon>
-                                    <ui:SymbolIcon Symbol="Megaphone24" Foreground="{StaticResource Blue}"/>
+                                        <ui:SymbolIcon Symbol="Open24" Foreground="{StaticResource Blue}"/>
                                 </ui:MenuItem.Icon>
                             </ui:MenuItem>
                             <ui:MenuItem Foreground="{StaticResource Blue}" ToolTip="Go to changelog page" Header="Changelog" Tag="changelog" Click="OptionChangelog_Click">
                                 <ui:MenuItem.Icon>
-                                    <ui:SymbolIcon Symbol="Notebook24" Foreground="{StaticResource Blue}"/>
+                                        <ui:SymbolIcon Symbol="Open24" Foreground="{StaticResource Blue}"/>
                                 </ui:MenuItem.Icon>
                             </ui:MenuItem>
                             <ui:NavigationViewItemSeparator/>
                             <ui:MenuItem Foreground="{StaticResource Rosewater}" ToolTip="Open settings folder" Header="Settings Folder" Tag="settingsfolder" Click="OptionSettingsFolder_Click">
                                 <ui:MenuItem.Icon>
-                                    <ui:SymbolIcon Symbol="Settings24" Foreground="{StaticResource Rosewater}"/>
+                                    <ui:SymbolIcon Symbol="OpenFolder24" Foreground="{StaticResource Rosewater}"/>
                                 </ui:MenuItem.Icon>
                             </ui:MenuItem>
                             <ui:MenuItem Foreground="{StaticResource Rosewater}" ToolTip="Open logs folder" Header="Logs Folder" Tag="logsfolder" Click="OptionLogsFolder_Click">
                                 <ui:MenuItem.Icon>
-                                    <ui:SymbolIcon Symbol="Document24" Foreground="{StaticResource Rosewater}"/>
+                                        <ui:SymbolIcon Symbol="OpenFolder24" Foreground="{StaticResource Rosewater}"/>
                                 </ui:MenuItem.Icon>
                             </ui:MenuItem>
                             <ui:MenuItem Foreground="{StaticResource Rosewater}" ToolTip="Open database folder" Header="Database Folder" Tag="databasefolder" Click="OptionDatabaseFolder_Click">
                                 <ui:MenuItem.Icon>
-                                    <ui:SymbolIcon Symbol="Database24" Foreground="{StaticResource Rosewater}"/>
+                                        <ui:SymbolIcon Symbol="OpenFolder24" Foreground="{StaticResource Rosewater}"/>
                                 </ui:MenuItem.Icon>
                             </ui:MenuItem>
                             <ui:NavigationViewItemSeparator/>

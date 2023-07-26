@@ -4385,6 +4385,55 @@ public partial class ConfigWindow : FluentWindow
             AchievementsListView.ItemsSource = filteredAchievements;
         }
     }
+
+    private void ChallengesInfoBar_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+    {
+        if (sender is InfoBar infobar)
+        {
+            infobar.IsOpen = false;
+        }
+    }
+
+    private void ChallengesListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        var listBox = sender as ListBox;
+        if (listBox != null)
+        {
+            listBox.SelectedItem = null;
+        }
+    }
+
+    private void ChallengesListBox_SizeChanged(object sender, SizeChangedEventArgs e)
+    {
+        //foreach (var item in ChallengesListBox.Items)
+        //{
+        //    var listBoxItem = (ListBoxItem)ChallengesListBox.ItemContainerGenerator.ContainerFromItem(item);
+        //    var textBlock = FindVisualChild < TextBlock > (listBoxItem);
+        //    if (textBlock != null)
+        //    {
+        //        textBlock.MaxWidth = ChallengesListBox.ActualWidth;
+        //    }
+        //}
+    }
+
+    private static T FindVisualChild<T>(DependencyObject obj) where T : DependencyObject
+    {
+        for (int i = 0; i < VisualTreeHelper.GetChildrenCount(obj); i++)
+        {
+            var child = VisualTreeHelper.GetChild(obj, i);
+            if (child is T typedChild)
+            {
+                return typedChild;
+            }
+
+            var childOfChild = FindVisualChild<T>(child);
+            if (childOfChild != null)
+            {
+                return childOfChild;
+            }
+        }
+        return null;
+    }
 }
 
 /* LoadConfig on startup
