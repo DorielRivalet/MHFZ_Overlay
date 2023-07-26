@@ -18,7 +18,7 @@ public static class Challenges
         {
             new Challenge()
             {
-                BannerImageLink = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/award_gold.png",
+                BannerImageLink = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/unknown_black.jpg",
                 Name = "Bingo",
                 AchievementIDRequired = 214, // Zenny Galore
                 AchievementNameRequired = Achievements.IDAchievement[214].Title,
@@ -36,7 +36,7 @@ Try to complete a fully diagonal, vertical or horizontal line in order to finish
         {
             new Challenge()
             {
-                BannerImageLink = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/award_gold.png",
+                BannerImageLink = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/unknown_black.jpg",
                 Name = "Gacha",
                 AchievementIDRequired = 212, // Quiz Time!
                 AchievementNameRequired = Achievements.IDAchievement[212].Title,
@@ -50,7 +50,7 @@ Try to complete a fully diagonal, vertical or horizontal line in order to finish
         },
         {
             new Challenge()
-            {BannerImageLink = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/award_gold.png",
+            {BannerImageLink = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/unknown_black.jpg",
                 Name = "Zenith Gauntlet",
                 AchievementIDRequired = 405, // Crushing Palms
                 AchievementNameRequired = Achievements.IDAchievement[405].Title,
@@ -64,7 +64,7 @@ Try to complete a fully diagonal, vertical or horizontal line in order to finish
         },
         {
             new Challenge()
-            {BannerImageLink = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/award_gold.png",
+            {BannerImageLink = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/unknown_black.jpg",
                 Name = "Solstice Gauntlet",
                 AchievementIDRequired = 404, // The Embodiment of Scarlet Devil
                 AchievementNameRequired = Achievements.IDAchievement[404].Title,
@@ -78,7 +78,7 @@ Try to complete a fully diagonal, vertical or horizontal line in order to finish
         },
         {
             new Challenge()
-            {BannerImageLink = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/award_gold.png",
+            {BannerImageLink = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/unknown_black.jpg",
                 Name = "Musou Gauntlet",
                 AchievementIDRequired = 195, // Seriously Thirsty
                 AchievementNameRequired = Achievements.IDAchievement[195].Title,
