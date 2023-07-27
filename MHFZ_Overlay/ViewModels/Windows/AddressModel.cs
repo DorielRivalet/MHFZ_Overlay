@@ -1199,9 +1199,74 @@ public abstract class AddressModel : INotifyPropertyChanged
 
     public abstract int PartnyaBagItem10Qty();
 
-    public bool HasMonster1 => CaravanOverride() ? ShowHPBar(CaravanMonster1ID(), Monster1HPInt()) : ShowHPBar(LargeMonster1ID(), Monster1HPInt());
+    public bool HasMonster1
+    {
+        get
+        {
+            // quest ids:
+            // mp road: 23527
+            // solo road: 23628
+            // 1st district dure: 21731
+            // 2nd district dure: 21746
+            // 1st district dure sky corridor: 21749
+            // 2nd district dure sky corridor: 21750
+            // arrogant dure repel: 23648
+            // arrogant dure slay: 23649
+            // urgent tower: 21751
+            // 4th district dure: 21748
+            // 3rd district dure: 21747
+            // 3rd district dure 2: 21734
+            // UNUSED sky corridor: 21730
+            // sky corridor prologue: 21729
 
-    public bool HasMonster2 => CaravanOverride() ? CaravanMonster2ID() > 0 && Monster2HPInt() != 0 && GetNotRoad() || Configuring : LargeMonster2ID() > 0 && Monster2HPInt() != 0 && GetNotRoad() || Configuring; // road check since the 2nd choice is used as the monster #1
+            if (QuestID() == 23527 ||
+                QuestID() == 23628 ||
+                QuestID() == 21731 ||
+                QuestID() == 21746 ||
+                QuestID() == 21749 ||
+                QuestID() == 21750 ||
+                QuestID() == 23648 ||
+                QuestID() == 23649 ||
+                QuestID() == 21751 ||
+                QuestID() == 21748 ||
+                QuestID() == 21747 ||
+                QuestID() == 21734
+                )
+            {
+                return true;
+            }
+
+            if (CaravanOverride())
+            {
+                return ShowHPBar(CaravanMonster1ID(), Monster1HPInt());
+            }
+            else
+            {
+                return ShowHPBar(LargeMonster1ID(), Monster1HPInt());
+            }
+        }
+    }
+
+    public bool HasMonster2
+    {
+        get
+        {
+            if (QuestID() == 23527 || QuestID() == 23628)
+            {
+                return true;
+            }
+
+            if (CaravanOverride())
+            {
+                return CaravanMonster2ID() > 0 && Monster2HPInt() != 0 && GetNotRoad() || Configuring;
+            }
+            else
+            {
+                // road check since the 2nd choice is used as the monster #1
+                return LargeMonster2ID() > 0 && Monster2HPInt() != 0 && GetNotRoad() || Configuring;
+            }
+        }
+    }
 
     public bool HasMonster3 => ShowHPBar(LargeMonster3ID(), Monster3HPInt());
 
