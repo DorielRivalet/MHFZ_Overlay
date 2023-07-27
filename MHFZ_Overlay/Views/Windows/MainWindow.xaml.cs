@@ -43,6 +43,7 @@ using MHFZ_Overlay.Services.Converter;
 using MHFZ_Overlay.Services.Hotkey;
 using MHFZ_Overlay.Views.CustomControls;
 using Microsoft.Extensions.DependencyModel;
+using NLog;
 using Octokit;
 using SkiaSharp;
 using Wpf.Ui.Common;
@@ -214,23 +215,9 @@ public partial class MainWindow : Window
 
     private void OptionDatabaseFolder_Click(object sender, RoutedEventArgs e)
     {
-        Settings s = (Settings)Application.Current.TryFindResource("Settings");
-        var directoryName = Path.GetDirectoryName(s.DatabaseFilePath);
-        if (directoryName == null)
-        {
-            return;
-        }
-
-        if (!File.Exists(s.DatabaseFilePath))
-        {
-            LoggerInstance.Error(CultureInfo.InvariantCulture, "Could not find the database file: {0}", s.DatabaseFilePath);
-            System.Windows.MessageBox.Show(string.Format(CultureInfo.InvariantCulture, "Could not find the database file: {0}", s.DatabaseFilePath), Messages.ErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
-        }
-
-        // Open the log file using the default application
         try
         {
-            Process.Start(ApplicationPaths.ExplorerPath, directoryName);
+            Process.Start(ApplicationPaths.ExplorerPath, "\"" + DatabaseManagerInstance.GetDatabaseFolderPath() + "\"");
         }
         catch (Exception ex)
         {
