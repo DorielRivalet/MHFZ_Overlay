@@ -1,5 +1,17 @@
 
 
+## [0.27.1](https://github.com/DorielRivalet/MHFZ_Overlay/compare/v0.27.0...v0.27.1) (2023-07-27)
+
+
+### Bug Fixes
+
+* database folder file explorer path ([5eb2240](https://github.com/DorielRivalet/MHFZ_Overlay/commit/5eb2240b3aa538f671ef6cb336d7346132be675f))
+
+
+### For Developers
+
+* bump version ([fd33236](https://github.com/DorielRivalet/MHFZ_Overlay/commit/fd332366f07592b9b95591d33fec2b8efa906e73))
+
 ## [0.27.0](https://github.com/DorielRivalet/MHFZ_Overlay/compare/v0.26.0...v0.27.0) (2023-07-27)
 
 
