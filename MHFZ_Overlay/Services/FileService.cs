@@ -795,6 +795,13 @@ public sealed class FileService
         }
     }
 
+    public static string GetDatabaseFolderPath(SQLiteConnection connection)
+    {
+        var databaseFilePath = connection.FileName;
+        var databaseFolderPath = Path.GetDirectoryName(databaseFilePath) ?? string.Empty;
+        return databaseFolderPath;
+    }
+
     /// <summary>
     /// Deletes the file.
     /// </summary>

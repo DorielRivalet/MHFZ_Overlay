@@ -192,6 +192,32 @@ public sealed class DatabaseService
 
     private static string previousVersion = string.Empty;
 
+    public string GetDatabaseFolderPath()
+    {
+        var path = string.Empty;
+
+        if (string.IsNullOrEmpty(dataSource))
+        {
+            logger.Warn("dataSource is empty, cannot get database folder path");
+            return path;
+        }
+
+        try
+        {
+            using (var conn = new SQLiteConnection(dataSource))
+            {
+                conn.Open();
+
+                return FileService.GetDatabaseFolderPath(conn);
+            }
+        }
+        catch (Exception ex)
+        {
+            logger.Error(ex);
+            return path;
+        }
+    }
+
     public bool SetupLocalDatabase(DataLoader dataLoader)
     {
         // Create a Stopwatch instance

@@ -1468,38 +1468,10 @@ public partial class ConfigWindow : FluentWindow
 
     private void OpenDatabaseFolder_Click(object sender, RoutedEventArgs e)
     {
+        // Open the file explorer at the directory
         try
         {
-            Settings s = (Settings)Application.Current.TryFindResource("Settings");
-            var directoryName = Path.GetDirectoryName(s.DatabaseFilePath);
-            if (directoryName == null)
-            {
-                logger.Warn("Cannot find directory {0}, finding absolute path", s.DatabaseFilePath);
-
-                var absolutePath = Path.GetFullPath(s.DatabaseFilePath);
-                directoryName = Path.GetDirectoryName(absolutePath);
-                if (directoryName == null)
-                {
-                    logger.Error("Cannot find directory even after finding absolute path {0}", absolutePath);
-                    return;
-                }
-            }
-
-            if (!File.Exists(s.DatabaseFilePath))
-            {
-                logger.Error(CultureInfo.InvariantCulture, "Could not find the database file: {0}", s.DatabaseFilePath);
-                System.Windows.MessageBox.Show(string.Format(CultureInfo.InvariantCulture, "Could not find the database file: {0}", s.DatabaseFilePath), Messages.ErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-
-            // Open the file explorer at the directory
-            try
-            {
-                Process.Start(ApplicationPaths.ExplorerPath, directoryName);
-            }
-            catch (Exception ex)
-            {
-                logger.Error(ex);
-            }
+            Process.Start(ApplicationPaths.ExplorerPath, "\"" + databaseManager.GetDatabaseFolderPath() + "\"");
         }
         catch (Exception ex)
         {
