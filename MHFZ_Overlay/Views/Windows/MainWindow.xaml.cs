@@ -1043,6 +1043,7 @@ The process may take some time, as the program attempts to download from GitHub 
             effectiveDamage = damage;
         }
 
+        // TODO sometimes i still show 0 as damage. specially in road.
         switch (s.DamageNumbersMode)
         {
             case "Automatic":
