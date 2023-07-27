@@ -1,5 +1,27 @@
 
 
+## [0.27.0](https://github.com/DorielRivalet/MHFZ_Overlay/compare/v0.26.0...v0.27.0) (2023-07-27)
+
+
+### Features
+
+* add secret achievement statistics ([158b931](https://github.com/DorielRivalet/MHFZ_Overlay/commit/158b93185904487b815eb3e067e15b6b6594136a))
+* add webview navigation to ferias section ([09f711e](https://github.com/DorielRivalet/MHFZ_Overlay/commit/09f711e1f142ee9893f8cc4954177a49bda19d9c))
+* adjust trophy rank counts ([af15866](https://github.com/DorielRivalet/MHFZ_Overlay/commit/af15866c5a3c66ee498005f761cda13378ea6113))
+
+
+### Bug Fixes
+
+* achievements snackbars ([81daa45](https://github.com/DorielRivalet/MHFZ_Overlay/commit/81daa45307939e4d00dadbf56bab256b8844b337))
+* duremudira and road hp bars ([0fb5b06](https://github.com/DorielRivalet/MHFZ_Overlay/commit/0fb5b06c354d9dfb6c8610d67f6431c8db20f97c))
+* **sqlite:** handle storing session time errors gracefully ([0adcc51](https://github.com/DorielRivalet/MHFZ_Overlay/commit/0adcc513d0b73710f472557cd53f0733872fe59e))
+
+
+### For Developers
+
+* add TODO ([b37fc08](https://github.com/DorielRivalet/MHFZ_Overlay/commit/b37fc0898f0eaa4635a469901d840de83de0b48d))
+* update demo images ([2e83576](https://github.com/DorielRivalet/MHFZ_Overlay/commit/2e83576209319f54edc08ea1debfe65f883fa439))
+
 ## [0.26.0](https://github.com/DorielRivalet/MHFZ_Overlay/compare/v0.25.7...v0.26.0) (2023-07-26)
 
 
