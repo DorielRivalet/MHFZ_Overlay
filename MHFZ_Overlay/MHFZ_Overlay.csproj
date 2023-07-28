@@ -1652,7 +1652,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Octokit" Version="7.0.1" />
+    <PackageReference Include="Octokit" Version="7.1.0" />
     <PackageReference Include="RESTCountries.NET" Version="3.0.1" />
     <PackageReference Include="ShowMeTheXAML.MSBuild" Version="2.0.0" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
