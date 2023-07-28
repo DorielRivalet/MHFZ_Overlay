@@ -1,0 +1,13 @@
+{
+  "$schema": "https://raw.githubusercontent.com/DotNetAnalyzers/StyleCopAnalyzers/master/StyleCop.Analyzers/StyleCop.Analyzers/Settings/stylecop.schema.json",
+  "settings": {
+    "documentationRules": {
+      "companyName": "The mhfz-overlay developers",
+      "copyrightText": "© 2023 {companyName}.\nUse of this source code is governed by a {licenseName} license that can be\nfound in the LICENSE file.",
+      "xmlHeader": false,
+      "variables": {
+        "licenseName": "MIT"
+      }
+    }
+  }
+}

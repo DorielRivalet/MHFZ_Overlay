@@ -1,5 +1,19 @@
 # Philosophy
 
+## Table of Contents
+
+- [Philosophy](#philosophy)
+  - [Table of Contents](#table-of-contents)
+  - [Overview](#overview)
+    - [Purpose](#purpose)
+    - [Goals](#goals)
+    - [Design Principles](#design-principles)
+    - [Development Workflow](#development-workflow)
+    - [Contribution Guidelines](#contribution-guidelines)
+    - [Future Development](#future-development)
+    - [Other Considerations](#other-considerations)
+    - [Conclusion](#conclusion)
+
 ## Overview
 
 This document outlines the direction and purpose of the MHFZ_Overlay repository and software, and provides insight into the reasoning behind our decisions. Our aim is to promote transparency and inclusivity between developers and end-users.

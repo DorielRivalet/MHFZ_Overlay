@@ -1,6 +1,6 @@
 {
   "name": "mhfz_overlay",
-  "version": "0.24.1",
+  "version": "0.27.3",
   "description": "[![Monster Hunter Frontier Z Overlay v0.21.0 Preview](./demo/youtubepreview1.jpg)](https://www.youtube.com/watch?v=A9ffbRICqZY \"Monster Hunter Frontier Z Overlay v0.21.0 Preview\")",
   "main": "MHFZ_Overlay.sln",
   "scripts": {
@@ -21,14 +21,14 @@
   "homepage": "https://github.com/DorielRivalet/MHFZ_Overlay#readme",
   "dependencies": {
     "@release-it/conventional-changelog": "^5.1.1",
-    "release-it": "^15.10.3"
+    "release-it": "^15.11.0"
   },
   "release-it": {
     "git": {
       "commitMessage": "chore: release v${version}"
     },
     "github": {
-      "release": true
+      "release": false
     },
     "npm": {
       "publish": false
@@ -36,6 +36,7 @@
     "plugins": {
       "@release-it/conventional-changelog": {
         "infile": "CHANGELOG.md",
+        "ignoreRecommendedBump": true,
         "preset": {
           "name": "conventionalcommits",
           "types": [
@@ -46,6 +47,10 @@
             {
               "type": "fix",
               "section": "Bug Fixes"
+            },
+            {
+              "type": "perf",
+              "section": "Performance Improvements"
             },
             {
               "type": "refactor",
@@ -68,10 +73,6 @@
               "section": "For Developers"
             },
             {
-              "type": "perf",
-              "section": "For Developers"
-            },
-            {
               "type": "build",
               "section": "For Developers"
             },
@@ -88,6 +89,7 @@
   "devDependencies": {
     "@commitlint/cli": "^17.6.3",
     "@commitlint/config-conventional": "^17.6.3",
+    "alex": "^11.0.0",
     "husky": "^8.0.3"
   }
 }

@@ -1,0 +1,13 @@
+# packages
+vendor/
+node_modules/
+
+# editors
+.vs/
+.vscode/
+
+# sonar
+.sonarlint/
+
+# husky
+.husky/
