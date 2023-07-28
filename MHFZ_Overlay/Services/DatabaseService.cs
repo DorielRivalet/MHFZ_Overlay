@@ -588,7 +588,7 @@ public sealed class DatabaseService
                         //Duremudira Arena
                         else if (dataLoader.model.AreaID() == 398)
                         {
-                            objectiveImage = dataLoader.model.getMonsterIcon(dataLoader.model.LargeMonster1ID());
+                            objectiveImage = dataLoader.model.GetMonsterIcon(dataLoader.model.LargeMonster1ID());
                         }
 
                         //Hunter's Road Base Camp
@@ -600,11 +600,11 @@ public sealed class DatabaseService
                         //Raviente
                         else if (dataLoader.model.AreaID() == 309 || (dataLoader.model.AreaID() >= 311 && dataLoader.model.AreaID() <= 321) || (dataLoader.model.AreaID() >= 417 && dataLoader.model.AreaID() <= 422) || dataLoader.model.AreaID() == 437 || (dataLoader.model.AreaID() >= 440 && dataLoader.model.AreaID() <= 444))
                         {
-                            objectiveImage = dataLoader.model.getMonsterIcon(dataLoader.model.LargeMonster1ID());
+                            objectiveImage = dataLoader.model.GetMonsterIcon(dataLoader.model.LargeMonster1ID());
                         }
                         else
                         {
-                            objectiveImage = dataLoader.model.getMonsterIcon(dataLoader.model.LargeMonster1ID());
+                            objectiveImage = dataLoader.model.GetMonsterIcon(dataLoader.model.LargeMonster1ID());
                         }
 
                         var objectiveTypeID = model.ObjectiveType();
@@ -616,7 +616,7 @@ public sealed class DatabaseService
                         }
                         else
                         {
-                            objectiveName = model.GetRealMonsterName(model.CurrentMonster1Icon, true);
+                            objectiveName = model.GetRealMonsterName(true);
                         }
 
                         var rankName = model.GetRankNameFromID(model.RankBand(), true);
@@ -630,7 +630,7 @@ public sealed class DatabaseService
                         }
                         else
                         {
-                            objectiveName = model.GetRealMonsterName(model.CurrentMonster1Icon, true);
+                            objectiveName = model.GetRealMonsterName(true);
                         }
 
                         var date = DateTime.UtcNow;

@@ -37,7 +37,7 @@ public static class Messages
 
     public const string OverlayModePlaceholder = "Standard";
 
-    public const string MonsterImageNotLoaded = "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/none.png";
+    public const string MonsterImageNotLoaded = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/none.png";
 
     public const string SecretAchievement = "???";
 
