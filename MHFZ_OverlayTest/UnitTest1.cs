@@ -1,25 +1,25 @@
-// Copyright 2023 The mhfz-overlay Authors.
+// © 2023 The mhfz-overlay developers.
 // Use of this source code is governed by a MIT license that can be
 // found in the LICENSE file.
-namespace MHFZ_OverlayTest
+
+namespace MHFZ_OverlayTest;
+
+public class UnitTest1
 {
-    public class UnitTest1
+    [Fact]
+    public void PassingTest()
     {
-        [Fact]
-        public void PassingTest()
-        {
-            Assert.Equal(4, Add(2, 2));
-        }
+        Assert.Equal(4, Add(2, 2));
+    }
 
-        [Fact]
-        public void FailingTest()
-        {
-            Assert.Equal(5, Add(2, 2));
-        }
+    [Fact]
+    public void FailingTest()
+    {
+        Assert.Equal(5, Add(2, 2));
+    }
 
-        int Add(int x, int y)
-        {
-            return x + y;
-        }
+    int Add(int x, int y)
+    {
+        return x + y;
     }
 }

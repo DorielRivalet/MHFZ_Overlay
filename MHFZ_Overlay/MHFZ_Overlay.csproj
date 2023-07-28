@@ -7,13 +7,11 @@
     <UseWPF>true</UseWPF>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <PlatformTarget>x86</PlatformTarget>
-	<RuntimeIdentifier>win-x86</RuntimeIdentifier>
     <UseWindowsForms>True</UseWindowsForms>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <ApplicationIcon>mhfzoverlayicon256.ico</ApplicationIcon>
     <RunAnalyzersDuringLiveAnalysis>False</RunAnalyzersDuringLiveAnalysis>
 	<EnableWindowsTargeting>true</EnableWindowsTargeting>
-	<CodeAnalysisRuleSet>..\.sonarlint\dorielrivalet_mhfz_overlaycsharp.ruleset</CodeAnalysisRuleSet>
     <!-- Project is not a test project -->
     <SonarQubeTestProject>false</SonarQubeTestProject>
 	<DebugType>pdbonly</DebugType>
@@ -22,7 +20,7 @@
 	<Title>mhfz-overlay</Title>
 	<Copyright>Doriel Rivalet</Copyright>
 	<Authors>Doriel Rivalet</Authors>
-	<Version>0.22.0</Version>
+	<Version>0.27.3</Version>
 	<PackageProjectUrl>https://github.com/DorielRivalet/mhfz-overlay</PackageProjectUrl>
 	<RepositoryUrl>https://github.com/DorielRivalet/mhfz-overlay.git</RepositoryUrl>
 	<RepositoryType>git</RepositoryType>
@@ -31,6 +29,7 @@
 	<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
 	<PackageIcon>mhfzoverlay128.png</PackageIcon>
 	<Description>A simple, customizable overlay with Discord Rich Presence integration for Monster Hunter Frontier Z on Windows</Description>
+	<EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -38,272 +37,360 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Samples\**" />
+    <Compile Remove="UI\**" />
+    <EmbeddedResource Remove="Samples\**" />
+    <EmbeddedResource Remove="UI\**" />
+    <None Remove="Samples\**" />
+    <None Remove="UI\**" />
+    <Page Remove="Samples\**" />
+    <Page Remove="UI\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove=".stylecop.json" />
+    <None Remove="Assets\Background\1.png" />
+    <None Remove="Assets\Background\2.png" />
+    <None Remove="Assets\Background\3.png" />
+    <None Remove="Assets\Background\4.png" />
+    <None Remove="Assets\Background\5.png" />
+    <None Remove="Assets\Background\6.png" />
+    <None Remove="Assets\Background\7.png" />
+    <None Remove="Assets\Background\8.png" />
+    <None Remove="Assets\Background\9.png" />
+    <None Remove="Assets\Fonts\Meslo LG M Regular Nerd Font Complete Mono Windows Compatible.ttf" />
+    <None Remove="Assets\Fonts\Monster hunter type 2.ttf" />
+    <None Remove="Assets\Fonts\OpenSans-Bold.ttf" />
+    <None Remove="Assets\Fonts\OpenSans-BoldItalic.ttf" />
+    <None Remove="Assets\Fonts\OpenSans-ExtraBold.ttf" />
+    <None Remove="Assets\Fonts\OpenSans-ExtraBoldItalic.ttf" />
+    <None Remove="Assets\Fonts\OpenSans-Italic.ttf" />
+    <None Remove="Assets\Fonts\OpenSans-Light.ttf" />
+    <None Remove="Assets\Fonts\OpenSans-LightItalic.ttf" />
+    <None Remove="Assets\Fonts\OpenSans-Medium.ttf" />
+    <None Remove="Assets\Fonts\OpenSans-MediumItalic.ttf" />
+    <None Remove="Assets\Fonts\OpenSans-Regular.ttf" />
+    <None Remove="Assets\Fonts\OpenSans-SemiBold.ttf" />
+    <None Remove="Assets\Fonts\OpenSans-SemiBoldItalic.ttf" />
+    <None Remove="Assets\Fonts\Segoe Fluent Icons.ttf" />
+    <None Remove="Assets\Fonts\SegoeUI-VF.ttf" />
+    <None Remove="Assets\Fonts\SourceCodePro-Black.ttf" />
+    <None Remove="Assets\Fonts\SourceCodePro-BlackItalic.ttf" />
+    <None Remove="Assets\Fonts\SourceCodePro-Bold.ttf" />
+    <None Remove="Assets\Fonts\SourceCodePro-BoldItalic.ttf" />
+    <None Remove="Assets\Fonts\SourceCodePro-ExtraBold.ttf" />
+    <None Remove="Assets\Fonts\SourceCodePro-ExtraBoldItalic.ttf" />
+    <None Remove="Assets\Fonts\SourceCodePro-ExtraLight.ttf" />
+    <None Remove="Assets\Fonts\SourceCodePro-ExtraLightItalic.ttf" />
+    <None Remove="Assets\Fonts\SourceCodePro-Italic-VariableFont_wght.ttf" />
+    <None Remove="Assets\Fonts\SourceCodePro-Italic.ttf" />
+    <None Remove="Assets\Fonts\SourceCodePro-Light.ttf" />
+    <None Remove="Assets\Fonts\SourceCodePro-LightItalic.ttf" />
+    <None Remove="Assets\Fonts\SourceCodePro-Medium.ttf" />
+    <None Remove="Assets\Fonts\SourceCodePro-MediumItalic.ttf" />
+    <None Remove="Assets\Fonts\SourceCodePro-Regular.ttf" />
+    <None Remove="Assets\Fonts\SourceCodePro-SemiBold.ttf" />
+    <None Remove="Assets\Fonts\SourceCodePro-SemiBoldItalic.ttf" />
+    <None Remove="Assets\Fonts\SourceCodePro-VariableFont_wght.ttf" />
+    <None Remove="Assets\Icons\achievement\award_bronze.png" />
+    <None Remove="Assets\Icons\achievement\award_gold.png" />
+    <None Remove="Assets\Icons\achievement\award_silver.png" />
+    <None Remove="Assets\Icons\achievement\balloon_red.jpg" />
+    <None Remove="Assets\Icons\achievement\balloon_yellow.jpg" />
+    <None Remove="Assets\Icons\achievement\berserk_raviente.jpg" />
+    <None Remove="Assets\Icons\achievement\blacksmith.jpg" />
+    <None Remove="Assets\Icons\achievement\book_guild.png" />
+    <None Remove="Assets\Icons\achievement\book_monster.png" />
+    <None Remove="Assets\Icons\achievement\book_weapon.png" />
+    <None Remove="Assets\Icons\achievement\book_wyvern.png" />
+    <None Remove="Assets\Icons\achievement\bronze_trophy.png" />
+    <None Remove="Assets\Icons\achievement\chestplate.jpg" />
+    <None Remove="Assets\Icons\achievement\chestplate_gold.jpg" />
+    <None Remove="Assets\Icons\achievement\clock.jpg" />
+    <None Remove="Assets\Icons\achievement\coin.jpg" />
+    <None Remove="Assets\Icons\achievement\diva.jpg" />
+    <None Remove="Assets\Icons\achievement\duremudira.jpg" />
+    <None Remove="Assets\Icons\achievement\gem.jpg" />
+    <None Remove="Assets\Icons\achievement\gold_trophy.png" />
+    <None Remove="Assets\Icons\achievement\guild_blue.jpg" />
+    <None Remove="Assets\Icons\achievement\guild_green.jpg" />
+    <None Remove="Assets\Icons\achievement\guild_orange.jpg" />
+    <None Remove="Assets\Icons\achievement\hunter.jpg" />
+    <None Remove="Assets\Icons\achievement\hunters.jpg" />
+    <None Remove="Assets\Icons\achievement\hunter_festival.jpg" />
+    <None Remove="Assets\Icons\achievement\meat.jpg" />
+    <None Remove="Assets\Icons\achievement\medal_gold.png" />
+    <None Remove="Assets\Icons\achievement\medal_platinum.png" />
+    <None Remove="Assets\Icons\achievement\medal_silver.png" />
+    <None Remove="Assets\Icons\achievement\medal_stamp.jpg" />
+    <None Remove="Assets\Icons\achievement\message.jpg" />
+    <None Remove="Assets\Icons\achievement\monster_blue.jpg" />
+    <None Remove="Assets\Icons\achievement\monster_blue2.jpg" />
+    <None Remove="Assets\Icons\achievement\monster_icon.jpg" />
+    <None Remove="Assets\Icons\achievement\monster_icon_blue.jpg" />
+    <None Remove="Assets\Icons\achievement\monster_icon_red.jpg" />
+    <None Remove="Assets\Icons\achievement\monster_red.jpg" />
+    <None Remove="Assets\Icons\achievement\monster_red2.jpg" />
+    <None Remove="Assets\Icons\achievement\monster_white.jpg" />
+    <None Remove="Assets\Icons\achievement\monster_white2.jpg" />
+    <None Remove="Assets\Icons\achievement\monster_yellow.jpg" />
+    <None Remove="Assets\Icons\achievement\plate.png" />
+    <None Remove="Assets\Icons\achievement\platinum_trophy.png" />
+    <None Remove="Assets\Icons\achievement\points.jpg" />
+    <None Remove="Assets\Icons\achievement\poogie.jpg" />
+    <None Remove="Assets\Icons\achievement\scroll.jpg" />
+    <None Remove="Assets\Icons\achievement\secret_trophy.png" />
+    <None Remove="Assets\Icons\achievement\silver_trophy.png" />
+    <None Remove="Assets\Icons\achievement\stamp.jpg" />
+    <None Remove="Assets\Icons\achievement\switch_axe_f.jpg" />
+    <None Remove="Assets\Icons\achievement\sword.jpg" />
+    <None Remove="Assets\Icons\achievement\swords.jpg" />
+    <None Remove="Assets\Icons\achievement\ticket_gold.jpg" />
+    <None Remove="Assets\Icons\achievement\ticket_silver.jpg" />
+    <None Remove="Assets\Icons\achievement\tower.jpg" />
+    <None Remove="Assets\Icons\achievement\transcend.jpg" />
+    <None Remove="Assets\Icons\achievement\unknown_black.jpg" />
+    <None Remove="Assets\Icons\achievement\unknown_blue.jpg" />
+    <None Remove="Assets\Icons\achievement\unknown_red.jpg" />
+    <None Remove="Assets\Icons\achievement\unknown_white.jpg" />
+    <None Remove="Assets\Icons\achievement\zenny.jpg" />
+    <None Remove="Assets\Icons\gif\scroll_rainbow.gif" />
+    <None Remove="Assets\Icons\ico\mhfzoverlayicon256.ico" />
+    <None Remove="Assets\Icons\png\armor_skills.png" />
+    <None Remove="Assets\Icons\png\arrow_down.png" />
+    <None Remove="Assets\Icons\png\arrow_left.png" />
+    <None Remove="Assets\Icons\png\arrow_right.png" />
+    <None Remove="Assets\Icons\png\arrow_up.png" />
+    <None Remove="Assets\Icons\png\attack.png" />
+    <None Remove="Assets\Icons\png\attack_icon.png" />
+    <None Remove="Assets\Icons\png\attack_up.png" />
+    <None Remove="Assets\Icons\png\attack_up_red.png" />
+    <None Remove="Assets\Icons\png\blast.png" />
+    <None Remove="Assets\Icons\png\blue_soul.png" />
+    <None Remove="Assets\Icons\png\board.png" />
+    <None Remove="Assets\Icons\png\boggers.png" />
+    <None Remove="Assets\Icons\png\bone.png" />
+    <None Remove="Assets\Icons\png\book.png" />
+    <None Remove="Assets\Icons\png\burst.png" />
+    <None Remove="Assets\Icons\png\burst_red.png" />
+    <None Remove="Assets\Icons\png\caravan_skills.png" />
+    <None Remove="Assets\Icons\png\clear.png" />
+    <None Remove="Assets\Icons\png\clear2.png" />
+    <None Remove="Assets\Icons\png\clock.png" />
+    <None Remove="Assets\Icons\png\clock_red.png" />
+    <None Remove="Assets\Icons\png\defense_down.png" />
+    <None Remove="Assets\Icons\png\defense_icon.png" />
+    <None Remove="Assets\Icons\png\defense_up.png" />
+    <None Remove="Assets\Icons\png\description_FILL0_wght400_GRAD0_opsz48.png" />
+    <None Remove="Assets\Icons\png\diva_prayer_gems.png" />
+    <None Remove="Assets\Icons\png\dure2.png" />
+    <None Remove="Assets\Icons\png\dure_attack.png" />
+    <None Remove="Assets\Icons\png\dure_attack_red.png" />
+    <None Remove="Assets\Icons\png\dure_defense.png" />
+    <None Remove="Assets\Icons\png\dure_defense_red.png" />
+    <None Remove="Assets\Icons\png\Element_Black_Flame.png" />
+    <None Remove="Assets\Icons\png\Element_Blaze.png" />
+    <None Remove="Assets\Icons\png\Element_Crimson_Demon.png" />
+    <None Remove="Assets\Icons\png\Element_Darkness.png" />
+    <None Remove="Assets\Icons\png\Element_Emperor%27s_Roar.png" />
+    <None Remove="Assets\Icons\png\Element_Frozen_Seraphim.png" />
+    <None Remove="Assets\Icons\png\Element_Golden_Dust.png" />
+    <None Remove="Assets\Icons\png\Element_Kanade.png" />
+    <None Remove="Assets\Icons\png\Element_Light.png" />
+    <None Remove="Assets\Icons\png\Element_Sound.png" />
+    <None Remove="Assets\Icons\png\Element_Tenshou.png" />
+    <None Remove="Assets\Icons\png\Element_Thunder_Pole.png" />
+    <None Remove="Assets\Icons\png\extreme_dragonblight.png" />
+    <None Remove="Assets\Icons\png\extreme_fireblight.png" />
+    <None Remove="Assets\Icons\png\extreme_iceblight.png" />
+    <None Remove="Assets\Icons\png\extreme_paralysis.png" />
+    <None Remove="Assets\Icons\png\extreme_poison.png" />
+    <None Remove="Assets\Icons\png\extreme_sleep.png" />
+    <None Remove="Assets\Icons\png\extreme_thunderblight.png" />
+    <None Remove="Assets\Icons\png\extreme_waterblight.png" />
+    <None Remove="Assets\Icons\png\fire.png" />
+    <None Remove="Assets\Icons\png\flame_hc.png" />
+    <None Remove="Assets\Icons\png\flame_ul.png" />
+    <None Remove="Assets\Icons\png\gamepad_a.png" />
+    <None Remove="Assets\Icons\png\gamepad_b.png" />
+    <None Remove="Assets\Icons\png\gamepad_dpad.png" />
+    <None Remove="Assets\Icons\png\gamepad_dpad_down.png" />
+    <None Remove="Assets\Icons\png\gamepad_dpad_downleft.png" />
+    <None Remove="Assets\Icons\png\gamepad_dpad_downright.png" />
+    <None Remove="Assets\Icons\png\gamepad_dpad_left.png" />
+    <None Remove="Assets\Icons\png\gamepad_dpad_right.png" />
+    <None Remove="Assets\Icons\png\gamepad_dpad_up.png" />
+    <None Remove="Assets\Icons\png\gamepad_dpad_upleft.png" />
+    <None Remove="Assets\Icons\png\gamepad_dpad_upright.png" />
+    <None Remove="Assets\Icons\png\gamepad_joystick.png" />
+    <None Remove="Assets\Icons\png\gamepad_joystick_down.png" />
+    <None Remove="Assets\Icons\png\gamepad_joystick_downleft.png" />
+    <None Remove="Assets\Icons\png\gamepad_joystick_downright.png" />
+    <None Remove="Assets\Icons\png\gamepad_joystick_left.png" />
+    <None Remove="Assets\Icons\png\gamepad_joystick_right.png" />
+    <None Remove="Assets\Icons\png\gamepad_joystick_up.png" />
+    <None Remove="Assets\Icons\png\gamepad_joystick_upleft.png" />
+    <None Remove="Assets\Icons\png\gamepad_joystick_upright.png" />
+    <None Remove="Assets\Icons\png\gamepad_l1.png" />
+    <None Remove="Assets\Icons\png\gamepad_l2.png" />
+    <None Remove="Assets\Icons\png\gamepad_lb.png" />
+    <None Remove="Assets\Icons\png\gamepad_ls.png" />
+    <None Remove="Assets\Icons\png\gamepad_lt.png" />
+    <None Remove="Assets\Icons\png\gamepad_r1.png" />
+    <None Remove="Assets\Icons\png\gamepad_r2.png" />
+    <None Remove="Assets\Icons\png\gamepad_rb.png" />
+    <None Remove="Assets\Icons\png\gamepad_rs.png" />
+    <None Remove="Assets\Icons\png\gamepad_rt.png" />
+    <None Remove="Assets\Icons\png\gamepad_select.png" />
+    <None Remove="Assets\Icons\png\gamepad_start.png" />
+    <None Remove="Assets\Icons\png\gamepad_x.png" />
+    <None Remove="Assets\Icons\png\gamepad_y.png" />
+    <None Remove="Assets\Icons\png\guild_food.png" />
+    <None Remove="Assets\Icons\png\helm.png" />
+    <None Remove="Assets\Icons\png\here.png" />
+    <None Remove="Assets\Icons\png\key_1.png" />
+    <None Remove="Assets\Icons\png\key_2.png" />
+    <None Remove="Assets\Icons\png\key_3.png" />
+    <None Remove="Assets\Icons\png\key_4.png" />
+    <None Remove="Assets\Icons\png\key_5.png" />
+    <None Remove="Assets\Icons\png\key_a.png" />
+    <None Remove="Assets\Icons\png\key_c.png" />
+    <None Remove="Assets\Icons\png\key_ctrl.png" />
+    <None Remove="Assets\Icons\png\key_d.png" />
+    <None Remove="Assets\Icons\png\key_e.png" />
+    <None Remove="Assets\Icons\png\key_f.png" />
+    <None Remove="Assets\Icons\png\key_g.png" />
+    <None Remove="Assets\Icons\png\key_h.png" />
+    <None Remove="Assets\Icons\png\key_q.png" />
+    <None Remove="Assets\Icons\png\key_r.png" />
+    <None Remove="Assets\Icons\png\key_s.png" />
+    <None Remove="Assets\Icons\png\key_shift.png" />
+    <None Remove="Assets\Icons\png\key_space.png" />
+    <None Remove="Assets\Icons\png\key_t.png" />
+    <None Remove="Assets\Icons\png\key_v.png" />
+    <None Remove="Assets\Icons\png\key_w.png" />
+    <None Remove="Assets\Icons\png\key_x.png" />
+    <None Remove="Assets\Icons\png\key_z.png" />
+    <None Remove="Assets\Icons\png\knife.png" />
+    <None Remove="Assets\Icons\png\left_click.png" />
+    <None Remove="Assets\Icons\png\loading.png" />
+    <None Remove="Assets\Icons\png\medal.png" />
+    <None Remove="Assets\Icons\png\middle_click.png" />
+    <None Remove="Assets\Icons\png\monster.png" />
+    <None Remove="Assets\Icons\png\monster_info.png" />
+    <None Remove="Assets\Icons\png\note_pink.png" />
+    <None Remove="Assets\Icons\png\paralysis.png" />
+    <None Remove="Assets\Icons\png\photo.png" />
+    <None Remove="Assets\Icons\png\point_down.png" />
+    <None Remove="Assets\Icons\png\point_left.png" />
+    <None Remove="Assets\Icons\png\point_right.png" />
+    <None Remove="Assets\Icons\png\point_up.png" />
+    <None Remove="Assets\Icons\png\poison.png" />
+    <None Remove="Assets\Icons\png\quest_1.png" />
+    <None Remove="Assets\Icons\png\quest_clock.png" />
+    <None Remove="Assets\Icons\png\quest_clock_red.png" />
+    <None Remove="Assets\Icons\png\quest_host.png" />
+    <None Remove="Assets\Icons\png\quest_info.png" />
+    <None Remove="Assets\Icons\png\red_soul.png" />
+    <None Remove="Assets\Icons\png\right_click.png" />
+    <None Remove="Assets\Icons\png\sand_clock.png" />
+    <None Remove="Assets\Icons\png\sand_clock2.png" />
+    <None Remove="Assets\Icons\png\sand_clock2_red.png" />
+    <None Remove="Assets\Icons\png\sigils.png" />
+    <None Remove="Assets\Icons\png\sleep.png" />
+    <None Remove="Assets\Icons\png\small_bow.png" />
+    <None Remove="Assets\Icons\png\small_ds.png" />
+    <None Remove="Assets\Icons\png\small_gl.png" />
+    <None Remove="Assets\Icons\png\small_gs.png" />
+    <None Remove="Assets\Icons\png\small_hammer.png" />
+    <None Remove="Assets\Icons\png\small_hbg.png" />
+    <None Remove="Assets\Icons\png\small_hh.png" />
+    <None Remove="Assets\Icons\png\small_lance.png" />
+    <None Remove="Assets\Icons\png\small_lbg.png" />
+    <None Remove="Assets\Icons\png\small_ls.png" />
+    <None Remove="Assets\Icons\png\small_ms.png" />
+    <None Remove="Assets\Icons\png\small_saf.png" />
+    <None Remove="Assets\Icons\png\small_sns.png" />
+    <None Remove="Assets\Icons\png\small_tonfa.png" />
+    <None Remove="Assets\Icons\png\study.png" />
+    <None Remove="Assets\Icons\png\stun.png" />
+    <None Remove="Assets\Icons\png\ticket.png" />
+    <None Remove="Assets\Icons\png\transcend.png" />
+    <None Remove="Assets\Icons\png\unknown.png" />
+    <None Remove="Assets\Icons\png\whetstone.png" />
+    <None Remove="Assets\Icons\png\world.png" />
+    <None Remove="Assets\Sounds\victory.wav" />
     <None Remove="NLog.config" />
-    <None Remove="UI\Background\1.png" />
-    <None Remove="UI\Background\2.png" />
-    <None Remove="UI\Background\3.png" />
-    <None Remove="UI\Background\4.png" />
-    <None Remove="UI\Background\5.png" />
-    <None Remove="UI\Background\6.png" />
-    <None Remove="UI\Background\7.png" />
-    <None Remove="UI\Background\8.png" />
-    <None Remove="UI\Background\9.png" />
-    <None Remove="UI\Fonts\Monster hunter type 2.ttf" />
-    <None Remove="UI\Fonts\OpenSans-Bold.ttf" />
-    <None Remove="UI\Fonts\OpenSans-BoldItalic.ttf" />
-    <None Remove="UI\Fonts\OpenSans-ExtraBold.ttf" />
-    <None Remove="UI\Fonts\OpenSans-ExtraBoldItalic.ttf" />
-    <None Remove="UI\Fonts\OpenSans-Italic.ttf" />
-    <None Remove="UI\Fonts\OpenSans-Light.ttf" />
-    <None Remove="UI\Fonts\OpenSans-LightItalic.ttf" />
-    <None Remove="UI\Fonts\OpenSans-Medium.ttf" />
-    <None Remove="UI\Fonts\OpenSans-MediumItalic.ttf" />
-    <None Remove="UI\Fonts\OpenSans-Regular.ttf" />
-    <None Remove="UI\Fonts\OpenSans-SemiBold.ttf" />
-    <None Remove="UI\Fonts\OpenSans-SemiBoldItalic.ttf" />
-    <None Remove="UI\Fonts\SourceCodePro-Black.ttf" />
-    <None Remove="UI\Fonts\SourceCodePro-BlackItalic.ttf" />
-    <None Remove="UI\Fonts\SourceCodePro-Bold.ttf" />
-    <None Remove="UI\Fonts\SourceCodePro-BoldItalic.ttf" />
-    <None Remove="UI\Fonts\SourceCodePro-ExtraBold.ttf" />
-    <None Remove="UI\Fonts\SourceCodePro-ExtraBoldItalic.ttf" />
-    <None Remove="UI\Fonts\SourceCodePro-ExtraLight.ttf" />
-    <None Remove="UI\Fonts\SourceCodePro-ExtraLightItalic.ttf" />
-    <None Remove="UI\Fonts\SourceCodePro-Italic-VariableFont_wght.ttf" />
-    <None Remove="UI\Fonts\SourceCodePro-Italic.ttf" />
-    <None Remove="UI\Fonts\SourceCodePro-Light.ttf" />
-    <None Remove="UI\Fonts\SourceCodePro-LightItalic.ttf" />
-    <None Remove="UI\Fonts\SourceCodePro-Medium.ttf" />
-    <None Remove="UI\Fonts\SourceCodePro-MediumItalic.ttf" />
-    <None Remove="UI\Fonts\SourceCodePro-Regular.ttf" />
-    <None Remove="UI\Fonts\SourceCodePro-SemiBold.ttf" />
-    <None Remove="UI\Fonts\SourceCodePro-SemiBoldItalic.ttf" />
-    <None Remove="UI\Fonts\SourceCodePro-VariableFont_wght.ttf" />
-    <None Remove="HuntedLogs\EXAMPLE.csv" />
-    <None Remove="UI\Icons\armor_skills.png" />
-    <None Remove="UI\Icons\attack.png" />
-    <None Remove="UI\Icons\attack_up.png" />
-    <None Remove="UI\Icons\blast.png" />
-    <None Remove="UI\Icons\boggers.png" />
-    <None Remove="UI\Icons\bone.png" />
-    <None Remove="UI\Icons\book.png" />
-    <None Remove="UI\Icons\burst.png" />
-    <None Remove="UI\Icons\caravan_skills.png" />
-    <None Remove="UI\Icons\clear.png" />
-    <None Remove="UI\Icons\clock.png" />
-    <None Remove="UI\Icons\description_FILL0_wght400_GRAD0_opsz48.png" />
-    <None Remove="UI\Icons\diva_prayer_gems.png" />
-    <None Remove="UI\Icons\dure2.png" />
-    <None Remove="UI\Icons\dure_attack.png" />
-    <None Remove="UI\Icons\dure_attack_red.png" />
-    <None Remove="UI\Icons\dure_defense.png" />
-    <None Remove="UI\Icons\dure_defense_red.png" />
-    <None Remove="UI\Icons\fire.png" />
-    <None Remove="UI\Icons\gif\scroll_rainbow.gif" />
-    <None Remove="UI\Icons\guild_food.png" />
-    <None Remove="UI\Icons\helm.png" />
-    <None Remove="UI\Icons\ico\mhfzoverlayicon256.ico" />
-    <None Remove="UI\Icons\knife.png" />
-    <None Remove="UI\Icons\loading.png" />
-    <None Remove="UI\Icons\monster.png" />
-    <None Remove="UI\Icons\monster_info.png" />
-    <None Remove="UI\Icons\note_pink.png" />
-    <None Remove="UI\Icons\page.png" />
-    <None Remove="UI\Icons\paralysis.png" />
-    <None Remove="UI\Icons\photo.png" />
-    <None Remove="UI\Icons\png\arrow_down.png" />
-    <None Remove="UI\Icons\png\arrow_left.png" />
-    <None Remove="UI\Icons\png\arrow_right.png" />
-    <None Remove="UI\Icons\png\arrow_up.png" />
-    <None Remove="UI\Icons\png\attack_icon.png" />
-    <None Remove="UI\Icons\png\attack_up_red.png" />
-    <None Remove="UI\Icons\png\blue_soul.png" />
-    <None Remove="UI\Icons\png\board.png" />
-    <None Remove="UI\Icons\png\burst_red.png" />
-    <None Remove="UI\Icons\png\clear2.png" />
-    <None Remove="UI\Icons\png\clock_red.png" />
-    <None Remove="UI\Icons\png\controller_a.png" />
-    <None Remove="UI\Icons\png\controller_b.png" />
-    <None Remove="UI\Icons\png\controller_dpad.png" />
-    <None Remove="UI\Icons\png\controller_joystick.png" />
-    <None Remove="UI\Icons\png\controller_l1.png" />
-    <None Remove="UI\Icons\png\controller_l2.png" />
-    <None Remove="UI\Icons\png\controller_lb.png" />
-    <None Remove="UI\Icons\png\controller_ls.png" />
-    <None Remove="UI\Icons\png\controller_lt.png" />
-    <None Remove="UI\Icons\png\controller_r1.png" />
-    <None Remove="UI\Icons\png\controller_r2.png" />
-    <None Remove="UI\Icons\png\controller_rb.png" />
-    <None Remove="UI\Icons\png\controller_rs.png" />
-    <None Remove="UI\Icons\png\controller_rt.png" />
-    <None Remove="UI\Icons\png\controller_select.png" />
-    <None Remove="UI\Icons\png\controller_start.png" />
-    <None Remove="UI\Icons\png\controller_x.png" />
-    <None Remove="UI\Icons\png\controller_y.png" />
-    <None Remove="UI\Icons\png\defense_down.png" />
-    <None Remove="UI\Icons\png\defense_icon.png" />
-    <None Remove="UI\Icons\png\defense_up.png" />
-    <None Remove="UI\Icons\png\flame_hc.png" />
-    <None Remove="UI\Icons\png\flame_ul.png" />
-    <None Remove="UI\Icons\png\here.png" />
-    <None Remove="UI\Icons\png\key_1.png" />
-    <None Remove="UI\Icons\png\key_2.png" />
-    <None Remove="UI\Icons\png\key_3.png" />
-    <None Remove="UI\Icons\png\key_4.png" />
-    <None Remove="UI\Icons\png\key_5.png" />
-    <None Remove="UI\Icons\png\key_a.png" />
-    <None Remove="UI\Icons\png\key_c.png" />
-    <None Remove="UI\Icons\png\key_ctrl.png" />
-    <None Remove="UI\Icons\png\key_d.png" />
-    <None Remove="UI\Icons\png\key_e.png" />
-    <None Remove="UI\Icons\png\key_f.png" />
-    <None Remove="UI\Icons\png\key_g.png" />
-    <None Remove="UI\Icons\png\key_h.png" />
-    <None Remove="UI\Icons\png\key_q.png" />
-    <None Remove="UI\Icons\png\key_r.png" />
-    <None Remove="UI\Icons\png\key_s.png" />
-    <None Remove="UI\Icons\png\key_shift.png" />
-    <None Remove="UI\Icons\png\key_space.png" />
-    <None Remove="UI\Icons\png\key_t.png" />
-    <None Remove="UI\Icons\png\key_v.png" />
-    <None Remove="UI\Icons\png\key_w.png" />
-    <None Remove="UI\Icons\png\key_x.png" />
-    <None Remove="UI\Icons\png\key_z.png" />
-    <None Remove="UI\Icons\png\left_click.png" />
-    <None Remove="UI\Icons\png\medal.png" />
-    <None Remove="UI\Icons\png\middle_click.png" />
-    <None Remove="UI\Icons\png\point_down.png" />
-    <None Remove="UI\Icons\png\point_left.png" />
-    <None Remove="UI\Icons\png\point_right.png" />
-    <None Remove="UI\Icons\png\point_up.png" />
-    <None Remove="UI\Icons\png\quest_1.png" />
-    <None Remove="UI\Icons\png\quest_clock.png" />
-    <None Remove="UI\Icons\png\quest_clock_red.png" />
-    <None Remove="UI\Icons\png\right_click.png" />
-    <None Remove="UI\Icons\png\sand_clock2_red.png" />
-    <None Remove="UI\Icons\png\small_bow.png" />
-    <None Remove="UI\Icons\png\small_ds.png" />
-    <None Remove="UI\Icons\png\small_gl.png" />
-    <None Remove="UI\Icons\png\small_gs.png" />
-    <None Remove="UI\Icons\png\small_hammer.png" />
-    <None Remove="UI\Icons\png\small_hbg.png" />
-    <None Remove="UI\Icons\png\small_hh.png" />
-    <None Remove="UI\Icons\png\small_lance.png" />
-    <None Remove="UI\Icons\png\small_lbg.png" />
-    <None Remove="UI\Icons\png\small_ls.png" />
-    <None Remove="UI\Icons\png\small_ms.png" />
-    <None Remove="UI\Icons\png\small_saf.png" />
-    <None Remove="UI\Icons\png\small_sns.png" />
-    <None Remove="UI\Icons\png\small_tonfa.png" />
-    <None Remove="UI\Icons\png\whetstone.png" />
-    <None Remove="UI\Icons\png\world.png" />
-    <None Remove="UI\Icons\poison.png" />
-    <None Remove="UI\Icons\quest_host.png" />
-    <None Remove="UI\Icons\quest_info.png" />
-    <None Remove="UI\Icons\red_soul.png" />
-    <None Remove="UI\Icons\sand_clock.png" />
-    <None Remove="UI\Icons\sand_clock2.png" />
-    <None Remove="UI\Icons\sigils.png" />
-    <None Remove="UI\Icons\sleep.png" />
-    <None Remove="UI\Icons\study.png" />
-    <None Remove="UI\Icons\stun.png" />
-    <None Remove="UI\Icons\unknown.png" />
   </ItemGroup>
 
   <ItemGroup>
-    <Page Remove="UI\Icons\123_FILL0_wght400_GRAD0_opsz48.xaml" />
-    <Page Remove="UI\Icons\Antenna_Icon_White.xaml" />
-    <Page Remove="UI\Icons\Armor_Sphere_Icon_White.xaml" />
-    <Page Remove="UI\Icons\badge.xaml" />
-    <Page Remove="UI\Icons\Ball_Icon_White.xaml" />
-    <Page Remove="UI\Icons\bar_chart_FILL0_wght400_GRAD0_opsz48.xaml" />
-    <Page Remove="UI\Icons\Blade_Icon_White.xaml" />
-    <Page Remove="UI\Icons\Blade_Oil_Icon_White.xaml" />
-    <Page Remove="UI\Icons\Bone_Icon_White.xaml" />
-    <Page Remove="UI\Icons\Bug_Icon_White.xaml" />
-    <Page Remove="UI\Icons\Cancel.xaml" />
-    <Page Remove="UI\Icons\Carapace_Icon_White.xaml" />
-    <Page Remove="UI\Icons\Charm_Icon_White.xaml" />
-    <Page Remove="UI\Icons\Claw_Icon_White.xaml" />
-    <Page Remove="UI\Icons\Close.xaml" />
-    <Page Remove="UI\Icons\Coin_Icon_White.xaml" />
-    <Page Remove="UI\Icons\content_copy_FILL0_wght400_GRAD0_opsz48.xaml" />
-    <Page Remove="UI\Icons\database_FILL0_wght400_GRAD0_opsz48.xaml" />
-    <Page Remove="UI\Icons\description_FILL0_wght400_GRAD0_opsz48.xaml" />
-    <Page Remove="UI\Icons\Done.xaml" />
-    <Page Remove="UI\Icons\Dracolite_Icon_White.xaml" />
-    <Page Remove="UI\Icons\DragDropControl.xaml" />
-    <Page Remove="UI\Icons\Drink_Icon_White.xaml" />
-    <Page Remove="UI\Icons\Dung_Icon_White.xaml" />
-    <Page Remove="UI\Icons\Eye_Icon_White.xaml" />
-    <Page Remove="UI\Icons\Fang_Icon_White.xaml" />
-    <Page Remove="UI\Icons\Feather_Icon_White.xaml" />
-    <Page Remove="UI\Icons\file_download_FILL0_wght400_GRAD0_opsz48.xaml" />
-    <Page Remove="UI\Icons\Fin_Icon_White.xaml" />
-    <Page Remove="UI\Icons\flag-checkered-solid.xaml" />
-    <Page Remove="UI\Icons\Flask_Icon_White.xaml" />
-    <Page Remove="UI\Icons\Flipper_Icon_White.xaml" />
-    <Page Remove="UI\Icons\Flower_Icon_White.xaml" />
-    <Page Remove="UI\Icons\Fluid_Icon_White.xaml" />
-    <Page Remove="UI\Icons\Frenzy_Crystal_Icon_White.xaml" />
-    <Page Remove="UI\Icons\Fruit_Icon_White.xaml" />
-    <Page Remove="UI\Icons\Head_Icon_White.xaml" />
-    <Page Remove="UI\Icons\heart.xaml" />
-    <Page Remove="UI\Icons\Heart_Icon_White.xaml" />
-    <Page Remove="UI\Icons\Herb_Icon_White.xaml" />
-    <Page Remove="UI\Icons\Hide_Icon_White.xaml" />
-    <Page Remove="UI\Icons\history_FILL0_wght400_GRAD0_opsz48.xaml" />
-    <Page Remove="UI\Icons\Horn_Icon_White.xaml" />
-    <Page Remove="UI\Icons\Husk_Icon_White.xaml" />
-    <Page Remove="UI\Icons\image_FILL0_wght400_GRAD0_opsz48.xaml" />
-    <Page Remove="UI\Icons\issues.xaml" />
-    <Page Remove="UI\Icons\Jelly_Icon_White.xaml" />
-    <Page Remove="UI\Icons\Jewel_Icon_White.xaml" />
-    <Page Remove="UI\Icons\keyboard_FILL0_wght400_GRAD0_opsz48.xaml" />
-    <Page Remove="UI\Icons\leaderboard_FILL0_wght400_GRAD0_opsz48.xaml" />
-    <Page Remove="UI\Icons\Leg_Carve_Icon_White.xaml" />
-    <Page Remove="UI\Icons\manage_history_FILL0_wght400_GRAD0_opsz48.xaml" />
-    <Page Remove="UI\Icons\Mantle_Icon_White.xaml" />
-    <Page Remove="UI\Icons\Mask_Icon_White.xaml" />
-    <Page Remove="UI\Icons\Meat_Icon_White.xaml" />
-    <Page Remove="UI\Icons\Medicine_Icon_White.xaml" />
-    <Page Remove="UI\Icons\Monster_Part_Icon_White.xaml" />
-    <Page Remove="UI\Icons\Nectar_Icon_White.xaml" />
-    <Page Remove="UI\Icons\Ore_Icon_Special_001.xaml" />
-    <Page Remove="UI\Icons\Ore_Icon_White.xaml" />
-    <Page Remove="UI\Icons\overview_FILL0_wght400_GRAD0_opsz48.xaml" />
-    <Page Remove="UI\Icons\Pill_Icon_White.xaml" />
-    <Page Remove="UI\Icons\Plate_Icon_White.xaml" />
-    <Page Remove="UI\Icons\query_stats_FILL0_wght400_GRAD0_opsz48.xaml" />
-    <Page Remove="UI\Icons\Refresh.xaml" />
-    <Page Remove="UI\Icons\Sac_Icon_White.xaml" />
-    <Page Remove="UI\Icons\save_FILL0_wght400_GRAD0_opsz48.xaml" />
-    <Page Remove="UI\Icons\Scale_Icon_White.xaml" />
-    <Page Remove="UI\Icons\Scrap_Icon_White.xaml" />
-    <Page Remove="UI\Icons\search_FILL0_wght400_GRAD0_opsz48.xaml" />
-    <Page Remove="UI\Icons\Settings.xaml" />
-    <Page Remove="UI\Icons\Shell_Icon_White.xaml" />
-    <Page Remove="UI\Icons\Spiderweb_Icon_White.xaml" />
-    <Page Remove="UI\Icons\sports_esports_FILL0_wght400_GRAD0_opsz48.xaml" />
-    <Page Remove="UI\Icons\stacked_bar_chart_FILL0_wght400_GRAD0_opsz48.xaml" />
-    <Page Remove="UI\Icons\Star.xaml" />
-    <Page Remove="UI\Icons\Steak_Icon_White.xaml" />
-    <Page Remove="UI\Icons\Sturdy_Shell_Icon_White.xaml" />
-    <Page Remove="UI\Icons\table_chart_FILL0_wght400_GRAD0_opsz48.xaml" />
-    <Page Remove="UI\Icons\Tail_Icon_White.xaml" />
-    <Page Remove="UI\Icons\Talisman_Icon_White.xaml" />
-    <Page Remove="UI\Icons\Tentacle_Icon_White.xaml" />
-    <Page Remove="UI\Icons\timer_FILL0_wght400_GRAD0_opsz48.xaml" />
-    <Page Remove="UI\Icons\Vial_Icon_White.xaml" />
-    <Page Remove="UI\Icons\Voucher_Icon_White.xaml" />
-    <Page Remove="UI\Icons\Watch.xaml" />
-    <Page Remove="UI\Icons\Webbing_Icon_White.xaml" />
-    <Page Remove="UI\Icons\Wing_Icon_White.xaml" />
-    <Page Remove="UI\Icons\Wood_Icon_White.xaml" />
+    <Page Remove="Assets\Icons\Antenna_Icon_White.xaml" />
+    <Page Remove="Assets\Icons\Armor_Sphere_Icon_White.xaml" />
+    <Page Remove="Assets\Icons\Ball_Icon_White.xaml" />
+    <Page Remove="Assets\Icons\Blade_Icon_White.xaml" />
+    <Page Remove="Assets\Icons\Blade_Oil_Icon_White.xaml" />
+    <Page Remove="Assets\Icons\Bone_Icon_White.xaml" />
+    <Page Remove="Assets\Icons\Bug_Icon_White.xaml" />
+    <Page Remove="Assets\Icons\Carapace_Icon_White.xaml" />
+    <Page Remove="Assets\Icons\Charm_Icon_White.xaml" />
+    <Page Remove="Assets\Icons\Claw_Icon_White.xaml" />
+    <Page Remove="Assets\Icons\Coin_Icon_White.xaml" />
+    <Page Remove="Assets\Icons\Dracolite_Icon_White.xaml" />
+    <Page Remove="Assets\Icons\DragDropControl.xaml" />
+    <Page Remove="Assets\Icons\Drink_Icon_White.xaml" />
+    <Page Remove="Assets\Icons\Dung_Icon_White.xaml" />
+    <Page Remove="Assets\Icons\Eye_Icon_White.xaml" />
+    <Page Remove="Assets\Icons\Fang_Icon_White.xaml" />
+    <Page Remove="Assets\Icons\Feather_Icon_White.xaml" />
+    <Page Remove="Assets\Icons\Fin_Icon_White.xaml" />
+    <Page Remove="Assets\Icons\flag-checkered-solid.xaml" />
+    <Page Remove="Assets\Icons\Flask_Icon_White.xaml" />
+    <Page Remove="Assets\Icons\Flipper_Icon_White.xaml" />
+    <Page Remove="Assets\Icons\Flower_Icon_White.xaml" />
+    <Page Remove="Assets\Icons\Fluid_Icon_White.xaml" />
+    <Page Remove="Assets\Icons\Frenzy_Crystal_Icon_White.xaml" />
+    <Page Remove="Assets\Icons\Fruit_Icon_White.xaml" />
+    <Page Remove="Assets\Icons\Head_Icon_White.xaml" />
+    <Page Remove="Assets\Icons\Heart_Icon_White.xaml" />
+    <Page Remove="Assets\Icons\Herb_Icon_White.xaml" />
+    <Page Remove="Assets\Icons\Hide_Icon_White.xaml" />
+    <Page Remove="Assets\Icons\Horn_Icon_White.xaml" />
+    <Page Remove="Assets\Icons\Husk_Icon_White.xaml" />
+    <Page Remove="Assets\Icons\issues.xaml" />
+    <Page Remove="Assets\Icons\Jelly_Icon_White.xaml" />
+    <Page Remove="Assets\Icons\Jewel_Icon_White.xaml" />
+    <Page Remove="Assets\Icons\Leg_Carve_Icon_White.xaml" />
+    <Page Remove="Assets\Icons\Mantle_Icon_White.xaml" />
+    <Page Remove="Assets\Icons\Mask_Icon_White.xaml" />
+    <Page Remove="Assets\Icons\Meat_Icon_White.xaml" />
+    <Page Remove="Assets\Icons\Medicine_Icon_White.xaml" />
+    <Page Remove="Assets\Icons\Monster_Part_Icon_White.xaml" />
+    <Page Remove="Assets\Icons\Nectar_Icon_White.xaml" />
+    <Page Remove="Assets\Icons\Ore_Icon_Special_001.xaml" />
+    <Page Remove="Assets\Icons\Ore_Icon_White.xaml" />
+    <Page Remove="Assets\Icons\Pill_Icon_White.xaml" />
+    <Page Remove="Assets\Icons\Plate_Icon_White.xaml" />
+    <Page Remove="Assets\Icons\Sac_Icon_White.xaml" />
+    <Page Remove="Assets\Icons\Scale_Icon_White.xaml" />
+    <Page Remove="Assets\Icons\Scrap_Icon_White.xaml" />
+    <Page Remove="Assets\Icons\Shell_Icon_White.xaml" />
+    <Page Remove="Assets\Icons\Spiderweb_Icon_White.xaml" />
+    <Page Remove="Assets\Icons\star.xaml" />
+    <Page Remove="Assets\Icons\Steak_Icon_White.xaml" />
+    <Page Remove="Assets\Icons\Sturdy_Shell_Icon_White.xaml" />
+    <Page Remove="Assets\Icons\Tail_Icon_White.xaml" />
+    <Page Remove="Assets\Icons\Talisman_Icon_White.xaml" />
+    <Page Remove="Assets\Icons\Tentacle_Icon_White.xaml" />
+    <Page Remove="Assets\Icons\Vial_Icon_White.xaml" />
+    <Page Remove="Assets\Icons\Voucher_Icon_White.xaml" />
+    <Page Remove="Assets\Icons\watch.xaml" />
+    <Page Remove="Assets\Icons\Webbing_Icon_White.xaml" />
+    <Page Remove="Assets\Icons\Wing_Icon_White.xaml" />
+    <Page Remove="Assets\Icons\Wood_Icon_White.xaml" />
+    <Page Remove="Assets\Themes\CatppuccinMocha.xaml" />
   </ItemGroup>
 
   <ItemGroup>
-    <AdditionalFiles Include="..\.sonarlint\dorielrivalet_mhfz_overlay\CSharp\SonarLint.xml" Link="SonarLint.xml" />
     <Content Include="mhfzoverlay128.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -313,402 +400,469 @@
     <Content Include="NLog.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Resource Include="UI\Icons\ico\mhfzoverlayicon256.ico">
+    <AdditionalFiles Include=".stylecop.json" />
+    <Resource Include="Assets\Background\1.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="UI\Background\9.png">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    <Resource Include="Assets\Background\2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="UI\Fonts\Monster hunter type 2.ttf" />
-    <Resource Include="UI\Fonts\OpenSans-Bold.ttf" />
-    <Resource Include="UI\Fonts\OpenSans-BoldItalic.ttf" />
-    <Resource Include="UI\Fonts\OpenSans-ExtraBold.ttf" />
-    <Resource Include="UI\Fonts\OpenSans-ExtraBoldItalic.ttf" />
-    <Resource Include="UI\Fonts\OpenSans-Italic.ttf" />
-    <Resource Include="UI\Fonts\OpenSans-Light.ttf" />
-    <Resource Include="UI\Fonts\OpenSans-LightItalic.ttf" />
-    <Resource Include="UI\Fonts\OpenSans-Medium.ttf" />
-    <Resource Include="UI\Fonts\OpenSans-MediumItalic.ttf" />
-    <Resource Include="UI\Fonts\OpenSans-Regular.ttf" />
-    <Resource Include="UI\Fonts\OpenSans-SemiBold.ttf" />
-    <Resource Include="UI\Fonts\OpenSans-SemiBoldItalic.ttf" />
-    <Resource Include="UI\Icons\123_FILL0_wght400_GRAD0_opsz48.xaml" />
-    <Resource Include="UI\Icons\bar_chart_FILL0_wght400_GRAD0_opsz48.xaml" />
-    <Resource Include="UI\Icons\database_FILL0_wght400_GRAD0_opsz48.xaml" />
-    <Resource Include="UI\Icons\flag-checkered-solid.xaml" />
-    <Resource Include="UI\Icons\gif\scroll_rainbow.gif" />
-    <Resource Include="UI\Icons\keyboard_FILL0_wght400_GRAD0_opsz48.xaml" />
-    <Resource Include="UI\Icons\leaderboard_FILL0_wght400_GRAD0_opsz48.xaml" />
-    <Resource Include="UI\Icons\manage_history_FILL0_wght400_GRAD0_opsz48.xaml" />
+    <Resource Include="Assets\Background\3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Background\4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Background\5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Background\6.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Background\7.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Background\8.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Background\9.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Fonts\Meslo LG M Regular Nerd Font Complete Mono Windows Compatible.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Fonts\Monster hunter type 2.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Fonts\OpenSans-Bold.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Fonts\OpenSans-BoldItalic.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Fonts\OpenSans-ExtraBold.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Fonts\OpenSans-ExtraBoldItalic.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Fonts\OpenSans-Italic.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Fonts\OpenSans-Light.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Fonts\OpenSans-LightItalic.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Fonts\OpenSans-Medium.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Fonts\OpenSans-MediumItalic.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Fonts\OpenSans-Regular.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Fonts\OpenSans-SemiBold.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Fonts\OpenSans-SemiBoldItalic.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Fonts\Segoe Fluent Icons.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Fonts\SegoeUI-VF.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Fonts\SourceCodePro-Black.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Fonts\SourceCodePro-BlackItalic.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Fonts\SourceCodePro-Bold.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Fonts\SourceCodePro-BoldItalic.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Fonts\SourceCodePro-ExtraBold.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Fonts\SourceCodePro-ExtraBoldItalic.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Fonts\SourceCodePro-ExtraLight.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Fonts\SourceCodePro-ExtraLightItalic.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Fonts\SourceCodePro-Italic-VariableFont_wght.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Fonts\SourceCodePro-Italic.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Fonts\SourceCodePro-Light.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Fonts\SourceCodePro-LightItalic.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Fonts\SourceCodePro-Medium.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Fonts\SourceCodePro-MediumItalic.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Fonts\SourceCodePro-Regular.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Fonts\SourceCodePro-SemiBold.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Fonts\SourceCodePro-SemiBoldItalic.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Fonts\SourceCodePro-VariableFont_wght.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Icons\achievement\award_bronze.png" />
+    <Resource Include="Assets\Icons\achievement\award_gold.png" />
+    <Resource Include="Assets\Icons\achievement\award_silver.png" />
+    <Resource Include="Assets\Icons\achievement\balloon_red.jpg" />
+    <Resource Include="Assets\Icons\achievement\balloon_yellow.jpg" />
+    <Resource Include="Assets\Icons\achievement\berserk_raviente.jpg" />
+    <Resource Include="Assets\Icons\achievement\blacksmith.jpg" />
+    <Resource Include="Assets\Icons\achievement\book_guild.png" />
+    <Resource Include="Assets\Icons\achievement\book_monster.png" />
+    <Resource Include="Assets\Icons\achievement\book_weapon.png" />
+    <Resource Include="Assets\Icons\achievement\book_wyvern.png" />
+    <Resource Include="Assets\Icons\achievement\bronze_trophy.png" />
+    <Resource Include="Assets\Icons\achievement\chestplate.jpg" />
+    <Resource Include="Assets\Icons\achievement\chestplate_gold.jpg" />
+    <Resource Include="Assets\Icons\achievement\clock.jpg" />
+    <Resource Include="Assets\Icons\achievement\coin.jpg" />
+    <Resource Include="Assets\Icons\achievement\diva.jpg" />
+    <Resource Include="Assets\Icons\achievement\duremudira.jpg" />
+    <Resource Include="Assets\Icons\achievement\gem.jpg" />
+    <Resource Include="Assets\Icons\achievement\gold_trophy.png" />
+    <Resource Include="Assets\Icons\achievement\guild_blue.jpg" />
+    <Resource Include="Assets\Icons\achievement\guild_green.jpg" />
+    <Resource Include="Assets\Icons\achievement\guild_orange.jpg" />
+    <Resource Include="Assets\Icons\achievement\hunter.jpg" />
+    <Resource Include="Assets\Icons\achievement\hunters.jpg" />
+    <Resource Include="Assets\Icons\achievement\hunter_festival.jpg" />
+    <Resource Include="Assets\Icons\achievement\meat.jpg" />
+    <Resource Include="Assets\Icons\achievement\medal_gold.png" />
+    <Resource Include="Assets\Icons\achievement\medal_platinum.png" />
+    <Resource Include="Assets\Icons\achievement\medal_silver.png" />
+    <Resource Include="Assets\Icons\achievement\medal_stamp.jpg" />
+    <Resource Include="Assets\Icons\achievement\message.jpg" />
+    <Resource Include="Assets\Icons\achievement\monster_blue.jpg" />
+    <Resource Include="Assets\Icons\achievement\monster_blue2.jpg" />
+    <Resource Include="Assets\Icons\achievement\monster_icon.jpg" />
+    <Resource Include="Assets\Icons\achievement\monster_icon_blue.jpg" />
+    <Resource Include="Assets\Icons\achievement\monster_icon_red.jpg" />
+    <Resource Include="Assets\Icons\achievement\monster_red.jpg" />
+    <Resource Include="Assets\Icons\achievement\monster_red2.jpg" />
+    <Resource Include="Assets\Icons\achievement\monster_white.jpg" />
+    <Resource Include="Assets\Icons\achievement\monster_white2.jpg" />
+    <Resource Include="Assets\Icons\achievement\monster_yellow.jpg" />
+    <Resource Include="Assets\Icons\achievement\plate.png" />
+    <Resource Include="Assets\Icons\achievement\platinum_trophy.png" />
+    <Resource Include="Assets\Icons\achievement\points.jpg" />
+    <Resource Include="Assets\Icons\achievement\poogie.jpg" />
+    <Resource Include="Assets\Icons\achievement\scroll.jpg" />
+    <Resource Include="Assets\Icons\achievement\secret_trophy.png" />
+    <Resource Include="Assets\Icons\achievement\silver_trophy.png" />
+    <Resource Include="Assets\Icons\achievement\stamp.jpg" />
+    <Resource Include="Assets\Icons\achievement\switch_axe_f.jpg" />
+    <Resource Include="Assets\Icons\achievement\sword.jpg" />
+    <Resource Include="Assets\Icons\achievement\swords.jpg" />
+    <Resource Include="Assets\Icons\achievement\ticket_gold.jpg" />
+    <Resource Include="Assets\Icons\achievement\ticket_silver.jpg" />
+    <Resource Include="Assets\Icons\achievement\tower.jpg" />
+    <Resource Include="Assets\Icons\achievement\transcend.jpg" />
+    <Resource Include="Assets\Icons\achievement\unknown_black.jpg" />
+    <Resource Include="Assets\Icons\achievement\unknown_blue.jpg" />
+    <Resource Include="Assets\Icons\achievement\unknown_red.jpg" />
+    <Resource Include="Assets\Icons\achievement\unknown_white.jpg" />
+    <Resource Include="Assets\Icons\achievement\zenny.jpg" />
+    <Resource Include="Assets\Icons\Antenna_Icon_White.xaml" />
+    <Resource Include="Assets\Icons\Armor_Sphere_Icon_White.xaml" />
+    <Resource Include="Assets\Icons\Ball_Icon_White.xaml" />
+    <Resource Include="Assets\Icons\Blade_Icon_White.xaml" />
+    <Resource Include="Assets\Icons\Blade_Oil_Icon_White.xaml" />
+    <Resource Include="Assets\Icons\Bone_Icon_White.xaml" />
+    <Resource Include="Assets\Icons\Bug_Icon_White.xaml" />
+    <Resource Include="Assets\Icons\Carapace_Icon_White.xaml" />
+    <Resource Include="Assets\Icons\Charm_Icon_White.xaml" />
+    <Resource Include="Assets\Icons\Claw_Icon_White.xaml" />
+    <Resource Include="Assets\Icons\Coin_Icon_White.xaml" />
+    <Resource Include="Assets\Icons\Dracolite_Icon_White.xaml" />
+    <Resource Include="Assets\Icons\DragDropControl.xaml" />
+    <Resource Include="Assets\Icons\Drink_Icon_White.xaml" />
+    <Resource Include="Assets\Icons\Dung_Icon_White.xaml" />
+    <Resource Include="Assets\Icons\Eye_Icon_White.xaml" />
+    <Resource Include="Assets\Icons\Fang_Icon_White.xaml" />
+    <Resource Include="Assets\Icons\Feather_Icon_White.xaml" />
+    <Resource Include="Assets\Icons\Fin_Icon_White.xaml" />
+    <Resource Include="Assets\Icons\flag-checkered-solid.xaml" />
+    <Resource Include="Assets\Icons\Flask_Icon_White.xaml" />
+    <Resource Include="Assets\Icons\Flipper_Icon_White.xaml" />
+    <Resource Include="Assets\Icons\Flower_Icon_White.xaml" />
+    <Resource Include="Assets\Icons\Fluid_Icon_White.xaml" />
+    <Resource Include="Assets\Icons\Frenzy_Crystal_Icon_White.xaml" />
+    <Resource Include="Assets\Icons\Fruit_Icon_White.xaml" />
+    <Resource Include="Assets\Icons\gif\scroll_rainbow.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Icons\Head_Icon_White.xaml" />
+    <Resource Include="Assets\Icons\Heart_Icon_White.xaml" />
+    <Resource Include="Assets\Icons\Herb_Icon_White.xaml" />
+    <Resource Include="Assets\Icons\Hide_Icon_White.xaml" />
+    <Resource Include="Assets\Icons\Horn_Icon_White.xaml" />
+    <Resource Include="Assets\Icons\Husk_Icon_White.xaml" />
+    <Resource Include="Assets\Icons\ico\mhfzoverlayicon256.ico" />
+    <Resource Include="Assets\Icons\issues.xaml" />
+    <Resource Include="Assets\Icons\Jelly_Icon_White.xaml" />
+    <Resource Include="Assets\Icons\Jewel_Icon_White.xaml" />
+    <Resource Include="Assets\Icons\Leg_Carve_Icon_White.xaml" />
+    <Resource Include="Assets\Icons\Mantle_Icon_White.xaml" />
+    <Resource Include="Assets\Icons\Mask_Icon_White.xaml" />
+    <Resource Include="Assets\Icons\Meat_Icon_White.xaml" />
+    <Resource Include="Assets\Icons\Medicine_Icon_White.xaml" />
+    <Resource Include="Assets\Icons\Monster_Part_Icon_White.xaml" />
+    <Resource Include="Assets\Icons\Nectar_Icon_White.xaml" />
+    <Resource Include="Assets\Icons\Ore_Icon_Special_001.xaml" />
+    <Resource Include="Assets\Icons\Ore_Icon_White.xaml" />
+    <Resource Include="Assets\Icons\Pill_Icon_White.xaml" />
+    <Resource Include="Assets\Icons\Plate_Icon_White.xaml" />
+    <Resource Include="Assets\Icons\png\armor_skills.png" />
+    <Resource Include="Assets\Icons\png\arrow_down.png" />
+    <Resource Include="Assets\Icons\png\arrow_left.png" />
+    <Resource Include="Assets\Icons\png\arrow_right.png" />
+    <Resource Include="Assets\Icons\png\arrow_up.png" />
+    <Resource Include="Assets\Icons\png\attack.png" />
+    <Resource Include="Assets\Icons\png\attack_icon.png" />
+    <Resource Include="Assets\Icons\png\attack_up.png" />
+    <Resource Include="Assets\Icons\png\attack_up_red.png" />
+    <Resource Include="Assets\Icons\png\blast.png" />
+    <Resource Include="Assets\Icons\png\blue_soul.png" />
+    <Resource Include="Assets\Icons\png\board.png" />
+    <Resource Include="Assets\Icons\png\boggers.png" />
+    <Resource Include="Assets\Icons\png\bone.png" />
+    <Resource Include="Assets\Icons\png\book.png" />
+    <Resource Include="Assets\Icons\png\burst.png" />
+    <Resource Include="Assets\Icons\png\burst_red.png" />
+    <Resource Include="Assets\Icons\png\caravan_skills.png" />
+    <Resource Include="Assets\Icons\png\clear.png" />
+    <Resource Include="Assets\Icons\png\clear2.png" />
+    <Resource Include="Assets\Icons\png\clock.png" />
+    <Resource Include="Assets\Icons\png\clock_red.png" />
+    <Resource Include="Assets\Icons\png\defense_down.png" />
+    <Resource Include="Assets\Icons\png\defense_icon.png" />
+    <Resource Include="Assets\Icons\png\defense_up.png" />
+    <Resource Include="Assets\Icons\png\description_FILL0_wght400_GRAD0_opsz48.png" />
+    <Resource Include="Assets\Icons\png\diva_prayer_gems.png" />
+    <Resource Include="Assets\Icons\png\dure2.png" />
+    <Resource Include="Assets\Icons\png\dure_attack.png" />
+    <Resource Include="Assets\Icons\png\dure_attack_red.png" />
+    <Resource Include="Assets\Icons\png\dure_defense.png" />
+    <Resource Include="Assets\Icons\png\dure_defense_red.png" />
+    <Resource Include="Assets\Icons\png\Element_Black_Flame.png" />
+    <Resource Include="Assets\Icons\png\Element_Blaze.png" />
+    <Resource Include="Assets\Icons\png\Element_Crimson_Demon.png" />
+    <Resource Include="Assets\Icons\png\Element_Darkness.png" />
+    <Resource Include="Assets\Icons\png\Element_Emperor's_Roar.png" />
+    <Resource Include="Assets\Icons\png\Element_Frozen_Seraphim.png" />
+    <Resource Include="Assets\Icons\png\Element_Golden_Dust.png" />
+    <Resource Include="Assets\Icons\png\Element_Kanade.png" />
+    <Resource Include="Assets\Icons\png\Element_Light.png" />
+    <Resource Include="Assets\Icons\png\Element_Sound.png" />
+    <Resource Include="Assets\Icons\png\Element_Tenshou.png" />
+    <Resource Include="Assets\Icons\png\Element_Thunder_Pole.png" />
+    <Resource Include="Assets\Icons\png\extreme_dragonblight.png" />
+    <Resource Include="Assets\Icons\png\extreme_fireblight.png" />
+    <Resource Include="Assets\Icons\png\extreme_iceblight.png" />
+    <Resource Include="Assets\Icons\png\extreme_paralysis.png" />
+    <Resource Include="Assets\Icons\png\extreme_poison.png" />
+    <Resource Include="Assets\Icons\png\extreme_sleep.png" />
+    <Resource Include="Assets\Icons\png\extreme_thunderblight.png" />
+    <Resource Include="Assets\Icons\png\extreme_waterblight.png" />
+    <Resource Include="Assets\Icons\png\fire.png" />
+    <Resource Include="Assets\Icons\png\flame_hc.png" />
+    <Resource Include="Assets\Icons\png\flame_ul.png" />
+    <Resource Include="Assets\Icons\png\gamepad_a.png" />
+    <Resource Include="Assets\Icons\png\gamepad_b.png" />
+    <Resource Include="Assets\Icons\png\gamepad_dpad.png" />
+    <Resource Include="Assets\Icons\png\gamepad_dpad_down.png" />
+    <Resource Include="Assets\Icons\png\gamepad_dpad_downleft.png" />
+    <Resource Include="Assets\Icons\png\gamepad_dpad_downright.png" />
+    <Resource Include="Assets\Icons\png\gamepad_dpad_left.png" />
+    <Resource Include="Assets\Icons\png\gamepad_dpad_right.png" />
+    <Resource Include="Assets\Icons\png\gamepad_dpad_up.png" />
+    <Resource Include="Assets\Icons\png\gamepad_dpad_upleft.png" />
+    <Resource Include="Assets\Icons\png\gamepad_dpad_upright.png" />
+    <Resource Include="Assets\Icons\png\gamepad_joystick.png" />
+    <Resource Include="Assets\Icons\png\gamepad_joystick_down.png" />
+    <Resource Include="Assets\Icons\png\gamepad_joystick_downleft.png" />
+    <Resource Include="Assets\Icons\png\gamepad_joystick_downright.png" />
+    <Resource Include="Assets\Icons\png\gamepad_joystick_left.png" />
+    <Resource Include="Assets\Icons\png\gamepad_joystick_right.png" />
+    <Resource Include="Assets\Icons\png\gamepad_joystick_up.png" />
+    <Resource Include="Assets\Icons\png\gamepad_joystick_upleft.png" />
+    <Resource Include="Assets\Icons\png\gamepad_joystick_upright.png" />
+    <Resource Include="Assets\Icons\png\gamepad_l1.png" />
+    <Resource Include="Assets\Icons\png\gamepad_l2.png" />
+    <Resource Include="Assets\Icons\png\gamepad_lb.png" />
+    <Resource Include="Assets\Icons\png\gamepad_ls.png" />
+    <Resource Include="Assets\Icons\png\gamepad_lt.png" />
+    <Resource Include="Assets\Icons\png\gamepad_r1.png" />
+    <Resource Include="Assets\Icons\png\gamepad_r2.png" />
+    <Resource Include="Assets\Icons\png\gamepad_rb.png" />
+    <Resource Include="Assets\Icons\png\gamepad_rs.png" />
+    <Resource Include="Assets\Icons\png\gamepad_rt.png" />
+    <Resource Include="Assets\Icons\png\gamepad_select.png" />
+    <Resource Include="Assets\Icons\png\gamepad_start.png" />
+    <Resource Include="Assets\Icons\png\gamepad_x.png" />
+    <Resource Include="Assets\Icons\png\gamepad_y.png" />
+    <Resource Include="Assets\Icons\png\guild_food.png" />
+    <Resource Include="Assets\Icons\png\helm.png" />
+    <Resource Include="Assets\Icons\png\here.png" />
+    <Resource Include="Assets\Icons\png\key_1.png" />
+    <Resource Include="Assets\Icons\png\key_2.png" />
+    <Resource Include="Assets\Icons\png\key_3.png" />
+    <Resource Include="Assets\Icons\png\key_4.png" />
+    <Resource Include="Assets\Icons\png\key_5.png" />
+    <Resource Include="Assets\Icons\png\key_a.png" />
+    <Resource Include="Assets\Icons\png\key_c.png" />
+    <Resource Include="Assets\Icons\png\key_ctrl.png" />
+    <Resource Include="Assets\Icons\png\key_d.png" />
+    <Resource Include="Assets\Icons\png\key_e.png" />
+    <Resource Include="Assets\Icons\png\key_f.png" />
+    <Resource Include="Assets\Icons\png\key_g.png" />
+    <Resource Include="Assets\Icons\png\key_h.png" />
+    <Resource Include="Assets\Icons\png\key_q.png" />
+    <Resource Include="Assets\Icons\png\key_r.png" />
+    <Resource Include="Assets\Icons\png\key_s.png" />
+    <Resource Include="Assets\Icons\png\key_shift.png" />
+    <Resource Include="Assets\Icons\png\key_space.png" />
+    <Resource Include="Assets\Icons\png\key_t.png" />
+    <Resource Include="Assets\Icons\png\key_v.png" />
+    <Resource Include="Assets\Icons\png\key_w.png" />
+    <Resource Include="Assets\Icons\png\key_x.png" />
+    <Resource Include="Assets\Icons\png\key_z.png" />
+    <Resource Include="Assets\Icons\png\knife.png" />
+    <Resource Include="Assets\Icons\png\left_click.png" />
+    <Resource Include="Assets\Icons\png\loading.png" />
+    <Resource Include="Assets\Icons\png\medal.png" />
+    <Resource Include="Assets\Icons\png\middle_click.png" />
+    <Resource Include="Assets\Icons\png\monster.png" />
+    <Resource Include="Assets\Icons\png\monster_info.png" />
+    <Resource Include="Assets\Icons\png\note_pink.png" />
+    <Resource Include="Assets\Icons\png\paralysis.png" />
+    <Resource Include="Assets\Icons\png\photo.png" />
+    <Resource Include="Assets\Icons\png\point_down.png" />
+    <Resource Include="Assets\Icons\png\point_left.png" />
+    <Resource Include="Assets\Icons\png\point_right.png" />
+    <Resource Include="Assets\Icons\png\point_up.png" />
+    <Resource Include="Assets\Icons\png\poison.png" />
+    <Resource Include="Assets\Icons\png\quest_1.png" />
+    <Resource Include="Assets\Icons\png\quest_clock.png" />
+    <Resource Include="Assets\Icons\png\quest_clock_red.png" />
+    <Resource Include="Assets\Icons\png\quest_host.png" />
+    <Resource Include="Assets\Icons\png\quest_info.png" />
+    <Resource Include="Assets\Icons\png\red_soul.png" />
+    <Resource Include="Assets\Icons\png\right_click.png" />
+    <Resource Include="Assets\Icons\png\sand_clock.png" />
+    <Resource Include="Assets\Icons\png\sand_clock2.png" />
+    <Resource Include="Assets\Icons\png\sand_clock2_red.png" />
+    <Resource Include="Assets\Icons\png\sigils.png" />
+    <Resource Include="Assets\Icons\png\sleep.png" />
+    <Resource Include="Assets\Icons\png\small_bow.png" />
+    <Resource Include="Assets\Icons\png\small_ds.png" />
+    <Resource Include="Assets\Icons\png\small_gl.png" />
+    <Resource Include="Assets\Icons\png\small_gs.png" />
+    <Resource Include="Assets\Icons\png\small_hammer.png" />
+    <Resource Include="Assets\Icons\png\small_hbg.png" />
+    <Resource Include="Assets\Icons\png\small_hh.png" />
+    <Resource Include="Assets\Icons\png\small_lance.png" />
+    <Resource Include="Assets\Icons\png\small_lbg.png" />
+    <Resource Include="Assets\Icons\png\small_ls.png" />
+    <Resource Include="Assets\Icons\png\small_ms.png" />
+    <Resource Include="Assets\Icons\png\small_saf.png" />
+    <Resource Include="Assets\Icons\png\small_sns.png" />
+    <Resource Include="Assets\Icons\png\small_tonfa.png" />
+    <Resource Include="Assets\Icons\png\study.png" />
+    <Resource Include="Assets\Icons\png\stun.png" />
+    <Resource Include="Assets\Icons\png\ticket.png" />
+    <Resource Include="Assets\Icons\png\transcend.png" />
+    <Resource Include="Assets\Icons\png\unknown.png" />
+    <Resource Include="Assets\Icons\png\whetstone.png" />
+    <Resource Include="Assets\Icons\png\world.png" />
+    <Resource Include="Assets\Icons\Sac_Icon_White.xaml" />
+    <Resource Include="Assets\Icons\Scale_Icon_White.xaml" />
+    <Resource Include="Assets\Icons\Scrap_Icon_White.xaml" />
+    <Resource Include="Assets\Icons\Shell_Icon_White.xaml" />
+    <Resource Include="Assets\Icons\Spiderweb_Icon_White.xaml" />
+    <Resource Include="Assets\Icons\star.xaml" />
+    <Resource Include="Assets\Icons\Steak_Icon_White.xaml" />
+    <Resource Include="Assets\Icons\Sturdy_Shell_Icon_White.xaml" />
+    <Resource Include="Assets\Icons\Tail_Icon_White.xaml" />
+    <Resource Include="Assets\Icons\Talisman_Icon_White.xaml" />
+    <Resource Include="Assets\Icons\Tentacle_Icon_White.xaml" />
+    <Resource Include="Assets\Icons\Vial_Icon_White.xaml" />
+    <Resource Include="Assets\Icons\Voucher_Icon_White.xaml" />
+    <Resource Include="Assets\Icons\watch.xaml" />
+    <Resource Include="Assets\Icons\Webbing_Icon_White.xaml" />
+    <Resource Include="Assets\Icons\Wing_Icon_White.xaml" />
+    <Resource Include="Assets\Icons\Wood_Icon_White.xaml" />
+    <Content Include="Assets\Sounds\victory.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Resource Include="Assets\Themes\CatppuccinMocha.xaml" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Clowd.Squirrel" Version="2.9.42" />
-    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.0" />
-    <PackageReference Include="CompiledBindings.WPF" Version="1.0.15" />
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1" />
+    <PackageReference Include="CompiledBindings.WPF" Version="1.0.16" />
     <PackageReference Include="CsvHelper" Version="30.0.1" />
-    <PackageReference Include="Discord.Net" Version="3.10.0" />
-    <PackageReference Include="DiscordRichPresence" Version="1.1.3.18" />
-    <PackageReference Include="Extended.Wpf.Toolkit" Version="4.5.0" />
-    <PackageReference Include="EZlion" Version="5.0.0-beta" />
-    <PackageReference Include="FluentMigrator" Version="3.3.2" />
-    <PackageReference Include="FluentMigrator.Runner" Version="3.3.2" />
+    <PackageReference Include="DiscordRichPresence" Version="1.1.4.20" />
+    <PackageReference Include="DotNetProjects.Extended.Wpf.Toolkit" Version="5.0.103" />
+    <PackageReference Include="EZlion" Version="6.0.0-beta" />
     <PackageReference Include="FontAwesome.Sharp" Version="6.3.0" />
-    <PackageReference Include="GetText.NET" Version="1.8.7" />
     <PackageReference Include="LiveChartsCore.SkiaSharpView.WPF" Version="2.0.0-beta.516" />
-    <PackageReference Include="MaterialDesignThemes" Version="4.9.0" />
     <PackageReference Include="Memory.dll.x86" Version="1.2.24" />
-    <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="7.0.5" />
     <PackageReference Include="Microsoft.Extensions.DependencyModel" Version="7.0.0" />
-    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.1774.30" />
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.1823.32" />
     <PackageReference Include="MouseKeyHook" Version="5.7.1" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="NLog" Version="5.1.4" />
-    <PackageReference Include="NuGet.CommandLine" Version="6.5.1">
+    <PackageReference Include="NLog" Version="5.2.2" />
+    <PackageReference Include="NuGet.CommandLine" Version="6.6.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Octokit" Version="6.0.0" />
+    <PackageReference Include="Octokit" Version="7.0.1" />
     <PackageReference Include="RESTCountries.NET" Version="3.0.1" />
     <PackageReference Include="ShowMeTheXAML.MSBuild" Version="2.0.0" />
-    <PackageReference Include="SQLitePCLRaw.bundle_winsqlite3" Version="2.1.4" />
-    <PackageReference Include="System.Data.SQLite.Core" Version="1.0.117" />
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="System.Data.SQLite.Core" Version="1.0.118" />
     <PackageReference Include="System.Drawing.Common" Version="7.0.0" />
+    <PackageReference Include="VirtualizingWrapPanel" Version="1.5.7" />
+    <PackageReference Include="WPF-UI" Version="3.0.0-preview.4" />
     <PackageReference Include="WpfAnimatedGif" Version="2.0.2" />
-    <PackageReference Include="XamlAnimatedGif" Version="2.1.1" />
-    <PackageReference Include="XInput.Wrapper" Version="0.3.1" />
-    <PackageReference Include="xunit" Version="2.4.2" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Resource Include="UI\Background\1.png">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="UI\Background\2.png">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="UI\Background\3.png">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="UI\Background\4.png">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="UI\Background\5.png">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="UI\Background\6.png">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="UI\Background\7.png">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="UI\Background\8.png">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="UI\Fonts\SourceCodePro-Black.ttf">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="UI\Fonts\SourceCodePro-BlackItalic.ttf">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="UI\Fonts\SourceCodePro-Bold.ttf">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="UI\Fonts\SourceCodePro-BoldItalic.ttf">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="UI\Fonts\SourceCodePro-ExtraBold.ttf">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="UI\Fonts\SourceCodePro-ExtraBoldItalic.ttf">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="UI\Fonts\SourceCodePro-ExtraLight.ttf">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="UI\Fonts\SourceCodePro-ExtraLightItalic.ttf">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="UI\Fonts\SourceCodePro-Italic-VariableFont_wght.ttf">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="UI\Fonts\SourceCodePro-Italic.ttf">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="UI\Fonts\SourceCodePro-Light.ttf">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="UI\Fonts\SourceCodePro-LightItalic.ttf">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="UI\Fonts\SourceCodePro-Medium.ttf">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="UI\Fonts\SourceCodePro-MediumItalic.ttf">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="UI\Fonts\SourceCodePro-Regular.ttf">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="UI\Fonts\SourceCodePro-SemiBold.ttf">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="UI\Fonts\SourceCodePro-SemiBoldItalic.ttf">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="UI\Fonts\SourceCodePro-VariableFont_wght.ttf">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="HuntedLogs\EXAMPLE.csv">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="UI\Icons\Antenna_Icon_White.xaml" />
-    <Resource Include="UI\Icons\Armor_Sphere_Icon_White.xaml" />
-    <Resource Include="UI\Icons\Ball_Icon_White.xaml" />
-    <Resource Include="UI\Icons\Blade_Icon_White.xaml" />
-    <Resource Include="UI\Icons\Blade_Oil_Icon_White.xaml" />
-    <Resource Include="UI\Icons\Bone_Icon_White.xaml" />
-    <Resource Include="UI\Icons\Bug_Icon_White.xaml" />
-    <Resource Include="UI\Icons\Carapace_Icon_White.xaml" />
-    <Resource Include="UI\Icons\Charm_Icon_White.xaml" />
-    <Resource Include="UI\Icons\Claw_Icon_White.xaml" />
-    <Resource Include="UI\Icons\Coin_Icon_White.xaml" />
-    <Resource Include="UI\Icons\Dracolite_Icon_White.xaml" />
-    <Resource Include="UI\Icons\Drink_Icon_White.xaml" />
-    <Resource Include="UI\Icons\Dung_Icon_White.xaml" />
-    <Resource Include="UI\Icons\Eye_Icon_White.xaml" />
-    <Resource Include="UI\Icons\Fang_Icon_White.xaml" />
-    <Resource Include="UI\Icons\Feather_Icon_White.xaml" />
-    <Resource Include="UI\Icons\Fin_Icon_White.xaml" />
-    <Resource Include="UI\Icons\Flask_Icon_White.xaml" />
-    <Resource Include="UI\Icons\Flipper_Icon_White.xaml" />
-    <Resource Include="UI\Icons\Flower_Icon_White.xaml" />
-    <Resource Include="UI\Icons\Fluid_Icon_White.xaml" />
-    <Resource Include="UI\Icons\Frenzy_Crystal_Icon_White.xaml" />
-    <Resource Include="UI\Icons\Fruit_Icon_White.xaml" />
-    <Resource Include="UI\Icons\Head_Icon_White.xaml" />
-    <Resource Include="UI\Icons\Heart_Icon_White.xaml" />
-    <Resource Include="UI\Icons\Herb_Icon_White.xaml" />
-    <Resource Include="UI\Icons\Hide_Icon_White.xaml" />
-    <Resource Include="UI\Icons\history_FILL0_wght400_GRAD0_opsz48.xaml" />
-    <Resource Include="UI\Icons\Horn_Icon_White.xaml" />
-    <Resource Include="UI\Icons\Husk_Icon_White.xaml" />
-    <Resource Include="UI\Icons\Jelly_Icon_White.xaml" />
-    <Resource Include="UI\Icons\Jewel_Icon_White.xaml" />
-    <Resource Include="UI\Icons\Leg_Carve_Icon_White.xaml" />
-    <Resource Include="UI\Icons\Mantle_Icon_White.xaml" />
-    <Resource Include="UI\Icons\Mask_Icon_White.xaml" />
-    <Resource Include="UI\Icons\Meat_Icon_White.xaml" />
-    <Resource Include="UI\Icons\Medicine_Icon_White.xaml" />
-    <Resource Include="UI\Icons\Monster_Part_Icon_White.xaml" />
-    <Resource Include="UI\Icons\Nectar_Icon_White.xaml" />
-    <Resource Include="UI\Icons\Ore_Icon_Special_001.xaml" />
-    <Resource Include="UI\Icons\Ore_Icon_White.xaml" />
-    <Resource Include="UI\Icons\overview_FILL0_wght400_GRAD0_opsz48.xaml" />
-    <Resource Include="UI\Icons\Pill_Icon_White.xaml" />
-    <Resource Include="UI\Icons\Plate_Icon_White.xaml" />
-    <Resource Include="UI\Icons\png\armor_skills.png" />
-    <Resource Include="UI\Icons\png\arrow_down.png" />
-    <Resource Include="UI\Icons\png\arrow_left.png" />
-    <Resource Include="UI\Icons\png\arrow_right.png" />
-    <Resource Include="UI\Icons\png\arrow_up.png" />
-    <Resource Include="UI\Icons\png\attack.png" />
-    <Resource Include="UI\Icons\png\attack_icon.png" />
-    <Resource Include="UI\Icons\png\attack_up.png" />
-    <Resource Include="UI\Icons\png\attack_up_red.png" />
-    <Resource Include="UI\Icons\png\blast.png" />
-    <Resource Include="UI\Icons\png\blue_soul.png" />
-    <Resource Include="UI\Icons\png\board.png" />
-    <Resource Include="UI\Icons\png\boggers.png" />
-    <Resource Include="UI\Icons\png\bone.png" />
-    <Resource Include="UI\Icons\png\book.png">
-      <Generator></Generator>
-    </Resource>
-    <Resource Include="UI\Icons\png\burst.png" />
-    <Resource Include="UI\Icons\png\burst_red.png" />
-    <Resource Include="UI\Icons\png\clear.png" />
-    <Resource Include="UI\Icons\png\clear2.png" />
-    <Resource Include="UI\Icons\png\clock.png" />
-    <Resource Include="UI\Icons\png\clock_red.png" />
-    <Resource Include="UI\Icons\png\controller_a.png" />
-    <Resource Include="UI\Icons\png\controller_b.png" />
-    <Resource Include="UI\Icons\png\controller_dpad.png" />
-    <Resource Include="UI\Icons\png\controller_joystick.png" />
-    <Resource Include="UI\Icons\png\controller_l1.png" />
-    <Resource Include="UI\Icons\png\controller_l2.png" />
-    <Resource Include="UI\Icons\png\controller_lb.png" />
-    <Resource Include="UI\Icons\png\controller_ls.png" />
-    <Resource Include="UI\Icons\png\controller_lt.png" />
-    <Resource Include="UI\Icons\png\controller_r1.png" />
-    <Resource Include="UI\Icons\png\controller_r2.png" />
-    <Resource Include="UI\Icons\png\controller_rb.png" />
-    <Resource Include="UI\Icons\png\controller_rs.png" />
-    <Resource Include="UI\Icons\png\controller_rt.png" />
-    <Resource Include="UI\Icons\png\controller_select.png" />
-    <Resource Include="UI\Icons\png\controller_start.png" />
-    <Resource Include="UI\Icons\png\controller_x.png" />
-    <Resource Include="UI\Icons\png\controller_y.png" />
-    <Resource Include="UI\Icons\png\defense_down.png" />
-    <Resource Include="UI\Icons\png\defense_icon.png" />
-    <Resource Include="UI\Icons\png\defense_up.png" />
-    <Resource Include="UI\Icons\png\dure_attack.png" />
-    <Resource Include="UI\Icons\png\dure_attack_red.png" />
-    <Resource Include="UI\Icons\png\dure_defense.png" />
-    <Resource Include="UI\Icons\png\dure_defense_red.png" />
-    <Resource Include="UI\Icons\heart.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Resource>
-    <Resource Include="UI\Icons\issues.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Resource>
-    <Resource Include="UI\Icons\png\flame_hc.png" />
-    <Resource Include="UI\Icons\png\flame_ul.png" />
-    <Resource Include="UI\Icons\png\here.png" />
-    <Resource Include="UI\Icons\png\key_1.png" />
-    <Resource Include="UI\Icons\png\key_2.png" />
-    <Resource Include="UI\Icons\png\key_3.png" />
-    <Resource Include="UI\Icons\png\key_4.png" />
-    <Resource Include="UI\Icons\png\key_5.png" />
-    <Resource Include="UI\Icons\png\key_a.png" />
-    <Resource Include="UI\Icons\png\key_c.png" />
-    <Resource Include="UI\Icons\png\key_ctrl.png" />
-    <Resource Include="UI\Icons\png\key_d.png" />
-    <Resource Include="UI\Icons\png\key_e.png" />
-    <Resource Include="UI\Icons\png\key_f.png" />
-    <Resource Include="UI\Icons\png\key_g.png" />
-    <Resource Include="UI\Icons\png\key_h.png" />
-    <Resource Include="UI\Icons\png\key_q.png" />
-    <Resource Include="UI\Icons\png\key_r.png" />
-    <Resource Include="UI\Icons\png\key_s.png" />
-    <Resource Include="UI\Icons\png\key_shift.png" />
-    <Resource Include="UI\Icons\png\key_space.png" />
-    <Resource Include="UI\Icons\png\key_t.png" />
-    <Resource Include="UI\Icons\png\key_v.png" />
-    <Resource Include="UI\Icons\png\key_w.png" />
-    <Resource Include="UI\Icons\png\key_x.png" />
-    <Resource Include="UI\Icons\png\key_z.png" />
-    <Resource Include="UI\Icons\png\left_click.png" />
-    <Resource Include="UI\Icons\png\loading.png" />
-    <Resource Include="UI\Icons\png\medal.png" />
-    <Resource Include="UI\Icons\png\middle_click.png" />
-    <Resource Include="UI\Icons\png\paralysis.png" />
-    <Resource Include="UI\Icons\png\point_down.png" />
-    <Resource Include="UI\Icons\png\point_left.png" />
-    <Resource Include="UI\Icons\png\point_right.png" />
-    <Resource Include="UI\Icons\png\point_up.png" />
-    <Resource Include="UI\Icons\png\quest_1.png" />
-    <Resource Include="UI\Icons\png\quest_clock.png" />
-    <Resource Include="UI\Icons\png\quest_clock_red.png" />
-    <Resource Include="UI\Icons\png\quest_host.png" />
-    <Resource Include="UI\Icons\png\red_soul.png" />
-    <Resource Include="UI\Icons\png\right_click.png" />
-    <Resource Include="UI\Icons\png\sand_clock.png" />
-    <Resource Include="UI\Icons\png\sand_clock2.png" />
-    <Resource Include="UI\Icons\png\sand_clock2_red.png" />
-    <Resource Include="UI\Icons\png\sleep.png" />
-    <Resource Include="UI\Icons\png\small_bow.png" />
-    <Resource Include="UI\Icons\png\small_ds.png" />
-    <Resource Include="UI\Icons\png\small_gl.png" />
-    <Resource Include="UI\Icons\png\small_gs.png" />
-    <Resource Include="UI\Icons\png\small_hammer.png" />
-    <Resource Include="UI\Icons\png\small_hbg.png" />
-    <Resource Include="UI\Icons\png\small_hh.png" />
-    <Resource Include="UI\Icons\png\small_lance.png" />
-    <Resource Include="UI\Icons\png\small_lbg.png" />
-    <Resource Include="UI\Icons\png\small_ls.png" />
-    <Resource Include="UI\Icons\png\small_ms.png" />
-    <Resource Include="UI\Icons\png\small_saf.png" />
-    <Resource Include="UI\Icons\png\small_sns.png" />
-    <Resource Include="UI\Icons\png\small_tonfa.png" />
-    <Resource Include="UI\Icons\png\study.png" />
-    <Resource Include="UI\Icons\png\stun.png" />
-    <Resource Include="UI\Icons\png\whetstone.png" />
-    <Resource Include="UI\Icons\png\world.png" />
-    <Resource Include="UI\Icons\query_stats_FILL0_wght400_GRAD0_opsz48.xaml" />
-    <Resource Include="UI\Icons\Sac_Icon_White.xaml" />
-    <Resource Include="UI\Icons\save_FILL0_wght400_GRAD0_opsz48.xaml" />
-    <Resource Include="UI\Icons\Scale_Icon_White.xaml" />
-    <Resource Include="UI\Icons\Scrap_Icon_White.xaml" />
-    <Resource Include="UI\Icons\search_FILL0_wght400_GRAD0_opsz48.xaml" />
-    <Resource Include="UI\Icons\Shell_Icon_White.xaml" />
-    <Resource Include="UI\Icons\Spiderweb_Icon_White.xaml" />
-    <Resource Include="UI\Icons\sports_esports_FILL0_wght400_GRAD0_opsz48.xaml" />
-    <Resource Include="UI\Icons\stacked_bar_chart_FILL0_wght400_GRAD0_opsz48.xaml" />
-    <Resource Include="UI\Icons\Steak_Icon_White.xaml" />
-    <Resource Include="UI\Icons\Sturdy_Shell_Icon_White.xaml" />
-    <Resource Include="UI\Icons\table_chart_FILL0_wght400_GRAD0_opsz48.xaml" />
-    <Resource Include="UI\Icons\Tail_Icon_White.xaml" />
-    <Resource Include="UI\Icons\Talisman_Icon_White.xaml" />
-    <Resource Include="UI\Icons\Tentacle_Icon_White.xaml" />
-    <Resource Include="UI\Icons\timer_FILL0_wght400_GRAD0_opsz48.xaml" />
-    <Resource Include="UI\Icons\Vial_Icon_White.xaml" />
-    <Resource Include="UI\Icons\Voucher_Icon_White.xaml" />
-    <Resource Include="UI\Icons\watch.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Resource>
-    <Resource Include="UI\Icons\star.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Resource>
-    <Resource Include="UI\Icons\png\caravan_skills.png" />
-    <Resource Include="UI\Icons\content_copy_FILL0_wght400_GRAD0_opsz48.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Resource>
-    <Resource Include="UI\Icons\badge.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Resource>
-    <Resource Include="UI\Icons\png\description_FILL0_wght400_GRAD0_opsz48.png" />
-    <Resource Include="UI\Icons\description_FILL0_wght400_GRAD0_opsz48.xaml" />
-    <Resource Include="UI\Icons\png\diva_prayer_gems.png" />
-    <Resource Include="UI\Icons\png\dure2.png" />
-    <Resource Include="UI\Icons\file_download_FILL0_wght400_GRAD0_opsz48.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Resource>
-    <Resource Include="UI\Icons\png\fire.png" />
-    <Resource Include="UI\Icons\png\guild_food.png" />
-    <Resource Include="UI\Icons\png\helm.png">
-      <Generator></Generator>
-    </Resource>
-    <Resource Include="UI\Icons\image_FILL0_wght400_GRAD0_opsz48.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Resource>
-    <Resource Include="UI\Icons\png\knife.png" />
-    <Resource Include="UI\Icons\png\monster.png" />
-    <Resource Include="UI\Icons\png\monster_info.png" />
-    <Resource Include="UI\Icons\png\note_pink.png" />
-    <Resource Include="UI\Icons\png\ticket.png" />
-    <Resource Include="UI\Icons\png\photo.png" />
-    <Resource Include="UI\Icons\png\poison.png" />
-    <Resource Include="UI\Icons\png\quest_info.png" />
-    <Resource Include="UI\Icons\Refresh.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Resource>
-    <Resource Include="UI\Icons\Close.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Resource>
-    <Resource Include="UI\Icons\Cancel.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Resource>
-    <Resource Include="UI\Icons\Done.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Resource>
-    <Resource Include="UI\Icons\DragDropControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Resource>
-    <Resource Include="UI\Icons\Settings.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Resource>
-    <Resource Include="UI\Icons\png\sigils.png" />
-    <Resource Include="UI\Icons\png\unknown.png" />
-    <Resource Include="UI\Icons\Webbing_Icon_White.xaml" />
-    <Resource Include="UI\Icons\Wing_Icon_White.xaml" />
-    <Resource Include="UI\Icons\Wood_Icon_White.xaml" />
+    <PackageReference Include="XamlAnimatedGif" Version="2.2.0" />
+    <PackageReference Include="XInputium" Version="1.2.0" />
+    <PackageReference Include="xunit" Version="2.5.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -734,7 +888,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Core\Class\Dictionary\Gacha\" />
+    <Folder Include="ViewModels\Pages\" />
+    <Folder Include="Views\Pages\" />
   </ItemGroup>
+
+  <ProjectExtensions><VisualStudio><UserProperties _1stylecop_1json__JsonSchema="stylecop" /></VisualStudio></ProjectExtensions>
 
 </Project>

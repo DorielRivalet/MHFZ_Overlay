@@ -12,7 +12,7 @@ namespace MHFZ_Overlay {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.5.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.6.0.0")]
     public sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -721,7 +721,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("300")]
+        [global::System.Configuration.DefaultSettingValueAttribute("310")]
         public double MonsterPoisonY {
             get {
                 return ((double)(this["MonsterPoisonY"]));
@@ -757,7 +757,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("330")]
+        [global::System.Configuration.DefaultSettingValueAttribute("350")]
         public double MonsterSleepY {
             get {
                 return ((double)(this["MonsterSleepY"]));
@@ -793,7 +793,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("360")]
+        [global::System.Configuration.DefaultSettingValueAttribute("390")]
         public double MonsterParaY {
             get {
                 return ((double)(this["MonsterParaY"]));
@@ -829,7 +829,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("390")]
+        [global::System.Configuration.DefaultSettingValueAttribute("430")]
         public double MonsterBlastY {
             get {
                 return ((double)(this["MonsterBlastY"]));
@@ -865,7 +865,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("420")]
+        [global::System.Configuration.DefaultSettingValueAttribute("470")]
         public double MonsterStunY {
             get {
                 return ((double)(this["MonsterStunY"]));
@@ -1057,7 +1057,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("800")]
+        [global::System.Configuration.DefaultSettingValueAttribute("900")]
         public double Monster1HealthBarX {
             get {
                 return ((double)(this["Monster1HealthBarX"]));
@@ -1093,7 +1093,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("800")]
+        [global::System.Configuration.DefaultSettingValueAttribute("900")]
         public double Monster2HealthBarX {
             get {
                 return ((double)(this["Monster2HealthBarX"]));
@@ -1105,7 +1105,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("80")]
+        [global::System.Configuration.DefaultSettingValueAttribute("110")]
         public double Monster2HealthBarY {
             get {
                 return ((double)(this["Monster2HealthBarY"]));
@@ -1129,7 +1129,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("800")]
+        [global::System.Configuration.DefaultSettingValueAttribute("900")]
         public double Monster3HealthBarX {
             get {
                 return ((double)(this["Monster3HealthBarX"]));
@@ -1141,7 +1141,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("120")]
+        [global::System.Configuration.DefaultSettingValueAttribute("180")]
         public double Monster3HealthBarY {
             get {
                 return ((double)(this["Monster3HealthBarY"]));
@@ -1165,7 +1165,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("800")]
+        [global::System.Configuration.DefaultSettingValueAttribute("900")]
         public double Monster4HealthBarX {
             get {
                 return ((double)(this["Monster4HealthBarX"]));
@@ -1177,7 +1177,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("160")]
+        [global::System.Configuration.DefaultSettingValueAttribute("250")]
         public double Monster4HealthBarY {
             get {
                 return ((double)(this["Monster4HealthBarY"]));
@@ -1429,7 +1429,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("https://dorielrivalet.github.io/mhfz-ferias-english-project/")]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://xl3lackout.github.io/MHFZ-Ferias-English-Project/")]
         public string FeriasVersionLink {
             get {
                 return ((string)(this["FeriasVersionLink"]));
@@ -1448,18 +1448,6 @@ namespace MHFZ_Overlay {
             }
             set {
                 this["MaxFaintsOverride"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool EnableAutoClose {
-            get {
-                return ((bool)(this["EnableAutoClose"]));
-            }
-            set {
-                this["EnableAutoClose"] = value;
             }
         }
         
@@ -1933,55 +1921,55 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool ControllerLayoutShown {
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool GamepadShown {
             get {
-                return ((bool)(this["ControllerLayoutShown"]));
+                return ((bool)(this["GamepadShown"]));
             }
             set {
-                this["ControllerLayoutShown"] = value;
+                this["GamepadShown"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("160")]
-        public double ControllerLayoutX {
+        public double GamepadX {
             get {
-                return ((double)(this["ControllerLayoutX"]));
+                return ((double)(this["GamepadX"]));
             }
             set {
-                this["ControllerLayoutX"] = value;
+                this["GamepadX"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("550")]
-        public double ControllerLayoutY {
+        public double GamepadY {
             get {
-                return ((double)(this["ControllerLayoutY"]));
+                return ((double)(this["GamepadY"]));
             }
             set {
-                this["ControllerLayoutY"] = value;
+                this["GamepadY"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool EnableKeyLogging {
+        public bool EnableInputLogging {
             get {
-                return ((bool)(this["EnableKeyLogging"]));
+                return ((bool)(this["EnableInputLogging"]));
             }
             set {
-                this["EnableKeyLogging"] = value;
+                this["EnableInputLogging"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("3840")]
+        [global::System.Configuration.DefaultSettingValueAttribute("1360")]
         public int MaxResolutionWidth {
             get {
                 return ((int)(this["MaxResolutionWidth"]));
@@ -1993,7 +1981,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("2160")]
+        [global::System.Configuration.DefaultSettingValueAttribute("768")]
         public string MaxResolutionHeight {
             get {
                 return ((string)(this["MaxResolutionHeight"]));
@@ -2977,7 +2965,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Source Code Pro")]
+        [global::System.Configuration.DefaultSettingValueAttribute("MesloLGM NF")]
         public string SecondaryFontFamily {
             get {
                 return ((string)(this["SecondaryFontFamily"]));
@@ -3104,6 +3092,714 @@ namespace MHFZ_Overlay {
             }
             set {
                 this["EnableNationality"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool EnableMonsterEHPDisplayCorrector {
+            get {
+                return ((bool)(this["EnableMonsterEHPDisplayCorrector"]));
+            }
+            set {
+                this["EnableMonsterEHPDisplayCorrector"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.001")]
+        public decimal MonsterEHPDisplayCorrectorDefrateMinimumThreshold {
+            get {
+                return ((decimal)(this["MonsterEHPDisplayCorrectorDefrateMinimumThreshold"]));
+            }
+            set {
+                this["MonsterEHPDisplayCorrectorDefrateMinimumThreshold"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public decimal MonsterEHPDisplayCorrectorDefrateMaximumThreshold {
+            get {
+                return ((decimal)(this["MonsterEHPDisplayCorrectorDefrateMaximumThreshold"]));
+            }
+            set {
+                this["MonsterEHPDisplayCorrectorDefrateMaximumThreshold"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Debug")]
+        public string LogLevel {
+            get {
+                return ((string)(this["LogLevel"]));
+            }
+            set {
+                this["LogLevel"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool EnableQuestCompletionsCounter {
+            get {
+                return ((bool)(this["EnableQuestCompletionsCounter"]));
+            }
+            set {
+                this["EnableQuestCompletionsCounter"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("150")]
+        public double GamepadSize {
+            get {
+                return ((double)(this["GamepadSize"]));
+            }
+            set {
+                this["GamepadSize"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("150")]
+        public double KBMLayoutSize {
+            get {
+                return ((double)(this["KBMLayoutSize"]));
+            }
+            set {
+                this["KBMLayoutSize"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("300")]
+        public double PlayerAttackGraphWidth {
+            get {
+                return ((double)(this["PlayerAttackGraphWidth"]));
+            }
+            set {
+                this["PlayerAttackGraphWidth"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("300")]
+        public double PlayerDPSGraphWidth {
+            get {
+                return ((double)(this["PlayerDPSGraphWidth"]));
+            }
+            set {
+                this["PlayerDPSGraphWidth"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("300")]
+        public double PlayerHitsPerSecondGraphWidth {
+            get {
+                return ((double)(this["PlayerHitsPerSecondGraphWidth"]));
+            }
+            set {
+                this["PlayerHitsPerSecondGraphWidth"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("300")]
+        public double PlayerAPMGraphWidth {
+            get {
+                return ((double)(this["PlayerAPMGraphWidth"]));
+            }
+            set {
+                this["PlayerAPMGraphWidth"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("150")]
+        public double PlayerAttackGraphHeight {
+            get {
+                return ((double)(this["PlayerAttackGraphHeight"]));
+            }
+            set {
+                this["PlayerAttackGraphHeight"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("150")]
+        public double PlayerDPSGraphHeight {
+            get {
+                return ((double)(this["PlayerDPSGraphHeight"]));
+            }
+            set {
+                this["PlayerDPSGraphHeight"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("150")]
+        public double PlayerHitsPerSecondGraphHeight {
+            get {
+                return ((double)(this["PlayerHitsPerSecondGraphHeight"]));
+            }
+            set {
+                this["PlayerHitsPerSecondGraphHeight"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("150")]
+        public double PlayerAPMGraphHeight {
+            get {
+                return ((double)(this["PlayerAPMGraphHeight"]));
+            }
+            set {
+                this["PlayerAPMGraphHeight"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Hardware")]
+        public string RenderingMode {
+            get {
+                return ((string)(this["RenderingMode"]));
+            }
+            set {
+                this["RenderingMode"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool ZenithGauntletMonstersShown {
+            get {
+                return ((bool)(this["ZenithGauntletMonstersShown"]));
+            }
+            set {
+                this["ZenithGauntletMonstersShown"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double ZenithGauntletMonstersX {
+            get {
+                return ((double)(this["ZenithGauntletMonstersX"]));
+            }
+            set {
+                this["ZenithGauntletMonstersX"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double ZenithGauntletMonstersY {
+            get {
+                return ((double)(this["ZenithGauntletMonstersY"]));
+            }
+            set {
+                this["ZenithGauntletMonstersY"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double ZenithGauntletMonstersWidth {
+            get {
+                return ((double)(this["ZenithGauntletMonstersWidth"]));
+            }
+            set {
+                this["ZenithGauntletMonstersWidth"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double ZenithGauntletMonstersHeight {
+            get {
+                return ((double)(this["ZenithGauntletMonstersHeight"]));
+            }
+            set {
+                this["ZenithGauntletMonstersHeight"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string ZenithGauntletOrder {
+            get {
+                return ((string)(this["ZenithGauntletOrder"]));
+            }
+            set {
+                this["ZenithGauntletOrder"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool MusouGauntletMonstersShown {
+            get {
+                return ((bool)(this["MusouGauntletMonstersShown"]));
+            }
+            set {
+                this["MusouGauntletMonstersShown"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double MusouGauntletMonstersX {
+            get {
+                return ((double)(this["MusouGauntletMonstersX"]));
+            }
+            set {
+                this["MusouGauntletMonstersX"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double MusouGauntletMonstersY {
+            get {
+                return ((double)(this["MusouGauntletMonstersY"]));
+            }
+            set {
+                this["MusouGauntletMonstersY"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double MusouGauntletMonstersWidth {
+            get {
+                return ((double)(this["MusouGauntletMonstersWidth"]));
+            }
+            set {
+                this["MusouGauntletMonstersWidth"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double MusouGauntletMonstersHeight {
+            get {
+                return ((double)(this["MusouGauntletMonstersHeight"]));
+            }
+            set {
+                this["MusouGauntletMonstersHeight"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string MusouGauntletOrder {
+            get {
+                return ((string)(this["MusouGauntletOrder"]));
+            }
+            set {
+                this["MusouGauntletOrder"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool SolsticeGauntletMonstersShown {
+            get {
+                return ((bool)(this["SolsticeGauntletMonstersShown"]));
+            }
+            set {
+                this["SolsticeGauntletMonstersShown"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double SolsticeGauntletMonstersX {
+            get {
+                return ((double)(this["SolsticeGauntletMonstersX"]));
+            }
+            set {
+                this["SolsticeGauntletMonstersX"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double SolsticeGauntletMonstersY {
+            get {
+                return ((double)(this["SolsticeGauntletMonstersY"]));
+            }
+            set {
+                this["SolsticeGauntletMonstersY"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double SolsticeGauntletMonstersWidth {
+            get {
+                return ((double)(this["SolsticeGauntletMonstersWidth"]));
+            }
+            set {
+                this["SolsticeGauntletMonstersWidth"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double SolsticeGauntletMonstersHeight {
+            get {
+                return ((double)(this["SolsticeGauntletMonstersHeight"]));
+            }
+            set {
+                this["SolsticeGauntletMonstersHeight"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string SolsticeGauntletOrder {
+            get {
+                return ((string)(this["SolsticeGauntletOrder"]));
+            }
+            set {
+                this["SolsticeGauntletOrder"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Automatic")]
+        public string DamageNumbersMode {
+            get {
+                return ((string)(this["DamageNumbersMode"]));
+            }
+            set {
+                this["DamageNumbersMode"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool HideOverlayWhenUnfocusedGame {
+            get {
+                return ((bool)(this["HideOverlayWhenUnfocusedGame"]));
+            }
+            set {
+                this["HideOverlayWhenUnfocusedGame"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool MonsterBarHPModeShown {
+            get {
+                return ((bool)(this["MonsterBarHPModeShown"]));
+            }
+            set {
+                this["MonsterBarHPModeShown"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool MonsterBarIconShown {
+            get {
+                return ((bool)(this["MonsterBarIconShown"]));
+            }
+            set {
+                this["MonsterBarIconShown"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool MonsterBarNameShown {
+            get {
+                return ((bool)(this["MonsterBarNameShown"]));
+            }
+            set {
+                this["MonsterBarNameShown"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool MonsterBarNumbersShown {
+            get {
+                return ((bool)(this["MonsterBarNumbersShown"]));
+            }
+            set {
+                this["MonsterBarNumbersShown"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool MonsterBarShown {
+            get {
+                return ((bool)(this["MonsterBarShown"]));
+            }
+            set {
+                this["MonsterBarShown"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("#11111b")]
+        public string Monster1BarBorderColor {
+            get {
+                return ((string)(this["Monster1BarBorderColor"]));
+            }
+            set {
+                this["Monster1BarBorderColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("#11111b")]
+        public string Monster2BarBorderColor {
+            get {
+                return ((string)(this["Monster2BarBorderColor"]));
+            }
+            set {
+                this["Monster2BarBorderColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("#11111b")]
+        public string Monster3BarBorderColor {
+            get {
+                return ((string)(this["Monster3BarBorderColor"]));
+            }
+            set {
+                this["Monster3BarBorderColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("#11111b")]
+        public string Monster4BarBorderColor {
+            get {
+                return ((string)(this["Monster4BarBorderColor"]));
+            }
+            set {
+                this["Monster4BarBorderColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("#11111b")]
+        public string MonsterPoisonBarBorderColor {
+            get {
+                return ((string)(this["MonsterPoisonBarBorderColor"]));
+            }
+            set {
+                this["MonsterPoisonBarBorderColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("#11111b")]
+        public string MonsterParalysisBarBorderColor {
+            get {
+                return ((string)(this["MonsterParalysisBarBorderColor"]));
+            }
+            set {
+                this["MonsterParalysisBarBorderColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("#11111b")]
+        public string MonsterSleepBarBorderColor {
+            get {
+                return ((string)(this["MonsterSleepBarBorderColor"]));
+            }
+            set {
+                this["MonsterSleepBarBorderColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("#11111b")]
+        public string MonsterStunBarBorderColor {
+            get {
+                return ((string)(this["MonsterStunBarBorderColor"]));
+            }
+            set {
+                this["MonsterStunBarBorderColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("#11111b")]
+        public string MonsterBlastBarBorderColor {
+            get {
+                return ((string)(this["MonsterBlastBarBorderColor"]));
+            }
+            set {
+                this["MonsterBlastBarBorderColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double GauntletProgressX {
+            get {
+                return ((double)(this["GauntletProgressX"]));
+            }
+            set {
+                this["GauntletProgressX"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double GauntletProgressY {
+            get {
+                return ((double)(this["GauntletProgressY"]));
+            }
+            set {
+                this["GauntletProgressY"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double GauntletProgressWidth {
+            get {
+                return ((double)(this["GauntletProgressWidth"]));
+            }
+            set {
+                this["GauntletProgressWidth"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double GauntletProgressHeight {
+            get {
+                return ((double)(this["GauntletProgressHeight"]));
+            }
+            set {
+                this["GauntletProgressHeight"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double BingoProgressX {
+            get {
+                return ((double)(this["BingoProgressX"]));
+            }
+            set {
+                this["BingoProgressX"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double BingoProgressY {
+            get {
+                return ((double)(this["BingoProgressY"]));
+            }
+            set {
+                this["BingoProgressY"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double BingoProgressSize {
+            get {
+                return ((double)(this["BingoProgressSize"]));
+            }
+            set {
+                this["BingoProgressSize"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool GauntletProgressShown {
+            get {
+                return ((bool)(this["GauntletProgressShown"]));
+            }
+            set {
+                this["GauntletProgressShown"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool BingoProgressShown {
+            get {
+                return ((bool)(this["BingoProgressShown"]));
+            }
+            set {
+                this["BingoProgressShown"] = value;
             }
         }
     }

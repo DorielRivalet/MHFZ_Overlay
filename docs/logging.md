@@ -1,5 +1,13 @@
 # Structured Logging
 
+## Table of Contents
+
+- [Structured Logging](#structured-logging)
+  - [Table of Contents](#table-of-contents)
+  - [Overview](#overview)
+    - [Logging with NLog](#logging-with-nlog)
+    - [Goals](#goals)
+
 ## Overview
 
 Our software uses structured logging to provide a clear and concise record of events and operations that occur during runtime. To facilitate structured logging, we use [NLog](https://github.com/NLog/NLog), a free logging platform for .NET with rich log routing and management capabilities.

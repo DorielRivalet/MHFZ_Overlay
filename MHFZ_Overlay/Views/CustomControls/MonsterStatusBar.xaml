@@ -1,0 +1,29 @@
+<!--
+// © 2023 The mhfz-overlay developers.
+// Use of this source code is governed by a MIT license that can be
+// found in the LICENSE file.
+-->
+    <UserControl x:Class="MHFZ_Overlay.Views.CustomControls.MonsterStatusBar"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+            xmlns:customcontrols="clr-namespace:MHFZ_Overlay.Views.CustomControls"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800"
+             x:Name="window">
+    <Grid>
+        <StackPanel Orientation="Horizontal">
+            <Grid>
+                <Image Width="32" Height="Auto" d:Source="https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/poison.png" Visibility="{Binding ElementName=window, Path=IconShown, UpdateSourceTrigger=PropertyChanged}" x:Name="IconItem" VerticalAlignment="Center" HorizontalAlignment="Right" Source="{Binding ElementName=window, Path=Icon, UpdateSourceTrigger=PropertyChanged}"/>
+                <customcontrols:OutlinedTextBlock Visibility="{Binding ElementName=window, Path=DescriptionShown, UpdateSourceTrigger=PropertyChanged}" x:Name="Descriptor" VerticalAlignment="Center" HorizontalAlignment="Right" Text="{Binding ElementName=window, Path=Desc, UpdateSourceTrigger=PropertyChanged}" FontSize="{Binding Path=PrimaryFontSize, Source={StaticResource Settings}}" FontFamily="{Binding Path=PrimaryFontFamily, Source={StaticResource Settings}}" FontWeight="{Binding Path=PrimaryFontWeight, Source={StaticResource Settings}}" StrokeThickness="4" Stroke="{Binding ElementName=window, Path=StrokeColor}" Fill="{Binding ElementName=window, Path=BarColor}"/>
+            </Grid>
+            <Border Margin="5,0,0,0" d:BorderThickness="2" d:BorderBrush="{StaticResource Crust}" BorderBrush="{Binding ElementName=window, Path=BorderColor}" CornerRadius="2">
+                <Grid>
+                    <customcontrols:OutlinedTextBlock x:Name="BarText" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="{Binding Path=SecondaryFontSize, Source={StaticResource Settings}}" FontFamily="{Binding Path=SecondaryFontFamily, Source={StaticResource Settings}}" FontWeight="{Binding Path=SecondaryFontWeight, Source={StaticResource Settings}}" StrokeThickness="4" Stroke="{Binding ElementName=window, Path=StrokeColor}" Fill="{Binding ElementName=window, Path=BarColor}" Text="{Binding ElementName=window, Path=ValueText, UpdateSourceTrigger=PropertyChanged}" Panel.ZIndex="1"/>
+                    <ProgressBar d:BorderThickness="2" d:BorderBrush="{StaticResource Crust}" BorderBrush="{Binding ElementName=window, Path=BorderColor}" FontFamily="{StaticResource MesloLGM NF}" FontWeight="Bold" Style="{StaticResource MyProgressBar}" x:Name="PercentBar" Value="{Binding ElementName=window, Path=Value, UpdateSourceTrigger=PropertyChanged}" Foreground="{Binding ElementName=window, Path=BarColor}" FontSize="16"/>
+                </Grid>
+            </Border>
+        </StackPanel>
+    </Grid>
+</UserControl>

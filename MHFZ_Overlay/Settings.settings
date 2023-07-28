@@ -1,4 +1,4 @@
-﻿<?xml version='1.0' encoding='utf-8'?>
+<?xml version='1.0' encoding='utf-8'?>
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="MHFZ_Overlay" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
@@ -177,7 +177,7 @@
       <Value Profile="(Default)">1060</Value>
     </Setting>
     <Setting Name="MonsterPoisonY" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">300</Value>
+      <Value Profile="(Default)">310</Value>
     </Setting>
     <Setting Name="MonsterSleepShown" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
@@ -186,7 +186,7 @@
       <Value Profile="(Default)">1060</Value>
     </Setting>
     <Setting Name="MonsterSleepY" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">330</Value>
+      <Value Profile="(Default)">350</Value>
     </Setting>
     <Setting Name="MonsterParaShown" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
@@ -195,7 +195,7 @@
       <Value Profile="(Default)">1060</Value>
     </Setting>
     <Setting Name="MonsterParaY" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">360</Value>
+      <Value Profile="(Default)">390</Value>
     </Setting>
     <Setting Name="MonsterBlastShown" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
@@ -204,7 +204,7 @@
       <Value Profile="(Default)">1060</Value>
     </Setting>
     <Setting Name="MonsterBlastY" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">390</Value>
+      <Value Profile="(Default)">430</Value>
     </Setting>
     <Setting Name="MonsterStunShown" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
@@ -213,7 +213,7 @@
       <Value Profile="(Default)">1060</Value>
     </Setting>
     <Setting Name="MonsterStunY" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">420</Value>
+      <Value Profile="(Default)">470</Value>
     </Setting>
     <Setting Name="DamageNumbersX" Type="System.Double" Scope="User">
       <Value Profile="(Default)">700</Value>
@@ -261,7 +261,7 @@
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="Monster1HealthBarX" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">800</Value>
+      <Value Profile="(Default)">900</Value>
     </Setting>
     <Setting Name="Monster1HealthBarY" Type="System.Double" Scope="User">
       <Value Profile="(Default)">40</Value>
@@ -270,28 +270,28 @@
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="Monster2HealthBarX" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">800</Value>
+      <Value Profile="(Default)">900</Value>
     </Setting>
     <Setting Name="Monster2HealthBarY" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">80</Value>
+      <Value Profile="(Default)">110</Value>
     </Setting>
     <Setting Name="Monster3HealthBarShown" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="Monster3HealthBarX" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">800</Value>
+      <Value Profile="(Default)">900</Value>
     </Setting>
     <Setting Name="Monster3HealthBarY" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">120</Value>
+      <Value Profile="(Default)">180</Value>
     </Setting>
     <Setting Name="Monster4HealthBarShown" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="Monster4HealthBarX" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">800</Value>
+      <Value Profile="(Default)">900</Value>
     </Setting>
     <Setting Name="Monster4HealthBarY" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">160</Value>
+      <Value Profile="(Default)">250</Value>
     </Setting>
     <Setting Name="TextFormatExport" Type="System.String" Scope="User">
       <Value Profile="(Default)">Image</Value>
@@ -354,13 +354,10 @@
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="FeriasVersionLink" Type="System.String" Scope="User">
-      <Value Profile="(Default)">https://dorielrivalet.github.io/mhfz-ferias-english-project/</Value>
+      <Value Profile="(Default)">https://xl3lackout.github.io/MHFZ-Ferias-English-Project/</Value>
     </Setting>
     <Setting Name="MaxFaintsOverride" Type="System.String" Scope="User">
       <Value Profile="(Default)">Automatic</Value>
-    </Setting>
-    <Setting Name="EnableAutoClose" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="EnableDamageMeter" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
@@ -479,23 +476,23 @@
     <Setting Name="KBMLayoutY" Type="System.Double" Scope="User">
       <Value Profile="(Default)">610</Value>
     </Setting>
-    <Setting Name="ControllerLayoutShown" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+    <Setting Name="GamepadShown" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="ControllerLayoutX" Type="System.Double" Scope="User">
+    <Setting Name="GamepadX" Type="System.Double" Scope="User">
       <Value Profile="(Default)">160</Value>
     </Setting>
-    <Setting Name="ControllerLayoutY" Type="System.Double" Scope="User">
+    <Setting Name="GamepadY" Type="System.Double" Scope="User">
       <Value Profile="(Default)">550</Value>
     </Setting>
-    <Setting Name="EnableKeyLogging" Type="System.Boolean" Scope="User">
+    <Setting Name="EnableInputLogging" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="MaxResolutionWidth" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">3840</Value>
+      <Value Profile="(Default)">1360</Value>
     </Setting>
     <Setting Name="MaxResolutionHeight" Type="System.String" Scope="User">
-      <Value Profile="(Default)">2160</Value>
+      <Value Profile="(Default)">768</Value>
     </Setting>
     <Setting Name="ActionsPerMinuteShown" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
@@ -741,7 +738,7 @@
       <Value Profile="(Default)">Bold</Value>
     </Setting>
     <Setting Name="SecondaryFontFamily" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Source Code Pro</Value>
+      <Value Profile="(Default)">MesloLGM NF</Value>
     </Setting>
     <Setting Name="SecondaryFontSize" Type="System.String" Scope="User">
       <Value Profile="(Default)">16</Value>
@@ -771,6 +768,183 @@
       <Value Profile="(Default)">170</Value>
     </Setting>
     <Setting Name="EnableNationality" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="EnableMonsterEHPDisplayCorrector" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="MonsterEHPDisplayCorrectorDefrateMinimumThreshold" Type="System.Decimal" Scope="User">
+      <Value Profile="(Default)">0.001</Value>
+    </Setting>
+    <Setting Name="MonsterEHPDisplayCorrectorDefrateMaximumThreshold" Type="System.Decimal" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="LogLevel" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Debug</Value>
+    </Setting>
+    <Setting Name="EnableQuestCompletionsCounter" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="GamepadSize" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">150</Value>
+    </Setting>
+    <Setting Name="KBMLayoutSize" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">150</Value>
+    </Setting>
+    <Setting Name="PlayerAttackGraphWidth" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">300</Value>
+    </Setting>
+    <Setting Name="PlayerDPSGraphWidth" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">300</Value>
+    </Setting>
+    <Setting Name="PlayerHitsPerSecondGraphWidth" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">300</Value>
+    </Setting>
+    <Setting Name="PlayerAPMGraphWidth" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">300</Value>
+    </Setting>
+    <Setting Name="PlayerAttackGraphHeight" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">150</Value>
+    </Setting>
+    <Setting Name="PlayerDPSGraphHeight" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">150</Value>
+    </Setting>
+    <Setting Name="PlayerHitsPerSecondGraphHeight" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">150</Value>
+    </Setting>
+    <Setting Name="PlayerAPMGraphHeight" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">150</Value>
+    </Setting>
+    <Setting Name="RenderingMode" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Hardware</Value>
+    </Setting>
+    <Setting Name="ZenithGauntletMonstersShown" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="ZenithGauntletMonstersX" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="ZenithGauntletMonstersY" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="ZenithGauntletMonstersWidth" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="ZenithGauntletMonstersHeight" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="ZenithGauntletOrder" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="MusouGauntletMonstersShown" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="MusouGauntletMonstersX" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="MusouGauntletMonstersY" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="MusouGauntletMonstersWidth" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="MusouGauntletMonstersHeight" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="MusouGauntletOrder" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SolsticeGauntletMonstersShown" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="SolsticeGauntletMonstersX" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="SolsticeGauntletMonstersY" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="SolsticeGauntletMonstersWidth" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="SolsticeGauntletMonstersHeight" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="SolsticeGauntletOrder" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="DamageNumbersMode" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Automatic</Value>
+    </Setting>
+    <Setting Name="HideOverlayWhenUnfocusedGame" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="MonsterBarHPModeShown" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="MonsterBarIconShown" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="MonsterBarNameShown" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="MonsterBarNumbersShown" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="MonsterBarShown" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="Monster1BarBorderColor" Type="System.String" Scope="User">
+      <Value Profile="(Default)">#11111b</Value>
+    </Setting>
+    <Setting Name="Monster2BarBorderColor" Type="System.String" Scope="User">
+      <Value Profile="(Default)">#11111b</Value>
+    </Setting>
+    <Setting Name="Monster3BarBorderColor" Type="System.String" Scope="User">
+      <Value Profile="(Default)">#11111b</Value>
+    </Setting>
+    <Setting Name="Monster4BarBorderColor" Type="System.String" Scope="User">
+      <Value Profile="(Default)">#11111b</Value>
+    </Setting>
+    <Setting Name="MonsterPoisonBarBorderColor" Type="System.String" Scope="User">
+      <Value Profile="(Default)">#11111b</Value>
+    </Setting>
+    <Setting Name="MonsterParalysisBarBorderColor" Type="System.String" Scope="User">
+      <Value Profile="(Default)">#11111b</Value>
+    </Setting>
+    <Setting Name="MonsterSleepBarBorderColor" Type="System.String" Scope="User">
+      <Value Profile="(Default)">#11111b</Value>
+    </Setting>
+    <Setting Name="MonsterStunBarBorderColor" Type="System.String" Scope="User">
+      <Value Profile="(Default)">#11111b</Value>
+    </Setting>
+    <Setting Name="MonsterBlastBarBorderColor" Type="System.String" Scope="User">
+      <Value Profile="(Default)">#11111b</Value>
+    </Setting>
+    <Setting Name="GauntletProgressX" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="GauntletProgressY" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="GauntletProgressWidth" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="GauntletProgressHeight" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="BingoProgressX" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="BingoProgressY" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="BingoProgressSize" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="GauntletProgressShown" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="BingoProgressShown" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
   </Settings>
