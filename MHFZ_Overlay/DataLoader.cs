@@ -258,7 +258,7 @@ public sealed class DataLoader
     // there are currently no workarounds.
     public void CheckForExternalProcesses()
     {
-        if (App.isClowdSquirrelUpdating)
+        if (App.isClowdSquirrelUpdating || databaseManager.schemaChanged)
         {
             return;
         }
