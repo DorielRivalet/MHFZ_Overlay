@@ -93,6 +93,11 @@
                                         <ui:SymbolIcon Symbol="OpenFolder24" Foreground="{StaticResource Rosewater}"/>
                                 </ui:MenuItem.Icon>
                             </ui:MenuItem>
+                            <ui:MenuItem Foreground="{StaticResource Rosewater}" ToolTip="Open overlay folder" Header="Overlay Folder" Tag="overlayfolder" Click="OptionOverlayFolder_Click">
+                                <ui:MenuItem.Icon>
+                                    <ui:SymbolIcon Symbol="OpenFolder24" Foreground="{StaticResource Rosewater}"/>
+                                </ui:MenuItem.Icon>
+                            </ui:MenuItem>
                             <ui:NavigationViewItemSeparator/>
                             <ui:MenuItem ToolTip="Restart overlay" Foreground="{StaticResource Yellow}" Header="Restart" Tag="restart" Click="OptionRestart_Click">
                                 <ui:MenuItem.Icon>

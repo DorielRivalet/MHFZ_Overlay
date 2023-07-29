@@ -7,9 +7,11 @@ namespace MHFZ_Overlay.Services;
 using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
@@ -37,6 +39,38 @@ using TextBlock = System.Windows.Controls.TextBlock;
 public sealed class FileService
 {
     private static readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+
+    public static bool OpenApplicationFolder(SnackbarPresenter snackbarPresenter, Style snackbarStyle, TimeSpan snackbarTimeout)
+    {
+        try
+        {
+            string exePath = Assembly.GetExecutingAssembly().Location;
+            string? folderPath = Path.GetDirectoryName(exePath);
+
+            if (string.IsNullOrEmpty(folderPath))
+            {
+                throw new Exception("Could not open overlay folder");
+            }
+
+            // Open file manager at the specified folder
+            Process.Start(ApplicationPaths.ExplorerPath, folderPath);
+            return true;
+        }
+        catch (Exception ex)
+        {
+            // TODO maybe a snackbar helper class?
+            logger.Error(ex);
+            var snackbar = new Snackbar(snackbarPresenter);
+            snackbar.Style = snackbarStyle;
+            snackbar.Title = Messages.ErrorTitle;
+            snackbar.Content = "Could not open overlay folder";
+            snackbar.Icon = new SymbolIcon(SymbolRegular.ErrorCircle24);
+            snackbar.Appearance = ControlAppearance.Danger;
+            snackbar.Timeout = snackbarTimeout;
+            snackbar.Show();
+            return false;
+        }
+    }
 
     /// <summary>
     /// Copies the text object contents to clipboard
@@ -558,7 +592,12 @@ public sealed class FileService
         logger.Info(CultureInfo.InvariantCulture, "{0}. Original file: {1}, Destination: {2}", logMessage, file, destination);
         if (showMessageBox)
         {
-            MessageBox.Show(string.Format(CultureInfo.InvariantCulture, "{0}. Original file: {1}, Destination: {2}", logMessage, file, destination), Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
+            MessageBox.Show(string.Format(CultureInfo.InvariantCulture,
+@"{0}
+
+Original file: {1}
+
+Destination: {2}", logMessage, file, destination), Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
         }
     }
 

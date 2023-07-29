@@ -141,6 +141,11 @@ public partial class MainWindow : Window
 
     public TimeSpan MainWindowSnackbarTimeOut { get; set; } = TimeSpan.FromSeconds(5);
 
+    private void OptionOverlayFolder_Click(object sender, RoutedEventArgs e)
+    {
+        FileService.OpenApplicationFolder(MainWindowSnackBarPresenter, (Style)FindResource("CatppuccinMochaSnackBar"), MainWindowSnackbarTimeOut);
+    }
+
     private void OptionSettingsFolder_Click(object sender, RoutedEventArgs e)
     {
         try

@@ -1387,6 +1387,11 @@ public partial class ConfigWindow : FluentWindow
         }
     }
 
+    private void OpenOverlayFolder_Click(object sender, RoutedEventArgs e)
+    {
+        FileService.OpenApplicationFolder(ConfigWindowSnackBarPresenter, (Style)FindResource("CatppuccinMochaSnackBar"), SnackbarTimeOut);
+    }
+
     private void OpenSettingsFolder_Click(object sender, RoutedEventArgs e)
     {
         try
