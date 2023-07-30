@@ -2597,14 +2597,29 @@ TreeScope.Children, condition);
                 HighestDPS = DPS;
             }
 
-            if (double.Parse(AtkMult, CultureInfo.InvariantCulture) > HighestAttackMult)
+            if (double.TryParse(AtkMult, NumberStyles.Any, CultureInfo.InvariantCulture, out double atkMultResult))
             {
-                HighestAttackMult = double.Parse(AtkMult, CultureInfo.InvariantCulture);
+                if (atkMultResult > HighestAttackMult)
+                {
+                    HighestAttackMult = atkMultResult;
+                }
+            }
+            else
+            {
+                LoggerInstance.Warn("Could not parse monster attack multiplier to double: {0}", AtkMult);
             }
 
-            if (decimal.Parse(DefMult) < LowestMonsterDefrate && decimal.Parse(DefMult, CultureInfo.InvariantCulture) != 0)
+            if (decimal.TryParse(DefMult, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal defMultResult))
             {
-                LowestMonsterDefrate = decimal.Parse(DefMult, CultureInfo.InvariantCulture);
+                if (defMultResult < LowestMonsterDefrate && defMultResult != 0)
+                {
+
+                    LowestMonsterDefrate = defMultResult;
+                }
+            }
+            else
+            {
+                LoggerInstance.Warn("Could not parse monster defense multiplier to decimal: {0}", DefMult);
             }
 
             return weaponRaw.ToString(CultureInfo.InvariantCulture);
@@ -2708,7 +2723,7 @@ TreeScope.Children, condition);
     }
 
     /// <summary>
-    /// Gets the atk mult.
+    /// Gets the monster atk mult.
     /// </summary>
     /// <value>
     /// The atk mult.
