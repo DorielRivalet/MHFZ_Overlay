@@ -394,7 +394,7 @@ As an added bonus:
 
 ```text
 Effective HP = True HP / Defense rate
-1,000,000 = 30,000 / 0,03
+1,000,000 = 30,000 / 0.03
 ```
 
 - True HP is the HP of the monster without taking into account the monster's defense rate.
