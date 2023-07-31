@@ -141,6 +141,13 @@ public sealed class DiscordService
             return;
         }
 
+        var success = int.TryParse(dataLoader.model.ATK, out int playerTrueRaw);
+        if (!success)
+        {
+            LoggerInstance.Warn("Could not parse player true raw as integer: {0}", dataLoader.model.ATK);
+            return;
+        }
+
         // TODO also need to handle the other fields lengths
         if (string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}{3}{4}{5}", this.GetPartySize(dataLoader), GetQuestState(dataLoader), this.GetCaravanScore(dataLoader), dataLoader.model.GetOverlayModeForRPC(), dataLoader.model.GetAreaName(dataLoader.model.AreaID()), GetGameMode(dataLoader.isHighGradeEdition)).Length >= 95)
         {
@@ -156,7 +163,7 @@ public sealed class DiscordService
         var smallImageTextString = string.Empty;
 
         // Info
-        if (dataLoader.model.QuestID() != 0 && dataLoader.model.TimeDefInt() != dataLoader.model.TimeInt() && int.Parse(dataLoader.model.ATK, CultureInfo.InvariantCulture) > 0 || (dataLoader.model.QuestID() == 21731 || dataLoader.model.QuestID() == 21746 || dataLoader.model.QuestID() == 21749 || dataLoader.model.QuestID() == 21750 || dataLoader.model.QuestID() == 23648 || dataLoader.model.QuestID() == 23649 || dataLoader.model.QuestID() == 21748 || dataLoader.model.QuestID() == 21747 || dataLoader.model.QuestID() == 21734) && int.Parse(dataLoader.model.ATK, CultureInfo.InvariantCulture) > 0)
+        if (dataLoader.model.QuestID() != 0 && dataLoader.model.TimeDefInt() != dataLoader.model.TimeInt() && playerTrueRaw > 0 || (dataLoader.model.QuestID() == 21731 || dataLoader.model.QuestID() == 21746 || dataLoader.model.QuestID() == 21749 || dataLoader.model.QuestID() == 21750 || dataLoader.model.QuestID() == 23648 || dataLoader.model.QuestID() == 23649 || dataLoader.model.QuestID() == 21748 || dataLoader.model.QuestID() == 21747 || dataLoader.model.QuestID() == 21734) && playerTrueRaw > 0)
         {
             switch (dataLoader.model.QuestID())
             {
@@ -390,7 +397,7 @@ public sealed class DiscordService
         }
 
         // Timer
-        if (dataLoader.model.QuestID() != 0 && !this.inQuest && dataLoader.model.TimeDefInt() > dataLoader.model.TimeInt() && int.Parse(dataLoader.model.ATK, CultureInfo.InvariantCulture) > 0 || dataLoader.model.IsRoad() || dataLoader.model.IsDure())
+        if (dataLoader.model.QuestID() != 0 && !this.inQuest && dataLoader.model.TimeDefInt() > dataLoader.model.TimeInt() && playerTrueRaw > 0 || dataLoader.model.IsRoad() || dataLoader.model.IsDure())
         {
             this.inQuest = true;
 
@@ -534,7 +541,7 @@ public sealed class DiscordService
         }
 
         // going back to Mezeporta or w/e
-        else if (dataLoader.model.QuestState() != 1 && dataLoader.model.QuestID() == 0 && this.inQuest && int.Parse(dataLoader.model.ATK, CultureInfo.InvariantCulture) == 0)
+        else if (dataLoader.model.QuestState() != 1 && dataLoader.model.QuestID() == 0 && this.inQuest && playerTrueRaw == 0)
         {
             // reset values
             this.inQuest = false;

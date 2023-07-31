@@ -1517,6 +1517,16 @@ TreeScope.Children, condition);
     public string GetOverlayMode()
     {
         var s = (Settings)Application.Current.TryFindResource("Settings");
+        var playerAtk = 0;
+        var success = int.TryParse(ATK, out int playerTrueRaw);
+        if (!success)
+        {
+            LoggerInstance.Warn("Could not parse player true raw as integer: {0}", ATK);
+        }
+        else
+        {
+            playerAtk = playerTrueRaw;
+        }
 
         if (Configuring)
         {
@@ -1541,12 +1551,12 @@ TreeScope.Children, condition);
         else if (QuestID() == 0 && AreaID() == 200 && BlademasterWeaponID() == 0 && GunnerWeaponID() == 0)
         {
             return "(World Select) ";
-        }
+        } // TODO do i need to check for road and dure?
         else if (
             !(
                 QuestID() != 0
                 && TimeDefInt() > TimeInt()
-                && int.Parse(ATK, CultureInfo.InvariantCulture) > 0
+                && playerAtk > 0
                 || IsRoad() || IsDure()
             )
             || s.EnableDamageNumbers
@@ -2391,7 +2401,15 @@ TreeScope.Children, condition);
     {
         get
         {
-            if (TimeDefInt() == 0 || int.Parse(Monster1MaxHP, CultureInfo.InvariantCulture) <= 1)
+            if (!int.TryParse(Monster1MaxHP, NumberStyles.Integer, CultureInfo.InvariantCulture, out int parsedMonster1MaxHP))
+            {
+                // Handle the case when Monster1MaxHP cannot be parsed to an int
+                // For example, you can return an error message, set a default value or throw an exception
+                LoggerInstance.Warn("Could not parse Monster1MaxHP to get pace: {0}", Monster1MaxHP);
+                return "#f5e0dc";
+            }
+
+            if (TimeDefInt() == 0 || parsedMonster1MaxHP <= 1)
             {
                 QuestTimeIcon = "../../Assets/Icons/png/sand_clock.png";
                 return "#f5e0dc";
@@ -2404,7 +2422,7 @@ TreeScope.Children, condition);
             }
 
             var timePercent = (float)TimeInt() / TimeDefInt() * 100.0;
-            var monster1HPPercent = (float)Monster1HPInt() / int.Parse(Monster1MaxHP, CultureInfo.InvariantCulture) * 100.0;
+            var monster1HPPercent = (float)Monster1HPInt() / parsedMonster1MaxHP * 100.0;
 
             if (timePercent >= monster1HPPercent && ShowQuestPaceColor())
             {
@@ -2439,7 +2457,15 @@ TreeScope.Children, condition);
     {
         get
         {
-            if (TimeDefInt() == 0 || int.Parse(Monster1MaxHP) <= 1)
+            if (!int.TryParse(Monster1MaxHP, NumberStyles.Integer, CultureInfo.InvariantCulture, out int parsedMonster1MaxHP))
+            {
+                // Handle the case when Monster1MaxHP cannot be parsed to an int
+                // For example, you can return an error message, set a default value or throw an exception
+                LoggerInstance.Warn("Could not parse Monster1MaxHP to get best pace: {0}", Monster1MaxHP);
+                return "#f5e0dc";
+            }
+
+            if (TimeDefInt() == 0 || parsedMonster1MaxHP <= 1)
             {
                 PersonalBestIcon = "../../Assets/Icons/png/quest_clock.png";
                 return "#f5e0dc";
@@ -2451,8 +2477,15 @@ TreeScope.Children, condition);
                 return "#f5e0dc";
             }
 
-            var timePercent = int.Parse(PersonalBestTimePercent.Replace("%", string.Empty));
-            var monster1HPPercent = (float)Monster1HPInt() / int.Parse(Monster1MaxHP, CultureInfo.InvariantCulture) * 100.0;
+            if (!int.TryParse(PersonalBestTimePercent.Replace("%", string.Empty), NumberStyles.Integer, CultureInfo.InvariantCulture, out int timePercent))
+            {
+                // Handle the case when PersonalBestTimePercent cannot be parsed to an int
+                // For example, you can return an error message, set a default value or throw an exception
+                LoggerInstance.Warn("Could not parse Monster1MaxHP to get best pace: {0}", Monster1MaxHP);
+                return "#f5e0dc";
+            }
+
+            var monster1HPPercent = (float)Monster1HPInt() / parsedMonster1MaxHP * 100.0;
 
             if (timePercent >= monster1HPPercent && ShowPersonalBestPaceColor())
             {
@@ -2467,7 +2500,7 @@ TreeScope.Children, condition);
         }
     }
 
-    public string PersonalBestLoaded = Messages.TimerNotLoaded;
+    public string PersonalBestLoaded { get; set; } = Messages.TimerNotLoaded;
 
     public string PersonalBestTimePercent
     {
@@ -2771,11 +2804,20 @@ TreeScope.Children, condition);
     /// </value>
     public double Monster1SizeMultForDictionary()
     {
+        var success = double.TryParse(Monster1Size().Replace("%", string.Empty), out double Monster1SizePercent);
+        var success2 = double.TryParse(Monster2Size().Replace("%", string.Empty), out double Monster2SizePercent);
+
+        if (!(success && success2))
+        {
+            LoggerInstance.Warn("Could not parse monster sizes as double: {0} {1}", Monster1Size().Replace("%", string.Empty), Monster2Size().Replace("%", string.Empty));
+            return 0.0;
+        }
+
         return SelectedMonster switch
         {
-            0 => double.Parse(Monster1Size().Replace("%", string.Empty), CultureInfo.InvariantCulture),
-            1 => double.Parse(Monster2Size().Replace("%", string.Empty), CultureInfo.InvariantCulture),
-            _ => double.Parse(Monster1Size().Replace("%", string.Empty), CultureInfo.InvariantCulture),
+            0 => Monster1SizePercent,
+            1 => Monster2SizePercent,
+            _ => Monster1SizePercent,
         };
     }
 
@@ -2787,11 +2829,20 @@ TreeScope.Children, condition);
     /// </value>
     public double Monster1AttackMultForDictionary()
     {
+        var success = double.TryParse(Monster1AtkMult(), out double Monster1AtkMultiplier);
+        var success2 = double.TryParse(Monster2AtkMult(), out double Monster2AtkMultiplier);
+
+        if (!(success && success2))
+        {
+            LoggerInstance.Warn("Could not parse monster attack multipliers as double: {0} {1}", Monster1AtkMult(), Monster2AtkMult());
+            return 0.0;
+        }
+
         return SelectedMonster switch
         {
-            0 => double.Parse(Monster1AtkMult(), CultureInfo.InvariantCulture),
-            1 => double.Parse(Monster2AtkMult(), CultureInfo.InvariantCulture),
-            _ => double.Parse(Monster1AtkMult(), CultureInfo.InvariantCulture),
+            0 => Monster1AtkMultiplier,
+            1 => Monster2AtkMultiplier,
+            _ => Monster1AtkMultiplier,
         };
     }
 
@@ -2803,14 +2854,23 @@ TreeScope.Children, condition);
     /// </value>
     public double Monster1DefMultForDictionary()
     {
+        var success = double.TryParse(Monster1DefMult().ToString(CultureInfo.InvariantCulture), out double Monster1Defrate);
+        var success2 = double.TryParse(Monster2DefMult().ToString(CultureInfo.InvariantCulture), out double Monster2Defrate);
+
+        if (!(success && success2))
+        {
+            LoggerInstance.Warn("Could not parse monster defense multipliers as double: {0} {1}", Monster1DefMult().ToString(CultureInfo.InvariantCulture), Monster2DefMult().ToString(CultureInfo.InvariantCulture));
+            return 0.0;
+        }
+
         switch (SelectedMonster)
         {
             case 0:
-                return double.Parse(Monster1DefMult().ToString(CultureInfo.InvariantCulture), CultureInfo.InvariantCulture);
+                return Monster1Defrate;
             case 1:
-                return double.Parse(Monster2DefMult().ToString(CultureInfo.InvariantCulture), CultureInfo.InvariantCulture);
+                return Monster2Defrate;
             default:
-                return double.Parse(Monster1DefMult().ToString(CultureInfo.InvariantCulture), CultureInfo.InvariantCulture);
+                return Monster1Defrate;
         }
     }
 
@@ -13733,9 +13793,17 @@ After all that you’ve unlocked magnet spike! You should get a material to make
     /// <returns></returns>
     public string GetMonster1EHPPercent()
     {
-        if (currentMonster1MaxHP < int.Parse(Monster1HP, CultureInfo.InvariantCulture))
+        if (!int.TryParse(Monster1HP, NumberStyles.Integer, CultureInfo.InvariantCulture, out int parsedMonster1HP))
         {
-            currentMonster1MaxHP = int.Parse(Monster1HP, CultureInfo.InvariantCulture);
+            // Handle the case when Monster1HP cannot be parsed to an int
+            // For example, you can return an error message or set some default value
+            LoggerInstance.Warn("Could not parse monster 1 HP to get monster 1 EHP Percent: {0}", Monster1HP);
+            return " (0%)";
+        }
+
+        if (currentMonster1MaxHP < parsedMonster1HP)
+        {
+            currentMonster1MaxHP = parsedMonster1HP;
         }
 
         if (currentMonster1MaxHP == 0 || GetMonster1EHP() == 0) // should be OK
@@ -13748,7 +13816,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             return string.Empty;
         }
 
-        return string.Format(CultureInfo.InvariantCulture, " ({0:0}%)", (float)int.Parse(Monster1HP, CultureInfo.InvariantCulture) / currentMonster1MaxHP * 100.0);
+        return string.Format(CultureInfo.InvariantCulture, " ({0:0}%)", (float)parsedMonster1HP / currentMonster1MaxHP * 100.0);
     }
 
     /// <summary>
