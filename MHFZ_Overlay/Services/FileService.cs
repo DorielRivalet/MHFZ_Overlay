@@ -677,6 +677,10 @@ Destination: {2}", logMessage, file, destination), Messages.InfoTitle, MessageBo
                 logger.Info(CultureInfo.InvariantCulture, "{0}{1}", logMessage, path);
                 doesExist = true;
             }
+            else
+            {
+                logger.Info("File does exist, canceling creation: {0}", path);
+            }
 
             return doesExist;
         }
