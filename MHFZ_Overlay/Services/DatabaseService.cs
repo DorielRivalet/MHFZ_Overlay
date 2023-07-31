@@ -265,6 +265,8 @@ public sealed class DatabaseService
                 this.CreateDatabaseIndexes(conn);
                 this.CreateDatabaseTriggers(conn);
                 this.CheckDatabaseVersion(conn, dataLoader);
+
+                // TODO: avoid using version files. find alternatives to IO.
                 WriteNewVersionToFile();
             }
 
@@ -295,11 +297,11 @@ public sealed class DatabaseService
                 }
             }
 
+            // Check if the schema has changed
             if (schemaChanged)
             {
-                logger.Fatal(CultureInfo.InvariantCulture, "Outdated database schema");
-                MessageBox.Show("Your quest runs will not be accepted into the central database unless you update the schemas.", Messages.ErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
-                ApplicationService.HandleShutdown();
+                RecreateReferenceSchemaFile();
+                ApplicationService.HandleRestart();
             }
         }
 
@@ -588,7 +590,7 @@ public sealed class DatabaseService
                         //Duremudira Arena
                         else if (dataLoader.model.AreaID() == 398)
                         {
-                            objectiveImage = dataLoader.model.getMonsterIcon(dataLoader.model.LargeMonster1ID());
+                            objectiveImage = dataLoader.model.GetMonsterIcon(dataLoader.model.LargeMonster1ID());
                         }
 
                         //Hunter's Road Base Camp
@@ -600,11 +602,11 @@ public sealed class DatabaseService
                         //Raviente
                         else if (dataLoader.model.AreaID() == 309 || (dataLoader.model.AreaID() >= 311 && dataLoader.model.AreaID() <= 321) || (dataLoader.model.AreaID() >= 417 && dataLoader.model.AreaID() <= 422) || dataLoader.model.AreaID() == 437 || (dataLoader.model.AreaID() >= 440 && dataLoader.model.AreaID() <= 444))
                         {
-                            objectiveImage = dataLoader.model.getMonsterIcon(dataLoader.model.LargeMonster1ID());
+                            objectiveImage = dataLoader.model.GetMonsterIcon(dataLoader.model.LargeMonster1ID());
                         }
                         else
                         {
-                            objectiveImage = dataLoader.model.getMonsterIcon(dataLoader.model.LargeMonster1ID());
+                            objectiveImage = dataLoader.model.GetMonsterIcon(dataLoader.model.LargeMonster1ID());
                         }
 
                         var objectiveTypeID = model.ObjectiveType();
@@ -616,7 +618,7 @@ public sealed class DatabaseService
                         }
                         else
                         {
-                            objectiveName = model.GetRealMonsterName(model.CurrentMonster1Icon, true);
+                            objectiveName = model.GetRealMonsterName(true);
                         }
 
                         var rankName = model.GetRankNameFromID(model.RankBand(), true);
@@ -630,7 +632,7 @@ public sealed class DatabaseService
                         }
                         else
                         {
-                            objectiveName = model.GetRealMonsterName(model.CurrentMonster1Icon, true);
+                            objectiveName = model.GetRealMonsterName(true);
                         }
 
                         var date = DateTime.UtcNow;
@@ -3326,23 +3328,54 @@ Message: {7}",
             schemaChanged = true;
         }
 
-        // Check if the schema has changed
-        if (schemaChanged)
+        return schemaChanged;
+    }
+
+    private void RecreateReferenceSchemaFile()
+    {
+        try
         {
             var s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
-            logger.Error(CultureInfo.InvariantCulture, "Invalid database schema");
+            logger.Info(CultureInfo.InvariantCulture, "Invalid database schema, backing up reference schema file and restarting overlay.");
             MessageBox.Show(
 @"The database schema got updated in the latest version. 
 
-Please make sure that reference_schema.json (in the current overlay directory) doesn't exist, so that the program can make a new one. 
+The reference_schema.json file (in the current overlay directory) will be copied to the backup folder and then deleted, so that the program can make a new one. 
 
-Disabling Quest Logging.",
-            Messages.ErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
-            s.EnableQuestLogging = false;
-            s.Save();
+Restarting overlay after deleting the file.",
+            Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
+            var referenceSchemaFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "MHFZ_Overlay\\reference_schema.json");
+            var databaseFolder = GetDatabaseFolderPath();
+
+            if (string.IsNullOrEmpty(databaseFolder))
+            {
+                logger.Error($"Database directory path not found: {databaseFolder}");
+                throw new Exception($"Database directory path not found: {databaseFolder}");
+            }
+
+            // Create the backups folder if it does not exist
+            var backupsFolderPath = Path.Combine(databaseFolder, BackupFolderName);
+            if (!Directory.Exists(backupsFolderPath))
+            {
+                Directory.CreateDirectory(backupsFolderPath);
+            }
+
+            // Create the backup file name with a timestamp
+            var timestamp = DateTime.UtcNow.ToString("yyyyMMddHHmmss", CultureInfo.InvariantCulture);
+            var backupFileName = $"reference_schema_backup_{timestamp}.json";
+
+            // Create the full path for the backup file
+            var backupFilePath = Path.Combine(backupsFolderPath, backupFileName);
+            logger.Info(CultureInfo.InvariantCulture, "Making reference schema backup. Reference schema file path: {0}. Backup file path: {1}", referenceSchemaFilePath, backupFilePath);
+            FileService.CopyFileToDestination(referenceSchemaFilePath, backupFilePath);
+            FileService.DeleteFile(referenceSchemaFilePath);
         }
-
-        return schemaChanged;
+        catch (Exception ex)
+        {
+            // Handle the exception and show an error message to the user
+            logger.Error(ex, "An error occurred while recreating reference schema file");
+            MessageBox.Show("An error occurred while recreating reference schema file: " + ex.Message, Messages.ErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
+        }
     }
 
     /// <summary>
@@ -14780,7 +14813,25 @@ Updating the database structure may take some time, it will transport all of you
             {
                 logger.Info(CultureInfo.InvariantCulture, "previousVersionFilePath found, reading version number.");
                 previousVersion = File.ReadAllText(previousVersionFilePath).Trim();
-                logger.Info(CultureInfo.InvariantCulture, "previousVersionFilePath version number {0}", previousVersion);
+                if (string.IsNullOrEmpty(previousVersion))
+                {
+                    logger.Info(CultureInfo.InvariantCulture, "previousVersionFilePath contents are empty, writing to file");
+                    if (App.CurrentProgramVersion == null)
+                    {
+                        logger.Fatal(CultureInfo.InvariantCulture, "CurrentProgramVersion does not exist");
+                        MessageBox.Show("Current Program Version not found.");
+                        LoggingService.WriteCrashLog(new Exception("CurrentProgramVersion not found."), logMessage);
+                        return;
+                    }
+
+                    previousVersion = App.CurrentProgramVersion.Trim();
+                    File.WriteAllText(previousVersionFilePath, previousVersion);
+                    logger.Info(CultureInfo.InvariantCulture, "Writing previous version {0} to file {1}", previousVersion, previousVersionFilePath);
+                }
+                else
+                {
+                    logger.Info(CultureInfo.InvariantCulture, "previousVersionFilePath version number {0}", previousVersion);
+                }
             }
             else
             {
@@ -14817,9 +14868,8 @@ Updating the database structure may take some time, it will transport all of you
                 var versionInFile = File.ReadAllText(previousVersionFilePath).Trim();
                 if (string.IsNullOrEmpty(versionInFile))
                 {
-                    logger.Fatal(CultureInfo.InvariantCulture, "previousVersionFilePath file is empty");
-                    MessageBox.Show("previous-version.txt is empty.");
-                    LoggingService.WriteCrashLog(new Exception("previous-version.txt is empty."), logMessage);
+                    logger.Warn(CultureInfo.InvariantCulture, "previousVersionFilePath file is empty");
+                    versionInFile = "Fresh Install";
                 }
 
                 if (App.CurrentProgramVersion == null)

@@ -1413,6 +1413,11 @@ public abstract class AddressModel : INotifyPropertyChanged
     /// <returns></returns>
     public string GetQuestNameFromID(int id)
     {
+        if (id > 63421)
+        {
+            return $"Custom Quest {id}";
+        }
+
         if (!DiscordService.ShowDiscordQuestNames())
         {
             return string.Empty;
@@ -1517,6 +1522,16 @@ TreeScope.Children, condition);
     public string GetOverlayMode()
     {
         var s = (Settings)Application.Current.TryFindResource("Settings");
+        var playerAtk = 0;
+        var success = int.TryParse(ATK, out int playerTrueRaw);
+        if (!success)
+        {
+            LoggerInstance.Warn("Could not parse player true raw as integer: {0}", ATK);
+        }
+        else
+        {
+            playerAtk = playerTrueRaw;
+        }
 
         if (Configuring)
         {
@@ -1541,12 +1556,12 @@ TreeScope.Children, condition);
         else if (QuestID() == 0 && AreaID() == 200 && BlademasterWeaponID() == 0 && GunnerWeaponID() == 0)
         {
             return "(World Select) ";
-        }
+        } // TODO do i need to check for road and dure?
         else if (
             !(
                 QuestID() != 0
                 && TimeDefInt() > TimeInt()
-                && int.Parse(ATK, CultureInfo.InvariantCulture) > 0
+                && playerAtk > 0
                 || IsRoad() || IsDure()
             )
             || s.EnableDamageNumbers
@@ -2391,7 +2406,15 @@ TreeScope.Children, condition);
     {
         get
         {
-            if (TimeDefInt() == 0 || int.Parse(Monster1MaxHP, CultureInfo.InvariantCulture) <= 1)
+            if (!int.TryParse(Monster1MaxHP, NumberStyles.Integer, CultureInfo.InvariantCulture, out int parsedMonster1MaxHP))
+            {
+                // Handle the case when Monster1MaxHP cannot be parsed to an int
+                // For example, you can return an error message, set a default value or throw an exception
+                LoggerInstance.Warn("Could not parse Monster1MaxHP to get pace: {0}", Monster1MaxHP);
+                return "#f5e0dc";
+            }
+
+            if (TimeDefInt() == 0 || parsedMonster1MaxHP <= 1)
             {
                 QuestTimeIcon = "../../Assets/Icons/png/sand_clock.png";
                 return "#f5e0dc";
@@ -2404,7 +2427,7 @@ TreeScope.Children, condition);
             }
 
             var timePercent = (float)TimeInt() / TimeDefInt() * 100.0;
-            var monster1HPPercent = (float)Monster1HPInt() / int.Parse(Monster1MaxHP, CultureInfo.InvariantCulture) * 100.0;
+            var monster1HPPercent = (float)Monster1HPInt() / parsedMonster1MaxHP * 100.0;
 
             if (timePercent >= monster1HPPercent && ShowQuestPaceColor())
             {
@@ -2439,7 +2462,15 @@ TreeScope.Children, condition);
     {
         get
         {
-            if (TimeDefInt() == 0 || int.Parse(Monster1MaxHP) <= 1)
+            if (!int.TryParse(Monster1MaxHP, NumberStyles.Integer, CultureInfo.InvariantCulture, out int parsedMonster1MaxHP))
+            {
+                // Handle the case when Monster1MaxHP cannot be parsed to an int
+                // For example, you can return an error message, set a default value or throw an exception
+                LoggerInstance.Warn("Could not parse Monster1MaxHP to get best pace: {0}", Monster1MaxHP);
+                return "#f5e0dc";
+            }
+
+            if (TimeDefInt() == 0 || parsedMonster1MaxHP <= 1)
             {
                 PersonalBestIcon = "../../Assets/Icons/png/quest_clock.png";
                 return "#f5e0dc";
@@ -2451,8 +2482,15 @@ TreeScope.Children, condition);
                 return "#f5e0dc";
             }
 
-            var timePercent = int.Parse(PersonalBestTimePercent.Replace("%", string.Empty));
-            var monster1HPPercent = (float)Monster1HPInt() / int.Parse(Monster1MaxHP, CultureInfo.InvariantCulture) * 100.0;
+            if (!int.TryParse(PersonalBestTimePercent.Replace("%", string.Empty), NumberStyles.Integer, CultureInfo.InvariantCulture, out int timePercent))
+            {
+                // Handle the case when PersonalBestTimePercent cannot be parsed to an int
+                // For example, you can return an error message, set a default value or throw an exception
+                LoggerInstance.Warn("Could not parse Monster1MaxHP to get best pace: {0}", Monster1MaxHP);
+                return "#f5e0dc";
+            }
+
+            var monster1HPPercent = (float)Monster1HPInt() / parsedMonster1MaxHP * 100.0;
 
             if (timePercent >= monster1HPPercent && ShowPersonalBestPaceColor())
             {
@@ -2467,7 +2505,7 @@ TreeScope.Children, condition);
         }
     }
 
-    public string PersonalBestLoaded = Messages.TimerNotLoaded;
+    public string PersonalBestLoaded { get; set; } = Messages.TimerNotLoaded;
 
     public string PersonalBestTimePercent
     {
@@ -2597,14 +2635,29 @@ TreeScope.Children, condition);
                 HighestDPS = DPS;
             }
 
-            if (double.Parse(AtkMult, CultureInfo.InvariantCulture) > HighestAttackMult)
+            if (double.TryParse(AtkMult, NumberStyles.Any, CultureInfo.InvariantCulture, out double atkMultResult))
             {
-                HighestAttackMult = double.Parse(AtkMult, CultureInfo.InvariantCulture);
+                if (atkMultResult > HighestAttackMult)
+                {
+                    HighestAttackMult = atkMultResult;
+                }
+            }
+            else
+            {
+                LoggerInstance.Warn("Could not parse monster attack multiplier to double: {0}", AtkMult);
             }
 
-            if (decimal.Parse(DefMult) < LowestMonsterDefrate && decimal.Parse(DefMult, CultureInfo.InvariantCulture) != 0)
+            if (decimal.TryParse(DefMult, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal defMultResult))
             {
-                LowestMonsterDefrate = decimal.Parse(DefMult, CultureInfo.InvariantCulture);
+                if (defMultResult < LowestMonsterDefrate && defMultResult != 0)
+                {
+
+                    LowestMonsterDefrate = defMultResult;
+                }
+            }
+            else
+            {
+                LoggerInstance.Warn("Could not parse monster defense multiplier to decimal: {0}", DefMult);
             }
 
             return weaponRaw.ToString(CultureInfo.InvariantCulture);
@@ -2708,7 +2761,7 @@ TreeScope.Children, condition);
     }
 
     /// <summary>
-    /// Gets the atk mult.
+    /// Gets the monster atk mult.
     /// </summary>
     /// <value>
     /// The atk mult.
@@ -2756,11 +2809,20 @@ TreeScope.Children, condition);
     /// </value>
     public double Monster1SizeMultForDictionary()
     {
+        var success = double.TryParse(Monster1Size().Replace("%", string.Empty), out double Monster1SizePercent);
+        var success2 = double.TryParse(Monster2Size().Replace("%", string.Empty), out double Monster2SizePercent);
+
+        if (!(success && success2))
+        {
+            LoggerInstance.Warn("Could not parse monster sizes as double: {0} {1}", Monster1Size().Replace("%", string.Empty), Monster2Size().Replace("%", string.Empty));
+            return 0.0;
+        }
+
         return SelectedMonster switch
         {
-            0 => double.Parse(Monster1Size().Replace("%", string.Empty), CultureInfo.InvariantCulture),
-            1 => double.Parse(Monster2Size().Replace("%", string.Empty), CultureInfo.InvariantCulture),
-            _ => double.Parse(Monster1Size().Replace("%", string.Empty), CultureInfo.InvariantCulture),
+            0 => Monster1SizePercent,
+            1 => Monster2SizePercent,
+            _ => Monster1SizePercent,
         };
     }
 
@@ -2772,11 +2834,20 @@ TreeScope.Children, condition);
     /// </value>
     public double Monster1AttackMultForDictionary()
     {
+        var success = double.TryParse(Monster1AtkMult(), out double Monster1AtkMultiplier);
+        var success2 = double.TryParse(Monster2AtkMult(), out double Monster2AtkMultiplier);
+
+        if (!(success && success2))
+        {
+            LoggerInstance.Warn("Could not parse monster attack multipliers as double: {0} {1}", Monster1AtkMult(), Monster2AtkMult());
+            return 0.0;
+        }
+
         return SelectedMonster switch
         {
-            0 => double.Parse(Monster1AtkMult(), CultureInfo.InvariantCulture),
-            1 => double.Parse(Monster2AtkMult(), CultureInfo.InvariantCulture),
-            _ => double.Parse(Monster1AtkMult(), CultureInfo.InvariantCulture),
+            0 => Monster1AtkMultiplier,
+            1 => Monster2AtkMultiplier,
+            _ => Monster1AtkMultiplier,
         };
     }
 
@@ -2788,14 +2859,23 @@ TreeScope.Children, condition);
     /// </value>
     public double Monster1DefMultForDictionary()
     {
+        var success = double.TryParse(Monster1DefMult().ToString(CultureInfo.InvariantCulture), out double Monster1Defrate);
+        var success2 = double.TryParse(Monster2DefMult().ToString(CultureInfo.InvariantCulture), out double Monster2Defrate);
+
+        if (!(success && success2))
+        {
+            LoggerInstance.Warn("Could not parse monster defense multipliers as double: {0} {1}", Monster1DefMult().ToString(CultureInfo.InvariantCulture), Monster2DefMult().ToString(CultureInfo.InvariantCulture));
+            return 0.0;
+        }
+
         switch (SelectedMonster)
         {
             case 0:
-                return double.Parse(Monster1DefMult().ToString(CultureInfo.InvariantCulture), CultureInfo.InvariantCulture);
+                return Monster1Defrate;
             case 1:
-                return double.Parse(Monster2DefMult().ToString(CultureInfo.InvariantCulture), CultureInfo.InvariantCulture);
+                return Monster2Defrate;
             default:
-                return double.Parse(Monster1DefMult().ToString(CultureInfo.InvariantCulture), CultureInfo.InvariantCulture);
+                return Monster1Defrate;
         }
     }
 
@@ -4030,7 +4110,7 @@ TreeScope.Children, condition);
         get
         {
             var s = (Settings)Application.Current.TryFindResource("Settings");
-            var monsterIcon = CurrentMonster1Icon;
+            var monsterIcon = CurrentMonster1Icon.Replace("https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/");
 
             if (s.EnableMonsterRenders)
             {
@@ -4056,7 +4136,7 @@ TreeScope.Children, condition);
         get
         {
             var s = (Settings)Application.Current.TryFindResource("Settings");
-            var monsterIcon = CurrentMonster2Icon;
+            var monsterIcon = CurrentMonster2Icon.Replace("https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/");
 
             if (s.EnableMonsterRenders)
             {
@@ -4082,7 +4162,7 @@ TreeScope.Children, condition);
         get
         {
             var s = (Settings)Application.Current.TryFindResource("Settings");
-            var monsterIcon = CurrentMonster3Icon;
+            var monsterIcon = CurrentMonster3Icon.Replace("https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/");
 
             if (s.EnableMonsterRenders)
             {
@@ -4108,7 +4188,7 @@ TreeScope.Children, condition);
         get
         {
             var s = (Settings)Application.Current.TryFindResource("Settings");
-            var monsterIcon = CurrentMonster4Icon;
+            var monsterIcon = CurrentMonster4Icon.Replace("https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/");
 
             if (s.EnableMonsterRenders)
             {
@@ -4202,21 +4282,43 @@ TreeScope.Children, condition);
         }
     }
 
-    public string DetermineMonsterImage(int id)
+    public string DetermineMonsterImage(int id, bool forDiscord = false)
     {
-        var keyFound = MonsterImages.MonsterImageID.TryGetValue(id, out var link);
-        if (link == null)
-        {
-            link = Messages.UnknownMonsterIcon;
-        }
+        var keyFound = false;
 
-        if (keyFound)
+        if (forDiscord)
         {
-            return link;
+            keyFound = MonsterImagesDiscord.MonsterImageID.TryGetValue(id, out var link);
+            if (link == null)
+            {
+                link = Messages.UnknownMonsterIcon;
+            }
+
+            if (keyFound)
+            {
+                return link;
+            }
+            else
+            {
+                return GetAlternateMonsterImage(id);
+            }
         }
         else
         {
-            return GetAlternateMonsterImage(id);
+            keyFound = MonsterImages.MonsterImageID.TryGetValue(id, out var link);
+            if (link == null)
+            {
+                link = Messages.UnknownMonsterIcon;
+            }
+
+            if (keyFound)
+            {
+                return link;
+            }
+            else
+            {
+                return GetAlternateMonsterImage(id);
+            }
         }
     }
 
@@ -10665,392 +10767,404 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         }
     }
 
-    public string GetAlternateMonsterImage(int id)
+
+    public string GetAlternateMonsterImage(int id, bool forDiscord = false)
     {
+        var pathContext = string.Empty;
+
+        if (forDiscord)
+        {
+            pathContext = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/";
+        }
+        else
+        {
+            pathContext = "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/";
+        }
+
         switch (id)
         {
             default:
-                return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/random.png";
+                return pathContext + "random.png";
             case 2:
                 if (RankBand() == 53)
                 {
-                    return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/conquest_fatalis.png";
+                    return pathContext + "conquest_fatalis.png";
                 }
                 else
                 {
-                    return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/fatalis.png";
+                    return pathContext + "fatalis.png";
                 }
 
             case 11:
                 if (RankBand() >= 64 && RankBand() <= 67)
                 {
-                    return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/zenith_rathalos.gif";
+                    return pathContext + "zenith_rathalos.gif";
                 }
                 else
                 {
-                    return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/rathalos.png";
+                    return pathContext + "rathalos.png";
                 }
 
             case 15:
                 if (RankBand() >= 64 && RankBand() <= 67)
                 {
-                    return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/zenith_khezu.gif";
+                    return pathContext + "zenith_khezu.gif";
                 }
                 else
                 {
-                    return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/khezu.png";
+                    return pathContext + "khezu.png";
                 }
 
             case 17:
                 if (RankBand() >= 64 && RankBand() <= 67)
                 {
-                    return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/zenith_gravios.gif";
+                    return pathContext + "zenith_gravios.gif";
                 }
                 else
                 {
-                    return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/gravios.png";
+                    return pathContext + "gravios.png";
                 }
 
             case 21:
                 if (RankBand() >= 64 && RankBand() <= 67)
                 {
-                    return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/zenith_plesioth.gif";
+                    return pathContext + "zenith_plesioth.gif";
                 }
                 else
                 {
-                    return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/plesioth.png";
+                    return pathContext + "plesioth.png";
                 }
 
             case 36:
                 if (RankBand() == 53)
                 {
-                    return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/conquest_crimson_fatalis.png";
+                    return pathContext + "conquest_crimson_fatalis.png";
                 }
                 else
                 {
-                    return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/crimson_fatalis.png";
+                    return pathContext + "crimson_fatalis.png";
                 }
 
             case 48:
                 if (RankBand() >= 64 && RankBand() <= 67)
                 {
-                    return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/zenith_daimyo_hermitaur.gif";
+                    return pathContext + "zenith_daimyo_hermitaur.gif";
                 }
                 else
                 {
-                    return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/daimyo_hermitaur.png";
+                    return pathContext + "daimyo_hermitaur.png";
                 }
 
             case 51:
                 if (RankBand() >= 64 && RankBand() <= 67)
                 {
-                    return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/zenith_blangonga.gif";
+                    return pathContext + "zenith_blangonga.gif";
                 }
                 else
                 {
-                    return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/blangonga.png";
+                    return pathContext + "blangonga.png";
                 }
 
             case 53:
                 if (RankBand() == 56 || RankBand() == 57)
                 {
-                    return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/twinhead_rajang.png";
+                    return pathContext + "twinhead_rajang.png";
                 }
                 else
                 {
-                    return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/rajang.png";
+                    return pathContext + "rajang.png";
                 }
 
             case 65:
                 if (RankBand() == 32)
                 {
-                    return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/supremacy_teostra.gif";
+                    return pathContext + "supremacy_teostra.gif";
                 }
                 else
                 {
-                    return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/teostra.png";
+                    return pathContext + "teostra.png";
                 }
 
             case 71:
                 if (RankBand() == 53)
                 {
-                    return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/road_white_fatalis.png";
+                    return pathContext + "road_white_fatalis.png";
                 }
                 else
                 {
-                    return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/white_fatalis.png";
+                    return pathContext + "white_fatalis.png";
                 }
 
             case 74:
                 if (RankBand() >= 64 && RankBand() <= 67)
                 {
-                    return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/zenith_hypnoc.gif";
+                    return pathContext + "zenith_hypnoc.gif";
                 }
                 else
                 {
-                    return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/hypnoc.png";
+                    return pathContext + "hypnoc.png";
                 }
 
             case 76:
                 if (RankBand() >= 64 && RankBand() <= 67)
                 {
-                    return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/zenith_tigrex.gif";
+                    return pathContext + "zenith_tigrex.gif";
                 }
                 else
                 {
-                    return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/tigrex.png";
+                    return pathContext + "tigrex.png";
                 }
 
             case 80:
                 if (RankBand() >= 64 && RankBand() <= 67)
                 {
-                    return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/zenith_espinas.gif";
+                    return pathContext + "zenith_espinas.gif";
                 }
                 else
                 {
-                    return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/espinas.png";
+                    return pathContext + "espinas.png";
                 }
 
             case 83:
                 if (RankBand() >= 64 && RankBand() <= 67)
                 {
-                    return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/zenith_akura_vashimu.gif";
+                    return pathContext + "zenith_akura_vashimu.gif";
                 }
                 else
                 {
-                    return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/akura_vashimu.png";
+                    return pathContext + "akura_vashimu.png";
                 }
 
             case 89:
                 if (RankBand() == 54)
                 {
-                    return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/thirsty_pariapuria.png";
+                    return pathContext + "thirsty_pariapuria.png";
                 }
                 else if (RankBand() == 32)
                 {
-                    return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/supremacy_pariapuria.gif";
+                    return pathContext + "supremacy_pariapuria.gif";
                 }
                 else
                 {
-                    return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/pariapuria.png";
+                    return pathContext + "pariapuria.png";
                 }
 
             case 95:
                 if (RankBand() >= 64 && RankBand() <= 67)
                 {
-                    return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/zenith_doragyurosu.gif";
+                    return pathContext + "zenith_doragyurosu.gif";
                 }
                 else if (RankBand() == 32)
                 {
-                    return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/supremacy_doragyurosu.gif";
+                    return pathContext + "supremacy_doragyurosu.gif";
                 }
                 else
                 {
-                    return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/doragyurosu.png";
+                    return pathContext + "doragyurosu.png";
                 }
 
             case 99:
                 if (RankBand() >= 64 && RankBand() <= 67)
                 {
-                    return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/zenith_rukodiora.gif";
+                    return pathContext + "zenith_rukodiora.gif";
                 }
                 else
                 {
-                    return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/rukodiora.png";
+                    return pathContext + "rukodiora.png";
                 }
 
             case 100:
                 if (RankBand() == 70 || RankBand() == 54)
                 {
-                    return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/shiten_unknown.png";
+                    return pathContext + "shiten_unknown.png";
                 }
                 else if (RankBand() == 46)
                 {
-                    return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/supremacy_unknown.gif";
+                    return pathContext + "supremacy_unknown.gif";
                 }
                 else
                 {
-                    return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/unknown.png";
+                    return pathContext + "unknown.png";
                 }
 
             case 103:
                 if (RankBand() >= 64 && RankBand() <= 67)
                 {
-                    return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/zenith_taikun_zamuza.gif";
+                    return pathContext + "zenith_taikun_zamuza.gif";
                 }
                 else
                 {
-                    return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/taikun_zamuza.png";
+                    return pathContext + "taikun_zamuza.png";
                 }
 
             case 106:
                 if (RankBand() == 32)
                 {
-                    return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/supremacy_odibatorasu.gif";
+                    return pathContext + "supremacy_odibatorasu.gif";
                 }
                 else
                 {
-                    return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/odibatorasu.png";
+                    return pathContext + "odibatorasu.png";
                 }
 
             case 107:
                 if (RankBand() == 54 || RankBand() == 55)
                 {
-                    return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/shiten_disufiroa.png";
+                    return pathContext + "shiten_disufiroa.png";
                 }
                 else
                 {
-                    return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/disufiroa.png";
+                    return pathContext + "disufiroa.png";
                 }
 
             case 109:
                 if (RankBand() >= 64 && RankBand() <= 67)
                 {
-                    return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/zenith_anorupatisu.gif";
+                    return pathContext + "zenith_anorupatisu.gif";
                 }
                 else
                 {
-                    return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/anorupatisu.png";
+                    return pathContext + "anorupatisu.png";
                 }
 
             case 110:
                 if (RankBand() >= 64 && RankBand() <= 67)
                 {
-                    return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/zenith_hyujikiki.gif";
+                    return pathContext + "zenith_hyujikiki.gif";
                 }
                 else
                 {
-                    return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/hyujikiki.png";
+                    return pathContext + "hyujikiki.png";
                 }
 
             case 111:
                 if (RankBand() >= 64 && RankBand() <= 67)
                 {
-                    return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/zenith_midogaron.gif";
+                    return pathContext + "zenith_midogaron.gif";
                 }
                 else
                 {
-                    return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/midogaron.png";
+                    return pathContext + "midogaron.png";
                 }
 
             case 112:
                 if (RankBand() >= 64 && RankBand() <= 67)
                 {
-                    return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/zenith_giaorugu.gif";
+                    return pathContext + "zenith_giaorugu.gif";
                 }
                 else
                 {
-                    return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/giaorugu.png";
+                    return pathContext + "giaorugu.png";
                 }
 
             case 113:
                 if (RankBand() == 55)
                 {
-                    return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/shifting_mi_ru.png";
+                    return pathContext + "shifting_mi_ru.png";
                 }
                 else
                 {
-                    return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/mi_ru.png";
+                    return pathContext + "mi_ru.png";
                 }
 
             case 116:
                 if (RankBand() == 53)
                 {
-                    return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/conquest_shantien.png";
+                    return pathContext + "conquest_shantien.png";
                 }
                 else
                 {
-                    return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/shantien.png";
+                    return pathContext + "shantien.png";
                 }
 
             case 121:
                 if (RankBand() >= 64 && RankBand() <= 67)
                 {
-                    return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/zenith_baruragaru.gif";
+                    return pathContext + "zenith_baruragaru.gif";
                 }
                 else
                 {
-                    return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/baruragaru.png";
+                    return pathContext + "baruragaru.png";
                 }
 
             case 129:
                 if (RankBand() >= 64 && RankBand() <= 67)
                 {
-                    return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/zenith_inagami.gif";
+                    return pathContext + "zenith_inagami.gif";
                 }
                 else
                 {
-                    return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/inagami.png";
+                    return pathContext + "inagami.png";
                 }
 
             case 140:
                 if (RankBand() >= 64 && RankBand() <= 67)
                 {
-                    return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/zenith_harudomerugu.gif";
+                    return pathContext + "zenith_harudomerugu.gif";
                 }
                 else
                 {
-                    return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/harudomerugu.png";
+                    return pathContext + "harudomerugu.png";
                 }
 
             case 141:
                 if (RankBand() >= 64 && RankBand() <= 67)
                 {
-                    return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/zenith_toridcless.gif";
+                    return pathContext + "zenith_toridcless.gif";
                 }
                 else
                 {
-                    return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/toridcless.png";
+                    return pathContext + "toridcless.png";
                 }
 
             case 142:
                 if (RankBand() >= 64 && RankBand() <= 67)
                 {
-                    return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/zenith_gasurabazura.gif";
+                    return pathContext + "zenith_gasurabazura.gif";
                 }
                 else
                 {
-                    return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/gasurabazura.png";
+                    return pathContext + "gasurabazura.png";
                 }
 
             case 146:
                 if (RankBand() >= 54 && RankBand() <= 55)
                 {
-                    return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/howling_zinogre.png";
+                    return pathContext + "howling_zinogre.png";
                 }
                 else
                 {
-                    return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/zinogre.png";
+                    return pathContext + "zinogre.png";
                 }
 
             case 154:
                 if (RankBand() >= 54 && RankBand() <= 55)
                 {
-                    return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/ruling_guanzorumu.png";
+                    return pathContext + "ruling_guanzorumu.png";
                 }
                 else
                 {
-                    return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/guanzorumu.png";
+                    return pathContext + "guanzorumu.png";
                 }
 
             case 155:
                 if (RankBand() == 55)
                 {
-                    return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/golden_deviljho.png";
+                    return pathContext + "golden_deviljho.png";
                 }
                 else
                 {
-                    return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/starving_deviljho.png";
+                    return pathContext + "starving_deviljho.png";
                 }
 
             case 166:
                 if (RankBand() >= 54 && RankBand() <= 55)
                 {
-                    return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/burning_freezing_elzelion.png";
+                    return pathContext + "burning_freezing_elzelion.png";
                 }
                 else
                 {
-                    return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/elzelion.png";
+                    return pathContext + "elzelion.png";
                 }
         }
     }
@@ -11434,7 +11548,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
     /// </summary>
     /// <param name="id">The identifier.</param>
     /// <returns></returns>
-    public string getMonsterIcon(int id)
+    public string GetMonsterIcon(int id, bool forDiscord = false)
     {
         // quest ids:
         // mp road: 23527
@@ -11473,7 +11587,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         }
 
         // arrogant duremudira
-        return DetermineMonsterImage(id);
+        return DetermineMonsterImage(id, forDiscord);
     }
 
     /// <summary>
@@ -11613,7 +11727,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
     /// </summary>
     /// <param name="iconName">Name of the icon.</param>
     /// <returns></returns>
-    public string GetRealMonsterName(string iconName, bool isLargeImageText = false)
+    public string GetRealMonsterName(bool isLargeImageText = false)
     {
         if (DiscordService.ShowDiscordQuestNames() && !isLargeImageText)
         {
@@ -13684,9 +13798,17 @@ After all that you’ve unlocked magnet spike! You should get a material to make
     /// <returns></returns>
     public string GetMonster1EHPPercent()
     {
-        if (currentMonster1MaxHP < int.Parse(Monster1HP, CultureInfo.InvariantCulture))
+        if (!int.TryParse(Monster1HP, NumberStyles.Integer, CultureInfo.InvariantCulture, out int parsedMonster1HP))
         {
-            currentMonster1MaxHP = int.Parse(Monster1HP, CultureInfo.InvariantCulture);
+            // Handle the case when Monster1HP cannot be parsed to an int
+            // For example, you can return an error message or set some default value
+            LoggerInstance.Warn("Could not parse monster 1 HP to get monster 1 EHP Percent: {0}", Monster1HP);
+            return " (0%)";
+        }
+
+        if (currentMonster1MaxHP < parsedMonster1HP)
+        {
+            currentMonster1MaxHP = parsedMonster1HP;
         }
 
         if (currentMonster1MaxHP == 0 || GetMonster1EHP() == 0) // should be OK
@@ -13699,7 +13821,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             return string.Empty;
         }
 
-        return string.Format(CultureInfo.InvariantCulture, " ({0:0}%)", (float)int.Parse(Monster1HP, CultureInfo.InvariantCulture) / currentMonster1MaxHP * 100.0);
+        return string.Format(CultureInfo.InvariantCulture, " ({0:0}%)", (float)parsedMonster1HP / currentMonster1MaxHP * 100.0);
     }
 
     /// <summary>

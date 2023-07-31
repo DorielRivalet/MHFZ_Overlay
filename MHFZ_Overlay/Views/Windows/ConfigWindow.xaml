@@ -1031,19 +1031,24 @@
 
                             <StackPanel Orientation="Horizontal" Margin="5,0,0,0" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
                                     <ui:SymbolIcon ToolTip="Open Folder" Symbol="FolderOpen24" FontSize="28" Foreground="{StaticResource Green}" Margin="0,0,5,0"/>
-                                    <ui:Button Appearance="Primary" Content="Settings" ToolTip="Open the settings folder" Click="OpenSettingsFolder_Click">
+                                    <ui:Button Appearance="Secondary" Content="Settings" ToolTip="Open the settings folder" Click="OpenSettingsFolder_Click">
                                     <ui:Button.Icon>
                                         <ui:SymbolIcon Symbol="Settings20" FontSize="20" />
                                     </ui:Button.Icon>
                                 </ui:Button>
-                                <ui:Button Margin="5,0,0,0" Appearance="Primary"  Content="Logs" ToolTip="Open the logs folder" Click="OpenLogsFolder_Click">
+                                    <ui:Button Margin="5,0,0,0" Appearance="Secondary"  Content="Logs" ToolTip="Open the logs folder" Click="OpenLogsFolder_Click">
                                     <ui:Button.Icon>
                                         <ui:SymbolIcon Symbol="Document20" FontSize="20"/>
                                     </ui:Button.Icon>
                                 </ui:Button>
-                                <ui:Button Margin="5,0,0,0" Appearance="Primary"  Content="Database" ToolTip="Open the database folder" Click="OpenDatabaseFolder_Click">
+                                <ui:Button Margin="5,0,0,0" Appearance="Secondary"  Content="Database" ToolTip="Open the database folder" Click="OpenDatabaseFolder_Click">
                                     <ui:Button.Icon>
                                         <ui:SymbolIcon Symbol="Database20" FontSize="20"/>
+                                    </ui:Button.Icon>
+                                </ui:Button>
+                                <ui:Button Margin="5,0,0,0" Appearance="Secondary"  Content="Overlay" ToolTip="Open the overlay folder" Click="OpenOverlayFolder_Click">
+                                    <ui:Button.Icon>
+                                        <ui:SymbolIcon Symbol="Folder20" FontSize="20"/>
                                     </ui:Button.Icon>
                                 </ui:Button>
                             </StackPanel>
@@ -1580,7 +1585,7 @@
                                             <Border CornerRadius="5,0,0,5" Grid.Row="0" Grid.Column="0" Grid.RowSpan="25" Width="5" Margin="0,0,5,0" Background="#f38ba8" />
 
                                             <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" Margin="5" Grid.ColumnSpan="2">
-                                                <Image x:Name="SelectedQuestObjectiveImage" Source="https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/burning_freezing_elzelion.png" Width="48" Height="48" Margin="0,0,5,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                                                <Image x:Name="SelectedQuestObjectiveImage" Source="pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/burning_freezing_elzelion.png" Width="48" Height="48" Margin="0,0,5,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                                                 <StackPanel Orientation="Vertical">
                                                     <TextBlock x:Name="SelectedQuestNameTextBlock" TextWrapping="Wrap" MaxWidth="240" Text="Dark Lord of Fire and Flame" FontFamily="{StaticResource Open Sans Bold}"/>
                                                     <TextBlock x:Name="SelectedQuestObjectiveTextBlock" TextWrapping="Wrap" MaxWidth="240" Text="Slay 1 Burning Freezing Elzelion" FontFamily="{StaticResource Open Sans Italic}"/>
@@ -3552,7 +3557,7 @@ Thunder Clad, Vigorous" Text="{Binding GetActiveSkillsForImage,Mode=OneTime}" Fo
                                 <RowDefinition Height="40"/>
                             </Grid.RowDefinitions>
                             <ui:InfoBar Grid.ColumnSpan="2" Foreground="{StaticResource Text}" Title="How Monster HP Works" 
-                            Message="Effective HP is the HP taking into account the monster's defense rate.&#x0a;Burning Freezing Elzelion has 1,000,000 EHP because his&#x0a;True HP is 30,000 and his defense rate is 0,03.&#x0a;&#x0a;Effective HP = True HP / Defense rate&#x0a;1,000,000 = 30,000 / 0,03&#x0a;&#x0a;True HP is the HP of the monster without taking into account the monster's defense rate." 
+                            Message="Effective HP is the HP taking into account the monster's defense rate.&#x0a;Burning Freezing Elzelion has 1,000,000 EHP because his&#x0a;True HP is 30,000 and his defense rate is 0.03.&#x0a;&#x0a;Effective HP = True HP / Defense rate&#x0a;1,000,000 = 30,000 / 0.03&#x0a;&#x0a;True HP is the HP of the monster without taking into account the monster's defense rate." 
                             IsClosable="False" IsOpen="True" Severity="Informational"/>
                             <TextBlock Margin="5" ToolTip="Show HP Mode (True/Effective)" Style="{StaticResource ConfigTextBox}" Grid.Row="1" Grid.Column="0" Text="Monster HP Mode Label"/>
                             <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="1" Grid.Column="1" IsChecked="{Binding Source={StaticResource Settings}, Path=MonsterBarHPModeShown}"/>

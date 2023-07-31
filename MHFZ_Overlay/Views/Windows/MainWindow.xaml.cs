@@ -141,6 +141,11 @@ public partial class MainWindow : Window
 
     public TimeSpan MainWindowSnackbarTimeOut { get; set; } = TimeSpan.FromSeconds(5);
 
+    private void OptionOverlayFolder_Click(object sender, RoutedEventArgs e)
+    {
+        FileService.OpenApplicationFolder(MainWindowSnackBarPresenter, (Style)FindResource("CatppuccinMochaSnackBar"), MainWindowSnackbarTimeOut);
+    }
+
     private void OptionSettingsFolder_Click(object sender, RoutedEventArgs e)
     {
         try
@@ -1016,7 +1021,12 @@ The process may take some time, as the program attempts to download from GitHub 
                 break;
         }
 
-        var defenseMultiplier = Double.Parse(this.dataLoader.model.DefMult, CultureInfo.InvariantCulture);
+        if (!Double.TryParse(this.dataLoader.model.DefMult, NumberStyles.Any, CultureInfo.InvariantCulture, out double defenseMultiplier))
+        {
+            LoggerInstance.Warn("Could not parse monster defense multiplier: {0}", this.dataLoader.model.DefMult);
+            defenseMultiplier = 1; // Default value if parse fails
+        }
+
         if (defenseMultiplier <= 0)
         {
             defenseMultiplier = 1;
@@ -1874,6 +1884,16 @@ The process may take some time, as the program attempts to download from GitHub 
     private async Task CheckQuestStateForDatabaseLogging()
     {
         Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
+        var playerAtk = 0;
+        var success = int.TryParse(this.dataLoader.model.ATK, NumberStyles.Integer, CultureInfo.InvariantCulture, out int playerTrueRaw);
+        if (success)
+        {
+            playerAtk = playerTrueRaw;
+        }
+        else
+        {
+            LoggerInstance.Warn("Could not parse player true raw: {0}", this.dataLoader.model.ATK);
+        }
 
         // Check if in quest and timer is NOT frozen
         if (this.dataLoader.model.QuestID() != 0 && this.dataLoader.model.TimeInt() != this.dataLoader.model.TimeDefInt() && this.dataLoader.model.QuestState() == 0 && this.dataLoader.model.previousTimeInt != this.dataLoader.model.TimeInt())
@@ -1886,7 +1906,7 @@ The process may take some time, as the program attempts to download from GitHub 
             this.dataLoader.model.InsertQuestInfoIntoDictionaries();
 
             // TODO: test on dure/etc
-            if (!calculatedPersonalBest && this.dataLoader.model.TimeDefInt() > this.dataLoader.model.TimeInt() && int.Parse(this.dataLoader.model.ATK, CultureInfo.InvariantCulture) > 0)
+            if (!calculatedPersonalBest && this.dataLoader.model.TimeDefInt() > this.dataLoader.model.TimeInt() && playerAtk > 0)
             {
                 calculatedPersonalBest = true;
                 personalBestTextBlock.Text = await DatabaseManagerInstance.GetPersonalBestAsync(this.dataLoader.model.QuestID(), this.dataLoader.model.WeaponType(), OverlayModeWatermarkTextBlock.Text, this.dataLoader.model.QuestTimeMode, dataLoader);
@@ -1895,7 +1915,7 @@ The process may take some time, as the program attempts to download from GitHub 
 
             if (!calculatedQuestAttempts
                 && this.dataLoader.model.TimeDefInt() > this.dataLoader.model.TimeInt()
-                && int.Parse(this.dataLoader.model.ATK, CultureInfo.InvariantCulture) > 0
+                && playerAtk > 0
                 && this.dataLoader.model.TimeDefInt() - this.dataLoader.model.TimeInt() >= 30)
             {
                 calculatedQuestAttempts = true;
