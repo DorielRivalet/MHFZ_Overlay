@@ -1,5 +1,47 @@
 
 
+## [0.28.0](https://github.com/DorielRivalet/MHFZ_Overlay/compare/v0.27.3...v0.28.0) (2023-07-31)
+
+
+### Features
+
+* add custom quest name partial support ([5509de4](https://github.com/DorielRivalet/MHFZ_Overlay/commit/5509de48bd21a6397e7a2af12a82fa681294d793))
+* add logging if file does exist ([4d12ed2](https://github.com/DorielRivalet/MHFZ_Overlay/commit/4d12ed211ff28a5fb764e9d22729c6ca4f8bd3a8))
+* automate reference schema file handling ([3535bdf](https://github.com/DorielRivalet/MHFZ_Overlay/commit/3535bdf9b59fb9dd079df3d1acea79499e95bf87)), closes [DorielRivalet/mhfz-overlay#139](https://github.com/DorielRivalet/mhfz-overlay/issues/139)
+* implement open overlay folder option ([a326d98](https://github.com/DorielRivalet/MHFZ_Overlay/commit/a326d9890d8245f2d7b61ae98003a480c3c1b7b4))
+* use local monster images instead of external ([5069f62](https://github.com/DorielRivalet/MHFZ_Overlay/commit/5069f62862e62eb238a3a252a63f10411113cf10)), closes [DorielRivalet/mhfz-overlay#137](https://github.com/DorielRivalet/mhfz-overlay/issues/137)
+
+
+### Bug Fixes
+
+* add TryParse for better error handling ([2d8484d](https://github.com/DorielRivalet/MHFZ_Overlay/commit/2d8484d68f1615d82032aeda28e44022bc63d303)), closes [DorielRivalet/mhfz-overlay#143](https://github.com/DorielRivalet/mhfz-overlay/issues/143)
+* **IO:** previous version file path handling ([0daa24d](https://github.com/DorielRivalet/MHFZ_Overlay/commit/0daa24defaed5f58d3369ea163303a54049565fc)), closes [DorielRivalet/mhfz-overlay#147](https://github.com/DorielRivalet/mhfz-overlay/issues/147)
+* monster stats parsing ([329fda0](https://github.com/DorielRivalet/MHFZ_Overlay/commit/329fda0a1269b9c115fbeaa16756c57824b97a6e)), closes [DorielRivalet/mhfz-overlay#141](https://github.com/DorielRivalet/mhfz-overlay/issues/141)
+
+
+### For Developers
+
+* add sonarcloud java distribution ([324b4c2](https://github.com/DorielRivalet/MHFZ_Overlay/commit/324b4c284f134bb9ae8e55c07198e13c377bdcfb))
+* bump version ([68a7de4](https://github.com/DorielRivalet/MHFZ_Overlay/commit/68a7de44d148f0e9a323c99e7472f73a0b49e607))
+* **deps-dev:** bump @commitlint/cli from 17.6.3 to 17.6.5 ([00b6e1b](https://github.com/DorielRivalet/MHFZ_Overlay/commit/00b6e1bc82f0d6763c8cfb9100827559652833be))
+* **deps-dev:** bump @commitlint/cli from 17.6.5 to 17.6.7 ([468911a](https://github.com/DorielRivalet/MHFZ_Overlay/commit/468911ae3f5eea0663054bea20b89148f46d72ec))
+* **deps-dev:** bump @commitlint/config-conventional ([11d1097](https://github.com/DorielRivalet/MHFZ_Overlay/commit/11d1097fdcddf9bfa4ce2f609564c5ffe3c7ad2c))
+* **deps-dev:** bump @commitlint/config-conventional ([dbd2e2d](https://github.com/DorielRivalet/MHFZ_Overlay/commit/dbd2e2d981179c9b786c1ad4db634c060c1cd6b8))
+* **deps:** bump @release-it/conventional-changelog from 5.1.1 to 6.0.0 ([23ea7fd](https://github.com/DorielRivalet/MHFZ_Overlay/commit/23ea7fd8a8a54dc9781be3e4df976f117531e762))
+* **deps:** bump actions/cache from 1 to 3 ([48948cf](https://github.com/DorielRivalet/MHFZ_Overlay/commit/48948cff8a4b72e91cc698cfdf4819f549569dfe))
+* **deps:** bump actions/checkout from 2 to 3 ([5ddab4c](https://github.com/DorielRivalet/MHFZ_Overlay/commit/5ddab4c02efd171bf77c8b69b2d39034a1793fa1))
+* **deps:** bump actions/setup-java from 1 to 3 ([d3c63aa](https://github.com/DorielRivalet/MHFZ_Overlay/commit/d3c63aa4de1d0f7587cb8aa95a1e87872060cbe6))
+* **deps:** bump DiscordRichPresence in /MHFZ_Overlay ([8972f84](https://github.com/DorielRivalet/MHFZ_Overlay/commit/8972f84c6f00213297793c3c630b4d923134e854))
+* **deps:** bump Microsoft.Web.WebView2 in /MHFZ_Overlay ([79fefa5](https://github.com/DorielRivalet/MHFZ_Overlay/commit/79fefa50bad22deeb43f8358b05f12f7e97c7a58))
+* **deps:** bump NuGet.CommandLine from 6.5.0 to 6.5.1 in /MHFZ_Overlay ([d247a3b](https://github.com/DorielRivalet/MHFZ_Overlay/commit/d247a3be8835ae649aeeea4e26a2159efccc4cfa))
+* **deps:** bump Octokit from 7.0.1 to 7.1.0 in /MHFZ_Overlay ([b24e0cf](https://github.com/DorielRivalet/MHFZ_Overlay/commit/b24e0cf94e61ad91ce0663256b384a47ad8d8e43))
+* **deps:** bump release-it from 15.10.3 to 15.11.0 ([ed1c9bc](https://github.com/DorielRivalet/MHFZ_Overlay/commit/ed1c9bc2a6625890682f9bb1dab857a3c54b27b9))
+* **deps:** bump semver from 5.7.1 to 5.7.2 ([d8de67f](https://github.com/DorielRivalet/MHFZ_Overlay/commit/d8de67ff5144e367b8b612189fad6b28414c49e5))
+* **deps:** bump word-wrap from 1.2.3 to 1.2.5 ([0e2c772](https://github.com/DorielRivalet/MHFZ_Overlay/commit/0e2c772e6dbb1a75f505f6ee7e26f9faa7e46434))
+* fix decimal formatting ([c07d9a6](https://github.com/DorielRivalet/MHFZ_Overlay/commit/c07d9a6464d52c49e15b5e4e1e9f559415727b13))
+* fix inconsistent number separator ([f3c0b2c](https://github.com/DorielRivalet/MHFZ_Overlay/commit/f3c0b2cd3587fda06d84492940b44f1edb294bc4))
+* **github:** update bug report instructions ([283d747](https://github.com/DorielRivalet/MHFZ_Overlay/commit/283d74793a321137d7a312806bdce8d93ac4da04))
+
 ## [0.27.3](https://github.com/DorielRivalet/MHFZ_Overlay/compare/v0.27.1...v0.27.3) (2023-07-27)
 
 
