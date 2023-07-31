@@ -265,6 +265,8 @@ public sealed class DatabaseService
                 this.CreateDatabaseIndexes(conn);
                 this.CreateDatabaseTriggers(conn);
                 this.CheckDatabaseVersion(conn, dataLoader);
+
+                // TODO: avoid using version files. find alternatives to IO.
                 WriteNewVersionToFile();
             }
 
@@ -14811,7 +14813,25 @@ Updating the database structure may take some time, it will transport all of you
             {
                 logger.Info(CultureInfo.InvariantCulture, "previousVersionFilePath found, reading version number.");
                 previousVersion = File.ReadAllText(previousVersionFilePath).Trim();
-                logger.Info(CultureInfo.InvariantCulture, "previousVersionFilePath version number {0}", previousVersion);
+                if (string.IsNullOrEmpty(previousVersion))
+                {
+                    logger.Info(CultureInfo.InvariantCulture, "previousVersionFilePath contents are empty, writing to file");
+                    if (App.CurrentProgramVersion == null)
+                    {
+                        logger.Fatal(CultureInfo.InvariantCulture, "CurrentProgramVersion does not exist");
+                        MessageBox.Show("Current Program Version not found.");
+                        LoggingService.WriteCrashLog(new Exception("CurrentProgramVersion not found."), logMessage);
+                        return;
+                    }
+
+                    previousVersion = App.CurrentProgramVersion.Trim();
+                    File.WriteAllText(previousVersionFilePath, previousVersion);
+                    logger.Info(CultureInfo.InvariantCulture, "Writing previous version {0} to file {1}", previousVersion, previousVersionFilePath);
+                }
+                else
+                {
+                    logger.Info(CultureInfo.InvariantCulture, "previousVersionFilePath version number {0}", previousVersion);
+                }
             }
             else
             {
@@ -14848,9 +14868,8 @@ Updating the database structure may take some time, it will transport all of you
                 var versionInFile = File.ReadAllText(previousVersionFilePath).Trim();
                 if (string.IsNullOrEmpty(versionInFile))
                 {
-                    logger.Fatal(CultureInfo.InvariantCulture, "previousVersionFilePath file is empty");
-                    MessageBox.Show("previous-version.txt is empty.");
-                    LoggingService.WriteCrashLog(new Exception("previous-version.txt is empty."), logMessage);
+                    logger.Warn(CultureInfo.InvariantCulture, "previousVersionFilePath file is empty");
+                    versionInFile = "Fresh Install";
                 }
 
                 if (App.CurrentProgramVersion == null)
