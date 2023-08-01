@@ -10,10 +10,9 @@ jobs:
         uses: sarisia/actions-status-discord@v1.10.1-pre.0
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
-          content: "<@937384021527257209>"
           title: "`MHF-Z Overlay` Status"
           description: |
-            New issue: ${{ github.event.issue.title }}
+            <@937384021527257209> New issue: ${{ github.event.issue.title }}
           image: ${{ secrets.EMBED_IMAGE }}
           color: 0xff435d
           username: GitHub Actions
@@ -24,10 +23,9 @@ jobs:
         uses: sarisia/actions-status-discord@v1.10.1-pre.0
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
-          content: "<@937384021527257209>"
           title: "`MHF-Z Overlay` Status"
           description: |
-            New pull request: ${{ github.event.pull_request.title }}
+            <@937384021527257209> New pull request: ${{ github.event.pull_request.title }}
           image: ${{ secrets.EMBED_IMAGE }}
           color: 0xff435d
           username: GitHub Actions
