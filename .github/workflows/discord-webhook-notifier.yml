@@ -1,19 +1,48 @@
 name: Actions Status Discord
-on: push
+on: [push, issues, pull_request]
 
 jobs:
   actions-status-discord:
     runs-on: ubuntu-latest
     steps:
-    - uses: sarisia/actions-status-discord@v1.10.1-pre.0
-      if: success()
-      with:
-        webhook: ${{ secrets.DISCORD_WEBHOOK }}
-        title: "`MHF-Z Overlay` Status"
-        description: |
-          New commit
-          Click [here](https://github.com/DorielRivalet/MHFZ_Overlay/blob/main/CHANGELOG.md) to view changelog!
-        image: ${{ secrets.EMBED_IMAGE }}
-        color: 0xff435d
-        username: GitHub Actions
-        avatar_url: ${{ secrets.AVATAR_URL }}
+      - name: Notify Discord about new issue
+        if: github.event_name == 'issues'
+        uses: sarisia/actions-status-discord@v1.10.1-pre.0
+        with:
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          content: "<@937384021527257209>"
+          title: "`MHF-Z Overlay` Status"
+          description: |
+            New issue: ${{ github.event.issue.title }}
+          image: ${{ secrets.EMBED_IMAGE }}
+          color: 0xff435d
+          username: GitHub Actions
+          avatar_url: ${{ secrets.AVATAR_URL }}
+  
+      - name: Notify Discord about new pull request
+        if: github.event_name == 'pull_request'
+        uses: sarisia/actions-status-discord@v1.10.1-pre.0
+        with:
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          content: "<@937384021527257209>"
+          title: "`MHF-Z Overlay` Status"
+          description: |
+            New pull request: ${{ github.event.pull_request.title }}
+          image: ${{ secrets.EMBED_IMAGE }}
+          color: 0xff435d
+          username: GitHub Actions
+          avatar_url: ${{ secrets.AVATAR_URL }}
+
+      - name: Notify Discord about pushes
+        if: github.event_name == 'push'
+        uses: sarisia/actions-status-discord@v1.10.1-pre.0
+        with:
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          title: "`MHF-Z Overlay` Status"
+          description: |
+            New commit
+            Click [here](https://github.com/DorielRivalet/MHFZ_Overlay/blob/main/CHANGELOG.md) to view changelog!
+          image: ${{ secrets.EMBED_IMAGE }}
+          color: 0xff435d
+          username: GitHub Actions
+          avatar_url: ${{ secrets.AVATAR_URL }}
