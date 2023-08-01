@@ -12,7 +12,7 @@ jobs:
           stale-issue-message: 'This issue is stale because it has been open 30 days with no activity. Remove stale label or comment or this will be closed in 5 days.'
           days-before-stale: 30
           days-before-close: 5
-          any-of-labels: 'waiting for author'
+          any-of-labels: 'waiting on author'
           stale-issue-label: stale
           # You can opt for 'only-labels' instead if your use-case requires all labels
           # to be present in the issue/PR
