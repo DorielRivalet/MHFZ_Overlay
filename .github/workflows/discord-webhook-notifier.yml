@@ -1,10 +1,27 @@
 name: Actions Status Discord
-on: [push, issues, pull_request]
+on:
+  push:
+  issues:
+  pull_request:
+  issue_comment:
 
 jobs:
   actions-status-discord:
     runs-on: ubuntu-latest
     steps:
+      - name: Notify Discord about issue and pull request comments
+        if: github.event_name == 'issue_comment'
+        uses: sarisia/actions-status-discord@v1.10.1-pre.0
+        with:
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          title: "`MHF-Z Overlay` Status"
+          description: |
+            <@937384021527257209> New comment: ${{ github.event.issue.url }}
+          image: ${{ secrets.EMBED_IMAGE }}
+          color: 0xff435d
+          username: GitHub Actions
+          avatar_url: ${{ secrets.AVATAR_URL }}
+
       - name: Notify Discord about new issue
         if: github.event_name == 'issues'
         uses: sarisia/actions-status-discord@v1.10.1-pre.0
