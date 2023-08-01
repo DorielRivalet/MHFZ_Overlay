@@ -5,12 +5,11 @@
 namespace MHFZ_Overlay.Services;
 
 using System;
-using System.Windows;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
-using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Media;
 using MHFZ_Overlay;
 using MHFZ_Overlay.Models;
@@ -26,48 +25,38 @@ using Wpf.Ui.Controls;
 
 public sealed class AchievementService : IAchievementService
 {
-    public static AchievementRank ConvertToAchievementRank(long rankValue)
+    private static readonly DatabaseService DatabaseManagerInstance = DatabaseService.GetInstance();
+
+    public static TimeSpan SnackbarTimeOut { get; set; } = TimeSpan.FromSeconds(5);
+
+    public static AchievementRank ConvertToAchievementRank(long rankValue) => rankValue switch
     {
-        switch (rankValue)
-        {
-            case 1:
-                return AchievementRank.Bronze;
-            case 2:
-                return AchievementRank.Silver;
-            case 3:
-                return AchievementRank.Gold;
-            case 4:
-                return AchievementRank.Platinum;
-            default:
-                return AchievementRank.None;
-        }
-    }
+        1 => AchievementRank.Bronze,
+        2 => AchievementRank.Silver,
+        3 => AchievementRank.Gold,
+        4 => AchievementRank.Platinum,
+        _ => AchievementRank.None,
+    };
 
     public static List<Achievement> FilterAchievementsToCompletedOnly(List<Achievement> achievements)
     {
-        List<Achievement> filteredAchievements = achievements.Where(a => a.CompletionDate != DateTime.UnixEpoch).ToList();
+        var filteredAchievements = achievements.Where(a => a.CompletionDate != DateTime.UnixEpoch).ToList();
         return filteredAchievements;
     }
 
     public static void ShowMany(SnackbarPresenter snackbarPresenter, List<int> achievementsID, Style style)
     {
-        if (MainWindow.MainWindowSoundPlayer != null)
-        {
-            MainWindow.MainWindowSoundPlayer.Play();
-        }
+        MainWindow.MainWindowSoundPlayer?.Play();
 
         const int maxAchievementsToShow = 5;
         var remainingAchievements = achievementsID.Count - maxAchievementsToShow;
 
         foreach (var achievementID in achievementsID.Take(maxAchievementsToShow))
         {
-            if (Achievements.IDAchievement.TryGetValue(achievementID, out Achievement? achievement) && achievement != null)
+            if (Achievements.IDAchievement.TryGetValue(achievementID, out var achievement) && achievement != null)
             {
                 var brushColor = achievement.GetBrushColorFromRank();
-                if (brushColor == null)
-                {
-                    brushColor = Brushes.Black;
-                }
+                brushColor ??= Brushes.Black;
 
                 snackbarPresenter.AddToQue(new Snackbar(snackbarPresenter)
                 {
@@ -91,7 +80,6 @@ public sealed class AchievementService : IAchievementService
             var brushColor = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Crust"]);
             var snackbar = new Snackbar(snackbarPresenter)
             {
-
                 Title = "Too many achievements!",
                 Content = $"To see the rest of the achievements unlocked ({remainingAchievements} left), see the Achievements tab in the Quests Logs section.",
                 Icon = new SymbolIcon()
@@ -107,19 +95,17 @@ public sealed class AchievementService : IAchievementService
         }
     }
 
-    public static TimeSpan SnackbarTimeOut { get; set; } = TimeSpan.FromSeconds(5);
-
     public static void ShowAchievementsTabInfo(Snackbar snackbar, int remainingAchievements)
     {
         var brushConverter = new BrushConverter();
         var brushColor = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Crust"]);
         snackbar.Title = "Too many achievements!";
         snackbar.Content = $"To see the rest of the achievements unlocked ({remainingAchievements} left), see the Achievements tab in the Quests Logs section.";
-        snackbar.Icon = new SymbolIcon()
+        snackbar.Icon = new SymbolIcon
         {
             Symbol = SymbolRegular.Info28,
+            Foreground = brushColor ?? Brushes.Black,
         };
-        snackbar.Icon.Foreground = brushColor ?? Brushes.Black;
         snackbar.Appearance = ControlAppearance.Info;
         snackbar.Timeout = SnackbarTimeOut;
         snackbar.Show();
@@ -138,6 +124,7 @@ public sealed class AchievementService : IAchievementService
         return instance;
     }
 
+    /// <inheritdoc/>
     public void LoadPlayerAchievements()
     {
         var playerAchievements = DatabaseManagerInstance.GetPlayerAchievementIDList();
@@ -148,6 +135,7 @@ public sealed class AchievementService : IAchievementService
         }
     }
 
+    /// <inheritdoc/>
     public void CheckForAchievements(SnackbarPresenter snackbarPresenter, DataLoader dataLoader, DatabaseService databaseManagerInstance, Settings s, Style style)
     {
         var newAchievements = this.GetNewlyObtainedAchievements(dataLoader, databaseManagerInstance, s);
@@ -164,6 +152,7 @@ public sealed class AchievementService : IAchievementService
         }
     }
 
+    /// <inheritdoc/>
     public void RewardAchievement(int achievementID, Snackbar snackbar, Style style)
     {
         Achievements.IDAchievement.TryGetValue(achievementID, out var achievement);
@@ -187,15 +176,11 @@ public sealed class AchievementService : IAchievementService
         }
     }
 
-    private static readonly DatabaseService DatabaseManagerInstance = DatabaseService.GetInstance();
-    private static readonly NLog.Logger LoggerInstance = NLog.LogManager.GetCurrentClassLogger();
+    private static readonly Logger LoggerInstance = LogManager.GetCurrentClassLogger();
     private static AchievementService? instance;
-    private HashSet<int> obtainedAchievements = new ();
+    private readonly HashSet<int> obtainedAchievements = new ();
 
-    private AchievementService()
-    {
-        LoggerInstance.Info($"Service initialized");
-    }
+    private AchievementService() => LoggerInstance.Info($"Service initialized");
 
     private List<int> GetNewlyObtainedAchievements(DataLoader dataLoader, DatabaseService databaseManagerInstance, Settings s)
     {
@@ -207,7 +192,7 @@ public sealed class AchievementService : IAchievementService
             var achievement = kvp.Value;
 
             // Check the specific conditions for obtaining the achievement
-            if (!this.obtainedAchievements.Contains(achievementID) && this.CheckConditionsForAchievement(achievementID, dataLoader, databaseManagerInstance, s))
+            if (!this.obtainedAchievements.Contains(achievementID) && CheckConditionsForAchievement(achievementID, dataLoader, databaseManagerInstance, s))
             {
                 newAchievements.Add(achievementID);
             }
@@ -216,7 +201,7 @@ public sealed class AchievementService : IAchievementService
         return newAchievements;
     }
 
-    private bool CheckConditionsForAchievement(int achievementID, DataLoader dataLoader, DatabaseService databaseManagerInstance, Settings s)
+    private static bool CheckConditionsForAchievement(int achievementID, DataLoader dataLoader, DatabaseService databaseManagerInstance, Settings s)
     {
         // Implement your logic here to check the conditions for obtaining the achievement
         // Return true if the conditions are met, false otherwise
@@ -1318,9 +1303,9 @@ public sealed class AchievementService : IAchievementService
             case 159:
                 return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDShiftingMiRu && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
             case 160:
-                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDBlinkingNargacugaForest || quest.QuestID == Numbers.QuestIDBlinkingNargacugaHistoric);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID is Numbers.QuestIDBlinkingNargacugaForest or Numbers.QuestIDBlinkingNargacugaHistoric);
             case 161:
-                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDBlinkingNargacugaForest || quest.QuestID == Numbers.QuestIDBlinkingNargacugaHistoric) >= Numbers.RequiredCompletionsMonsterSlayer)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID is Numbers.QuestIDBlinkingNargacugaForest or Numbers.QuestIDBlinkingNargacugaHistoric) >= Numbers.RequiredCompletionsMonsterSlayer)
                 {
                     return true;
                 }
@@ -1330,7 +1315,7 @@ public sealed class AchievementService : IAchievementService
                 }
 
             case 162:
-                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDBlinkingNargacugaForest || quest.QuestID == Numbers.QuestIDBlinkingNargacugaHistoric) >= Numbers.RequiredCompletionsMonsterAnnihilator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID is Numbers.QuestIDBlinkingNargacugaForest or Numbers.QuestIDBlinkingNargacugaHistoric) >= Numbers.RequiredCompletionsMonsterAnnihilator)
                 {
                     return true;
                 }
@@ -1340,7 +1325,7 @@ public sealed class AchievementService : IAchievementService
                 }
 
             case 163:
-                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDBlinkingNargacugaForest || quest.QuestID == Numbers.QuestIDBlinkingNargacugaHistoric) >= Numbers.RequiredCompletionsMonsterExterminator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID is Numbers.QuestIDBlinkingNargacugaForest or Numbers.QuestIDBlinkingNargacugaHistoric) >= Numbers.RequiredCompletionsMonsterExterminator)
                 {
                     return true;
                 }
@@ -1352,9 +1337,9 @@ public sealed class AchievementService : IAchievementService
             case 164:
                 return databaseManagerInstance.AllQuests.Any(quest => (quest.QuestID == Numbers.QuestIDBlinkingNargacugaForest || quest.QuestID == Numbers.QuestIDBlinkingNargacugaHistoric) && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
             case 165:
-                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDHowlingZinogreForest || quest.QuestID == Numbers.QuestIDHowlingZinogreHistoric);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID is Numbers.QuestIDHowlingZinogreForest or Numbers.QuestIDHowlingZinogreHistoric);
             case 166:
-                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDHowlingZinogreForest || quest.QuestID == Numbers.QuestIDHowlingZinogreHistoric) >= Numbers.RequiredCompletionsMonsterSlayer)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID is Numbers.QuestIDHowlingZinogreForest or Numbers.QuestIDHowlingZinogreHistoric) >= Numbers.RequiredCompletionsMonsterSlayer)
                 {
                     return true;
                 }
@@ -1364,7 +1349,7 @@ public sealed class AchievementService : IAchievementService
                 }
 
             case 167:
-                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDHowlingZinogreForest || quest.QuestID == Numbers.QuestIDHowlingZinogreHistoric) >= Numbers.RequiredCompletionsMonsterAnnihilator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID is Numbers.QuestIDHowlingZinogreForest or Numbers.QuestIDHowlingZinogreHistoric) >= Numbers.RequiredCompletionsMonsterAnnihilator)
                 {
                     return true;
                 }
@@ -1374,7 +1359,7 @@ public sealed class AchievementService : IAchievementService
                 }
 
             case 168:
-                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDHowlingZinogreForest || quest.QuestID == Numbers.QuestIDHowlingZinogreHistoric) >= Numbers.RequiredCompletionsMonsterExterminator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID is Numbers.QuestIDHowlingZinogreForest or Numbers.QuestIDHowlingZinogreHistoric) >= Numbers.RequiredCompletionsMonsterExterminator)
                 {
                     return true;
                 }
@@ -1386,9 +1371,9 @@ public sealed class AchievementService : IAchievementService
             case 169:
                 return databaseManagerInstance.AllQuests.Any(quest => (quest.QuestID == Numbers.QuestIDHowlingZinogreForest || quest.QuestID == Numbers.QuestIDHowlingZinogreHistoric) && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
             case 170:
-                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDStarvingDeviljhoArena || quest.QuestID == Numbers.QuestIDStarvingDeviljhoHistoric);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID is Numbers.QuestIDStarvingDeviljhoArena or Numbers.QuestIDStarvingDeviljhoHistoric);
             case 171:
-                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDStarvingDeviljhoArena || quest.QuestID == Numbers.QuestIDStarvingDeviljhoHistoric) >= Numbers.RequiredCompletionsMonsterSlayer)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID is Numbers.QuestIDStarvingDeviljhoArena or Numbers.QuestIDStarvingDeviljhoHistoric) >= Numbers.RequiredCompletionsMonsterSlayer)
                 {
                     return true;
                 }
@@ -1398,7 +1383,7 @@ public sealed class AchievementService : IAchievementService
                 }
 
             case 172:
-                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDStarvingDeviljhoArena || quest.QuestID == Numbers.QuestIDStarvingDeviljhoHistoric) >= Numbers.RequiredCompletionsMonsterAnnihilator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID is Numbers.QuestIDStarvingDeviljhoArena or Numbers.QuestIDStarvingDeviljhoHistoric) >= Numbers.RequiredCompletionsMonsterAnnihilator)
                 {
                     return true;
                 }
@@ -1408,7 +1393,7 @@ public sealed class AchievementService : IAchievementService
                 }
 
             case 173:
-                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDStarvingDeviljhoArena || quest.QuestID == Numbers.QuestIDStarvingDeviljhoHistoric) >= Numbers.RequiredCompletionsMonsterExterminator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID is Numbers.QuestIDStarvingDeviljhoArena or Numbers.QuestIDStarvingDeviljhoHistoric) >= Numbers.RequiredCompletionsMonsterExterminator)
                 {
                     return true;
                 }
@@ -1420,9 +1405,9 @@ public sealed class AchievementService : IAchievementService
             case 174:
                 return databaseManagerInstance.AllQuests.Any(quest => (quest.QuestID == Numbers.QuestIDStarvingDeviljhoArena || quest.QuestID == Numbers.QuestIDStarvingDeviljhoHistoric) && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
             case 175:
-                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDSparklingZerureusu || quest.QuestID == Numbers.QuestIDSparklingZerureusuEvent);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID is Numbers.QuestIDSparklingZerureusu or Numbers.QuestIDSparklingZerureusuEvent);
             case 176:
-                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDSparklingZerureusu || quest.QuestID == Numbers.QuestIDSparklingZerureusuEvent) >= Numbers.RequiredCompletionsMonsterSlayer)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID is Numbers.QuestIDSparklingZerureusu or Numbers.QuestIDSparklingZerureusuEvent) >= Numbers.RequiredCompletionsMonsterSlayer)
                 {
                     return true;
                 }
@@ -1432,7 +1417,7 @@ public sealed class AchievementService : IAchievementService
                 }
 
             case 177:
-                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDSparklingZerureusu || quest.QuestID == Numbers.QuestIDSparklingZerureusuEvent) >= Numbers.RequiredCompletionsMonsterAnnihilator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID is Numbers.QuestIDSparklingZerureusu or Numbers.QuestIDSparklingZerureusuEvent) >= Numbers.RequiredCompletionsMonsterAnnihilator)
                 {
                     return true;
                 }
@@ -1442,7 +1427,7 @@ public sealed class AchievementService : IAchievementService
                 }
 
             case 178:
-                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDSparklingZerureusu || quest.QuestID == Numbers.QuestIDSparklingZerureusuEvent) >= Numbers.RequiredCompletionsMonsterExterminator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID is Numbers.QuestIDSparklingZerureusu or Numbers.QuestIDSparklingZerureusuEvent) >= Numbers.RequiredCompletionsMonsterExterminator)
                 {
                     return true;
                 }
@@ -1522,9 +1507,9 @@ public sealed class AchievementService : IAchievementService
             case 189:
                 return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDBlitzkriegBogabadorumu && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
             case 190:
-                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDBurningFreezingElzelionTower || quest.QuestID == Numbers.QuestIDBurningFreezingElzelionHistoric);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID is Numbers.QuestIDBurningFreezingElzelionTower or Numbers.QuestIDBurningFreezingElzelionHistoric);
             case 191:
-                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDBurningFreezingElzelionTower || quest.QuestID == Numbers.QuestIDBurningFreezingElzelionHistoric) >= Numbers.RequiredCompletionsMonsterSlayer)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID is Numbers.QuestIDBurningFreezingElzelionTower or Numbers.QuestIDBurningFreezingElzelionHistoric) >= Numbers.RequiredCompletionsMonsterSlayer)
                 {
                     return true;
                 }
@@ -1534,7 +1519,7 @@ public sealed class AchievementService : IAchievementService
                 }
 
             case 192:
-                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDBurningFreezingElzelionTower || quest.QuestID == Numbers.QuestIDBurningFreezingElzelionHistoric) >= Numbers.RequiredCompletionsMonsterAnnihilator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID is Numbers.QuestIDBurningFreezingElzelionTower or Numbers.QuestIDBurningFreezingElzelionHistoric) >= Numbers.RequiredCompletionsMonsterAnnihilator)
                 {
                     return true;
                 }
@@ -1544,7 +1529,7 @@ public sealed class AchievementService : IAchievementService
                 }
 
             case 193:
-                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDBurningFreezingElzelionTower || quest.QuestID == Numbers.QuestIDBurningFreezingElzelionHistoric) >= Numbers.RequiredCompletionsMonsterExterminator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID is Numbers.QuestIDBurningFreezingElzelionTower or Numbers.QuestIDBurningFreezingElzelionHistoric) >= Numbers.RequiredCompletionsMonsterExterminator)
                 {
                     return true;
                 }
@@ -1721,7 +1706,7 @@ public sealed class AchievementService : IAchievementService
                 }
 
             case 205:
-                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDFourHeavenlyKingMale1 || quest.QuestID == Numbers.QuestIDFourHeavenlyKingMale2 || quest.QuestID == Numbers.QuestIDFourHeavenlyKingFemale1 || quest.QuestID == Numbers.QuestIDFourHeavenlyKingFemale2);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID is Numbers.QuestIDFourHeavenlyKingMale1 or Numbers.QuestIDFourHeavenlyKingMale2 or Numbers.QuestIDFourHeavenlyKingFemale1 or Numbers.QuestIDFourHeavenlyKingFemale2);
             case 206:
                 return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDHatsuneMiku);
             case 207:
@@ -1739,7 +1724,7 @@ public sealed class AchievementService : IAchievementService
             case 213:
                 return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDCongalalaCure);
             case 214:
-                if (dataLoader.model.GZenny() >= 9_999_999)
+                if (dataLoader.Model.GZenny() >= 9_999_999)
                 {
                     return true;
                 }
@@ -1749,7 +1734,7 @@ public sealed class AchievementService : IAchievementService
                 }
 
             case 215: // TODO test
-                if (dataLoader.model.DivaBond() >= 999)
+                if (dataLoader.Model.DivaBond() >= 999)
                 {
                     return true;
                 }
@@ -1758,13 +1743,13 @@ public sealed class AchievementService : IAchievementService
                     return false;
                 }
 
-            case 216:// TODO Obtain S Rank in all single-player MezFes minigames
+            case 216: // TODO Obtain S Rank in all single-player MezFes minigames
             {
                 return false;
             }
 
             case 217:
-                if (dataLoader.model.CaravanPoints() >= 9_999_999)
+                if (dataLoader.Model.CaravanPoints() >= 9_999_999)
                 {
                     return true;
                 }
@@ -1774,7 +1759,7 @@ public sealed class AchievementService : IAchievementService
                 }
 
             case 218:
-                if (dataLoader.model.RoadMaxStagesMultiplayer() >= 50)
+                if (dataLoader.Model.RoadMaxStagesMultiplayer() >= 50)
                 {
                     return true;
                 }
@@ -1784,7 +1769,7 @@ public sealed class AchievementService : IAchievementService
                 }
 
             case 219:
-                if (dataLoader.model.RoadMaxStagesMultiplayer() >= 100)
+                if (dataLoader.Model.RoadMaxStagesMultiplayer() >= 100)
                 {
                     return true;
                 }
@@ -1794,7 +1779,7 @@ public sealed class AchievementService : IAchievementService
                 }
 
             case 220:
-                if (dataLoader.model.PartnerLevel() >= 999)
+                if (dataLoader.Model.PartnerLevel() >= 999)
                 {
                     return true;
                 }
@@ -1808,7 +1793,7 @@ public sealed class AchievementService : IAchievementService
             case 222:
                 return databaseManagerInstance.AllPersonalBestAttempts.Any(pbAttempts => pbAttempts.Attempts >= 100);
             case 223:
-                if (dataLoader.model.SecondDistrictDuremudiraSlays() >= 100)
+                if (dataLoader.Model.SecondDistrictDuremudiraSlays() >= 100)
                 {
                     return true;
                 }
@@ -1818,7 +1803,7 @@ public sealed class AchievementService : IAchievementService
                 }
 
             case 224:
-                if (dataLoader.model.RoadFatalisSlain() >= 100)
+                if (dataLoader.Model.RoadFatalisSlain() >= 100)
                 {
                     return true;
                 }
@@ -1827,7 +1812,7 @@ public sealed class AchievementService : IAchievementService
                     return false;
                 }
 
-            case 225:// fumo
+            case 225: // fumo
             {
                 return false;
             }
@@ -2198,10 +2183,10 @@ public sealed class AchievementService : IAchievementService
 
                     return false; // Handle invalid TotalTimeElapsed values
                 });
-            case 340:// TODO discord rich presence
+            case 340: // TODO discord rich presence
                 return s.EnableRichPresence;
             case 341:
-                if (dataLoader.model.GetOverlayMode().Contains("Zen"))
+                if (dataLoader.Model.GetOverlayMode().Contains("Zen"))
                 {
                     return true;
                 }
@@ -2211,7 +2196,7 @@ public sealed class AchievementService : IAchievementService
                 }
 
             case 342:
-                if (dataLoader.model.GetOverlayMode().Contains("Freestyle"))
+                if (dataLoader.Model.GetOverlayMode().Contains("Freestyle"))
                 {
                     return true;
                 }
@@ -2240,13 +2225,13 @@ public sealed class AchievementService : IAchievementService
                     return false;
                 }
 
-            case 345:// TODO gallery
+            case 345: // TODO gallery
             {
                 return false;
             }
 
             case 346:
-                if (dataLoader.model.CalculateTotalLargeMonstersHunted() >= 1000)
+                if (dataLoader.Model.CalculateTotalLargeMonstersHunted() >= 1000)
                 {
                     return true;
                 }
@@ -2266,17 +2251,15 @@ public sealed class AchievementService : IAchievementService
                 }
 
             case 348: // TODO idk if i should check by name
-                EZlion.Mapper.WeaponBlademaster.IDName.TryGetValue(dataLoader.model.BlademasterWeaponID(), out var blademasterWeaponName);
-                EZlion.Mapper.WeaponGunner.IDName.TryGetValue(dataLoader.model.GunnerWeaponID(), out var gunnerWeaponName);
+                EZlion.Mapper.WeaponBlademaster.IDName.TryGetValue(dataLoader.Model.BlademasterWeaponID(), out var blademasterWeaponName);
+                EZlion.Mapper.WeaponGunner.IDName.TryGetValue(dataLoader.Model.GunnerWeaponID(), out var gunnerWeaponName);
 
-                if (dataLoader.model.GRWeaponLv() == 100 && (
+                if (dataLoader.Model.GRWeaponLv() == 100 && (
 
-                        blademasterWeaponName != null && (blademasterWeaponName.Contains("\"Shine\"") || blademasterWeaponName.Contains("\"Clear\"") || blademasterWeaponName.Contains("\"Flash\"") || blademasterWeaponName.Contains("\"Glory\""))
+                        (blademasterWeaponName != null && (blademasterWeaponName.Contains("\"Shine\"") || blademasterWeaponName.Contains("\"Clear\"") || blademasterWeaponName.Contains("\"Flash\"") || blademasterWeaponName.Contains("\"Glory\"")))
                      ||
 
-                        gunnerWeaponName != null && (gunnerWeaponName.Contains("\"Shine\"") || gunnerWeaponName.Contains("\"Clear\"") || gunnerWeaponName.Contains("\"Flash\"") || gunnerWeaponName.Contains("\"Glory\""))
-
-                ))
+                        (gunnerWeaponName != null && (gunnerWeaponName.Contains("\"Shine\"") || gunnerWeaponName.Contains("\"Clear\"") || gunnerWeaponName.Contains("\"Flash\"") || gunnerWeaponName.Contains("\"Glory\"")))))
                 {
                     return true;
                 }
@@ -2307,7 +2290,7 @@ public sealed class AchievementService : IAchievementService
                 return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDMosswineLastStand);
             case 355:
                 return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDHalloweenSpeedster);
-            case 356:// TODO 1000 bingo points in 1 go
+            case 356: // TODO 1000 bingo points in 1 go
             {
                 return false;
             }
@@ -2352,7 +2335,7 @@ public sealed class AchievementService : IAchievementService
                     return false;
                 }
 
-            case 361:// TODO gacha stuff
+            case 361: // TODO gacha stuff
             case 362:
             case 363:
             case 364:

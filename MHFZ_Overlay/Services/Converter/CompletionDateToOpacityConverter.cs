@@ -4,14 +4,13 @@
 
 namespace MHFZ_Overlay.Services.Converter;
 
-using MHFZ_Overlay.Models.Collections;
-using MHFZ_Overlay.Models.Structures;
+using System;
 using System.Globalization;
 using System.Windows.Data;
-using System;
 
 public class CompletionDateToOpacityConverter : IValueConverter
 {
+    /// <inheritdoc/>
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
         if (value is DateTime completionDate && completionDate == DateTime.UnixEpoch)
@@ -22,8 +21,6 @@ public class CompletionDateToOpacityConverter : IValueConverter
         return 1.0; // Default opacity
     }
 
-    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-    {
-        throw new NotImplementedException();
-    }
+    /// <inheritdoc/>
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new NotImplementedException();
 }

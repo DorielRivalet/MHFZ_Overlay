@@ -16,9 +16,9 @@ using MHFZ_Overlay.Views.Windows;
 /// </summary>
 public sealed class ApplicationService
 {
-    private static readonly DatabaseService databaseManager = DatabaseService.GetInstance();
+    private static readonly DatabaseService DatabaseManager = DatabaseService.GetInstance();
 
-    private static readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+    private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
 
     /// <summary>
     /// Handles the shutdown.
@@ -26,10 +26,10 @@ public sealed class ApplicationService
     public static void HandleShutdown()
     {
         // https://stackoverflow.com/a/9050477/18859245
-        databaseManager.StoreSessionTime(databaseManager.DatabaseStartTime);
+        DatabaseManager.StoreSessionTime(DatabaseManager.DatabaseStartTime);
         DiscordService.DiscordRPCCleanup();
         DisposeNotifyIcon();
-        logger.Info(CultureInfo.InvariantCulture, "Closing overlay");
+        Logger.Info(CultureInfo.InvariantCulture, "Closing overlay");
         Environment.Exit(0);
     }
 
@@ -48,7 +48,7 @@ public sealed class ApplicationService
             MainWindow._mainWindowNotifyIcon.Visibility = Visibility.Collapsed;
             MainWindow._mainWindowNotifyIcon.Icon = null;
             MainWindow._mainWindowNotifyIcon.Dispose();
-            logger.Info(CultureInfo.InvariantCulture, "Disposed Notify Icon");
+            Logger.Info(CultureInfo.InvariantCulture, "Disposed Notify Icon");
         });
     }
 
@@ -57,20 +57,20 @@ public sealed class ApplicationService
     /// </summary>
     public static void HandleRestart()
     {
-        databaseManager.StoreSessionTime(databaseManager.DatabaseStartTime);
+        DatabaseManager.StoreSessionTime(DatabaseManager.DatabaseStartTime);
         DiscordService.DiscordRPCCleanup();
         DisposeNotifyIcon();
-        logger.Info(CultureInfo.InvariantCulture, "Restarting overlay");
+        Logger.Info(CultureInfo.InvariantCulture, "Restarting overlay");
         System.Windows.Forms.Application.Restart();
         Application.Current.Shutdown();
     }
 
     /// <summary>
-    /// This should never run if possible, only used as last resort
+    /// This should never run if possible, only used as last resort.
     /// </summary>
     public static void HandleGameShutdown()
     {
-        logger.Info(CultureInfo.InvariantCulture, "Closing game");
+        Logger.Info(CultureInfo.InvariantCulture, "Closing game");
         KillProcess("mhf");
         MessageBox.Show("The game was closed due to a fatal overlay error, please report this to the developer", Messages.FatalTitle, MessageBoxButton.OK, MessageBoxImage.Error);
     }
@@ -83,7 +83,7 @@ public sealed class ApplicationService
     {
         try
         {
-            logger.Info(CultureInfo.InvariantCulture, "Killing process {0}", processName);
+            Logger.Info(CultureInfo.InvariantCulture, "Killing process {0}", processName);
 
             // Get all running processes with the specified name
             var processes = Process.GetProcessesByName(processName);
@@ -96,24 +96,24 @@ public sealed class ApplicationService
                 // Forcefully close the process
                 process.Kill();
 
-                logger.Info(CultureInfo.InvariantCulture, "Process {0} has been killed.", processName);
+                Logger.Info(CultureInfo.InvariantCulture, "Process {0} has been killed.", processName);
             }
             else
             {
                 // Handle the case when multiple processes with the specified name are found
                 if (processes.Length == 0)
                 {
-                    logger.Warn(CultureInfo.InvariantCulture, "No process with the specified name found.");
+                    Logger.Warn(CultureInfo.InvariantCulture, "No process with the specified name found.");
                 }
                 else
                 {
-                    logger.Warn(CultureInfo.InvariantCulture, "Multiple processes with the specified name found. Unable to kill the process automatically.");
+                    Logger.Warn(CultureInfo.InvariantCulture, "Multiple processes with the specified name found. Unable to kill the process automatically.");
                 }
             }
         }
         catch (Exception ex)
         {
-            logger.Error(ex);
+            Logger.Error(ex);
         }
     }
 
@@ -125,7 +125,7 @@ public sealed class ApplicationService
     {
         try
         {
-            logger.Info(CultureInfo.InvariantCulture, "Closing process {0}", processName);
+            Logger.Info(CultureInfo.InvariantCulture, "Closing process {0}", processName);
 
             // Get all running processes with the specified name
             var processes = Process.GetProcessesByName(processName);
@@ -137,7 +137,7 @@ public sealed class ApplicationService
 
                 // Close the process
                 var successful = process.CloseMainWindow();
-                logger.Info(CultureInfo.InvariantCulture, "Closed main window, successful: {0}.", successful);
+                Logger.Info(CultureInfo.InvariantCulture, "Closed main window, successful: {0}.", successful);
                 process.WaitForExit();
 
                 // Check if the process is still running after closing its main window
@@ -147,24 +147,24 @@ public sealed class ApplicationService
                     process.Kill();
                 }
 
-                logger.Info(CultureInfo.InvariantCulture, "Process {0} has been closed.", processName);
+                Logger.Info(CultureInfo.InvariantCulture, "Process {0} has been closed.", processName);
             }
             else
             {
                 // Handle the case when multiple processes with the specified name are found
                 if (processes.Length == 0)
                 {
-                    logger.Warn(CultureInfo.InvariantCulture, "No process with the specified name found.");
+                    Logger.Warn(CultureInfo.InvariantCulture, "No process with the specified name found.");
                 }
                 else
                 {
-                    logger.Warn(CultureInfo.InvariantCulture, "Multiple processes with the specified name found. Unable to close the process automatically.");
+                    Logger.Warn(CultureInfo.InvariantCulture, "Multiple processes with the specified name found. Unable to close the process automatically.");
                 }
             }
         }
         catch (Exception ex)
         {
-            logger.Error(ex);
+            Logger.Error(ex);
         }
     }
 }

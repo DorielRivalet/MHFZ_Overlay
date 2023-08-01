@@ -7,9 +7,9 @@ namespace MHFZ_Overlay.Models.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-///<summary>
-///The monster image list
-///</summary>
+/// <summary>
+/// The monster image list.
+/// </summary>
 public static class MonsterImages
 {
     public static ReadOnlyDictionary<int, string> MonsterImageID { get; } = new (new Dictionary<int, string>

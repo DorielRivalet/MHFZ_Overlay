@@ -12,12 +12,22 @@ using System.Windows.Input;
 
 public sealed class GlobalHotKey : IDisposable
 {
+    private static readonly InvisibleWindowForMessages Window = new ();
+
+    static GlobalHotKey() => Window.KeyPressed += (s, e) => RegisteredHotKeys.ForEach(x =>
+                                      {
+                                          if (e.Modifier == x.Modifier && e.Key == x.Key)
+                                          {
+                                              x.Action();
+                                          }
+                                      });
+
     /// <summary>
-    /// Registers a global hotkey
+    /// Registers a global hotkey.
     /// </summary>
-    /// <param name="aKeyGesture">e.g. Alt + Shift + Control + Win + S</param>
-    /// <param name="aAction">Action to be called when hotkey is pressed</param>
-    /// <returns>true, if registration succeeded, otherwise false</returns>
+    /// <param name="aKeyGesture">e.g. Alt + Shift + Control + Win + S.</param>
+    /// <param name="aAction">Action to be called when hotkey is pressed.</param>
+    /// <returns>true, if registration succeeded, otherwise false.</returns>
     public static bool RegisterHotKey(string aKeyGestureString, Action aAction)
     {
         var c = new KeyGestureConverter();
@@ -43,53 +53,43 @@ public sealed class GlobalHotKey : IDisposable
         }
 
         var aVirtualKeyCode = (System.Windows.Forms.Keys)KeyInterop.VirtualKeyFromKey(aKey);
-        currentID = currentID + 1;
-        var aRegistered = RegisterHotKey(window.Handle,
-                                    currentID,
-                                    (uint)aModifier | MOD_NOREPEAT,
-                                    (uint)aVirtualKeyCode);
+        currentID++;
+        var aRegistered = RegisterHotKey(
+            Window.Handle,
+            currentID,
+            (uint)aModifier | MODNOREPEAT,
+            (uint)aVirtualKeyCode);
 
         if (aRegistered)
         {
-            registeredHotKeys.Add(new HotKeyWithAction(aModifier, aKey, aAction));
+            RegisteredHotKeys.Add(new HotKeyWithAction(aModifier, aKey, aAction));
         }
 
         return aRegistered;
     }
 
+    /// <inheritdoc/>
     public void Dispose()
     {
         // unregister all the registered hot keys.
         for (var i = currentID; i > 0; i--)
         {
-            UnregisterHotKey(window.Handle, i);
+            UnregisterHotKey(Window.Handle, i);
         }
 
         // dispose the inner native window.
-        window.Dispose();
+        Window.Dispose();
     }
 
-    static GlobalHotKey()
-    {
-        window.KeyPressed += (s, e) =>
-        {
-            registeredHotKeys.ForEach(x =>
-            {
-                if (e.Modifier == x.Modifier && e.Key == x.Key)
-                {
-                    x.Action();
-                }
-            });
-        };
-    }
-
-    private static readonly InvisibleWindowForMessages window = new InvisibleWindowForMessages();
+    private static readonly uint MODNOREPEAT = 0x4000;
 
     private static int currentID;
 
-    private static uint MOD_NOREPEAT = 0x4000;
+    private static readonly List<HotKeyWithAction> RegisteredHotKeys = new ();
 
-    private static List<HotKeyWithAction> registeredHotKeys = new List<HotKeyWithAction>();
+    // Registers a hot key with Windows.
+    [DllImport("user32.dll")]
+    private static extern bool RegisterHotKey(IntPtr hWnd, int id, uint fsModifiers, uint vk);
 
     private class HotKeyWithAction
     {
@@ -107,65 +107,45 @@ public sealed class GlobalHotKey : IDisposable
         public Action Action { get; }
     }
 
-    // Registers a hot key with Windows.
-    [DllImport("user32.dll")]
-    private static extern bool RegisterHotKey(IntPtr hWnd, int id, uint fsModifiers, uint vk);
-
     // Unregisters the hot key with Windows.
     [DllImport("user32.dll")]
     private static extern bool UnregisterHotKey(IntPtr hWnd, int id);
 
     private class InvisibleWindowForMessages : System.Windows.Forms.NativeWindow, IDisposable
     {
-        public InvisibleWindowForMessages()
-        {
-            this.CreateHandle(new System.Windows.Forms.CreateParams());
-        }
+        private static readonly int WMHOTKEY = 0x0312;
 
-        private static int WM_HOTKEY = 0x0312;
+        public InvisibleWindowForMessages() => this.CreateHandle(new System.Windows.Forms.CreateParams());
+
+        public event EventHandler<HotKeyPressedEventArgs> KeyPressed;
 
         protected override void WndProc(ref System.Windows.Forms.Message m)
         {
             base.WndProc(ref m);
 
-            if (m.Msg == WM_HOTKEY)
+            if (m.Msg == WMHOTKEY)
             {
-                var aWPFKey = KeyInterop.KeyFromVirtualKey((int)m.LParam >> 16 & 0xFFFF);
+                var aWPFKey = KeyInterop.KeyFromVirtualKey(((int)m.LParam >> 16) & 0xFFFF);
                 var modifier = (ModifierKeys)((int)m.LParam & 0xFFFF);
-                if (this.KeyPressed != null)
-                {
-                    this.KeyPressed(this, new HotKeyPressedEventArgs(modifier, aWPFKey));
-                }
+                this.KeyPressed?.Invoke(this, new HotKeyPressedEventArgs(modifier, aWPFKey));
             }
         }
 
         public sealed class HotKeyPressedEventArgs : EventArgs
         {
-            private ModifierKeys _modifier;
-            private Key _key;
+            private readonly Key key;
 
             public HotKeyPressedEventArgs(ModifierKeys modifier, Key key)
             {
-                this._modifier = modifier;
-                this._key = key;
+                this.Modifier = modifier;
+                this.key = key;
             }
 
-            public ModifierKeys Modifier
-            {
-                get { return this._modifier; }
-            }
+            public ModifierKeys Modifier { get; }
 
-            public Key Key
-            {
-                get { return this._key; }
-            }
+            public Key Key => this.key;
         }
 
-        public event EventHandler<HotKeyPressedEventArgs> KeyPressed;
-
-        public void Dispose()
-        {
-            this.DestroyHandle();
-        }
+        public void Dispose() => this.DestroyHandle();
     }
 }

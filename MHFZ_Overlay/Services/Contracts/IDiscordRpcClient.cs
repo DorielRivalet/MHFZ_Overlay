@@ -4,14 +4,16 @@
 
 namespace MHFZ_Overlay.Services.Contracts;
 
-using DiscordRPC;
 using System;
+using DiscordRPC;
 using DiscordRPC.Events;
-using DiscordRPC.Message;
 using DiscordRPC.Logging;
+using DiscordRPC.Message;
 
 public interface IDiscordRpcClient : IDisposable
 {
+    event OnReadyEvent OnReady;
+
     bool HasRegisteredUriScheme { get; }
 
     string ApplicationID { get; }
@@ -44,8 +46,6 @@ public interface IDiscordRpcClient : IDisposable
 
     bool ShutdownOnly { get; set; }
 
-    event OnReadyEvent OnReady;
-
     event OnCloseEvent OnClose;
 
     event OnErrorEvent OnError;
@@ -72,7 +72,7 @@ public interface IDiscordRpcClient : IDisposable
 
     void SetPresence(RichPresence presence);
 
-    RichPresence UpdateButtons(Button[] button = null);
+    RichPresence UpdateButtons(Button[]? button = null);
 
     RichPresence SetButton(Button button, int index = 0);
 
@@ -86,9 +86,9 @@ public interface IDiscordRpcClient : IDisposable
 
     RichPresence UpdatePartySize(int size, int max);
 
-    RichPresence UpdateLargeAsset(string key = null, string tooltip = null);
+    RichPresence UpdateLargeAsset(string? key = null, string? tooltip = null);
 
-    RichPresence UpdateSmallAsset(string key = null, string tooltip = null);
+    RichPresence UpdateSmallAsset(string? key = null, string? tooltip = null);
 
     RichPresence UpdateSecrets(Secrets secrets);
 
@@ -104,7 +104,7 @@ public interface IDiscordRpcClient : IDisposable
 
     void ClearPresence();
 
-    bool RegisterUriScheme(string steamAppID = null, string executable = null);
+    bool RegisterUriScheme(string? steamAppID = null, string? executable = null);
 
     void Subscribe(EventType type);
 

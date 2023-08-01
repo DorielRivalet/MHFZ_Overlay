@@ -5,7 +5,7 @@
 namespace MHFZ_Overlay.Models;
 
 /// <summary>
-/// Affected by player stats
+/// Affected by player stats.
 /// </summary>
 public sealed class MonsterLog
 {

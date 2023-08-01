@@ -4,12 +4,7 @@
 
 namespace MHFZ_Overlay.Models.Collections;
 
-using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 public static class Challenges
 {
@@ -50,7 +45,8 @@ Try to complete a fully diagonal, vertical or horizontal line in order to finish
         },
         {
             new Challenge()
-            {BannerImageLink = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/unknown_black.jpg",
+            {
+                BannerImageLink = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/unknown_black.jpg",
                 Name = "Zenith Gauntlet",
                 AchievementIDRequired = 405, // Crushing Palms
                 AchievementNameRequired = Achievements.IDAchievement[405].Title,
@@ -64,7 +60,8 @@ Try to complete a fully diagonal, vertical or horizontal line in order to finish
         },
         {
             new Challenge()
-            {BannerImageLink = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/unknown_black.jpg",
+            {
+                BannerImageLink = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/unknown_black.jpg",
                 Name = "Solstice Gauntlet",
                 AchievementIDRequired = 404, // The Embodiment of Scarlet Devil
                 AchievementNameRequired = Achievements.IDAchievement[404].Title,
@@ -78,7 +75,8 @@ Try to complete a fully diagonal, vertical or horizontal line in order to finish
         },
         {
             new Challenge()
-            {BannerImageLink = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/unknown_black.jpg",
+            {
+                BannerImageLink = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/unknown_black.jpg",
                 Name = "Musou Gauntlet",
                 AchievementIDRequired = 195, // Seriously Thirsty
                 AchievementNameRequired = Achievements.IDAchievement[195].Title,

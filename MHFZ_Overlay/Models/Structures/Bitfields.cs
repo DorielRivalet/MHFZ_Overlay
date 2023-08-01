@@ -175,7 +175,7 @@ public enum BowCoatings : uint
 }
 
 /// <summary>
-/// Quest states
+/// Quest states.
 /// </summary>
 [Flags]
 [JsonConverter(typeof(JsonStringEnumConverter))]

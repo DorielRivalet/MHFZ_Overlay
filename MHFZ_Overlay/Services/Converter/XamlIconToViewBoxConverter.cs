@@ -13,6 +13,7 @@ using System.Windows.Markup;
 
 public sealed class XamlIconToViewBoxConverter : IValueConverter
 {
+    /// <inheritdoc/>
     public object? Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
     {
         if (DesignerProperties.GetIsInDesignMode(new DependencyObject()))
@@ -22,11 +23,10 @@ public sealed class XamlIconToViewBoxConverter : IValueConverter
         }
 
         var stream = Application.GetResourceStream(new Uri("pack://application:,,,/" + (string)parameter)).Stream;
-        var viewBox = XamlReader.Load(stream) as Viewbox;
 
         // Optional:
         // we set Height and Width to "Auto" to let an icon scale, because in the <icon>.xaml file its size is explicitly specified as 16x16
-        if (viewBox == null)
+        if (XamlReader.Load(stream) is not Viewbox viewBox)
         {
             return null;
         }
@@ -37,8 +37,6 @@ public sealed class XamlIconToViewBoxConverter : IValueConverter
         return viewBox;
     }
 
-    public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-    {
-        throw new NotImplementedException();
-    }
+    /// <inheritdoc/>
+    public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture) => throw new NotImplementedException();
 }

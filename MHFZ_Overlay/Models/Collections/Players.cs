@@ -9,9 +9,9 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
 
-///<summary>
-///The players list
-///</summary>
+/// <summary>
+/// The players list.
+/// </summary>
 public static class Players
 {
     public static ReadOnlyDictionary<int, List<string>> PlayerIDs { get; } = new (new Dictionary<int, List<string>>
@@ -20,6 +20,6 @@ public static class Players
         { 0, new List<string> { DateTime.UnixEpoch.Date.ToString(CultureInfo.InvariantCulture), "None", "NoGuild", "0", "Unknown", "Japan" } },
 
         // Local Player
-        { 1, new List<string> { DateTime.UtcNow.Date.ToString(CultureInfo.InvariantCulture), "HunterName", "GuildName","0", "Unknown", "Japan" } },
+        { 1, new List<string> { DateTime.UtcNow.Date.ToString(CultureInfo.InvariantCulture), "HunterName", "GuildName", "0", "Unknown", "Japan" } },
     });
 }

@@ -3,17 +3,12 @@
 // found in the LICENSE file.
 
 namespace MHFZ_Overlay.Services.Contracts;
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using MHFZ_Overlay.Models.Structures;
 
 public interface IDatabase
 {
     // TODO i would like to return the data that was set
+
     /// <summary>
     /// Returns: null if the data failed to set, the value set if the object was successfully set.
     /// </summary>

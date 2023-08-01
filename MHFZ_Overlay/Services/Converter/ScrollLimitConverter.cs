@@ -13,6 +13,7 @@ using System.Windows.Data;
 /// </summary>
 public sealed class ScrollLimitConverter : IMultiValueConverter
 {
+    /// <inheritdoc/>
     public object Convert(object[] values, Type targetType, object parameter, System.Globalization.CultureInfo culture)
     {
         if (values.Length == 2 && values[0] is double && values[1] is double)
@@ -23,5 +24,6 @@ public sealed class ScrollLimitConverter : IMultiValueConverter
         return false;
     }
 
+    /// <inheritdoc/>
     public object[] ConvertBack(object value, Type[] targetTypes, object parameter, System.Globalization.CultureInfo culture) => throw new NotImplementedException();
 }

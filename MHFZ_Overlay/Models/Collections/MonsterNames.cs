@@ -7,9 +7,9 @@ namespace MHFZ_Overlay.Models.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-///<summary>
-///The monster name list. Not the full list.
-///</summary>
+/// <summary>
+/// The monster name list. Not the full list.
+/// </summary>
 public static class MonsterNames
 {
     public static ReadOnlyDictionary<int, string> MonsterNameID { get; } = new (new Dictionary<int, string>
