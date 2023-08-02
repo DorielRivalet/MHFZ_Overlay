@@ -1590,11 +1590,53 @@ public sealed class AchievementService : IAchievementService
                 }
 
             case 197:
-                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDShiftingMiRu && quest.KeyStrokesDictionary != null && JsonConvert.DeserializeObject<Dictionary<int, string>>(quest.KeyStrokesDictionary).Values.First() == "LShiftKey");
+                return databaseManagerInstance.AllQuests.Any(quest =>
+                {
+                    if (quest.QuestID != Numbers.QuestIDShiftingMiRu || quest.KeyStrokesDictionary == null)
+                    {
+                        return false;
+                    }
+
+                    var keyStrokes = JsonConvert.DeserializeObject<Dictionary<int, string>>(quest.KeyStrokesDictionary);
+                    if (keyStrokes == null)
+                    {
+                        return false;
+                    }
+
+                    return keyStrokes.Values.Any() && keyStrokes.Values.First() == "LShiftKey";
+                });
             case 198:
-                return databaseManagerInstance.AllQuests.Any(quest => (quest.QuestID == Numbers.QuestIDBlinkingNargacugaForest || quest.QuestID == Numbers.QuestIDBlinkingNargacugaHistoric) && quest.HitsTakenBlockedDictionary != null && JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int, int>>>(quest.HitsTakenBlockedDictionary).Count == 0);
-            case 199:
-                return databaseManagerInstance.AllQuests.Any(quest => (quest.QuestID == Numbers.QuestIDHowlingZinogreForest || quest.QuestID == Numbers.QuestIDHowlingZinogreHistoric) && quest.PartySize == 1 && quest.PlayerStaminaDictionary != null && JsonConvert.DeserializeObject<Dictionary<int, int>>(quest.PlayerStaminaDictionary).Values.First() <= 75);
+                return databaseManagerInstance.AllQuests.Any(quest =>
+                {
+                    if (quest.QuestID != Numbers.QuestIDBlinkingNargacugaForest && quest.QuestID != Numbers.QuestIDBlinkingNargacugaHistoric || quest.HitsTakenBlockedDictionary == null)
+                    {
+                        return false;
+                    }
+
+                    var hitsTaken = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int, int>>>(quest.HitsTakenBlockedDictionary);
+                    if (hitsTaken == null)
+                    {
+                        return false;
+                    }
+
+                    return hitsTaken.Count == 0;
+                });
+            case 199: // TODO test these fixes in-game
+                return databaseManagerInstance.AllQuests.Any(quest =>
+                {
+                    if (quest.QuestID != Numbers.QuestIDHowlingZinogreForest && quest.QuestID != Numbers.QuestIDHowlingZinogreHistoric || quest.PartySize != 1 || quest.PlayerStaminaDictionary == null)
+                    {
+                        return false;
+                    }
+
+                    var playerStamina = JsonConvert.DeserializeObject<Dictionary<int, int>>(quest.PlayerStaminaDictionary);
+                    if (playerStamina == null)
+                    {
+                        return false;
+                    }
+
+                    return playerStamina.Values.Any() && playerStamina.Values.First() <= 75;
+                });
             case 200:
                 completedQuests = from quest in databaseManagerInstance.AllQuests
                                   join activeSkills in databaseManagerInstance.AllActiveSkills on quest.RunID equals activeSkills.RunID
