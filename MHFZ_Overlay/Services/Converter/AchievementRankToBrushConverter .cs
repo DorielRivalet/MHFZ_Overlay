@@ -23,7 +23,7 @@ public class AchievementRankToBrushConverter : IValueConverter
                 AchievementRank.Silver => CatppuccinMochaColors.NameHex["Lavender"],
                 AchievementRank.Gold => CatppuccinMochaColors.NameHex["Yellow"],
                 AchievementRank.Platinum => CatppuccinMochaColors.NameHex["Teal"],
-                AchievementRank.None => throw new NotImplementedException(),
+                AchievementRank.None => CatppuccinMochaColors.NameHex["Base"],
                 _ => CatppuccinMochaColors.NameHex["Base"],
             };
         }
