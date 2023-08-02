@@ -90,7 +90,7 @@ public sealed class Achievement
             AchievementRank.Silver => "pack://application:,,,/Assets/Icons/achievement/silver_trophy.png",
             AchievementRank.Gold => "pack://application:,,,/Assets/Icons/achievement/gold_trophy.png",
             AchievementRank.Platinum => "pack://application:,,,/Assets/Icons/achievement/platinum_trophy.png",
-            AchievementRank.None => throw new NotImplementedException(),
+            AchievementRank.None => "pack://application:,,,/Assets/Icons/achievement/bronze_trophy.png",
             _ => "pack://application:,,,/Assets/Icons/achievement/bronze_trophy.png",
         };
     }
