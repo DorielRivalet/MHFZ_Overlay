@@ -15,7 +15,7 @@ public class DateTimeToStringConverter : IValueConverter
     {
         if (value is DateTime dateTime)
         {
-            return dateTime.ToString(parameter as string);
+            return dateTime.ToString(parameter as string, CultureInfo.InvariantCulture);
         }
 
         return string.Empty;

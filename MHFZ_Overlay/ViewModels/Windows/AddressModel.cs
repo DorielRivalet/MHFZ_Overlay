@@ -1511,7 +1511,7 @@ TreeScope.Children, condition);
     {
         var s = (Settings)Application.Current.TryFindResource("Settings");
         var playerAtk = 0;
-        var success = int.TryParse(this.ATK, out var playerTrueRaw);
+        var success = int.TryParse(this.ATK, NumberStyles.Number, CultureInfo.InvariantCulture, out var playerTrueRaw);
         if (!success)
         {
             LoggerInstance.Warn("Could not parse player true raw as integer: {0}", this.ATK);
@@ -2812,8 +2812,8 @@ TreeScope.Children, condition);
     /// <returns></returns>
     public double Monster1SizeMultForDictionary()
     {
-        var success = double.TryParse(this.Monster1Size().Replace("%", string.Empty), out var monster1SizePercent);
-        var success2 = double.TryParse(this.Monster2Size().Replace("%", string.Empty), out var monster2SizePercent);
+        var success = double.TryParse(this.Monster1Size().Replace("%", string.Empty), NumberStyles.Number, CultureInfo.InvariantCulture, out var monster1SizePercent);
+        var success2 = double.TryParse(this.Monster2Size().Replace("%", string.Empty), NumberStyles.Number, CultureInfo.InvariantCulture, out var monster2SizePercent);
 
         if (!(success && success2))
         {
@@ -2838,8 +2838,8 @@ TreeScope.Children, condition);
     /// <returns></returns>
     public double Monster1AttackMultForDictionary()
     {
-        var success = double.TryParse(this.Monster1AtkMult(), out var monster1AtkMultiplier);
-        var success2 = double.TryParse(this.Monster2AtkMult(), out var monster2AtkMultiplier);
+        var success = double.TryParse(this.Monster1AtkMult(), NumberStyles.Number, CultureInfo.InvariantCulture, out var monster1AtkMultiplier);
+        var success2 = double.TryParse(this.Monster2AtkMult(), NumberStyles.Number, CultureInfo.InvariantCulture, out var monster2AtkMultiplier);
 
         if (!(success && success2))
         {
@@ -2864,8 +2864,8 @@ TreeScope.Children, condition);
     /// <returns></returns>
     public double Monster1DefMultForDictionary()
     {
-        var success = double.TryParse(this.Monster1DefMult().ToString(CultureInfo.InvariantCulture), out var monster1Defrate);
-        var success2 = double.TryParse(this.Monster2DefMult().ToString(CultureInfo.InvariantCulture), out var monster2Defrate);
+        var success = double.TryParse(this.Monster1DefMult().ToString(CultureInfo.InvariantCulture), NumberStyles.Number, CultureInfo.InvariantCulture, out var monster1Defrate);
+        var success2 = double.TryParse(this.Monster2DefMult().ToString(CultureInfo.InvariantCulture), NumberStyles.Number, CultureInfo.InvariantCulture, out var monster2Defrate);
 
         if (!(success && success2))
         {
@@ -5102,7 +5102,7 @@ TreeScope.Children, condition);
         }
 
         var type1 = sigilTypes[index] + ": ";
-        var value1 = (sigilValues[index] > 127 ? sigilValues[index] - 256 : sigilValues[index]).ToString();
+        var value1 = (sigilValues[index] > 127 ? sigilValues[index] - 256 : sigilValues[index]).ToString(CultureInfo.InvariantCulture);
         var type2 = "Empty, ";
         var value2 = string.Empty;
         var type3 = "Empty";
@@ -5111,13 +5111,13 @@ TreeScope.Children, condition);
         if (sigilValues[index + 1] != 0 && sigilNames[index + 1] != 0)
         {
             type2 = sigilTypes[index + 1] + ": ";
-            value2 = (sigilValues[index + 1] > 127 ? sigilValues[index + 1] - 256 : sigilValues[index + 1]).ToString();
+            value2 = (sigilValues[index + 1] > 127 ? sigilValues[index + 1] - 256 : sigilValues[index + 1]).ToString(CultureInfo.InvariantCulture);
         }
 
         if (sigilValues[index + 2] != 0 && sigilNames[index + 2] != 0)
         {
             type3 = sigilTypes[index + 2] + ": ";
-            value3 = (sigilValues[index + 2] > 127 ? sigilValues[index + 2] - 256 : sigilValues[index + 2]).ToString();
+            value3 = (sigilValues[index + 2] > 127 ? sigilValues[index + 2] - 256 : sigilValues[index + 2]).ToString(CultureInfo.InvariantCulture);
         }
 
         return type1 + (value1 != string.Empty && !value1.Contains('-') ? "+" : string.Empty) + value1 + ", " + type2 + (value2 != string.Empty && !value2.Contains('-') ? "+" : string.Empty) + value2 + ", " + type3 + (value3 != string.Empty && !value3.Contains('-') ? "+" : string.Empty) + value3;
@@ -9490,7 +9490,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         }
     }
 
-    public string GetAtkDefForImage => string.Format(CultureInfo.InvariantCulture, "Bloat Attack: {0} | Total Defense: {1}", this.BloatedWeaponAttack().ToString(), this.TotalDefense().ToString());
+    public string GetAtkDefForImage => string.Format(CultureInfo.InvariantCulture, "Bloat Attack: {0} | Total Defense: {1}", this.BloatedWeaponAttack().ToString(CultureInfo.InvariantCulture), this.TotalDefense().ToString(CultureInfo.InvariantCulture));
 
     public string GetStyleRankForImage
     {
@@ -10144,7 +10144,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         // hunt / capture / slay
         else if (this.ObjectiveType() is 0x1 or 0x101 or 0x201)
         {
-            return this.Objective1Quantity().ToString() + " ";
+            return this.Objective1Quantity().ToString(CultureInfo.InvariantCulture) + " ";
         }
         else if (this.ObjectiveType() is 0x8004 or 0x18004)
         {
@@ -10152,7 +10152,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         }
         else
         {
-            return this.Objective1Quantity().ToString() + " ";
+            return this.Objective1Quantity().ToString(CultureInfo.InvariantCulture) + " ";
         }
     }
 
@@ -10175,7 +10175,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             }
             else
             {
-                return this.Objective1CurrentQuantityItem().ToString() + "/";
+                return this.Objective1CurrentQuantityItem().ToString(CultureInfo.InvariantCulture) + "/";
             }
         }
         else
@@ -10187,7 +10187,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             else
             {
                 // increases when u hit a dead large monster
-                return this.Objective1CurrentQuantityMonster().ToString() + "/";
+                return this.Objective1CurrentQuantityMonster().ToString(CultureInfo.InvariantCulture) + "/";
             }
         }
     }
@@ -10268,7 +10268,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
 
         if (this.IsToggeableDifficulty())
         {
-            return string.Format(CultureInfo.InvariantCulture, "★{0} ", this.StarGrades().ToString());
+            return string.Format(CultureInfo.InvariantCulture, "★{0} ", this.StarGrades().ToString(CultureInfo.InvariantCulture));
         }
         else
         {

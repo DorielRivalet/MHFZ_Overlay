@@ -878,7 +878,7 @@ public partial class ConfigWindow : FluentWindow
 
         var textBox = (TextBox)sender;
         var newText = textBox.Text.Insert(textBox.SelectionStart, e.Text);
-        var isValidDecimal = decimal.TryParse(newText, out _);
+        var isValidDecimal = decimal.TryParse(newText, NumberStyles.Any, CultureInfo.InvariantCulture, out _);
 
         if (!isValidDecimal)
         {
@@ -2281,7 +2281,7 @@ public partial class ConfigWindow : FluentWindow
         {
             this.Series[i] = new ColumnSeries<double>
             {
-                Name = entry.Key.ToString(),
+                Name = entry.Key.ToString(CultureInfo.InvariantCulture),
                 Values = new double[] { entry.Value },
             };
 
@@ -2292,7 +2292,7 @@ public partial class ConfigWindow : FluentWindow
         {
             new Axis
             {
-                Labels = data.Keys.Select(x => x.ToString()).ToArray(),
+                Labels = data.Keys.Select(x => x.ToString(CultureInfo.InvariantCulture)).ToArray(),
                 LabelsRotation = 0,
                 SeparatorsPaint = new SolidColorPaint(new SKColor(200, 200, 200)),
                 TicksPaint = new SolidColorPaint(new SKColor(35, 35, 35)),

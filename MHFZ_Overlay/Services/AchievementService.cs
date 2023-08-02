@@ -2086,7 +2086,7 @@ public sealed class AchievementService : IAchievementService
 
                 return databaseManagerInstance.AllZenithGauntlets.Any(gauntlet =>
                 {
-                    if (TimeSpan.TryParse(gauntlet.TotalTimeElapsed, out var timeElapsed))
+                    if (TimeSpan.TryParse(gauntlet.TotalTimeElapsed, CultureInfo.InvariantCulture, out var timeElapsed))
                     {
                         return timeElapsed < TimeSpan.FromHours(4);
                     }
@@ -2131,7 +2131,7 @@ public sealed class AchievementService : IAchievementService
 
                 return databaseManagerInstance.AllSolsticeGauntlets.Any(gauntlet =>
                 {
-                    if (TimeSpan.TryParse(gauntlet.TotalTimeElapsed, out var timeElapsed))
+                    if (TimeSpan.TryParse(gauntlet.TotalTimeElapsed, CultureInfo.InvariantCulture, out var timeElapsed))
                     {
                         return timeElapsed < TimeSpan.FromHours(1);
                     }
@@ -2176,7 +2176,7 @@ public sealed class AchievementService : IAchievementService
 
                 return databaseManagerInstance.AllMusouGauntlets.Any(gauntlet =>
                 {
-                    if (TimeSpan.TryParse(gauntlet.TotalTimeElapsed, out var timeElapsed))
+                    if (TimeSpan.TryParse(gauntlet.TotalTimeElapsed, CultureInfo.InvariantCulture, out var timeElapsed))
                     {
                         return timeElapsed < TimeSpan.FromMinutes(100);
                     }

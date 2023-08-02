@@ -3475,17 +3475,17 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                         var creationDate = playerInfo[0];
                         var playerName = playerInfo[1];
                         var guildName = playerInfo[2];
-                        long discordServerID = int.Parse(playerInfo[3]);
+                        long discordServerID = int.Parse(playerInfo[3], CultureInfo.InvariantCulture);
                         var gender = playerInfo[4];
                         var nationality = playerInfo[5];
 
                         if (playerID == 1 && (startTime == DateTime.UnixEpoch || startTime == DateTime.MinValue))
                         {
-                            creationDate = DateTime.UtcNow.Date.ToString();
+                            creationDate = DateTime.UtcNow.Date.ToString(CultureInfo.InvariantCulture);
                         }
                         else
                         {
-                            creationDate = startTime.Date.ToString();
+                            creationDate = startTime.Date.ToString(CultureInfo.InvariantCulture);
                         }
 
                         if (playerID == 1)
@@ -3837,7 +3837,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
     {
         var minutes = framesElapsed / (Numbers.FramesPerSecond * 60);
         var seconds = (framesElapsed % (Numbers.FramesPerSecond * 60)) / Numbers.FramesPerSecond;
-        var milliseconds = ((framesElapsed % (Numbers.FramesPerSecond * 60)) % Numbers.FramesPerSecond) / double.Parse(Numbers.FramesPerSecond.ToString());
+        var milliseconds = ((framesElapsed % (Numbers.FramesPerSecond * 60)) % Numbers.FramesPerSecond) / double.Parse(Numbers.FramesPerSecond.ToString(), CultureInfo.InvariantCulture);
         return $"{minutes:D2}:{seconds:D2}.{(int)(milliseconds * 1000):D3}";
     }
 
@@ -9700,7 +9700,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
             return fastestRuns;
         }
 
-        if (long.TryParse(configWindow.QuestIDTextBox.Text.Trim(), out var questID))
+        if (long.TryParse(configWindow.QuestIDTextBox.Text.Trim(), NumberStyles.Number, CultureInfo.InvariantCulture, out var questID))
         {
             using (var conn = new SQLiteConnection(this.dataSource))
             {
@@ -9803,7 +9803,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                                             QuestID = (long)reader["QuestID"],
                                             YoutubeID = (string)reader["YoutubeID"],
                                             FinalTimeDisplay = (string)reader["FinalTimeDisplay"],
-                                            Date = DateTime.Parse((string)reader["Date"]),
+                                            Date = DateTime.Parse((string)reader["Date"], CultureInfo.InvariantCulture),
                                         });
                                     }
                                 }
@@ -9877,7 +9877,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                                     {
                                         CompletionDate = reader.IsDBNull(reader.GetOrdinal("CompletionDate"))
                                     ? DateTime.UnixEpoch
-                                    : DateTime.Parse(reader.GetString(reader.GetOrdinal("CompletionDate"))),
+                                    : DateTime.Parse(reader.GetString(reader.GetOrdinal("CompletionDate")), CultureInfo.InvariantCulture),
                                         Title = reader.GetString(reader.GetOrdinal("Title")),
                                         Description = reader.GetString(reader.GetOrdinal("Description")),
                                         Rank = AchievementService.ConvertToAchievementRank(reader.GetInt64(reader.GetOrdinal("Rank"))),
@@ -9957,7 +9957,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                                         QuestID = (long)reader["QuestID"],
                                         YoutubeID = (string)reader["YoutubeID"],
                                         FinalTimeDisplay = (string)reader["FinalTimeDisplay"],
-                                        Date = DateTime.Parse((string)reader["Date"]),
+                                        Date = DateTime.Parse((string)reader["Date"], CultureInfo.InvariantCulture),
                                         ActualOverlayMode = (string)reader["ActualOverlayMode"],
                                         PartySize = (long)reader["PartySize"],
                                     };
@@ -10040,7 +10040,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                                         QuestID = (long)reader["QuestID"],
                                         YoutubeID = (string)reader["YoutubeID"],
                                         FinalTimeDisplay = (string)reader["FinalTimeDisplay"],
-                                        Date = DateTime.Parse((string)reader["Date"]),
+                                        Date = DateTime.Parse((string)reader["Date"], CultureInfo.InvariantCulture),
                                         ActualOverlayMode = (string)reader["ActualOverlayMode"],
                                         PartySize = (long)reader["PartySize"],
                                     };
@@ -10084,7 +10084,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
                     if (isByQuestID)
                     {
-                        questID = long.Parse(configWindow.QuestIDTextBox.Text.Trim());
+                        questID = long.Parse(configWindow.QuestIDTextBox.Text.Trim(), CultureInfo.InvariantCulture);
                         sql = @"SELECT 
                             WeaponTypeID, 
                             StyleID, 
@@ -10140,8 +10140,8 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                                         // LiveChart graph
                                         // use a switch statement or a lookup table to convert the
                                         // weaponTypeID and styleID to their corresponding string names
-                                        weaponType = WeaponType.IDName[int.Parse(weaponTypeID.ToString())];
-                                        style = WeaponStyle.IDName[int.Parse(styleID.ToString())];
+                                        weaponType = WeaponType.IDName[int.Parse(weaponTypeID.ToString(), CultureInfo.InvariantCulture)];
+                                        style = WeaponStyle.IDName[int.Parse(styleID.ToString(), CultureInfo.InvariantCulture)];
                                         weaponUsageData.Add(new WeaponUsage(weaponType, style, (int)runCount));
                                     }
                                 }
@@ -10171,7 +10171,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         // Execute query with only Quest ID
-        var questID = int.Parse(configWindow.QuestIDTextBox.Text);
+        var questID = int.Parse(configWindow.QuestIDTextBox.Text, CultureInfo.InvariantCulture);
         var selectedOverlayMode = ((ComboBoxItem)configWindow.OverlayModeComboBox.SelectedItem).Content.ToString();
 
         // idk if this is needed
@@ -10231,7 +10231,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                                 var questName = reader["QuestNameName"].ToString();
                                 configWindow.SelectedQuestNameTextBlock.Text = questName == string.Empty ? string.Format("{0} {1}", Messages.CustomQuestName, questID) : questName;
                                 configWindow.SelectedQuestObjectiveTextBlock.Text = string.Format(CultureInfo.InvariantCulture, "{0} {1} {2}", ObjectiveType.IDName[int.Parse(reader["ObjectiveTypeID"]?.ToString() ?? "0", CultureInfo.InvariantCulture)], reader["ObjectiveQuantity"], reader["ObjectiveName"]);
-                                configWindow.CurrentTimeTextBlock.Text = DateTime.UtcNow.ToString();
+                                configWindow.CurrentTimeTextBlock.Text = DateTime.UtcNow.ToString(CultureInfo.InvariantCulture);
                             }
                         }
                     }
@@ -10463,7 +10463,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                         {
                             if (reader.Read())
                             {
-                                questCompletions = Convert.ToInt64(reader["CompletionCount"]).ToString();
+                                questCompletions = Convert.ToInt64(reader["CompletionCount"], CultureInfo.InvariantCulture).ToString(CultureInfo.InvariantCulture);
                             }
                         }
                     }
@@ -10517,7 +10517,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                         {
                             if (reader is SQLiteDataReader sqliteReader && await sqliteReader.ReadAsync())
                             {
-                                questCompletions = Convert.ToInt64(sqliteReader["CompletionCount"]).ToString();
+                                questCompletions = Convert.ToInt64(sqliteReader["CompletionCount"], CultureInfo.InvariantCulture).ToString(CultureInfo.InvariantCulture);
                             }
                         }
                     }

@@ -208,7 +208,7 @@ public sealed class DiscordService
             return;
         }
 
-        var success = int.TryParse(dataLoader.Model.ATK, out var playerTrueRaw);
+        var success = int.TryParse(dataLoader.Model.ATK, NumberStyles.Number, CultureInfo.InvariantCulture, out var playerTrueRaw);
         if (!success)
         {
             LoggerInstance.Warn("Could not parse player true raw as integer: {0}", dataLoader.Model.ATK);

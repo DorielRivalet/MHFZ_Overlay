@@ -30,7 +30,7 @@ public sealed class TextFormattingModeConverter : IValueConverter
     {
         if (value is TextFormattingMode textFormattingMode)
         {
-            return textFormattingMode.ToString();
+            return textFormattingMode.ToString(CultureInfo.InvariantCulture);
         }
 
         return null;

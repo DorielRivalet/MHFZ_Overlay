@@ -540,7 +540,7 @@ public sealed class FileService
                     var settingName = setting.Name;
                     var settingDefaultValue = setting.DefaultValue.ToString();
                     var settingPropertyType = setting.PropertyType.ToString();
-                    var settingIsReadOnly = setting.IsReadOnly.ToString();
+                    var settingIsReadOnly = setting.IsReadOnly.ToString(CultureInfo.InvariantCulture);
                     var settingProvider = setting.Provider.ToString();
                     var settingProviderApplicationName = setting.Provider.ApplicationName;
                     var settingProviderDescription = setting.Provider.Description;
