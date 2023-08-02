@@ -1,5 +1,34 @@
 
 
+## [0.29.0](https://github.com/DorielRivalet/MHFZ_Overlay/compare/v0.28.0...v0.29.0) (2023-08-02)
+
+
+### Features
+
+* add scripts for stats ([7a29350](https://github.com/DorielRivalet/MHFZ_Overlay/commit/7a29350e3f11a306eca6ba0794c4c6850683aa17))
+
+
+### Bug Fixes
+
+* **achievements:** add check for empty sequences ([edc6853](https://github.com/DorielRivalet/MHFZ_Overlay/commit/edc68535872e2e580f59a749bb155b7e76ee3adb)), closes [DorielRivalet/mhfz-overlay#151](https://github.com/DorielRivalet/mhfz-overlay/issues/151)
+* remove converter exceptions ([c43fb2c](https://github.com/DorielRivalet/MHFZ_Overlay/commit/c43fb2c605f944cf8c2825d1fb52647d4815c6b6))
+* remove exception in trophy image link from rank calculation ([f17ed39](https://github.com/DorielRivalet/MHFZ_Overlay/commit/f17ed3960dea21bb02d54fbb93b57cce7bd820df))
+* specify CultureInfo as InvariantCulture when parsing ([e095ce0](https://github.com/DorielRivalet/MHFZ_Overlay/commit/e095ce0591708942811e69753ba7cdd908cd30ac))
+
+
+### For Developers
+
+* add automatic code formatter section ([91b682d](https://github.com/DorielRivalet/MHFZ_Overlay/commit/91b682d39aed61de3ea97b01dba040d5d71434f8))
+* add more github actions ([8f34779](https://github.com/DorielRivalet/MHFZ_Overlay/commit/8f347795374df49d1091409de5ac725e8ee13ae6))
+* automate stale issues and pull requests ([7b85ce2](https://github.com/DorielRivalet/MHFZ_Overlay/commit/7b85ce2b638f7c1bf34ca2facd02db7255e9bf2b))
+* bump version ([81087b0](https://github.com/DorielRivalet/MHFZ_Overlay/commit/81087b0668a1440b0faea918ccae4929cb5b6b36))
+* fix discord workflow ([37b01de](https://github.com/DorielRivalet/MHFZ_Overlay/commit/37b01de63521fbcc8f9b3a1091f61b602aa296f6))
+* fix stale workflow ([bf1fe89](https://github.com/DorielRivalet/MHFZ_Overlay/commit/bf1fe89517ed3816bdfa2442eff9155566f183cd))
+* **github:** fix bug report grammar ([ea7ad1c](https://github.com/DorielRivalet/MHFZ_Overlay/commit/ea7ad1c7275b5029c3fb82d1207fcd89acd06281))
+* **git:** update gitignore ([ac0cc62](https://github.com/DorielRivalet/MHFZ_Overlay/commit/ac0cc6204de17e93f3ba9b31a36b8a6e3d9122d5))
+* run dotnet format ([02933bb](https://github.com/DorielRivalet/MHFZ_Overlay/commit/02933bb8162149c8bcb7b507f1c556cd2ea0d6cf))
+* update discord workflow ([649f655](https://github.com/DorielRivalet/MHFZ_Overlay/commit/649f655a377510981528eaf39c4669e2fcee075d))
+
 ## [0.28.0](https://github.com/DorielRivalet/MHFZ_Overlay/compare/v0.27.3...v0.28.0) (2023-07-31)
 
 
