@@ -11,12 +11,14 @@ jobs:
     steps:
       - name: Notify Discord about issue and pull request comments
         if: github.event_name == 'issue_comment'
-        uses: sarisia/actions-status-discord@v1.10.1-pre.0
+        uses: sarisia/actions-status-discord@v1
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          status: ${{ job.status }}
+          content: "<@937384021527257209>"
           title: "`MHF-Z Overlay` Status"
           description: |
-            <@937384021527257209> New comment: ${{ github.event.issue.url }}
+            New comment: ${{ github.event.issue.url }}
           image: ${{ secrets.EMBED_IMAGE }}
           color: 0xff435d
           username: GitHub Actions
@@ -24,12 +26,14 @@ jobs:
 
       - name: Notify Discord about new issue
         if: github.event_name == 'issues'
-        uses: sarisia/actions-status-discord@v1.10.1-pre.0
+        uses: sarisia/actions-status-discord@v1
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          status: ${{ job.status }}
+          content: "<@937384021527257209>"
           title: "`MHF-Z Overlay` Status"
           description: |
-            <@937384021527257209> New issue: ${{ github.event.issue.title }}
+            New issue: ${{ github.event.issue.title }}
           image: ${{ secrets.EMBED_IMAGE }}
           color: 0xff435d
           username: GitHub Actions
@@ -37,12 +41,14 @@ jobs:
   
       - name: Notify Discord about new pull request
         if: github.event_name == 'pull_request'
-        uses: sarisia/actions-status-discord@v1.10.1-pre.0
+        uses: sarisia/actions-status-discord@v1
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          status: ${{ job.status }}
+          content: "<@937384021527257209>"
           title: "`MHF-Z Overlay` Status"
           description: |
-            <@937384021527257209> New pull request: ${{ github.event.pull_request.title }}
+            New pull request: ${{ github.event.pull_request.title }}
           image: ${{ secrets.EMBED_IMAGE }}
           color: 0xff435d
           username: GitHub Actions
@@ -50,9 +56,10 @@ jobs:
 
       - name: Notify Discord about pushes
         if: github.event_name == 'push'
-        uses: sarisia/actions-status-discord@v1.10.1-pre.0
+        uses: sarisia/actions-status-discord@v1
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          status: ${{ job.status }}
           title: "`MHF-Z Overlay` Status"
           description: |
             New commit
