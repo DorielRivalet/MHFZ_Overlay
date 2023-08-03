@@ -1062,7 +1062,8 @@
                             </ComboBox>
                             <StackPanel Margin="5" Orientation="Horizontal" Grid.Row="2" Grid.Column="0">
                                 <ui:SymbolIcon Margin="0,0,5,0" Symbol="Fire24" Foreground="{StaticResource Red}" FontSize="28" ToolTip="Significantly affects performance"/>
-                                <TextBlock ToolTip="Recommended to change if your resolution is lower"  Style="{StaticResource ConfigTextBox}" Text="Resolution"/>
+                                    <ui:SymbolIcon Margin="0,0,5,0" Symbol="Info28" Foreground="{StaticResource Yellow}" FontSize="28" ToolTip="Overlay Restart Required"/>
+                                    <TextBlock ToolTip="Recommended to change if your resolution is lower"  Style="{StaticResource ConfigTextBox}" Text="Resolution"/>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center">
                                 <ui:TextBox PlaceholderText="Enter Max Resolution Width" IsUndoEnabled="False" TextAlignment="Center" Text="{Binding Source={StaticResource Settings},Path=MaxResolutionWidth}" PreviewTextInput="ValidateNumber"/>
