@@ -11925,6 +11925,11 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
 
+        if (numberOfEntries == 0)
+        {
+            return 0; // Or any other default value
+        }
+
         var averageValue = sumOfValues / numberOfEntries;
 
         return averageValue;

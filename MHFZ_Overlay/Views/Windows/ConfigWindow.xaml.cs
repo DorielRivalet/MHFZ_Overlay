@@ -3139,14 +3139,15 @@ public partial class ConfigWindow : FluentWindow
         }
 
         List<ISeries> series = new ();
-        ObservableCollection<double> performanceCollection = new ()
+
+        ObservableCollection<double> performanceCollection = new()
         {
-            performanceCompendium.TrueRawMedian / performanceCompendium.HighestTrueRaw,
-            performanceCompendium.SingleHitDamageMedian / performanceCompendium.HighestSingleHitDamage,
-            performanceCompendium.DPSMedian / performanceCompendium.HighestDPS,
-            performanceCompendium.HitsPerSecondMedian / performanceCompendium.HighestHitsPerSecond,
-            performanceCompendium.HitsTakenBlockedPerSecondMedian / performanceCompendium.HighestHitsTakenBlockedPerSecond,
-            performanceCompendium.ActionsPerMinuteMedian / performanceCompendium.HighestActionsPerMinute,
+            performanceCompendium.HighestTrueRaw != 0 ? performanceCompendium.TrueRawMedian / performanceCompendium.HighestTrueRaw : 0,
+            performanceCompendium.HighestSingleHitDamage != 0 ? performanceCompendium.SingleHitDamageMedian / performanceCompendium.HighestSingleHitDamage : 0,
+            performanceCompendium.HighestDPS != 0 ? performanceCompendium.DPSMedian / performanceCompendium.HighestDPS : 0,
+            performanceCompendium.HighestHitsPerSecond != 0 ? performanceCompendium.HitsPerSecondMedian / performanceCompendium.HighestHitsPerSecond : 0,
+            performanceCompendium.HighestHitsTakenBlockedPerSecond != 0 ? performanceCompendium.HitsTakenBlockedPerSecondMedian / performanceCompendium.HighestHitsTakenBlockedPerSecond : 0,
+            performanceCompendium.HighestActionsPerMinute != 0 ? performanceCompendium.ActionsPerMinuteMedian / performanceCompendium.HighestActionsPerMinute : 0,
         };
 
         series.Add(new PolarLineSeries<double>
