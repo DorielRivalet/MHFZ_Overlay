@@ -398,8 +398,8 @@
                             </ComboBox>
                             <TextBlock Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Text="Personal Best of solo runs of quest ID by category" Loaded="PersonalBestDescriptionTextBlock_Loaded"/>
                         </StackPanel>
-                        <Grid x:Name="personalBestChartGrid" Loaded="personalBestChartGrid_Loaded">
-                            <lvc:CartesianChart Loaded="personalBest_Loaded" Margin="5" Width="800" Height="500" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        <Grid x:Name="personalBestChartGrid" Loaded="PersonalBestChartGrid_Loaded">
+                            <lvc:CartesianChart Loaded="PersonalBest_Loaded" Margin="5" Width="800" Height="500" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                         </Grid>
                     </StackPanel>
                 </Grid>
@@ -434,7 +434,7 @@
                                     <ui:SymbolIcon Symbol="Copy24" Foreground="{StaticResource Sapphire}" FontSize="24"/>
                                 </Button.Content>
                             </ui:Button>
-                            <ComboBox x:Name="weaponListTop20RunsComboBox" ToolTip="Top 20 fastest solo runs of quest ID by category" SelectedIndex="0" HorizontalAlignment="Left" FontSize="16" SelectionChanged="weaponListTop20RunsComboBox_SelectionChanged">
+                            <ComboBox x:Name="weaponListTop20RunsComboBox" ToolTip="Top 20 fastest solo runs of quest ID by category" SelectedIndex="0" HorizontalAlignment="Left" FontSize="16" SelectionChanged="WeaponListTop20RunsComboBox_SelectionChanged">
                                 <ComboBoxItem>All Weapons</ComboBoxItem>
                                 <ComboBoxItem>Sword and Shield</ComboBoxItem>
                                 <ComboBoxItem>Dual Swords</ComboBoxItem>
@@ -553,7 +553,7 @@
                             </ComboBox>
                         </StackPanel>
                         <Grid x:Name="WeaponUsageChartGrid" Loaded="WeaponUsageChartGrid_Loaded">
-                            <lvc:CartesianChart Loaded="weaponUsageChart_Loaded" Grid.Column="1" Grid.Row="1" x:Name="weaponUsageChart" Margin="5" Width="800" Height="500" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <lvc:CartesianChart Loaded="WeaponUsageChart_Loaded" Grid.Column="1" Grid.Row="1" x:Name="weaponUsageChart" Margin="5" Width="800" Height="500" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                         </Grid>
                         <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" >
                             <Image Margin="38,0,0,0" Width="32" Height="32" Source="https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/weapon/sns.png"/>
@@ -1031,25 +1031,30 @@
 
                             <StackPanel Orientation="Horizontal" Margin="5,0,0,0" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
                                     <ui:SymbolIcon ToolTip="Open Folder" Symbol="FolderOpen24" FontSize="28" Foreground="{StaticResource Green}" Margin="0,0,5,0"/>
-                                    <ui:Button Appearance="Primary" Content="Settings" ToolTip="Open the settings folder" Click="OpenSettingsFolder_Click">
+                                    <ui:Button Appearance="Secondary" Content="Settings" ToolTip="Open the settings folder" Click="OpenSettingsFolder_Click">
                                     <ui:Button.Icon>
                                         <ui:SymbolIcon Symbol="Settings20" FontSize="20" />
                                     </ui:Button.Icon>
                                 </ui:Button>
-                                <ui:Button Margin="5,0,0,0" Appearance="Primary"  Content="Logs" ToolTip="Open the logs folder" Click="OpenLogsFolder_Click">
+                                    <ui:Button Margin="5,0,0,0" Appearance="Secondary"  Content="Logs" ToolTip="Open the logs folder" Click="OpenLogsFolder_Click">
                                     <ui:Button.Icon>
                                         <ui:SymbolIcon Symbol="Document20" FontSize="20"/>
                                     </ui:Button.Icon>
                                 </ui:Button>
-                                <ui:Button Margin="5,0,0,0" Appearance="Primary"  Content="Database" ToolTip="Open the database folder" Click="OpenDatabaseFolder_Click">
+                                <ui:Button Margin="5,0,0,0" Appearance="Secondary"  Content="Database" ToolTip="Open the database folder" Click="OpenDatabaseFolder_Click">
                                     <ui:Button.Icon>
                                         <ui:SymbolIcon Symbol="Database20" FontSize="20"/>
+                                    </ui:Button.Icon>
+                                </ui:Button>
+                                <ui:Button Margin="5,0,0,0" Appearance="Secondary"  Content="Overlay" ToolTip="Open the overlay folder" Click="OpenOverlayFolder_Click">
+                                    <ui:Button.Icon>
+                                        <ui:SymbolIcon Symbol="Folder20" FontSize="20"/>
                                     </ui:Button.Icon>
                                 </ui:Button>
                             </StackPanel>
 
                             <TextBlock Margin="5" ToolTip="Select a settings preset configuration" Style="{StaticResource ConfigTextBox}" Grid.Row="1" Grid.Column="0"  Text="Configuration Preset"/>
-                            <ComboBox x:Name="settingsPresetComboBox" Grid.Column="1" Grid.Row="1" SelectedIndex="0" SelectionChanged="settingsPresetComboBox_SelectionChanged">
+                            <ComboBox x:Name="settingsPresetComboBox" Grid.Column="1" Grid.Row="1" SelectedIndex="0" SelectionChanged="SettingsPresetComboBox_SelectionChanged">
                                 <ComboBoxItem>None</ComboBoxItem>
                                 <ComboBoxItem>Speedrun</ComboBoxItem>
                                 <ComboBoxItem>Zen</ComboBoxItem>
@@ -1382,7 +1387,7 @@
                                             <ui:SymbolIcon Symbol="Info28" FontSize="28" Foreground="{StaticResource Blue}" Margin="0,0,5,0" ToolTip="Required for Speedrun Modes"/>
                                             <TextBlock  ToolTip="Enable logging of quests when completing them and inserts the information into a local database" Style="{StaticResource ConfigTextBox}" Text="Quest Logging" />
                                         </StackPanel>
-                                        <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="2" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=EnableQuestLogging}" Checked="questLoggingToggle_Check"/>
+                                        <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="2" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=EnableQuestLogging}" Checked="QuestLoggingToggle_Check"/>
                                         <StackPanel Margin="5" Orientation="Horizontal" Grid.Row="3" Grid.Column="0" >
                                             <ui:SymbolIcon Symbol="Info28" FontSize="28" Foreground="{StaticResource Blue}" Margin="0,0,5,0" ToolTip="Required for Speedrun Modes"/>
                                             <TextBlock ToolTip="Enable logging of inputs (KBM + Gamepad) during quests and inserts the information into a local database. WARNING: the runs with this option disabled will not be displayed on leaderboards, in order to prevent cheating." Style="{StaticResource ConfigTextBox}"  Text="Log Inputs during Quest" />
@@ -1580,7 +1585,7 @@
                                             <Border CornerRadius="5,0,0,5" Grid.Row="0" Grid.Column="0" Grid.RowSpan="25" Width="5" Margin="0,0,5,0" Background="#f38ba8" />
 
                                             <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" Margin="5" Grid.ColumnSpan="2">
-                                                <Image x:Name="SelectedQuestObjectiveImage" Source="https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/burning_freezing_elzelion.png" Width="48" Height="48" Margin="0,0,5,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                                                <Image x:Name="SelectedQuestObjectiveImage" Source="pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/burning_freezing_elzelion.png" Width="48" Height="48" Margin="0,0,5,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                                                 <StackPanel Orientation="Vertical">
                                                     <TextBlock x:Name="SelectedQuestNameTextBlock" TextWrapping="Wrap" MaxWidth="240" Text="Dark Lord of Fire and Flame" FontFamily="{StaticResource Open Sans Bold}"/>
                                                     <TextBlock x:Name="SelectedQuestObjectiveTextBlock" TextWrapping="Wrap" MaxWidth="240" Text="Slay 1 Burning Freezing Elzelion" FontFamily="{StaticResource Open Sans Italic}"/>
@@ -3552,7 +3557,7 @@ Thunder Clad, Vigorous" Text="{Binding GetActiveSkillsForImage,Mode=OneTime}" Fo
                                 <RowDefinition Height="40"/>
                             </Grid.RowDefinitions>
                             <ui:InfoBar Grid.ColumnSpan="2" Foreground="{StaticResource Text}" Title="How Monster HP Works" 
-                            Message="Effective HP is the HP taking into account the monster's defense rate.&#x0a;Burning Freezing Elzelion has 1,000,000 EHP because his&#x0a;True HP is 30,000 and his defense rate is 0,03.&#x0a;&#x0a;Effective HP = True HP / Defense rate&#x0a;1,000,000 = 30,000 / 0,03&#x0a;&#x0a;True HP is the HP of the monster without taking into account the monster's defense rate." 
+                            Message="Effective HP is the HP taking into account the monster's defense rate.&#x0a;Burning Freezing Elzelion has 1,000,000 EHP because his&#x0a;True HP is 30,000 and his defense rate is 0.03.&#x0a;&#x0a;Effective HP = True HP / Defense rate&#x0a;1,000,000 = 30,000 / 0.03&#x0a;&#x0a;True HP is the HP of the monster without taking into account the monster's defense rate." 
                             IsClosable="False" IsOpen="True" Severity="Informational"/>
                             <TextBlock Margin="5" ToolTip="Show HP Mode (True/Effective)" Style="{StaticResource ConfigTextBox}" Grid.Row="1" Grid.Column="0" Text="Monster HP Mode Label"/>
                             <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="1" Grid.Column="1" IsChecked="{Binding Source={StaticResource Settings}, Path=MonsterBarHPModeShown}"/>
@@ -4093,21 +4098,21 @@ Thunder Clad, Vigorous" Text="{Binding GetActiveSkillsForImage,Mode=OneTime}" Fo
                             <TextBlock Margin="10,0,0,10" Grid.Column="2" Grid.Row="0" Grid.ColumnSpan="1" Name="txtbFooterRight">
                         <Hyperlink Name="lnkImg" TextDecorations="None" 
                             NavigateUri="https://github.com/Imulion" 
-                            ToolTip="Navigate to GitHub profile" RequestNavigate="lnkImg_RequestNavigate">
+                            ToolTip="Navigate to GitHub profile" RequestNavigate="LnkImg_RequestNavigate">
                             <Image Width="180" Source="https://cdn-icons-png.flaticon.com/512/733/733553.png" />
                         </Hyperlink>
                             </TextBlock>
                             <TextBlock Margin="10,0,0,10" Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="1" Name="txtbFooterRight2">
                         <Hyperlink Name="lnkImg2" TextDecorations="None" 
                             NavigateUri="https://github.com/suzaku01"
-                            ToolTip="Navigate to GitHub profile" RequestNavigate="lnkImg_RequestNavigate">
+                            ToolTip="Navigate to GitHub profile" RequestNavigate="LnkImg_RequestNavigate">
                             <Image Width="180" Source="https://cdn-icons-png.flaticon.com/512/733/733553.png" />
                         </Hyperlink>
                             </TextBlock>
                             <TextBlock Margin="10,0,0,10" Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="1" Name="txtbFooterRight3">
                         <Hyperlink Name="lnkImg3" TextDecorations="None" 
                             NavigateUri="https://github.com/DorielRivalet"
-                            ToolTip="Navigate to GitHub profile" RequestNavigate="lnkImg_RequestNavigate">
+                            ToolTip="Navigate to GitHub profile" RequestNavigate="LnkImg_RequestNavigate">
                             <Image Width="180" Source="https://cdn-icons-png.flaticon.com/512/733/733553.png" />
                         </Hyperlink>
                             </TextBlock>
@@ -4115,7 +4120,7 @@ Thunder Clad, Vigorous" Text="{Binding GetActiveSkillsForImage,Mode=OneTime}" Fo
                             <Button ToolTip="Stargazers" BorderBrush="Transparent" Background="Transparent" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='Assets/Icons/star.xaml'}" Width="128" Height="128" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="1" Margin="10,0,0,10"/>
                             <Grid Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="1">
                                 <ScrollViewer CanContentScroll="True" IsDeferredScrollingEnabled="True">
-                                    <TextBlock ToolTip="View Stargazers" Grid.Row="8" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="32"><Hyperlink Foreground="{StaticResource Blue}" NavigateUri="https://github.com/DorielRivalet/mhfz-overlay/stargazers" RequestNavigate="lnkImg_RequestNavigate">View Stargazers</Hyperlink></TextBlock>
+                                    <TextBlock ToolTip="View Stargazers" Grid.Row="8" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="32"><Hyperlink Foreground="{StaticResource Blue}" NavigateUri="https://github.com/DorielRivalet/mhfz-overlay/stargazers" RequestNavigate="LnkImg_RequestNavigate">View Stargazers</Hyperlink></TextBlock>
                                 </ScrollViewer>
                             </Grid>
                             <MediaElement Grid.Row="3" Grid.Column="2"  MediaEnded="Stars_MediaEnded" x:Name="myAnime" UnloadedBehavior="Manual" Source="https://media.tenor.com/uMRSXoUOwpYAAAAC/anime-girl.gif" LoadedBehavior="Play"/>
@@ -4143,9 +4148,9 @@ Thunder Clad, Vigorous" Text="{Binding GetActiveSkillsForImage,Mode=OneTime}" Fo
                             <TextBlock TextWrapping="Wrap" Grid.RowSpan="2" Grid.Row="7" FontSize="32" Grid.ColumnSpan="3" Text="Loading..." x:Name="OctokitInfo"/>
 
                             <!--https://stackoverflow.com/questions/10238694/example-using-hyperlink-in-wpf-->
-                            <TextBlock ToolTip="View Changelog" Grid.Row="8" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="32"><Hyperlink Foreground="{StaticResource Blue}" NavigateUri="https://github.com/DorielRivalet/mhfz-overlay/blob/main/CHANGELOG.md" RequestNavigate="lnkImg_RequestNavigate">View Changelog</Hyperlink></TextBlock>
-                            <TextBlock ToolTip="View Releases Statistics (Put DorielRivalet as GitHub Username and MHFZ_Overlay as Repository Name)" Grid.Row="8" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="32"><Hyperlink Foreground="{StaticResource Blue}" NavigateUri="https://somsubhra.github.io/github-release-stats/" RequestNavigate="lnkImg_RequestNavigate">View Releases Statistics</Hyperlink></TextBlock>
-                            <TextBlock ToolTip="Download latest version as 7z file" Grid.Row="8" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="32"><Hyperlink Foreground="{StaticResource Blue}" NavigateUri="https://github.com/DorielRivalet/mhfz-overlay/releases/latest" RequestNavigate="lnkImg_RequestNavigate">Get latest version</Hyperlink></TextBlock>
+                            <TextBlock ToolTip="View Changelog" Grid.Row="8" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="32"><Hyperlink Foreground="{StaticResource Blue}" NavigateUri="https://github.com/DorielRivalet/mhfz-overlay/blob/main/CHANGELOG.md" RequestNavigate="LnkImg_RequestNavigate">View Changelog</Hyperlink></TextBlock>
+                            <TextBlock ToolTip="View Releases Statistics (Put DorielRivalet as GitHub Username and MHFZ_Overlay as Repository Name)" Grid.Row="8" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="32"><Hyperlink Foreground="{StaticResource Blue}" NavigateUri="https://somsubhra.github.io/github-release-stats/" RequestNavigate="LnkImg_RequestNavigate">View Releases Statistics</Hyperlink></TextBlock>
+                            <TextBlock ToolTip="Download latest version as 7z file" Grid.Row="8" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="32"><Hyperlink Foreground="{StaticResource Blue}" NavigateUri="https://github.com/DorielRivalet/mhfz-overlay/releases/latest" RequestNavigate="LnkImg_RequestNavigate">Get latest version</Hyperlink></TextBlock>
                             <TextBlock ToolTip="Total Program Usage Time" Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="3" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="32" Text="{Binding TotalTimeSpent, StringFormat=hh\\:mm\\:ss, Mode=OneTime}"/>
                         </Grid>
                     </ScrollViewer>

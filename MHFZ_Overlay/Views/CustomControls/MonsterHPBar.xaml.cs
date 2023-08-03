@@ -12,10 +12,13 @@ using System.Windows.Controls;
 using System.Windows.Media;
 
 /// <summary>
-/// Interaction logic for UserControl1.xaml
+/// Interaction logic for UserControl1.xaml.
 /// </summary>
 public partial class MonsterHPBar : UserControl, INotifyPropertyChanged
 {
+    public static readonly DependencyProperty DescriptionProperty =
+        DependencyProperty.Register("Description", typeof(string), typeof(MonsterHPBar), new PropertyMetadata(string.Empty));
+
     public MonsterHPBar()
     {
         this.InitializeComponent();
@@ -30,14 +33,14 @@ public partial class MonsterHPBar : UserControl, INotifyPropertyChanged
     /// </value>
     public string Description
     {
-        get { return (string)this.GetValue(DescriptionProperty); }
-        set { this.SetValue(DescriptionProperty, value); }
+        get => (string)this.GetValue(DescriptionProperty);
+        set => this.SetValue(DescriptionProperty, value);
     }
 
     public string BarType
     {
-        get { return (string)this.GetValue(BarTypeProperty); }
-        set { this.SetValue(BarTypeProperty, value); }
+        get => (string)this.GetValue(BarTypeProperty);
+        set => this.SetValue(BarTypeProperty, value);
     }
 
     /// <summary>
@@ -48,8 +51,8 @@ public partial class MonsterHPBar : UserControl, INotifyPropertyChanged
     /// </value>
     public int NumCurr
     {
-        get { return (int)this.GetValue(NumCurrProperty); }
-        set { this.SetValue(NumCurrProperty, value); }
+        get => (int)this.GetValue(NumCurrProperty);
+        set => this.SetValue(NumCurrProperty, value);
     }
 
     /// <summary>
@@ -60,8 +63,8 @@ public partial class MonsterHPBar : UserControl, INotifyPropertyChanged
     /// </value>
     public int NumMax
     {
-        get { return (int)this.GetValue(NumMaxProperty); }
-        set { this.SetValue(NumMaxProperty, value); }
+        get => (int)this.GetValue(NumMaxProperty);
+        set => this.SetValue(NumMaxProperty, value);
     }
 
     /// <summary>
@@ -72,36 +75,33 @@ public partial class MonsterHPBar : UserControl, INotifyPropertyChanged
     /// </value>
     public Brush BarColor
     {
-        get { return (Brush)this.GetValue(BarColorProperty); }
-        set { this.SetValue(BarColorProperty, value); }
+        get => (Brush)this.GetValue(BarColorProperty);
+        set => this.SetValue(BarColorProperty, value);
     }
 
     public Brush StrokeColor
     {
-        get { return (Brush)this.GetValue(StrokeColorProperty); }
-        set { this.SetValue(StrokeColorProperty, value); }
+        get => (Brush)this.GetValue(StrokeColorProperty);
+        set => this.SetValue(StrokeColorProperty, value);
     }
 
     public Brush BorderColor
     {
-        get { return (Brush)this.GetValue(BorderColorProperty); }
-        set { this.SetValue(BorderColorProperty, value); }
+        get => (Brush)this.GetValue(BorderColorProperty);
+        set => this.SetValue(BorderColorProperty, value);
     }
 
     public string IconSource
     {
-        get { return (string)this.GetValue(IconSourceProperty); }
-        set { this.SetValue(IconSourceProperty, value); }
+        get => (string)this.GetValue(IconSourceProperty);
+        set => this.SetValue(IconSourceProperty, value);
     }
 
     public string HPMode
     {
-        get { return (string)this.GetValue(HPModeProperty); }
-        set { this.SetValue(HPModeProperty, value); }
+        get => (string)this.GetValue(HPModeProperty);
+        set => this.SetValue(HPModeProperty, value);
     }
-
-    public static readonly DependencyProperty DescriptionProperty =
-        DependencyProperty.Register("Description", typeof(string), typeof(MonsterHPBar), new PropertyMetadata(string.Empty));
 
     public static readonly DependencyProperty NumCurrProperty =
         DependencyProperty.Register("NumCurr", typeof(int), typeof(MonsterHPBar), new PropertyMetadata(0));
@@ -127,25 +127,13 @@ public partial class MonsterHPBar : UserControl, INotifyPropertyChanged
     public static readonly DependencyProperty HPModeProperty =
         DependencyProperty.Register("HPMode", typeof(string), typeof(MonsterHPBar), new PropertyMetadata(string.Empty));
 
+    /// <summary>
+    /// The current hp percent.
+    /// </summary>
+    private string currentHPPercent = string.Empty;
+
+    /// <inheritdoc/>
     public event PropertyChangedEventHandler? PropertyChanged;
-
-    /// <summary>
-    /// Reloads the data.
-    /// </summary>
-    public void ReloadData()
-    {
-        this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(null));
-    }
-
-    /// <summary>
-    /// Shows the current hp percentage?
-    /// </summary>
-    /// <returns></returns>
-    public static bool ShowCurrentHPPercentage()
-    {
-        Settings s = (Settings)Application.Current.TryFindResource("Settings");
-        return s.EnableCurrentHPPercentage;
-    }
 
     /// <summary>
     /// Gets the current hp percent number.
@@ -169,9 +157,19 @@ public partial class MonsterHPBar : UserControl, INotifyPropertyChanged
     }
 
     /// <summary>
-    /// The current hp percent
+    /// Shows the current hp percentage?.
     /// </summary>
-    private string CurrentHPPercent = string.Empty;
+    /// <returns></returns>
+    public static bool ShowCurrentHPPercentage()
+    {
+        var s = (Settings)Application.Current.TryFindResource("Settings");
+        return s.EnableCurrentHPPercentage;
+    }
+
+    /// <summary>
+    /// Reloads the data.
+    /// </summary>
+    public void ReloadData() => this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(null));
 
     /// <summary>
     /// Gets the descriptor horizontal alignment.
@@ -183,7 +181,7 @@ public partial class MonsterHPBar : UserControl, INotifyPropertyChanged
     {
         get
         {
-            if (this.Desc == "Poison" || this.Desc == "Sleep" || this.Desc == "Para." || this.Desc == "Blast" || this.Desc == "Stun")
+            if (this.Desc is "Poison" or "Sleep" or "Para." or "Blast" or "Stun")
             {
                 return "Left";
             }
@@ -215,14 +213,14 @@ public partial class MonsterHPBar : UserControl, INotifyPropertyChanged
                 this.NumMax += this.NumCurr;
                 if (ShowCurrentHPPercentage())
                 {
-                    this.CurrentHPPercent = this.CurrentHPPercentNumber;
+                    this.currentHPPercent = this.CurrentHPPercentNumber;
                 }
                 else
                 {
-                    this.CurrentHPPercent = string.Empty;
+                    this.currentHPPercent = string.Empty;
                 }
 
-                return string.Format(CultureInfo.InvariantCulture, "{0}/{1}", this.NumCurr, this.NumMax) + this.CurrentHPPercent;
+                return string.Format(CultureInfo.InvariantCulture, "{0}/{1}", this.NumCurr, this.NumMax) + this.currentHPPercent;
             }
 
             if (this.NumCurr == 0 && this.Description != "Poison" && this.Description != "Sleep" && this.Description != "Para." && this.Description != "Blast" && this.Description != "Stun")
@@ -232,14 +230,14 @@ public partial class MonsterHPBar : UserControl, INotifyPropertyChanged
 
             if (ShowCurrentHPPercentage())
             {
-                this.CurrentHPPercent = this.CurrentHPPercentNumber;
+                this.currentHPPercent = this.CurrentHPPercentNumber;
             }
             else
             {
-                this.CurrentHPPercent = string.Empty;
+                this.currentHPPercent = string.Empty;
             }
 
-            return string.Format(CultureInfo.InvariantCulture, "{0}/{1}", this.NumCurr, this.NumMax) + this.CurrentHPPercent;
+            return string.Format(CultureInfo.InvariantCulture, "{0}/{1}", this.NumCurr, this.NumMax) + this.currentHPPercent;
         }
     }
 
@@ -258,13 +256,10 @@ public partial class MonsterHPBar : UserControl, INotifyPropertyChanged
                 return 0f;
             }
 
-            return ((float)this.NumCurr / (float)this.NumMax) * 100f;
+            return this.NumCurr / (float)this.NumMax * 100f;
         }
 
-        set
-        {
-            throw new InvalidOperationException();
-        }
+        set => throw new InvalidOperationException();
     }
 
     /// <summary>
@@ -275,27 +270,27 @@ public partial class MonsterHPBar : UserControl, INotifyPropertyChanged
     /// </value>
     public string Desc
     {
-        get { return this.Description; }
-        set { this.Description = value; }
+        get => this.Description;
+        set => this.Description = value;
     }
 
     public string Icon
     {
-        get { return this.IconSource; }
-        set { this.IconSource = value; }
+        get => this.IconSource;
+        set => this.IconSource = value;
     }
 
     public string HPModeText
     {
-        get { return this.HPMode; }
-        set { this.HPMode = value; }
+        get => this.HPMode;
+        set => this.HPMode = value;
     }
 
-    public string IconShown
+    public static string IconShown
     {
         get
         {
-            Settings s = (Settings)Application.Current.TryFindResource("Settings");
+            var s = (Settings)Application.Current.TryFindResource("Settings");
 
             if (s.MonsterBarIconShown)
             {
@@ -308,11 +303,11 @@ public partial class MonsterHPBar : UserControl, INotifyPropertyChanged
         }
     }
 
-    public string DescriptionShown
+    public static string DescriptionShown
     {
         get
         {
-            Settings s = (Settings)Application.Current.TryFindResource("Settings");
+            var s = (Settings)Application.Current.TryFindResource("Settings");
 
             if (s.MonsterBarNameShown)
             {
@@ -325,11 +320,11 @@ public partial class MonsterHPBar : UserControl, INotifyPropertyChanged
         }
     }
 
-    public string HPModeShown
+    public static string HPModeShown
     {
         get
         {
-            Settings s = (Settings)Application.Current.TryFindResource("Settings");
+            var s = (Settings)Application.Current.TryFindResource("Settings");
 
             if (s.MonsterBarHPModeShown)
             {
@@ -342,11 +337,11 @@ public partial class MonsterHPBar : UserControl, INotifyPropertyChanged
         }
     }
 
-    public string NumbersShown
+    public static string NumbersShown
     {
         get
         {
-            Settings s = (Settings)Application.Current.TryFindResource("Settings");
+            var s = (Settings)Application.Current.TryFindResource("Settings");
 
             if (s.MonsterBarNumbersShown)
             {
@@ -359,11 +354,11 @@ public partial class MonsterHPBar : UserControl, INotifyPropertyChanged
         }
     }
 
-    public string BarShown
+    public static string BarShown
     {
         get
         {
-            Settings s = (Settings)Application.Current.TryFindResource("Settings");
+            var s = (Settings)Application.Current.TryFindResource("Settings");
 
             if (s.MonsterBarShown)
             {

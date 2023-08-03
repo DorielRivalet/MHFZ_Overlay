@@ -7,9 +7,9 @@ namespace MHFZ_Overlay.Models.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-///<summary>
-///The weapon icons list
-///</summary>
+/// <summary>
+/// The weapon icons list.
+/// </summary>
 public static class WeaponIcons
 {
     public static ReadOnlyDictionary<int, string> WeaponIconID { get; } = new (new Dictionary<int, string>

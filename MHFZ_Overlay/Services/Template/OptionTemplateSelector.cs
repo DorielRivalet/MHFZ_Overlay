@@ -9,6 +9,7 @@ using System.Windows.Controls;
 
 public sealed class OptionTemplateSelector : DataTemplateSelector
 {
+    /// <inheritdoc/>
     public override DataTemplate? SelectTemplate(object item, DependencyObject container)
     {
         if (item is string selectedOption)

@@ -7,10 +7,10 @@ namespace MHFZ_Overlay.Models.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-///<summary>
-///The monster ID list
-///is the same as monsternamedictionary seemingly. could use this for something else.
-///</summary>
+/// <summary>
+/// The monster ID list
+/// is the same as monsternamedictionary seemingly. could use this for something else.
+/// </summary>
 public static class Monsters
 {
     public static ReadOnlyDictionary<int, string> MonsterID { get; } = new (new Dictionary<int, string>

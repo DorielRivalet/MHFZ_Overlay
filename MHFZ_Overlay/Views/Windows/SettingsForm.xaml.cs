@@ -9,7 +9,7 @@ using System.Windows.Controls;
 using Wpf.Ui.Controls;
 
 /// <summary>
-/// Interaction logic for SettingsForm.xaml
+/// Interaction logic for SettingsForm.xaml.
 /// </summary>
 public partial class SettingsForm : FluentWindow
 {

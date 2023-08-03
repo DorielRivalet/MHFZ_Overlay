@@ -7,9 +7,9 @@ namespace MHFZ_Overlay.Models.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-///<summary>
-///The color list
-///</summary>
+/// <summary>
+/// The color list.
+/// </summary>
 // Labels    Hex    RGB    HSL
 // Rosewater    #f5e0dc    rgb(245, 224, 220)    hsl(10, 56%, 91%)
 // Flamingo    #f2cdcd    rgb(242, 205, 205)    hsl(0, 59%, 88%)

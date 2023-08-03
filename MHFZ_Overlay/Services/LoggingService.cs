@@ -27,6 +27,17 @@ public sealed class LoggingService
         ApplicationService.HandleShutdown();
     }
 
+    public static NLog.LogLevel GetLogLevel(string logLevel) => logLevel switch
+    {
+        "Trace" => NLog.LogLevel.Trace,
+        "Debug" => NLog.LogLevel.Debug,
+        "Info" => NLog.LogLevel.Info,
+        "Warn" => NLog.LogLevel.Warn,
+        "Error" => NLog.LogLevel.Error,
+        "Fatal" => NLog.LogLevel.Fatal,
+        _ => NLog.LogLevel.Debug,
+    };
+
     private static void PromptForOpeningLogs()
     {
         var directoryName = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
@@ -58,27 +69,6 @@ public sealed class LoggingService
                 LoggerInstance.Error(ex, "Could not open the log file: {0}", logFilePath);
                 MessageBox.Show("Could not open the log file: " + ex.Message, Messages.ErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
             }
-        }
-    }
-
-    public static NLog.LogLevel GetLogLevel(string logLevel)
-    {
-        switch (logLevel)
-        {
-            case "Trace":
-                return NLog.LogLevel.Trace;
-            case "Debug":
-                return NLog.LogLevel.Debug;
-            case "Info":
-                return NLog.LogLevel.Info;
-            case "Warn":
-                return NLog.LogLevel.Warn;
-            case "Error":
-                return NLog.LogLevel.Error;
-            case "Fatal":
-                return NLog.LogLevel.Fatal;
-            default:
-                return NLog.LogLevel.Debug;
         }
     }
 }

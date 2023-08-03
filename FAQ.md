@@ -390,11 +390,11 @@ As an added bonus:
 
 ## What does Effective HP and True HP mean?
 
-- Effective HP is the HP taking into account the monster's defense rate. Burning Freezing Elzelion has 1,000,000 EHP because his True HP is 30,000 and his defense rate is 0,03.
+- Effective HP is the HP taking into account the monster's defense rate. Burning Freezing Elzelion has 1,000,000 EHP because his True HP is 30,000 and his defense rate is 0.03.
 
 ```text
 Effective HP = True HP / Defense rate
-1,000,000 = 30,000 / 0,03
+1,000,000 = 30,000 / 0.03
 ```
 
 - True HP is the HP of the monster without taking into account the monster's defense rate.

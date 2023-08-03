@@ -4,8 +4,8 @@
 
 // TODO separation of concerns
 /*
- 
- 
+
+
  To make the DataLoader class clearly fit into a single category in the MVVM pattern,
 you can refactor it by separating its responsibilities into distinct components.
 Here's a suggestion on how you can achieve this:
@@ -34,7 +34,7 @@ The MainWindow acts as the user interface (view).
 This separation allows for better maintainability, testability, and adherence to the MVVM pattern.
 Each component has a well-defined responsibility,
 making it easier to understand and modify the codebase.
- 
+
  */
 
 namespace MHFZ_Overlay;
@@ -60,6 +60,13 @@ public sealed class DataLoader
 {
     private static readonly NLog.Logger LoggerInstance = NLog.LogManager.GetCurrentClassLogger();
 
+    private static readonly DatabaseService DatabaseManager = DatabaseService.GetInstance();
+
+    private readonly List<string> bannedProcesses = new ()
+    {
+        "displayer", "Displayer", "cheat", "Cheat", "overlay", "Overlay", "Wireshark", "FreeCam",
+    };
+
     // TODO: would like to make this a singleton but its complicated
     // this loads first before MainWindow constructor is called. meaning this runs twice.
     public DataLoader()
@@ -72,13 +79,13 @@ public sealed class DataLoader
         LoggerInstance.Trace(CultureInfo.InvariantCulture, "DataLoader constructor called. Call stack: {0}", new StackTrace().ToString());
         LoggerInstance.Info(CultureInfo.InvariantCulture, $"DataLoader initialized");
 
-        var PID = this.m.GetProcIdFromName("mhf");
-        if (PID > 0)
+        var pID = this.m.GetProcIdFromName("mhf");
+        if (pID > 0)
         {
-            this.m.OpenProcess(PID);
+            this.m.OpenProcess(pID);
             try
             {
-                this.CreateCodeCave(PID);
+                this.CreateCodeCave(pID);
             }
             catch (Exception ex)
             {
@@ -87,18 +94,18 @@ public sealed class DataLoader
                 // Imulion's version does not have anything in the catch block.
                 // I'm marking this as error since overlay might interfere with custom shaders.
                 LoggerInstance.Error(ex, "Could not create code cave");
-                System.Windows.MessageBox.Show("Could not create code cave. ReShade or similar programs might trigger this error. Also make sure you are not loading the overlay when on game launcher.", Messages.ErrorTitle, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                MessageBox.Show("Could not create code cave. ReShade or similar programs might trigger this error. Also make sure you are not loading the overlay when on game launcher.", Messages.ErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
-            if (!this.isHighGradeEdition)
+            if (!this.IsHighGradeEdition)
             {
                 LoggerInstance.Info(CultureInfo.InvariantCulture, "Running game in Non-HGE");
-                this.model = new AddressModelNotHGE(this.m);
+                this.Model = new AddressModelNotHGE(this.m);
             }
             else
             {
                 LoggerInstance.Info(CultureInfo.InvariantCulture, "Running game in HGE");
-                this.model = new AddressModelHGE(this.m);
+                this.Model = new AddressModelHGE(this.m);
             }
 
             // first we check if there are duplicate mhf.exe
@@ -106,18 +113,18 @@ public sealed class DataLoader
             this.CheckForIllegalModifications();
 
             // if there aren't then this runs and sets the game folder and also the database folder if needed
-            this.GetMHFFolderLocation();
+            GetMHFFolderLocation();
 
             // and thus set the data to database then, after doing it to the settings
-            this.databaseChanged = databaseManager.SetupLocalDatabase(this);
-            string overlayHash = databaseManager.StoreOverlayHash();
+            this.DatabaseChanged = DatabaseManager.SetupLocalDatabase(this);
+            var overlayHash = DatabaseManager.StoreOverlayHash();
             this.CheckIfLoadedInMezeporta();
             this.CheckIfLoadedOutsideQuest();
         }
         else
         {
             LoggerInstance.Fatal(CultureInfo.InvariantCulture, "Launch game first");
-            System.Windows.MessageBox.Show("Please launch game first", Messages.ErrorTitle, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+            MessageBox.Show("Please launch game first", Messages.ErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
             ApplicationService.HandleShutdown();
         }
 
@@ -125,44 +132,44 @@ public sealed class DataLoader
         stopwatch.Stop();
 
         // Get the elapsed time in milliseconds
-        double elapsedTimeMs = stopwatch.Elapsed.TotalMilliseconds;
+        var elapsedTimeMs = stopwatch.Elapsed.TotalMilliseconds;
 
         // Print the elapsed time
         LoggerInstance.Debug($"DataLoader ctor Elapsed Time: {elapsedTimeMs} ms");
     }
 
-    public bool loadedOutsideMezeporta { get; set; }
+    public bool LoadedOutsideMezeporta { get; set; }
 
     private void CheckIfLoadedInMezeporta()
     {
-        if (this.model.AreaID() != 200)
+        if (this.Model.AreaID() != 200)
         {
             LoggerInstance.Warn(CultureInfo.InvariantCulture, "Loaded overlay outside Mezeporta");
 
-            Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
+            var s = (Settings)Application.Current.TryFindResource("Settings");
             if (s.EnableOutsideMezeportaLoadingWarning)
             {
-                this.loadedOutsideMezeporta = true;
+                this.LoadedOutsideMezeporta = true;
             }
         }
     }
 
     private void CheckIfLoadedOutsideQuest()
     {
-        if (this.model.QuestID() != 0)
+        if (this.Model.QuestID() != 0)
         {
-            LoggerInstance.Fatal(CultureInfo.InvariantCulture, "Loaded overlay inside quest {0}", this.model.QuestID());
-            System.Windows.MessageBox.Show("Loaded overlay inside quest. Please load the overlay outside quests.", Messages.FatalTitle, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+            LoggerInstance.Fatal(CultureInfo.InvariantCulture, "Loaded overlay inside quest {0}", this.Model.QuestID());
+            MessageBox.Show("Loaded overlay inside quest. Please load the overlay outside quests.", Messages.FatalTitle, MessageBoxButton.OK, MessageBoxImage.Error);
             LoggingService.WriteCrashLog(new Exception("Loaded overlay inside quest"));
         }
     }
 
-    private void GetMHFFolderLocation()
+    private static void GetMHFFolderLocation()
     {
         // Get the process that is running "mhf.exe"
-        Process[] processes = Process.GetProcessesByName("mhf");
+        var processes = Process.GetProcessesByName("mhf");
 
-        Settings s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
+        var s = (Settings)Application.Current.TryFindResource("Settings");
 
         if (processes.Length > 0)
         {
@@ -177,10 +184,10 @@ public sealed class DataLoader
             }
 
             // Get the location of the first "mhf.exe" process
-            string? mhfPath = module.FileName;
+            var mhfPath = module.FileName;
 
             // Get the directory that contains "mhf.exe"
-            string? mhfDirectory = Path.GetDirectoryName(mhfPath);
+            var mhfDirectory = Path.GetDirectoryName(mhfPath);
 
             if (mhfDirectory == null)
             {
@@ -196,7 +203,7 @@ public sealed class DataLoader
             s.GameFolderPath = mhfDirectory;
 
             // Check if the "database" folder exists in the "mhf" folder
-            string databasePath = Path.Combine(mhfDirectory, "database");
+            var databasePath = Path.Combine(mhfDirectory, "database");
             if (!Directory.Exists(databasePath))
             {
                 // Create the "database" folder if it doesn't exist
@@ -204,12 +211,12 @@ public sealed class DataLoader
             }
 
             // Check if the "MHFZ_Overlay.sqlite" file exists in the "database" folder
-            string sqlitePath = Path.Combine(databasePath, "MHFZ_Overlay.sqlite");
+            var sqlitePath = Path.Combine(databasePath, "MHFZ_Overlay.sqlite");
 
             s.DatabaseFilePath = sqlitePath;
 
             // Check if the version file exists in the database folder
-            string previousVersionPath = Path.Combine(databasePath, "previous-version.txt");
+            var previousVersionPath = Path.Combine(databasePath, "previous-version.txt");
             FileService.CreateFileIfNotExists(previousVersionPath, "Creating version file at ");
 
             s.PreviousVersionFilePath = previousVersionPath;
@@ -224,11 +231,6 @@ public sealed class DataLoader
             ApplicationService.HandleShutdown();
         }
     }
-
-    private readonly List<string> bannedProcesses = new ()
-    {
-        "displayer", "Displayer", "cheat", "Cheat", "overlay", "Overlay", "Wireshark", "FreeCam",
-    };
 
     private readonly List<string> bannedFiles = new ()
     {
@@ -252,20 +254,27 @@ public sealed class DataLoader
         "LogiOverlay", // Logitech Bluetooth for mouse
     };
 
+    // needed for getting data
+    private readonly Mem m = new ();
+
     private bool steamOverlayWarningShown;
 
-    // TODO: savvy users know the bypass. Short of making the overlay too involved in the user's machine, 
+    private int index;
+
+    public bool DatabaseChanged { get; set; }
+
+    // TODO: savvy users know the bypass. Short of making the overlay too involved in the user's machine,
     // there are currently no workarounds.
     public void CheckForExternalProcesses()
     {
-        if (App.isClowdSquirrelUpdating)
+        if (App.IsClowdSquirrelUpdating || DatabaseManager.SchemaChanged)
         {
             return;
         }
 
-        var processList = System.Diagnostics.Process.GetProcesses();
-        int overlayCount = 0;
-        int gameCount = 0;
+        var processList = Process.GetProcesses();
+        var overlayCount = 0;
+        var gameCount = 0;
 
         // first we check for steam overlay, if found then skip to next iteration
         // then we apply the whitelist, if found then skip to next iteration
@@ -338,7 +347,7 @@ public sealed class DataLoader
     // TODO: test
     public void CheckForIllegalModifications()
     {
-        if (App.isClowdSquirrelUpdating)
+        if (App.IsClowdSquirrelUpdating)
         {
             return;
         }
@@ -346,7 +355,7 @@ public sealed class DataLoader
         try
         {
             // Get the process that is running "mhf.exe"
-            Process[] processes = Process.GetProcessesByName("mhf");
+            var processes = Process.GetProcessesByName("mhf");
 
             if (processes.Length > 0)
             {
@@ -362,10 +371,10 @@ public sealed class DataLoader
                 }
 
                 // Get the location of the first "mhf.exe" process
-                string? mhfPath = module.FileName;
+                var mhfPath = module.FileName;
 
                 // Get the directory that contains "mhf.exe"
-                string? mhfDirectory = Path.GetDirectoryName(mhfPath);
+                var mhfDirectory = Path.GetDirectoryName(mhfPath);
 
                 if (string.IsNullOrEmpty(mhfDirectory))
                 {
@@ -377,8 +386,8 @@ public sealed class DataLoader
                 }
 
                 // Get a list of all files and folders in the game folder
-                string[] files = Directory.GetFiles(mhfDirectory, "*", SearchOption.AllDirectories);
-                string[] folders = Directory.GetDirectories(mhfDirectory, "*", SearchOption.AllDirectories);
+                var files = Directory.GetFiles(mhfDirectory, "*", SearchOption.AllDirectories);
+                var folders = Directory.GetDirectories(mhfDirectory, "*", SearchOption.AllDirectories);
                 var isFatal = true;
                 FileService.CheckIfFileExtensionFolderExists(files, folders, this.bannedFiles, this.bannedFileExtensions, this.bannedFolders, isFatal);
             }
@@ -396,14 +405,7 @@ public sealed class DataLoader
         }
     }
 
-    public bool databaseChanged { get; set; }
-
-    //needed for getting data
-    private readonly Mem m = new ();
-
-    public bool isHighGradeEdition { get; set; }
-
-    private int index;
+    public bool IsHighGradeEdition { get; set; }
 
     /// <summary>
     /// Gets the model.
@@ -411,73 +413,71 @@ public sealed class DataLoader
     /// <value>
     /// The model.
     /// </value>
-    public AddressModel model { get; } // TODO: fix null warning
-
-    private static readonly DatabaseService databaseManager = DatabaseService.GetInstance();
-
-    /// <summary>
-    /// Creates the code cave.
-    /// </summary>
-    /// <param name="PID">The pid.</param>
-    private void CreateCodeCave(int PID)
-    {
-        // TODO why is this needed?
-        Process? proc = this.LoadMHFODLL(PID);
-        if (proc == null)
-        {
-            LoggerInstance.Fatal(CultureInfo.InvariantCulture, "Launch game first");
-            System.Windows.MessageBox.Show("Please launch game first", Messages.ErrorTitle, System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
-            ApplicationService.HandleShutdown();
-            return;
-        }
-
-        long searchAddress = this.m.AoBScan("89 04 8D 00 C6 43 00 61 E9").Result.FirstOrDefault();
-        if (searchAddress.ToString("X8", CultureInfo.InvariantCulture) == "00000000")
-        {
-            LoggerInstance.Info(CultureInfo.InvariantCulture, "Creating code cave");
-
-            // Create code cave and get its address
-            long baseScanAddress = this.m.AoBScan("0F B7 8a 24 06 00 00 0f b7 ?? ?? ?? c1 c1 e1 0b").Result.FirstOrDefault();
-            UIntPtr codecaveAddress = this.m.CreateCodeCave(baseScanAddress.ToString("X8", CultureInfo.InvariantCulture), new byte[] { 0x0F, 0xB7, 0x8A, 0x24, 0x06, 0x00, 0x00, 0x0F, 0xB7, 0x52, 0x0C, 0x88, 0x15, 0x21, 0x00, 0x0F, 0x15, 0x8B, 0xC1, 0xC1, 0xE1, 0x0B, 0x0F, 0xBF, 0xC9, 0xC1, 0xE8, 0x05, 0x09, 0xC8, 0x01, 0xD2, 0xB9, 0x8E, 0x76, 0x21, 0x25, 0x29, 0xD1, 0x66, 0x8B, 0x11, 0x66, 0xF7, 0xD2, 0x0F, 0xBF, 0xCA, 0x0F, 0xBF, 0x15, 0xC4, 0x22, 0xEA, 0x17, 0x31, 0xC8, 0x31, 0xD0, 0xB9, 0xC0, 0x5E, 0x73, 0x16, 0x0F, 0xBF, 0xD1, 0x31, 0xD0, 0x60, 0x8B, 0x0D, 0x21, 0x00, 0x0F, 0x15, 0x89, 0x04, 0x8D, 0x00, 0xC6, 0x43, 0x00, 0x61 }, 63, 0x100);
-
-            // Change addresses
-            UIntPtr storeValueAddress = codecaveAddress + 125;                  //address where store some value?
-            string storeValueAddressString = storeValueAddress.ToString("X8", CultureInfo.InvariantCulture);
-            byte[] storeValueAddressByte = Enumerable.Range(0, storeValueAddressString.Length).Where(x => x % 2 == 0).Select(x => Convert.ToByte(storeValueAddressString.Substring(x, 2), 16)).ToArray();
-            Array.Reverse(storeValueAddressByte, 0, storeValueAddressByte.Length);
-            byte[] by15 = { 136, 21 };
-            this.m.WriteBytes(codecaveAddress + 11, by15);
-            this.m.WriteBytes(codecaveAddress + 13, storeValueAddressByte);  //1
-            this.m.WriteBytes(codecaveAddress + 72, storeValueAddressByte);  //2
-
-            this.WriteByteFromAddress(codecaveAddress, proc, this.isHighGradeEdition ? 249263758 : 102223598, 33);
-            this.WriteByteFromAddress(codecaveAddress, proc, this.isHighGradeEdition ? 27534020 : 27601756, 51);
-            this.WriteByteFromAddress(codecaveAddress, proc, this.isHighGradeEdition ? 2973376 : 2865056, 60);
-        }
-        else
-        {
-            this.LoadMHFODLL(PID);
-        }
-    }
+    public AddressModel Model { get; } // TODO: fix null warning
 
     public string GetQuestTimeCompletion()
     {
-        double totalQuestDuration = (double)this.model.TimeDefInt() / Numbers.FramesPerSecond; // Total duration of the quest in seconds
-        double timeRemainingInQuest = (double)this.model.TimeInt() / Numbers.FramesPerSecond; // Time left in the quest in seconds
+        var totalQuestDuration = (double)this.Model.TimeDefInt() / Numbers.FramesPerSecond; // Total duration of the quest in seconds
+        var timeRemainingInQuest = (double)this.Model.TimeInt() / Numbers.FramesPerSecond; // Time left in the quest in seconds
 
         // Calculate the elapsed time by subtracting the time left from the total duration
-        double elapsedTime = totalQuestDuration - timeRemainingInQuest;
+        var elapsedTime = totalQuestDuration - timeRemainingInQuest;
 
         // Convert the elapsed time from seconds to milliseconds
         elapsedTime *= 1_000;
 
         // Convert the elapsed time to a TimeSpan object
-        TimeSpan timeSpan = TimeSpan.FromMilliseconds(elapsedTime);
+        var timeSpan = TimeSpan.FromMilliseconds(elapsedTime);
 
         // Format the TimeSpan object as a string
-        string formattedTime = timeSpan.ToString(TimeFormats.MinutesSecondsMilliseconds, CultureInfo.InvariantCulture);
+        var formattedTime = timeSpan.ToString(TimeFormats.MinutesSecondsMilliseconds, CultureInfo.InvariantCulture);
 
         return formattedTime;
+    }
+
+    /// <summary>
+    /// Creates the code cave.
+    /// </summary>
+    /// <param name="pID">The pid.</param>
+    private void CreateCodeCave(int pID)
+    {
+        // TODO why is this needed?
+        var proc = this.LoadMHFODLL(pID);
+        if (proc == null)
+        {
+            LoggerInstance.Fatal(CultureInfo.InvariantCulture, "Launch game first");
+            MessageBox.Show("Please launch game first", Messages.ErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
+            ApplicationService.HandleShutdown();
+            return;
+        }
+
+        var searchAddress = this.m.AoBScan("89 04 8D 00 C6 43 00 61 E9").Result.FirstOrDefault();
+        if (searchAddress.ToString("X8", CultureInfo.InvariantCulture) == "00000000")
+        {
+            LoggerInstance.Info(CultureInfo.InvariantCulture, "Creating code cave");
+
+            // Create code cave and get its address
+            var baseScanAddress = this.m.AoBScan("0F B7 8a 24 06 00 00 0f b7 ?? ?? ?? c1 c1 e1 0b").Result.FirstOrDefault();
+            var codecaveAddress = this.m.CreateCodeCave(baseScanAddress.ToString("X8", CultureInfo.InvariantCulture), new byte[] { 0x0F, 0xB7, 0x8A, 0x24, 0x06, 0x00, 0x00, 0x0F, 0xB7, 0x52, 0x0C, 0x88, 0x15, 0x21, 0x00, 0x0F, 0x15, 0x8B, 0xC1, 0xC1, 0xE1, 0x0B, 0x0F, 0xBF, 0xC9, 0xC1, 0xE8, 0x05, 0x09, 0xC8, 0x01, 0xD2, 0xB9, 0x8E, 0x76, 0x21, 0x25, 0x29, 0xD1, 0x66, 0x8B, 0x11, 0x66, 0xF7, 0xD2, 0x0F, 0xBF, 0xCA, 0x0F, 0xBF, 0x15, 0xC4, 0x22, 0xEA, 0x17, 0x31, 0xC8, 0x31, 0xD0, 0xB9, 0xC0, 0x5E, 0x73, 0x16, 0x0F, 0xBF, 0xD1, 0x31, 0xD0, 0x60, 0x8B, 0x0D, 0x21, 0x00, 0x0F, 0x15, 0x89, 0x04, 0x8D, 0x00, 0xC6, 0x43, 0x00, 0x61 }, 63, 0x100);
+
+            // Change addresses
+            var storeValueAddress = codecaveAddress + 125;                  // address where store some value?
+            var storeValueAddressString = storeValueAddress.ToString("X8", CultureInfo.InvariantCulture);
+            var storeValueAddressByte = Enumerable.Range(0, storeValueAddressString.Length).Where(x => x % 2 == 0).Select(x => Convert.ToByte(storeValueAddressString.Substring(x, 2), 16)).ToArray();
+            Array.Reverse(storeValueAddressByte, 0, storeValueAddressByte.Length);
+            byte[] by15 = { 136, 21 };
+            this.m.WriteBytes(codecaveAddress + 11, by15);
+            this.m.WriteBytes(codecaveAddress + 13, storeValueAddressByte);  // 1
+            this.m.WriteBytes(codecaveAddress + 72, storeValueAddressByte);  // 2
+
+            this.WriteByteFromAddress(codecaveAddress, proc, this.IsHighGradeEdition ? 249263758 : 102223598, 33);
+            this.WriteByteFromAddress(codecaveAddress, proc, this.IsHighGradeEdition ? 27534020 : 27601756, 51);
+            this.WriteByteFromAddress(codecaveAddress, proc, this.IsHighGradeEdition ? 2973376 : 2865056, 60);
+        }
+        else
+        {
+            this.LoadMHFODLL(pID);
+        }
     }
 
     /// <summary>
@@ -489,9 +489,9 @@ public sealed class DataLoader
     /// <param name="offset2">The offset2.</param>
     private void WriteByteFromAddress(UIntPtr codecaveAddress, Process proc, long offset1, int offset2)
     {
-        long address = proc.Modules[this.index].BaseAddress.ToInt32() + offset1;
-        string addressString = address.ToString("X8", CultureInfo.InvariantCulture);
-        byte[] addressByte = Enumerable.Range(0, addressString.Length).Where(x => x % 2 == 0).Select(x => Convert.ToByte(addressString.Substring(x, 2), 16)).ToArray();
+        var address = proc.Modules[this.index].BaseAddress.ToInt32() + offset1;
+        var addressString = address.ToString("X8", CultureInfo.InvariantCulture);
+        var addressByte = Enumerable.Range(0, addressString.Length).Where(x => x % 2 == 0).Select(x => Convert.ToByte(addressString.Substring(x, 2), 16)).ToArray();
         Array.Reverse(addressByte, 0, addressByte.Length);
         this.m.WriteBytes(codecaveAddress + offset2, addressByte);
     }
@@ -499,41 +499,41 @@ public sealed class DataLoader
     /// <summary>
     /// Loads the mhfo.dll.
     /// </summary>
-    /// <param name="PID">The pid.</param>
+    /// <param name="pID">The pid.</param>
     /// <returns></returns>
-    private Process? LoadMHFODLL(int PID)
+    private Process? LoadMHFODLL(int pID)
     {
         LoggerInstance.Info(CultureInfo.InvariantCulture, "Loading MHFODLL");
 
         // Search and get mhfo-hd.dll module base address
-        Process proccess = Process.GetProcessById(PID);
+        var proccess = Process.GetProcessById(pID);
         if (proccess == null)
         {
             LoggerInstance.Warn(CultureInfo.InvariantCulture, "Process not found");
             return null;
         }
 
-        var ModuleList = new List<string>();
+        var moduleList = new List<string>();
         foreach (ProcessModule md in proccess.Modules)
         {
-            string? moduleName = md.ModuleName;
+            var moduleName = md.ModuleName;
             if (moduleName != null)
             {
-                ModuleList.Add(moduleName);
+                moduleList.Add(moduleName);
             }
         }
 
-        this.index = ModuleList.IndexOf("mhfo-hd.dll");
+        this.index = moduleList.IndexOf("mhfo-hd.dll");
         if (this.index > 0)
         {
-            this.isHighGradeEdition = true;
+            this.IsHighGradeEdition = true;
         }
         else
         {
-            this.index = ModuleList.IndexOf("mhfo.dll");
+            this.index = moduleList.IndexOf("mhfo.dll");
             if (this.index > 0)
             {
-                this.isHighGradeEdition = false;
+                this.IsHighGradeEdition = false;
             }
             else
             {

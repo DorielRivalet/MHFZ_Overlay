@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 /// <summary>
-/// The Raviente Trigger Events list
+/// The Raviente Trigger Events list.
 /// </summary>
 public static class RavienteTriggerEvents
 {

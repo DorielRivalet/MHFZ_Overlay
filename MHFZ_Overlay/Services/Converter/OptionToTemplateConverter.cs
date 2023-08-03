@@ -10,6 +10,7 @@ using MHFZ_Overlay.Models;
 
 public sealed class OptionToTemplateConverter : DataTemplateSelector
 {
+    /// <inheritdoc/>
     public override DataTemplate? SelectTemplate(object item, DependencyObject container)
     {
         if (item is not QuestLogsOption option)

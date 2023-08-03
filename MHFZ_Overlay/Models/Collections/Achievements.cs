@@ -11,7 +11,7 @@ using MHFZ_Overlay.Models;
 using MHFZ_Overlay.Models.Structures;
 
 /// <summary>
-/// Achievements dictionary. TODO
+/// Achievements dictionary. TODO.
 /// </summary>
 public static class Achievements
 {
@@ -32,7 +32,7 @@ public static class Achievements
                 Rank = AchievementRank.Bronze,
                 Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_red2.jpg",
                 Objective = "Complete 1 Zenith★4 Akura Vashimu quest.",
-            IsSecret = false,
+                IsSecret = false,
                 Hint = string.Empty,
             }
         },
@@ -45,7 +45,7 @@ public static class Achievements
                 Rank = AchievementRank.Bronze,
                 Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_red2.jpg",
                 Objective = "Complete 10 Zenith★4 Akura Vashimu quests.",
-            IsSecret = false,
+                IsSecret = false,
                 Hint = string.Empty,
             }
         },
@@ -58,7 +58,7 @@ public static class Achievements
                 Rank = AchievementRank.Silver,
                 Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_white2.jpg",
                 Objective = "Complete 25 Zenith★4 Akura Vashimu quests.",
-            IsSecret = false,
+                IsSecret = false,
                 Hint = string.Empty,
             }
         },

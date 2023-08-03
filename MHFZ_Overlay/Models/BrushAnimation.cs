@@ -10,27 +10,31 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 
-//https://stackoverflow.com/questions/8096852/brush-to-brush-animation
+// https://stackoverflow.com/questions/8096852/brush-to-brush-animation
 public sealed class BrushAnimation : AnimationTimeline
 {
-    public override Type TargetPropertyType
+    public static readonly DependencyProperty FromProperty =
+        DependencyProperty.Register("From", typeof(Brush), typeof(BrushAnimation));
+
+    /// <inheritdoc/>
+    public override Type TargetPropertyType => typeof(Brush);
+
+    // we must define From and To, AnimationTimeline does not have this properties
+    public Brush From
     {
-        get
-        {
-            return typeof(Brush);
-        }
+        get => (Brush)this.GetValue(FromProperty);
+
+        set => this.SetValue(FromProperty, value);
     }
 
+    /// <inheritdoc/>
     public override object GetCurrentValue(
         object defaultOriginValue,
         object defaultDestinationValue,
-        AnimationClock animationClock)
-    {
-        return GetCurrentValue(
+        AnimationClock animationClock) => this.GetCurrentValue(
             defaultOriginValue as Brush,
             defaultDestinationValue as Brush,
             animationClock);
-    }
 
     public object GetCurrentValue(
         Brush? defaultOriginValue,
@@ -42,7 +46,7 @@ public sealed class BrushAnimation : AnimationTimeline
             return Brushes.Transparent;
         }
 
-        // use the standard values if From and To are not set 
+        // use the standard values if From and To are not set
         // (it is the value of the given property)
         defaultOriginValue = this.From ?? defaultOriginValue;
         defaultDestinationValue = this.To ?? defaultDestinationValue;
@@ -70,28 +74,15 @@ public sealed class BrushAnimation : AnimationTimeline
         });
     }
 
-    protected override Freezable CreateInstanceCore()
-    {
-        return new BrushAnimation();
-    }
-
-    //we must define From and To, AnimationTimeline does not have this properties
-    public Brush From
-    {
-        get { return (Brush)GetValue(FromProperty); }
-
-        set { SetValue(FromProperty, value); }
-    }
+    /// <inheritdoc/>
+    protected override Freezable CreateInstanceCore() => new BrushAnimation();
 
     public Brush To
     {
-        get { return (Brush)GetValue(ToProperty); }
+        get => (Brush)this.GetValue(ToProperty);
 
-        set { SetValue(ToProperty, value); }
+        set => this.SetValue(ToProperty, value);
     }
-
-    public static readonly DependencyProperty FromProperty =
-        DependencyProperty.Register("From", typeof(Brush), typeof(BrushAnimation));
 
     public static readonly DependencyProperty ToProperty =
         DependencyProperty.Register("To", typeof(Brush), typeof(BrushAnimation));

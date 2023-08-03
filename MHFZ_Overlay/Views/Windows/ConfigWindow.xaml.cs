@@ -5,7 +5,6 @@
 namespace MHFZ_Overlay.Views.Windows;
 
 using System;
-using System.CodeDom;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -19,7 +18,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
@@ -60,608 +58,428 @@ using TextBlock = System.Windows.Controls.TextBlock;
 using TextBox = System.Windows.Controls.TextBox;
 
 /// <summary>
-/// Interaction logic for ConfigWindow.xaml
+/// Interaction logic for ConfigWindow.xaml.
 /// </summary>
 public partial class ConfigWindow : FluentWindow
 {
+    public static readonly string RickRoll = "https://www.youtube.com/embed/dQw4w9WgXcQ";
+
+    private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
+
     /// <summary>
-    /// Gets or sets the main window.
+    /// Gets the main window.
     /// </summary>
     /// <value>
     /// The main window.
     /// </value>
     private MainWindow MainWindow { get; }
 
-    private static readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+    private static readonly string RandomMonsterImage = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/random.png";
 
-    private static string randomMonsterImage = "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/random.png";
+    private static readonly DatabaseService DatabaseManager = DatabaseService.GetInstance();
+    private static readonly AchievementService AchievementManager = AchievementService.GetInstance();
+    private static readonly OverlaySettingsService OverlaySettingsManager = OverlaySettingsService.GetInstance();
 
-    private static readonly DatabaseService databaseManager = DatabaseService.GetInstance();
-    private static readonly AchievementService achievementManager = AchievementService.GetInstance();
-    private static readonly OverlaySettingsService overlaySettingsManager = OverlaySettingsService.GetInstance();
-
-    public static Uri MonsterInfoLink
+    // TODO put this in a read-only dictionary thing
+    private readonly MonsterLog[] monsters = new MonsterLog[]
     {
-        get { return new Uri(randomMonsterImage, UriKind.RelativeOrAbsolute); }
-    }
+      new MonsterLog(0, "None", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/none.png", 0),
+      new MonsterLog(1, "Rathian", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/rathian.png", 0, true),
+      new MonsterLog(2, "Fatalis", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/fatalis.png", 0, true),
+      new MonsterLog(3, "Kelbi", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/kelbi.png", 0),
+      new MonsterLog(4, "Mosswine", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/mosswine.png", 0),
+      new MonsterLog(5, "Bullfango", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/bullfango.png", 0),
+      new MonsterLog(6, "Yian Kut-Ku", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/yian_kut-ku.png", 0, true),
+      new MonsterLog(7, "Lao-Shan Lung", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/lao-shan_lung.png", 0, true),
+      new MonsterLog(8, "Cephadrome", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/cephadrome.png", 0, true),
+      new MonsterLog(9, "Felyne", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/felyne.png", 0),
+      new MonsterLog(10, "Veggie Elder", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/random.png", 0),
+      new MonsterLog(11, "Rathalos", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/rathalos.png", 0, true),
+      new MonsterLog(12, "Aptonoth", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/aptonoth.png", 0),
+      new MonsterLog(13, "Genprey", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/genprey.png", 0),
+      new MonsterLog(14, "Diablos", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/diablos.png", 0, true),
+      new MonsterLog(15, "Khezu", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/khezu.png", 0, true),
+      new MonsterLog(16, "Velociprey", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/velociprey.png", 0),
+      new MonsterLog(17, "Gravios", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/gravios.png", 0, true),
+      new MonsterLog(18, "Felyne?", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/felyne.png", 0),
+      new MonsterLog(19, "Vespoid", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/vespoid.png", 0),
+      new MonsterLog(20, "Gypceros", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/gypceros.png", 0, true),
+      new MonsterLog(21, "Plesioth", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/plesioth.png", 0, true),
+      new MonsterLog(22, "Basarios", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/basarios.png", 0, true),
+      new MonsterLog(23, "Melynx", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/melynx.png", 0),
+      new MonsterLog(24, "Hornetaur", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/hornetaur.png", 0),
+      new MonsterLog(25, "Apceros", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/apceros.png", 0),
+      new MonsterLog(26, "Monoblos", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/monoblos.png", 0, true),
+      new MonsterLog(27, "Velocidrome", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/velocidrome.png", 0, true),
+      new MonsterLog(28, "Gendrome", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/gendrome.png", 0, true),
+      new MonsterLog(29, "Rocks", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/random.png", 0),
+      new MonsterLog(30, "Ioprey", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/ioprey.png", 0),
+      new MonsterLog(31, "Iodrome", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/iodrome.png", 0, true),
+      new MonsterLog(32, "Pugis", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/random.png", 0),
+      new MonsterLog(33, "Kirin", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/kirin.png", 0, true),
+      new MonsterLog(34, "Cephalos", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/cephalos.png", 0),
+      new MonsterLog(35, "Giaprey / Giadrome", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/giaprey.png", 0),
+      new MonsterLog(36, "Crimson Fatalis", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/crimson_fatalis.png", 0, true),
+      new MonsterLog(37, "Pink Rathian", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/pink_rathian.png", 0, true),
+      new MonsterLog(38, "Blue Yian Kut-Ku", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/blue_yian_kut-ku.png", 0, true),
+      new MonsterLog(39, "Purple Gypceros", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/purple_gypceros.png", 0, true),
+      new MonsterLog(40, "Yian Garuga", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/yian_garuga.png", 0, true),
+      new MonsterLog(41, "Silver Rathalos", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/silver_rathalos.png", 0, true),
+      new MonsterLog(42, "Gold Rathian", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/gold_rathian.png", 0, true),
+      new MonsterLog(43, "Black Diablos", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/black_diablos.png", 0, true),
+      new MonsterLog(44, "White Monoblos", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/white_monoblos.png", 0, true),
+      new MonsterLog(45, "Red Khezu", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/red_khezu.png", 0, true),
+      new MonsterLog(46, "Green Plesioth", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/green_plesioth.png", 0, true),
+      new MonsterLog(47, "Black Gravios", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/black_gravios.png", 0, true),
+      new MonsterLog(48, "Daimyo Hermitaur", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/daimyo_hermitaur.png", 0, true),
+      new MonsterLog(49, "Azure Rathalos", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/azure_rathalos.png", 0, true),
+      new MonsterLog(50, "Ashen Lao-Shan Lung", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/ashen_lao-shan_lung.png", 0, true),
+      new MonsterLog(51, "Blangonga", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/blangonga.png", 0, true),
+      new MonsterLog(52, "Congalala", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/congalala.png", 0, true),
+      new MonsterLog(53, "Rajang", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/rajang.png", 0, true),
+      new MonsterLog(54, "Kushala Daora", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/kushala_daora.png", 0, true),
+      new MonsterLog(55, "Shen Gaoren", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/shen_gaoren.png", 0, true),
+      new MonsterLog(56, "Great Thunderbug", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/great_thunderbug.png", 0),
+      new MonsterLog(57, "Shakalaka", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/shakalaka.png", 0),
+      new MonsterLog(58, "Yama Tsukami", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/yama_tsukami.png", 0, true),
+      new MonsterLog(59, "Chameleos", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/chameleos.png", 0, true),
+      new MonsterLog(60, "Rusted Kushala Daora", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/rusted_kushala_daora.png", 0, true),
+      new MonsterLog(61, "Blango", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/blango.png", 0),
+      new MonsterLog(62, "Conga", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/conga.png", 0),
+      new MonsterLog(63, "Remobra", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/remobra.png", 0),
+      new MonsterLog(64, "Lunastra", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/lunastra.png", 0, true),
+      new MonsterLog(65, "Teostra", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/teostra.png", 0, true),
+      new MonsterLog(66, "Hermitaur", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/hermitaur.png", 0),
+      new MonsterLog(67, "Shogun Ceanataur", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/shogun_ceanataur.png", 0, true),
+      new MonsterLog(68, "Bulldrome", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/bulldrome.png", 0, true),
+      new MonsterLog(69, "Anteka", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/anteka.png", 0),
+      new MonsterLog(70, "Popo", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/popo.png", 0),
+      new MonsterLog(71, "White Fatalis", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/white_fatalis.png", 0, true),
+      new MonsterLog(72, "Yama Tsukami", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/yama_tsukami.png", 0, true),
+      new MonsterLog(73, "Ceanataur", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/ceanataur.png", 0),
+      new MonsterLog(74, "Hypnocatrice", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/hypnoc.png", 0, true),
+      new MonsterLog(75, "Lavasioth", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/lavasioth.png", 0, true),
+      new MonsterLog(76, "Tigrex", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/tigrex.png", 0, true),
+      new MonsterLog(77, "Akantor", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/akantor.png", 0, true),
+      new MonsterLog(78, "Bright Hypnoc", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/bright_hypnoc.png", 0, true),
+      new MonsterLog(79, "Red Lavasioth", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/red_lavasioth.png", 0, true),
+      new MonsterLog(80, "Espinas", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/espinas.png", 0, true),
+      new MonsterLog(81, "Orange Espinas", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/orange_espinas.png", 0, true),
+      new MonsterLog(82, "Silver Hypnoc", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/silver_hypnoc.png", 0, true),
+      new MonsterLog(83, "Akura Vashimu", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/akura_vashimu.png", 0, true),
+      new MonsterLog(84, "Akura Jebia", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/akura_jebia.png", 0, true),
+      new MonsterLog(85, "Berukyurosu", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/berukyurosu.png", 0, true),
+      new MonsterLog(86, "Cactus", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/cactus.png", 0),
+      new MonsterLog(87, "Gorge Objects", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/random.png", 0),
+      new MonsterLog(88, "Gorge Rocks", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/random.png", 0),
+      new MonsterLog(89, "Pariapuria", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/pariapuria.png", 0, true),
+      new MonsterLog(90, "White Espinas", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/white_espinas.png", 0, true),
+      new MonsterLog(91, "Kamu Orugaron", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/kamu_orugaron.png", 0, true),
+      new MonsterLog(92, "Nono Orugaron", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/nono_orugaron.png", 0, true),
+      new MonsterLog(93, "Raviente", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/raviente.png", 0, true),
+      new MonsterLog(94, "Dyuragaua", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/dyuragaua.png", 0, true),
+      new MonsterLog(95, "Doragyurosu", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/doragyurosu.png", 0, true),
+      new MonsterLog(96, "Gurenzeburu", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/gurenzeburu.png", 0, true),
+      new MonsterLog(97, "Burukku", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/burukku.png", 0),
+      new MonsterLog(98, "Erupe", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/erupe.png", 0),
+      new MonsterLog(99, "Rukodiora", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/rukodiora.png", 0, true),
+      new MonsterLog(100, "UNKNOWN", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/unknown.png", 0, true),
+      new MonsterLog(101, "Gogomoa", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/gogomoa.png", 0, true),
+      new MonsterLog(102, "Kokomoa", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/gogomoa.png", 0),
+      new MonsterLog(103, "Taikun Zamuza", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/taikun_zamuza.png", 0, true),
+      new MonsterLog(104, "Abiorugu", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/abiorugu.png", 0, true),
+      new MonsterLog(105, "Kuarusepusu", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/kuarusepusu.png", 0, true),
+      new MonsterLog(106, "Odibatorasu", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/odibatorasu.png", 0, true),
+      new MonsterLog(107, "Disufiroa", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/disufiroa.png", 0, true),
+      new MonsterLog(108, "Rebidiora", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/rebidiora.png", 0, true),
+      new MonsterLog(109, "Anorupatisu", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/anorupatisu.png", 0, true),
+      new MonsterLog(110, "Hyujikiki", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/hyujikiki.png", 0, true),
+      new MonsterLog(111, "Midogaron", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/midogaron.png", 0, true),
+      new MonsterLog(112, "Giaorugu", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/giaorugu.png", 0, true),
+      new MonsterLog(113, "Mi Ru", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/mi_ru.png", 0, true),
+      new MonsterLog(114, "Farunokku", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/farunokku.png", 0, true),
+      new MonsterLog(115, "Pokaradon", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/pokaradon.png", 0, true),
+      new MonsterLog(116, "Shantien", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/shantien.png", 0, true),
+      new MonsterLog(117, "Pokara", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/pokara.png", 0),
+      new MonsterLog(118, "Dummy", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/random.png", 0),
+      new MonsterLog(119, "Goruganosu", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/goruganosu.png", 0, true),
+      new MonsterLog(120, "Aruganosu", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/aruganosu.png", 0, true),
+      new MonsterLog(121, "Baruragaru", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/baruragaru.png", 0, true),
+      new MonsterLog(122, "Zerureusu", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/zerureusu.png", 0, true),
+      new MonsterLog(123, "Gougarf", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/gougarf.png", 0, true),
+      new MonsterLog(124, "Uruki", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/uruki.png", 0),
+      new MonsterLog(125, "Forokururu", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/forokururu.png", 0, true),
+      new MonsterLog(126, "Meraginasu", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/meraginasu.png", 0, true),
+      new MonsterLog(127, "Diorex", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/diorex.png", 0, true),
+      new MonsterLog(128, "Garuba Daora", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/garuba_daora.png", 0, true),
+      new MonsterLog(129, "Inagami", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/inagami.png", 0, true),
+      new MonsterLog(130, "Varusaburosu", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/varusaburosu.png", 0, true),
+      new MonsterLog(131, "Poborubarumu", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/poborubarumu.png", 0, true),
+      new MonsterLog(132, "1st District Duremudira", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/duremudira.png", 0, true),
+      new MonsterLog(133, "UNK", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/random.png", 0),
+      new MonsterLog(134, "Felyne", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/felyne.png", 0),
+      new MonsterLog(135, "Blue NPC", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/random.png", 0),
+      new MonsterLog(136, "UNK", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/random.png", 0),
+      new MonsterLog(137, "Cactus", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/cactus.png", 0),
+      new MonsterLog(138, "Veggie Elders", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/random.png", 0),
+      new MonsterLog(139, "Gureadomosu", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/gureadomosu.png", 0, true),
+      new MonsterLog(140, "Harudomerugu", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/harudomerugu.png", 0, true),
+      new MonsterLog(141, "Toridcless", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/toridcless.png", 0, true),
+      new MonsterLog(142, "Gasurabazura", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/gasurabazura.png", 0, true),
+      new MonsterLog(143, "Kusubami", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/kusubami.png", 0),
+      new MonsterLog(144, "Yama Kurai", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/yama_kurai.png", 0, true),
+      new MonsterLog(145, "2nd District Duremudira", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/duremudira.png", 0, true),
+      new MonsterLog(146, "Zinogre", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/zinogre.png", 0, true),
+      new MonsterLog(147, "Deviljho", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/deviljho.png", 0, true),
+      new MonsterLog(148, "Brachydios", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/brachydios.png", 0, true),
+      new MonsterLog(149, "Berserk Raviente", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/berserk_raviente.png", 0, true),
+      new MonsterLog(150, "Toa Tesukatora", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/toa_tesukatora.png", 0, true),
+      new MonsterLog(151, "Barioth", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/barioth.png", 0, true),
+      new MonsterLog(152, "Uragaan", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/uragaan.png", 0, true),
+      new MonsterLog(153, "Stygian Zinogre", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/stygian_zinogre.png", 0, true),
+      new MonsterLog(154, "Guanzorumu", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/guanzorumu.png", 0, true),
+      new MonsterLog(155, "Starving Deviljho", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/starving_deviljho.png", 0, true),
+      new MonsterLog(156, "UNK", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/random.png", 0),
+      new MonsterLog(157, "Egyurasu", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/random.png", 0),
+      new MonsterLog(158, "Voljang", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/voljang.png", 0, true),
+      new MonsterLog(159, "Nargacuga", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/nargacuga.png", 0, true),
+      new MonsterLog(160, "Keoaruboru", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/keoaruboru.png", 0, true),
+      new MonsterLog(161, "Zenaserisu", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/zenaserisu.png", 0, true),
+      new MonsterLog(162, "Gore Magala", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/gore_magala.png", 0, true),
+      new MonsterLog(163, "Blinking Nargacuga", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/blinking_nargacuga.png", 0, true),
+      new MonsterLog(164, "Shagaru Magala", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/shagaru_magala.png", 0, true),
+      new MonsterLog(165, "Amatsu", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/amatsu.png", 0, true),
+      new MonsterLog(166, "Elzelion", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/elzelion.png", 0, true),
+      new MonsterLog(167, "Arrogant Duremudira", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/arrogant_duremudira.png", 0, true),
+      new MonsterLog(168, "Rocks", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/random.png", 0),
+      new MonsterLog(169, "Seregios", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/seregios.png", 0, true),
+      new MonsterLog(170, "Bogabadorumu", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/zenith_bogabadorumu.gif", 0, true),
+      new MonsterLog(171, "Unknown Blue Barrel", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/random.png", 0),
+      new MonsterLog(172, "Blitzkrieg Bogabadorumu", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/blitzkrieg_bogabadorumu.png", 0, true),
+      new MonsterLog(173, "Costumed Uruki", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/uruki.png", 0),
+      new MonsterLog(174, "Sparkling Zerureusu", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/sparkling_zerureusu.png", 0, true),
+      new MonsterLog(175, "PSO2 Rappy", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/pso2_rappy.png", 0),
+      new MonsterLog(176, "King Shakalaka", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/king_shakalaka.png", 0, true),
+    };
 
-    public static readonly string RickRoll = "https://www.youtube.com/embed/dQw4w9WgXcQ";
+    private readonly IReadOnlyList<MonsterInfo> monsterInfos = MonsterInfos.MonsterInfoIDs;
 
-    public static string getFeriasLink()
+    private readonly GitHubClient client = new (new ProductHeaderValue("MHFZ_Overlay"));
+
+    private List<WeaponUsage> weaponUsageData = new ();
+
+    public static Uri MonsterInfoLink => new (RandomMonsterImage, UriKind.RelativeOrAbsolute);
+
+    public static Uri MonsterImage => new (RandomMonsterImage, UriKind.RelativeOrAbsolute);
+
+    public static string GetFeriasLink()
     {
-        Settings s = (Settings)Application.Current.TryFindResource("Settings");
+        var s = (Settings)Application.Current.TryFindResource("Settings");
         return s.FeriasVersionLink;
     }
 
-    public static Uri MonsterImage
-    {
-        get { return new Uri(randomMonsterImage, UriKind.RelativeOrAbsolute); }
-    }
-
-    // TODO put this in a read-only dictionary thing
-    private MonsterLog[] Monsters = new MonsterLog[]
-    {
-      new MonsterLog(0, "None", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/none.png", 0),
-      new MonsterLog(1, "Rathian", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/rathian.png", 0, true),
-      new MonsterLog(2, "Fatalis", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/fatalis.png", 0, true),
-      new MonsterLog(3, "Kelbi", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/kelbi.png", 0),
-      new MonsterLog(4, "Mosswine", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/mosswine.png", 0),
-      new MonsterLog(5, "Bullfango", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/bullfango.png", 0),
-      new MonsterLog(6, "Yian Kut-Ku", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/yian_kut-ku.png", 0, true),
-      new MonsterLog(7, "Lao-Shan Lung", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/lao-shan_lung.png", 0, true),
-      new MonsterLog(8, "Cephadrome", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/cephadrome.png", 0, true),
-      new MonsterLog(9, "Felyne", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/felyne.png", 0),
-      new MonsterLog(10, "Veggie Elder", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/random.png", 0),
-      new MonsterLog(11, "Rathalos", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/rathalos.png", 0, true),
-      new MonsterLog(12, "Aptonoth", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/aptonoth.png", 0),
-      new MonsterLog(13, "Genprey", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/genprey.png", 0),
-      new MonsterLog(14, "Diablos", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/diablos.png", 0, true),
-      new MonsterLog(15, "Khezu", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/khezu.png", 0, true),
-      new MonsterLog(16, "Velociprey", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/velociprey.png", 0),
-      new MonsterLog(17, "Gravios", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/gravios.png", 0, true),
-      new MonsterLog(18, "Felyne?", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/felyne.png", 0),
-      new MonsterLog(19, "Vespoid", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/vespoid.png", 0),
-      new MonsterLog(20, "Gypceros", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/gypceros.png", 0, true),
-      new MonsterLog(21, "Plesioth", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/plesioth.png", 0, true),
-      new MonsterLog(22, "Basarios", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/basarios.png", 0, true),
-      new MonsterLog(23, "Melynx", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/melynx.png", 0),
-      new MonsterLog(24, "Hornetaur", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/hornetaur.png", 0),
-      new MonsterLog(25, "Apceros", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/apceros.png", 0),
-      new MonsterLog(26, "Monoblos", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/monoblos.png", 0, true),
-      new MonsterLog(27, "Velocidrome", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/velocidrome.png", 0, true),
-      new MonsterLog(28, "Gendrome", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/gendrome.png", 0, true),
-      new MonsterLog(29, "Rocks", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/random.png", 0),
-      new MonsterLog(30, "Ioprey", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/ioprey.png", 0),
-      new MonsterLog(31, "Iodrome", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/iodrome.png", 0, true),
-      new MonsterLog(32, "Pugis", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/random.png", 0),
-      new MonsterLog(33, "Kirin", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/kirin.png", 0, true),
-      new MonsterLog(34, "Cephalos", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/cephalos.png", 0),
-      new MonsterLog(35, "Giaprey / Giadrome", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/giaprey.png", 0),
-      new MonsterLog(36, "Crimson Fatalis", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/crimson_fatalis.png", 0, true),
-      new MonsterLog(37, "Pink Rathian", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/pink_rathian.png", 0, true),
-      new MonsterLog(38, "Blue Yian Kut-Ku", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/blue_yian_kut-ku.png", 0, true),
-      new MonsterLog(39, "Purple Gypceros", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/purple_gypceros.png", 0, true),
-      new MonsterLog(40, "Yian Garuga", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/yian_garuga.png", 0, true),
-      new MonsterLog(41, "Silver Rathalos", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/silver_rathalos.png", 0, true),
-      new MonsterLog(42, "Gold Rathian", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/gold_rathian.png", 0, true),
-      new MonsterLog(43, "Black Diablos", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/black_diablos.png", 0, true),
-      new MonsterLog(44, "White Monoblos", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/white_monoblos.png", 0, true),
-      new MonsterLog(45, "Red Khezu", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/red_khezu.png", 0, true),
-      new MonsterLog(46, "Green Plesioth", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/green_plesioth.png", 0, true),
-      new MonsterLog(47, "Black Gravios", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/black_gravios.png", 0, true),
-      new MonsterLog(48, "Daimyo Hermitaur", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/daimyo_hermitaur.png", 0, true),
-      new MonsterLog(49, "Azure Rathalos", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/azure_rathalos.png", 0, true),
-      new MonsterLog(50, "Ashen Lao-Shan Lung", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/ashen_lao-shan_lung.png", 0, true),
-      new MonsterLog(51, "Blangonga", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/blangonga.png", 0, true),
-      new MonsterLog(52, "Congalala", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/congalala.png", 0, true),
-      new MonsterLog(53, "Rajang", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/rajang.png", 0, true),
-      new MonsterLog(54, "Kushala Daora", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/kushala_daora.png", 0, true),
-      new MonsterLog(55, "Shen Gaoren", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/shen_gaoren.png", 0, true),
-      new MonsterLog(56, "Great Thunderbug", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/great_thunderbug.png", 0),
-      new MonsterLog(57, "Shakalaka", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/shakalaka.png", 0),
-      new MonsterLog(58, "Yama Tsukami", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/yama_tsukami.png", 0, true),
-      new MonsterLog(59, "Chameleos", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/chameleos.png", 0, true),
-      new MonsterLog(60, "Rusted Kushala Daora", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/rusted_kushala_daora.png", 0, true),
-      new MonsterLog(61, "Blango", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/blango.png", 0),
-      new MonsterLog(62, "Conga", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/conga.png", 0),
-      new MonsterLog(63, "Remobra", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/remobra.png", 0),
-      new MonsterLog(64, "Lunastra", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/lunastra.png", 0, true),
-      new MonsterLog(65, "Teostra", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/teostra.png", 0, true),
-      new MonsterLog(66, "Hermitaur", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/hermitaur.png", 0),
-      new MonsterLog(67, "Shogun Ceanataur", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/shogun_ceanataur.png", 0, true),
-      new MonsterLog(68, "Bulldrome", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/bulldrome.png", 0, true),
-      new MonsterLog(69, "Anteka", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/anteka.png", 0),
-      new MonsterLog(70, "Popo", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/popo.png", 0),
-      new MonsterLog(71, "White Fatalis", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/white_fatalis.png", 0, true),
-      new MonsterLog(72, "Yama Tsukami", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/yama_tsukami.png", 0, true),
-      new MonsterLog(73, "Ceanataur", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/ceanataur.png", 0),
-      new MonsterLog(74, "Hypnocatrice", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/hypnoc.png", 0, true),
-      new MonsterLog(75, "Lavasioth", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/lavasioth.png", 0, true),
-      new MonsterLog(76, "Tigrex", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/tigrex.png", 0, true),
-      new MonsterLog(77, "Akantor", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/akantor.png", 0, true),
-      new MonsterLog(78, "Bright Hypnoc", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/bright_hypnoc.png", 0, true),
-      new MonsterLog(79, "Red Lavasioth", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/red_lavasioth.png", 0, true),
-      new MonsterLog(80, "Espinas", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/espinas.png", 0, true),
-      new MonsterLog(81, "Orange Espinas", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/orange_espinas.png", 0, true),
-      new MonsterLog(82, "Silver Hypnoc", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/silver_hypnoc.png", 0, true),
-      new MonsterLog(83, "Akura Vashimu", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/akura_vashimu.png", 0, true),
-      new MonsterLog(84, "Akura Jebia", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/akura_jebia.png", 0, true),
-      new MonsterLog(85, "Berukyurosu", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/berukyurosu.png", 0, true),
-      new MonsterLog(86, "Cactus", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/cactus.png", 0),
-      new MonsterLog(87, "Gorge Objects", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/random.png", 0),
-      new MonsterLog(88, "Gorge Rocks", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/random.png", 0),
-      new MonsterLog(89, "Pariapuria", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/pariapuria.png", 0, true),
-      new MonsterLog(90, "White Espinas", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/white_espinas.png", 0, true),
-      new MonsterLog(91, "Kamu Orugaron", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/kamu_orugaron.png", 0, true),
-      new MonsterLog(92, "Nono Orugaron", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/nono_orugaron.png", 0, true),
-      new MonsterLog(93, "Raviente", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/raviente.png", 0, true),
-      new MonsterLog(94, "Dyuragaua", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/dyuragaua.png", 0, true),
-      new MonsterLog(95, "Doragyurosu", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/doragyurosu.png", 0, true),
-      new MonsterLog(96, "Gurenzeburu", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/gurenzeburu.png", 0, true),
-      new MonsterLog(97, "Burukku", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/burukku.png", 0),
-      new MonsterLog(98, "Erupe", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/erupe.png", 0),
-      new MonsterLog(99, "Rukodiora", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/rukodiora.png", 0, true),
-      new MonsterLog(100, "UNKNOWN", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/unknown.png", 0, true),
-      new MonsterLog(101, "Gogomoa", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/gogomoa.png", 0, true),
-      new MonsterLog(102, "Kokomoa", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/gogomoa.png", 0),
-      new MonsterLog(103, "Taikun Zamuza", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/taikun_zamuza.png", 0, true),
-      new MonsterLog(104, "Abiorugu", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/abiorugu.png", 0, true),
-      new MonsterLog(105, "Kuarusepusu", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/kuarusepusu.png", 0, true),
-      new MonsterLog(106, "Odibatorasu", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/odibatorasu.png", 0, true),
-      new MonsterLog(107, "Disufiroa", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/disufiroa.png", 0, true),
-      new MonsterLog(108, "Rebidiora", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/rebidiora.png", 0, true),
-      new MonsterLog(109, "Anorupatisu", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/anorupatisu.png", 0, true),
-      new MonsterLog(110, "Hyujikiki", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/hyujikiki.png", 0, true),
-      new MonsterLog(111, "Midogaron", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/midogaron.png", 0, true),
-      new MonsterLog(112, "Giaorugu", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/giaorugu.png", 0, true),
-      new MonsterLog(113, "Mi Ru", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/mi_ru.png", 0, true),
-      new MonsterLog(114, "Farunokku", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/farunokku.png", 0, true),
-      new MonsterLog(115, "Pokaradon", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/pokaradon.png", 0, true),
-      new MonsterLog(116, "Shantien", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/shantien.png", 0, true),
-      new MonsterLog(117, "Pokara", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/pokara.png", 0),
-      new MonsterLog(118, "Dummy", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/random.png", 0),
-      new MonsterLog(119, "Goruganosu", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/goruganosu.png", 0, true),
-      new MonsterLog(120, "Aruganosu", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/aruganosu.png", 0, true),
-      new MonsterLog(121, "Baruragaru", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/baruragaru.png", 0, true),
-      new MonsterLog(122, "Zerureusu", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/zerureusu.png", 0, true),
-      new MonsterLog(123, "Gougarf", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/gougarf.png", 0, true),
-      new MonsterLog(124, "Uruki", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/uruki.png", 0),
-      new MonsterLog(125, "Forokururu", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/forokururu.png", 0, true),
-      new MonsterLog(126, "Meraginasu", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/meraginasu.png", 0, true),
-      new MonsterLog(127, "Diorex", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/diorex.png", 0, true),
-      new MonsterLog(128, "Garuba Daora", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/garuba_daora.png", 0, true),
-      new MonsterLog(129, "Inagami", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/inagami.png", 0, true),
-      new MonsterLog(130, "Varusaburosu", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/varusaburosu.png", 0, true),
-      new MonsterLog(131, "Poborubarumu", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/poborubarumu.png", 0, true),
-      new MonsterLog(132, "1st District Duremudira", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/duremudira.png", 0, true),
-      new MonsterLog(133, "UNK", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/random.png", 0),
-      new MonsterLog(134, "Felyne", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/felyne.png", 0),
-      new MonsterLog(135, "Blue NPC", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/random.png", 0),
-      new MonsterLog(136, "UNK", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/random.png", 0),
-      new MonsterLog(137, "Cactus", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/cactus.png", 0),
-      new MonsterLog(138, "Veggie Elders", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/random.png", 0),
-      new MonsterLog(139, "Gureadomosu", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/gureadomosu.png", 0, true),
-      new MonsterLog(140, "Harudomerugu", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/harudomerugu.png", 0, true),
-      new MonsterLog(141, "Toridcless", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/toridcless.png", 0, true),
-      new MonsterLog(142, "Gasurabazura", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/gasurabazura.png", 0, true),
-      new MonsterLog(143, "Kusubami", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/kusubami.png", 0),
-      new MonsterLog(144, "Yama Kurai", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/yama_kurai.png", 0, true),
-      new MonsterLog(145, "2nd District Duremudira", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/duremudira.png", 0, true),
-      new MonsterLog(146, "Zinogre", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/zinogre.png", 0, true),
-      new MonsterLog(147, "Deviljho", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/deviljho.png", 0, true),
-      new MonsterLog(148, "Brachydios", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/brachydios.png", 0, true),
-      new MonsterLog(149, "Berserk Raviente", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/berserk_raviente.png", 0, true),
-      new MonsterLog(150, "Toa Tesukatora", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/toa_tesukatora.png", 0, true),
-      new MonsterLog(151, "Barioth", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/barioth.png", 0, true),
-      new MonsterLog(152, "Uragaan", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/uragaan.png", 0, true),
-      new MonsterLog(153, "Stygian Zinogre", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/stygian_zinogre.png", 0, true),
-      new MonsterLog(154, "Guanzorumu", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/guanzorumu.png", 0, true),
-      new MonsterLog(155, "Starving Deviljho", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/starving_deviljho.png", 0, true),
-      new MonsterLog(156, "UNK", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/random.png", 0),
-      new MonsterLog(157, "Egyurasu", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/random.png", 0),
-      new MonsterLog(158, "Voljang", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/voljang.png", 0, true),
-      new MonsterLog(159, "Nargacuga", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/nargacuga.png", 0, true),
-      new MonsterLog(160, "Keoaruboru", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/keoaruboru.png", 0, true),
-      new MonsterLog(161, "Zenaserisu", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/zenaserisu.png", 0, true),
-      new MonsterLog(162, "Gore Magala", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/gore_magala.png", 0, true),
-      new MonsterLog(163, "Blinking Nargacuga", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/blinking_nargacuga.png", 0, true),
-      new MonsterLog(164, "Shagaru Magala", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/shagaru_magala.png", 0, true),
-      new MonsterLog(165, "Amatsu", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/amatsu.png", 0, true),
-      new MonsterLog(166, "Elzelion", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/elzelion.png", 0, true),
-      new MonsterLog(167, "Arrogant Duremudira", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/arrogant_duremudira.png", 0, true),
-      new MonsterLog(168, "Rocks", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/random.png", 0),
-      new MonsterLog(169, "Seregios", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/seregios.png", 0, true),
-      new MonsterLog(170, "Bogabadorumu", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/zenith_bogabadorumu.gif", 0, true),
-      new MonsterLog(171, "Unknown Blue Barrel", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/random.png", 0),
-      new MonsterLog(172, "Blitzkrieg Bogabadorumu", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/blitzkrieg_bogabadorumu.png", 0, true),
-      new MonsterLog(173, "Costumed Uruki", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/uruki.png", 0),
-      new MonsterLog(174, "Sparkling Zerureusu", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/sparkling_zerureusu.png", 0, true),
-      new MonsterLog(175, "PSO2 Rappy", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/pso2_rappy.png", 0),
-      new MonsterLog(176, "King Shakalaka", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/king_shakalaka.png", 0, true),
-    };
-
     public static string ReplaceMonsterInfoFeriasVersion(string link)
     {
-        string ReplaceSettingsLink = getFeriasLink();
+        var replaceSettingsLink = GetFeriasLink();
 
         // Check if no need to replace because its the same version already
-        if (link.Contains(ReplaceSettingsLink))
+        if (link.Contains(replaceSettingsLink))
         {
             return link;
         }
 
-        string separator = "mons/";
-        string info = link.Split(separator)[1];
+        var separator = "mons/";
+        var info = link.Split(separator)[1];
 
-        return string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}", ReplaceSettingsLink, separator, info);
+        return string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}", replaceSettingsLink, separator, info);
     }
 
     public int GetHuntedCount(int id)
     {
-        var dl = MainWindow.dataLoader;
+        var dl = this.MainWindow.DataLoader;
 
-        switch (id)
+        return id switch
         {
-            default:
-                return 0;
-            case 0:
-                return 0;
-            case 1:
-                return dl.model.RathianHunted();
-            case 2:
-                return dl.model.FatalisHunted();
-            case 3:
-                return dl.model.KelbiHunted();
-            case 4:
-                return dl.model.MosswineHunted();
-            case 5:
-                return dl.model.BullfangoHunted();
-            case 6:
-                return dl.model.YianKutKuHunted();
-            case 7:
-                return dl.model.LaoShanLungHunted();
-            case 8:
-                return dl.model.CephadromeHunted();
-            case 9:
-                return dl.model.FelyneHunted();
-            case 10:
-                return 0;
-            case 11:
-                return dl.model.RathalosHunted();
-            case 12:
-                return dl.model.AptonothHunted();
-            case 13:
-                return dl.model.GenpreyHunted();
-            case 14:
-                return dl.model.DiablosHunted();
-            case 15:
-                return dl.model.KhezuHunted();
-            case 16:
-                return dl.model.VelocipreyHunted();
-            case 17:
-                return dl.model.GraviosHunted();
-            case 18:
-                return 0;
-            case 19:
-                return dl.model.VespoidHunted();
-            case 20:
-                return dl.model.GypcerosHunted();
-            case 21:
-                return dl.model.PlesiothHunted();
-            case 22:
-                return dl.model.BasariosHunted();
-            case 23:
-                return dl.model.MelynxHunted();
-            case 24:
-                return dl.model.HornetaurHunted();
-            case 25:
-                return dl.model.ApcerosHunted();
-            case 26:
-                return dl.model.MonoblosHunted();
-            case 27:
-                return dl.model.VelocidromeHunted();
-            case 28:
-                return dl.model.GendromeHunted();
-            case 29:
-                return dl.model.RocksHunted();
-            case 30:
-                return dl.model.IopreyHunted();
-            case 31:
-                return dl.model.IodromeHunted();
-            case 32:
-                return 0;
-            case 33:
-                return dl.model.KirinHunted();
-            case 34:
-                return dl.model.CephalosHunted();
-            case 35:
-                return dl.model.GiapreyHunted();
-            case 36:
-                return dl.model.CrimsonFatalisHunted();
-            case 37:
-                return dl.model.PinkRathianHunted();
-            case 38:
-                return dl.model.BlueYianKutKuHunted();
-            case 39:
-                return dl.model.PurpleGypcerosHunted();
-            case 40:
-                return dl.model.YianGarugaHunted();
-            case 41:
-                return dl.model.SilverRathalosHunted();
-            case 42:
-                return dl.model.GoldRathianHunted();
-            case 43:
-                return dl.model.BlackDiablosHunted();
-            case 44:
-                return dl.model.WhiteMonoblosHunted();
-            case 45:
-                return dl.model.RedKhezuHunted();
-            case 46:
-                return dl.model.GreenPlesiothHunted();
-            case 47:
-                return dl.model.BlackGraviosHunted();
-            case 48:
-                return dl.model.DaimyoHermitaurHunted();
-            case 49:
-                return dl.model.AzureRathalosHunted();
-            case 50:
-                return dl.model.AshenLaoShanLungHunted();
-            case 51:
-                return dl.model.BlangongaHunted();
-            case 52:
-                return dl.model.CongalalaHunted();
-            case 53:
-                return dl.model.RajangHunted();
-            case 54:
-                return dl.model.KushalaDaoraHunted();
-            case 55:
-                return dl.model.ShenGaorenHunted();
-            case 56:
-                return dl.model.GreatThunderbugHunted();
-            case 57:
-                return dl.model.ShakalakaHunted();
-            case 58:
-                return dl.model.YamaTsukamiHunted();
-            case 59:
-                return dl.model.ChameleosHunted();
-            case 60:
-                return dl.model.RustedKushalaDaoraHunted();
-            case 61:
-                return dl.model.BlangoHunted();
-            case 62:
-                return dl.model.CongaHunted();
-            case 63:
-                return dl.model.RemobraHunted();
-            case 64:
-                return dl.model.LunastraHunted();
-            case 65:
-                return dl.model.TeostraHunted();
-            case 66:
-                return dl.model.HermitaurHunted();
-            case 67:
-                return dl.model.ShogunCeanataurHunted();
-            case 68:
-                return dl.model.BulldromeHunted();
-            case 69:
-                return dl.model.AntekaHunted();
-            case 70:
-                return dl.model.PopoHunted();
-            case 71:
-                return dl.model.WhiteFatalisHunted();
-            case 72:
-                return dl.model.YamaTsukamiHunted();
-            case 73:
-                return dl.model.CeanataurHunted();
-            case 74:
-                return dl.model.HypnocHunted();
-            case 75:
-                return dl.model.VolganosHunted();
-            case 76:
-                return dl.model.TigrexHunted();
-            case 77:
-                return dl.model.AkantorHunted();
-            case 78:
-                return dl.model.BrightHypnocHunted();
-            case 79:
-                return dl.model.RedVolganosHunted();
-            case 80:
-                return dl.model.EspinasHunted();
-            case 81:
-                return dl.model.OrangeEspinasHunted();
-            case 82:
-                return dl.model.SilverHypnocHunted();
-            case 83:
-                return dl.model.AkuraVashimuHunted();
-            case 84:
-                return dl.model.AkuraJebiaHunted();
-            case 85:
-                return dl.model.BerukyurosuHunted();
-            case 86:
-                return dl.model.CactusHunted();
-            case 87:
-                return dl.model.GorgeObjectsHunted();
-            case 88:
-                return 0;
-            case 89:
-                return dl.model.PariapuriaHunted();
-            case 90:
-                return dl.model.WhiteEspinasHunted();
-            case 91:
-                return dl.model.KamuOrugaronHunted();
-            case 92:
-                return dl.model.NonoOrugaronHunted();
-            case 93:
-                return 0;
-            case 94:
-                return dl.model.DyuragauaHunted();
-            case 95:
-                return dl.model.DoragyurosuHunted();
-            case 96:
-                return dl.model.GurenzeburuHunted();
-            case 97:
-                return dl.model.BurukkuHunted();
-            case 98:
-                return dl.model.ErupeHunted();
-            case 99:
-                return dl.model.RukodioraHunted();
-            case 100:
-                return dl.model.UnknownHunted();
-            case 101:
-                return dl.model.GogomoaHunted();
-            case 102:
-                return 0;
-            case 103:
-                return dl.model.TaikunZamuzaHunted();
-            case 104:
-                return dl.model.AbioruguHunted();
-            case 105:
-                return dl.model.KuarusepusuHunted();
-            case 106:
-                return dl.model.OdibatorasuHunted();
-            case 107:
-                return dl.model.DisufiroaHunted();
-            case 108:
-                return dl.model.RebidioraHunted();
-            case 109:
-                return dl.model.AnorupatisuHunted();
-            case 110:
-                return dl.model.HyujikikiHunted();
-            case 111:
-                return dl.model.MidogaronHunted();
-            case 112:
-                return dl.model.GiaoruguHunted();
-            case 113:
-                return dl.model.MiRuHunted();
-            case 114:
-                return dl.model.FarunokkuHunted();
-            case 115:
-                return dl.model.PokaradonHunted();
-            case 116:
-                return dl.model.ShantienHunted();
-            case 117:
-                return dl.model.PokaraHunted();
-            case 118:
-                return 0;
-            case 119:
-                return dl.model.GoruganosuHunted();
-            case 120:
-                return dl.model.AruganosuHunted();
-            case 121:
-                return dl.model.BaruragaruHunted();
-            case 122:
-                return dl.model.ZerureusuHunted();
-            case 123:
-                return dl.model.GougarfHunted();
-            case 124:
-                return dl.model.UrukiHunted();
-            case 125:
-                return dl.model.ForokururuHunted();
-            case 126:
-                return dl.model.MeraginasuHunted();
-            case 127:
-                return dl.model.DiorexHunted();
-            case 128:
-                return dl.model.GarubaDaoraHunted();
-            case 129:
-                return dl.model.InagamiHunted();
-            case 130:
-                return dl.model.VarusaburosuHunted();
-            case 131:
-                return dl.model.PoborubarumuHunted();
-            case 132:
-                return dl.model.FirstDistrictDuremudiraSlays();
-            case 133:
-                return 0;
-            case 134:
-                return 0;
-            case 135:
-                return 0;
-            case 136:
-                return 0;
-            case 137:
-                return dl.model.CactusHunted();
-            case 138:
-                return 0;
-            case 139:
-                return dl.model.GureadomosuHunted();
-            case 140:
-                return dl.model.HarudomeruguHunted();
-            case 141:
-                return dl.model.ToridclessHunted();
-            case 142:
-                return dl.model.GasurabazuraHunted();
-            case 143:
-                return dl.model.KusubamiHunted();
-            case 144:
-                return dl.model.YamaKuraiHunted();
-            case 145:
-                return dl.model.SecondDistrictDuremudiraSlays();
-            case 146:
-                return dl.model.ZinogreHunted();
-            case 147:
-                return dl.model.DeviljhoHunted();
-            case 148:
-                return dl.model.BrachydiosHunted();
-            case 149:
-                return 0;
-            case 150:
-                return dl.model.ToaTesukatoraHunted();
-            case 151:
-                return dl.model.BariothHunted();
-            case 152:
-                return dl.model.UragaanHunted();
-            case 153:
-                return dl.model.StygianZinogreHunted();
-            case 154:
-                return dl.model.GuanzorumuHunted();
-            case 155:
-                return dl.model.StarvingDeviljhoHunted();
-            case 156:
-                return 0;
-            case 157:
-                return 0;
-            case 158:
-                return dl.model.VoljangHunted();
-            case 159:
-                return dl.model.NargacugaHunted();
-            case 160:
-                return dl.model.KeoaruboruHunted();
-            case 161:
-                return dl.model.ZenaserisuHunted();
-            case 162:
-                return dl.model.GoreMagalaHunted();
-            case 163:
-                return dl.model.BlinkingNargacugaHunted();
-            case 164:
-                return dl.model.ShagaruMagalaHunted();
-            case 165:
-                return dl.model.AmatsuHunted();
-            case 166:
-                return dl.model.ElzelionHunted();
-            case 167:
-                return dl.model.ArrogantDuremudiraHunted();
-            case 168:
-                return 0;
-            case 169:
-                return dl.model.SeregiosHunted();
-            case 170:
-                return dl.model.BogabadorumuHunted();
-            case 171:
-                return 0;
-            case 172:
-                return dl.model.BlitzkriegBogabadorumuHunted();
-            case 173:
-                return 0;
-            case 174:
-                return dl.model.SparklingZerureusuHunted();
-            case 175:
-                return dl.model.PSO2RappyHunted();
-            case 176:
-                return dl.model.KingShakalakaHunted();
-        }
+            0 => 0,
+            1 => dl.Model.RathianHunted(),
+            2 => dl.Model.FatalisHunted(),
+            3 => dl.Model.KelbiHunted(),
+            4 => dl.Model.MosswineHunted(),
+            5 => dl.Model.BullfangoHunted(),
+            6 => dl.Model.YianKutKuHunted(),
+            7 => dl.Model.LaoShanLungHunted(),
+            8 => dl.Model.CephadromeHunted(),
+            9 => dl.Model.FelyneHunted(),
+            10 => 0,
+            11 => dl.Model.RathalosHunted(),
+            12 => dl.Model.AptonothHunted(),
+            13 => dl.Model.GenpreyHunted(),
+            14 => dl.Model.DiablosHunted(),
+            15 => dl.Model.KhezuHunted(),
+            16 => dl.Model.VelocipreyHunted(),
+            17 => dl.Model.GraviosHunted(),
+            18 => 0,
+            19 => dl.Model.VespoidHunted(),
+            20 => dl.Model.GypcerosHunted(),
+            21 => dl.Model.PlesiothHunted(),
+            22 => dl.Model.BasariosHunted(),
+            23 => dl.Model.MelynxHunted(),
+            24 => dl.Model.HornetaurHunted(),
+            25 => dl.Model.ApcerosHunted(),
+            26 => dl.Model.MonoblosHunted(),
+            27 => dl.Model.VelocidromeHunted(),
+            28 => dl.Model.GendromeHunted(),
+            29 => dl.Model.RocksHunted(),
+            30 => dl.Model.IopreyHunted(),
+            31 => dl.Model.IodromeHunted(),
+            32 => 0,
+            33 => dl.Model.KirinHunted(),
+            34 => dl.Model.CephalosHunted(),
+            35 => dl.Model.GiapreyHunted(),
+            36 => dl.Model.CrimsonFatalisHunted(),
+            37 => dl.Model.PinkRathianHunted(),
+            38 => dl.Model.BlueYianKutKuHunted(),
+            39 => dl.Model.PurpleGypcerosHunted(),
+            40 => dl.Model.YianGarugaHunted(),
+            41 => dl.Model.SilverRathalosHunted(),
+            42 => dl.Model.GoldRathianHunted(),
+            43 => dl.Model.BlackDiablosHunted(),
+            44 => dl.Model.WhiteMonoblosHunted(),
+            45 => dl.Model.RedKhezuHunted(),
+            46 => dl.Model.GreenPlesiothHunted(),
+            47 => dl.Model.BlackGraviosHunted(),
+            48 => dl.Model.DaimyoHermitaurHunted(),
+            49 => dl.Model.AzureRathalosHunted(),
+            50 => dl.Model.AshenLaoShanLungHunted(),
+            51 => dl.Model.BlangongaHunted(),
+            52 => dl.Model.CongalalaHunted(),
+            53 => dl.Model.RajangHunted(),
+            54 => dl.Model.KushalaDaoraHunted(),
+            55 => dl.Model.ShenGaorenHunted(),
+            56 => dl.Model.GreatThunderbugHunted(),
+            57 => dl.Model.ShakalakaHunted(),
+            58 => dl.Model.YamaTsukamiHunted(),
+            59 => dl.Model.ChameleosHunted(),
+            60 => dl.Model.RustedKushalaDaoraHunted(),
+            61 => dl.Model.BlangoHunted(),
+            62 => dl.Model.CongaHunted(),
+            63 => dl.Model.RemobraHunted(),
+            64 => dl.Model.LunastraHunted(),
+            65 => dl.Model.TeostraHunted(),
+            66 => dl.Model.HermitaurHunted(),
+            67 => dl.Model.ShogunCeanataurHunted(),
+            68 => dl.Model.BulldromeHunted(),
+            69 => dl.Model.AntekaHunted(),
+            70 => dl.Model.PopoHunted(),
+            71 => dl.Model.WhiteFatalisHunted(),
+            72 => dl.Model.YamaTsukamiHunted(),
+            73 => dl.Model.CeanataurHunted(),
+            74 => dl.Model.HypnocHunted(),
+            75 => dl.Model.VolganosHunted(),
+            76 => dl.Model.TigrexHunted(),
+            77 => dl.Model.AkantorHunted(),
+            78 => dl.Model.BrightHypnocHunted(),
+            79 => dl.Model.RedVolganosHunted(),
+            80 => dl.Model.EspinasHunted(),
+            81 => dl.Model.OrangeEspinasHunted(),
+            82 => dl.Model.SilverHypnocHunted(),
+            83 => dl.Model.AkuraVashimuHunted(),
+            84 => dl.Model.AkuraJebiaHunted(),
+            85 => dl.Model.BerukyurosuHunted(),
+            86 => dl.Model.CactusHunted(),
+            87 => dl.Model.GorgeObjectsHunted(),
+            88 => 0,
+            89 => dl.Model.PariapuriaHunted(),
+            90 => dl.Model.WhiteEspinasHunted(),
+            91 => dl.Model.KamuOrugaronHunted(),
+            92 => dl.Model.NonoOrugaronHunted(),
+            93 => 0,
+            94 => dl.Model.DyuragauaHunted(),
+            95 => dl.Model.DoragyurosuHunted(),
+            96 => dl.Model.GurenzeburuHunted(),
+            97 => dl.Model.BurukkuHunted(),
+            98 => dl.Model.ErupeHunted(),
+            99 => dl.Model.RukodioraHunted(),
+            100 => dl.Model.UnknownHunted(),
+            101 => dl.Model.GogomoaHunted(),
+            102 => 0,
+            103 => dl.Model.TaikunZamuzaHunted(),
+            104 => dl.Model.AbioruguHunted(),
+            105 => dl.Model.KuarusepusuHunted(),
+            106 => dl.Model.OdibatorasuHunted(),
+            107 => dl.Model.DisufiroaHunted(),
+            108 => dl.Model.RebidioraHunted(),
+            109 => dl.Model.AnorupatisuHunted(),
+            110 => dl.Model.HyujikikiHunted(),
+            111 => dl.Model.MidogaronHunted(),
+            112 => dl.Model.GiaoruguHunted(),
+            113 => dl.Model.MiRuHunted(),
+            114 => dl.Model.FarunokkuHunted(),
+            115 => dl.Model.PokaradonHunted(),
+            116 => dl.Model.ShantienHunted(),
+            117 => dl.Model.PokaraHunted(),
+            118 => 0,
+            119 => dl.Model.GoruganosuHunted(),
+            120 => dl.Model.AruganosuHunted(),
+            121 => dl.Model.BaruragaruHunted(),
+            122 => dl.Model.ZerureusuHunted(),
+            123 => dl.Model.GougarfHunted(),
+            124 => dl.Model.UrukiHunted(),
+            125 => dl.Model.ForokururuHunted(),
+            126 => dl.Model.MeraginasuHunted(),
+            127 => dl.Model.DiorexHunted(),
+            128 => dl.Model.GarubaDaoraHunted(),
+            129 => dl.Model.InagamiHunted(),
+            130 => dl.Model.VarusaburosuHunted(),
+            131 => dl.Model.PoborubarumuHunted(),
+            132 => dl.Model.FirstDistrictDuremudiraSlays(),
+            133 => 0,
+            134 => 0,
+            135 => 0,
+            136 => 0,
+            137 => dl.Model.CactusHunted(),
+            138 => 0,
+            139 => dl.Model.GureadomosuHunted(),
+            140 => dl.Model.HarudomeruguHunted(),
+            141 => dl.Model.ToridclessHunted(),
+            142 => dl.Model.GasurabazuraHunted(),
+            143 => dl.Model.KusubamiHunted(),
+            144 => dl.Model.YamaKuraiHunted(),
+            145 => dl.Model.SecondDistrictDuremudiraSlays(),
+            146 => dl.Model.ZinogreHunted(),
+            147 => dl.Model.DeviljhoHunted(),
+            148 => dl.Model.BrachydiosHunted(),
+            149 => 0,
+            150 => dl.Model.ToaTesukatoraHunted(),
+            151 => dl.Model.BariothHunted(),
+            152 => dl.Model.UragaanHunted(),
+            153 => dl.Model.StygianZinogreHunted(),
+            154 => dl.Model.GuanzorumuHunted(),
+            155 => dl.Model.StarvingDeviljhoHunted(),
+            156 => 0,
+            157 => 0,
+            158 => dl.Model.VoljangHunted(),
+            159 => dl.Model.NargacugaHunted(),
+            160 => dl.Model.KeoaruboruHunted(),
+            161 => dl.Model.ZenaserisuHunted(),
+            162 => dl.Model.GoreMagalaHunted(),
+            163 => dl.Model.BlinkingNargacugaHunted(),
+            164 => dl.Model.ShagaruMagalaHunted(),
+            165 => dl.Model.AmatsuHunted(),
+            166 => dl.Model.ElzelionHunted(),
+            167 => dl.Model.ArrogantDuremudiraHunted(),
+            168 => 0,
+            169 => dl.Model.SeregiosHunted(),
+            170 => dl.Model.BogabadorumuHunted(),
+            171 => 0,
+            172 => dl.Model.BlitzkriegBogabadorumuHunted(),
+            173 => 0,
+            174 => dl.Model.SparklingZerureusuHunted(),
+            175 => dl.Model.PSO2RappyHunted(),
+            176 => dl.Model.KingShakalakaHunted(),
+            _ => 0,
+        };
     }
-
-    private IReadOnlyList<MonsterInfo> monsterInfos = MonsterInfos.MonsterInfoIDs;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ConfigWindow"/> class.
@@ -670,26 +488,26 @@ public partial class ConfigWindow : FluentWindow
     public ConfigWindow(MainWindow mainWindow)
     {
         // Create a Stopwatch instance
-        Stopwatch stopwatch = new Stopwatch();
+        var stopwatch = new Stopwatch();
 
         // Start the stopwatch
         stopwatch.Start();
 
         InitializeComponent();
-        logger.Info(CultureInfo.InvariantCulture, $"ConfigWindow initialized");
+        Logger.Info(CultureInfo.InvariantCulture, $"ConfigWindow initialized");
 
-        Topmost = true;
-        MainWindow = mainWindow;
+        this.Topmost = true;
+        this.MainWindow = mainWindow;
 
-        string background1 = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Background/1.png";
-        string background2 = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Background/2.png";
-        string background3 = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Background/3.png";
-        string background4 = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Background/4.png";
-        string background5 = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Background/5.png";
-        string background6 = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Background/6.png";
-        string background7 = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Background/7.png";
-        string background8 = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Background/8.png";
-        string background9 = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Background/9.png";
+        var background1 = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Background/1.png";
+        var background2 = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Background/2.png";
+        var background3 = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Background/3.png";
+        var background4 = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Background/4.png";
+        var background5 = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Background/5.png";
+        var background6 = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Background/6.png";
+        var background7 = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Background/7.png";
+        var background8 = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Background/8.png";
+        var background9 = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Background/9.png";
 
         // https://stackoverflow.com/questions/30839173/change-background-image-in-wpf-using-c-sharp
         GeneralContent.Background = new ImageBrush(new BitmapImage(new Uri(background1)));
@@ -703,34 +521,34 @@ public partial class ConfigWindow : FluentWindow
         PlayerContent.Background = new ImageBrush(new BitmapImage(new Uri(background9)));
 
         // TODO: test this
-        DataContext = MainWindow.dataLoader.model;
+        this.DataContext = this.MainWindow.DataLoader.Model;
 
-        for (int i = 0; i < Monsters.Length; i++)
+        for (var i = 0; i < this.monsters.Length; i++)
         {
-            Monsters[i].Hunted = GetHuntedCount(Monsters[i].ID);
+            this.monsters[i].Hunted = this.GetHuntedCount(this.monsters[i].ID);
         }
 
-        HuntLogDataGrid.ItemsSource = Monsters;
+        HuntLogDataGrid.ItemsSource = this.monsters;
         HuntLogDataGrid.Items.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
         FilterBox.ItemsSource = new string[] { "All", "Large Monster", "Small Monster" };
         HuntLogDataGrid.Items.Filter = MonsterFilterAll;
 
         // See: https://stackoverflow.com/questions/22285866/why-relaycommand
         // Or use MVVM Light to obtain RelayCommand.
-        List<string> MonsterNameList = new List<string>();
+        var monsterNameList = new List<string>();
 
-        for (int i = 0; i < monsterInfos.Count; i++)
+        for (var i = 0; i < this.monsterInfos.Count; i++)
         {
-            MonsterNameList.Add(monsterInfos[i].Name);
+            monsterNameList.Add(this.monsterInfos[i].Name);
         }
 
-        MonsterNameComboBox.ItemsSource = MonsterNameList;
+        MonsterNameComboBox.ItemsSource = monsterNameList;
 
-        _ = GetRepoStats();
+        _ = this.GetRepoStats();
 
-        replaceAllMonsterInfoFeriasLinks();
+        this.ReplaceAllMonsterInfoFeriasLinks();
 
-        weaponUsageData = databaseManager.CalculateTotalWeaponUsage(this, MainWindow.dataLoader);
+        this.weaponUsageData = DatabaseManager.CalculateTotalWeaponUsage(this, this.MainWindow.DataLoader);
 
         // In your initialization or setup code
         ISnackbarService snackbarService = new SnackbarService();
@@ -742,24 +560,88 @@ public partial class ConfigWindow : FluentWindow
         stopwatch.Stop();
 
         // Get the elapsed time in milliseconds
-        double elapsedTimeMs = stopwatch.Elapsed.TotalMilliseconds;
+        var elapsedTimeMs = stopwatch.Elapsed.TotalMilliseconds;
 
         // Print the elapsed time
-        logger.Debug($"ConfigWindow ctor Elapsed Time: {elapsedTimeMs} ms");
+        Logger.Debug($"ConfigWindow ctor Elapsed Time: {elapsedTimeMs} ms");
     }
 
-    private List<WeaponUsage> weaponUsageData = new ();
+    public TimeSpan SnackbarTimeOut { get; set; } = TimeSpan.FromSeconds(5);
+
+    /// <summary>
+    /// Shows the text format mode.
+    /// </summary>
+    /// <returns></returns>
+    public static string GetTextFormatMode()
+    {
+        var s = (Settings)Application.Current.TryFindResource("Settings");
+        return s.TextFormatExport ?? "None";
+    }
+
+    public Predicate<object> GetFilter() => (FilterBox.SelectedItem as string) switch
+    {
+        "Large Monster" => MonsterFilterLarge,
+        "Small Monster" => MonsterFilterSmall,
+        _ => MonsterFilterAll,
+    };
+
+    /// <summary>
+    /// Saves the key press.
+    /// </summary>
+    public void SaveKeyPress()
+    {
+        var s = (Settings)Application.Current.TryFindResource("Settings");
+        s.Save();
+        this.DisposeAllWebViews();
+        this.Close();
+    }
+
+    /// <summary>
+    /// Cancels the key press.
+    /// </summary>
+    public void CancelKeyPress()
+    {
+        var s = (Settings)Application.Current.TryFindResource("Settings");
+        s.Reload();
+        this.DisposeAllWebViews();
+        this.Close();
+    }
+
+    /// <summary>
+    /// Set default settings.
+    /// </summary>
+    public void DefaultKeyPress()
+    {
+        var s = (Settings)Application.Current.TryFindResource("Settings");
+        this.DisposeAllWebViews();
+        s.Reset();
+    }
+
+    /// <summary>
+    /// Raises the <see cref="E:System.Windows.Window.Closing" /> event.
+    /// </summary>
+    /// <param name="e">A <see cref="T:System.ComponentModel.CancelEventArgs" /> that contains the event data.</param>
+    protected override void OnClosing(CancelEventArgs e)
+    {
+        base.OnClosing(e);
+        var s = (Settings)Application.Current.TryFindResource("Settings");
+        s.Reload();
+        this.MainWindow.DataLoader.Model.Configuring = false;
+    }
 
     private void SetWeaponUsageChart(CartesianChart weaponUsageChart)
     {
-        MainWindow.dataLoader.model.weaponUsageSeries.Clear();
-        Settings s = (Settings)Application.Current.TryFindResource("Settings");
+        this.MainWindow.DataLoader.Model.WeaponUsageSeries.Clear();
+        var s = (Settings)Application.Current.TryFindResource("Settings");
 
         var weaponStyles = new[] { "Earth Style", "Heaven Style", "Storm Style", "Extreme Style" };
-        var weaponTypes = new[] { "Sword and Shield", "Dual Swords", "Great Sword", "Long Sword",
-                          "Hammer", "Hunting Horn", "Lance", "Gunlance", "Tonfa",
-                          "Switch Axe F", "Magnet Spike", "Light Bowgun", "Heavy Bowgun",
-                          "Bow" };
+        var weaponTypes = new[]
+        {
+            "Sword and Shield", "Dual Swords", "Great Sword", "Long Sword",
+            "Hammer", "Hunting Horn", "Lance", "Gunlance", "Tonfa",
+            "Switch Axe F", "Magnet Spike", "Light Bowgun", "Heavy Bowgun",
+            "Bow",
+        };
 
         foreach (var weaponType in weaponTypes)
         {
@@ -768,145 +650,128 @@ public partial class ConfigWindow : FluentWindow
                 switch (weaponStyle)
                 {
                     case "Earth Style":
-                        var weaponUsageCount = weaponUsageData.Where(x => x.WeaponType == weaponType && x.Style == weaponStyle)
+                        var weaponUsageCount = this.weaponUsageData.Where(x => x.WeaponType == weaponType && x.Style == weaponStyle)
                                                                       .Sum(x => x.RunCount);
-                        MainWindow.dataLoader.model.weaponUsageEarthStyle.Add(weaponUsageCount);
+                        this.MainWindow.DataLoader.Model.WeaponUsageEarthStyle.Add(weaponUsageCount);
                         break;
                     case "Heaven Style":
-                        weaponUsageCount = weaponUsageData.Where(x => x.WeaponType == weaponType && x.Style == weaponStyle)
+                        weaponUsageCount = this.weaponUsageData.Where(x => x.WeaponType == weaponType && x.Style == weaponStyle)
                                                                       .Sum(x => x.RunCount);
-                        MainWindow.dataLoader.model.weaponUsageHeavenStyle.Add(weaponUsageCount);
+                        this.MainWindow.DataLoader.Model.WeaponUsageHeavenStyle.Add(weaponUsageCount);
                         break;
                     case "Storm Style":
-                        weaponUsageCount = weaponUsageData.Where(x => x.WeaponType == weaponType && x.Style == weaponStyle)
+                        weaponUsageCount = this.weaponUsageData.Where(x => x.WeaponType == weaponType && x.Style == weaponStyle)
                                                                       .Sum(x => x.RunCount);
-                        MainWindow.dataLoader.model.weaponUsageStormStyle.Add(weaponUsageCount);
+                        this.MainWindow.DataLoader.Model.WeaponUsageStormStyle.Add(weaponUsageCount);
                         break;
                     case "Extreme Style":
-                        weaponUsageCount = weaponUsageData.Where(x => x.WeaponType == weaponType && x.Style == weaponStyle)
+                        weaponUsageCount = this.weaponUsageData.Where(x => x.WeaponType == weaponType && x.Style == weaponStyle)
                                                                       .Sum(x => x.RunCount);
-                        MainWindow.dataLoader.model.weaponUsageExtremeStyle.Add(weaponUsageCount);
+                        this.MainWindow.DataLoader.Model.WeaponUsageExtremeStyle.Add(weaponUsageCount);
+                        break;
+                    default:
                         break;
                 }
             }
         }
 
-        MainWindow.dataLoader.model.weaponUsageSeries.Add(new StackedColumnSeries<long>
+        this.MainWindow.DataLoader.Model.WeaponUsageSeries.Add(new StackedColumnSeries<long>
         {
             Name = "Earth Style",
-            Values = MainWindow.dataLoader.model.weaponUsageEarthStyle,
-            DataLabelsPaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal(CatppuccinMochaColors.NameHex["Text"]))),
+            Values = this.MainWindow.DataLoader.Model.WeaponUsageEarthStyle,
+            DataLabelsPaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal(CatppuccinMochaColors.NameHex["Text"]))),
             DataLabelsSize = 14,
             DataLabelsPosition = DataLabelsPosition.Middle,
-            Fill = new LinearGradientPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal(s.PlayerHitsPerSecondGraphColor, "7f")), new SKColor(MainWindow.dataLoader.model.HexColorToDecimal(s.PlayerHitsPerSecondGraphColor, "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
-            Stroke = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal(s.PlayerHitsPerSecondGraphColor))) { StrokeThickness = 2 },
+            Fill = new LinearGradientPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal(s.PlayerHitsPerSecondGraphColor, "7f")), new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal(s.PlayerHitsPerSecondGraphColor, "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
+            Stroke = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal(s.PlayerHitsPerSecondGraphColor))) { StrokeThickness = 2 },
         });
 
-        MainWindow.dataLoader.model.weaponUsageSeries.Add(new StackedColumnSeries<long>
+        this.MainWindow.DataLoader.Model.WeaponUsageSeries.Add(new StackedColumnSeries<long>
         {
             Name = "Heaven Style",
-            Values = MainWindow.dataLoader.model.weaponUsageHeavenStyle,
-            DataLabelsPaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal(CatppuccinMochaColors.NameHex["Text"]))),
+            Values = this.MainWindow.DataLoader.Model.WeaponUsageHeavenStyle,
+            DataLabelsPaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal(CatppuccinMochaColors.NameHex["Text"]))),
             DataLabelsSize = 14,
             DataLabelsPosition = DataLabelsPosition.Middle,
-            Fill = new LinearGradientPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal(s.PlayerHitsPerSecondGraphColor, "7f")), new SKColor(MainWindow.dataLoader.model.HexColorToDecimal(s.PlayerHitsPerSecondGraphColor, "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
-            Stroke = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal(s.PlayerHitsPerSecondGraphColor))) { StrokeThickness = 2 },
+            Fill = new LinearGradientPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal(s.PlayerHitsPerSecondGraphColor, "7f")), new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal(s.PlayerHitsPerSecondGraphColor, "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
+            Stroke = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal(s.PlayerHitsPerSecondGraphColor))) { StrokeThickness = 2 },
         });
 
-        MainWindow.dataLoader.model.weaponUsageSeries.Add(new StackedColumnSeries<long>
+        this.MainWindow.DataLoader.Model.WeaponUsageSeries.Add(new StackedColumnSeries<long>
         {
             Name = "Storm Style",
-            Values = MainWindow.dataLoader.model.weaponUsageStormStyle,
-            DataLabelsPaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal(CatppuccinMochaColors.NameHex["Text"]))),
+            Values = this.MainWindow.DataLoader.Model.WeaponUsageStormStyle,
+            DataLabelsPaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal(CatppuccinMochaColors.NameHex["Text"]))),
             DataLabelsSize = 14,
             DataLabelsPosition = DataLabelsPosition.Middle,
-            Fill = new LinearGradientPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal(s.PlayerHitsPerSecondGraphColor, "7f")), new SKColor(MainWindow.dataLoader.model.HexColorToDecimal(s.PlayerHitsPerSecondGraphColor, "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
-            Stroke = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal(s.PlayerHitsPerSecondGraphColor))) { StrokeThickness = 2 },
+            Fill = new LinearGradientPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal(s.PlayerHitsPerSecondGraphColor, "7f")), new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal(s.PlayerHitsPerSecondGraphColor, "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
+            Stroke = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal(s.PlayerHitsPerSecondGraphColor))) { StrokeThickness = 2 },
         });
 
-        MainWindow.dataLoader.model.weaponUsageSeries.Add(new StackedColumnSeries<long>
+        this.MainWindow.DataLoader.Model.WeaponUsageSeries.Add(new StackedColumnSeries<long>
         {
             Name = "Extreme Style",
-            Values = MainWindow.dataLoader.model.weaponUsageExtremeStyle,
-            DataLabelsPaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal(CatppuccinMochaColors.NameHex["Text"]))),
+            Values = this.MainWindow.DataLoader.Model.WeaponUsageExtremeStyle,
+            DataLabelsPaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal(CatppuccinMochaColors.NameHex["Text"]))),
             DataLabelsSize = 14,
             DataLabelsPosition = DataLabelsPosition.Middle,
-            Fill = new LinearGradientPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal(s.PlayerHitsPerSecondGraphColor, "7f")), new SKColor(MainWindow.dataLoader.model.HexColorToDecimal(s.PlayerHitsPerSecondGraphColor, "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
-            Stroke = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal(s.PlayerHitsPerSecondGraphColor))) { StrokeThickness = 2 },
+            Fill = new LinearGradientPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal(s.PlayerHitsPerSecondGraphColor, "7f")), new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal(s.PlayerHitsPerSecondGraphColor, "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
+            Stroke = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal(s.PlayerHitsPerSecondGraphColor))) { StrokeThickness = 2 },
         });
 
-        weaponUsageChart.Series = MainWindow.dataLoader.model.weaponUsageSeries;
+        weaponUsageChart.Series = this.MainWindow.DataLoader.Model.WeaponUsageSeries;
         weaponUsageChart.XAxes = new List<Axis>
         {
                 new Axis
                 {
-                    MinStep=1,
-                    Padding=new LiveChartsCore.Drawing.Padding(0,0,0,0),
-                    ShowSeparatorLines=true,
-                    IsVisible=false,
-                    LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal(CatppuccinMochaColors.NameHex["Text"]))),
-                }
+                    MinStep = 1,
+                    Padding = new LiveChartsCore.Drawing.Padding(0, 0, 0, 0),
+                    ShowSeparatorLines = true,
+                    IsVisible = false,
+                    LabelsPaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal(CatppuccinMochaColors.NameHex["Text"]))),
+                },
         };
         weaponUsageChart.YAxes = new List<Axis>
         {
                 new Axis
                 {
-                    MinStep=1,
-                    LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal(CatppuccinMochaColors.NameHex["Text"]))),
-                    ShowSeparatorLines=true,
-                    TextSize=12,
-                }
+                    MinStep = 1,
+                    LabelsPaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal(CatppuccinMochaColors.NameHex["Text"]))),
+                    ShowSeparatorLines = true,
+                    TextSize = 12,
+                },
         };
     }
 
-    private void replaceAllMonsterInfoFeriasLinks()
+    private void ReplaceAllMonsterInfoFeriasLinks()
     {
-        for (int i = 0; i < monsterInfos.Count; i++)
+        for (var i = 0; i < this.monsterInfos.Count; i++)
         {
-            monsterInfos[i].FeriasLink = ReplaceMonsterInfoFeriasVersion(monsterInfos[i].FeriasLink);
+            this.monsterInfos[i].FeriasLink = ReplaceMonsterInfoFeriasVersion(this.monsterInfos[i].FeriasLink);
         }
     }
 
-    private bool MonsterFilterAll(object obj)
+    private static bool MonsterFilterAll(object obj)
     {
-        var FilterObj = obj as MonsterLog;
-        if (FilterObj == null)
-        {
-            return false;
-        }
-
-        return FilterObj.IsLarge || !FilterObj.IsLarge;
-    }
-
-    private bool MonsterFilterLarge(object obj)
-    {
-        var FilterObj = obj as MonsterLog;
-        if (FilterObj == null)
+        if (obj is not MonsterLog filterObj)
         {
             return false;
         }
 
-        return FilterObj.IsLarge;
+        return filterObj.IsLarge || !filterObj.IsLarge;
     }
 
-    private bool MonsterFilterSmall(object obj)
+    private static bool MonsterFilterLarge(object obj)
     {
-        var FilterObj = obj as MonsterLog;
-        return FilterObj != null ? !FilterObj.IsLarge : false;
-    }
-
-    public Predicate<object> GetFilter()
-    {
-        switch (FilterBox.SelectedItem as string)
+        if (obj is not MonsterLog filterObj)
         {
-            default:
-                return MonsterFilterAll;
-            case "Large Monster":
-                return MonsterFilterLarge;
-            case "Small Monster":
-                return MonsterFilterSmall;
+            return false;
         }
+
+        return filterObj.IsLarge;
     }
+
+    private static bool MonsterFilterSmall(object obj) => obj is MonsterLog filterObj && !filterObj.IsLarge;
 
     /// <summary>
     /// Handles the PreviewTextInput event of the RoadOverrideTextBox control.
@@ -915,21 +780,10 @@ public partial class ConfigWindow : FluentWindow
     /// <param name="e">The <see cref="TextCompositionEventArgs"/> instance containing the event data.</param>
     private void RoadOverrideTextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
     {
-        if (e.Text != "0" && e.Text != "1" && e.Text != "2")
+        if (e.Text is not "0" and not "1" and not "2")
         {
             e.Handled = true;
         }
-    }
-
-    /// <summary>
-    /// Saves the key press.
-    /// </summary>
-    public void SaveKey_Press()
-    {
-        Settings s = (Settings)Application.Current.TryFindResource("Settings");
-        s.Save();
-        DisposeAllWebViews();
-        Close();
     }
 
     // TODO does this cover everything?
@@ -947,21 +801,10 @@ public partial class ConfigWindow : FluentWindow
     /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
     private void SaveButton_Click(object sender, RoutedEventArgs e)
     {
-        Settings s = (Settings)Application.Current.TryFindResource("Settings");
+        var s = (Settings)Application.Current.TryFindResource("Settings");
         s.Save();
-        DisposeAllWebViews();
-        Close();
-    }
-
-    /// <summary>
-    /// Cancels the key press.
-    /// </summary>
-    public void CancelKey_Press()
-    {
-        Settings s = (Settings)Application.Current.TryFindResource("Settings");
-        s.Reload();
-        DisposeAllWebViews();
-        Close();
+        this.DisposeAllWebViews();
+        this.Close();
     }
 
     /// <summary>
@@ -971,32 +814,10 @@ public partial class ConfigWindow : FluentWindow
     /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
     private void CancelButton_Click(object sender, RoutedEventArgs e)
     {
-        Settings s = (Settings)Application.Current.TryFindResource("Settings");
-        DisposeAllWebViews();
+        var s = (Settings)Application.Current.TryFindResource("Settings");
+        this.DisposeAllWebViews();
         s.Reload();
-        Close();
-    }
-
-    /// <summary>
-    /// Raises the <see cref="E:System.Windows.Window.Closing" /> event.
-    /// </summary>
-    /// <param name="e">A <see cref="T:System.ComponentModel.CancelEventArgs" /> that contains the event data.</param>
-    protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
-    {
-        base.OnClosing(e);
-        Settings s = (Settings)Application.Current.TryFindResource("Settings");
-        s.Reload();
-        MainWindow.dataLoader.model.Configuring = false;
-    }
-
-    /// <summary>
-    /// Set default settings
-    /// </summary>
-    public void DefaultKey_Press()
-    {
-        Settings s = (Settings)Application.Current.TryFindResource("Settings");
-        DisposeAllWebViews();
-        s.Reset();
+        this.Close();
     }
 
     /// <summary>
@@ -1009,8 +830,8 @@ public partial class ConfigWindow : FluentWindow
         var result = MessageBox.Show("Resetting settings, are you sure?", Messages.InfoTitle, MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
         if (result == MessageBoxResult.Yes)
         {
-            Settings s = (Settings)Application.Current.TryFindResource("Settings");
-            DisposeAllWebViews();
+            var s = (Settings)Application.Current.TryFindResource("Settings");
+            this.DisposeAllWebViews();
             s.Reset();
         }
     }
@@ -1020,10 +841,7 @@ public partial class ConfigWindow : FluentWindow
     /// </summary>
     /// <param name="sender">The source of the event.</param>
     /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
-    private void ConfigureButton_Click(object sender, RoutedEventArgs e)
-    {
-        MainWindow.EnableDragAndDrop();
-    }
+    private void ConfigureButton_Click(object sender, RoutedEventArgs e) => this.MainWindow.EnableDragAndDrop();
 
     /// <summary>
     /// Validates the number.
@@ -1032,7 +850,7 @@ public partial class ConfigWindow : FluentWindow
     /// <param name="e">The <see cref="TextCompositionEventArgs"/> instance containing the event data.</param>
     private void ValidateNumber(object sender, TextCompositionEventArgs e)
     {
-        foreach (char ch in e.Text)
+        foreach (var ch in e.Text)
         {
             if (!char.IsNumber(ch))
             {
@@ -1049,7 +867,7 @@ public partial class ConfigWindow : FluentWindow
 
     private void ValidateDecimalNumber(object sender, TextCompositionEventArgs e)
     {
-        foreach (char ch in e.Text)
+        foreach (var ch in e.Text)
         {
             if (!char.IsDigit(ch) && ch != '.')
             {
@@ -1060,13 +878,13 @@ public partial class ConfigWindow : FluentWindow
 
         var textBox = (TextBox)sender;
         var newText = textBox.Text.Insert(textBox.SelectionStart, e.Text);
-        var isValidDecimal = decimal.TryParse(newText, out _);
+        var isValidDecimal = decimal.TryParse(newText, NumberStyles.Any, CultureInfo.InvariantCulture, out _);
 
         if (!isValidDecimal)
         {
             e.Handled = true;
         }
-        else if (e.Text == "." && textBox.Text.Contains("."))
+        else if (e.Text == "." && textBox.Text.Contains('.'))
         {
             e.Handled = true;
         }
@@ -1086,9 +904,9 @@ public partial class ConfigWindow : FluentWindow
     {
         // Create a Regex
 
-        // Get all matches  
+        // Get all matches
         // https://stackoverflow.com/questions/1046740/how-can-i-validate-a-string-to-only-allow-alphanumeric-characters-in-it
-        if (!(e.Text.All(char.IsLetterOrDigit)))
+        if (!e.Text.All(char.IsLetterOrDigit))
         {
             // just letters and digits.
             e.Handled = true;
@@ -1100,20 +918,10 @@ public partial class ConfigWindow : FluentWindow
     /// </summary>
     /// <param name="sender">The source of the event.</param>
     /// <param name="e">The <see cref="System.Windows.Navigation.RequestNavigateEventArgs"/> instance containing the event data.</param>
-    private void lnkImg_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
+    private void LnkImg_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
     {
         Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri) { UseShellExecute = true });
         e.Handled = true;
-    }
-
-    /// <summary>
-    /// Shows the text format mode
-    /// </summary>
-    /// <returns></returns>
-    public static string GetTextFormatMode()
-    {
-        Settings s = (Settings)Application.Current.TryFindResource("Settings");
-        return s.TextFormatExport ?? "None";
     }
 
     /// <summary>
@@ -1123,7 +931,7 @@ public partial class ConfigWindow : FluentWindow
     /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
     private void BtnSaveFile_Click(object sender, RoutedEventArgs e)
     {
-        string textToSave = GearStats.Text;
+        var textToSave = GearStats.Text;
 
         if (GetTextFormatMode() == "Code Block")
         {
@@ -1131,7 +939,7 @@ public partial class ConfigWindow : FluentWindow
         }
         else if (GetTextFormatMode() == "Markdown")
         {
-            textToSave = MainWindow.dataLoader.model.MarkdownSavedGearStats;
+            textToSave = this.MainWindow.DataLoader.Model.MarkdownSavedGearStats;
         }
 
         var snackbar = new Snackbar(ConfigWindowSnackBarPresenter);
@@ -1139,13 +947,13 @@ public partial class ConfigWindow : FluentWindow
     }
 
     /// <summary>
-    /// Copy to clipboard. TODO: change function name, its too generic
+    /// Copy to clipboard. TODO: change function name, its too generic.
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
     private void BtnCopyFile_Click(object sender, RoutedEventArgs e)
     {
-        string textToSave = GearStats.Text;
+        var textToSave = GearStats.Text;
 
         if (GetTextFormatMode() == "Code Block")
         {
@@ -1153,14 +961,16 @@ public partial class ConfigWindow : FluentWindow
         }
         else if (GetTextFormatMode() == "Markdown")
         {
-            textToSave = MainWindow.dataLoader.model.MarkdownSavedGearStats;
+            textToSave = this.MainWindow.DataLoader.Model.MarkdownSavedGearStats;
         }
         else if (GetTextFormatMode() == "Image")
         {
             var previousBackground = GearTextGrid.Background;
             GearTextGrid.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
-            var snackbar = new Snackbar(ConfigWindowSnackBarPresenter);
-            snackbar.Style = (Style)FindResource("CatppuccinMochaSnackBar");
+            var snackbar = new Snackbar(ConfigWindowSnackBarPresenter)
+            {
+                Style = (Style)this.FindResource("CatppuccinMochaSnackBar"),
+            };
             FileService.CopyUIElementToClipboard(GearTextGrid, snackbar);
             GearTextGrid.Background = previousBackground;
             return;
@@ -1168,30 +978,27 @@ public partial class ConfigWindow : FluentWindow
 
         // https://stackoverflow.com/questions/3546016/how-to-copy-data-to-clipboard-in-c-sharp
         Clipboard.SetText(textToSave);
-        var snackbarSuccess = new Snackbar(ConfigWindowSnackBarPresenter);
-        snackbarSuccess.Style = (Style)FindResource("CatppuccinMochaSnackBar");
-        snackbarSuccess.Title = Messages.InfoTitle;
-        snackbarSuccess.Content = "Copied text to clipboard";
-        snackbarSuccess.Appearance = ControlAppearance.Success;
-        snackbarSuccess.Icon = new SymbolIcon(SymbolRegular.Clipboard32);
-        snackbarSuccess.Timeout = SnackbarTimeOut;
+        var snackbarSuccess = new Snackbar(ConfigWindowSnackBarPresenter)
+        {
+            Style = (Style)this.FindResource("CatppuccinMochaSnackBar"),
+            Title = Messages.InfoTitle,
+            Content = "Copied text to clipboard",
+            Appearance = ControlAppearance.Success,
+            Icon = new SymbolIcon(SymbolRegular.Clipboard32),
+            Timeout = this.SnackbarTimeOut,
+        };
         snackbarSuccess.Show();
     }
 
-    public TimeSpan SnackbarTimeOut { get; set; } = TimeSpan.FromSeconds(5);
-
-    private void FilterBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-    {
-        HuntLogDataGrid.Items.Filter = GetFilter();
-    }
+    private void FilterBox_SelectionChanged(object sender, SelectionChangedEventArgs e) => HuntLogDataGrid.Items.Filter = this.GetFilter();
 
     private void Config_Closed(object sender, EventArgs e)
     {
-        Settings s = (Settings)Application.Current.TryFindResource("Settings");
-        DisposeAllWebViews();
+        var s = (Settings)Application.Current.TryFindResource("Settings");
+        this.DisposeAllWebViews();
         s.Reload();
-        Close();
-        DeletexNames_OnClosed();
+        this.Close();
+        this.DeletexNames_OnClosed();
     }
 
     private void ChangeMonsterInfo()
@@ -1201,19 +1008,19 @@ public partial class ConfigWindow : FluentWindow
             return;
         }
 
-        Dictionary<string, string> MonsterFeriasOptionDictionary = new ();
-        Dictionary<string, string> MonsterWikiOptionDictionary = new ();
-        Dictionary<string, string> MonsterVideoLinkOptionDictionary = new ();
+        Dictionary<string, string> monsterFeriasOptionDictionary = new ();
+        Dictionary<string, string> monsterWikiOptionDictionary = new ();
+        Dictionary<string, string> monsterVideoLinkOptionDictionary = new ();
 
-        for (int i = 0; i < monsterInfos.Count; i++)
+        for (var i = 0; i < this.monsterInfos.Count; i++)
         {
-            foreach (var videolinkPerRankBand in monsterInfos[i].WeaponMatchups)
+            foreach (var videolinkPerRankBand in this.monsterInfos[i].WeaponMatchups)
             {
-                MonsterVideoLinkOptionDictionary.Add(videolinkPerRankBand.Key + " " + monsterInfos[i].Name, videolinkPerRankBand.Value);
+                monsterVideoLinkOptionDictionary.Add(videolinkPerRankBand.Key + " " + this.monsterInfos[i].Name, videolinkPerRankBand.Value);
             }
 
-            MonsterWikiOptionDictionary.Add(monsterInfos[i].Name, monsterInfos[i].WikiLink);
-            MonsterFeriasOptionDictionary.Add(monsterInfos[i].Name, monsterInfos[i].FeriasLink);
+            monsterWikiOptionDictionary.Add(this.monsterInfos[i].Name, this.monsterInfos[i].WikiLink);
+            monsterFeriasOptionDictionary.Add(this.monsterInfos[i].Name, this.monsterInfos[i].FeriasLink);
         }
 
         // see this
@@ -1224,9 +1031,9 @@ public partial class ConfigWindow : FluentWindow
             selectedName = string.Empty;
         }
 
-        string selectedMatchup = $"{((ComboBoxItem)WeaponMatchupComboBox.SelectedItem).Content} {selectedName}";
+        var selectedMatchup = $"{((ComboBoxItem)WeaponMatchupComboBox.SelectedItem).Content} {selectedName}";
 
-        if (!MonsterFeriasOptionDictionary.TryGetValue(selectedName, out string? val1) || !MonsterWikiOptionDictionary.TryGetValue(selectedName, out string? val2))
+        if (!monsterFeriasOptionDictionary.TryGetValue(selectedName, out var val1) || !monsterWikiOptionDictionary.TryGetValue(selectedName, out var val2))
         {
             return;
         }
@@ -1240,35 +1047,35 @@ public partial class ConfigWindow : FluentWindow
         {
             default:
                 return;
-            case 0:// ferias
+            case 0: // ferias
                 // https://stackoverflow.com/questions/1265812/howto-define-the-auto-width-of-the-wpf-gridview-column-in-code
-                DockPanelMonsterInfo.Width = Double.NaN;// Auto
-                DockPanelMonsterInfo.Height = Double.NaN;// Auto
-                webViewMonsterInfo.CoreWebView2.Navigate(MonsterFeriasOptionDictionary[MonsterNameComboBox.SelectedItem.ToString() + ""]);
+                DockPanelMonsterInfo.Width = double.NaN; // Auto
+                DockPanelMonsterInfo.Height = double.NaN; // Auto
+                webViewMonsterInfo.CoreWebView2.Navigate(monsterFeriasOptionDictionary[MonsterNameComboBox.SelectedItem.ToString() + string.Empty]);
                 return;
-            case 1:// wiki
-                DockPanelMonsterInfo.Width = Double.NaN;// Auto
-                DockPanelMonsterInfo.Height = Double.NaN;// Auto
-                webViewMonsterInfo.CoreWebView2.Navigate(MonsterWikiOptionDictionary[MonsterNameComboBox.SelectedItem.ToString() + ""]);
+            case 1: // wiki
+                DockPanelMonsterInfo.Width = double.NaN; // Auto
+                DockPanelMonsterInfo.Height = double.NaN; // Auto
+                webViewMonsterInfo.CoreWebView2.Navigate(monsterWikiOptionDictionary[MonsterNameComboBox.SelectedItem.ToString() + string.Empty]);
                 return;
-            case 2:// youtube
-                if (MonsterVideoLinkOptionDictionary.TryGetValue(selectedMatchup, out string? videoval) && MonsterVideoLinkOptionDictionary[selectedMatchup] != "")
+            case 2: // youtube
+                if (monsterVideoLinkOptionDictionary.TryGetValue(selectedMatchup, out var videoval) && monsterVideoLinkOptionDictionary[selectedMatchup] != string.Empty)
                 {
                     DockPanelMonsterInfo.Width = 854;
                     DockPanelMonsterInfo.Height = 480;
-                    webViewMonsterInfo.CoreWebView2.Navigate(MonsterVideoLinkOptionDictionary[selectedMatchup]);
+                    webViewMonsterInfo.CoreWebView2.Navigate(monsterVideoLinkOptionDictionary[selectedMatchup]);
                 }
                 else
                 {
-                    System.Windows.MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Video not found. Go to issues page?", "【MHF-Z】Overlay Information Missing", System.Windows.MessageBoxButton.YesNo, System.Windows.MessageBoxImage.Warning, MessageBoxResult.No);
+                    var messageBoxResult = MessageBox.Show("Video not found. Go to issues page?", "【MHF-Z】Overlay Information Missing", MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.No);
                     if (messageBoxResult.ToString() == "Yes")
                     {
-                        string issueLink = "https://github.com/DorielRivalet/mhfz-overlay/issues/26";
-                        var sInfo = new System.Diagnostics.ProcessStartInfo(issueLink)
+                        var issueLink = "https://github.com/DorielRivalet/mhfz-overlay/issues/26";
+                        var sInfo = new ProcessStartInfo(issueLink)
                         {
                             UseShellExecute = true,
                         };
-                        System.Diagnostics.Process.Start(sInfo);
+                        Process.Start(sInfo);
                     }
                 }
 
@@ -1276,54 +1083,46 @@ public partial class ConfigWindow : FluentWindow
         }
     }
 
-    private void MonsterNameComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-    {
-        ChangeMonsterInfo();
-    }
+    private void MonsterNameComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e) => this.ChangeMonsterInfo();
 
-    private void MonsterInfoSource_SelectionChanged(object sender, SelectionChangedEventArgs e)
-    {
-        ChangeMonsterInfo();
-    }
+    private void MonsterInfoSource_SelectionChanged(object sender, SelectionChangedEventArgs e) => this.ChangeMonsterInfo();
 
-    private void WeaponMatchupComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-    {
-        ChangeMonsterInfo();
-    }
+    private void WeaponMatchupComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e) => this.ChangeMonsterInfo();
 
-    private void MonsterViewInfoOption_SelectionChanged(object sender, SelectionChangedEventArgs e)
-    {
-        ChangeMonsterInfo();
-    }
+    private void MonsterViewInfoOption_SelectionChanged(object sender, SelectionChangedEventArgs e) => this.ChangeMonsterInfo();
 
-    GitHubClient client = new GitHubClient(new ProductHeaderValue("MHFZ_Overlay"));
+    private readonly ListView? mostRecentRunsListView;
+
+    private readonly ListView? top20RunsListView;
+
+    private CartesianChart? weaponUsageChart;
 
     // TODO optimize
     private async Task GetRepoStats()
     {
-        var info = client.GetLastApiInfo();
+        var info = this.client.GetLastApiInfo();
 
         if (info != null)
         {
             OctokitInfo.Text = string.Format(CultureInfo.InvariantCulture, "Server Time Difference: {0}, Max Requests/hr: {1}, Requests remaining: {2}, Current Rate Limit Window Reset: {3}", info.ServerTimeDifference, info.RateLimit.Limit, info.RateLimit.Remaining, info.RateLimit.Reset);
         }
 
-        var issuesForOctokit = await client.Issue.GetAllForRepository("DorielRivalet", "MHFZ_Overlay");
+        var issuesForOctokit = await this.client.Issue.GetAllForRepository("DorielRivalet", "MHFZ_Overlay");
 
         // TODO
         IssuesTextBlock.Text = (issuesForOctokit.Count - 2).ToString(CultureInfo.InvariantCulture) + " Issue(s)";
 
-        var watchers = await client.Activity.Watching.GetAllWatchers("DorielRivalet", "MHFZ_Overlay");
+        var watchers = await this.client.Activity.Watching.GetAllWatchers("DorielRivalet", "MHFZ_Overlay");
         WatchersTextBlock.Text = watchers.Count.ToString(CultureInfo.InvariantCulture) + " Watcher(s)";
 
-        info = client.GetLastApiInfo();
+        info = this.client.GetLastApiInfo();
 
         if (info != null)
         {
             OctokitInfo.Text = string.Format(CultureInfo.InvariantCulture, "Server Time Difference: {0}, Max Requests/hr: {1}, Requests remaining: {2}, Current Rate Limit Window Reset: {3}", info.ServerTimeDifference, info.RateLimit.Limit, info.RateLimit.Remaining, info.RateLimit.Reset);
         }
 
-        info = client.GetLastApiInfo();
+        info = this.client.GetLastApiInfo();
 
         if (info != null)
         {
@@ -1376,7 +1175,7 @@ public partial class ConfigWindow : FluentWindow
     }
 
     /// <summary>
-    /// might need to work on? is the memory reduction worth it?
+    /// might need to work on? is the memory reduction worth it?.
     /// </summary>
     private void DeletexNames_OnClosed()
     {
@@ -1387,41 +1186,47 @@ public partial class ConfigWindow : FluentWindow
         }
     }
 
+    private void OpenOverlayFolder_Click(object sender, RoutedEventArgs e) => FileService.OpenApplicationFolder(ConfigWindowSnackBarPresenter, (Style)this.FindResource("CatppuccinMochaSnackBar"), this.SnackbarTimeOut);
+
     private void OpenSettingsFolder_Click(object sender, RoutedEventArgs e)
     {
         try
         {
-            string settingsFile = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal).FilePath;
+            var settingsFile = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal).FilePath;
             var settingsFileDirectoryName = Path.GetDirectoryName(settingsFile);
             if (!Directory.Exists(settingsFileDirectoryName))
             {
-                logger.Error(CultureInfo.InvariantCulture, "Could not open settings folder");
-                var snackbar = new Snackbar(ConfigWindowSnackBarPresenter);
-                snackbar.Style = (Style)FindResource("CatppuccinMochaSnackBar");
-                snackbar.Title = Messages.ErrorTitle;
-                snackbar.Content = "Could not open settings folder";
-                snackbar.Appearance = ControlAppearance.Danger;
-                snackbar.Icon = new SymbolIcon(SymbolRegular.ErrorCircle24);
-                snackbar.Timeout = SnackbarTimeOut;
+                Logger.Error(CultureInfo.InvariantCulture, "Could not open settings folder");
+                var snackbar = new Snackbar(ConfigWindowSnackBarPresenter)
+                {
+                    Style = (Style)this.FindResource("CatppuccinMochaSnackBar"),
+                    Title = Messages.ErrorTitle,
+                    Content = "Could not open settings folder",
+                    Appearance = ControlAppearance.Danger,
+                    Icon = new SymbolIcon(SymbolRegular.ErrorCircle24),
+                    Timeout = this.SnackbarTimeOut,
+                };
                 snackbar.Show();
                 return;
             }
 
-            string settingsFolder = settingsFileDirectoryName;
+            var settingsFolder = settingsFileDirectoryName;
 
             // Open file manager at the specified folder
             Process.Start(ApplicationPaths.ExplorerPath, settingsFolder);
         }
         catch (Exception ex)
         {
-            logger.Error(ex);
-            var snackbar = new Snackbar(ConfigWindowSnackBarPresenter);
-            snackbar.Style = (Style)FindResource("CatppuccinMochaSnackBar");
-            snackbar.Title = Messages.ErrorTitle;
-            snackbar.Content = "Could not open settings folder";
-            snackbar.Appearance = ControlAppearance.Danger;
-            snackbar.Icon = new SymbolIcon(SymbolRegular.ErrorCircle24);
-            snackbar.Timeout = SnackbarTimeOut;
+            Logger.Error(ex);
+            var snackbar = new Snackbar(ConfigWindowSnackBarPresenter)
+            {
+                Style = (Style)this.FindResource("CatppuccinMochaSnackBar"),
+                Title = Messages.ErrorTitle,
+                Content = "Could not open settings folder",
+                Appearance = ControlAppearance.Danger,
+                Icon = new SymbolIcon(SymbolRegular.ErrorCircle24),
+                Timeout = this.SnackbarTimeOut,
+            };
             snackbar.Show();
         }
     }
@@ -1440,8 +1245,8 @@ public partial class ConfigWindow : FluentWindow
 
             if (!File.Exists(logFilePath))
             {
-                logger.Error(CultureInfo.InvariantCulture, "Could not find the log file: {0}", logFilePath);
-                System.Windows.MessageBox.Show(string.Format(CultureInfo.InvariantCulture, "Could not find the log file: {0}", logFilePath), Messages.ErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
+                Logger.Error(CultureInfo.InvariantCulture, "Could not find the log file: {0}", logFilePath);
+                MessageBox.Show(string.Format(CultureInfo.InvariantCulture, "Could not find the log file: {0}", logFilePath), Messages.ErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
             // Open the log file using the default application
@@ -1457,12 +1262,12 @@ public partial class ConfigWindow : FluentWindow
             }
             catch (Exception ex)
             {
-                logger.Error(ex);
+                Logger.Error(ex);
             }
         }
         catch (Exception ex)
         {
-            logger.Error(ex);
+            Logger.Error(ex);
         }
     }
 
@@ -1471,29 +1276,29 @@ public partial class ConfigWindow : FluentWindow
         // Open the file explorer at the directory
         try
         {
-            Process.Start(ApplicationPaths.ExplorerPath, "\"" + databaseManager.GetDatabaseFolderPath() + "\"");
+            Process.Start(ApplicationPaths.ExplorerPath, "\"" + DatabaseManager.GetDatabaseFolderPath() + "\"");
         }
         catch (Exception ex)
         {
-            logger.Error(ex);
+            Logger.Error(ex);
         }
     }
 
-    private void questLoggingToggle_Check(object sender, RoutedEventArgs e)
+    private void QuestLoggingToggle_Check(object sender, RoutedEventArgs e)
     {
-        if (MainWindow == null)
+        if (this.MainWindow == null)
         {
             return;
         }
 
-        MainWindow.dataLoader.model.ValidateGameFolder();
+        ViewModels.Windows.AddressModel.ValidateGameFolder();
 
-        databaseManager.CheckIfSchemaChanged(MainWindow.dataLoader);
+        DatabaseService.CheckIfSchemaChanged(this.MainWindow.DataLoader);
     }
 
     private void CountryComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        Settings s = (Settings)Application.Current.TryFindResource("Settings");
+        var s = (Settings)Application.Current.TryFindResource("Settings");
         s.PlayerNationalityIndex = CountryComboBox.SelectedIndex;
     }
 
@@ -1502,7 +1307,7 @@ public partial class ConfigWindow : FluentWindow
         if (!string.IsNullOrEmpty(QuestIDTextBox.Text))
         {
             SetDefaultInfoInQuestIDWeaponSection();
-            databaseManager.QuestIDButton_Click(sender, e, this);
+            DatabaseManager.QuestIDButtonClick(sender, e, this);
         }
     }
 
@@ -1550,7 +1355,7 @@ public partial class ConfigWindow : FluentWindow
         BowBestTimeTextBlock.Text = Messages.TimerNotLoaded;
         BowRunIDTextBlock.Text = Messages.RunNotFound;
 
-        SelectedQuestObjectiveImage.Source = new BitmapImage(new Uri("https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/random.png"));
+        SelectedQuestObjectiveImage.Source = new BitmapImage(new Uri(@"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/random.png"));
         SelectedQuestNameTextBlock.Text = Messages.QuestNotFound;
         SelectedQuestObjectiveTextBlock.Text = Messages.InvalidQuest;
         CurrentTimeTextBlock.Text = Messages.NotANumber;
@@ -1566,9 +1371,10 @@ public partial class ConfigWindow : FluentWindow
         // nothing
     }
 
-    private T? FindChild<T>(DependencyObject parent, string childName) where T : DependencyObject
+    private T? FindChild<T>(DependencyObject parent, string childName)
+        where T : DependencyObject
     {
-        // Confirm parent and childName are valid. 
+        // Confirm parent and childName are valid.
         if (parent == null)
         {
             return null;
@@ -1576,19 +1382,18 @@ public partial class ConfigWindow : FluentWindow
 
         T? foundChild = null;
 
-        int childrenCount = VisualTreeHelper.GetChildrenCount(parent);
-        for (int i = 0; i < childrenCount; i++)
+        var childrenCount = VisualTreeHelper.GetChildrenCount(parent);
+        for (var i = 0; i < childrenCount; i++)
         {
             var child = VisualTreeHelper.GetChild(parent, i);
 
             // If the child is not of the request child type child
-            T? childType = child as T;
-            if (childType == null)
+            if (child is not T childType)
             {
                 // recursively drill down the tree
-                foundChild = FindChild<T>(child, childName);
+                foundChild = this.FindChild<T>(child, childName);
 
-                // If the child is found, break so we do not overwrite the found child. 
+                // If the child is found, break so we do not overwrite the found child.
                 if (foundChild != null)
                 {
                     break;
@@ -1596,10 +1401,8 @@ public partial class ConfigWindow : FluentWindow
             }
             else if (!string.IsNullOrEmpty(childName))
             {
-                var frameworkElement = child as FrameworkElement;
-
                 // If the child's name is set for search
-                if (frameworkElement != null && frameworkElement.Name == childName)
+                if (child is FrameworkElement frameworkElement && frameworkElement.Name == childName)
                 {
                     // if the child's name is of the request name
                     foundChild = (T)child;
@@ -1619,24 +1422,24 @@ public partial class ConfigWindow : FluentWindow
 
     private void WeaponUsageGraphComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        ComboBox comboBox = (ComboBox)sender;
-        if (weaponUsageChart == null)
+        var comboBox = (ComboBox)sender;
+        if (this.weaponUsageChart == null)
         {
             return;
         }
 
-        MainWindow.dataLoader.model.weaponUsageEarthStyle.Clear();
-        MainWindow.dataLoader.model.weaponUsageHeavenStyle.Clear();
-        MainWindow.dataLoader.model.weaponUsageStormStyle.Clear();
-        MainWindow.dataLoader.model.weaponUsageExtremeStyle.Clear();
+        this.MainWindow.DataLoader.Model.WeaponUsageEarthStyle.Clear();
+        this.MainWindow.DataLoader.Model.WeaponUsageHeavenStyle.Clear();
+        this.MainWindow.DataLoader.Model.WeaponUsageStormStyle.Clear();
+        this.MainWindow.DataLoader.Model.WeaponUsageExtremeStyle.Clear();
 
         if (comboBox.SelectedIndex == 0)
         {
-            weaponUsageData = databaseManager.CalculateTotalWeaponUsage(this, MainWindow.dataLoader);
+            this.weaponUsageData = DatabaseManager.CalculateTotalWeaponUsage(this, this.MainWindow.DataLoader);
         }
         else if (comboBox.SelectedIndex == 1)
         {
-            weaponUsageData = databaseManager.CalculateTotalWeaponUsage(this, MainWindow.dataLoader, true);
+            this.weaponUsageData = DatabaseManager.CalculateTotalWeaponUsage(this, this.MainWindow.DataLoader, true);
         }
         else
         {
@@ -1644,10 +1447,13 @@ public partial class ConfigWindow : FluentWindow
         }
 
         var weaponStyles = new[] { "Earth Style", "Heaven Style", "Storm Style", "Extreme Style" };
-        var weaponTypes = new[] { "Sword and Shield", "Dual Swords", "Great Sword", "Long Sword",
-                          "Hammer", "Hunting Horn", "Lance", "Gunlance", "Tonfa",
-                          "Switch Axe F", "Magnet Spike", "Light Bowgun", "Heavy Bowgun",
-                          "Bow", };
+        var weaponTypes = new[]
+        {
+            "Sword and Shield", "Dual Swords", "Great Sword", "Long Sword",
+            "Hammer", "Hunting Horn", "Lance", "Gunlance", "Tonfa",
+            "Switch Axe F", "Magnet Spike", "Light Bowgun", "Heavy Bowgun",
+            "Bow",
+        };
 
         foreach (var weaponType in weaponTypes)
         {
@@ -1656,53 +1462,52 @@ public partial class ConfigWindow : FluentWindow
                 switch (weaponStyle)
                 {
                     case "Earth Style":
-                        var weaponUsageCount = weaponUsageData.Where(x => x.WeaponType == weaponType && x.Style == weaponStyle)
+                        var weaponUsageCount = this.weaponUsageData.Where(x => x.WeaponType == weaponType && x.Style == weaponStyle)
                                                                       .Sum(x => x.RunCount);
-                        MainWindow.dataLoader.model.weaponUsageEarthStyle.Add(weaponUsageCount);
+                        this.MainWindow.DataLoader.Model.WeaponUsageEarthStyle.Add(weaponUsageCount);
                         break;
                     case "Heaven Style":
-                        weaponUsageCount = weaponUsageData.Where(x => x.WeaponType == weaponType && x.Style == weaponStyle)
+                        weaponUsageCount = this.weaponUsageData.Where(x => x.WeaponType == weaponType && x.Style == weaponStyle)
                                                                       .Sum(x => x.RunCount);
-                        MainWindow.dataLoader.model.weaponUsageHeavenStyle.Add(weaponUsageCount);
+                        this.MainWindow.DataLoader.Model.WeaponUsageHeavenStyle.Add(weaponUsageCount);
                         break;
                     case "Storm Style":
-                        weaponUsageCount = weaponUsageData.Where(x => x.WeaponType == weaponType && x.Style == weaponStyle)
+                        weaponUsageCount = this.weaponUsageData.Where(x => x.WeaponType == weaponType && x.Style == weaponStyle)
                                                                       .Sum(x => x.RunCount);
-                        MainWindow.dataLoader.model.weaponUsageStormStyle.Add(weaponUsageCount);
+                        this.MainWindow.DataLoader.Model.WeaponUsageStormStyle.Add(weaponUsageCount);
                         break;
                     case "Extreme Style":
-                        weaponUsageCount = weaponUsageData.Where(x => x.WeaponType == weaponType && x.Style == weaponStyle)
+                        weaponUsageCount = this.weaponUsageData.Where(x => x.WeaponType == weaponType && x.Style == weaponStyle)
                                                                       .Sum(x => x.RunCount);
-                        MainWindow.dataLoader.model.weaponUsageExtremeStyle.Add(weaponUsageCount);
+                        this.MainWindow.DataLoader.Model.WeaponUsageExtremeStyle.Add(weaponUsageCount);
+                        break;
+                    default:
                         break;
                 }
             }
         }
     }
 
-    private void weaponUsageChart_Loaded(object sender, RoutedEventArgs e)
+    private void WeaponUsageChart_Loaded(object sender, RoutedEventArgs e)
     {
-        weaponUsageChart = (CartesianChart)sender;
+        this.weaponUsageChart = (CartesianChart)sender;
 
-        if (!weaponUsageChart.Series.Any())
+        if (!this.weaponUsageChart.Series.Any())
         {
-            MainWindow.dataLoader.model.weaponUsageEarthStyle.Clear();
-            MainWindow.dataLoader.model.weaponUsageHeavenStyle.Clear();
-            MainWindow.dataLoader.model.weaponUsageStormStyle.Clear();
-            MainWindow.dataLoader.model.weaponUsageExtremeStyle.Clear();
+            this.MainWindow.DataLoader.Model.WeaponUsageEarthStyle.Clear();
+            this.MainWindow.DataLoader.Model.WeaponUsageHeavenStyle.Clear();
+            this.MainWindow.DataLoader.Model.WeaponUsageStormStyle.Clear();
+            this.MainWindow.DataLoader.Model.WeaponUsageExtremeStyle.Clear();
 
             // TODO: is this needed?
-            weaponUsageChart.SyncContext = MainWindow.dataLoader.model.weaponUsageSync;
+            this.weaponUsageChart.SyncContext = this.MainWindow.DataLoader.Model.WeaponUsageSync;
 
-            SetWeaponUsageChart(weaponUsageChart);
+            this.SetWeaponUsageChart(this.weaponUsageChart);
         }
     }
 
-    private CartesianChart? weaponUsageChart;
     private TextBox? youtubeLinkTextBox;
-    private ListView? mostRecentRunsListView;
     private DataGrid? mostRecentRunsDataGrid;
-    private ListView? top20RunsListView;
     private DataGrid? top20RunsDataGrid;
     private TextBlock? questLogGearStatsTextBlock;
     private TextBlock? compendiumTextBlock;
@@ -1727,51 +1532,57 @@ public partial class ConfigWindow : FluentWindow
     private ListView? achievementsListView;
     private Grid? achievementsSelectedInfoGrid;
 
+    private string top20RunsSelectedWeapon = string.Empty;
+
     private void UpdateYoutubeLink_ButtonClick(object sender, RoutedEventArgs e)
     {
         // Get the quest ID and new YouTube link from the textboxes
-        long runID = long.Parse(RunIDTextBox.Text.Trim(), CultureInfo.InvariantCulture);
-        if (youtubeLinkTextBox == null)
+        var runID = long.Parse(RunIDTextBox.Text.Trim(), CultureInfo.InvariantCulture);
+        if (this.youtubeLinkTextBox == null)
         {
             return;
         }
 
-        string youtubeLink = youtubeLinkTextBox.Text.Trim();
-        if (databaseManager.UpdateYoutubeLink(sender, e, runID, youtubeLink))
+        var youtubeLink = this.youtubeLinkTextBox.Text.Trim();
+        if (DatabaseManager.UpdateYoutubeLink(sender, e, runID, youtubeLink))
         {
-            var snackbar = new Snackbar(ConfigWindowSnackBarPresenter);
-            snackbar.Style = (Style)FindResource("CatppuccinMochaSnackBar");
-            snackbar.Title = Messages.InfoTitle;
-            snackbar.Content = string.Format(CultureInfo.InvariantCulture, "Updated run {0} with link https://youtube.com/watch?v={1}", runID, youtubeLink);
-            snackbar.Appearance = ControlAppearance.Success;
-            snackbar.Icon = new SymbolIcon(SymbolRegular.Video32);
-            snackbar.Timeout = SnackbarTimeOut;
+            var snackbar = new Snackbar(ConfigWindowSnackBarPresenter)
+            {
+                Style = (Style)this.FindResource("CatppuccinMochaSnackBar"),
+                Title = Messages.InfoTitle,
+                Content = string.Format(CultureInfo.InvariantCulture, "Updated run {0} with link https://youtube.com/watch?v={1}", runID, youtubeLink),
+                Appearance = ControlAppearance.Success,
+                Icon = new SymbolIcon(SymbolRegular.Video32),
+                Timeout = this.SnackbarTimeOut,
+            };
             snackbar.Show();
         }
         else
         {
-            var snackbar = new Snackbar(ConfigWindowSnackBarPresenter);
-            snackbar.Style = (Style)FindResource("CatppuccinMochaSnackBar");
-            snackbar.Title = Messages.ErrorTitle;
-            snackbar.Content = string.Format(CultureInfo.InvariantCulture, "Could not update run {0} with link https://youtube.com/watch?v={1}. The link may have already been set to the same value, or the run ID and link input are invalid.", runID, youtubeLink);
-            snackbar.Appearance = ControlAppearance.Danger;
-            snackbar.Icon = new SymbolIcon(SymbolRegular.Video32);
-            snackbar.Timeout = SnackbarTimeOut;
+            var snackbar = new Snackbar(ConfigWindowSnackBarPresenter)
+            {
+                Style = (Style)this.FindResource("CatppuccinMochaSnackBar"),
+                Title = Messages.ErrorTitle,
+                Content = string.Format(CultureInfo.InvariantCulture, "Could not update run {0} with link https://youtube.com/watch?v={1}. The link may have already been set to the same value, or the run ID and link input are invalid.", runID, youtubeLink),
+                Appearance = ControlAppearance.Danger,
+                Icon = new SymbolIcon(SymbolRegular.Video32),
+                Timeout = this.SnackbarTimeOut,
+            };
             snackbar.Show();
         }
     }
 
     private void YoutubeIconButton_Click(object sender, RoutedEventArgs e)
     {
-        long runID = long.Parse(RunIDTextBox.Text.Trim(), CultureInfo.InvariantCulture);
-        string youtubeLink = databaseManager.GetYoutubeLinkForRunID(runID);
-        if (youtubeLink != "")
+        var runID = long.Parse(RunIDTextBox.Text.Trim(), CultureInfo.InvariantCulture);
+        var youtubeLink = DatabaseManager.GetYoutubeLinkForRunID(runID);
+        if (youtubeLink != string.Empty)
         {
-            var sInfo = new System.Diagnostics.ProcessStartInfo(youtubeLink)
+            var sInfo = new ProcessStartInfo(youtubeLink)
             {
                 UseShellExecute = true,
             };
-            System.Diagnostics.Process.Start(sInfo);
+            Process.Start(sInfo);
         }
         else
         {
@@ -1779,34 +1590,56 @@ public partial class ConfigWindow : FluentWindow
         }
     }
 
-    private void YoutubeLinkTextBox_Loaded(object sender, RoutedEventArgs e)
-    {
-        youtubeLinkTextBox = (TextBox)sender;
-    }
+    private void YoutubeLinkTextBox_Loaded(object sender, RoutedEventArgs e) => this.youtubeLinkTextBox = (TextBox)sender;
 
     private void Top20Runs_DataGridLoaded(object sender, RoutedEventArgs e)
     {
-        top20RunsDataGrid = (DataGrid)sender;
-        MainWindow.dataLoader.model.FastestRuns = databaseManager.GetFastestRuns(this);
-        top20RunsDataGrid.ItemsSource = MainWindow.dataLoader.model.FastestRuns;
-        top20RunsDataGrid.Items.Refresh();
+        this.top20RunsDataGrid = (DataGrid)sender;
+        this.MainWindow.DataLoader.Model.FastestRuns = DatabaseManager.GetFastestRuns(this);
+        this.top20RunsDataGrid.ItemsSource = this.MainWindow.DataLoader.Model.FastestRuns;
+        this.top20RunsDataGrid.Items.Refresh();
     }
-
-    private string top20RunsSelectedWeapon = string.Empty;
 
     private string statsGraphsSelectedOption = string.Empty;
 
     private string statsTextSelectedOption = string.Empty;
 
-    private void weaponListTop20RunsComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    private DateTime datePickerDate = DateTime.UtcNow;
+
+    // Declare flags to track event subscription
+    private bool isConfigureButtonClickedSubscribed;
+
+    private ISeries[] ? Series { get; set; }
+
+    // TODO to another class
+    public static void SaveCSVFromListOfRecentRuns(List<RecentRuns> recentRuns, string filePath)
     {
-        if (top20RunsDataGrid == null)
+        var sb = new StringBuilder();
+        sb.AppendLine("Objective Image,Quest Name,Run ID,Quest ID,Youtube ID,Final Time Display,Date,Actual Overlay Mode,Party Size");
+
+        foreach (var run in recentRuns)
+        {
+            var objectiveImage = run.ObjectiveImage.Replace(",", string.Empty);
+            var questName = run.QuestName.Replace(",", string.Empty);
+            var youtubeID = run.YoutubeID.Replace(",", string.Empty);
+            var finalTimeDisplay = run.FinalTimeDisplay.Replace(",", string.Empty);
+            var actualOverlayMode = run.ActualOverlayMode.Replace(",", string.Empty);
+
+            var line = $"{objectiveImage},{questName},{run.RunID},{run.QuestID},{youtubeID},{finalTimeDisplay},{run.Date},{actualOverlayMode},{run.PartySize}";
+            sb.AppendLine(line);
+        }
+
+        File.WriteAllText(filePath, sb.ToString());
+    }
+
+    private void WeaponListTop20RunsComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (this.top20RunsDataGrid == null)
         {
             return;
         }
 
-        var comboBox = sender as ComboBox;
-        if (comboBox == null)
+        if (sender is not ComboBox comboBox)
         {
             return;
         }
@@ -1818,107 +1651,113 @@ public partial class ConfigWindow : FluentWindow
         }
 
         // You can now use the selectedItem variable to get the data or value of the selected option
-        string? selectedWeapon = selectedItem.ToString()?.Replace("System.Windows.Controls.ComboBoxItem: ", "");
+        var selectedWeapon = selectedItem.ToString()?.Replace("System.Windows.Controls.ComboBoxItem: ", string.Empty);
         if (string.IsNullOrEmpty(selectedWeapon))
         {
             return;
         }
 
-        top20RunsSelectedWeapon = selectedWeapon;
-        MainWindow.dataLoader.model.FastestRuns = databaseManager.GetFastestRuns(this, selectedWeapon);
-        top20RunsDataGrid.ItemsSource = MainWindow.dataLoader.model.FastestRuns;
-        top20RunsDataGrid.Items.Refresh();
+        this.top20RunsSelectedWeapon = selectedWeapon;
+        this.MainWindow.DataLoader.Model.FastestRuns = DatabaseManager.GetFastestRuns(this, selectedWeapon);
+        this.top20RunsDataGrid.ItemsSource = this.MainWindow.DataLoader.Model.FastestRuns;
+        this.top20RunsDataGrid.Items.Refresh();
 
-        if (top20RunsDescriptionTextblock != null)
+        if (this.top20RunsDescriptionTextblock != null)
         {
-            top20RunsDescriptionTextblock.Text = $"Top 20 fastest solo runs of quest ID {QuestIDTextBox.Text} by category {OverlayModeComboBox.Text}";
+            this.top20RunsDescriptionTextblock.Text = $"Top 20 fastest solo runs of quest ID {QuestIDTextBox.Text} by category {OverlayModeComboBox.Text}";
         }
     }
 
     private void QuestLogGearStats_Loaded(object sender, RoutedEventArgs e)
     {
-        var textBlock = sender as TextBlock;
-        if (textBlock == null)
+        if (sender is not TextBlock textBlock)
         {
             return;
         }
 
-        long runID = long.Parse(RunIDTextBox.Text.Trim(), CultureInfo.InvariantCulture);
-        textBlock.Text = MainWindow.dataLoader.model.GenerateGearStats(runID);
-        questLogGearStatsTextBlock = textBlock;
+        var runID = long.Parse(RunIDTextBox.Text.Trim(), CultureInfo.InvariantCulture);
+        textBlock.Text = this.MainWindow.DataLoader.Model.GenerateGearStats(runID);
+        this.questLogGearStatsTextBlock = textBlock;
     }
 
     private void QuestLogGearBtnSaveFile_Click(object sender, RoutedEventArgs e)
     {
-        if (questLogGearStatsTextBlock == null)
+        if (this.questLogGearStatsTextBlock == null)
         {
             return;
         }
 
-        string textToSave = questLogGearStatsTextBlock.Text;
+        var textToSave = this.questLogGearStatsTextBlock.Text;
         textToSave = string.Format(CultureInfo.InvariantCulture, "```text\n{0}\n```", textToSave);
         var fileName = "Set";
         var beginningFileName = "Run";
         var beginningText = RunIDTextBox.Text.Trim();
-        var snackbar = new Snackbar(ConfigWindowSnackBarPresenter);
-        snackbar.Style = (Style)FindResource("CatppuccinMochaSnackBar");
+        var snackbar = new Snackbar(ConfigWindowSnackBarPresenter)
+        {
+            Style = (Style)this.FindResource("CatppuccinMochaSnackBar"),
+        };
         FileService.SaveTextFile(snackbar, textToSave, fileName, beginningFileName, beginningText);
     }
 
     private void QuestLogGearBtnCopyFile_Click(object sender, RoutedEventArgs e)
     {
-        if (questLogGearStatsTextBlock == null)
+        if (this.questLogGearStatsTextBlock == null)
         {
             return;
         }
 
-        var previousBackground = questLogGearStatsTextBlock.Background;
-        questLogGearStatsTextBlock.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
-        var snackbar = new Snackbar(ConfigWindowSnackBarPresenter);
-        snackbar.Style = (Style)FindResource("CatppuccinMochaSnackBar");
-        FileService.CopyUIElementToClipboard(questLogGearStatsTextBlock, snackbar);
-        questLogGearStatsTextBlock.Background = previousBackground;
+        var previousBackground = this.questLogGearStatsTextBlock.Background;
+        this.questLogGearStatsTextBlock.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
+        var snackbar = new Snackbar(ConfigWindowSnackBarPresenter)
+        {
+            Style = (Style)this.FindResource("CatppuccinMochaSnackBar"),
+        };
+        FileService.CopyUIElementToClipboard(this.questLogGearStatsTextBlock, snackbar);
+        this.questLogGearStatsTextBlock.Background = previousBackground;
     }
 
     private void Compendium_Loaded(object sender, RoutedEventArgs e)
     {
-        var textBlock = sender as TextBlock;
-        if (textBlock == null)
+        if (sender is not TextBlock textBlock)
         {
             return;
         }
 
-        textBlock.Text = MainWindow.dataLoader.model.GenerateCompendium(MainWindow.dataLoader);
-        compendiumTextBlock = textBlock;
+        textBlock.Text = this.MainWindow.DataLoader.Model.GenerateCompendium(this.MainWindow.DataLoader);
+        this.compendiumTextBlock = textBlock;
     }
 
     private void CompendiumBtnSaveFile_Click(object sender, RoutedEventArgs e)
     {
-        if (compendiumTextBlock == null)
+        if (this.compendiumTextBlock == null)
         {
             return;
         }
 
-        string textToSave = compendiumTextBlock.Text;
+        var textToSave = this.compendiumTextBlock.Text;
         textToSave = string.Format(CultureInfo.InvariantCulture, "```text\n{0}\n```", textToSave);
-        var snackbar = new Snackbar(ConfigWindowSnackBarPresenter);
-        snackbar.Style = (Style)FindResource("CatppuccinMochaSnackBar");
+        var snackbar = new Snackbar(ConfigWindowSnackBarPresenter)
+        {
+            Style = (Style)this.FindResource("CatppuccinMochaSnackBar"),
+        };
         FileService.SaveTextFile(snackbar, textToSave, "Compendium");
     }
 
     private void CompendiumBtnCopyFile_Click(object sender, RoutedEventArgs e)
     {
-        if (compendiumInformationStackPanel == null)
+        if (this.compendiumInformationStackPanel == null)
         {
             return;
         }
 
-        var previousBackground = compendiumInformationStackPanel.Background;
-        compendiumInformationStackPanel.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
-        var snackbar = new Snackbar(ConfigWindowSnackBarPresenter);
-        snackbar.Style = (Style)FindResource("CatppuccinMochaSnackBar");
-        FileService.CopyUIElementToClipboard(compendiumInformationStackPanel, snackbar);
-        compendiumInformationStackPanel.Background = previousBackground;
+        var previousBackground = this.compendiumInformationStackPanel.Background;
+        this.compendiumInformationStackPanel.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
+        var snackbar = new Snackbar(ConfigWindowSnackBarPresenter)
+        {
+            Style = (Style)this.FindResource("CatppuccinMochaSnackBar"),
+        };
+        FileService.CopyUIElementToClipboard(this.compendiumInformationStackPanel, snackbar);
+        this.compendiumInformationStackPanel.Background = previousBackground;
     }
 
     // TODO: put in file manager class?
@@ -1926,107 +1765,88 @@ public partial class ConfigWindow : FluentWindow
     {
         try
         {
-            var data = MainWindow.dataLoader.model.CalendarRuns;
+            var data = this.MainWindow.DataLoader.Model.CalendarRuns;
             if (data == null)
             {
                 return;
             }
 
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "CSV files (*.csv)|*.csv";
-            saveFileDialog.Title = "Save Calendar Runs as CSV";
-            Settings s = (Settings)Application.Current.TryFindResource("Settings");
+            var saveFileDialog = new SaveFileDialog
+            {
+                Filter = "CSV files (*.csv)|*.csv",
+                Title = "Save Calendar Runs as CSV",
+            };
+            var s = (Settings)Application.Current.TryFindResource("Settings");
             saveFileDialog.InitialDirectory = Path.GetDirectoryName(s.DatabaseFilePath);
-            string dateTime = DateTime.UtcNow.ToString(CultureInfo.InvariantCulture);
+            var dateTime = DateTime.UtcNow.ToString(CultureInfo.InvariantCulture);
             dateTime = dateTime.Replace("/", "-");
             dateTime = dateTime.Replace(" ", "_");
             dateTime = dateTime.Replace(":", "-");
-            saveFileDialog.FileName = string.Format(CultureInfo.InvariantCulture, "CalendarRuns-{0}", datePickerDate.ToString("yy/MM/dd", CultureInfo.InvariantCulture).Replace("/", "-"));
+            saveFileDialog.FileName = string.Format(CultureInfo.InvariantCulture, "CalendarRuns-{0}", this.datePickerDate.ToString("yy/MM/dd", CultureInfo.InvariantCulture).Replace("/", "-"));
             if (saveFileDialog.ShowDialog() == true)
             {
-                string filePath = saveFileDialog.FileName;
+                var filePath = saveFileDialog.FileName;
                 SaveCSVFromListOfRecentRuns(data, filePath);
-                logger.Info(CultureInfo.InvariantCulture, "Saved text {0}", saveFileDialog.FileName);
+                Logger.Info(CultureInfo.InvariantCulture, "Saved text {0}", saveFileDialog.FileName);
             }
         }
         catch (Exception ex)
         {
-            logger.Error(ex, "Could not save text file");
+            Logger.Error(ex, "Could not save text file");
         }
     }
 
-    // TODO to another class
-    public void SaveCSVFromListOfRecentRuns(List<RecentRuns> recentRuns, string filePath)
+    public static void SaveCSVFromWeaponUsage(List<WeaponUsage> weaponUsageData, string filePath)
     {
-        StringBuilder sb = new StringBuilder();
-        sb.AppendLine("Objective Image,Quest Name,Run ID,Quest ID,Youtube ID,Final Time Display,Date,Actual Overlay Mode,Party Size");
-
-        foreach (var run in recentRuns)
-        {
-            string objectiveImage = run.ObjectiveImage.Replace(",", "");
-            string questName = run.QuestName.Replace(",", "");
-            string youtubeID = run.YoutubeID.Replace(",", "");
-            string finalTimeDisplay = run.FinalTimeDisplay.Replace(",", "");
-            string actualOverlayMode = run.ActualOverlayMode.Replace(",", "");
-
-            string line = $"{objectiveImage},{questName},{run.RunID},{run.QuestID},{youtubeID},{finalTimeDisplay},{run.Date},{actualOverlayMode},{run.PartySize}";
-            sb.AppendLine(line);
-        }
-
-        File.WriteAllText(filePath, sb.ToString());
-    }
-
-    public void SaveCSVFromWeaponUsage(List<WeaponUsage> weaponUsageData, string filePath)
-    {
-        StringBuilder sb = new StringBuilder();
+        var sb = new StringBuilder();
         sb.AppendLine("Weapon Type,Style,Run Count");
 
-        foreach (var WeaponUsageMapper in weaponUsageData)
+        foreach (var weaponUsageMapper in weaponUsageData)
         {
-            string weaponType = WeaponUsageMapper.WeaponType.Replace(",", "");
-            string style = WeaponUsageMapper.Style.Replace(",", "");
-            string runCount = WeaponUsageMapper.RunCount.ToString(CultureInfo.InvariantCulture).Replace(",", "");
+            var weaponType = weaponUsageMapper.WeaponType.Replace(",", string.Empty);
+            var style = weaponUsageMapper.Style.Replace(",", string.Empty);
+            var runCount = weaponUsageMapper.RunCount.ToString(CultureInfo.InvariantCulture).Replace(",", string.Empty);
 
-            string line = $"{weaponType},{style},{runCount}";
+            var line = $"{weaponType},{style},{runCount}";
             sb.AppendLine(line);
         }
 
         File.WriteAllText(filePath, sb.ToString());
     }
 
-    public void SaveCSVFromListOfRecentRuns(ObservableCollection<RecentRuns> recentRuns, string filePath)
+    public static void SaveCSVFromListOfRecentRuns(ObservableCollection<RecentRuns> recentRuns, string filePath)
     {
-        StringBuilder sb = new StringBuilder();
+        var sb = new StringBuilder();
         sb.AppendLine("Objective Image,Quest Name,Run ID,Quest ID,Youtube ID,Final Time Display,Date,Actual Overlay Mode,Party Size");
 
         foreach (var run in recentRuns)
         {
-            string objectiveImage = run.ObjectiveImage.Replace(",", "");
-            string questName = run.QuestName.Replace(",", "");
-            string youtubeID = run.YoutubeID.Replace(",", "");
-            string finalTimeDisplay = run.FinalTimeDisplay.Replace(",", "");
-            string actualOverlayMode = run.ActualOverlayMode.Replace(",", "");
+            var objectiveImage = run.ObjectiveImage.Replace(",", string.Empty);
+            var questName = run.QuestName.Replace(",", string.Empty);
+            var youtubeID = run.YoutubeID.Replace(",", string.Empty);
+            var finalTimeDisplay = run.FinalTimeDisplay.Replace(",", string.Empty);
+            var actualOverlayMode = run.ActualOverlayMode.Replace(",", string.Empty);
 
-            string line = $"{objectiveImage},{questName},{run.RunID},{run.QuestID},{youtubeID},{finalTimeDisplay},{run.Date},{actualOverlayMode},{run.PartySize}";
+            var line = $"{objectiveImage},{questName},{run.RunID},{run.QuestID},{youtubeID},{finalTimeDisplay},{run.Date},{actualOverlayMode},{run.PartySize}";
             sb.AppendLine(line);
         }
 
         File.WriteAllText(filePath, sb.ToString());
     }
 
-    public void SaveCSVFromListOfFastestRuns(List<FastestRun> fastestRuns, string filePath)
+    public static void SaveCSVFromListOfFastestRuns(List<FastestRun> fastestRuns, string filePath)
     {
-        StringBuilder sb = new StringBuilder();
+        var sb = new StringBuilder();
         sb.AppendLine("Objective Image,Quest Name,Run ID,Quest ID,Youtube ID,Final Time Display,Date");
 
         foreach (var run in fastestRuns)
         {
-            string objectiveImage = run.ObjectiveImage.Replace(",", "");
-            string questName = run.QuestName.Replace(",", "");
-            string youtubeID = run.YoutubeID.Replace(",", "");
-            string finalTimeDisplay = run.FinalTimeDisplay.Replace(",", "");
+            var objectiveImage = run.ObjectiveImage.Replace(",", string.Empty);
+            var questName = run.QuestName.Replace(",", string.Empty);
+            var youtubeID = run.YoutubeID.Replace(",", string.Empty);
+            var finalTimeDisplay = run.FinalTimeDisplay.Replace(",", string.Empty);
 
-            string line = $"{objectiveImage},{questName},{run.RunID},{run.QuestID},{youtubeID},{finalTimeDisplay},{run.Date}";
+            var line = $"{objectiveImage},{questName},{run.RunID},{run.QuestID},{youtubeID},{finalTimeDisplay},{run.Date}";
             sb.AppendLine(line);
         }
 
@@ -2035,251 +1855,277 @@ public partial class ConfigWindow : FluentWindow
 
     private void CalendarButtonCopyFile_Click(object sender, RoutedEventArgs e)
     {
-        if (calendarDataGrid == null)
+        if (this.calendarDataGrid == null)
         {
             return;
         }
 
-        var previousBackground = calendarDataGrid.Background;
-        calendarDataGrid.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
-        var snackbar = new Snackbar(ConfigWindowSnackBarPresenter);
-        snackbar.Style = (Style)FindResource("CatppuccinMochaSnackBar");
-        FileService.CopyUIElementToClipboard(calendarDataGrid, snackbar);
-        calendarDataGrid.Background = previousBackground;
+        var previousBackground = this.calendarDataGrid.Background;
+        this.calendarDataGrid.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
+        var snackbar = new Snackbar(ConfigWindowSnackBarPresenter)
+        {
+            Style = (Style)this.FindResource("CatppuccinMochaSnackBar"),
+        };
+        FileService.CopyUIElementToClipboard(this.calendarDataGrid, snackbar);
+        this.calendarDataGrid.Background = previousBackground;
     }
 
     private void PersonalBestButtonSaveFile_Click(object sender, RoutedEventArgs e)
     {
-        if (personalBestChart == null || personalBestChartGrid == null || personalBestMainGrid == null)
+        if (this.personalBestChart == null || this.personalBestChartGrid == null || this.personalBestMainGrid == null)
         {
             return;
         }
 
-        var fileName = $"PersonalBest-Quest_{QuestIDTextBox.Text}-{OverlayModeComboBox.Text}-{personalBestSelectedType}-{personalBestSelectedWeapon}".Trim().Replace(" ", "_");
-        var snackbar = new Snackbar(ConfigWindowSnackBarPresenter);
-        snackbar.Style = (Style)FindResource("CatppuccinMochaSnackBar");
-        FileService.SaveElementAsImageFile(personalBestMainGrid, fileName, snackbar, false);
+        var fileName = $"PersonalBest-Quest_{QuestIDTextBox.Text}-{OverlayModeComboBox.Text}-{this.personalBestSelectedType}-{this.personalBestSelectedWeapon}".Trim().Replace(" ", "_");
+        var snackbar = new Snackbar(ConfigWindowSnackBarPresenter)
+        {
+            Style = (Style)this.FindResource("CatppuccinMochaSnackBar"),
+        };
+        FileService.SaveElementAsImageFile(this.personalBestMainGrid, fileName, snackbar, false);
     }
 
     private void PersonalBestButtonCopyFile_Click(object sender, RoutedEventArgs e)
     {
-        if (personalBestChartGrid == null || personalBestMainGrid == null)
+        if (this.personalBestChartGrid == null || this.personalBestMainGrid == null)
         {
             return;
         }
 
-        var previousBackground = personalBestMainGrid.Background;
-        personalBestMainGrid.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
-        var snackbar = new Snackbar(ConfigWindowSnackBarPresenter);
-        snackbar.Style = (Style)FindResource("CatppuccinMochaSnackBar");
-        FileService.CopyUIElementToClipboard(personalBestMainGrid, snackbar);
-        personalBestMainGrid.Background = previousBackground;
+        var previousBackground = this.personalBestMainGrid.Background;
+        this.personalBestMainGrid.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
+        var snackbar = new Snackbar(ConfigWindowSnackBarPresenter)
+        {
+            Style = (Style)this.FindResource("CatppuccinMochaSnackBar"),
+        };
+        FileService.CopyUIElementToClipboard(this.personalBestMainGrid, snackbar);
+        this.personalBestMainGrid.Background = previousBackground;
     }
 
     private void Top20ButtonSaveFile_Click(object sender, RoutedEventArgs e)
     {
         try
         {
-            var data = MainWindow.dataLoader.model.FastestRuns;
+            var data = this.MainWindow.DataLoader.Model.FastestRuns;
             if (data == null)
             {
                 return;
             }
 
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "CSV files (*.csv)|*.csv";
-            saveFileDialog.Title = "Save Fastest Runs as CSV";
-            Settings s = (Settings)Application.Current.TryFindResource("Settings");
+            var saveFileDialog = new SaveFileDialog
+            {
+                Filter = "CSV files (*.csv)|*.csv",
+                Title = "Save Fastest Runs as CSV",
+            };
+            var s = (Settings)Application.Current.TryFindResource("Settings");
             saveFileDialog.InitialDirectory = Path.GetDirectoryName(s.DatabaseFilePath);
-            string dateTime = DateTime.UtcNow.ToString(CultureInfo.InvariantCulture);
+            var dateTime = DateTime.UtcNow.ToString(CultureInfo.InvariantCulture);
             dateTime = dateTime.Replace("/", "-");
             dateTime = dateTime.Replace(" ", "_");
             dateTime = dateTime.Replace(":", "-");
-            saveFileDialog.FileName = string.Format(CultureInfo.InvariantCulture, "FastestRuns-Quest_{0}-{1}-{2}-{3}", QuestIDTextBox.Text, OverlayModeComboBox.Text, top20RunsSelectedWeapon, DateTime.UtcNow.ToString("yy/MM/dd", CultureInfo.InvariantCulture).Replace("/", "-"));
+            saveFileDialog.FileName = string.Format(CultureInfo.InvariantCulture, "FastestRuns-Quest_{0}-{1}-{2}-{3}", QuestIDTextBox.Text, OverlayModeComboBox.Text, this.top20RunsSelectedWeapon, DateTime.UtcNow.ToString("yy/MM/dd", CultureInfo.InvariantCulture).Replace("/", "-"));
             if (saveFileDialog.ShowDialog() == true)
             {
-                string filePath = saveFileDialog.FileName;
+                var filePath = saveFileDialog.FileName;
                 SaveCSVFromListOfFastestRuns(data, filePath);
-                logger.Info(CultureInfo.InvariantCulture, "Saved text {0}", saveFileDialog.FileName);
+                Logger.Info(CultureInfo.InvariantCulture, "Saved text {0}", saveFileDialog.FileName);
             }
         }
         catch (Exception ex)
         {
-            logger.Error(ex, "Could not save text file");
+            Logger.Error(ex, "Could not save text file");
         }
     }
 
     private void Top20ButtonCopyFile_Click(object sender, RoutedEventArgs e)
     {
-        if (top20RunsDataGrid == null || top20MainGrid == null)
+        if (this.top20RunsDataGrid == null || this.top20MainGrid == null)
         {
             return;
         }
 
-        var previousBackground = top20MainGrid.Background;
-        top20MainGrid.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
-        var snackbar = new Snackbar(ConfigWindowSnackBarPresenter);
-        snackbar.Style = (Style)FindResource("CatppuccinMochaSnackBar");
-        FileService.CopyUIElementToClipboard(top20MainGrid, snackbar);
-        top20MainGrid.Background = previousBackground;
+        var previousBackground = this.top20MainGrid.Background;
+        this.top20MainGrid.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
+        var snackbar = new Snackbar(ConfigWindowSnackBarPresenter)
+        {
+            Style = (Style)this.FindResource("CatppuccinMochaSnackBar"),
+        };
+        FileService.CopyUIElementToClipboard(this.top20MainGrid, snackbar);
+        this.top20MainGrid.Background = previousBackground;
     }
 
     private void WeaponStatsButtonSaveFile_Click(object sender, RoutedEventArgs e)
     {
-        if (weaponUsageChartGrid == null || weaponUsageChart == null || weaponUsageData == null || weaponStatsMainGrid == null)
+        if (this.weaponUsageChartGrid == null || this.weaponUsageChart == null || this.weaponUsageData == null || this.weaponStatsMainGrid == null)
         {
             return;
         }
 
         try
         {
-            var data = MainWindow.dataLoader.model.CalendarRuns;
+            var data = this.MainWindow.DataLoader.Model.CalendarRuns;
             if (data == null)
             {
                 return;
             }
 
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "CSV files (*.csv)|*.csv";
-            saveFileDialog.Title = "Save Weapon Stats as CSV";
-            Settings s = (Settings)Application.Current.TryFindResource("Settings");
+            var saveFileDialog = new SaveFileDialog
+            {
+                Filter = "CSV files (*.csv)|*.csv",
+                Title = "Save Weapon Stats as CSV",
+            };
+            var s = (Settings)Application.Current.TryFindResource("Settings");
             saveFileDialog.InitialDirectory = Path.GetDirectoryName(s.DatabaseFilePath);
-            string dateTime = DateTime.UtcNow.ToString(CultureInfo.InvariantCulture);
+            var dateTime = DateTime.UtcNow.ToString(CultureInfo.InvariantCulture);
             dateTime = dateTime.Replace("/", "-");
             dateTime = dateTime.Replace(" ", "_");
             dateTime = dateTime.Replace(":", "-");
             saveFileDialog.FileName = string.Format(CultureInfo.InvariantCulture, "WeaponUsage-{0}", dateTime);
             if (saveFileDialog.ShowDialog() == true)
             {
-                string filePath = saveFileDialog.FileName;
-                SaveCSVFromWeaponUsage(weaponUsageData, filePath);
-                logger.Info(CultureInfo.InvariantCulture, "Saved text {0}", saveFileDialog.FileName);
+                var filePath = saveFileDialog.FileName;
+                SaveCSVFromWeaponUsage(this.weaponUsageData, filePath);
+                Logger.Info(CultureInfo.InvariantCulture, "Saved text {0}", saveFileDialog.FileName);
             }
         }
         catch (Exception ex)
         {
-            logger.Error(ex, "Could not save text file");
+            Logger.Error(ex, "Could not save text file");
         }
     }
 
     private void WeaponStatsButtonCopyFile_Click(object sender, RoutedEventArgs e)
     {
-        if (weaponUsageChartGrid == null || weaponStatsMainGrid == null)
+        if (this.weaponUsageChartGrid == null || this.weaponStatsMainGrid == null)
         {
             return;
         }
 
-        var previousBackground = weaponStatsMainGrid.Background;
-        weaponStatsMainGrid.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
-        var snackbar = new Snackbar(ConfigWindowSnackBarPresenter);
-        snackbar.Style = (Style)FindResource("CatppuccinMochaSnackBar");
-        FileService.CopyUIElementToClipboard(weaponStatsMainGrid, snackbar);
-        weaponStatsMainGrid.Background = previousBackground;
+        var previousBackground = this.weaponStatsMainGrid.Background;
+        this.weaponStatsMainGrid.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
+        var snackbar = new Snackbar(ConfigWindowSnackBarPresenter)
+        {
+            Style = (Style)this.FindResource("CatppuccinMochaSnackBar"),
+        };
+        FileService.CopyUIElementToClipboard(this.weaponStatsMainGrid, snackbar);
+        this.weaponStatsMainGrid.Background = previousBackground;
     }
 
     private void MostRecentButtonSaveFile_Click(object sender, RoutedEventArgs e)
     {
         try
         {
-            var data = MainWindow.dataLoader.model.RecentRuns;
+            var data = this.MainWindow.DataLoader.Model.RecentRuns;
             if (data == null)
             {
                 return;
             }
 
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "CSV files (*.csv)|*.csv";
-            saveFileDialog.Title = "Save Recent Runs as CSV";
-            Settings s = (Settings)Application.Current.TryFindResource("Settings");
+            var saveFileDialog = new SaveFileDialog
+            {
+                Filter = "CSV files (*.csv)|*.csv",
+                Title = "Save Recent Runs as CSV",
+            };
+            var s = (Settings)Application.Current.TryFindResource("Settings");
             saveFileDialog.InitialDirectory = Path.GetDirectoryName(s.DatabaseFilePath);
-            string dateTime = DateTime.UtcNow.ToString(CultureInfo.InvariantCulture);
+            var dateTime = DateTime.UtcNow.ToString(CultureInfo.InvariantCulture);
             dateTime = dateTime.Replace("/", "-");
             dateTime = dateTime.Replace(" ", "_");
             dateTime = dateTime.Replace(":", "-");
             saveFileDialog.FileName = string.Format(CultureInfo.InvariantCulture, "RecentRuns-{0}", dateTime);
             if (saveFileDialog.ShowDialog() == true)
             {
-                string filePath = saveFileDialog.FileName;
+                var filePath = saveFileDialog.FileName;
                 SaveCSVFromListOfRecentRuns(data, filePath);
-                logger.Info(CultureInfo.InvariantCulture, "Saved text {0}", saveFileDialog.FileName);
+                Logger.Info(CultureInfo.InvariantCulture, "Saved text {0}", saveFileDialog.FileName);
             }
         }
         catch (Exception ex)
         {
-            logger.Error(ex, "Could not save text file");
+            Logger.Error(ex, "Could not save text file");
         }
     }
 
     private void MostRecentButtonCopyFile_Click(object sender, RoutedEventArgs e)
     {
-        if (mostRecentRunsDataGrid == null)
+        if (this.mostRecentRunsDataGrid == null)
         {
             return;
         }
 
-        var previousBackground = mostRecentRunsDataGrid.Background;
-        mostRecentRunsDataGrid.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
-        var snackbar = new Snackbar(ConfigWindowSnackBarPresenter);
-        snackbar.Style = (Style)FindResource("CatppuccinMochaSnackBar");
-        FileService.CopyUIElementToClipboard(mostRecentRunsDataGrid, snackbar);
-        mostRecentRunsDataGrid.Background = previousBackground;
+        var previousBackground = this.mostRecentRunsDataGrid.Background;
+        this.mostRecentRunsDataGrid.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
+        var snackbar = new Snackbar(ConfigWindowSnackBarPresenter)
+        {
+            Style = (Style)this.FindResource("CatppuccinMochaSnackBar"),
+        };
+        FileService.CopyUIElementToClipboard(this.mostRecentRunsDataGrid, snackbar);
+        this.mostRecentRunsDataGrid.Background = previousBackground;
     }
 
     private void StatsGraphsButtonSaveFile_Click(object sender, RoutedEventArgs e)
     {
-        if (statsGraphsGrid == null || statsGraphsMainGrid == null)
+        if (this.statsGraphsGrid == null || this.statsGraphsMainGrid == null)
         {
             return;
         }
 
-        var fileName = $"StatsGraphs-{statsGraphsSelectedOption}";
-        var snackbar = new Snackbar(ConfigWindowSnackBarPresenter);
-        snackbar.Style = (Style)FindResource("CatppuccinMochaSnackBar");
-        FileService.SaveElementAsImageFile(statsGraphsMainGrid, fileName, snackbar, false);
+        var fileName = $"StatsGraphs-{this.statsGraphsSelectedOption}";
+        var snackbar = new Snackbar(ConfigWindowSnackBarPresenter)
+        {
+            Style = (Style)this.FindResource("CatppuccinMochaSnackBar"),
+        };
+        FileService.SaveElementAsImageFile(this.statsGraphsMainGrid, fileName, snackbar, false);
     }
 
     private void StatsGraphsButtonCopyFile_Click(object sender, RoutedEventArgs e)
     {
-        if (statsGraphsGrid == null || statsGraphsMainGrid == null)
+        if (this.statsGraphsGrid == null || this.statsGraphsMainGrid == null)
         {
             return;
         }
 
-        var previousBackground = statsGraphsMainGrid.Background;
-        statsGraphsMainGrid.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
-        var snackbar = new Snackbar(ConfigWindowSnackBarPresenter);
-        snackbar.Style = (Style)FindResource("CatppuccinMochaSnackBar");
-        FileService.CopyUIElementToClipboard(statsGraphsMainGrid, snackbar);
-        statsGraphsMainGrid.Background = previousBackground;
+        var previousBackground = this.statsGraphsMainGrid.Background;
+        this.statsGraphsMainGrid.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
+        var snackbar = new Snackbar(ConfigWindowSnackBarPresenter)
+        {
+            Style = (Style)this.FindResource("CatppuccinMochaSnackBar"),
+        };
+        FileService.CopyUIElementToClipboard(this.statsGraphsMainGrid, snackbar);
+        this.statsGraphsMainGrid.Background = previousBackground;
     }
 
     private void StatsTextButtonSaveFile_Click(object sender, RoutedEventArgs e)
     {
-        if (statsTextTextBlock == null || statsTextMainGrid == null)
+        if (this.statsTextTextBlock == null || this.statsTextMainGrid == null)
         {
             return;
         }
 
-        string textToSave = statsTextTextBlock.Text;
+        var textToSave = this.statsTextTextBlock.Text;
         textToSave = string.Format(CultureInfo.InvariantCulture, "```text\n{0}\n```", textToSave);
-        var snackbar = new Snackbar(ConfigWindowSnackBarPresenter);
-        snackbar.Style = (Style)FindResource("CatppuccinMochaSnackBar");
-        FileService.SaveTextFile(snackbar, textToSave, $"StatsText-Run_{RunIDTextBox.Text}-{statsTextSelectedOption}");
+        var snackbar = new Snackbar(ConfigWindowSnackBarPresenter)
+        {
+            Style = (Style)this.FindResource("CatppuccinMochaSnackBar"),
+        };
+        FileService.SaveTextFile(snackbar, textToSave, $"StatsText-Run_{RunIDTextBox.Text}-{this.statsTextSelectedOption}");
     }
 
     private void StatsTextButtonCopyFile_Click(object sender, RoutedEventArgs e)
     {
-        if (statsTextTextBlock == null || statsTextMainGrid == null)
+        if (this.statsTextTextBlock == null || this.statsTextMainGrid == null)
         {
             return;
         }
 
-        var previousBackground = statsTextTextBlock.Background;
-        statsTextTextBlock.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
-        var snackbar = new Snackbar(ConfigWindowSnackBarPresenter);
-        snackbar.Style = (Style)FindResource("CatppuccinMochaSnackBar");
-        FileService.CopyUIElementToClipboard(statsTextTextBlock, snackbar);
-        statsTextTextBlock.Background = previousBackground;
+        var previousBackground = this.statsTextTextBlock.Background;
+        this.statsTextTextBlock.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
+        var snackbar = new Snackbar(ConfigWindowSnackBarPresenter)
+        {
+            Style = (Style)this.FindResource("CatppuccinMochaSnackBar"),
+        };
+        FileService.CopyUIElementToClipboard(this.statsTextTextBlock, snackbar);
+        this.statsTextTextBlock.Background = previousBackground;
     }
 
     private void PersonalBestsOverviewButtonSaveFile_Click(object sender, RoutedEventArgs e)
@@ -2290,8 +2136,10 @@ public partial class ConfigWindow : FluentWindow
         }
 
         var fileName = $"PersonalBestsOverview-Quest_{QuestIDTextBox.Text}-{DateTime.UtcNow.ToString("yy/MM/dd", CultureInfo.InvariantCulture).Replace("/", "-")}";
-        var snackbar = new Snackbar(ConfigWindowSnackBarPresenter);
-        snackbar.Style = (Style)FindResource("CatppuccinMochaSnackBar");
+        var snackbar = new Snackbar(ConfigWindowSnackBarPresenter)
+        {
+            Style = (Style)this.FindResource("CatppuccinMochaSnackBar"),
+        };
         FileService.SaveElementAsImageFile(DiscordEmbedWeaponPersonalBest, fileName, snackbar, false);
     }
 
@@ -2304,31 +2152,105 @@ public partial class ConfigWindow : FluentWindow
 
         var previousBackground = DiscordEmbedWeaponPersonalBest.Background;
         DiscordEmbedWeaponPersonalBest.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
-        var snackbar = new Snackbar(ConfigWindowSnackBarPresenter);
-        snackbar.Style = (Style)FindResource("CatppuccinMochaSnackBar");
+        var snackbar = new Snackbar(ConfigWindowSnackBarPresenter)
+        {
+            Style = (Style)this.FindResource("CatppuccinMochaSnackBar"),
+        };
         FileService.CopyUIElementToClipboard(DiscordEmbedWeaponPersonalBest, snackbar);
         DiscordEmbedWeaponPersonalBest.Background = previousBackground;
     }
 
-    private ISeries[]? Series { get; set; }
+    private Axis[] ? XAxes { get; set; }
 
-    private Axis[]? XAxes { get; set; }
+    private Axis[] ? YAxes { get; set; }
 
-    private Axis[]? YAxes { get; set; }
+    private ISeries[] ? PersonalBestSeries { get; set; }
 
-    private ISeries[]? PersonalBestSeries { get; set; }
+    private Axis[] ? PersonalBestXAxes { get; set; }
 
-    private Axis[]? PersonalBestXAxes { get; set; }
+    private Axis[] ? PersonalBestYAxes { get; set; }
 
-    private Axis[]? PersonalBestYAxes { get; set; }
+    public void SetPlayerHealthStamina(Dictionary<int, int> hp, Dictionary<int, int> stamina)
+    {
+        if (this.graphChart == null)
+        {
+            return;
+        }
+
+        List<ISeries> series = new ();
+        ObservableCollection<ObservablePoint> healthCollection = new ();
+        ObservableCollection<ObservablePoint> staminaCollection = new ();
+
+        var newHP = GetElapsedTime(hp);
+        var newStamina = GetElapsedTime(stamina);
+
+        foreach (var entry in newHP)
+        {
+            healthCollection.Add(new ObservablePoint(entry.Key, entry.Value));
+        }
+
+        foreach (var entry in newStamina)
+        {
+            staminaCollection.Add(new ObservablePoint(entry.Key, entry.Value));
+        }
+
+        series.Add(new LineSeries<ObservablePoint>
+        {
+            Values = healthCollection,
+            LineSmoothness = .5,
+            GeometrySize = 0,
+            TooltipLabelFormatter = (chartPoint) =>
+            $"Health: {(long)chartPoint.PrimaryValue}",
+            Stroke = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#ffa6e3a1"))) { StrokeThickness = 2 },
+            Fill = new LinearGradientPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#ffa6e3a1", "7f")), new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#ffa6e3a1", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
+        });
+
+        series.Add(new LineSeries<ObservablePoint>
+        {
+            Values = staminaCollection,
+            LineSmoothness = .5,
+            GeometrySize = 0,
+            TooltipLabelFormatter = (chartPoint) =>
+            $"Stamina: {(long)chartPoint.PrimaryValue}",
+            Stroke = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#fff9e2af"))) { StrokeThickness = 2 },
+            Fill = new LinearGradientPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#fff9e2af", "7f")), new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#fff9e2af", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
+        });
+
+        this.XAxes = new Axis[]
+        {
+            new Axis
+            {
+                TextSize = 12,
+                Labeler = (value) => ViewModels.Windows.AddressModel.GetTimeElapsed(value),
+                NamePaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
+                LabelsPaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
+            },
+        };
+
+        this.YAxes = new Axis[]
+        {
+            new Axis
+            {
+                NameTextSize = 12,
+                TextSize = 12,
+                NamePadding = new LiveChartsCore.Drawing.Padding(0),
+                NamePaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
+                LabelsPaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
+            },
+        };
+
+        this.graphChart.Series = series;
+        this.graphChart.XAxes = this.XAxes;
+        this.graphChart.YAxes = this.YAxes;
+    }
 
     private void SetColumnSeriesForDictionaryIntInt(Dictionary<int, int> data)
     {
-        Series = new ISeries[data.Count];
-        int i = 0;
+        this.Series = new ISeries[data.Count];
+        var i = 0;
         foreach (var entry in data)
         {
-            Series[i] = new ColumnSeries<double>
+            this.Series[i] = new ColumnSeries<double>
             {
                 Name = entry.Key.ToString(CultureInfo.InvariantCulture),
                 Values = new double[] { entry.Value },
@@ -2337,7 +2259,7 @@ public partial class ConfigWindow : FluentWindow
             i++;
         }
 
-        XAxes = new Axis[]
+        this.XAxes = new Axis[]
         {
             new Axis
             {
@@ -2345,57 +2267,57 @@ public partial class ConfigWindow : FluentWindow
                 LabelsRotation = 0,
                 SeparatorsPaint = new SolidColorPaint(new SKColor(200, 200, 200)),
                 TicksPaint = new SolidColorPaint(new SKColor(35, 35, 35)),
-                NamePaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#a6adc8"))),
-                LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#a6adc8"))),
-            }
+                NamePaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
+                LabelsPaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
+            },
         };
     }
 
     private void SetColumnSeriesForDictionaryStringInt(Dictionary<string, int> data)
     {
-        Series = new ISeries[data.Count];
-        int i = 0;
+        this.Series = new ISeries[data.Count];
+        var i = 0;
         foreach (var entry in data)
         {
-            Series[i] = new ColumnSeries<double>
+            this.Series[i] = new ColumnSeries<double>
             {
-                Name = entry.Key.ToString(),
-                Values = new double[] { entry.Value }
+                Name = entry.Key.ToString(CultureInfo.InvariantCulture),
+                Values = new double[] { entry.Value },
             };
 
             i++;
         }
 
-        XAxes = new Axis[]
+        this.XAxes = new Axis[]
         {
             new Axis
             {
-                Labels = data.Keys.Select(x => x.ToString()).ToArray(),
+                Labels = data.Keys.Select(x => x.ToString(CultureInfo.InvariantCulture)).ToArray(),
                 LabelsRotation = 0,
                 SeparatorsPaint = new SolidColorPaint(new SKColor(200, 200, 200)),
                 TicksPaint = new SolidColorPaint(new SKColor(35, 35, 35)),
-                NamePaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#a6adc8"))),
-                LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#a6adc8"))),
-            }
+                NamePaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
+                LabelsPaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
+            },
         };
     }
 
     private void SetColumnSeriesForDictionaryDateInt(Dictionary<DateTime, int> data)
     {
-        Series = new ISeries[data.Count];
-        int i = 0;
+        this.Series = new ISeries[data.Count];
+        var i = 0;
         foreach (var entry in data)
         {
-            Series[i] = new ColumnSeries<double>
+            this.Series[i] = new ColumnSeries<double>
             {
                 Name = entry.Key.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture),
-                Values = new double[] { entry.Value }
+                Values = new double[] { entry.Value },
             };
 
             i++;
         }
 
-        XAxes = new Axis[]
+        this.XAxes = new Axis[]
         {
     new Axis
     {
@@ -2403,13 +2325,13 @@ public partial class ConfigWindow : FluentWindow
         LabelsRotation = 0,
         SeparatorsPaint = new SolidColorPaint(new SKColor(200, 200, 200)),
         TicksPaint = new SolidColorPaint(new SKColor(35, 35, 35)),
-        NamePaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#a6adc8"))),
-        LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#a6adc8"))),
-    }
+        NamePaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
+        LabelsPaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
+    },
         };
     }
 
-    private Dictionary<int, int> GetElapsedTime(Dictionary<int, int> timeAttackDict)
+    private static Dictionary<int, int> GetElapsedTime(Dictionary<int, int> timeAttackDict)
     {
         Dictionary<int, int> elapsedTimeDict = new ();
         if (timeAttackDict == null || !timeAttackDict.Any())
@@ -2417,7 +2339,7 @@ public partial class ConfigWindow : FluentWindow
             return elapsedTimeDict;
         }
 
-        int initialTime = timeAttackDict.First().Key;
+        var initialTime = timeAttackDict.First().Key;
         foreach (var entry in timeAttackDict)
         {
             elapsedTimeDict[initialTime - entry.Key] = entry.Value;
@@ -2426,7 +2348,7 @@ public partial class ConfigWindow : FluentWindow
         return elapsedTimeDict;
     }
 
-    private Dictionary<int, double> GetElapsedTimeForDictionaryIntDouble(Dictionary<int, double> timeAttackDict)
+    private static Dictionary<int, double> GetElapsedTimeForDictionaryIntDouble(Dictionary<int, double> timeAttackDict)
     {
         Dictionary<int, double> elapsedTimeDict = new ();
         if (timeAttackDict == null || !timeAttackDict.Any())
@@ -2434,7 +2356,7 @@ public partial class ConfigWindow : FluentWindow
             return elapsedTimeDict;
         }
 
-        int initialTime = timeAttackDict.First().Key;
+        var initialTime = timeAttackDict.First().Key;
         foreach (var entry in timeAttackDict)
         {
             elapsedTimeDict[initialTime - entry.Key] = entry.Value;
@@ -2445,7 +2367,7 @@ public partial class ConfigWindow : FluentWindow
 
     private void SetLineSeriesForDictionaryIntInt(Dictionary<int, int> data)
     {
-        if (graphChart == null)
+        if (this.graphChart == null)
         {
             return;
         }
@@ -2453,7 +2375,7 @@ public partial class ConfigWindow : FluentWindow
         List<ISeries> series = new ();
         ObservableCollection<ObservablePoint> collection = new ();
 
-        Dictionary<int, int> newData = GetElapsedTime(data);
+        var newData = GetElapsedTime(data);
 
         foreach (var entry in newData)
         {
@@ -2465,95 +2387,95 @@ public partial class ConfigWindow : FluentWindow
             Values = collection,
             LineSmoothness = .5,
             GeometrySize = 0,
-            Stroke = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#fff38ba8"))) { StrokeThickness = 2 },
-            Fill = new LinearGradientPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#fff38ba8", "7f")), new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#fff38ba8", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
+            Stroke = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#fff38ba8"))) { StrokeThickness = 2 },
+            Fill = new LinearGradientPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#fff38ba8", "7f")), new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#fff38ba8", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
         });
 
-        XAxes = new Axis[]
+        this.XAxes = new Axis[]
         {
             new Axis
             {
-                TextSize=12,
-                Labeler = (value) => MainWindow.dataLoader.model.GetTimeElapsed(value),
-                NamePaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#a6adc8"))),
-                LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#a6adc8"))),
-            }
+                TextSize = 12,
+                Labeler = (value) => ViewModels.Windows.AddressModel.GetTimeElapsed(value),
+                NamePaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
+                LabelsPaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
+            },
         };
 
-        YAxes = new Axis[]
-        {
-            new Axis
-            {
-                NameTextSize= 12,
-                TextSize=12,
-                NamePadding= new LiveChartsCore.Drawing.Padding(0),
-                NamePaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#a6adc8"))),
-                LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#a6adc8"))),
-            }
-        };
-
-        graphChart.Series = series;
-        graphChart.XAxes = XAxes;
-        graphChart.YAxes = YAxes;
-    }
-
-    private void SetLineSeriesForDictionaryIntDouble(Dictionary<int, double> data)
-    {
-        if (graphChart == null)
-        {
-            return;
-        }
-
-        List<ISeries> series = new ();
-        ObservableCollection<ObservablePoint> collection = new ();
-
-        Dictionary<int, double> newData = GetElapsedTimeForDictionaryIntDouble(data);
-
-        foreach (var entry in newData)
-        {
-            collection.Add(new ObservablePoint(entry.Key, entry.Value));
-        }
-
-        series.Add(new LineSeries<ObservablePoint>
-        {
-            Values = collection,
-            LineSmoothness = .5,
-            GeometrySize = 0,
-            Stroke = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#fff38ba8"))) { StrokeThickness = 2 },
-            Fill = new LinearGradientPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#fff38ba8", "7f")), new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#fff38ba8", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
-        });
-
-        XAxes = new Axis[]
-        {
-            new Axis
-            {
-                TextSize=12,
-                Labeler = (value) => MainWindow.dataLoader.model.GetTimeElapsed(value),
-                NamePaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#a6adc8"))),
-                LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#a6adc8"))),
-            }
-        };
-
-        YAxes = new Axis[]
+        this.YAxes = new Axis[]
         {
             new Axis
             {
                 NameTextSize = 12,
                 TextSize = 12,
                 NamePadding = new LiveChartsCore.Drawing.Padding(0),
-                NamePaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#a6adc8"))),
-                LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#a6adc8"))),
-            }
+                NamePaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
+                LabelsPaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
+            },
         };
 
-        graphChart.Series = series;
-        graphChart.XAxes = XAxes;
-        graphChart.YAxes = YAxes;
+        this.graphChart.Series = series;
+        this.graphChart.XAxes = this.XAxes;
+        this.graphChart.YAxes = this.YAxes;
+    }
+
+    private void SetLineSeriesForDictionaryIntDouble(Dictionary<int, double> data)
+    {
+        if (this.graphChart == null)
+        {
+            return;
+        }
+
+        List<ISeries> series = new ();
+        ObservableCollection<ObservablePoint> collection = new ();
+
+        var newData = GetElapsedTimeForDictionaryIntDouble(data);
+
+        foreach (var entry in newData)
+        {
+            collection.Add(new ObservablePoint(entry.Key, entry.Value));
+        }
+
+        series.Add(new LineSeries<ObservablePoint>
+        {
+            Values = collection,
+            LineSmoothness = .5,
+            GeometrySize = 0,
+            Stroke = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#fff38ba8"))) { StrokeThickness = 2 },
+            Fill = new LinearGradientPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#fff38ba8", "7f")), new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#fff38ba8", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
+        });
+
+        this.XAxes = new Axis[]
+        {
+            new Axis
+            {
+                TextSize = 12,
+                Labeler = (value) => ViewModels.Windows.AddressModel.GetTimeElapsed(value),
+                NamePaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
+                LabelsPaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
+            },
+        };
+
+        this.YAxes = new Axis[]
+        {
+            new Axis
+            {
+                NameTextSize = 12,
+                TextSize = 12,
+                NamePadding = new LiveChartsCore.Drawing.Padding(0),
+                NamePaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
+                LabelsPaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
+            },
+        };
+
+        this.graphChart.Series = series;
+        this.graphChart.XAxes = this.XAxes;
+        this.graphChart.YAxes = this.YAxes;
     }
 
     private void SetStepLineSeriesForPersonalBestByAttempts(Dictionary<long, long> data)
     {
-        if (personalBestChart == null)
+        if (this.personalBestChart == null)
         {
             return;
         }
@@ -2570,24 +2492,24 @@ public partial class ConfigWindow : FluentWindow
         {
             Values = collection,
             TooltipLabelFormatter = (chartPoint) =>
-            $"Attempt {chartPoint.SecondaryValue}: {MainWindow.dataLoader.model.GetMinutesSecondsMillisecondsFromFrames((long)chartPoint.PrimaryValue)}",
+            $"Attempt {chartPoint.SecondaryValue}: {ViewModels.Windows.AddressModel.GetMinutesSecondsMillisecondsFromFrames((long)chartPoint.PrimaryValue)}",
             GeometrySize = 0,
-            Stroke = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#fff38ba8"))) { StrokeThickness = 2 },
-            Fill = new LinearGradientPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#fff38ba8", "7f")), new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#fff38ba8", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1))
+            Stroke = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#fff38ba8"))) { StrokeThickness = 2 },
+            Fill = new LinearGradientPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#fff38ba8", "7f")), new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#fff38ba8", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
         });
 
-        PersonalBestXAxes = new Axis[]
+        this.PersonalBestXAxes = new Axis[]
         {
             new Axis
             {
                 MinStep = 1,
                 TextSize = 12,
-                NamePaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#a6adc8"))),
-                LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#a6adc8"))),
-            }
+                NamePaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
+                LabelsPaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
+            },
         };
 
-        PersonalBestYAxes = new Axis[]
+        this.PersonalBestYAxes = new Axis[]
         {
             new Axis
             {
@@ -2596,19 +2518,19 @@ public partial class ConfigWindow : FluentWindow
                 MinStep = 1,
                 TextSize = 12,
                 NamePadding = new LiveChartsCore.Drawing.Padding(0),
-                NamePaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#a6adc8"))),
-                LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#a6adc8"))),
-            }
+                NamePaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
+                LabelsPaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
+            },
         };
 
-        personalBestChart.Series = series;
-        personalBestChart.XAxes = PersonalBestXAxes;
-        personalBestChart.YAxes = PersonalBestYAxes;
+        this.personalBestChart.Series = series;
+        this.personalBestChart.XAxes = this.PersonalBestXAxes;
+        this.personalBestChart.YAxes = this.PersonalBestYAxes;
     }
 
     private void SetStepLineSeriesForPersonalBestByDate(Dictionary<DateTime, long> data)
     {
-        if (personalBestChart == null)
+        if (this.personalBestChart == null)
         {
             return;
         }
@@ -2641,23 +2563,23 @@ public partial class ConfigWindow : FluentWindow
         {
             Values = collection,
             GeometrySize = 0,
-            Stroke = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#fff38ba8"))) { StrokeThickness = 2 },
-            Fill = new LinearGradientPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#fff38ba8", "7f")), new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#fff38ba8", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
+            Stroke = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#fff38ba8"))) { StrokeThickness = 2 },
+            Fill = new LinearGradientPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#fff38ba8", "7f")), new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#fff38ba8", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
             TooltipLabelFormatter = (chartPoint) =>
-            $"{new DateTime((long)chartPoint.SecondaryValue):yy-MM-dd}: {MainWindow.dataLoader.model.GetMinutesSecondsMillisecondsFromFrames((long)chartPoint.PrimaryValue)}",
+            $"{new DateTime((long)chartPoint.SecondaryValue):yy-MM-dd}: {ViewModels.Windows.AddressModel.GetMinutesSecondsMillisecondsFromFrames((long)chartPoint.PrimaryValue)}",
         });
 
-        PersonalBestXAxes = new Axis[]
+        this.PersonalBestXAxes = new Axis[]
         {
             new Axis
             {
-                Labeler = value => new DateTime((long) value).ToString("yy-MM-dd", CultureInfo.InvariantCulture),
+                Labeler = value => new DateTime((long)value).ToString("yy-MM-dd", CultureInfo.InvariantCulture),
                 LabelsRotation = 80,
-                NamePaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#a6adc8"))),
-                LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#a6adc8"))),
+                NamePaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
+                LabelsPaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
 
-                // when using a date time type, let the library know your unit 
-                UnitWidth = TimeSpan.FromDays(1).Ticks, 
+                // when using a date time type, let the library know your unit
+                UnitWidth = TimeSpan.FromDays(1).Ticks,
 
                 // if the difference between our points is in hours then we would do:
                 // UnitWidth = TimeSpan.FromHours(1).Ticks,
@@ -2668,11 +2590,11 @@ public partial class ConfigWindow : FluentWindow
                 // Years: TimeSpan.FromDays(365.25).Ticks
 
                 // The MinStep property forces the separator to be greater than 1 day.
-                MinStep = TimeSpan.FromDays(1).Ticks
-            }
+                MinStep = TimeSpan.FromDays(1).Ticks,
+            },
         };
 
-        PersonalBestYAxes = new Axis[]
+        this.PersonalBestYAxes = new Axis[]
         {
             new Axis
             {
@@ -2681,19 +2603,19 @@ public partial class ConfigWindow : FluentWindow
                 NameTextSize = 12,
                 TextSize = 12,
                 NamePadding = new LiveChartsCore.Drawing.Padding(0),
-                NamePaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#a6adc8"))),
-                LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#a6adc8"))),
-            }
+                NamePaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
+                LabelsPaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
+            },
         };
 
-        personalBestChart.Series = series;
-        personalBestChart.XAxes = PersonalBestXAxes;
-        personalBestChart.YAxes = PersonalBestYAxes;
+        this.personalBestChart.Series = series;
+        this.personalBestChart.XAxes = this.PersonalBestXAxes;
+        this.personalBestChart.YAxes = this.PersonalBestYAxes;
     }
 
     private void SetHitsTakenBlocked(Dictionary<int, Dictionary<int, int>> data)
     {
-        if (graphChart == null)
+        if (this.graphChart == null)
         {
             return;
         }
@@ -2701,9 +2623,9 @@ public partial class ConfigWindow : FluentWindow
         List<ISeries> series = new ();
         ObservableCollection<ObservablePoint> collection = new ();
 
-        Dictionary<int, int> hitsTakenBlocked = CalculateHitsTakenBlocked(data);
+        var hitsTakenBlocked = CalculateHitsTakenBlocked(data);
 
-        Dictionary<int, int> newData = GetElapsedTime(hitsTakenBlocked);
+        var newData = GetElapsedTime(hitsTakenBlocked);
 
         foreach (var entry in newData)
         {
@@ -2715,115 +2637,41 @@ public partial class ConfigWindow : FluentWindow
             Values = collection,
             LineSmoothness = .5,
             GeometrySize = 0,
-            Stroke = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#fff38ba8"))) { StrokeThickness = 2 },
-            Fill = new LinearGradientPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#fff38ba8", "7f")), new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#fff38ba8", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1))
+            Stroke = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#fff38ba8"))) { StrokeThickness = 2 },
+            Fill = new LinearGradientPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#fff38ba8", "7f")), new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#fff38ba8", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
         });
 
-        XAxes = new Axis[]
+        this.XAxes = new Axis[]
         {
             new Axis
             {
-                TextSize=12,
-                Labeler = (value) => MainWindow.dataLoader.model.GetTimeElapsed(value),
-                NamePaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#a6adc8"))),
-                LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#a6adc8"))),
-            }
+                TextSize = 12,
+                Labeler = (value) => ViewModels.Windows.AddressModel.GetTimeElapsed(value),
+                NamePaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
+                LabelsPaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
+            },
         };
 
-        YAxes = new Axis[]
+        this.YAxes = new Axis[]
         {
             new Axis
             {
-                NameTextSize= 12,
-                TextSize=12,
-                NamePadding= new LiveChartsCore.Drawing.Padding(0),
-                NamePaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#a6adc8"))),
-                LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#a6adc8"))),
-            }
+                NameTextSize = 12,
+                TextSize = 12,
+                NamePadding = new LiveChartsCore.Drawing.Padding(0),
+                NamePaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
+                LabelsPaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
+            },
         };
 
-        graphChart.Series = series;
-        graphChart.XAxes = XAxes;
-        graphChart.YAxes = YAxes;
-    }
-
-    public void SetPlayerHealthStamina(Dictionary<int, int> hp, Dictionary<int, int> stamina)
-    {
-        if (graphChart == null)
-        {
-            return;
-        }
-
-        List<ISeries> series = new ();
-        ObservableCollection<ObservablePoint> healthCollection = new ();
-        ObservableCollection<ObservablePoint> staminaCollection = new ();
-
-        Dictionary<int, int> newHP = GetElapsedTime(hp);
-        Dictionary<int, int> newStamina = GetElapsedTime(stamina);
-
-        foreach (var entry in newHP)
-        {
-            healthCollection.Add(new ObservablePoint(entry.Key, entry.Value));
-        }
-
-        foreach (var entry in newStamina)
-        {
-            staminaCollection.Add(new ObservablePoint(entry.Key, entry.Value));
-        }
-
-        series.Add(new LineSeries<ObservablePoint>
-        {
-            Values = healthCollection,
-            LineSmoothness = .5,
-            GeometrySize = 0,
-            TooltipLabelFormatter = (chartPoint) =>
-            $"Health: {((long)chartPoint.PrimaryValue)}",
-            Stroke = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#ffa6e3a1"))) { StrokeThickness = 2 },
-            Fill = new LinearGradientPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#ffa6e3a1", "7f")), new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#ffa6e3a1", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
-        });
-
-        series.Add(new LineSeries<ObservablePoint>
-        {
-            Values = staminaCollection,
-            LineSmoothness = .5,
-            GeometrySize = 0,
-            TooltipLabelFormatter = (chartPoint) =>
-            $"Stamina: {((long)chartPoint.PrimaryValue)}",
-            Stroke = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#fff9e2af"))) { StrokeThickness = 2 },
-            Fill = new LinearGradientPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#fff9e2af", "7f")), new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#fff9e2af", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
-        });
-
-        XAxes = new Axis[]
-        {
-            new Axis
-            {
-                TextSize=12,
-                Labeler = (value) => MainWindow.dataLoader.model.GetTimeElapsed(value),
-                NamePaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#a6adc8"))),
-                LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#a6adc8"))),
-            }
-        };
-
-        YAxes = new Axis[]
-        {
-            new Axis
-            {
-                NameTextSize= 12,
-                TextSize=12,
-                NamePadding= new LiveChartsCore.Drawing.Padding(0),
-                NamePaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#a6adc8"))),
-                LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#a6adc8"))),
-            }
-        };
-
-        graphChart.Series = series;
-        graphChart.XAxes = XAxes;
-        graphChart.YAxes = YAxes;
+        this.graphChart.Series = series;
+        this.graphChart.XAxes = this.XAxes;
+        this.graphChart.YAxes = this.YAxes;
     }
 
     public void SetMonsterAttackMultiplier(Dictionary<int, double> attack)
     {
-        if (graphChart == null)
+        if (this.graphChart == null)
         {
             return;
         }
@@ -2831,7 +2679,7 @@ public partial class ConfigWindow : FluentWindow
         List<ISeries> series = new ();
         ObservableCollection<ObservablePoint> attackCollection = new ();
 
-        Dictionary<int, double> newAttack = GetElapsedTimeForDictionaryIntDouble(attack);
+        var newAttack = GetElapsedTimeForDictionaryIntDouble(attack);
 
         foreach (var entry in newAttack)
         {
@@ -2842,41 +2690,41 @@ public partial class ConfigWindow : FluentWindow
         {
             Values = attackCollection,
             GeometrySize = 0,
-            Stroke = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#f38ba8"))) { StrokeThickness = 2 },
-            Fill = new LinearGradientPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#f38ba8", "7f")), new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#f38ba8", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
+            Stroke = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#f38ba8"))) { StrokeThickness = 2 },
+            Fill = new LinearGradientPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#f38ba8", "7f")), new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#f38ba8", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
         });
 
-        XAxes = new Axis[]
+        this.XAxes = new Axis[]
         {
             new Axis
             {
-                TextSize=12,
-                Labeler = (value) => MainWindow.dataLoader.model.GetTimeElapsed(value),
-                NamePaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#a6adc8"))),
-                LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#a6adc8"))),
-            }
+                TextSize = 12,
+                Labeler = (value) => ViewModels.Windows.AddressModel.GetTimeElapsed(value),
+                NamePaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
+                LabelsPaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
+            },
         };
 
-        YAxes = new Axis[]
+        this.YAxes = new Axis[]
         {
             new Axis
             {
-                NameTextSize= 12,
-                TextSize=12,
-                NamePadding= new LiveChartsCore.Drawing.Padding(0),
-                NamePaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#a6adc8"))),
-                LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#a6adc8"))),
-            }
+                NameTextSize = 12,
+                TextSize = 12,
+                NamePadding = new LiveChartsCore.Drawing.Padding(0),
+                NamePaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
+                LabelsPaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
+            },
         };
 
-        graphChart.Series = series;
-        graphChart.XAxes = XAxes;
-        graphChart.YAxes = YAxes;
+        this.graphChart.Series = series;
+        this.graphChart.XAxes = this.XAxes;
+        this.graphChart.YAxes = this.YAxes;
     }
 
     public void SetMonsterDefenseRate(Dictionary<int, double> defense)
     {
-        if (graphChart == null)
+        if (this.graphChart == null)
         {
             return;
         }
@@ -2884,7 +2732,7 @@ public partial class ConfigWindow : FluentWindow
         List<ISeries> series = new ();
         ObservableCollection<ObservablePoint> defenseCollection = new ();
 
-        Dictionary<int, double> newDefense = GetElapsedTimeForDictionaryIntDouble(defense);
+        var newDefense = GetElapsedTimeForDictionaryIntDouble(defense);
 
         foreach (var entry in newDefense)
         {
@@ -2895,41 +2743,41 @@ public partial class ConfigWindow : FluentWindow
         {
             Values = defenseCollection,
             GeometrySize = 0,
-            Stroke = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#74c7ec"))) { StrokeThickness = 2 },
-            Fill = new LinearGradientPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#74c7ec", "7f")), new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#74c7ec", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
+            Stroke = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#74c7ec"))) { StrokeThickness = 2 },
+            Fill = new LinearGradientPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#74c7ec", "7f")), new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#74c7ec", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
         });
 
-        XAxes = new Axis[]
+        this.XAxes = new Axis[]
         {
             new Axis
             {
-                TextSize=12,
-                Labeler = (value) => MainWindow.dataLoader.model.GetTimeElapsed(value),
-                NamePaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#a6adc8"))),
-                LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#a6adc8"))),
-            }
+                TextSize = 12,
+                Labeler = (value) => ViewModels.Windows.AddressModel.GetTimeElapsed(value),
+                NamePaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
+                LabelsPaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
+            },
         };
 
-        YAxes = new Axis[]
+        this.YAxes = new Axis[]
         {
             new Axis
             {
-                NameTextSize= 12,
-                TextSize=12,
-                NamePadding= new LiveChartsCore.Drawing.Padding(0),
-                NamePaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#a6adc8"))),
-                LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#a6adc8"))),
-            }
+                NameTextSize = 12,
+                TextSize = 12,
+                NamePadding = new LiveChartsCore.Drawing.Padding(0),
+                NamePaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
+                LabelsPaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
+            },
         };
 
-        graphChart.Series = series;
-        graphChart.XAxes = XAxes;
-        graphChart.YAxes = YAxes;
+        this.graphChart.Series = series;
+        this.graphChart.XAxes = this.XAxes;
+        this.graphChart.YAxes = this.YAxes;
     }
 
     private void SetMonsterStatusAilmentsThresholds(Dictionary<int, int> poison, Dictionary<int, int> sleep, Dictionary<int, int> para, Dictionary<int, int> blast, Dictionary<int, int> stun)
     {
-        if (graphChart == null)
+        if (this.graphChart == null)
         {
             return;
         }
@@ -2941,11 +2789,11 @@ public partial class ConfigWindow : FluentWindow
         ObservableCollection<ObservablePoint> blastCollection = new ();
         ObservableCollection<ObservablePoint> stunCollection = new ();
 
-        Dictionary<int, int> newPoison = GetElapsedTime(poison);
-        Dictionary<int, int> newSleep = GetElapsedTime(sleep);
-        Dictionary<int, int> newPara = GetElapsedTime(para);
-        Dictionary<int, int> newBlast = GetElapsedTime(blast);
-        Dictionary<int, int> newStun = GetElapsedTime(stun);
+        var newPoison = GetElapsedTime(poison);
+        var newSleep = GetElapsedTime(sleep);
+        var newPara = GetElapsedTime(para);
+        var newBlast = GetElapsedTime(blast);
+        var newStun = GetElapsedTime(stun);
 
         foreach (var entry in newPoison)
         {
@@ -2978,9 +2826,9 @@ public partial class ConfigWindow : FluentWindow
             LineSmoothness = .5,
             GeometrySize = 0,
             TooltipLabelFormatter = (chartPoint) =>
-            $"Poison: {((long)chartPoint.PrimaryValue)}",
-            Stroke = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#cba6f7"))) { StrokeThickness = 2 },
-            Fill = new LinearGradientPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#cba6f7", "7f")), new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#cba6f7", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
+            $"Poison: {(long)chartPoint.PrimaryValue}",
+            Stroke = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#cba6f7"))) { StrokeThickness = 2 },
+            Fill = new LinearGradientPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#cba6f7", "7f")), new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#cba6f7", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
         });
 
         series.Add(new LineSeries<ObservablePoint>
@@ -2988,9 +2836,9 @@ public partial class ConfigWindow : FluentWindow
             Values = sleepCollection,
             LineSmoothness = .5,
             GeometrySize = 0,
-            TooltipLabelFormatter = (chartPoint) => $"Sleep: {((long)chartPoint.PrimaryValue)}",
-            Stroke = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#74c7ec"))) { StrokeThickness = 2 },
-            Fill = new LinearGradientPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#74c7ec", "7f")), new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#74c7ec", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
+            TooltipLabelFormatter = (chartPoint) => $"Sleep: {(long)chartPoint.PrimaryValue}",
+            Stroke = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#74c7ec"))) { StrokeThickness = 2 },
+            Fill = new LinearGradientPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#74c7ec", "7f")), new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#74c7ec", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
         });
 
         series.Add(new LineSeries<ObservablePoint>
@@ -2998,9 +2846,9 @@ public partial class ConfigWindow : FluentWindow
             Values = paraCollection,
             LineSmoothness = .5,
             GeometrySize = 0,
-            TooltipLabelFormatter = (chartPoint) => $"Paralysis: {((long)chartPoint.PrimaryValue)}",
-            Stroke = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#f9e2af"))) { StrokeThickness = 2 },
-            Fill = new LinearGradientPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#f9e2af", "7f")), new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#f9e2af", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
+            TooltipLabelFormatter = (chartPoint) => $"Paralysis: {(long)chartPoint.PrimaryValue}",
+            Stroke = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#f9e2af"))) { StrokeThickness = 2 },
+            Fill = new LinearGradientPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#f9e2af", "7f")), new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#f9e2af", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
         });
 
         series.Add(new LineSeries<ObservablePoint>
@@ -3008,9 +2856,9 @@ public partial class ConfigWindow : FluentWindow
             Values = blastCollection,
             LineSmoothness = .5,
             GeometrySize = 0,
-            TooltipLabelFormatter = (chartPoint) => $"Blast: {((long)chartPoint.PrimaryValue)}",
-            Stroke = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#a6e3a1"))) { StrokeThickness = 2 },
-            Fill = new LinearGradientPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#a6e3a1", "7f")), new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#a6e3a1", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
+            TooltipLabelFormatter = (chartPoint) => $"Blast: {(long)chartPoint.PrimaryValue}",
+            Stroke = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6e3a1"))) { StrokeThickness = 2 },
+            Fill = new LinearGradientPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6e3a1", "7f")), new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6e3a1", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
         });
 
         series.Add(new LineSeries<ObservablePoint>
@@ -3018,37 +2866,37 @@ public partial class ConfigWindow : FluentWindow
             Values = stunCollection,
             LineSmoothness = .5,
             GeometrySize = 0,
-            TooltipLabelFormatter = (chartPoint) => $"Stun: {((long)chartPoint.PrimaryValue)}",
-            Stroke = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#7f849c"))) { StrokeThickness = 2 },
-            Fill = new LinearGradientPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#7f849c", "7f")), new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#7f849c", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
+            TooltipLabelFormatter = (chartPoint) => $"Stun: {(long)chartPoint.PrimaryValue}",
+            Stroke = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#7f849c"))) { StrokeThickness = 2 },
+            Fill = new LinearGradientPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#7f849c", "7f")), new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#7f849c", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
         });
 
-        XAxes = new Axis[]
+        this.XAxes = new Axis[]
         {
             new Axis
             {
-                TextSize=12,
-                Labeler = (value) => MainWindow.dataLoader.model.GetTimeElapsed(value),
-                NamePaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#a6adc8"))),
-                LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#a6adc8"))),
-            }
+                TextSize = 12,
+                Labeler = (value) => ViewModels.Windows.AddressModel.GetTimeElapsed(value),
+                NamePaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
+                LabelsPaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
+            },
         };
 
-        YAxes = new Axis[]
+        this.YAxes = new Axis[]
         {
             new Axis
             {
-                NameTextSize= 12,
-                TextSize=12,
-                NamePadding= new LiveChartsCore.Drawing.Padding(0),
-                NamePaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#a6adc8"))),
-                LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#a6adc8"))),
-            }
+                NameTextSize = 12,
+                TextSize = 12,
+                NamePadding = new LiveChartsCore.Drawing.Padding(0),
+                NamePaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
+                LabelsPaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
+            },
         };
 
-        graphChart.Series = series;
-        graphChart.XAxes = XAxes;
-        graphChart.YAxes = YAxes;
+        this.graphChart.Series = series;
+        this.graphChart.XAxes = this.XAxes;
+        this.graphChart.YAxes = this.YAxes;
     }
 
     private void CreateQuestDurationStackedChart(Dictionary<int, int> questDurations)
@@ -3063,32 +2911,32 @@ public partial class ConfigWindow : FluentWindow
                 Name = questDuration.Key.ToString(CultureInfo.InvariantCulture),
                 DataLabelsPosition = DataLabelsPosition.Middle,
                 DataLabelsSize = 6,
-                TooltipLabelFormatter = value => questDuration.Key.ToString(CultureInfo.InvariantCulture) + " " + TimeSpan.FromSeconds(value.PrimaryValue / Double.Parse(Numbers.FramesPerSecond.ToString(CultureInfo.InvariantCulture), CultureInfo.InvariantCulture)).ToString(@"hh\:mm\:ss", CultureInfo.InvariantCulture),
-                DataLabelsFormatter = value => TimeSpan.FromSeconds(value.PrimaryValue / Double.Parse(Numbers.FramesPerSecond.ToString(CultureInfo.InvariantCulture), CultureInfo.InvariantCulture)).ToString(@"hh\:mm\:ss", CultureInfo.InvariantCulture)
+                TooltipLabelFormatter = value => questDuration.Key.ToString(CultureInfo.InvariantCulture) + " " + TimeSpan.FromSeconds(value.PrimaryValue / double.Parse(Numbers.FramesPerSecond.ToString(CultureInfo.InvariantCulture), CultureInfo.InvariantCulture)).ToString(@"hh\:mm\:ss", CultureInfo.InvariantCulture),
+                DataLabelsFormatter = value => TimeSpan.FromSeconds(value.PrimaryValue / double.Parse(Numbers.FramesPerSecond.ToString(CultureInfo.InvariantCulture), CultureInfo.InvariantCulture)).ToString(@"hh\:mm\:ss", CultureInfo.InvariantCulture),
             });
         }
 
-        Series = series.ToArray();
-        YAxes = new Axis[]
+        this.Series = series.ToArray();
+        this.YAxes = new Axis[]
         {
             new Axis
             {
-                Labeler = (value) => TimeSpan.FromSeconds(value / Double.Parse(Numbers.FramesPerSecond.ToString(CultureInfo.InvariantCulture), CultureInfo.InvariantCulture)).ToString(@"hh\:mm\:ss", CultureInfo.InvariantCulture),
+                Labeler = (value) => TimeSpan.FromSeconds(value / double.Parse(Numbers.FramesPerSecond.ToString(CultureInfo.InvariantCulture), CultureInfo.InvariantCulture)).ToString(@"hh\:mm\:ss", CultureInfo.InvariantCulture),
                 LabelsRotation = 0,
-                NamePaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#a6adc8"))),
-                LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#a6adc8"))),
+                NamePaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
+                LabelsPaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
                 SeparatorsPaint = new SolidColorPaint(new SKColor(200, 200, 200)),
                 TicksPaint = new SolidColorPaint(new SKColor(35, 35, 35)),
-            }
+            },
         };
     }
 
     // TODO: gamepad test
-    private Dictionary<string, int> GetMostCommonInputs(long runID)
+    private static Dictionary<string, int> GetMostCommonInputs(long runID)
     {
-        var keystrokesDictionary = databaseManager.GetKeystrokesDictionary(runID);
-        var mouseInputDictionary = databaseManager.GetMouseInputDictionary(runID);
-        var gamepadInputDictionary = databaseManager.GetGamepadInputDictionary(runID);
+        var keystrokesDictionary = DatabaseManager.GetKeystrokesDictionary(runID);
+        var mouseInputDictionary = DatabaseManager.GetMouseInputDictionary(runID);
+        var gamepadInputDictionary = DatabaseManager.GetGamepadInputDictionary(runID);
         var combinedDictionary = keystrokesDictionary
             .Union(mouseInputDictionary)
             .Union(gamepadInputDictionary)
@@ -3100,15 +2948,15 @@ public partial class ConfigWindow : FluentWindow
             .ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
     }
 
-    private Dictionary<int, int> CalculateHitsTakenBlocked(Dictionary<int, Dictionary<int, int>> hitsTakenBlocked)
+    private static Dictionary<int, int> CalculateHitsTakenBlocked(Dictionary<int, Dictionary<int, int>> hitsTakenBlocked)
     {
         Dictionary<int, int> dictionary = new ();
 
-        int i = 1;
+        var i = 1;
         foreach (var entry in hitsTakenBlocked)
         {
-            int time = int.Parse(entry.Key.ToString(CultureInfo.InvariantCulture), CultureInfo.InvariantCulture);
-            int count = i;
+            var time = int.Parse(entry.Key.ToString(CultureInfo.InvariantCulture), CultureInfo.InvariantCulture);
+            var count = i;
             dictionary.Add(time, count);
             i++;
         }
@@ -3116,17 +2964,17 @@ public partial class ConfigWindow : FluentWindow
         return dictionary;
     }
 
-    private Dictionary<int, int> CalculateMonsterHP(Dictionary<int, Dictionary<int, int>> monsterHP)
+    private static Dictionary<int, int> CalculateMonsterHP(Dictionary<int, Dictionary<int, int>> monsterHP)
     {
         Dictionary<int, int> dictionary = new ();
 
-        int i = 1;
+        var i = 1;
         foreach (var entry in monsterHP)
         {
-            int time = int.Parse(entry.Key.ToString(CultureInfo.InvariantCulture), CultureInfo.InvariantCulture);
+            var time = int.Parse(entry.Key.ToString(CultureInfo.InvariantCulture), CultureInfo.InvariantCulture);
 
             // get the value of the inner dictionary
-            int hp = entry.Value.Values.First();
+            var hp = entry.Value.Values.First();
             dictionary.Add(time, hp);
             i++;
         }
@@ -3134,17 +2982,17 @@ public partial class ConfigWindow : FluentWindow
         return dictionary;
     }
 
-    private Dictionary<int, double> CalculateMonsterMultiplier(Dictionary<int, Dictionary<int, double>> monsterDictionary)
+    private static Dictionary<int, double> CalculateMonsterMultiplier(Dictionary<int, Dictionary<int, double>> monsterDictionary)
     {
         Dictionary<int, double> dictionary = new ();
 
-        int i = 1;
+        var i = 1;
         foreach (var entry in monsterDictionary)
         {
-            int time = int.Parse(entry.Key.ToString(CultureInfo.InvariantCulture), CultureInfo.InvariantCulture);
+            var time = int.Parse(entry.Key.ToString(CultureInfo.InvariantCulture), CultureInfo.InvariantCulture);
 
             // get the value of the inner dictionary
-            double mult = entry.Value.Values.First();
+            var mult = entry.Value.Values.First();
             dictionary.Add(time, mult);
             i++;
         }
@@ -3152,17 +3000,17 @@ public partial class ConfigWindow : FluentWindow
         return dictionary;
     }
 
-    private Dictionary<int, int> CalculateMonsterStatusAilmentThresholds(Dictionary<int, Dictionary<int, int>> monsterDictionary)
+    private static Dictionary<int, int> CalculateMonsterStatusAilmentThresholds(Dictionary<int, Dictionary<int, int>> monsterDictionary)
     {
         Dictionary<int, int> dictionary = new ();
 
-        int i = 1;
+        var i = 1;
         foreach (var entry in monsterDictionary)
         {
-            int time = int.Parse(entry.Key.ToString(CultureInfo.InvariantCulture), CultureInfo.InvariantCulture);
+            var time = int.Parse(entry.Key.ToString(CultureInfo.InvariantCulture), CultureInfo.InvariantCulture);
 
             // get the value of the inner dictionary
-            int threshold = entry.Value.Values.First();
+            var threshold = entry.Value.Values.First();
             dictionary.Add(time, threshold);
             i++;
         }
@@ -3172,7 +3020,7 @@ public partial class ConfigWindow : FluentWindow
 
     private void SetMonsterHP(Dictionary<int, int> monster1, Dictionary<int, int> monster2, Dictionary<int, int> monster3, Dictionary<int, int> monster4)
     {
-        if (graphChart == null)
+        if (this.graphChart == null)
         {
             return;
         }
@@ -3183,10 +3031,10 @@ public partial class ConfigWindow : FluentWindow
         ObservableCollection<ObservablePoint> monster3Collection = new ();
         ObservableCollection<ObservablePoint> monster4Collection = new ();
 
-        Dictionary<int, int> newMonster1 = GetElapsedTime(monster1);
-        Dictionary<int, int> newMonster2 = GetElapsedTime(monster2);
-        Dictionary<int, int> newMonster3 = GetElapsedTime(monster3);
-        Dictionary<int, int> newMonster4 = GetElapsedTime(monster4);
+        var newMonster1 = GetElapsedTime(monster1);
+        var newMonster2 = GetElapsedTime(monster2);
+        var newMonster3 = GetElapsedTime(monster3);
+        var newMonster4 = GetElapsedTime(monster4);
 
         foreach (var entry in newMonster1)
         {
@@ -3213,8 +3061,8 @@ public partial class ConfigWindow : FluentWindow
             Values = monster1Collection,
             LineSmoothness = .5,
             GeometrySize = 0,
-            Stroke = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#fff38ba8"))) { StrokeThickness = 2 },
-            Fill = new LinearGradientPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#fff38ba8", "7f")), new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#fff38ba8", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1))
+            Stroke = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#fff38ba8"))) { StrokeThickness = 2 },
+            Fill = new LinearGradientPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#fff38ba8", "7f")), new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#fff38ba8", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
         });
 
         series.Add(new LineSeries<ObservablePoint>
@@ -3222,8 +3070,8 @@ public partial class ConfigWindow : FluentWindow
             Values = monster2Collection,
             LineSmoothness = .5,
             GeometrySize = 0,
-            Stroke = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#fff9e2af"))) { StrokeThickness = 2 },
-            Fill = new LinearGradientPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#fff9e2af", "7f")), new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#fff9e2af", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
+            Stroke = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#fff9e2af"))) { StrokeThickness = 2 },
+            Fill = new LinearGradientPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#fff9e2af", "7f")), new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#fff9e2af", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
         });
 
         series.Add(new LineSeries<ObservablePoint>
@@ -3231,8 +3079,8 @@ public partial class ConfigWindow : FluentWindow
             Values = monster3Collection,
             LineSmoothness = .5,
             GeometrySize = 0,
-            Stroke = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#ff94e2d5"))) { StrokeThickness = 2 },
-            Fill = new LinearGradientPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#ff94e2d5", "7f")), new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#ff94e2d5", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
+            Stroke = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#ff94e2d5"))) { StrokeThickness = 2 },
+            Fill = new LinearGradientPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#ff94e2d5", "7f")), new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#ff94e2d5", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
         });
 
         series.Add(new LineSeries<ObservablePoint>
@@ -3240,75 +3088,67 @@ public partial class ConfigWindow : FluentWindow
             Values = monster4Collection,
             LineSmoothness = .5,
             GeometrySize = 0,
-            Stroke = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#ffcba6f7"))) { StrokeThickness = 2 },
-            Fill = new LinearGradientPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#ffcba6f7", "7f")), new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#ffcba6f7", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
+            Stroke = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#ffcba6f7"))) { StrokeThickness = 2 },
+            Fill = new LinearGradientPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#ffcba6f7", "7f")), new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#ffcba6f7", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
         });
 
-        XAxes = new Axis[]
+        this.XAxes = new Axis[]
         {
             new Axis
             {
-                TextSize=12,
-                Labeler = (value) => MainWindow.dataLoader.model.GetTimeElapsed(value),
-                NamePaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#a6adc8"))),
-                LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#a6adc8"))),
-            }
+                TextSize = 12,
+                Labeler = (value) => ViewModels.Windows.AddressModel.GetTimeElapsed(value),
+                NamePaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
+                LabelsPaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
+            },
         };
 
-        YAxes = new Axis[]
+        this.YAxes = new Axis[]
         {
             new Axis
             {
-                NameTextSize= 12,
-                TextSize=12,
-                NamePadding= new LiveChartsCore.Drawing.Padding(0),
-                NamePaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#a6adc8"))),
-                LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#a6adc8"))),
-            }
+                NameTextSize = 12,
+                TextSize = 12,
+                NamePadding = new LiveChartsCore.Drawing.Padding(0),
+                NamePaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
+                LabelsPaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
+            },
         };
 
-        graphChart.Series = series;
-        graphChart.XAxes = XAxes;
-        graphChart.YAxes = YAxes;
+        this.graphChart.Series = series;
+        this.graphChart.XAxes = this.XAxes;
+        this.graphChart.YAxes = this.YAxes;
     }
 
-    private string GetHunterPerformanceValueType(double value)
+    private static string GetHunterPerformanceValueType(double value) => value switch
     {
-        switch (value)
-        {
-            case 0:
-                return "True Raw";
-            case 1:
-                return "DPH";
-            case 2:
-                return "DPS";
-            case 3:
-                return "Hits/s";
-            case 4:
-                return "Blocked Hits/s";
-            case 5:
-                return "APM";
-            default:
-                return "None";
-        }
-    }
+        0 => "True Raw",
+        1 => "DPH",
+        2 => "DPS",
+        3 => "Hits/s",
+        4 => "Blocked Hits/s",
+        5 => "APM",
+        _ => "None",
+    };
 
     private void SetPolarLineSeriesForHunterPerformance(PerformanceCompendium performanceCompendium)
     {
-        if (hunterPerformanceChart == null)
+        if (this.hunterPerformanceChart == null)
         {
             return;
         }
 
         List<ISeries> series = new ();
-        ObservableCollection<double> performanceCollection = new ();
 
-        performanceCollection.Add(performanceCompendium.TrueRawMedian / performanceCompendium.HighestTrueRaw);
-        performanceCollection.Add(performanceCompendium.SingleHitDamageMedian / performanceCompendium.HighestSingleHitDamage);
-        performanceCollection.Add(performanceCompendium.DPSMedian / performanceCompendium.HighestDPS);
-        performanceCollection.Add(performanceCompendium.HitsPerSecondMedian / performanceCompendium.HighestHitsPerSecond);
-        performanceCollection.Add(performanceCompendium.HitsTakenBlockedPerSecondMedian / performanceCompendium.HighestHitsTakenBlockedPerSecond);
-        performanceCollection.Add(performanceCompendium.ActionsPerMinuteMedian / performanceCompendium.HighestActionsPerMinute);
+        ObservableCollection<double> performanceCollection = new()
+        {
+            performanceCompendium.HighestTrueRaw != 0 ? performanceCompendium.TrueRawMedian / performanceCompendium.HighestTrueRaw : 0,
+            performanceCompendium.HighestSingleHitDamage != 0 ? performanceCompendium.SingleHitDamageMedian / performanceCompendium.HighestSingleHitDamage : 0,
+            performanceCompendium.HighestDPS != 0 ? performanceCompendium.DPSMedian / performanceCompendium.HighestDPS : 0,
+            performanceCompendium.HighestHitsPerSecond != 0 ? performanceCompendium.HitsPerSecondMedian / performanceCompendium.HighestHitsPerSecond : 0,
+            performanceCompendium.HighestHitsTakenBlockedPerSecond != 0 ? performanceCompendium.HitsTakenBlockedPerSecondMedian / performanceCompendium.HighestHitsTakenBlockedPerSecond : 0,
+            performanceCompendium.HighestActionsPerMinute != 0 ? performanceCompendium.ActionsPerMinuteMedian / performanceCompendium.HighestActionsPerMinute : 0,
+        };
 
         series.Add(new PolarLineSeries<double>
         {
@@ -3319,41 +3159,41 @@ public partial class ConfigWindow : FluentWindow
             GeometryFill = null,
             GeometryStroke = null,
             TooltipLabelFormatter = value => string.Format(CultureInfo.InvariantCulture, "{0}: {1:0.##}%", GetHunterPerformanceValueType(value.SecondaryValue), value.PrimaryValue * 100),
-            Stroke = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#fff38ba8"))) { StrokeThickness = 2 },
-            Fill = new LinearGradientPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#fff38ba8", "7f")), new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#fff38ba8", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
+            Stroke = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#fff38ba8"))) { StrokeThickness = 2 },
+            Fill = new LinearGradientPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#fff38ba8", "7f")), new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#fff38ba8", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
         });
 
-        PolarAxis[] RadiusAxes = new PolarAxis[]
+        var radiusAxes = new PolarAxis[]
         {
             new PolarAxis
             {
                 // formats the value as a number with 2 decimals.
                 Labeler = value => string.Format(CultureInfo.InvariantCulture, "{0:0}%", value * 100),
-                LabelsBackground = new LiveChartsCore.Drawing.LvcColor(0x1e,0x1e,0x2e,0xa8),
-                LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#cdd6f4a8")))
-            }
+                LabelsBackground = new LiveChartsCore.Drawing.LvcColor(0x1e, 0x1e, 0x2e, 0xa8),
+                LabelsPaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#cdd6f4a8"))),
+            },
         };
 
-        PolarAxis[] AngleAxes = new PolarAxis[]
+        var angleAxes = new PolarAxis[]
         {
             new PolarAxis
             {
                 Labels = new[] { "TRaw", "DPH", "DPS", "Hits/s", "Blocks/s", "APM" },
-                LabelsBackground = new LiveChartsCore.Drawing.LvcColor(0x1e,0x1e,0x2e,0xa8),
-                LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#cdd6f4a8"))),
+                LabelsBackground = new LiveChartsCore.Drawing.LvcColor(0x1e, 0x1e, 0x2e, 0xa8),
+                LabelsPaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#cdd6f4a8"))),
                 MinStep = 1,
-                ForceStepToMin = true
-            }
+                ForceStepToMin = true,
+            },
         };
 
-        hunterPerformanceChart.AngleAxes = AngleAxes;
-        hunterPerformanceChart.RadiusAxes = RadiusAxes;
-        hunterPerformanceChart.Series = series;
+        this.hunterPerformanceChart.AngleAxes = angleAxes;
+        this.hunterPerformanceChart.RadiusAxes = radiusAxes;
+        this.hunterPerformanceChart.Series = series;
     }
 
     private void GraphsComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        ComboBox comboBox = (ComboBox)sender;
+        var comboBox = (ComboBox)sender;
 
         var selectedItem = (ComboBoxItem)comboBox.SelectedItem;
 
@@ -3362,177 +3202,171 @@ public partial class ConfigWindow : FluentWindow
             return;
         }
 
-        string? selectedOption = selectedItem.Content.ToString();
+        var selectedOption = selectedItem.Content.ToString();
 
-        if (graphChart == null || selectedOption == null || string.IsNullOrEmpty(selectedOption))
+        if (this.graphChart == null || selectedOption == null || string.IsNullOrEmpty(selectedOption))
         {
             return;
         }
 
-        Series = null;
-        XAxes = new Axis[]
+        this.Series = null;
+        this.XAxes = new Axis[]
         {
             new Axis
             {
-                NamePaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#a6adc8"))),
-                LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#a6adc8"))),
-            }
+                NamePaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
+                LabelsPaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
+            },
         };
-        YAxes = new Axis[]
+        this.YAxes = new Axis[]
         {
             new Axis
             {
-                NamePaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#a6adc8"))),
-                LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#a6adc8"))),
-            }
+                NamePaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
+                LabelsPaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
+            },
         };
 
-        long runID = long.Parse(RunIDTextBox.Text.Trim(), CultureInfo.InvariantCulture);
+        var runID = long.Parse(RunIDTextBox.Text.Trim(), CultureInfo.InvariantCulture);
 
         switch (selectedOption)
         {
             case "(General) Most Quest Completions":
-                SetColumnSeriesForDictionaryIntInt(databaseManager.GetMostQuestCompletions());
+                this.SetColumnSeriesForDictionaryIntInt(DatabaseManager.GetMostQuestCompletions());
                 break;
             case "(General) Quest Durations":
-                CreateQuestDurationStackedChart(databaseManager.GetTotalTimeSpentInQuests());
+                this.CreateQuestDurationStackedChart(DatabaseManager.GetTotalTimeSpentInQuests());
                 break;
             case "(General) Most Common Objective Types":
-                SetColumnSeriesForDictionaryStringInt(databaseManager.GetMostCommonObjectiveTypes());
+                this.SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetMostCommonObjectiveTypes());
                 break;
             case "(General) Most Common Star Grades":
-                SetColumnSeriesForDictionaryIntInt(databaseManager.GetMostCommonStarGrades());
+                this.SetColumnSeriesForDictionaryIntInt(DatabaseManager.GetMostCommonStarGrades());
                 break;
             case "(General) Most Common Rank Bands":
-                SetColumnSeriesForDictionaryStringInt(databaseManager.GetMostCommonRankBands());
+                this.SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetMostCommonRankBands());
                 break;
             case "(General) Most Common Objective":
-                SetColumnSeriesForDictionaryStringInt(databaseManager.GetMostCommonObjectives());
+                this.SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetMostCommonObjectives());
                 break;
             case "(General) Quests Completed by Date":
-                SetColumnSeriesForDictionaryDateInt(databaseManager.GetQuestsCompletedByDate());
+                this.SetColumnSeriesForDictionaryDateInt(DatabaseManager.GetQuestsCompletedByDate());
                 break;
             case "(General) Most Common Party Size":
-                SetColumnSeriesForDictionaryIntInt(databaseManager.GetMostCommonPartySize());
+                this.SetColumnSeriesForDictionaryIntInt(DatabaseManager.GetMostCommonPartySize());
                 break;
             case "(General) Most Common Set Name":
-                SetColumnSeriesForDictionaryStringInt(databaseManager.GetMostCommonSetNames());
+                this.SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetMostCommonSetNames());
                 break;
             case "(General) Most Common Weapon Name":
-                SetColumnSeriesForDictionaryStringInt(databaseManager.GetMostCommonWeaponNames());
+                this.SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetMostCommonWeaponNames());
                 break;
             case "(General) Most Common Head Piece":
-                SetColumnSeriesForDictionaryStringInt(databaseManager.GetMostCommonHeadPieces());
+                this.SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetMostCommonHeadPieces());
                 break;
             case "(General) Most Common Chest Piece":
-                SetColumnSeriesForDictionaryStringInt(databaseManager.GetMostCommonChestPieces());
+                this.SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetMostCommonChestPieces());
                 break;
             case "(General) Most Common Arms Piece":
-                SetColumnSeriesForDictionaryStringInt(databaseManager.GetMostCommonArmsPieces());
+                this.SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetMostCommonArmsPieces());
                 break;
             case "(General) Most Common Waist Piece":
-                SetColumnSeriesForDictionaryStringInt(databaseManager.GetMostCommonWaistPieces());
+                this.SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetMostCommonWaistPieces());
                 break;
             case "(General) Most Common Legs Piece":
-                SetColumnSeriesForDictionaryStringInt(databaseManager.GetMostCommonLegsPieces());
+                this.SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetMostCommonLegsPieces());
                 break;
             case "(General) Most Common Diva Skill":
-                SetColumnSeriesForDictionaryStringInt(databaseManager.GetMostCommonDivaSkill());
+                this.SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetMostCommonDivaSkill());
                 break;
             case "(General) Most Common Guild Food":
-                SetColumnSeriesForDictionaryStringInt(databaseManager.GetMostCommonGuildFood());
+                this.SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetMostCommonGuildFood());
                 break;
             case "(General) Most Common Style Rank Skills":
-                SetColumnSeriesForDictionaryStringInt(databaseManager.GetMostCommonStyleRankSkills());
+                this.SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetMostCommonStyleRankSkills());
                 break;
             case "(General) Most Common Caravan Skills":
-                SetColumnSeriesForDictionaryStringInt(databaseManager.GetMostCommonCaravanSkills());
+                this.SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetMostCommonCaravanSkills());
                 break;
             case "(General) Most Common Category":
-                SetColumnSeriesForDictionaryStringInt(databaseManager.GetMostCommonCategory());
+                this.SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetMostCommonCategory());
                 break;
             case "(Run ID) Attack Buff":
-                SetLineSeriesForDictionaryIntInt(databaseManager.GetAttackBuffDictionary(runID));
+                this.SetLineSeriesForDictionaryIntInt(DatabaseManager.GetAttackBuffDictionary(runID));
                 return;
             case "(Run ID) Hit Count":
-                SetLineSeriesForDictionaryIntInt(databaseManager.GetHitCountDictionary(runID));
+                this.SetLineSeriesForDictionaryIntInt(DatabaseManager.GetHitCountDictionary(runID));
                 return;
             case "(Run ID) Hits per Second":
-                SetLineSeriesForDictionaryIntDouble(databaseManager.GetHitsPerSecondDictionary(runID));
+                this.SetLineSeriesForDictionaryIntDouble(DatabaseManager.GetHitsPerSecondDictionary(runID));
                 return;
             case "(Run ID) Damage Dealt":
-                SetLineSeriesForDictionaryIntInt(databaseManager.GetDamageDealtDictionary(runID));
+                this.SetLineSeriesForDictionaryIntInt(DatabaseManager.GetDamageDealtDictionary(runID));
                 return;
             case "(Run ID) Damage per Second":
-                SetLineSeriesForDictionaryIntDouble(databaseManager.GetDamagePerSecondDictionary(runID));
+                this.SetLineSeriesForDictionaryIntDouble(DatabaseManager.GetDamagePerSecondDictionary(runID));
                 return;
             case "(Run ID) Carts":
-                SetLineSeriesForDictionaryIntInt(databaseManager.GetCartsDictionary(runID));
+                this.SetLineSeriesForDictionaryIntInt(DatabaseManager.GetCartsDictionary(runID));
                 return;
             case "(Run ID) Hits Taken/Blocked":
-                SetHitsTakenBlocked(databaseManager.GetHitsTakenBlockedDictionary(runID));
+                this.SetHitsTakenBlocked(DatabaseManager.GetHitsTakenBlockedDictionary(runID));
                 return;
             case "(Run ID) Hits Taken/Blocked per Second":
-                SetLineSeriesForDictionaryIntDouble(databaseManager.GetHitsTakenBlockedPerSecondDictionary(runID));
+                this.SetLineSeriesForDictionaryIntDouble(DatabaseManager.GetHitsTakenBlockedPerSecondDictionary(runID));
                 return;
             case "(Run ID) Player Health and Stamina":
-                SetPlayerHealthStamina(databaseManager.GetPlayerHPDictionary(runID), databaseManager.GetPlayerStaminaDictionary(runID));
+                this.SetPlayerHealthStamina(DatabaseManager.GetPlayerHPDictionary(runID), DatabaseManager.GetPlayerStaminaDictionary(runID));
                 return;
             case "(Run ID) Most Common Player Input":
-                SetColumnSeriesForDictionaryStringInt(GetMostCommonInputs(runID));
+                this.SetColumnSeriesForDictionaryStringInt(GetMostCommonInputs(runID));
                 break;
             case "(Run ID) Actions per Minute":
-                SetLineSeriesForDictionaryIntDouble(databaseManager.GetActionsPerMinuteDictionary(runID));
+                this.SetLineSeriesForDictionaryIntDouble(DatabaseManager.GetActionsPerMinuteDictionary(runID));
                 return;
             case "(Run ID) Monster HP":
-                SetMonsterHP(CalculateMonsterHP(databaseManager.GetMonster1HPDictionary(runID)), CalculateMonsterHP(databaseManager.GetMonster2HPDictionary(runID)), CalculateMonsterHP(databaseManager.GetMonster3HPDictionary(runID)), CalculateMonsterHP(databaseManager.GetMonster4HPDictionary(runID)));
+                this.SetMonsterHP(CalculateMonsterHP(DatabaseManager.GetMonster1HPDictionary(runID)), CalculateMonsterHP(DatabaseManager.GetMonster2HPDictionary(runID)), CalculateMonsterHP(DatabaseManager.GetMonster3HPDictionary(runID)), CalculateMonsterHP(DatabaseManager.GetMonster4HPDictionary(runID)));
                 return;
             case "(Run ID) Monster Attack Multiplier":
-                SetMonsterAttackMultiplier(CalculateMonsterMultiplier(databaseManager.GetMonster1AttackMultiplierDictionary(runID)));
+                this.SetMonsterAttackMultiplier(CalculateMonsterMultiplier(DatabaseManager.GetMonster1AttackMultiplierDictionary(runID)));
                 return;
             case "(Run ID) Monster Defense Rate":
-                SetMonsterDefenseRate(CalculateMonsterMultiplier(databaseManager.GetMonster1DefenseRateDictionary(runID)));
+                this.SetMonsterDefenseRate(CalculateMonsterMultiplier(DatabaseManager.GetMonster1DefenseRateDictionary(runID)));
                 return;
             case "(Run ID) Monster Status Ailments Thresholds":
-                SetMonsterStatusAilmentsThresholds(
+                this.SetMonsterStatusAilmentsThresholds(
                     CalculateMonsterStatusAilmentThresholds(
-                        databaseManager.GetMonster1PoisonThresholdDictionary(runID)),
+                        DatabaseManager.GetMonster1PoisonThresholdDictionary(runID)),
                     CalculateMonsterStatusAilmentThresholds(
-                        databaseManager.GetMonster1SleepThresholdDictionary(runID)),
+                        DatabaseManager.GetMonster1SleepThresholdDictionary(runID)),
                     CalculateMonsterStatusAilmentThresholds(
-                        databaseManager.GetMonster1ParalysisThresholdDictionary(runID)),
+                        DatabaseManager.GetMonster1ParalysisThresholdDictionary(runID)),
                     CalculateMonsterStatusAilmentThresholds(
-                        databaseManager.GetMonster1BlastThresholdDictionary(runID)),
+                        DatabaseManager.GetMonster1BlastThresholdDictionary(runID)),
                     CalculateMonsterStatusAilmentThresholds(
-                        databaseManager.GetMonster1StunThresholdDictionary(runID)
-                        )
-                    );
+                        DatabaseManager.GetMonster1StunThresholdDictionary(runID)));
                 return;
+            default:
+                break;
         }
 
-        statsGraphsSelectedOption = selectedOption.Trim().Replace(" ", "_");
+        this.statsGraphsSelectedOption = selectedOption.Trim().Replace(" ", "_");
 
-        if (Series == null)
+        if (this.Series == null)
         {
             return;
         }
 
-        graphChart.Series = Series;
-        graphChart.XAxes = XAxes;
-        graphChart.YAxes = YAxes;
+        this.graphChart.Series = this.Series;
+        this.graphChart.XAxes = this.XAxes;
+        this.graphChart.YAxes = this.YAxes;
     }
 
-    private void GraphsChart_Loaded(object sender, RoutedEventArgs e)
-    {
-        graphChart = (CartesianChart)sender;
-    }
+    private void GraphsChart_Loaded(object sender, RoutedEventArgs e) => this.graphChart = (CartesianChart)sender;
 
-    private void StatsTextTextBlock_Loaded(object sender, RoutedEventArgs e)
-    {
-        statsTextTextBlock = (TextBlock)sender;
-    }
+    private void StatsTextTextBlock_Loaded(object sender, RoutedEventArgs e) => this.statsTextTextBlock = (TextBlock)sender;
 
-    private Dictionary<int, List<Dictionary<int, int>>> GetElapsedTimeForInventories(Dictionary<int, List<Dictionary<int, int>>> dictionary)
+    private static Dictionary<int, List<Dictionary<int, int>>> GetElapsedTimeForInventories(Dictionary<int, List<Dictionary<int, int>>> dictionary)
     {
         Dictionary<int, List<Dictionary<int, int>>> elapsedTimeDict = new ();
         if (dictionary == null || !dictionary.Any())
@@ -3540,7 +3374,7 @@ public partial class ConfigWindow : FluentWindow
             return elapsedTimeDict;
         }
 
-        int initialTime = dictionary.First().Key;
+        var initialTime = dictionary.First().Key;
         foreach (var entry in dictionary)
         {
             elapsedTimeDict[initialTime - entry.Key] = entry.Value;
@@ -3549,7 +3383,7 @@ public partial class ConfigWindow : FluentWindow
         return elapsedTimeDict;
     }
 
-    private Dictionary<int, int> GetElapsedTimeForDictionaryIntInt(Dictionary<int, int> dictionary)
+    private static Dictionary<int, int> GetElapsedTimeForDictionaryIntInt(Dictionary<int, int> dictionary)
     {
         Dictionary<int, int> elapsedTimeDict = new ();
 
@@ -3558,7 +3392,7 @@ public partial class ConfigWindow : FluentWindow
             return elapsedTimeDict;
         }
 
-        int initialTime = dictionary.First().Key;
+        var initialTime = dictionary.First().Key;
         foreach (var entry in dictionary)
         {
             elapsedTimeDict[initialTime - entry.Key] = entry.Value;
@@ -3571,14 +3405,14 @@ public partial class ConfigWindow : FluentWindow
     {
         inventory = GetElapsedTimeForInventories(inventory);
 
-        StringBuilder sb = new StringBuilder();
+        var sb = new StringBuilder();
 
         foreach (var entry in inventory)
         {
-            int time = entry.Key;
-            string timeString = TimeSpan.FromSeconds((double)time / Numbers.FramesPerSecond).ToString(TimeFormats.MinutesSecondsMilliseconds, CultureInfo.InvariantCulture);
+            var time = entry.Key;
+            var timeString = TimeSpan.FromSeconds((double)time / Numbers.FramesPerSecond).ToString(TimeFormats.MinutesSecondsMilliseconds, CultureInfo.InvariantCulture);
             var items = entry.Value;
-            int count = 0;
+            var count = 0;
             sb.AppendLine(timeString + " ");
             foreach (var item in items)
             {
@@ -3586,7 +3420,7 @@ public partial class ConfigWindow : FluentWindow
                 {
                     if (itemData.Value > 0)
                     {
-                        string itemName = GetItemName(itemData.Key);
+                        var itemName = GetItemName(itemData.Key);
                         sb.Append(itemName + " x" + itemData.Value + ", ");
                         count++;
                     }
@@ -3610,16 +3444,16 @@ public partial class ConfigWindow : FluentWindow
     {
         areas = GetElapsedTimeForDictionaryIntInt(areas);
 
-        StringBuilder sb = new StringBuilder();
+        var sb = new StringBuilder();
 
         foreach (var entry in areas)
         {
-            int time = entry.Key;
-            string timeString = TimeSpan.FromSeconds((double)time / Numbers.FramesPerSecond).ToString(TimeFormats.MinutesSecondsMilliseconds, CultureInfo.InvariantCulture);
+            var time = entry.Key;
+            var timeString = TimeSpan.FromSeconds((double)time / Numbers.FramesPerSecond).ToString(TimeFormats.MinutesSecondsMilliseconds, CultureInfo.InvariantCulture);
             var area = entry.Value;
             sb.AppendLine(timeString + " ");
 
-            Location.IDName.TryGetValue(area, out string? itemName);
+            Location.IDName.TryGetValue(area, out var itemName);
             sb.Append(itemName);
             sb.AppendLine();
             sb.AppendLine();
@@ -3628,10 +3462,10 @@ public partial class ConfigWindow : FluentWindow
         return sb.ToString();
     }
 
-    private string GetItemName(int itemID)
+    private static string GetItemName(int itemID)
     {
         // implement code to get item name based on itemID
-        Item.IDName.TryGetValue(itemID, out string? value);
+        Item.IDName.TryGetValue(itemID, out var value);
         if (value == null)
         {
             return string.Empty;
@@ -3642,51 +3476,53 @@ public partial class ConfigWindow : FluentWindow
 
     private void StatsTextComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        ComboBox comboBox = (ComboBox)sender;
+        var comboBox = (ComboBox)sender;
 
         var selectedItem = (ComboBoxItem)comboBox.SelectedItem;
 
-        if (selectedItem == null || statsTextTextBlock == null)
+        if (selectedItem == null || this.statsTextTextBlock == null)
         {
             return;
         }
 
-        string? selectedOption = selectedItem.Content.ToString();
+        var selectedOption = selectedItem.Content.ToString();
 
-        if (statsTextTextBlock == null || selectedOption == null || string.IsNullOrEmpty(selectedOption))
+        if (this.statsTextTextBlock == null || selectedOption == null || string.IsNullOrEmpty(selectedOption))
         {
             return;
         }
 
-        statsTextTextBlock.Text = string.Empty;
+        this.statsTextTextBlock.Text = string.Empty;
 
-        long runID = long.Parse(RunIDTextBox.Text.Trim(), CultureInfo.InvariantCulture);
+        var runID = long.Parse(RunIDTextBox.Text.Trim(), CultureInfo.InvariantCulture);
 
         switch (selectedOption)
         {
             case "Inventory":
-                statsTextTextBlock.Text = string.Format(CultureInfo.InvariantCulture, "Inventory\n\n{0}", FormatInventory(databaseManager.GetPlayerInventoryDictionary(runID)));
+                this.statsTextTextBlock.Text = string.Format(CultureInfo.InvariantCulture, "Inventory\n\n{0}", this.FormatInventory(DatabaseManager.GetPlayerInventoryDictionary(runID)));
                 break;
             case "Ammo":
-                statsTextTextBlock.Text = string.Format(CultureInfo.InvariantCulture, "Ammo\n\n{0}", FormatInventory(databaseManager.GetAmmoDictionary(runID)));
+                this.statsTextTextBlock.Text = string.Format(CultureInfo.InvariantCulture, "Ammo\n\n{0}", this.FormatInventory(DatabaseManager.GetAmmoDictionary(runID)));
                 break;
             case "Partnya Bag":
-                statsTextTextBlock.Text = string.Format(CultureInfo.InvariantCulture, "Partnya Bag\n\n{0}", FormatInventory(databaseManager.GetPartnyaBagDictionary(runID)));
+                this.statsTextTextBlock.Text = string.Format(CultureInfo.InvariantCulture, "Partnya Bag\n\n{0}", this.FormatInventory(DatabaseManager.GetPartnyaBagDictionary(runID)));
                 break;
             case "Area Changes":
-                statsTextTextBlock.Text = string.Format(CultureInfo.InvariantCulture, "Area Changes\n\n{0}", DisplayAreaChanges(databaseManager.GetAreaChangesDictionary(runID)));
+                this.statsTextTextBlock.Text = string.Format(CultureInfo.InvariantCulture, "Area Changes\n\n{0}", this.DisplayAreaChanges(DatabaseManager.GetAreaChangesDictionary(runID)));
+                break;
+            default:
                 break;
         }
 
-        statsTextSelectedOption = selectedOption.Trim().Replace(" ", "_");
+        this.statsTextSelectedOption = selectedOption.Trim().Replace(" ", "_");
     }
 
     // TODO: double-check the settings and the conditionals in the other code
-    private void settingsPresetComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    private void SettingsPresetComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        Settings s = (Settings)Application.Current.TryFindResource("Settings");
+        var s = (Settings)Application.Current.TryFindResource("Settings");
 
-        ComboBox comboBox = (ComboBox)sender;
+        var comboBox = (ComboBox)sender;
 
         var selectedItem = (ComboBoxItem)comboBox.SelectedItem;
 
@@ -3695,7 +3531,7 @@ public partial class ConfigWindow : FluentWindow
             return;
         }
 
-        string? selectedOption = selectedItem.Content.ToString();
+        var selectedOption = selectedItem.Content.ToString();
 
         if (string.IsNullOrEmpty(selectedOption))
         {
@@ -3704,24 +3540,20 @@ public partial class ConfigWindow : FluentWindow
 
         if (s != null)
         {
-            overlaySettingsManager.SetConfigurationPreset(s, ConfigurationPresetConverter.Convert(selectedOption));
+            OverlaySettingsService.SetConfigurationPreset(s, ConfigurationPresetConverter.Convert(selectedOption));
         }
     }
 
-    private void personalBest_Loaded(object sender, RoutedEventArgs e)
-    {
-        personalBestChart = (CartesianChart)sender;
-    }
+    private void PersonalBest_Loaded(object sender, RoutedEventArgs e) => this.personalBestChart = (CartesianChart)sender;
 
     private void PersonalBestTypeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        if (personalBestChart == null)
+        if (this.personalBestChart == null)
         {
             return;
         }
 
-        var comboBox = sender as ComboBox;
-        if (comboBox == null)
+        if (sender is not ComboBox comboBox)
         {
             return;
         }
@@ -3733,24 +3565,23 @@ public partial class ConfigWindow : FluentWindow
             return;
         }
 
-        string? selectedType = selectedItem.ToString();
+        var selectedType = selectedItem.ToString();
         if (string.IsNullOrEmpty(selectedType))
         {
             return;
         }
 
-        personalBestSelectedType = selectedType.Replace("System.Windows.Controls.ComboBoxItem: ", "");
+        this.personalBestSelectedType = selectedType.Replace("System.Windows.Controls.ComboBoxItem: ", string.Empty);
     }
 
     private void PersonalBestWeaponComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        if (personalBestChart == null)
+        if (this.personalBestChart == null)
         {
             return;
         }
 
-        var comboBox = sender as ComboBox;
-        if (comboBox == null)
+        if (sender is not ComboBox comboBox)
         {
             return;
         }
@@ -3762,89 +3593,85 @@ public partial class ConfigWindow : FluentWindow
             return;
         }
 
-        string? selectedWeapon = selectedItem.ToString();
+        var selectedWeapon = selectedItem.ToString();
         if (string.IsNullOrEmpty(selectedWeapon))
         {
             return;
         }
 
-        personalBestSelectedWeapon = selectedWeapon.Replace("System.Windows.Controls.ComboBoxItem: ", "");
+        this.personalBestSelectedWeapon = selectedWeapon.Replace("System.Windows.Controls.ComboBoxItem: ", string.Empty);
     }
 
     private void PersonalBestRefreshButton_Click(object sender, RoutedEventArgs e)
     {
-        if (personalBestChart == null || personalBestSelectedWeapon == "" || personalBestSelectedType == "")
+        if (this.personalBestChart == null || this.personalBestSelectedWeapon == string.Empty || this.personalBestSelectedType == string.Empty)
         {
             return;
         }
 
-        PersonalBestSeries = null;
-        PersonalBestXAxes = new Axis[]
+        this.PersonalBestSeries = null;
+        this.PersonalBestXAxes = new Axis[]
         {
             new Axis
             {
-                NamePaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#a6adc8"))),
-                LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#a6adc8"))),
-            }
+                NamePaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
+                LabelsPaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
+            },
         };
-        PersonalBestYAxes = new Axis[]
+        this.PersonalBestYAxes = new Axis[]
         {
             new Axis
             {
-                NamePaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#a6adc8"))),
-                LabelsPaint = new SolidColorPaint(new SKColor(MainWindow.dataLoader.model.HexColorToDecimal("#a6adc8"))),
-            }
+                NamePaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
+                LabelsPaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
+            },
         };
 
-        long questID = long.Parse(QuestIDTextBox.Text.Trim(), CultureInfo.InvariantCulture);
-        int weaponTypeID = WeaponType.IDName.FirstOrDefault(x => x.Value == personalBestSelectedWeapon).Key;
+        var questID = long.Parse(QuestIDTextBox.Text.Trim(), CultureInfo.InvariantCulture);
+        var weaponTypeID = WeaponType.IDName.FirstOrDefault(x => x.Value == this.personalBestSelectedWeapon).Key;
 
-        switch (personalBestSelectedType)
+        switch (this.personalBestSelectedType)
         {
             case "(Quest ID) Personal Best by Date":
-                SetStepLineSeriesForPersonalBestByDate(databaseManager.GetPersonalBestsByDate(questID, weaponTypeID, OverlayModeComboBox.Text));
+                this.SetStepLineSeriesForPersonalBestByDate(DatabaseManager.GetPersonalBestsByDate(questID, weaponTypeID, OverlayModeComboBox.Text));
                 break;
             case "(Quest ID) Personal Best by Attempts":
-                SetStepLineSeriesForPersonalBestByAttempts(databaseManager.GetPersonalBestsByAttempts(questID, weaponTypeID, OverlayModeComboBox.Text));
+                this.SetStepLineSeriesForPersonalBestByAttempts(DatabaseManager.GetPersonalBestsByAttempts(questID, weaponTypeID, OverlayModeComboBox.Text));
                 break;
             default:
-                personalBestChart.Series = PersonalBestSeries ?? new ISeries[0]; // TODO test
-                personalBestChart.XAxes = PersonalBestXAxes;
-                personalBestChart.YAxes = PersonalBestYAxes;
+                this.personalBestChart.Series = this.PersonalBestSeries ?? Array.Empty<ISeries>(); // TODO test
+                this.personalBestChart.XAxes = this.PersonalBestXAxes;
+                this.personalBestChart.YAxes = this.PersonalBestYAxes;
                 break;
         }
 
-        if (personalBestDescriptionTextBlock != null)
+        if (this.personalBestDescriptionTextBlock != null)
         {
-            personalBestDescriptionTextBlock.Text = $"Personal best of solo runs of quest ID {QuestIDTextBox.Text} by category {OverlayModeComboBox.Text}";
+            this.personalBestDescriptionTextBlock.Text = $"Personal best of solo runs of quest ID {QuestIDTextBox.Text} by category {OverlayModeComboBox.Text}";
         }
     }
 
     private void HunterPerformancePolarChart_Loaded(object sender, RoutedEventArgs e)
     {
         var chart = sender as PolarChart;
-        hunterPerformanceChart = chart;
-        SetPolarLineSeriesForHunterPerformance(databaseManager.GetPerformanceCompendium());
+        this.hunterPerformanceChart = chart;
+        this.SetPolarLineSeriesForHunterPerformance(DatabaseManager.GetPerformanceCompendium());
     }
 
     private void CompendiumInformationStackPanel_Loaded(object sender, RoutedEventArgs e)
     {
         var stackPanel = sender as StackPanel;
-        compendiumInformationStackPanel = stackPanel;
+        this.compendiumInformationStackPanel = stackPanel;
     }
-
-    private DateTime datePickerDate = DateTime.UtcNow;
 
     private void CalendarDatePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
     {
-        if (calendarDataGrid == null || sender == null)
+        if (this.calendarDataGrid == null || sender == null)
         {
             return;
         }
 
-        DatePicker? datePicker = sender as DatePicker;
-
-        if (datePicker == null)
+        if (sender is not DatePicker datePicker)
         {
             return;
         }
@@ -3856,27 +3683,21 @@ public partial class ConfigWindow : FluentWindow
             return;
         }
 
-        datePickerDate = (DateTime)selectedDate;
-        MainWindow.dataLoader.model.CalendarRuns = databaseManager.GetCalendarRuns(selectedDate);
-        calendarDataGrid.ItemsSource = MainWindow.dataLoader.model.CalendarRuns;
-        calendarDataGrid.Items.Refresh();
+        this.datePickerDate = (DateTime)selectedDate;
+        this.MainWindow.DataLoader.Model.CalendarRuns = DatabaseManager.GetCalendarRuns(selectedDate);
+        this.calendarDataGrid.ItemsSource = this.MainWindow.DataLoader.Model.CalendarRuns;
+        this.calendarDataGrid.Items.Refresh();
     }
 
     private void MostRecentRuns_DataGridLoaded(object sender, RoutedEventArgs e)
     {
-        mostRecentRunsDataGrid = (DataGrid)sender;
-        MainWindow.dataLoader.model.RecentRuns = databaseManager.GetRecentRuns();
-        mostRecentRunsDataGrid.ItemsSource = MainWindow.dataLoader.model.RecentRuns;
-        mostRecentRunsDataGrid.Items.Refresh();
+        this.mostRecentRunsDataGrid = (DataGrid)sender;
+        this.MainWindow.DataLoader.Model.RecentRuns = DatabaseManager.GetRecentRuns();
+        this.mostRecentRunsDataGrid.ItemsSource = this.MainWindow.DataLoader.Model.RecentRuns;
+        this.mostRecentRunsDataGrid.Items.Refresh();
     }
 
-    private void Calendar_DataGridLoaded(object sender, RoutedEventArgs e)
-    {
-        calendarDataGrid = (DataGrid)sender;
-    }
-
-    // Declare flags to track event subscription
-    private bool isConfigureButtonClickedSubscribed;
+    private void Calendar_DataGridLoaded(object sender, RoutedEventArgs e) => this.calendarDataGrid = (DataGrid)sender;
     private bool isDefaultButtonClickedSubscribed;
     private bool isSaveButtonClickedSubscribed;
 
@@ -3886,22 +3707,22 @@ public partial class ConfigWindow : FluentWindow
         var obj = (MainConfigurationActions)sender;
 
         // Subscribe to events only if not already subscribed
-        if (!isSaveButtonClickedSubscribed)
+        if (!this.isSaveButtonClickedSubscribed)
         {
-            obj.SaveButtonClicked += SaveButton_Click;
-            isSaveButtonClickedSubscribed = true;
+            obj.SaveButtonClicked += this.SaveButton_Click;
+            this.isSaveButtonClickedSubscribed = true;
         }
 
-        if (!isConfigureButtonClickedSubscribed)
+        if (!this.isConfigureButtonClickedSubscribed)
         {
-            obj.ConfigureButtonClicked += ConfigureButton_Click;
-            isConfigureButtonClickedSubscribed = true;
+            obj.ConfigureButtonClicked += this.ConfigureButton_Click;
+            this.isConfigureButtonClickedSubscribed = true;
         }
 
-        if (!isDefaultButtonClickedSubscribed)
+        if (!this.isDefaultButtonClickedSubscribed)
         {
-            obj.DefaultButtonClicked += DefaultButton_Click;
-            isDefaultButtonClickedSubscribed = true;
+            obj.DefaultButtonClicked += this.DefaultButton_Click;
+            this.isDefaultButtonClickedSubscribed = true;
         }
     }
 
@@ -3911,31 +3732,31 @@ public partial class ConfigWindow : FluentWindow
         var obj = (MainConfigurationActions)sender;
 
         // Unsubscribe from events and update flags
-        if (isSaveButtonClickedSubscribed)
+        if (this.isSaveButtonClickedSubscribed)
         {
-            obj.SaveButtonClicked -= SaveButton_Click;
-            isSaveButtonClickedSubscribed = false;
+            obj.SaveButtonClicked -= this.SaveButton_Click;
+            this.isSaveButtonClickedSubscribed = false;
         }
 
-        if (isConfigureButtonClickedSubscribed)
+        if (this.isConfigureButtonClickedSubscribed)
         {
-            obj.ConfigureButtonClicked -= ConfigureButton_Click;
-            isConfigureButtonClickedSubscribed = false;
+            obj.ConfigureButtonClicked -= this.ConfigureButton_Click;
+            this.isConfigureButtonClickedSubscribed = false;
         }
 
-        if (isDefaultButtonClickedSubscribed)
+        if (this.isDefaultButtonClickedSubscribed)
         {
-            obj.DefaultButtonClicked -= DefaultButton_Click;
-            isDefaultButtonClickedSubscribed = false;
+            obj.DefaultButtonClicked -= this.DefaultButton_Click;
+            this.isDefaultButtonClickedSubscribed = false;
         }
     }
 
-    private void personalBestChartGrid_Loaded(object sender, RoutedEventArgs e)
+    private void PersonalBestChartGrid_Loaded(object sender, RoutedEventArgs e)
     {
         var obj = (Grid)sender;
         if (obj != null)
         {
-            personalBestChartGrid = obj;
+            this.personalBestChartGrid = obj;
         }
     }
 
@@ -3944,7 +3765,7 @@ public partial class ConfigWindow : FluentWindow
         var obj = (Grid)sender;
         if (obj != null)
         {
-            weaponUsageChartGrid = obj;
+            this.weaponUsageChartGrid = obj;
         }
     }
 
@@ -3963,13 +3784,13 @@ public partial class ConfigWindow : FluentWindow
         }
 
         // You can now use the selectedItem variable to get the data or value of the selected option
-        string? selectedOption = selectedItem.ToString()?.Replace("System.Windows.Controls.ComboBoxItem: ", "").Trim().Replace(" ", "_");
+        var selectedOption = selectedItem.ToString()?.Replace("System.Windows.Controls.ComboBoxItem: ", string.Empty).Trim().Replace(" ", "_");
         if (string.IsNullOrEmpty(selectedOption))
         {
             return;
         }
 
-        statsGraphsSelectedOption = selectedOption;
+        this.statsGraphsSelectedOption = selectedOption;
     }
 
     private void StatsTextComboBox_Loaded(object sender, RoutedEventArgs e)
@@ -3987,13 +3808,13 @@ public partial class ConfigWindow : FluentWindow
         }
 
         // You can now use the selectedItem variable to get the data or value of the selected option
-        string? selectedOption = selectedItem.ToString()?.Replace("System.Windows.Controls.ComboBoxItem: ", "").Trim().Replace(" ", "_");
+        var selectedOption = selectedItem.ToString()?.Replace("System.Windows.Controls.ComboBoxItem: ", string.Empty).Trim().Replace(" ", "_");
         if (string.IsNullOrEmpty(selectedOption))
         {
             return;
         }
 
-        statsTextSelectedOption = selectedOption;
+        this.statsTextSelectedOption = selectedOption;
     }
 
     private void GraphsChartGrid_Loaded(object sender, RoutedEventArgs e)
@@ -4001,7 +3822,7 @@ public partial class ConfigWindow : FluentWindow
         var obj = (Grid)sender;
         if (obj != null)
         {
-            statsGraphsGrid = obj;
+            this.statsGraphsGrid = obj;
         }
     }
 
@@ -4010,7 +3831,7 @@ public partial class ConfigWindow : FluentWindow
         var obj = (TextBlock)sender;
         if (obj != null)
         {
-            personalBestDescriptionTextBlock = obj;
+            this.personalBestDescriptionTextBlock = obj;
         }
     }
 
@@ -4019,7 +3840,7 @@ public partial class ConfigWindow : FluentWindow
         var obj = (TextBlock)sender;
         if (obj != null)
         {
-            top20RunsDescriptionTextblock = obj;
+            this.top20RunsDescriptionTextblock = obj;
         }
     }
 
@@ -4028,7 +3849,7 @@ public partial class ConfigWindow : FluentWindow
         var obj = (Grid)sender;
         if (obj != null)
         {
-            personalBestMainGrid = obj;
+            this.personalBestMainGrid = obj;
         }
     }
 
@@ -4037,7 +3858,7 @@ public partial class ConfigWindow : FluentWindow
         var obj = (Grid)sender;
         if (obj != null)
         {
-            top20MainGrid = obj;
+            this.top20MainGrid = obj;
         }
     }
 
@@ -4046,7 +3867,7 @@ public partial class ConfigWindow : FluentWindow
         var obj = (Grid)sender;
         if (obj != null)
         {
-            weaponStatsMainGrid = obj;
+            this.weaponStatsMainGrid = obj;
         }
     }
 
@@ -4055,7 +3876,7 @@ public partial class ConfigWindow : FluentWindow
         var obj = (Grid)sender;
         if (obj != null)
         {
-            statsGraphsMainGrid = obj;
+            this.statsGraphsMainGrid = obj;
         }
     }
 
@@ -4064,27 +3885,29 @@ public partial class ConfigWindow : FluentWindow
         var obj = (Grid)sender;
         if (obj != null)
         {
-            statsTextMainGrid = obj;
+            this.statsTextMainGrid = obj;
         }
     }
 
     private void FumoImage_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
-        var snackbar = new Snackbar(ConfigWindowSnackBarPresenter);
-        snackbar.Style = (Style)FindResource("CatppuccinMochaSnackBar");
-        achievementManager.RewardAchievement(225, snackbar, (Style)FindResource("CatppuccinMochaSnackBar"));
+        var snackbar = new Snackbar(ConfigWindowSnackBarPresenter)
+        {
+            Style = (Style)this.FindResource("CatppuccinMochaSnackBar"),
+        };
+        AchievementManager.RewardAchievement(225, snackbar, (Style)this.FindResource("CatppuccinMochaSnackBar"));
     }
 
     private void Achievements3DPreviewGrid_Loaded(object sender, RoutedEventArgs e)
     {
         // Create the rotation animation
-        Storyboard storyboard = new Storyboard();
-        DoubleAnimation animation = new DoubleAnimation
+        var storyboard = new Storyboard();
+        var animation = new DoubleAnimation
         {
             From = 0,
             To = 360,
             Duration = TimeSpan.FromSeconds(10), // Adjust the duration to control the rotation speed
-            RepeatBehavior = RepeatBehavior.Forever
+            RepeatBehavior = RepeatBehavior.Forever,
         };
         Rotation.BeginAnimation(AxisAngleRotation3D.AngleProperty, animation);
         storyboard.Begin();
@@ -4092,16 +3915,16 @@ public partial class ConfigWindow : FluentWindow
 
     private void AchievementsListView_Loaded(object sender, RoutedEventArgs e)
     {
-        achievementsListView = (ListView)sender;
-        MainWindow.dataLoader.model.PlayerAchievements = databaseManager.GetPlayerAchievements();
-        achievementsListView.ItemsSource = MainWindow.dataLoader.model.PlayerAchievements;
-        achievementsListView.Items.Refresh();
-        UpdateAchievementsProgress();
+        this.achievementsListView = (ListView)sender;
+        this.MainWindow.DataLoader.Model.PlayerAchievements = DatabaseManager.GetPlayerAchievements();
+        this.achievementsListView.ItemsSource = this.MainWindow.DataLoader.Model.PlayerAchievements;
+        this.achievementsListView.Items.Refresh();
+        this.UpdateAchievementsProgress();
     }
 
     private void AchievementsListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        if (achievementsSelectedInfoGrid is null)
+        if (this.achievementsSelectedInfoGrid is null)
         {
             return;
         }
@@ -4119,7 +3942,7 @@ public partial class ConfigWindow : FluentWindow
             else
             {
                 AchievementSelectionInfoImage.Opacity = 1;
-                AchievementSelectionInfoTitle.Text = $"{selectedAchievement.Title} | {selectedAchievement.CompletionDate.ToString("yy/MM/dd HH:mm:ss")}"; ;
+                AchievementSelectionInfoTitle.Text = $"{selectedAchievement.Title} | {selectedAchievement.CompletionDate:yy/MM/dd HH:mm:ss}";
             }
 
             var brushConverter = new BrushConverter();
@@ -4139,28 +3962,29 @@ public partial class ConfigWindow : FluentWindow
 
             AchievementFrontSide.ImageSource = new BitmapImage(new Uri($"{selectedAchievement.Image}"));
             AchievementBackSide.ImageSource = new BitmapImage(new Uri($"{selectedAchievement.GetTrophyImageLinkFromRank()}"));
+
             // ...
         }
     }
 
     private void UpdateAchievementsProgress()
     {
-        int totalAchievements = MainWindow.dataLoader.model.PlayerAchievements.Count(a => a.IsSecret == false);
-        int obtainedAchievements = MainWindow.dataLoader.model.PlayerAchievements.Count(a => a.CompletionDate != DateTime.UnixEpoch);
-        int obtainedSecretAchievements = MainWindow.dataLoader.model.PlayerAchievements.Count(a => a.CompletionDate != DateTime.UnixEpoch && a.IsSecret == true);
-        int totalSecretAchievements = MainWindow.dataLoader.model.PlayerAchievements.Count(a => a.IsSecret == true);
-        double progressPercentage = (obtainedAchievements * 100.0 / totalAchievements) == 100 ? (obtainedAchievements * 100.0 / totalAchievements) + (obtainedSecretAchievements / totalSecretAchievements) : (obtainedAchievements * 100.0 / totalAchievements);
+        var totalAchievements = this.MainWindow.DataLoader.Model.PlayerAchievements.Count(a => a.IsSecret == false);
+        var obtainedAchievements = this.MainWindow.DataLoader.Model.PlayerAchievements.Count(a => a.CompletionDate != DateTime.UnixEpoch);
+        var obtainedSecretAchievements = this.MainWindow.DataLoader.Model.PlayerAchievements.Count(a => a.CompletionDate != DateTime.UnixEpoch && a.IsSecret);
+        var totalSecretAchievements = this.MainWindow.DataLoader.Model.PlayerAchievements.Count(a => a.IsSecret);
+        var progressPercentage = (obtainedAchievements * 100.0 / totalAchievements) == 100 ? (obtainedAchievements * 100.0 / totalAchievements) + (obtainedSecretAchievements / totalSecretAchievements) : (obtainedAchievements * 100.0 / totalAchievements);
         AchievementsProgressBar.Value = progressPercentage;
 
-        int totalBronzeAchievements = MainWindow.dataLoader.model.PlayerAchievements.Count(a => a.IsSecret == false && a.Rank == AchievementRank.Bronze);
-        int totalSilverAchievements = MainWindow.dataLoader.model.PlayerAchievements.Count(a => a.IsSecret == false && a.Rank == AchievementRank.Silver);
-        int totalGoldAchievements = MainWindow.dataLoader.model.PlayerAchievements.Count(a => a.IsSecret == false && a.Rank == AchievementRank.Gold);
-        int totalPlatinumAchievements = MainWindow.dataLoader.model.PlayerAchievements.Count(a => a.IsSecret == false && a.Rank == AchievementRank.Platinum);
+        var totalBronzeAchievements = this.MainWindow.DataLoader.Model.PlayerAchievements.Count(a => a.IsSecret == false && a.Rank == AchievementRank.Bronze);
+        var totalSilverAchievements = this.MainWindow.DataLoader.Model.PlayerAchievements.Count(a => a.IsSecret == false && a.Rank == AchievementRank.Silver);
+        var totalGoldAchievements = this.MainWindow.DataLoader.Model.PlayerAchievements.Count(a => a.IsSecret == false && a.Rank == AchievementRank.Gold);
+        var totalPlatinumAchievements = this.MainWindow.DataLoader.Model.PlayerAchievements.Count(a => a.IsSecret == false && a.Rank == AchievementRank.Platinum);
 
-        int obtainedBronzeAchievements = MainWindow.dataLoader.model.PlayerAchievements.Count(a => a.CompletionDate != DateTime.UnixEpoch && a.Rank == AchievementRank.Bronze);
-        int obtainedSilverAchievements = MainWindow.dataLoader.model.PlayerAchievements.Count(a => a.CompletionDate != DateTime.UnixEpoch && a.Rank == AchievementRank.Silver);
-        int obtainedGoldAchievements = MainWindow.dataLoader.model.PlayerAchievements.Count(a => a.CompletionDate != DateTime.UnixEpoch && a.Rank == AchievementRank.Gold);
-        int obtainedPlatinumAchievements = MainWindow.dataLoader.model.PlayerAchievements.Count(a => a.CompletionDate != DateTime.UnixEpoch && a.Rank == AchievementRank.Platinum);
+        var obtainedBronzeAchievements = this.MainWindow.DataLoader.Model.PlayerAchievements.Count(a => a.CompletionDate != DateTime.UnixEpoch && a.Rank == AchievementRank.Bronze);
+        var obtainedSilverAchievements = this.MainWindow.DataLoader.Model.PlayerAchievements.Count(a => a.CompletionDate != DateTime.UnixEpoch && a.Rank == AchievementRank.Silver);
+        var obtainedGoldAchievements = this.MainWindow.DataLoader.Model.PlayerAchievements.Count(a => a.CompletionDate != DateTime.UnixEpoch && a.Rank == AchievementRank.Gold);
+        var obtainedPlatinumAchievements = this.MainWindow.DataLoader.Model.PlayerAchievements.Count(a => a.CompletionDate != DateTime.UnixEpoch && a.Rank == AchievementRank.Platinum);
 
         TrophyBronzeCountTextBlock.Text = $"{obtainedBronzeAchievements}/{totalBronzeAchievements}";
         TrophySilverCountTextBlock.Text = $"{obtainedSilverAchievements}/{totalSilverAchievements}";
@@ -4169,29 +3993,28 @@ public partial class ConfigWindow : FluentWindow
 
         var brushConverter = new BrushConverter();
 
-        if (obtainedAchievements >= 50 && obtainedAchievements < 100) // unlock Bingo + Gacha
+        if (obtainedAchievements is >= 50 and < 100) // unlock Bingo + Gacha
         {
             AchievementsProgressBar.Foreground = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Maroon"]);
             AchievementsProgressTextBlock.Fill = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Maroon"]);
             AchievementTotalProgressTextBlock.Fill = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Maroon"]);
             AchievementTotalProgressPercentTextBlock.Fill = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Maroon"]);
         }
-        else if (obtainedAchievements >= 100 && obtainedAchievements < 150) // unlock zenith gauntlet
+        else if (obtainedAchievements is >= 100 and < 150) // unlock zenith gauntlet
         {
             AchievementsProgressBar.Foreground = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Lavender"]);
             AchievementsProgressTextBlock.Fill = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Lavender"]);
             AchievementTotalProgressTextBlock.Fill = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Lavender"]);
             AchievementTotalProgressPercentTextBlock.Fill = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Lavender"]);
-
         }
-        else if (obtainedAchievements >= 150 && obtainedAchievements < 200) // unlock solstice gauntlet
+        else if (obtainedAchievements is >= 150 and < 200) // unlock solstice gauntlet
         {
             AchievementsProgressBar.Foreground = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Yellow"]);
             AchievementsProgressTextBlock.Fill = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Yellow"]);
             AchievementTotalProgressTextBlock.Fill = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Yellow"]);
             AchievementTotalProgressPercentTextBlock.Fill = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Yellow"]);
         }
-        else if (obtainedAchievements >= 200 && obtainedAchievements < 300) // unlock musou gauntlet
+        else if (obtainedAchievements is >= 200 and < 300) // unlock musou gauntlet
         {
             AchievementsProgressBar.Foreground = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Teal"]);
             AchievementsProgressTextBlock.Fill = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Teal"]);
@@ -4211,7 +4034,7 @@ public partial class ConfigWindow : FluentWindow
                 Color = (Color)ColorConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Teal"]),
                 ShadowDepth = 0,
                 BlurRadius = 15,
-                Opacity = 1
+                Opacity = 1,
             };
 
             AchievementsProgressBar.Effect = dropShadowEffect;
@@ -4228,20 +4051,19 @@ public partial class ConfigWindow : FluentWindow
 
         AchievementsProgressTextBlock.Text = $"{obtainedAchievements}/{totalAchievements}";
         AchievementTotalProgressPercentTextBlock.Text = $"{progressPercentage:F2}%";
-        AchievementSelectionInfoHint.Text = $"There are 5 types of trophies: bronze, silver, gold, platinum and secret. For every secret trophy you find, you gain {(1.0 / (double)totalSecretAchievements):F2}% more progress if you have already obtained every non-secret achievement already. You have obtained {obtainedSecretAchievements} out of {totalSecretAchievements} secret trophies ({(obtainedSecretAchievements * 100.0 / totalSecretAchievements):F2}%).";
+        AchievementSelectionInfoHint.Text = $"There are 5 types of trophies: bronze, silver, gold, platinum and secret. For every secret trophy you find, you gain {1.0 / totalSecretAchievements:F2}% more progress if you have already obtained every non-secret achievement already. You have obtained {obtainedSecretAchievements} out of {totalSecretAchievements} secret trophies ({obtainedSecretAchievements * 100.0 / totalSecretAchievements:F2}%).";
     }
 
-    private void AchievementSelectedInfoGrid_Loaded(object sender, RoutedEventArgs e)
-    {
-        achievementsSelectedInfoGrid = (Grid)sender;
-    }
+    private void AchievementSelectedInfoGrid_Loaded(object sender, RoutedEventArgs e) => this.achievementsSelectedInfoGrid = (Grid)sender;
 
     private void HunterNotesGridMenuItem_Click(object sender, RoutedEventArgs e)
     {
         if (sender is MenuItem menuItem && menuItem.Parent is ContextMenu contextMenu && contextMenu.PlacementTarget is FrameworkElement element)
         {
-            var snackbar = new Snackbar(ConfigWindowSnackBarPresenter);
-            snackbar.Style = (Style)FindResource("CatppuccinMochaSnackBar");
+            var snackbar = new Snackbar(ConfigWindowSnackBarPresenter)
+            {
+                Style = (Style)this.FindResource("CatppuccinMochaSnackBar"),
+            };
 
             // Check the Tag property of the ContextMenu to decide which menu items to handle
             if (contextMenu.Name == "HunterNotesContextMenu")
@@ -4264,12 +4086,12 @@ public partial class ConfigWindow : FluentWindow
                 }
                 else
                 {
-                    logger.Error("Invalid Menu Item option: {0}", menuItem);
+                    Logger.Error("Invalid Menu Item option: {0}", menuItem);
                     snackbar.Title = Messages.ErrorTitle;
                     snackbar.Content = $"Invalid Menu Item option: {menuItem}";
                     snackbar.Appearance = ControlAppearance.Danger;
                     snackbar.Icon = new SymbolIcon(SymbolRegular.ErrorCircle20);
-                    snackbar.Timeout = SnackbarTimeOut;
+                    snackbar.Timeout = this.SnackbarTimeOut;
                     snackbar.Show();
                 }
             }
@@ -4285,12 +4107,12 @@ public partial class ConfigWindow : FluentWindow
                 }
                 else
                 {
-                    logger.Error("Invalid Menu Item option: {0}", menuItem);
+                    Logger.Error("Invalid Menu Item option: {0}", menuItem);
                     snackbar.Title = Messages.ErrorTitle;
                     snackbar.Content = $"Invalid Menu Item option: {menuItem}";
                     snackbar.Appearance = ControlAppearance.Danger;
                     snackbar.Icon = new SymbolIcon(SymbolRegular.ErrorCircle20);
-                    snackbar.Timeout = SnackbarTimeOut;
+                    snackbar.Timeout = this.SnackbarTimeOut;
                     snackbar.Show();
                 }
             }
@@ -4308,40 +4130,39 @@ public partial class ConfigWindow : FluentWindow
                 {
                     if (element.Name == "HuntedLogGrid")
                     {
-                        FileService.SaveRecordsAsCSVFile(Monsters, snackbar, "HuntedLog");
+                        FileService.SaveRecordsAsCSVFile(this.monsters, snackbar, "HuntedLog");
                     }
                     else if (element.Name == "AchievementsGrid")
                     {
                         FileService.SaveRecordsAsCSVFile(
                             AchievementService.FilterAchievementsToCompletedOnly(
-                                MainWindow.dataLoader.model.PlayerAchievements
-                                ).ToArray(), snackbar, "Achievements");
+                                this.MainWindow.DataLoader.Model.PlayerAchievements).ToArray(), snackbar, "Achievements");
                     }
                     else
                     {
-                        logger.Error("Unhandled csv class records: {0}", element.Name);
+                        Logger.Error("Unhandled csv class records: {0}", element.Name);
                         snackbar.Title = Messages.ErrorTitle;
                         snackbar.Content = "Could not save class records as CSV file: unhandled element";
                         snackbar.Appearance = ControlAppearance.Danger;
                         snackbar.Icon = new SymbolIcon(SymbolRegular.ErrorCircle20);
-                        snackbar.Timeout = SnackbarTimeOut;
+                        snackbar.Timeout = this.SnackbarTimeOut;
                         snackbar.Show();
                     }
                 }
                 else
                 {
-                    logger.Error("Invalid Menu Item option: {0}", menuItem);
+                    Logger.Error("Invalid Menu Item option: {0}", menuItem);
                     snackbar.Title = Messages.ErrorTitle;
                     snackbar.Content = $"Invalid Menu Item option: {menuItem}";
                     snackbar.Appearance = ControlAppearance.Danger;
                     snackbar.Icon = new SymbolIcon(SymbolRegular.ErrorCircle20);
-                    snackbar.Timeout = SnackbarTimeOut;
+                    snackbar.Timeout = this.SnackbarTimeOut;
                     snackbar.Show();
                 }
             }
             else
             {
-                logger.Error("Unhandled Context Menu found: {0}", contextMenu.Name);
+                Logger.Error("Unhandled Context Menu found: {0}", contextMenu.Name);
             }
         }
     }
@@ -4352,7 +4173,7 @@ public partial class ConfigWindow : FluentWindow
         if (string.IsNullOrWhiteSpace(AchievementsSearchComboBox.Text))
         {
             // If the text is empty, show the original list in the ListView
-            AchievementsListView.ItemsSource = MainWindow.dataLoader.model.PlayerAchievements;
+            AchievementsListView.ItemsSource = this.MainWindow.DataLoader.Model.PlayerAchievements;
         }
         else
         {
@@ -4360,8 +4181,8 @@ public partial class ConfigWindow : FluentWindow
             AchievementsListView.ItemsSource = null;
 
             // Then, set the ItemsSource back to the filtered achievements list based on the user's input
-            string userInput = AchievementsSearchComboBox.Text;
-            List<Achievement> filteredAchievements = MainWindow.dataLoader.model.PlayerAchievements
+            var userInput = AchievementsSearchComboBox.Text;
+            var filteredAchievements = this.MainWindow.DataLoader.Model.PlayerAchievements
                 .Where(achievement => achievement.Title.Contains(userInput, StringComparison.OrdinalIgnoreCase))
                 .ToList();
             AchievementsListView.ItemsSource = filteredAchievements;
@@ -4378,32 +4199,19 @@ public partial class ConfigWindow : FluentWindow
 
     private void ChallengesListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        var listBox = sender as ListBox;
-        if (listBox != null)
+        if (sender is ListBox listBox)
         {
             listBox.SelectedItem = null;
         }
     }
 
-    private void GameInfoNavigationCommandsBrowseBack(object sender, RoutedEventArgs e)
-    {
-        webViewFerias.GoBack();
-    }
+    private void GameInfoNavigationCommandsBrowseBack(object sender, RoutedEventArgs e) => webViewFerias.GoBack();
 
-    private void GameInfoNavigationCommandsBrowseForward(object sender, RoutedEventArgs e)
-    {
-        webViewFerias.GoForward();
-    }
+    private void GameInfoNavigationCommandsBrowseForward(object sender, RoutedEventArgs e) => webViewFerias.GoForward();
 
-    private void GameInfoNavigationCommandsRefresh(object sender, RoutedEventArgs e)
-    {
-        webViewFerias.Reload();
-    }
+    private void GameInfoNavigationCommandsRefresh(object sender, RoutedEventArgs e) => webViewFerias.Reload();
 
-    private void GameInfoNavigationCommandsBrowseStop(object sender, RoutedEventArgs e)
-    {
-        webViewFerias.Stop();
-    }
+    private void GameInfoNavigationCommandsBrowseStop(object sender, RoutedEventArgs e) => webViewFerias.Stop();
 
     private void GameInfoNavigationCommandsGoToPage(object sender, RoutedEventArgs e)
     {
@@ -4416,7 +4224,7 @@ public partial class ConfigWindow : FluentWindow
         }
         catch
         {
-            logger.Error("Could not navigate in WebView2");
+            Logger.Error("Could not navigate in WebView2");
         }
     }
 }
@@ -4426,5 +4234,5 @@ public partial class ConfigWindow : FluentWindow
  * On Save -> Window close -> tell program to use new copy instead of current -> Save Config File
  * On Cancel -> Window Close -> Discard copy of config
  * On Config Change Still show changes immediately and show windows which are set to show -> Ignore logic that hides windows during this time and force  them on if they are enabled
- * 
+ *
  */

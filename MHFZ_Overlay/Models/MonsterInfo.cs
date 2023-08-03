@@ -7,7 +7,7 @@ namespace MHFZ_Overlay.Models;
 using System.Collections.Generic;
 
 /// <summary>
-/// Unaffected by player stats
+/// Unaffected by player stats.
 /// </summary>
 public sealed class MonsterInfo
 {

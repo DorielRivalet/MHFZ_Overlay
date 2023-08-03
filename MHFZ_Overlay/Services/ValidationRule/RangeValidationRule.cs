@@ -13,9 +13,10 @@ public sealed class RangeValidationRule : ValidationRule
 
     public int Maximum { get; set; }
 
+    /// <inheritdoc/>
     public override ValidationResult Validate(object value, CultureInfo cultureInfo)
     {
-        if (int.TryParse((string)value, out var inputValue))
+        if (int.TryParse((string)value, NumberStyles.Number, CultureInfo.InvariantCulture, out var inputValue))
         {
             if (inputValue < this.Minimum || inputValue > this.Maximum)
             {

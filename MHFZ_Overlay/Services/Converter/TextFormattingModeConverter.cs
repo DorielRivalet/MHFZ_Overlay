@@ -11,6 +11,7 @@ using System.Windows.Media;
 
 public sealed class TextFormattingModeConverter : IValueConverter
 {
+    /// <inheritdoc/>
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
         if (value is string textFormattingModeString)
@@ -24,11 +25,12 @@ public sealed class TextFormattingModeConverter : IValueConverter
         return TextFormattingMode.Ideal;
     }
 
+    /// <inheritdoc/>
     public object? ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
         if (value is TextFormattingMode textFormattingMode)
         {
-            return textFormattingMode.ToString();
+            return textFormattingMode.ToString(CultureInfo.InvariantCulture);
         }
 
         return null;

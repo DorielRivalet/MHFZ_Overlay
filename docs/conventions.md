@@ -54,6 +54,7 @@
     - [Consistency and communication within the team](#consistency-and-communication-within-the-team)
     - [Code review processes and best practices](#code-review-processes-and-best-practices)
   - [SonarCloud Analysis](#sonarcloud-analysis)
+  - [Automatic Code Formatter](#automatic-code-formatter)
   - [Conclusion](#conclusion)
 
 ## Introduction
@@ -1113,6 +1114,10 @@ By promoting collaboration through coding conventions, maintaining consistent co
 ## SonarCloud Analysis
 
 The project utilizes SonarCloud for static code analysis, which helps identify code smells, bugs, and security hotspots. It is important to pay attention to SonarCloud analysis results and address any flagged issues promptly. Developers should review and resolve code smells, bugs, and security hotspots to ensure code quality and adherence to best practices. This includes refactoring code, fixing issues, and following the recommendations provided by SonarCloud. Regular analysis and resolution of SonarCloud findings contribute to a clean, maintainable, and secure codebase.
+
+## Automatic Code Formatter
+
+See [here](https://github.com/dotnet/format).
 
 ## Conclusion
 

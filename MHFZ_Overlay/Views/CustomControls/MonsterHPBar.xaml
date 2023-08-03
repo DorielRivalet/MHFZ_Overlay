@@ -17,7 +17,7 @@
             <ColumnDefinition Width="48"/>
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
-        <Image d:Source="https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/burning_freezing_elzelion.png" Visibility="{Binding ElementName=window, Path=IconShown, UpdateSourceTrigger=PropertyChanged}" x:Name="IconItem" VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Column="0" Source="{Binding ElementName=window, Path=Icon, UpdateSourceTrigger=PropertyChanged}"/>
+        <Image d:Source="pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/burning_freezing_elzelion.png" Visibility="{Binding ElementName=window, Path=IconShown, UpdateSourceTrigger=PropertyChanged}" x:Name="IconItem" VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Column="0" Source="{Binding ElementName=window, Path=Icon, UpdateSourceTrigger=PropertyChanged}"/>
         <StackPanel Orientation="Vertical" Grid.Column="1">
             <Grid>
                 <Grid.ColumnDefinitions>

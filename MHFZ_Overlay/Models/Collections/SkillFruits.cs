@@ -7,9 +7,9 @@ namespace MHFZ_Overlay.Models.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-///<summary>
-///The skill fruits list
-///</summary>
+/// <summary>
+/// The skill fruits list.
+/// </summary>
 public static class SkillFruits
 {
     public static ReadOnlyDictionary<long, bool> ItemID { get; } = new (new Dictionary<long, bool>
