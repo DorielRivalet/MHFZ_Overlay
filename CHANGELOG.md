@@ -1,5 +1,17 @@
 
 
+## [0.29.1](https://github.com/DorielRivalet/MHFZ_Overlay/compare/v0.29.0...v0.29.1) (2023-08-03)
+
+
+### Bug Fixes
+
+* division by zero in hunter performance compendium stats ([517ce51](https://github.com/DorielRivalet/MHFZ_Overlay/commit/517ce514d591e37a3198874148e5eac6d3135c36))
+
+
+### For Developers
+
+* bump version ([19ff473](https://github.com/DorielRivalet/MHFZ_Overlay/commit/19ff473efc7d384735cf9793e1f31fb3e77b8dfe))
+
 ## [0.29.0](https://github.com/DorielRivalet/MHFZ_Overlay/compare/v0.28.0...v0.29.0) (2023-08-02)
 
 
