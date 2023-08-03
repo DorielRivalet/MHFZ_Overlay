@@ -7,12 +7,12 @@ namespace MHFZ_Overlay.Models.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-///<summary>
-///The monster image list
-///</summary>
+/// <summary>
+/// The monster image list.
+/// </summary>
 public static class MonsterImagesDiscord
 {
-    public static ReadOnlyDictionary<int, string> MonsterImageID { get; } = new(new Dictionary<int, string>
+    public static ReadOnlyDictionary<int, string> MonsterImageID { get; } = new (new Dictionary<int, string>
     {
         { 0, "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/none.png" },
         { 1, "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/rathian.png" },

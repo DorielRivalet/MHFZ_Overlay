@@ -6,13 +6,13 @@ namespace MHFZ_Overlay.Models.Collections;
 
 using System.Collections.Generic;
 
-///<summary>
-///The monster info list
-///<br>TODO: missing labels</br>
-///</summary>
+/// <summary>
+/// The monster info list.
+/// <br>TODO: missing labels</br>
+/// </summary>
 public static class MonsterInfos
 {
-    private static string rickRoll = string.Empty;
+    private static readonly string RickRoll = string.Empty;
 
     public static IReadOnlyList<MonsterInfo> MonsterInfoIDs { get; } = new List<MonsterInfo>
     {
@@ -104,7 +104,7 @@ public static class MonsterInfos
             },
             "https://monsterhunter.fandom.com/wiki/Burning_Freezing_Eruzerion"),
 
-            new MonsterInfo(
+        new MonsterInfo(
             "[Musou] Howling Zinogre",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/zin_ng.htm",
             new Dictionary<string, string>()
@@ -1666,7 +1666,7 @@ public static class MonsterInfos
             {
                 { string.Empty, string.Empty },
             },
-            rickRoll),
+            RickRoll),
         new MonsterInfo(
             "Purple Gypceros",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/geryoao_n.htm",
@@ -1746,7 +1746,7 @@ public static class MonsterInfos
             {
                 { string.Empty, string.Empty },
             },
-            rickRoll),
+            RickRoll),
         new MonsterInfo(
             "Rukodiora",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/ruco_n.htm",
@@ -2032,5 +2032,5 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Zinogre"),
-        };
+    };
 }

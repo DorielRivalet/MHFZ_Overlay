@@ -5,17 +5,17 @@
 namespace MHFZ_Overlay.Models.Constant;
 
 /// <summary>
-/// Not very OS-independent friendly
+/// Not very OS-independent friendly.
 /// </summary>
 public static class ApplicationPaths
 {
     /// <summary>
-    /// The Notepad path
+    /// The Notepad path.
     /// </summary>
     public const string NotepadPath = @"C:\Windows\System32\notepad.exe";
 
     /// <summary>
-    /// The File Explorer path
+    /// The File Explorer path.
     /// </summary>
     public const string ExplorerPath = @"C:\Windows\explorer.exe";
 }

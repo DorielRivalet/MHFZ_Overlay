@@ -6,8 +6,6 @@ namespace MHFZ_Overlay.Models;
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using MHFZ_Overlay.Models.Collections;
@@ -21,45 +19,55 @@ using Wpf.Ui.Controls;
 /// </summary>
 public sealed class Achievement
 {
-    public void Show(Snackbar snackbar, Style style)
+    // Additional properties or methods related to achievements can be added here
+    private static readonly Dictionary<AchievementRank, string> RankColors = new ()
     {
-        var brushColor = this.GetBrushColorFromRank();
-        if (brushColor == null)
-        {
-            brushColor = Brushes.Black;
-        }
-        snackbar.Style = style;
-        snackbar.Title = this.Title;
-        snackbar.Content = this.Objective;
-        snackbar.Icon = new SymbolIcon()
-        {
-            Symbol = SymbolRegular.Trophy32,
-        };
-        snackbar.Icon.Foreground = brushColor;
-        snackbar.Appearance = ControlAppearance.Secondary;
-        if (MainWindow.MainWindowSoundPlayer != null)
-        {
-            MainWindow.MainWindowSoundPlayer.Play();
-        }
-        snackbar.Timeout = SnackbarTimeOut;
-        snackbar.Show();
-    }
+        { AchievementRank.None, CatppuccinMochaColors.NameHex["Base"] },        // Black
+        { AchievementRank.Bronze, CatppuccinMochaColors.NameHex["Maroon"] },      // Bronze color
+        { AchievementRank.Silver, CatppuccinMochaColors.NameHex["Lavender"] },      // Silver color
+        { AchievementRank.Gold, CatppuccinMochaColors.NameHex["Yellow"] },        // Gold color
+        { AchievementRank.Platinum, CatppuccinMochaColors.NameHex["Teal"] },     // Platinum color
+    };
 
     public TimeSpan SnackbarTimeOut { get; set; } = TimeSpan.FromSeconds(5);
 
     /// <summary>
+    /// Gets or sets the completion date.
+    /// </summary>
+    /// <value>
+    /// The completion date.
+    /// </value>
+    public DateTime CompletionDate { get; set; } = DateTime.UnixEpoch;
+
+    public void Show(Snackbar snackbar, Style style)
+    {
+        var brushColor = this.GetBrushColorFromRank();
+        brushColor ??= Brushes.Black;
+        snackbar.Style = style;
+        snackbar.Title = this.Title;
+        snackbar.Content = this.Objective;
+        snackbar.Icon = new SymbolIcon
+        {
+            Symbol = SymbolRegular.Trophy32,
+            Foreground = brushColor,
+        };
+        snackbar.Appearance = ControlAppearance.Secondary;
+        MainWindow.MainWindowSoundPlayer?.Play();
+        snackbar.Timeout = this.SnackbarTimeOut;
+        snackbar.Show();
+    }
+
+    /// <summary>
     /// Gets the color for title and icon from rank.
     /// </summary>
+    /// <returns></returns>
     public Brush? GetBrushColorFromRank()
     {
         var brushConverter = new BrushConverter();
 
         if (RankColors.TryGetValue(this.Rank, out var colorString))
         {
-            if (colorString == null)
-            {
-                colorString = CatppuccinMochaColors.NameHex["Base"];
-            }
+            colorString ??= CatppuccinMochaColors.NameHex["Base"];
 
             var brush = (Brush?)brushConverter.ConvertFromString(colorString);
             return brush;
@@ -76,28 +84,16 @@ public sealed class Achievement
             return "pack://application:,,,/Assets/Icons/achievement/secret_trophy.png";
         }
 
-        switch(this.Rank)
+        return this.Rank switch
         {
-            default:
-                return "pack://application:,,,/Assets/Icons/achievement/bronze_trophy.png";
-            case AchievementRank.Bronze:
-                return "pack://application:,,,/Assets/Icons/achievement/bronze_trophy.png";
-            case AchievementRank.Silver:
-                return "pack://application:,,,/Assets/Icons/achievement/silver_trophy.png";
-            case AchievementRank.Gold:
-                return "pack://application:,,,/Assets/Icons/achievement/gold_trophy.png";
-            case AchievementRank.Platinum:
-                return "pack://application:,,,/Assets/Icons/achievement/platinum_trophy.png";
-        }
+            AchievementRank.Bronze => "pack://application:,,,/Assets/Icons/achievement/bronze_trophy.png",
+            AchievementRank.Silver => "pack://application:,,,/Assets/Icons/achievement/silver_trophy.png",
+            AchievementRank.Gold => "pack://application:,,,/Assets/Icons/achievement/gold_trophy.png",
+            AchievementRank.Platinum => "pack://application:,,,/Assets/Icons/achievement/platinum_trophy.png",
+            AchievementRank.None => "pack://application:,,,/Assets/Icons/achievement/bronze_trophy.png",
+            _ => "pack://application:,,,/Assets/Icons/achievement/bronze_trophy.png",
+        };
     }
-
-    /// <summary>
-    /// Gets or sets the completion date.
-    /// </summary>
-    /// <value>
-    /// The completion date.
-    /// </value>
-    public DateTime CompletionDate { get; set; } = DateTime.UnixEpoch;
 
     /// <summary>
     /// Gets or sets the title.
@@ -154,14 +150,4 @@ public sealed class Achievement
     /// The hint.
     /// </value>
     public string Hint { get; set; } = string.Empty;
-
-    // Additional properties or methods related to achievements can be added here
-    private static readonly Dictionary<AchievementRank, string> RankColors = new Dictionary<AchievementRank, string>
-    {
-        { AchievementRank.None, CatppuccinMochaColors.NameHex["Base"] },        // Black
-        { AchievementRank.Bronze, CatppuccinMochaColors.NameHex["Maroon"] },      // Bronze color
-        { AchievementRank.Silver, CatppuccinMochaColors.NameHex["Lavender"] },      // Silver color
-        { AchievementRank.Gold, CatppuccinMochaColors.NameHex["Yellow"] },        // Gold color
-        { AchievementRank.Platinum, CatppuccinMochaColors.NameHex["Teal"] },     // Platinum color
-    };
 }

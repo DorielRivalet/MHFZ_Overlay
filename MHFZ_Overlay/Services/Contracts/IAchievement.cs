@@ -3,9 +3,6 @@
 // found in the LICENSE file.
 
 namespace MHFZ_Overlay.Services.Contracts;
-
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using System.Windows;
 using Wpf.Ui.Controls;
 

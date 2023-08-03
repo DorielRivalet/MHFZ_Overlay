@@ -17,6 +17,15 @@ using System.Windows.Media;
 public sealed class OutlinedTextBlock : FrameworkElement
 {
     /// <summary>
+    /// The fill property.
+    /// </summary>
+    public static readonly DependencyProperty FillProperty = DependencyProperty.Register(
+  "Fill",
+  typeof(Brush),
+  typeof(OutlinedTextBlock),
+  new FrameworkPropertyMetadata(Brushes.Black, FrameworkPropertyMetadataOptions.AffectsRender));
+
+    /// <summary>
     /// Initializes a new instance of the <see cref="OutlinedTextBlock"/> class.
     /// </summary>
     public OutlinedTextBlock()
@@ -26,16 +35,7 @@ public sealed class OutlinedTextBlock : FrameworkElement
     }
 
     /// <summary>
-    /// The fill property
-    /// </summary>
-    public static readonly DependencyProperty FillProperty = DependencyProperty.Register(
-  "Fill",
-  typeof(Brush),
-  typeof(OutlinedTextBlock),
-  new FrameworkPropertyMetadata(Brushes.Black, FrameworkPropertyMetadataOptions.AffectsRender));
-
-    /// <summary>
-    /// The stroke property
+    /// The stroke property.
     /// </summary>
     public static readonly DependencyProperty StrokeProperty = DependencyProperty.Register(
   "Stroke",
@@ -44,7 +44,7 @@ public sealed class OutlinedTextBlock : FrameworkElement
   new FrameworkPropertyMetadata(Brushes.Black, FrameworkPropertyMetadataOptions.AffectsRender, StrokePropertyChangedCallback));
 
     /// <summary>
-    /// The stroke thickness property
+    /// The stroke thickness property.
     /// </summary>
     public static readonly DependencyProperty StrokeThicknessProperty = DependencyProperty.Register(
   "StrokeThickness",
@@ -53,42 +53,42 @@ public sealed class OutlinedTextBlock : FrameworkElement
   new FrameworkPropertyMetadata(1d, FrameworkPropertyMetadataOptions.AffectsRender, StrokePropertyChangedCallback));
 
     /// <summary>
-    /// The font family property
+    /// The font family property.
     /// </summary>
     public static readonly DependencyProperty FontFamilyProperty = TextElement.FontFamilyProperty.AddOwner(
   typeof(OutlinedTextBlock),
   new FrameworkPropertyMetadata(OnFormattedTextUpdated));
 
     /// <summary>
-    /// The font size property
+    /// The font size property.
     /// </summary>
     public static readonly DependencyProperty FontSizeProperty = TextElement.FontSizeProperty.AddOwner(
   typeof(OutlinedTextBlock),
   new FrameworkPropertyMetadata(OnFormattedTextUpdated));
 
     /// <summary>
-    /// The font stretch property
+    /// The font stretch property.
     /// </summary>
     public static readonly DependencyProperty FontStretchProperty = TextElement.FontStretchProperty.AddOwner(
   typeof(OutlinedTextBlock),
   new FrameworkPropertyMetadata(OnFormattedTextUpdated));
 
     /// <summary>
-    /// The font style property
+    /// The font style property.
     /// </summary>
     public static readonly DependencyProperty FontStyleProperty = TextElement.FontStyleProperty.AddOwner(
   typeof(OutlinedTextBlock),
   new FrameworkPropertyMetadata(OnFormattedTextUpdated));
 
     /// <summary>
-    /// The font weight property
+    /// The font weight property.
     /// </summary>
     public static readonly DependencyProperty FontWeightProperty = TextElement.FontWeightProperty.AddOwner(
   typeof(OutlinedTextBlock),
   new FrameworkPropertyMetadata(OnFormattedTextUpdated));
 
     /// <summary>
-    /// The text property
+    /// The text property.
     /// </summary>
     public static readonly DependencyProperty TextProperty = DependencyProperty.Register(
   "Text",
@@ -97,7 +97,7 @@ public sealed class OutlinedTextBlock : FrameworkElement
   new FrameworkPropertyMetadata(OnFormattedTextInvalidated));
 
     /// <summary>
-    /// The text alignment property
+    /// The text alignment property.
     /// </summary>
     public static readonly DependencyProperty TextAlignmentProperty = DependencyProperty.Register(
   "TextAlignment",
@@ -106,7 +106,7 @@ public sealed class OutlinedTextBlock : FrameworkElement
   new FrameworkPropertyMetadata(OnFormattedTextUpdated));
 
     /// <summary>
-    /// The text decorations property
+    /// The text decorations property.
     /// </summary>
     public static readonly DependencyProperty TextDecorationsProperty = DependencyProperty.Register(
   "TextDecorations",
@@ -115,7 +115,7 @@ public sealed class OutlinedTextBlock : FrameworkElement
   new FrameworkPropertyMetadata(OnFormattedTextUpdated));
 
     /// <summary>
-    /// The text trimming property
+    /// The text trimming property.
     /// </summary>
     public static readonly DependencyProperty TextTrimmingProperty = DependencyProperty.Register(
   "TextTrimming",
@@ -124,7 +124,7 @@ public sealed class OutlinedTextBlock : FrameworkElement
   new FrameworkPropertyMetadata(OnFormattedTextUpdated));
 
     /// <summary>
-    /// The text wrapping property
+    /// The text wrapping property.
     /// </summary>
     public static readonly DependencyProperty TextWrappingProperty = DependencyProperty.Register(
   "TextWrapping",
@@ -146,8 +146,8 @@ public sealed class OutlinedTextBlock : FrameworkElement
     /// </value>
     public Brush Fill
     {
-        get { return (Brush)this.GetValue(FillProperty); }
-        set { this.SetValue(FillProperty, value); }
+        get => (Brush)this.GetValue(FillProperty);
+        set => this.SetValue(FillProperty, value);
     }
 
     /// <summary>
@@ -158,15 +158,15 @@ public sealed class OutlinedTextBlock : FrameworkElement
     /// </value>
     public FontFamily FontFamily
     {
-        get { return (FontFamily)this.GetValue(FontFamilyProperty); }
-        set { this.SetValue(FontFamilyProperty, value); }
+        get => (FontFamily)this.GetValue(FontFamilyProperty);
+        set => this.SetValue(FontFamilyProperty, value);
     }
 
     [TypeConverter(typeof(FontSizeConverter))]
     public double FontSize
     {
-        get { return (double)this.GetValue(FontSizeProperty); }
-        set { this.SetValue(FontSizeProperty, value); }
+        get => (double)this.GetValue(FontSizeProperty);
+        set => this.SetValue(FontSizeProperty, value);
     }
 
     /// <summary>
@@ -177,8 +177,8 @@ public sealed class OutlinedTextBlock : FrameworkElement
     /// </value>
     public FontStretch FontStretch
     {
-        get { return (FontStretch)this.GetValue(FontStretchProperty); }
-        set { this.SetValue(FontStretchProperty, value); }
+        get => (FontStretch)this.GetValue(FontStretchProperty);
+        set => this.SetValue(FontStretchProperty, value);
     }
 
     /// <summary>
@@ -189,8 +189,8 @@ public sealed class OutlinedTextBlock : FrameworkElement
     /// </value>
     public FontStyle FontStyle
     {
-        get { return (FontStyle)this.GetValue(FontStyleProperty); }
-        set { this.SetValue(FontStyleProperty, value); }
+        get => (FontStyle)this.GetValue(FontStyleProperty);
+        set => this.SetValue(FontStyleProperty, value);
     }
 
     /// <summary>
@@ -201,8 +201,8 @@ public sealed class OutlinedTextBlock : FrameworkElement
     /// </value>
     public FontWeight FontWeight
     {
-        get { return (FontWeight)this.GetValue(FontWeightProperty); }
-        set { this.SetValue(FontWeightProperty, value); }
+        get => (FontWeight)this.GetValue(FontWeightProperty);
+        set => this.SetValue(FontWeightProperty, value);
     }
 
     /// <summary>
@@ -213,8 +213,8 @@ public sealed class OutlinedTextBlock : FrameworkElement
     /// </value>
     public Brush Stroke
     {
-        get { return (Brush)this.GetValue(StrokeProperty); }
-        set { this.SetValue(StrokeProperty, value); }
+        get => (Brush)this.GetValue(StrokeProperty);
+        set => this.SetValue(StrokeProperty, value);
     }
 
     /// <summary>
@@ -225,8 +225,8 @@ public sealed class OutlinedTextBlock : FrameworkElement
     /// </value>
     public double StrokeThickness
     {
-        get { return (double)this.GetValue(StrokeThicknessProperty); }
-        set { this.SetValue(StrokeThicknessProperty, value); }
+        get => (double)this.GetValue(StrokeThicknessProperty);
+        set => this.SetValue(StrokeThicknessProperty, value);
     }
 
     /// <summary>
@@ -237,8 +237,8 @@ public sealed class OutlinedTextBlock : FrameworkElement
     /// </value>
     public string Text
     {
-        get { return (string)this.GetValue(TextProperty); }
-        set { this.SetValue(TextProperty, value); }
+        get => (string)this.GetValue(TextProperty);
+        set => this.SetValue(TextProperty, value);
     }
 
     /// <summary>
@@ -249,8 +249,8 @@ public sealed class OutlinedTextBlock : FrameworkElement
     /// </value>
     public TextAlignment TextAlignment
     {
-        get { return (TextAlignment)this.GetValue(TextAlignmentProperty); }
-        set { this.SetValue(TextAlignmentProperty, value); }
+        get => (TextAlignment)this.GetValue(TextAlignmentProperty);
+        set => this.SetValue(TextAlignmentProperty, value);
     }
 
     /// <summary>
@@ -261,8 +261,8 @@ public sealed class OutlinedTextBlock : FrameworkElement
     /// </value>
     public TextDecorationCollection TextDecorations
     {
-        get { return (TextDecorationCollection)this.GetValue(TextDecorationsProperty); }
-        set { this.SetValue(TextDecorationsProperty, value); }
+        get => (TextDecorationCollection)this.GetValue(TextDecorationsProperty);
+        set => this.SetValue(TextDecorationsProperty, value);
     }
 
     /// <summary>
@@ -273,8 +273,8 @@ public sealed class OutlinedTextBlock : FrameworkElement
     /// </value>
     public TextTrimming TextTrimming
     {
-        get { return (TextTrimming)this.GetValue(TextTrimmingProperty); }
-        set { this.SetValue(TextTrimmingProperty, value); }
+        get => (TextTrimming)this.GetValue(TextTrimmingProperty);
+        set => this.SetValue(TextTrimmingProperty, value);
     }
 
     /// <summary>
@@ -285,9 +285,24 @@ public sealed class OutlinedTextBlock : FrameworkElement
     /// </value>
     public TextWrapping TextWrapping
     {
-        get { return (TextWrapping)this.GetValue(TextWrappingProperty); }
-        set { this.SetValue(TextWrappingProperty, value); }
+        get => (TextWrapping)this.GetValue(TextWrappingProperty);
+        set => this.SetValue(TextWrappingProperty, value);
     }
+
+    /// <summary>
+    /// When overridden in a derived class, participates in rendering operations that are directed by the layout system. The rendering instructions for this element are not used directly when this method is invoked, and are instead preserved for later asynchronous use by layout and drawing.
+    /// </summary>
+    /// <param name="drawingContext">The drawing instructions for a specific element. This context is provided to the layout system.</param>
+    [Obsolete]
+    protected override void OnRender(DrawingContext drawingContext)
+    {
+        this.EnsureGeometry();
+
+        drawingContext.DrawGeometry(null, this.pen, this.textGeometry);
+        drawingContext.DrawGeometry(this.Fill, null, this.textGeometry);
+    }
+
+    private static void StrokePropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs) => (dependencyObject as OutlinedTextBlock)?.UpdatePen();
 
     /// <summary>
     /// Updates the pen.
@@ -303,24 +318,6 @@ public sealed class OutlinedTextBlock : FrameworkElement
         };
 
         this.InvalidateVisual();
-    }
-    
-    private static void StrokePropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
-    {
-        (dependencyObject as OutlinedTextBlock)?.UpdatePen();
-    }
-
-    /// <summary>
-    /// When overridden in a derived class, participates in rendering operations that are directed by the layout system. The rendering instructions for this element are not used directly when this method is invoked, and are instead preserved for later asynchronous use by layout and drawing.
-    /// </summary>
-    /// <param name="drawingContext">The drawing instructions for a specific element. This context is provided to the layout system.</param>
-    [Obsolete]
-    protected override void OnRender(DrawingContext drawingContext)
-    {
-        this.EnsureGeometry();
-
-        drawingContext.DrawGeometry(null, this.pen, this.textGeometry);
-        drawingContext.DrawGeometry(this.Fill, null, this.textGeometry);
     }
 
     /// <summary>
@@ -375,8 +372,9 @@ public sealed class OutlinedTextBlock : FrameworkElement
     /// </summary>
     /// <param name="dependencyObject">The dependency object.</param>
     /// <param name="e">The <see cref="DependencyPropertyChangedEventArgs"/> instance containing the event data.</param>
-    private static void OnFormattedTextInvalidated(DependencyObject dependencyObject,
-  DependencyPropertyChangedEventArgs e)
+    private static void OnFormattedTextInvalidated(
+        DependencyObject dependencyObject,
+        DependencyPropertyChangedEventArgs e)
     {
         var outlinedTextBlock = (OutlinedTextBlock)dependencyObject;
         outlinedTextBlock.formattedText = null;

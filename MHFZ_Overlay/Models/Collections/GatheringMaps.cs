@@ -8,9 +8,9 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using MHFZ_Overlay.Models.Constant;
 
-///<summary>
-///The gathering map list
-///</summary>
+/// <summary>
+/// The gathering map list.
+/// </summary>
 public static class GatheringMaps
 {
     public static ReadOnlyDictionary<List<int>, string> GatheringMapID { get; } = new (new Dictionary<List<int>, string>

@@ -14,18 +14,14 @@ using System.Linq;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Forms;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using CsvHelper;
 using MHFZ_Overlay.Models;
 using MHFZ_Overlay.Models.Constant;
-using MHFZ_Overlay.Views.Windows;
 using Newtonsoft.Json;
-using Octokit;
 using Wpf.Ui.Common;
 using Wpf.Ui.Controls;
-using Xunit;
 using Application = System.Windows.Application;
 using Clipboard = System.Windows.Clipboard;
 using MessageBox = System.Windows.MessageBox;
@@ -38,14 +34,16 @@ using TextBlock = System.Windows.Controls.TextBlock;
 /// </summary>
 public sealed class FileService
 {
-    private static readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+    private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
+
+    public static TimeSpan SnackbarTimeOut { get; set; } = TimeSpan.FromSeconds(5);
 
     public static bool OpenApplicationFolder(SnackbarPresenter snackbarPresenter, Style snackbarStyle, TimeSpan snackbarTimeout)
     {
         try
         {
-            string exePath = Assembly.GetExecutingAssembly().Location;
-            string? folderPath = Path.GetDirectoryName(exePath);
+            var exePath = Assembly.GetExecutingAssembly().Location;
+            var folderPath = Path.GetDirectoryName(exePath);
 
             if (string.IsNullOrEmpty(folderPath))
             {
@@ -59,25 +57,27 @@ public sealed class FileService
         catch (Exception ex)
         {
             // TODO maybe a snackbar helper class?
-            logger.Error(ex);
-            var snackbar = new Snackbar(snackbarPresenter);
-            snackbar.Style = snackbarStyle;
-            snackbar.Title = Messages.ErrorTitle;
-            snackbar.Content = "Could not open overlay folder";
-            snackbar.Icon = new SymbolIcon(SymbolRegular.ErrorCircle24);
-            snackbar.Appearance = ControlAppearance.Danger;
-            snackbar.Timeout = snackbarTimeout;
+            Logger.Error(ex);
+            var snackbar = new Snackbar(snackbarPresenter)
+            {
+                Style = snackbarStyle,
+                Title = Messages.ErrorTitle,
+                Content = "Could not open overlay folder",
+                Icon = new SymbolIcon(SymbolRegular.ErrorCircle24),
+                Appearance = ControlAppearance.Danger,
+                Timeout = snackbarTimeout,
+            };
             snackbar.Show();
             return false;
         }
     }
 
     /// <summary>
-    /// Copies the text object contents to clipboard
+    /// Copies the text object contents to clipboard.
     /// </summary>
     /// <param name="textObject"></param>
     /// <param name="snackbar"></param>
-    /// <returns>The copied text</returns>
+    /// <returns>The copied text.</returns>
     public static string CopyTextToClipboard(object textObject, Snackbar snackbar, string copyMode = "Code Block")
     {
         var textToSave = string.Empty;
@@ -92,14 +92,14 @@ public sealed class FileService
             {
                 var previousBackground = tb.Background;
                 tb.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
-                FileService.CopyUIElementToClipboard(tb, snackbar);
+                CopyUIElementToClipboard(tb, snackbar);
                 tb.Background = previousBackground;
                 return tb.Text;
             }
 
             // https://stackoverflow.com/questions/3546016/how-to-copy-data-to-clipboard-in-c-sharp
             Clipboard.SetText(textToSave);
-            logger.Info(CultureInfo.InvariantCulture, "Copied text to clipboard");
+            Logger.Info(CultureInfo.InvariantCulture, "Copied text to clipboard");
             snackbar.Title = Messages.InfoTitle;
             snackbar.Content = "Copied text to clipboard";
             snackbar.Icon = new SymbolIcon(SymbolRegular.Clipboard32);
@@ -109,7 +109,7 @@ public sealed class FileService
         }
         else
         {
-            logger.Error(CultureInfo.InvariantCulture, "Could not copy text to clipboard: text block not found");
+            Logger.Error(CultureInfo.InvariantCulture, "Could not copy text to clipboard: text block not found");
             snackbar.Title = Messages.ErrorTitle;
             snackbar.Content = "Could not copy text to clipboard: text block not found";
             snackbar.Icon = new SymbolIcon(SymbolRegular.ClipboardError24);
@@ -150,7 +150,7 @@ public sealed class FileService
                 if (savefile.ShowDialog() == true)
                 {
                     File.WriteAllText(savefile.FileName, textToSave);
-                    logger.Info(CultureInfo.InvariantCulture, "Saved text {0}", savefile.FileName);
+                    Logger.Info(CultureInfo.InvariantCulture, "Saved text {0}", savefile.FileName);
                     snackbar.Title = Messages.InfoTitle;
                     snackbar.Content = "Saved text";
                     snackbar.Icon = new SymbolIcon(SymbolRegular.CheckmarkCircle20);
@@ -161,7 +161,7 @@ public sealed class FileService
             }
             catch (Exception ex)
             {
-                logger.Error(ex, "Could not save text file");
+                Logger.Error(ex, "Could not save text file");
                 snackbar.Title = Messages.ErrorTitle;
                 snackbar.Content = "Could not save text file";
                 snackbar.Icon = new SymbolIcon(SymbolRegular.ErrorCircle20);
@@ -172,7 +172,7 @@ public sealed class FileService
         }
         else
         {
-            logger.Error("Could not save text file");
+            Logger.Error("Could not save text file");
             snackbar.Title = Messages.ErrorTitle;
             snackbar.Content = "Could not save text file";
             snackbar.Icon = new SymbolIcon(SymbolRegular.ErrorCircle20);
@@ -191,7 +191,7 @@ public sealed class FileService
             fileNamePrefix = "Element";
         }
 
-        if (element is TextBlock || element is Grid)
+        if (element is TextBlock or Grid)
         {
             try
             {
@@ -210,7 +210,7 @@ public sealed class FileService
                     if (element is TextBlock tb)
                     {
                         CreateBitmapFromVisual(tb, savefile.FileName);
-                        logger.Info(CultureInfo.InvariantCulture, "Saved image {0}", savefile.FileName);
+                        Logger.Info(CultureInfo.InvariantCulture, "Saved image {0}", savefile.FileName);
                         snackbar.Title = Messages.InfoTitle;
                         snackbar.Content = $"Saved image {savefile.FileName}";
                         snackbar.Icon = new SymbolIcon(SymbolRegular.CheckmarkCircle20);
@@ -221,7 +221,7 @@ public sealed class FileService
                     else if (element is Grid g)
                     {
                         CreateBitmapFromVisual(g, savefile.FileName);
-                        logger.Info(CultureInfo.InvariantCulture, "Saved image {0}", savefile.FileName);
+                        Logger.Info(CultureInfo.InvariantCulture, "Saved image {0}", savefile.FileName);
                         snackbar.Title = Messages.InfoTitle;
                         snackbar.Content = $"Saved image {savefile.FileName}";
                         snackbar.Icon = new SymbolIcon(SymbolRegular.CheckmarkCircle20);
@@ -233,7 +233,7 @@ public sealed class FileService
             }
             catch (Exception ex)
             {
-                logger.Error(ex, "Could not save image file");
+                Logger.Error(ex, "Could not save image file");
 
                 snackbar.Title = Messages.ErrorTitle;
                 snackbar.Content = "Could not save image file";
@@ -245,7 +245,7 @@ public sealed class FileService
         }
         else
         {
-            logger.Error("Could not save image file");
+            Logger.Error("Could not save image file");
             snackbar.Title = Messages.ErrorTitle;
             snackbar.Content = "Could not save image file";
             snackbar.Icon = new SymbolIcon(SymbolRegular.ErrorCircle20);
@@ -266,8 +266,10 @@ public sealed class FileService
     {
         try
         {
-            var saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "Markdown file (*.md)|*.md|Text file (*.txt)|*.txt";
+            var saveFileDialog = new SaveFileDialog
+            {
+                Filter = "Markdown file (*.md)|*.md|Text file (*.txt)|*.txt",
+            };
             var s = (Settings)Application.Current.TryFindResource("Settings");
             saveFileDialog.InitialDirectory = Path.GetDirectoryName(s.DatabaseFilePath);
             var dateTime = DateTime.UtcNow.ToString(CultureInfo.InvariantCulture);
@@ -281,7 +283,7 @@ public sealed class FileService
             if (saveFileDialog.ShowDialog() == true)
             {
                 File.WriteAllText(saveFileDialog.FileName, textToSave);
-                logger.Info(CultureInfo.InvariantCulture, "Saved text {0}", saveFileDialog.FileName);
+                Logger.Info(CultureInfo.InvariantCulture, "Saved text {0}", saveFileDialog.FileName);
                 snackbar.Title = Messages.InfoTitle;
                 snackbar.Content = "Saved text";
                 snackbar.Icon = new SymbolIcon(SymbolRegular.CheckmarkCircle20);
@@ -292,7 +294,7 @@ public sealed class FileService
         }
         catch (Exception ex)
         {
-            logger.Error(ex, "Could not save text file");
+            Logger.Error(ex, "Could not save text file");
             snackbar.Title = Messages.ErrorTitle;
             snackbar.Content = "Could not save text file";
             snackbar.Icon = new SymbolIcon(SymbolRegular.ErrorCircle20);
@@ -332,7 +334,7 @@ public sealed class FileService
                 }
 
                 gridToSave.Background = previousBackground;
-                logger.Info(CultureInfo.InvariantCulture, "Saved image {0}", savefile.FileName);
+                Logger.Info(CultureInfo.InvariantCulture, "Saved image {0}", savefile.FileName);
                 snackbar.Title = Messages.InfoTitle;
                 snackbar.Content = $"Saved image {savefile.FileName}";
                 snackbar.Icon = new SymbolIcon(SymbolRegular.CheckmarkCircle20);
@@ -343,7 +345,7 @@ public sealed class FileService
         }
         catch (Exception ex)
         {
-            logger.Error(ex, "Could not save image file");
+            Logger.Error(ex, "Could not save image file");
             snackbar.Title = Messages.ErrorTitle;
             snackbar.Content = "Could not save image file";
             snackbar.Icon = new SymbolIcon(SymbolRegular.ErrorCircle20);
@@ -352,8 +354,6 @@ public sealed class FileService
             snackbar.Show();
         }
     }
-
-    public static TimeSpan SnackbarTimeOut { get; set; } = TimeSpan.FromSeconds(5);
 
     /// <summary>
     /// Copies a UI element to the clipboard as an image.
@@ -377,12 +377,12 @@ public sealed class FileService
             using (var dc = dv.RenderOpen())
             {
                 var vb = new VisualBrush(element);
-                dc.DrawRectangle(vb, null, new Rect(new Point(), new Size(width, height)));
+                dc.DrawRectangle(vb, null, new Rect(default(Point), new Size(width, height)));
             }
 
             bmpCopied.Render(dv);
             Clipboard.SetImage(bmpCopied);
-            logger.Info(CultureInfo.InvariantCulture, "Copied image to clipboard");
+            Logger.Info(CultureInfo.InvariantCulture, "Copied image to clipboard");
             snackbar.Title = Messages.InfoTitle;
             snackbar.Content = "Copied image to clipboard";
             snackbar.Icon = new SymbolIcon(SymbolRegular.Clipboard32);
@@ -392,7 +392,7 @@ public sealed class FileService
         }
         catch (Exception ex)
         {
-            logger.Error(ex, "Could not copy UI element to clipboard");
+            Logger.Error(ex, "Could not copy UI element to clipboard");
             snackbar.Title = Messages.ErrorTitle;
             snackbar.Content = "Could not copy UI element to clipboard";
             snackbar.Icon = new SymbolIcon(SymbolRegular.ClipboardError24);
@@ -420,7 +420,7 @@ public sealed class FileService
 
             if (bounds.Width <= 0 || bounds.Height <= 0)
             {
-                logger.Error("Visual out of bounds, aborting bitmap creation");
+                Logger.Error("Visual out of bounds, aborting bitmap creation");
                 MessageBox.Show("Visual out of bounds, aborting bitmap creation", Messages.ErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
@@ -429,18 +429,17 @@ public sealed class FileService
 
             var visual = new DrawingVisual();
 
-            if (backgroundBrush is null)
-            {
-                backgroundBrush = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
-            }
+            backgroundBrush ??= new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
 
             using (var context = visual.RenderOpen())
             {
-                context.DrawRectangle(backgroundBrush, null, new Rect(new Point(), bounds.Size));
+                context.DrawRectangle(backgroundBrush, null, new Rect(default(Point), bounds.Size));
 
-                var visualBrush = new VisualBrush(target);
-                visualBrush.Stretch = Stretch.None;
-                context.DrawRectangle(visualBrush, null, new Rect(new Point(), bounds.Size));
+                var visualBrush = new VisualBrush(target)
+                {
+                    Stretch = Stretch.None,
+                };
+                context.DrawRectangle(visualBrush, null, new Rect(default(Point), bounds.Size));
             }
 
             renderTarget.Render(visual);
@@ -449,12 +448,12 @@ public sealed class FileService
             using (Stream stm = File.Create(fileName))
             {
                 bitmapEncoder.Save(stm);
-                logger.Info(CultureInfo.InvariantCulture, "Created bitmap {0}", fileName);
+                Logger.Info(CultureInfo.InvariantCulture, "Created bitmap {0}", fileName);
             }
         }
         catch (Exception ex)
         {
-            logger.Error(ex, "Could not create bitmap from visual");
+            Logger.Error(ex, "Could not create bitmap from visual");
         }
     }
 
@@ -484,7 +483,7 @@ public sealed class FileService
                     csv.WriteRecords(records);
                 }
 
-                logger.Info(CultureInfo.InvariantCulture, "Saved csv file {0}", savefile.FileName);
+                Logger.Info(CultureInfo.InvariantCulture, "Saved csv file {0}", savefile.FileName);
                 snackbar.Title = Messages.InfoTitle;
                 snackbar.Content = "Saved csv file";
                 snackbar.Icon = new SymbolIcon(SymbolRegular.CheckmarkCircle20);
@@ -495,7 +494,7 @@ public sealed class FileService
         }
         catch (Exception ex)
         {
-            logger.Error(ex, "Could not save class records as CSV file");
+            Logger.Error(ex, "Could not save class records as CSV file");
             snackbar.Title = Messages.ErrorTitle;
             snackbar.Content = "Could not save class records as CSV file";
             snackbar.Icon = new SymbolIcon(SymbolRegular.ErrorCircle20);
@@ -513,10 +512,12 @@ public sealed class FileService
         try
         {
             // Show a Save File Dialog to let the user choose the location for the JSON file
-            var saveFileDialog = new SaveFileDialog();
-            saveFileDialog.FileName = "user_settings"; // Default file name
-            saveFileDialog.DefaultExt = ".json"; // Default file extension
-            saveFileDialog.Filter = "JSON files (.json)|*.json"; // Filter files by extension
+            var saveFileDialog = new SaveFileDialog
+            {
+                FileName = "user_settings", // Default file name
+                DefaultExt = ".json", // Default file extension
+                Filter = "JSON files (.json)|*.json", // Filter files by extension
+            };
 
             // Show the Save File Dialog
             var result = saveFileDialog.ShowDialog();
@@ -539,7 +540,7 @@ public sealed class FileService
                     var settingName = setting.Name;
                     var settingDefaultValue = setting.DefaultValue.ToString();
                     var settingPropertyType = setting.PropertyType.ToString();
-                    var settingIsReadOnly = setting.IsReadOnly.ToString();
+                    var settingIsReadOnly = setting.IsReadOnly.ToString(CultureInfo.InvariantCulture);
                     var settingProvider = setting.Provider.ToString();
                     var settingProviderApplicationName = setting.Provider.ApplicationName;
                     var settingProviderDescription = setting.Provider.Description;
@@ -568,12 +569,12 @@ public sealed class FileService
 
                 // Save the JSON string to the selected file
                 File.WriteAllText(saveFileDialog.FileName, json);
-                logger.Info(CultureInfo.InvariantCulture, "Saved settings {0}", saveFileDialog.FileName);
+                Logger.Info(CultureInfo.InvariantCulture, "Saved settings {0}", saveFileDialog.FileName);
             }
         }
         catch (Exception ex)
         {
-            logger.Error(ex, "Could not save settings to JSON file");
+            Logger.Error(ex, "Could not save settings to JSON file");
         }
     }
 
@@ -587,13 +588,15 @@ public sealed class FileService
     /// <param name="showMessageBox">if set to <c>true</c> [show message box].</param>
     public static void CopyFileToDestination(string file, string destination, bool overwrite = false, string logMessage = "", bool showMessageBox = true)
     {
-        logger.Info(CultureInfo.InvariantCulture, "Copying file to destination. Original file: {0}, Destination: {1}", file, destination);
+        Logger.Info(CultureInfo.InvariantCulture, "Copying file to destination. Original file: {0}, Destination: {1}", file, destination);
         File.Copy(file, destination, overwrite);
-        logger.Info(CultureInfo.InvariantCulture, "{0}. Original file: {1}, Destination: {2}", logMessage, file, destination);
+        Logger.Info(CultureInfo.InvariantCulture, "{0}. Original file: {1}, Destination: {2}", logMessage, file, destination);
         if (showMessageBox)
         {
-            MessageBox.Show(string.Format(CultureInfo.InvariantCulture,
-@"{0}
+            MessageBox.Show(
+                string.Format(
+                CultureInfo.InvariantCulture,
+                @"{0}
 
 Original file: {1}
 
@@ -613,14 +616,14 @@ Destination: {2}", logMessage, file, destination), Messages.InfoTitle, MessageBo
         if (!File.Exists(sourceFile))
         {
             // Nothing we need to do
-            logger.Info(CultureInfo.InvariantCulture, "File not found at {0}", sourceFile);
+            Logger.Info(CultureInfo.InvariantCulture, "File not found at {0}", sourceFile);
             return;
         }
 
         // Create directory as needed
         try
         {
-            logger.Info(CultureInfo.InvariantCulture, "Creating directory if it doesn't exist: {0}", Path.GetDirectoryName(destFile));
+            Logger.Info(CultureInfo.InvariantCulture, "Creating directory if it doesn't exist: {0}", Path.GetDirectoryName(destFile));
             var destFileDirectoryName = Path.GetDirectoryName(destFile);
             if (destFileDirectoryName == null)
             {
@@ -631,32 +634,32 @@ Destination: {2}", logMessage, file, destination), Messages.InfoTitle, MessageBo
         }
         catch (Exception ex)
         {
-            logger.Info(ex, "Did not make directory for {0}", destFile);
+            Logger.Info(ex, "Did not make directory for {0}", destFile);
         }
 
-        // Copy our backup file in place 
+        // Copy our backup file in place
         try
         {
-            logger.Info(CultureInfo.InvariantCulture, "Copying {0} into {1}", sourceFile, destFile);
+            Logger.Info(CultureInfo.InvariantCulture, "Copying {0} into {1}", sourceFile, destFile);
             File.Copy(sourceFile, destFile, true);
         }
         catch (Exception ex)
         {
-            logger.Info(ex, "Did not copy backup file. Source: {0}, Destination: {1} ", sourceFile, destFile);
+            Logger.Info(ex, "Did not copy backup file. Source: {0}, Destination: {1} ", sourceFile, destFile);
         }
 
         // Delete backup file
         try
         {
-            logger.Info(CultureInfo.InvariantCulture, "Deleting {0}", sourceFile);
+            Logger.Info(CultureInfo.InvariantCulture, "Deleting {0}", sourceFile);
             File.Delete(sourceFile);
         }
         catch (Exception ex)
         {
-            logger.Info(ex, "Did not delete backup file. Source: {0}", sourceFile);
+            Logger.Info(ex, "Did not delete backup file. Source: {0}", sourceFile);
         }
 
-        logger.Info(CultureInfo.InvariantCulture, "{0}. Source: {1}, Destination: {2}", logMessage, sourceFile, destFile);
+        Logger.Info(CultureInfo.InvariantCulture, "{0}. Source: {1}, Destination: {2}", logMessage, sourceFile, destFile);
     }
 
     /// <summary>
@@ -674,19 +677,19 @@ Destination: {2}", logMessage, file, destination), Messages.InfoTitle, MessageBo
             {
                 // Create the version file if it doesn't exist
                 File.Create(path);
-                logger.Info(CultureInfo.InvariantCulture, "{0}{1}", logMessage, path);
+                Logger.Info(CultureInfo.InvariantCulture, "{0}{1}", logMessage, path);
                 doesExist = true;
             }
             else
             {
-                logger.Info("File does exist, canceling creation: {0}", path);
+                Logger.Info("File does exist, canceling creation: {0}", path);
             }
 
             return doesExist;
         }
         catch (Exception ex)
         {
-            logger.Error(ex, "Could not create file at path {0}", path);
+            Logger.Error(ex, "Could not create file at path {0}", path);
             return doesExist;
         }
     }
@@ -702,12 +705,12 @@ Destination: {2}", logMessage, file, destination), Messages.InfoTitle, MessageBo
         try
         {
             var doesExist = File.Exists(path);
-            logger.Info(CultureInfo.InvariantCulture, "{0} ({1}). File exists: {2}", logMessage, path, doesExist);
+            Logger.Info(CultureInfo.InvariantCulture, "{0} ({1}). File exists: {2}", logMessage, path, doesExist);
             return doesExist;
         }
         catch (Exception ex)
         {
-            logger.Error(ex);
+            Logger.Error(ex);
             return false;
         }
     }
@@ -760,7 +763,7 @@ Destination: {2}", logMessage, file, destination), Messages.InfoTitle, MessageBo
         {
             // If there are any banned files or folders, display an error message and exit the application
             var message = string.Format(CultureInfo.InvariantCulture, "The following files or folders are not allowed:\n{0}", string.Join("\n", illegalFiles));
-            logger.Fatal(message);
+            Logger.Fatal(message);
             MessageBox.Show(message, Messages.ErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
             ApplicationService.HandleShutdown();
         }
@@ -778,11 +781,11 @@ Destination: {2}", logMessage, file, destination), Messages.InfoTitle, MessageBo
         try
         {
             File.WriteAllText(path, textToWrite);
-            logger.Info(CultureInfo.InvariantCulture, "Writing into {0}", path);
+            Logger.Info(CultureInfo.InvariantCulture, "Writing into {0}", path);
         }
         catch (Exception ex)
         {
-            logger.Error(ex, "Could not write to file path {0}", path);
+            Logger.Error(ex, "Could not write to file path {0}", path);
         }
     }
 
@@ -790,12 +793,12 @@ Destination: {2}", logMessage, file, destination), Messages.InfoTitle, MessageBo
     /// Creates the database backup.
     /// </summary>
     /// <param name="connection">The connection.</param>
-    /// <param name="BackupFolderName">Name of the backup folder.</param>
-    public static void CreateDatabaseBackup(SQLiteConnection connection, string BackupFolderName)
+    /// <param name="backupFolderName">Name of the backup folder.</param>
+    public static void CreateDatabaseBackup(SQLiteConnection connection, string backupFolderName)
     {
         try
         {
-            logger.Info(CultureInfo.InvariantCulture, "Creating database backup");
+            Logger.Info(CultureInfo.InvariantCulture, "Creating database backup");
 
             // Get the path of the current database file
             var databaseFilePath = connection.FileName;
@@ -806,7 +809,7 @@ Destination: {2}", logMessage, file, destination), Messages.InfoTitle, MessageBo
             if (!string.IsNullOrEmpty(databaseDirectoryPath))
             {
                 // Create the backups folder if it does not exist
-                var backupsFolderPath = Path.Combine(databaseDirectoryPath, BackupFolderName);
+                var backupsFolderPath = Path.Combine(databaseDirectoryPath, backupFolderName);
                 if (!Directory.Exists(backupsFolderPath))
                 {
                     Directory.CreateDirectory(backupsFolderPath);
@@ -819,21 +822,21 @@ Destination: {2}", logMessage, file, destination), Messages.InfoTitle, MessageBo
                 // Create the full path for the backup file
                 var backupFilePath = Path.Combine(backupsFolderPath, backupFileName);
 
-                logger.Info(CultureInfo.InvariantCulture, "Making database backup. Database file path: {0}. Backup file path: {1}", databaseFilePath, backupFilePath);
+                Logger.Info(CultureInfo.InvariantCulture, "Making database backup. Database file path: {0}. Backup file path: {1}", databaseFilePath, backupFilePath);
 
                 // Create a backup of the database file
                 File.Copy(databaseFilePath, backupFilePath, true);
             }
             else
             {
-                logger.Error($"Database directory path not found: {databaseDirectoryPath}");
+                Logger.Error($"Database directory path not found: {databaseDirectoryPath}");
                 throw new Exception($"Database directory path not found: {databaseDirectoryPath}");
             }
         }
         catch (Exception ex)
         {
             // Handle the exception and show an error message to the user
-            logger.Error(ex, "An error occurred while creating a database backup");
+            Logger.Error(ex, "An error occurred while creating a database backup");
             MessageBox.Show("An error occurred while creating a database backup: " + ex.Message, Messages.ErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
@@ -858,17 +861,17 @@ Destination: {2}", logMessage, file, destination), Messages.InfoTitle, MessageBo
             // Check if the file exists
             if (doesFileExist)
             {
-                logger.Info(CultureInfo.InvariantCulture, "Deleting {0}", path);
+                Logger.Info(CultureInfo.InvariantCulture, "Deleting {0}", path);
                 File.Delete(path);
             }
             else
             {
-                logger.Info(CultureInfo.InvariantCulture, $"{path} does not exist, canceling deletion process.");
+                Logger.Info(CultureInfo.InvariantCulture, $"{path} does not exist, canceling deletion process.");
             }
         }
         catch (Exception ex)
         {
-            logger.Error(ex, "Could not delete file {0}", path);
+            Logger.Error(ex, "Could not delete file {0}", path);
         }
     }
 }

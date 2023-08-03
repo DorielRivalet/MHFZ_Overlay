@@ -10,10 +10,11 @@ using MHFZ_Overlay;
 
 public sealed class OverlaySettingsService
 {
-    private OverlaySettingsService()
-    {
-        logger.Info($"Service initialized");
-    }
+    private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
+
+    private static OverlaySettingsService? instance;
+
+    private OverlaySettingsService() => Logger.Info($"Service initialized");
 
     public enum ConfigurationPreset
     {
@@ -28,12 +29,12 @@ public sealed class OverlaySettingsService
     {
         if (instance == null)
         {
-            logger.Debug("Singleton not found, creating instance.");
+            Logger.Debug("Singleton not found, creating instance.");
             instance = new OverlaySettingsService();
         }
 
-        logger.Debug("Singleton found, returning instance.");
-        logger.Trace(new StackTrace().ToString());
+        Logger.Debug("Singleton found, returning instance.");
+        Logger.Trace(new StackTrace().ToString());
         return instance;
     }
 
@@ -42,12 +43,12 @@ public sealed class OverlaySettingsService
     /// </summary>
     /// <param name="s">The s.</param>
     /// <param name="preset">The preset.</param>
-    public void SetConfigurationPreset(Settings s, ConfigurationPreset preset)
+    public static void SetConfigurationPreset(Settings s, ConfigurationPreset preset)
     {
         switch (preset)
         {
             default:
-                logger.Warn(CultureInfo.InvariantCulture, "Could not find preset name for settings");
+                Logger.Warn(CultureInfo.InvariantCulture, "Could not find preset name for settings");
                 return;
             case ConfigurationPreset.None:
                 return;
@@ -219,8 +220,4 @@ public sealed class OverlaySettingsService
                 break;
         }
     }
-
-    private static OverlaySettingsService? instance;
-
-    private static readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 }

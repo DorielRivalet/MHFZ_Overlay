@@ -10,7 +10,7 @@ using MHFZ_Overlay.Models.Structures;
 
 public static class DPadImages
 {
-    private static readonly ReadOnlyDictionary<Direction, string> imagePaths = new (new Dictionary<Direction, string>
+    private static readonly ReadOnlyDictionary<Direction, string> ImagePaths = new (new Dictionary<Direction, string>
     {
         { Direction.None, "../../Assets/Icons/png/gamepad_dpad.png" },
         { Direction.Up, "../../Assets/Icons/png/gamepad_dpad_up.png" },
@@ -25,7 +25,7 @@ public static class DPadImages
 
     public static string GetImage(Direction direction)
     {
-        if (imagePaths.TryGetValue(direction, out var imagePath))
+        if (ImagePaths.TryGetValue(direction, out var imagePath))
         {
             return imagePath;
         }

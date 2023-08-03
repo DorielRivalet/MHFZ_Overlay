@@ -7,9 +7,9 @@ namespace MHFZ_Overlay.Models.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-///<summary>
-///The monster color list
-///</summary>
+/// <summary>
+/// The monster color list.
+/// </summary>
 public static class MonsterColors
 {
     // Labels  Hex  RGB  HSL

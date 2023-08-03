@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 /// <summary>
-/// The Violent Raviente Trigger Events list
+/// The Violent Raviente Trigger Events list.
 /// </summary>
 public static class ViolentRavienteTriggerEvents
 {

@@ -7,9 +7,9 @@ namespace MHFZ_Overlay.Models.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-///<summary>
-///The area icon list
-///</summary>
+/// <summary>
+/// The area icon list.
+/// </summary>
 public static class AreaIcons
 {
     public static ReadOnlyDictionary<List<int>, string> AreaIconID { get; } = new (new Dictionary<List<int>, string>
