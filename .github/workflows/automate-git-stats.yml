@@ -44,6 +44,19 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y luajit
 
+      - name: Install LuaRocks
+        run : |
+          wget https://luarocks.org/releases/luarocks-3.8.0.tar.gz
+          tar zxpf luarocks-3.8.0.tar.gz
+          cd luarocks-3.8.0
+          ./configure --with-lua-include=/usr/local/include
+          make
+          sudo make install
+
+      - name: Install Lua dependencies
+        run: |
+          luarocks install luafilesystem
+
       - name: Install Python dependencies
         run: |
           pip install -r ./scripts/dependencies/requirements.txt
@@ -73,7 +86,7 @@ jobs:
         run: |
           mkdir ./scripts/input
           git log --numstat > ./scripts/input/git.txt
-          wc -l < ./scripts/input/git.txt
+          echo "Total lines in git text file: " << wc -l < ./scripts/input/git.txt
 
       - name: Anonymize emails
         run: |

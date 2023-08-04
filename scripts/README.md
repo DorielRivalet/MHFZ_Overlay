@@ -8,6 +8,7 @@
   - [Dependencies](#dependencies)
     - [Ruby](#ruby)
     - [Python](#python)
+    - [Lua](#lua)
   - [Usage](#usage)
   - [GitHub Actions](#github-actions)
 
@@ -77,6 +78,16 @@ You can install these dependencies by running the following command:
 
 ```bash
 pip install pandas matplotlib
+```
+
+### Lua
+
+- Luafilesystem
+
+You can install this by running the following command:
+
+```bash
+luarocks install luafilesystem
 ```
 
 ## Usage
