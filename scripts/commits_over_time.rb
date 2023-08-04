@@ -14,6 +14,7 @@ commit_regex = /Date:\s+(.+)/
 author_regex = /Author:\s+(.+)/
 current_author = nil
 
+puts Dir.pwd
 puts 'Calculating commits over time...'
 
 File.open(input_file, 'r').each_line do |line|

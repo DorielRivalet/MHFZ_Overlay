@@ -1,8 +1,9 @@
 local lfs = require("lfs")
 
-print('Renaming emails...')
 local current_dir = lfs.currentdir()
 print(current_dir)
+
+print('Renaming emails...')
 
 local input_folder = './scripts/input'
 local input_file = './scripts/input/git.txt'
