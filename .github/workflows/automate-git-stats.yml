@@ -76,7 +76,7 @@ jobs:
 
       - name: Anonymize emails
         run: |
-          luajit .scripts/rename_emails.lua
+          luajit ./scripts/rename_emails.lua
 
       - name: Remove old git.txt
         run: |
@@ -87,8 +87,8 @@ jobs:
 
       - name: Generate images using Python
         run: |
-          python .scripts/commits_per_hour.py
-          python .scripts/commits_per_weekday.py
+          python ./scripts/commits_per_hour.py
+          python ./scripts/commits_per_weekday.py
 
       - name: Remove git txt
         run: |
