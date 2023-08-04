@@ -28,7 +28,7 @@ set LC_ALL=C.UTF-8
 - Run the following command to generate the git information file:
 
 ```bash
-git log --numstat > ./input/git.txt
+git log --numstat > ./scripts/input/git.txt
 ```
 
 ### Unix
@@ -43,7 +43,7 @@ export LANG=en_US.UTF-8
 - Run the following command to generate the git information file:
 
 ```bash
-git log --numstat > ./input/git.txt
+git log --numstat > ./scripts/input/git.txt
 ```
 
 ### Email renaming with Lua
@@ -51,7 +51,7 @@ git log --numstat > ./input/git.txt
 After generating the git information file, you need to anonymize the emails. Run the following command:
 
 ```bash
-lua5.1 rename_emails.lua
+lua5.1 ./scripts/rename_emails.lua
 # or luajit rename_emails.lua
 ```
 
@@ -96,8 +96,8 @@ luarocks install luafilesystem
 To generate the git statistics, run the following commands:
 
 ```bash
-python ./commits_per_hour.py; python ./commits_per_weekday.py
-ruby ./commits_over_time.rb; ruby ./commits_type_count.rb
+python ./scripts/commits_per_hour.py; python ./scripts/commits_per_weekday.py
+ruby ./scripts/commits_over_time.rb; ruby ./scripts/commits_type_count.rb
 ```
 
 These commands will generate the necessary images and statistics based on the git information.
