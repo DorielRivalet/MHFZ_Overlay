@@ -22,7 +22,7 @@ jobs:
         id: check_last_commit
         run: |
           LAST_COMMIT=$(git log -1 --format="%cd" --date=iso-strict)
-          echo ::set-output name=last_commit::$LAST_COMMIT
+          echo "{last_commit}={$LAST_COMMIT}" >> $GITHUB_OUTPUT
         shell: bash
   
       - name: Check if commits were made in the last 3 months
@@ -32,6 +32,8 @@ jobs:
           CURRENT_DATE=$(date -u +"%Y-%m-%d")
           DATE_DIFF=$(($(date -u -d $CURRENT_DATE +%s) - $(date -u -d $LAST_COMMIT_DATE +%s)))
           if [ $DATE_DIFF -le 7948800 ]; then
+            echo "New commits found since the last 3 months."
+          else
             echo "No new commits since the last 3 months. Cancelling the workflow."
             exit 0
           fi
@@ -44,12 +46,13 @@ jobs:
 
       - name: Install Python dependencies
         run: |
-          pip install pandas matplotlib
+          pip install -r ./scripts/dependencies/requirements.txt
 
       - name: Install Ruby and dependencies
-        uses: actions/setup-ruby@v1
+        uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 2.7
+          ruby-version: '3.0' # Not needed with a .ruby-version file
+          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
 
       - name: Cache Ruby gems
         uses: actions/cache@v3
@@ -59,9 +62,12 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gem-
 
-      - name: Install Ruby dependencies
+      - run: bundle exec rake
+
+      - name: Generate Gemfile.lock
         run: |
-          gem install gruff rmagick
+          cd ./scripts/dependencies
+          bundle install --deployment
 
       - name: Generate git.txt
         run: |
@@ -69,7 +75,7 @@ jobs:
 
       - name: Anonymize emails
         run: |
-          luajit rename_emails.lua
+          luajit .scripts/rename_emails.lua
 
       - name: Remove old git.txt
         run: |
@@ -77,13 +83,13 @@ jobs:
 
       - name: Generate images using Python
         run: |
-          python ./commits_per_hour.py
-          python ./commits_per_weekday.py
+          python .scripts/commits_per_hour.py
+          python .scripts/commits_per_weekday.py
 
       - name: Generate images using Ruby
         run: |
-          ruby ./commits_over_time.rb
-          ruby ./commits_type_count.rb
+          ruby .scripts/commits_over_time.rb
+          ruby .scripts/commits_type_count.rb
 
       - name: Remove git txt
         run: |
