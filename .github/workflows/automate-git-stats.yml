@@ -90,6 +90,9 @@ jobs:
         run: |
           mkdir -p ./scripts/input
           git log --numstat > ./scripts/input/git.txt
+
+      - name: Count lines from git.txt
+        run: |
           echo "Total lines in git text file: "
           wc -l < ./scripts/input/git.txt
 
