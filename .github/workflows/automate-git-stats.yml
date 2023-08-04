@@ -71,7 +71,7 @@ jobs:
 
       - name: Generate git.txt
         run: |
-          touch ./scripts/input/git.txt
+          mkdir ./scripts/input
           git log --numstat > ./scripts/input/git.txt
 
       - name: Anonymize emails
