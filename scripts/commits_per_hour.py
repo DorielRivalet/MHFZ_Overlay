@@ -2,6 +2,7 @@ import re
 import datetime
 import pandas as pd
 import matplotlib.pyplot as plt
+from pathlib import Path
 
 author_name = "Doriel Rivalet"  # replace with your name for display
 author_email = "100863878+DorielRivalet@users.noreply.github.com"  # replace with your email for identification
@@ -12,6 +13,12 @@ data = []  # this will hold our commit times
 commit_regex = r"Date:\s+(.+)"  # regex to match the datetime line
 author_regex = r"Author:\s+(.+)"  # regex to match the author line
 current_author = None
+
+# get the current working directory
+current_working_directory = Path.cwd()
+
+# print output to the console
+print(current_working_directory)
 
 print("Calculating commits per hour... ")
 
