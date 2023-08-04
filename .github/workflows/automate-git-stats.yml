@@ -53,6 +53,7 @@ jobs:
 
       - name: Install Luarocks rocks
         run: |
+          dos2unix rocks.txt
           echo "Total rocks to install: "
           wc -l < rocks.txt
           echo "Contents of rocks.txt:"
