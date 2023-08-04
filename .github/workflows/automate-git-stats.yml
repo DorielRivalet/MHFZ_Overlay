@@ -12,6 +12,8 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
       - name: Set up Git
         run: |
@@ -89,7 +91,7 @@ jobs:
       - name: Generate git.txt
         run: |
           mkdir -p ./scripts/input
-          git log -p > ./scripts/input/git.txt
+          git log --numstat > ./scripts/input/git.txt
 
       - name: Count lines from git.txt
         run: |
