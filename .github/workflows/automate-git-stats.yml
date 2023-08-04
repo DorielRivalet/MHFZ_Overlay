@@ -90,7 +90,8 @@ jobs:
         run: |
           mkdir ./scripts/input
           git log --numstat > ./scripts/input/git.txt
-          echo "Total lines in git text file: " << wc -l < ./scripts/input/git.txt
+          echo "Total lines in git text file: "
+          wc -l < ./scripts/input/git.txt
 
       - name: Anonymize emails
         run: |

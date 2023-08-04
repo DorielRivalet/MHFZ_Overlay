@@ -4,6 +4,7 @@ print('Renaming emails...')
 local current_dir = lfs.currentdir()
 print(current_dir)
 
+local input_folder = './input'
 local input_file = './input/git.txt'
 local output_file = './input/git_anonymized.txt'
 local keep_email = '100863878+DorielRivalet@users.noreply.github.com'
