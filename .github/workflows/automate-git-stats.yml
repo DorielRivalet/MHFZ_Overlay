@@ -28,7 +28,7 @@ jobs:
           LAST_COMMIT_AUTHOR=$(git log -1 --format="%cn")
           echo "Last commit author: $LAST_COMMIT_AUTHOR"
           if [ "$LAST_COMMIT_AUTHOR" = "github-actions[bot]" ]; then
-            echo "Commit made by github-actions[bot]. Cancelling the workflow."
+            echo "Last commit was already made by github-actions[bot]. Cancelling the workflow."
             exit 0
           fi
         shell: bash
