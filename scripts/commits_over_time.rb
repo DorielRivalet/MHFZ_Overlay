@@ -72,3 +72,5 @@ g.theme = {
 
 g.data('Commits', dates, hours)
 g.write(output_file)
+
+puts 'Created commits over time image successfully'

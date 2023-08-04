@@ -12,10 +12,11 @@ jobs:
     permissions:
       contents: write
     steps:
+      # https://stackoverflow.com/questions/62334460/git-history-in-a-github-action
       - name: Check out repository
         uses: actions/checkout@v3
         with:
-          fetch-depth: 0
+          fetch-depth: 0 # get full stats instead of last commit
 
       - name: Set up Git
         run: |
@@ -51,13 +52,10 @@ jobs:
           make
           sudo make install
 
-      - name: Install dos2unix
-        run: sudo apt-get install dos2unix -y
-
+      # https://stackoverflow.com/questions/1521462/looping-through-the-content-of-a-file-in-bash/
       - name: Install Luarocks rocks
         working-directory: ./scripts/dependencies
         run: |
-          dos2unix rocks.txt
           echo "Contents of rocks.txt:"
           cat rocks.txt
           while IFS="" read -r rock || [ -n "$rock" ]

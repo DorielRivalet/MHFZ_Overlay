@@ -90,3 +90,5 @@ end
 g.data('Commits', commit_type_counts.values)
 
 g.write(output_file)
+
+puts 'Created commits type count image successfully'

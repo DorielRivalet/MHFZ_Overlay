@@ -75,3 +75,5 @@ dpi = max(dpi_width, dpi_height)
 # Save the figure as a PNG image
 plt.savefig(output_file, dpi=dpi)
 plt.show()
+
+print('Created commits per day of the week image succesfully')
