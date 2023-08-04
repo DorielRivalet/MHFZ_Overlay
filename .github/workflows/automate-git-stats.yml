@@ -69,10 +69,8 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gem-
 
-      - name: Rake
-        run: |
-          cd ./scripts/dependencies
-          bundle exec rake
+      - run: bundle exec rake
+        working-directory: ./scripts/dependencies
 
       - name: Generate git.txt
         run: |
