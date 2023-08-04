@@ -50,12 +50,10 @@ jobs:
 
       - name: Install LuaRocks
         run : |
-          echo "Lua development files location: "
-          ls /usr/include/lua5.1/
           wget https://luarocks.org/releases/luarocks-3.8.0.tar.gz
           tar zxpf luarocks-3.8.0.tar.gz
           cd luarocks-3.8.0
-          ./configure --with-lua-include=/usr/local/include
+          ./configure --with-lua-include=/usr/include/lua5.1/
           make
           sudo make install
 
