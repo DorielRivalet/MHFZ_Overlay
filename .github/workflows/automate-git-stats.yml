@@ -59,7 +59,7 @@ jobs:
 
       - name: Install Lua dependencies
         run: |
-          luarocks install luafilesystem
+          sudo luarocks install luafilesystem
 
       - name: Install Python dependencies
         run: |
