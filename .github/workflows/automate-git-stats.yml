@@ -30,7 +30,7 @@ jobs:
           echo "Last commit author: $LAST_COMMIT_AUTHOR"
           if [ "$LAST_COMMIT_AUTHOR" = "github-actions[bot]" ]; then
             echo "Last commit was already made by github-actions[bot]. Cancelling the workflow."
-            exit 0
+            exit 1
           fi
         shell: bash
 
