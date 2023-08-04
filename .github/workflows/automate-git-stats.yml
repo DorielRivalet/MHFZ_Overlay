@@ -58,9 +58,10 @@ jobs:
           echo "Contents of rocks.txt:"
           cat rocks.txt
           while IFS= read -r rock; do
-          sudo luarocks install "$rock"
+            luarocks install "$rock"
           done < rocks.txt
         working-directory: ./scripts/dependencies
+        shell: bash
 
       - name: Install Python packages
         run: |
