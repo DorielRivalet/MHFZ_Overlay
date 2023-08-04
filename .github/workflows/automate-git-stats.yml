@@ -108,7 +108,7 @@ jobs:
           name: git-text-file
           path: ./scripts/input/git_anonymized.txt
 
-      - name: Remove old git.txt
+      - name: Remove git.txt
         run: |
           rm ./scripts/input/git.txt
 
@@ -117,10 +117,10 @@ jobs:
 
       - name: Generate images using Python
         run: |
-          python ./scripts/commits_per_hour.py
-          python ./scripts/commits_per_weekday.py
+          cd ./scripts
+          python commits_per_hour.py; python commits_per_weekday.py
 
-      - name: Remove git txt
+      - name: Remove git_anonymized.txt
         run: |
             rm ./scripts/input/git_anonymized.txt
 
