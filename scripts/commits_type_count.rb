@@ -4,8 +4,8 @@ require 'gruff'
 
 author_name = 'Doriel Rivalet' # used for display only
 author_email = '100863878+DorielRivalet@users.noreply.github.com' # used for identification
-input_file = './input/git_anonymized.txt'
-output_file = './output/commit_types.png'
+input_file = '../input/git_anonymized.txt'
+output_file = '../output/commit_types.png'
 valid_commit_types = %w[build chore ci docs feat fix perf refactor revert style test]
 
 commit_type_counts = {
