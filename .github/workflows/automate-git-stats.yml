@@ -55,6 +55,8 @@ jobs:
         run: |
           echo "Total rocks to install: "
           wc -l < rocks.txt
+          echo "Contents of rocks.txt:"
+          cat rocks.txt
           while IFS= read -r rock; do
           sudo luarocks install "$rock"
           done < rocks.txt
