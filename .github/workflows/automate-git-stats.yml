@@ -55,6 +55,7 @@ jobs:
         run: sudo apt-get install dos2unix -y
 
       - name: Install Luarocks rocks
+        working-directory: ./scripts/dependencies
         run: |
           dos2unix rocks.txt
           echo "Contents of rocks.txt:"
@@ -63,7 +64,6 @@ jobs:
           do
             sudo luarocks install "$rock"
           done < rocks.txt
-        working-directory: ./scripts/dependencies
         shell: bash
 
       - name: Install Python packages
