@@ -5,8 +5,8 @@ require 'gruff'
 
 author_name = 'Doriel Rivalet' # used for display only
 author_email = '100863878+DorielRivalet@users.noreply.github.com' # used for identification
-input_file = '../input/git_anonymized.txt'
-output_file = '../output/commits_over_time.png'
+input_file = './input/git_anonymized.txt'
+output_file = './output/commits_over_time.png'
 
 data = []
 email_regex = /<(.*)>/

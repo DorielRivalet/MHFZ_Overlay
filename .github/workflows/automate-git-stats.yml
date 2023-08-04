@@ -69,9 +69,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gem-
 
-      - run: bundle exec rake
-        working-directory: ./scripts/dependencies
-
       - name: Generate git.txt
         run: |
           git log --numstat > ./scripts/input/git.txt
@@ -83,6 +80,9 @@ jobs:
       - name: Remove old git.txt
         run: |
           rm ./scripts/input/git.txt
+
+      - run: bundle exec rake
+        working-directory: ./scripts/dependencies
 
       - name: Generate images using Python
         run: |
