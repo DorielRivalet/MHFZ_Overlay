@@ -8,7 +8,9 @@ on:
 jobs:
   run_scripts:
     runs-on: ubuntu-latest
-
+    name: Update Git Stats images with the latest commits
+    permissions:
+      contents: write
     steps:
       - name: Check out repository
         uses: actions/checkout@v3
@@ -24,15 +26,15 @@ jobs:
         id: check_last_commit
         run: |
           LAST_COMMIT=$(git log -1 --format="%cd" --date=iso-strict)
-          echo "{last_commit}={$LAST_COMMIT}" >> $GITHUB_OUTPUT
+          echo "last_commit=${LAST_COMMIT}" >> $GITHUB_OUTPUT
         shell: bash
-  
+        
       - name: Check if commits were made in the last 3 months
         id: check_last_commit_date
         run: |
           LAST_COMMIT_DATE="${{ steps.check_last_commit.outputs.last_commit }}"
           CURRENT_DATE=$(date -u +"%Y-%m-%d")
-          DATE_DIFF=$(($(date -u -d $CURRENT_DATE +%s) - $(date -u -d $LAST_COMMIT_DATE +%s)))
+          DATE_DIFF=$(( $(date -u -d $CURRENT_DATE +%s) - $(date -u -d "$LAST_COMMIT_DATE" +%s) ))
           if [ $DATE_DIFF -le 7948800 ]; then
             echo "New commits found since the last 3 months."
           else
@@ -80,6 +82,7 @@ jobs:
           bundle config set --local deployment 'true'
           bundle install
 
+      # TODO: Remove?
       - name: Cache Ruby gems
         uses: actions/cache@v3
         with:
@@ -107,6 +110,7 @@ jobs:
         with:
           name: git-text-file
           path: ./scripts/input/git_anonymized.txt
+          retention-days: 1
 
       - name: Remove git.txt
         run: |
