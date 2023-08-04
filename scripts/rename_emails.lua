@@ -4,9 +4,9 @@ print('Renaming emails...')
 local current_dir = lfs.currentdir()
 print(current_dir)
 
-local input_folder = './input'
-local input_file = './input/git.txt'
-local output_file = './input/git_anonymized.txt'
+local input_folder = './scripts/input'
+local input_file = './scripts/input/git.txt'
+local output_file = './scripts/input/git_anonymized.txt'
 local keep_email = '100863878+DorielRivalet@users.noreply.github.com'
 local renamed_email = 'unknown@thisisaplaceholderemail.com'
 local email_regex = '<(.-)>'
@@ -15,12 +15,16 @@ local email_regex = '<(.-)>'
 local input_folder_attributes = lfs.attributes(input_folder)
 if not input_folder_attributes or input_folder_attributes.mode ~= "directory" then
     error("Input folder does not exist")
+else
+    print("Input folder found")
 end
 
 -- Check if the input file exists
 local input_file_attributes = lfs.attributes(input_file)
 if not input_file_attributes or input_file_attributes.mode ~= "file" then
     error("Input file does not exist")
+else
+    print("Input file found")
 end
 
 -- Function to replace email addresses with <unknown@unknown.com>
