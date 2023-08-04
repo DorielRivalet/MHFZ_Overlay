@@ -10,6 +10,18 @@ local keep_email = '100863878+DorielRivalet@users.noreply.github.com'
 local renamed_email = 'unknown@thisisaplaceholderemail.com'
 local email_regex = '<(.-)>'
 
+-- Check if the input folder exists
+local input_folder_attributes = lfs.attributes(input_folder)
+if not input_folder_attributes or input_folder_attributes.mode ~= "directory" then
+    error("Input folder does not exist")
+end
+
+-- Check if the input file exists
+local input_file_attributes = lfs.attributes(input_file)
+if not input_file_attributes or input_file_attributes.mode ~= "file" then
+    error("Input file does not exist")
+end
+
 -- Function to replace email addresses with <unknown@unknown.com>
 local function replace_email(match)
     -- Check if the matched email is the one to keep
