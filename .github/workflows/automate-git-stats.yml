@@ -121,6 +121,13 @@ jobs:
       - name: Remove git_anonymized.txt
         run: rm ./scripts/input/git_anonymized.txt
 
+      - name: Generate image artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: generated-git-stats-images
+          path: ./scripts/output
+          retention-days: 1
+
       - name: Commit and push changes
         run: |
           git add ./scripts/output/commit_types.png ./scripts/output/commits_over_time.png ./scripts/output/commits_per_day_of_week.png ./scripts/output/commits_per_hour.png
