@@ -55,6 +55,9 @@ jobs:
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
           working-directory: ./scripts/dependencies
 
+      - name: Change working directory to repository root
+        run: cd $(git rev-parse --show-toplevel)  # Change the working directory to the root of the repository
+
       - name: Cache Ruby gems
         uses: actions/cache@v3
         with:
