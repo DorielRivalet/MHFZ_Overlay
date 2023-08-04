@@ -1,16 +1,20 @@
+# frozen_string_literal: true
+
 require 'date'
 require 'gruff'
 
 author_name = 'Doriel Rivalet' # used for display only
 author_email = '100863878+DorielRivalet@users.noreply.github.com' # used for identification
-input_file = './input/git.txt'
+input_file = './input/git_anonymized.txt'
 output_file = './output/commits_over_time.png'
 
 data = []
-email_regex = /<(.*)>/ 
+email_regex = /<(.*)>/
 commit_regex = /Date:\s+(.+)/
 author_regex = /Author:\s+(.+)/
 current_author = nil
+
+puts 'Calculating commits over time...'
 
 File.open(input_file, 'r').each_line do |line|
   author_match = line.match(author_regex)
@@ -37,16 +41,17 @@ if data.empty?
   exit
 end
 
-g = Gruff::Scatter.new(3840)  # the width of the image in pixels
+g = Gruff::Scatter.new(3840) # the width of the image in pixels
 g.title = "Commits over time by #{author_name}"
-g.x_axis_label = "Day"
-g.y_axis_label = "Hour"
+g.y_axis_label = 'Hour'
 g.y_axis_increment = 1
 g.minimum_value = 0
 g.maximum_value = 23
-g.circle_radius = 2  # You can adjust the size of the dots here
+g.circle_radius = 2 # You can adjust the size of the dots here
 g.hide_legend = true
 g.label_margin = 0
+g.show_vertical_markers = true
+g.marker_x_count = 2
 
 # Set the label format from an integer into the date format YY-MM-DD
 g.x_axis_label_format = lambda do |value|

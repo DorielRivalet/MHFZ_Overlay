@@ -1,0 +1,96 @@
+name: Automate Git Stats
+
+on:
+  workflow_dispatch:
+  schedule:
+      - cron: '0 0 1 */3 *'  # Run every 3 months at 00:00 UTC on the 1st day of the month
+
+jobs:
+  run_scripts:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+
+      - name: Set up Git
+        run: |
+          git config user.name "Automated Git Stats"
+          git config user.email "actions@users.noreply.github.com"
+
+      - name: Check last commit date
+        id: check_last_commit
+        run: |
+          LAST_COMMIT=$(git log -1 --format="%cd" --date=iso-strict)
+          echo ::set-output name=last_commit::$LAST_COMMIT
+        shell: bash
+  
+      - name: Check if commits were made in the last 3 months
+        id: check_last_commit_date
+        run: |
+          LAST_COMMIT_DATE="${{ steps.check_last_commit.outputs.last_commit }}"
+          CURRENT_DATE=$(date -u +"%Y-%m-%d")
+          DATE_DIFF=$(($(date -u -d $CURRENT_DATE +%s) - $(date -u -d $LAST_COMMIT_DATE +%s)))
+          if [ $DATE_DIFF -le 7948800 ]; then
+            echo "No new commits since the last 3 months. Cancelling the workflow."
+            exit 0
+          fi
+        shell: bash
+      
+      - name: Install LuaJIT
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y luajit
+
+      - name: Install Python dependencies
+        run: |
+          pip install pandas matplotlib
+
+      - name: Install Ruby and dependencies
+        uses: actions/setup-ruby@v1
+        with:
+          ruby-version: 2.7
+
+      - name: Cache Ruby gems
+        uses: actions/cache@v2
+        with:
+          path: vendor/bundle
+          key: ${{ runner.os }}-gem-${{ hashFiles('Gemfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-gem-
+
+      - name: Install Ruby dependencies
+        run: |
+          gem install gruff rmagick
+
+      - name: Generate git.txt
+        run: |
+          git log --numstat > ./scripts/input/git.txt
+
+      - name: Anonymize emails
+        run: |
+          luajit rename_emails.lua
+
+      - name: Remove old git.txt
+        run: |
+          rm ./scripts/input/git.txt
+
+      - name: Generate images using Python
+        run: |
+          python ./commits_per_hour.py
+          python ./commits_per_weekday.py
+
+      - name: Generate images using Ruby
+        run: |
+          ruby ./commits_over_time.rb
+          ruby ./commits_type_count.rb
+
+      - name: Remove git txt
+        run: |
+            rm ./scripts/input/git_anonymized.txt
+
+      - name: Commit and push changes
+        run: |
+          git add ./scripts/output/commit_types.png ./scripts/output/commits_over_time.png ./scripts/output/commits_per_day_of_week.png ./scripts/output/commits_per_hour.png
+          git commit -m "chore(scripts): update git statistics images"
+          git push
