@@ -57,11 +57,10 @@ jobs:
       - name: Install Luarocks rocks
         run: |
           dos2unix rocks.txt
-          echo "Total rocks to install: "
-          wc -l < rocks.txt
           echo "Contents of rocks.txt:"
           cat rocks.txt
-          while IFS= read -r rock; do
+          while IFS="" read -r rock || [ -n "$rock" ]
+          do
             luarocks install "$rock"
           done < rocks.txt
         working-directory: ./scripts/dependencies
