@@ -55,8 +55,10 @@ jobs:
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
           working-directory: ./scripts/dependencies
 
-      - name: Change working directory to repository root
-        run: cd $(git rev-parse --show-toplevel)  # Change the working directory to the root of the repository
+      - name: Generate Gemfile.lock
+        run: |
+          cd ./scripts/dependencies
+          bundle install --deployment
 
       - name: Cache Ruby gems
         uses: actions/cache@v3
@@ -65,13 +67,8 @@ jobs:
           key: ${{ runner.os }}-gem-${{ hashFiles('Gemfile.lock') }}
           restore-keys: |
             ${{ runner.os }}-gem-
-
+      
       - run: bundle exec rake
-
-      - name: Generate Gemfile.lock
-        run: |
-          cd ./scripts/dependencies
-          bundle install --deployment
 
       - name: Generate git.txt
         run: |
