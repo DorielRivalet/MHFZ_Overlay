@@ -89,11 +89,6 @@ jobs:
           python .scripts/commits_per_hour.py
           python .scripts/commits_per_weekday.py
 
-      - name: Generate images using Ruby
-        run: |
-          ruby .scripts/commits_over_time.rb
-          ruby .scripts/commits_type_count.rb
-
       - name: Remove git txt
         run: |
             rm ./scripts/input/git_anonymized.txt
