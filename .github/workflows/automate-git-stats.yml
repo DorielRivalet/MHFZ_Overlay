@@ -89,7 +89,7 @@ jobs:
       - name: Generate git.txt
         run: |
           mkdir -p ./scripts/input
-          git log --numstat > ./scripts/input/git.txt
+          git log -p > ./scripts/input/git.txt
 
       - name: Count lines from git.txt
         run: |
