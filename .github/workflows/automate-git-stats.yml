@@ -73,6 +73,7 @@ jobs:
         run: |
           mkdir ./scripts/input
           git log --numstat > ./scripts/input/git.txt
+          wc -l < ./scripts/input/git.txt
 
       - name: Anonymize emails
         run: |
