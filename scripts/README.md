@@ -4,13 +4,13 @@
   - [Input](#input)
     - [Windows](#windows)
     - [Unix](#unix)
-    - [Email Renaming](#email-renaming)
-  - [Dependencies](#dependencies)
-    - [Ruby](#ruby)
-    - [Python](#python)
-    - [Lua](#lua)
+    - [Email renaming with Lua](#email-renaming-with-lua)
+  - [Dependencies and Packages](#dependencies-and-packages)
+    - [Ruby gems](#ruby-gems)
+    - [Python packages](#python-packages)
+    - [Lua rocks](#lua-rocks)
   - [Usage](#usage)
-  - [GitHub Actions](#github-actions)
+  - [Script automation with GitHub Actions](#script-automation-with-github-actions)
 
 ## Input
 
@@ -28,7 +28,7 @@ set LC_ALL=C.UTF-8
 - Run the following command to generate the git information file:
 
 ```bash
-git log --numstat > ./scripts/input/git.txt
+git log --numstat > ./input/git.txt
 ```
 
 ### Unix
@@ -43,22 +43,23 @@ export LANG=en_US.UTF-8
 - Run the following command to generate the git information file:
 
 ```bash
-git log --numstat > ./scripts/input/git.txt
+git log --numstat > ./input/git.txt
 ```
 
-### Email Renaming
+### Email renaming with Lua
 
 After generating the git information file, you need to anonymize the emails. Run the following command:
 
 ```bash
-luajit rename_emails.lua
+lua5.1 rename_emails.lua
+# or luajit rename_emails.lua
 ```
 
-## Dependencies
+## Dependencies and Packages
 
 Make sure you have the following dependencies installed:
 
-### Ruby
+### Ruby gems
 
 - Gruff
 - RMagick
@@ -69,7 +70,7 @@ You can install these dependencies by running the following command:
 gem install gruff rmagick
 ```
 
-### Python
+### Python packages
 
 - Pandas
 - Matplotlib
@@ -80,7 +81,7 @@ You can install these dependencies by running the following command:
 pip install pandas matplotlib
 ```
 
-### Lua
+### Lua rocks
 
 - Luafilesystem
 
@@ -101,6 +102,6 @@ ruby ./commits_over_time.rb; ruby ./commits_type_count.rb
 
 These commands will generate the necessary images and statistics based on the git information.
 
-## GitHub Actions
+## Script automation with GitHub Actions
 
 The [workflow](../.github/workflows/automate-git-stats.yml) automatically does the steps above every 3 months, it installs the necessary dependencies by checking the contents of the [dependencies folder](./dependencies/).

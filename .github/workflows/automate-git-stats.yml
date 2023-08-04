@@ -8,7 +8,7 @@ on:
 jobs:
   run_scripts:
     runs-on: ubuntu-latest
-    name: Update Git Stats images with the latest commits
+    name: Update Git stats images with the latest commits
     permissions:
       contents: write
     steps:
@@ -19,26 +19,16 @@ jobs:
 
       - name: Set up Git
         run: |
-          git config user.name "Automated Git Stats"
-          git config user.email "actions@users.noreply.github.com"
-
-      - name: Check last commit date
-        id: check_last_commit
-        run: |
-          LAST_COMMIT=$(git log -1 --format="%cd" --date=iso-strict)
-          echo "last_commit=${LAST_COMMIT}" >> $GITHUB_OUTPUT
-        shell: bash
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
         
-      - name: Check if commits were made in the last 3 months
-        id: check_last_commit_date
+      - name: Check if commit was made by github-actions[bot]
+        id: check_last_commit_author
         run: |
-          LAST_COMMIT_DATE="${{ steps.check_last_commit.outputs.last_commit }}"
-          CURRENT_DATE=$(date -u +"%Y-%m-%d")
-          DATE_DIFF=$(( $(date -u -d $CURRENT_DATE +%s) - $(date -u -d "$LAST_COMMIT_DATE" +%s) ))
-          if [ $DATE_DIFF -le 7948800 ]; then
-            echo "New commits found since the last 3 months."
-          else
-            echo "No new commits since the last 3 months. Cancelling the workflow."
+          LAST_COMMIT_AUTHOR=$(git log -1 --format="%cn")
+          echo "Last commit author: $LAST_COMMIT_AUTHOR"
+          if [ "$LAST_COMMIT_AUTHOR" = "github-actions[bot]" ]; then
+            echo "Commit made by github-actions[bot]. Cancelling the workflow."
             exit 0
           fi
         shell: bash
@@ -61,15 +51,20 @@ jobs:
           make
           sudo make install
 
-      - name: Install Lua dependencies
+      - name: Install Luarocks rocks
         run: |
-          sudo luarocks install luafilesystem
+          echo "Total rocks to install: "
+          wc -l < rocks.txt
+          while IFS= read -r rock; do
+          sudo luarocks install "$rock"
+          done < rocks.txt
+        working-directory: ./scripts/dependencies
 
-      - name: Install Python dependencies
+      - name: Install Python packages
         run: |
           pip install -r ./scripts/dependencies/requirements.txt
 
-      - name: Install Ruby and dependencies
+      - name: Install Ruby and ruby gems
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.0' # Not needed with a .ruby-version file
@@ -103,7 +98,8 @@ jobs:
 
       - name: Anonymize emails
         run: |
-          luajit ./scripts/rename_emails.lua
+          luajit ./rename_emails.lua
+        working-directory: ./scripts
 
       - name: Create git_anonymized.txt artifact
         uses: actions/upload-artifact@v3

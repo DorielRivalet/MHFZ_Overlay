@@ -1,3 +1,4 @@
+print('Loading Luafilesystem...')
 local lfs = require("lfs")
 
 local current_dir = lfs.currentdir()
@@ -5,9 +6,9 @@ print(current_dir)
 
 print('Renaming emails...')
 
-local input_folder = './scripts/input'
-local input_file = './scripts/input/git.txt'
-local output_file = './scripts/input/git_anonymized.txt'
+local input_folder = './input'
+local input_file = './input/git.txt'
+local output_file = './input/git_anonymized.txt'
 local keep_email = '100863878+DorielRivalet@users.noreply.github.com'
 local renamed_email = 'unknown@thisisaplaceholderemail.com'
 local email_regex = '<(.-)>'
