@@ -51,6 +51,9 @@ jobs:
           make
           sudo make install
 
+      - name: Install dos2unix
+        run: sudo apt-get install dos2unix -y
+
       - name: Install Luarocks rocks
         run: |
           dos2unix rocks.txt
