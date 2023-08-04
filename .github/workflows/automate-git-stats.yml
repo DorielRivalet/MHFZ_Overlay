@@ -53,21 +53,26 @@ jobs:
         with:
           ruby-version: '3.0' # Not needed with a .ruby-version file
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+          working-directory: ./scripts/dependencies
 
       - name: Generate Gemfile.lock
         run: |
+          cd ./scripts/dependencies
           bundle config set --local deployment 'true'
           bundle install
 
       - name: Cache Ruby gems
         uses: actions/cache@v3
         with:
-          path: vendor/bundle
+          path: ./scripts/dependencies/vendor/bundle
           key: ${{ runner.os }}-gem-${{ hashFiles('Gemfile.lock') }}
           restore-keys: |
             ${{ runner.os }}-gem-
-      
-      - run: bundle exec rake
+
+      - name: Rake
+        run: |
+          cd ./scripts/dependencies
+          bundle exec rake
 
       - name: Generate git.txt
         run: |
