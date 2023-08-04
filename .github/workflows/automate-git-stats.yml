@@ -88,7 +88,7 @@ jobs:
 
       - name: Generate git.txt
         run: |
-          mkdir ./scripts/input
+          mkdir -p ./scripts/input
           git log --numstat > ./scripts/input/git.txt
           echo "Total lines in git text file: "
           wc -l < ./scripts/input/git.txt
