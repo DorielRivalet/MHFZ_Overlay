@@ -61,7 +61,7 @@ jobs:
           cat rocks.txt
           while IFS="" read -r rock || [ -n "$rock" ]
           do
-            luarocks install "$rock"
+            sudo luarocks install "$rock"
           done < rocks.txt
         working-directory: ./scripts/dependencies
         shell: bash
