@@ -33,15 +33,24 @@ jobs:
             exit 0
           fi
         shell: bash
-      
+
+      - name: Generate git.txt
+        run: |
+          mkdir -p ./scripts/input
+          git log --numstat > ./scripts/input/git.txt
+
+      - name: Count lines from git.txt
+        run: |
+          echo "Total lines in git text file: "
+          wc -l < ./scripts/input/git.txt
+
       - name: Install LuaJIT
         run: |
           sudo apt-get update
           sudo apt-get install -y luajit
-
+  
       - name: Install Lua development files
-        run: |
-          sudo apt-get install liblua5.1-dev
+        run: sudo apt-get install liblua5.1-dev
 
       - name: Install LuaRocks
         run : |
@@ -64,9 +73,19 @@ jobs:
           done < rocks.txt
         shell: bash
 
-      - name: Install Python packages
-        run: |
-          pip install -r ./scripts/dependencies/requirements.txt
+      - name: Anonymize emails
+        run: luajit ./rename_emails.lua
+        working-directory: ./scripts
+
+      - name: Create git_anonymized.txt artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: git-text-file-anonymized
+          path: ./scripts/input/git_anonymized.txt
+          retention-days: 1
+
+      - name: Remove git.txt
+        run: rm ./scripts/input/git.txt
 
       - name: Install Ruby and ruby gems
         uses: ruby/setup-ruby@v1
@@ -74,7 +93,7 @@ jobs:
           ruby-version: '3.0' # Not needed with a .ruby-version file
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
           working-directory: ./scripts/dependencies
-
+  
       - name: Generate Gemfile.lock
         run: |
           cd ./scripts/dependencies
@@ -90,43 +109,17 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gem-
 
-      - name: Generate git.txt
-        run: |
-          mkdir -p ./scripts/input
-          git log --numstat > ./scripts/input/git.txt
-
-      - name: Count lines from git.txt
-        run: |
-          echo "Total lines in git text file: "
-          wc -l < ./scripts/input/git.txt
-
-      - name: Anonymize emails
-        run: |
-          luajit ./rename_emails.lua
-        working-directory: ./scripts
-
-      - name: Create git_anonymized.txt artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: git-text-file
-          path: ./scripts/input/git_anonymized.txt
-          retention-days: 1
-
-      - name: Remove git.txt
-        run: |
-          rm ./scripts/input/git.txt
-
       - run: bundle exec rake
         working-directory: ./scripts/dependencies
 
+      - name: Install Python packages
+        run: make -C ./scripts/dependencies install_packages
+      
       - name: Generate images using Python
-        run: |
-          cd ./scripts
-          python commits_per_hour.py; python commits_per_weekday.py
+        run: make -C ./scripts/dependencies generate_images
 
       - name: Remove git_anonymized.txt
-        run: |
-            rm ./scripts/input/git_anonymized.txt
+        run: rm ./scripts/input/git_anonymized.txt
 
       - name: Commit and push changes
         run: |
