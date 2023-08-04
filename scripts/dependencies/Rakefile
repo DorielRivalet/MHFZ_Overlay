@@ -3,7 +3,7 @@
 task default: %w[generate_images]
 
 task :generate_images do
-  Dir.chdir('../scripts') do
+  Dir.chdir('..') do
     ruby 'commits_over_time.rb'
     ruby 'commits_type_count.rb'
   end
