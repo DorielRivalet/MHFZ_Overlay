@@ -100,6 +100,12 @@ jobs:
         run: |
           luajit ./scripts/rename_emails.lua
 
+      - name: Create git_anonymized.txt artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: git-text-file
+          path: ./scripts/input/git_anonymized.txt
+
       - name: Remove old git.txt
         run: |
           rm ./scripts/input/git.txt
