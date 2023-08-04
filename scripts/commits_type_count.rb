@@ -28,6 +28,7 @@ commit_message_regex = /^\s+(.+)/
 current_author = nil
 current_commit = nil
 
+puts Dir.pwd
 puts 'Calculating commit types count...'
 
 File.open(input_file, 'r').each_line do |line|
@@ -89,3 +90,5 @@ end
 g.data('Commits', commit_type_counts.values)
 
 g.write(output_file)
+
+puts 'Created commits type count image successfully'

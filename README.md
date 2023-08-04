@@ -393,6 +393,20 @@ We recommend consulting the appropriate documentation file based on your needs. 
 ![GitHub repo size](https://img.shields.io/github/repo-size/DorielRivalet/mhfz-overlay?style=flat)
 [![wakatime](https://wakatime.com/badge/user/958e2c62-03f7-4c2a-82df-75c8df9ee232/project/db4298ba-fbc4-4fc2-aa24-67938f65ee8a.svg)](https://wakatime.com/badge/user/958e2c62-03f7-4c2a-82df-75c8df9ee232/project/db4298ba-fbc4-4fc2-aa24-67938f65ee8a)
 
+![Repository Commits Stats 1](./scripts/output/commit_types.png)
+
+![Repository Commits Stats 2](./scripts/output/commits_over_time.png)
+
+![Repository Commits Stats 3](./scripts/output/commits_per_day_of_week.png)
+
+![Repository Commits Stats 4](./scripts/output/commits_per_hour.png)
+
+[Generated thanks to the following scripts](./scripts)
+
+![Ruby](https://img.shields.io/badge/Ruby-1e1e2e?style=for-the-badge&labelColor=23f5e0dc&logoColor=CC342D&logo=ruby)
+![Python](https://img.shields.io/badge/Python-1e1e2e?style=for-the-badge&labelColor=23f5e0dc&logoColor=3776AB&logo=python)
+![Lua](https://img.shields.io/badge/Lua-1e1e2e?style=for-the-badge&labelColor=23f5e0dc&logoColor=2C2D72&logo=lua)
+
 ## Feedback
 
 [Google Forms](https://forms.gle/hrAVWMcYS5HEo1v7A).
