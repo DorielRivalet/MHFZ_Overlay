@@ -1824,7 +1824,7 @@
                                                         <StackPanel Orientation="Vertical" Margin="5">
                                                             <customcontrols:OutlinedTextBlock Fill="{StaticResource Text}" Stroke="{StaticResource Crust}" StrokeThickness="2" FontWeight="SemiBold" x:Name="AchievementSelectionInfoTitle" TextWrapping="Wrap" FontSize="24" Text="Select an achievement to view more information"/>
                                                             <TextBlock Margin="0,5,0,0" x:Name="AchievementSelectionInfoObjective" TextWrapping="Wrap" Text="Some achievements are currently unobtainable." FontSize="20"/>
-                                                            <TextBlock Margin="0,5,0,0" x:Name="AchievementSelectionInfoHint" TextWrapping="Wrap" d:Text="There are 5 types of trophies: bronze, silver, gold, platinum and secret. For every secret trophy you find, you gain 0.20% more progress. You have obtained 20 out of 100 secret trophies (20%)." FontSize="16"/>
+                                                            <TextBlock Margin="0,5,0,0" x:Name="AchievementSelectionInfoHint" TextWrapping="Wrap" d:Text="Most achievements requirements are checked when you are at the quest completion rewards screen. There are 5 types of trophies: bronze, silver, gold, platinum and secret. For every secret trophy you find, you gain 0.20% more progress. You have obtained 20 out of 100 secret trophies (20%)." FontSize="16"/>
                                                         </StackPanel>
                                                     </ScrollViewer>
                                                 </Grid>
