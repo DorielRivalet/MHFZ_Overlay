@@ -5326,5 +5326,18 @@ Just now, reduced to ashes",
             Hint = string.Empty,
             }
         },
+        {
+            407, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "UNKNOWN Was Her?",
+            Description = string.Empty,
+            Rank = AchievementRank.Platinum,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/unknown_blue.jpg",
+            Objective = "Defeat Upper Shiten Unknown solo without any items.",
+            IsSecret = false,
+            Hint = string.Empty,
+            }
+        },
     });
 }
