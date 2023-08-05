@@ -132,6 +132,8 @@ As an alternative to hotkeys, you can use the system tray options by right-click
 
 - Use the Configuration Preset option for quickly setting up your configuration.
 
+![Preset](./demo/preset.png)
+
 - If the monster HP shown is less than what its actual values should be, restart both the game and the overlay. If the HP shows 0/1 then change area for it to load. If the issue still occurs, change the Effective HP Corrector's minimum and maximum thresholds or disable Effective HP.
 
 - If you are having issues with the damage numbers when hitting the monster, change Damage Numbers Mode from Automatic to True Damage.
