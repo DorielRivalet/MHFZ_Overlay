@@ -146,7 +146,7 @@ As an alternative to hotkeys, you can use the system tray options by right-click
 
 - If you are having performance issues, lower the overlay resolution and refresh rate. Also try setting Rendering Mode to Software or Hardware.
 
-- If you are playing in multiplayer, keep in mind that is not fully supported.
+- If you are playing on multiplayer, keep in mind that is not fully supported.
 
 - Fully reinstalling the game or .NET dependencies may fix some bugs.
 
