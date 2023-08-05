@@ -124,29 +124,33 @@ We strongly recommend that you verify the authenticity and integrity of the soft
 - `Shift+F5` Restart Overlay.
 - `Shift+F6` Exit.
 
-As an alternative to hotkeys, you can check your system tray options by right-clicking the icon.
+As an alternative to hotkeys, you can use the system tray options by right-clicking the icon.
 
 ![System Tray options](./demo/systemtray.png)
 
 ### Quick Troubleshooting
 
-- If the overlay doesn't seem to load values properly, restart it. If that didn't fix the issue, [please send information here](https://github.com/DorielRivalet/mhfz-overlay/issues).
+- Use the Configuration Preset option for quickly setting up your configuration.
 
-- Additionally, if information from the overlay is wrong or inaccurate (*e.g.* monster parts labels), feel free to send an issue.
+- If the monster HP shown is less than what its actual values should be, restart both the game and the overlay. If the HP shows 0/1 then change area for it to load. If the issue still occurs, change the Effective HP Corrector's minimum and maximum thresholds or disable Effective HP.
 
-- If the monster HP shown is less than what its actual values should be, restart both the game and the overlay. If the HP shows 0/1 then change area for it to load. If the issue still occurs, change the Effective HP Corrector's minimum and maximum thresholds or disable Effective HP, otherwise send a bug report if there isn't already one.
+- If you are having issues with the damage numbers when hitting the monster, change Damage Numbers Mode from Automatic to True Damage.
 
 - If you want the overlay to use the least memory possible, you can decide to not open the configuration window. If you want to change settings, then open the configuration window, edit settings, click save and restart the overlay.
 
-- Fully reinstalling the game or .NET dependencies may fix some bugs.
+- Press `Alt+Enter` if your screen resolution got lowered.
 
-- Press `Alt+Enter` twice if your screen resolution got lowered.
-
-- If the HP shows 0/1 then change area for it to load.
-
-- If you have screen issues when starting the overlay, first press `Alt+Enter` in-game, load the overlay, then press `Alt+Enter` in-game again. Also make sure that the UAC prompts do not cause issues in your computer, and that you have the correct permissions.
+- If you have screen issues when starting the overlay, first press `Alt+Enter` in-game, load the overlay, then press `Alt+Enter` in-game again. Also make sure that the UAC prompts do not cause issues in your computer, and that you have the correct operating system permissions.
 
 - If you are having performance issues, lower the overlay resolution and refresh rate. Also try setting Rendering Mode to Software or Hardware.
+
+- If you are playing in multiplayer, keep in mind that is not fully supported.
+
+- Fully reinstalling the game or .NET dependencies may fix some bugs.
+
+- If the overlay doesn't seem to load values properly, restart it. If that didn't fix the issue, [please send information here](https://github.com/DorielRivalet/mhfz-overlay/issues).
+
+- Additionally, if information from the overlay is wrong or inaccurate (*e.g.* monster parts labels), feel free to send an issue.
 
 ## Features
 
