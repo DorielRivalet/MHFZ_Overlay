@@ -167,7 +167,7 @@ public sealed class DatabaseService
                         var result = cmd.ExecuteScalar();
                         if (result != DBNull.Value)
                         {
-                            totalTimeSpent = TimeSpan.FromSeconds(Convert.ToInt32(result));
+                            totalTimeSpent = TimeSpan.FromSeconds(Convert.ToInt32(result, CultureInfo.InvariantCulture));
                         }
                     }
 
@@ -470,7 +470,7 @@ public sealed class DatabaseService
                         var result = cmd.ExecuteScalar();
                         if (result != null && result.ToString() != string.Empty)
                         {
-                            runID = Convert.ToInt32(result);
+                            runID = Convert.ToInt32(result, CultureInfo.InvariantCulture);
                         }
                         else
                         {
@@ -729,7 +729,7 @@ public sealed class DatabaseService
                         var isHighGradeEdition = dataLoader.IsHighGradeEdition ? 1 : 0;
                         var refreshRate = s.RefreshRate;
 
-                        var questData = string.Format(
+                        var questData = string.Format(CultureInfo.InvariantCulture,
                             "{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}{11}{12}{13}{14}{15}{16}{17}{18}{19}{20}{21}{22}{23}{24}{25}{26}{27}{28}{29}{30}{31}{32}{33}{34}{35}{36}{37}{38}{39}{40}{41}{42}{43}{44}{45}{46}{47}",
                             runID, createdAt, createdBy, questID, timeLeft,
                             finalTimeValue, finalTimeDisplay, objectiveImage, objectiveTypeID, objectiveQuantity,
@@ -803,7 +803,7 @@ public sealed class DatabaseService
                     sql = "SELECT LAST_INSERT_ROWID()";
                     using (var cmd = new SQLiteCommand(sql, conn))
                     {
-                        runID = Convert.ToInt32(cmd.ExecuteScalar());
+                        runID = Convert.ToInt32(cmd.ExecuteScalar(), CultureInfo.InvariantCulture);
                     }
 
                     if (dataLoader.Model.PartySize() == 1)
@@ -925,7 +925,7 @@ public sealed class DatabaseService
                         var mhfohddllHash = CalculateFileHash(gameFolderPath, @"\mhfo-hd.dll");
                         var mhfexeHash = CalculateFileHash(gameFolderPath, @"\mhf.exe");
 
-                        var gameFolderData = string.Format(
+                        var gameFolderData = string.Format(CultureInfo.InvariantCulture,
                             "{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}",
                             createdAt, createdBy, runID,
                             gameFolderPath, mhfdatHash, mhfemdHash,
@@ -1005,7 +1005,7 @@ public sealed class DatabaseService
                     int zenithSkillsID;
                     using (var cmd = new SQLiteCommand(sql, conn))
                     {
-                        zenithSkillsID = Convert.ToInt32(cmd.ExecuteScalar());
+                        zenithSkillsID = Convert.ToInt32(cmd.ExecuteScalar(), CultureInfo.InvariantCulture);
                     }
 
                     sql = @"INSERT INTO AutomaticSkills (
@@ -1055,7 +1055,7 @@ public sealed class DatabaseService
                     int automaticSkillsID;
                     using (var cmd = new SQLiteCommand(sql, conn))
                     {
-                        automaticSkillsID = Convert.ToInt32(cmd.ExecuteScalar());
+                        automaticSkillsID = Convert.ToInt32(cmd.ExecuteScalar(), CultureInfo.InvariantCulture);
                     }
 
                     sql = @"INSERT INTO ActiveSkills (
@@ -1157,7 +1157,7 @@ public sealed class DatabaseService
                     int activeSkillsID;
                     using (var cmd = new SQLiteCommand(sql, conn))
                     {
-                        activeSkillsID = Convert.ToInt32(cmd.ExecuteScalar());
+                        activeSkillsID = Convert.ToInt32(cmd.ExecuteScalar(), CultureInfo.InvariantCulture);
                     }
 
                     sql = @"INSERT INTO CaravanSkills (
@@ -1195,7 +1195,7 @@ public sealed class DatabaseService
                     int caravanSkillsID;
                     using (var cmd = new SQLiteCommand(sql, conn))
                     {
-                        caravanSkillsID = Convert.ToInt32(cmd.ExecuteScalar());
+                        caravanSkillsID = Convert.ToInt32(cmd.ExecuteScalar(), CultureInfo.InvariantCulture);
                     }
 
                     sql = @"INSERT INTO StyleRankSkills (
@@ -1229,7 +1229,7 @@ public sealed class DatabaseService
                     int styleRankSkillsID;
                     using (var cmd = new SQLiteCommand(sql, conn))
                     {
-                        styleRankSkillsID = Convert.ToInt32(cmd.ExecuteScalar());
+                        styleRankSkillsID = Convert.ToInt32(cmd.ExecuteScalar(), CultureInfo.InvariantCulture);
                     }
 
                     sql = @"INSERT INTO PlayerInventory (
@@ -1417,7 +1417,7 @@ public sealed class DatabaseService
                     int playerInventoryID;
                     using (var cmd = new SQLiteCommand(sql, conn))
                     {
-                        playerInventoryID = Convert.ToInt32(cmd.ExecuteScalar());
+                        playerInventoryID = Convert.ToInt32(cmd.ExecuteScalar(), CultureInfo.InvariantCulture);
                     }
 
                     sql = @"INSERT INTO AmmoPouch (
@@ -1525,7 +1525,7 @@ public sealed class DatabaseService
                     int ammoPouchID;
                     using (var cmd = new SQLiteCommand(sql, conn))
                     {
-                        ammoPouchID = Convert.ToInt32(cmd.ExecuteScalar());
+                        ammoPouchID = Convert.ToInt32(cmd.ExecuteScalar(), CultureInfo.InvariantCulture);
                     }
 
                     sql = @"INSERT INTO PartnyaBag (
@@ -1633,7 +1633,7 @@ public sealed class DatabaseService
                     int partnyaBagID;
                     using (var cmd = new SQLiteCommand(sql, conn))
                     {
-                        partnyaBagID = Convert.ToInt32(cmd.ExecuteScalar());
+                        partnyaBagID = Convert.ToInt32(cmd.ExecuteScalar(), CultureInfo.InvariantCulture);
                     }
 
                     sql = @"INSERT INTO RoadDureSkills (
@@ -1791,7 +1791,7 @@ public sealed class DatabaseService
                     int roadDureSkillsID;
                     using (var cmd = new SQLiteCommand(sql, conn))
                     {
-                        roadDureSkillsID = Convert.ToInt32(cmd.ExecuteScalar());
+                        roadDureSkillsID = Convert.ToInt32(cmd.ExecuteScalar(), CultureInfo.InvariantCulture);
                     }
 
                     var gearName = s.GearDescriptionExport;
@@ -1975,7 +1975,7 @@ public sealed class DatabaseService
                         @PartnyaBagDictionary-- TEXT NOT NULL,
                         )";
 
-                    var playerGearData = string.Format(
+                    var playerGearData = string.Format(CultureInfo.InvariantCulture,
                         "{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}{11}{12}{13}{14}{15}{16}{17}{18}{19}{20}{21}{22}{23}{24}{25}{26}{27}{28}{29}{30}{31}{32}{33}{34}{35}{36}{37}{38}{39}{40}{41}{42}{43}{44}{45}{46}{47}{48}{49}{50}",
                         createdAt, createdBy, runID, playerID, gearName,
                         styleID, weaponIconID, weaponClassID, weaponTypeID, blademasterWeaponID,
@@ -2078,7 +2078,7 @@ public sealed class DatabaseService
                     // Handle a SQL exception
                     Logger.Error(ex, "An error occurred while accessing the database");
                     MessageBox.Show(
-                        string.Format(
+                        string.Format(CultureInfo.InvariantCulture,
 @"An error occurred while accessing the database.
 
 Sql State: {0}
@@ -2123,7 +2123,7 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
             this.UpdateHashSets(conn);
         }
 
-        Logger.Debug("Inserted quest data, returning runID {0}", runID);
+        Logger.Debug(CultureInfo.InvariantCulture, "Inserted quest data, returning runID {0}", runID);
         dataLoader.Model.ShowSaveIcon = false;
         return runID;
     }
@@ -3030,7 +3030,7 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
                 // Handle a SQL exception
                 Logger.Error(ex, "An error occurred while accessing the database");
                 MessageBox.Show(
-                    string.Format(
+                    string.Format(CultureInfo.InvariantCulture,
                 @"An error occurred while accessing the database.
 
 SQL State: {0}
@@ -3429,7 +3429,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                     var result = cmd.ExecuteScalar();
                     if (result != null && result.ToString() != string.Empty)
                     {
-                        startTime = Convert.ToDateTime(result);
+                        startTime = Convert.ToDateTime(result, CultureInfo.InvariantCulture);
                     }
                     else
                     {
@@ -3781,7 +3781,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
     public void StoreAchievement(int achievementID)
     {
-        Logger.Debug("Storing achievement ID {0}", achievementID);
+        Logger.Debug(CultureInfo.InvariantCulture, "Storing achievement ID {0}", achievementID);
 
         if (string.IsNullOrEmpty(this.dataSource))
         {
@@ -3837,7 +3837,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
     {
         var minutes = framesElapsed / (Numbers.FramesPerSecond * 60);
         var seconds = (framesElapsed % (Numbers.FramesPerSecond * 60)) / Numbers.FramesPerSecond;
-        var milliseconds = ((framesElapsed % (Numbers.FramesPerSecond * 60)) % Numbers.FramesPerSecond) / double.Parse(Numbers.FramesPerSecond.ToString(), CultureInfo.InvariantCulture);
+        var milliseconds = ((framesElapsed % (Numbers.FramesPerSecond * 60)) % Numbers.FramesPerSecond) / double.Parse(Numbers.FramesPerSecond.ToString(CultureInfo.InvariantCulture), CultureInfo.InvariantCulture);
         return $"{minutes:D2}:{seconds:D2}.{(int)(milliseconds * 1000):D3}";
     }
 
@@ -6011,7 +6011,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                             command.Parameters.AddWithValue("@WeaponTypeID", weaponTypeID);
                             command.Parameters.AddWithValue("@ActualOverlayMode", category);
 
-                            attempts = Convert.ToInt32(command.ExecuteScalar());
+                            attempts = Convert.ToInt32(command.ExecuteScalar(), CultureInfo.InvariantCulture);
                         }
 
                         transaction.Commit();
@@ -6078,7 +6078,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                             command.Parameters.AddWithValue("@WeaponTypeID", weaponTypeID);
                             command.Parameters.AddWithValue("@ActualOverlayMode", category);
 
-                            attempts = Convert.ToInt32(command.ExecuteScalar());
+                            attempts = Convert.ToInt32(command.ExecuteScalar(), CultureInfo.InvariantCulture);
                         }
 
                         transaction.Commit();
@@ -6145,7 +6145,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                             command.Parameters.AddWithValue("@WeaponTypeID", weaponTypeID);
                             command.Parameters.AddWithValue("@ActualOverlayMode", category);
 
-                            attempts = Convert.ToInt32(await command.ExecuteScalarAsync());
+                            attempts = Convert.ToInt32(await command.ExecuteScalarAsync(), CultureInfo.InvariantCulture);
                         }
 
                         transaction.Commit();
@@ -6212,7 +6212,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                             command.Parameters.AddWithValue("@WeaponTypeID", weaponTypeID);
                             command.Parameters.AddWithValue("@ActualOverlayMode", category);
 
-                            attempts = Convert.ToInt32(await command.ExecuteScalarAsync());
+                            attempts = Convert.ToInt32(await command.ExecuteScalarAsync(), CultureInfo.InvariantCulture);
                         }
 
                         transaction.Commit();
@@ -6275,7 +6275,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                         var result = cmd.ExecuteScalar();
                         if (result != null)
                         {
-                            attempts = Convert.ToInt64(result);
+                            attempts = Convert.ToInt64(result, CultureInfo.InvariantCulture);
                         }
                     }
 
@@ -10140,8 +10140,8 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                                         // LiveChart graph
                                         // use a switch statement or a lookup table to convert the
                                         // weaponTypeID and styleID to their corresponding string names
-                                        weaponType = WeaponType.IDName[int.Parse(weaponTypeID.ToString(), CultureInfo.InvariantCulture)];
-                                        style = WeaponStyle.IDName[int.Parse(styleID.ToString(), CultureInfo.InvariantCulture)];
+                                        weaponType = WeaponType.IDName[int.Parse(weaponTypeID.ToString(CultureInfo.InvariantCulture), CultureInfo.InvariantCulture)];
+                                        style = WeaponStyle.IDName[int.Parse(styleID.ToString(CultureInfo.InvariantCulture), CultureInfo.InvariantCulture)];
                                         weaponUsageData.Add(new WeaponUsage(weaponType, style, (int)runCount));
                                     }
                                 }
@@ -10229,7 +10229,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                                 reader.Read();
                                 configWindow.SelectedQuestObjectiveImage.Source = new BitmapImage(new Uri(reader["ObjectiveImage"]?.ToString() ?? "0"));
                                 var questName = reader["QuestNameName"].ToString();
-                                configWindow.SelectedQuestNameTextBlock.Text = questName == string.Empty ? string.Format("{0} {1}", Messages.CustomQuestName, questID) : questName;
+                                configWindow.SelectedQuestNameTextBlock.Text = questName == string.Empty ? string.Format(CultureInfo.InvariantCulture, "{0} {1}", Messages.CustomQuestName, questID) : questName;
                                 configWindow.SelectedQuestObjectiveTextBlock.Text = string.Format(CultureInfo.InvariantCulture, "{0} {1} {2}", ObjectiveType.IDName[int.Parse(reader["ObjectiveTypeID"]?.ToString() ?? "0", CultureInfo.InvariantCulture)], reader["ObjectiveQuantity"], reader["ObjectiveName"]);
                                 configWindow.CurrentTimeTextBlock.Text = DateTime.UtcNow.ToString(CultureInfo.InvariantCulture);
                             }
@@ -10276,7 +10276,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
                             while (reader.Read())
                             {
-                                WeaponType.IDName.TryGetValue(Convert.ToInt32(reader["WeaponTypeID"]), out var weaponType);
+                                WeaponType.IDName.TryGetValue(Convert.ToInt32(reader["WeaponTypeID"], CultureInfo.InvariantCulture), out var weaponType);
 
                                 int bestTime;
                                 if (reader["BestTime"] == DBNull.Value)
@@ -11587,7 +11587,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                         {
                             if (reader.Read())
                             {
-                                totalTimeElapsed = Convert.ToInt64(reader["TotalTimeElapsed"]);
+                                totalTimeElapsed = Convert.ToInt64(reader["TotalTimeElapsed"], CultureInfo.InvariantCulture);
                             }
                         }
                     }
@@ -11640,7 +11640,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                         {
                             if (reader.Read())
                             {
-                                var value = Convert.ToInt64(reader["TotalTimeElapsed"]);
+                                var value = Convert.ToInt64(reader["TotalTimeElapsed"], CultureInfo.InvariantCulture);
 
                                 questCompendium.TotalTimeElapsedQuests = value;
                             }
@@ -11705,7 +11705,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                         {
                             while (reader.Read())
                             {
-                                var questId = Convert.ToInt32(reader["QuestId"]);
+                                var questId = Convert.ToInt32(reader["QuestId"], CultureInfo.InvariantCulture);
                                 var cartsDictionaryJson = reader.GetString(1);
 
                                 // Deserialize carts dictionary JSON string
@@ -11877,7 +11877,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
         using (var cmd = new SQLiteCommand(query, conn))
         {
             cmd.Parameters.AddWithValue("@value", value);
-            count = Convert.ToInt64(cmd.ExecuteScalar());
+            count = Convert.ToInt64(cmd.ExecuteScalar(), CultureInfo.InvariantCulture);
         }
 
         return count;
@@ -12151,7 +12151,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
         using (var cmd = new SQLiteCommand(totalQuestRunsQuery, conn))
         {
-            totalQuestRuns = Convert.ToInt32(cmd.ExecuteScalar());
+            totalQuestRuns = Convert.ToInt32(cmd.ExecuteScalar(), CultureInfo.InvariantCulture);
         }
 
         using (var cmd = new SQLiteCommand(hitsTakenBlockedCountQuery, conn))
@@ -12319,7 +12319,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
         var sql = $"SELECT COUNT({fieldName}) FROM {tableName}";
         using (var command = new SQLiteCommand(sql, conn))
         {
-            return Convert.ToInt64(command.ExecuteScalar());
+            return Convert.ToInt64(command.ExecuteScalar(), CultureInfo.InvariantCulture);
         }
     }
 
@@ -12338,7 +12338,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
         using (var cmd = new SQLiteCommand(query, conn))
         {
             cmd.Parameters.AddWithValue("@value", value);
-            count = Convert.ToInt64(cmd.ExecuteScalar());
+            count = Convert.ToInt64(cmd.ExecuteScalar(), CultureInfo.InvariantCulture);
         }
 
         return count;
@@ -12764,7 +12764,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
         var query = $"SELECT TOTAL({field}) FROM {table} WHERE {field} IS NOT NULL";
         using (var cmd = new SQLiteCommand(query, conn))
         {
-            var sum = Convert.ToInt64(cmd.ExecuteScalar());
+            var sum = Convert.ToInt64(cmd.ExecuteScalar(), CultureInfo.InvariantCulture);
             return sum;
         }
     }
@@ -12918,7 +12918,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
             {
                 if (reader.Read())
                 {
-                    attempts = Convert.ToInt64(reader["TotalAttempts"]);
+                    attempts = Convert.ToInt64(reader["TotalAttempts"], CultureInfo.InvariantCulture);
                 }
             }
         }
@@ -12954,7 +12954,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                 if (reader.Read())
                 {
                     questID = (long)reader["QuestID"];
-                    attempts = Convert.ToInt64(reader["Attempts"]);
+                    attempts = Convert.ToInt64(reader["Attempts"], CultureInfo.InvariantCulture);
                 }
             }
         }
@@ -13356,7 +13356,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                     var result = cmd.ExecuteScalar();
                     if (result != DBNull.Value)
                     {
-                        version = Convert.ToInt32(result);
+                        version = Convert.ToInt32(result, CultureInfo.InvariantCulture);
                         Logger.Info(CultureInfo.InvariantCulture, "Current user_version is {0}", version);
                     }
                 }
@@ -13488,7 +13488,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                     default:
                         Logger.Info(CultureInfo.InvariantCulture, "No new schema updates found. Schema version: {0}", fromVersion);
                         MessageBox.Show(
-                            string.Format(
+                            string.Format(CultureInfo.InvariantCulture,
 @"No new schema updates found! Schema version: {0}", fromVersion),
                             string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} to {1})",
                             previousVersion,
@@ -13918,7 +13918,7 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
                 createTable.ExecuteNonQuery();
             }
 
-            Logger.Debug("Created table if not exists new_{0}", tableName);
+            Logger.Debug(CultureInfo.InvariantCulture, "Created table if not exists new_{0}", tableName);
 
             // 5. Transfer content from X into new_X using a statement like: INSERT INTO new_X SELECT ... FROM X.
             // Transfer content from X into new_X using a statement like: INSERT INTO new_X SELECT ... FROM X
@@ -13927,9 +13927,9 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
             var countQuery = "SELECT COUNT(*) FROM Quests";
             using (var command = new SQLiteCommand(countQuery, connection))
             {
-                var rowCount = Convert.ToInt32(command.ExecuteScalar());
+                var rowCount = Convert.ToInt32(command.ExecuteScalar(), CultureInfo.InvariantCulture);
 
-                Logger.Debug("Inserting default values into new_Quests");
+                Logger.Debug(CultureInfo.InvariantCulture, "Inserting default values into new_Quests");
 
                 // Insert rows with default values into new_Quests
                 var insertQuery = $"INSERT INTO new_Quests DEFAULT VALUES";
@@ -13979,7 +13979,7 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
                 dropTable.ExecuteNonQuery();
             }
 
-            Logger.Debug("Deleted table {0}", tableName);
+            Logger.Debug(CultureInfo.InvariantCulture, "Deleted table {0}", tableName);
 
             // 7. Change the name of new_X to X using: ALTER TABLE new_X RENAME TO X.
             // Change the name of new_X to X using: ALTER TABLE new_X RENAME TO X
@@ -13988,7 +13988,7 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
                 renameTable.ExecuteNonQuery();
             }
 
-            Logger.Debug("Renamed new_{0} to {1}", tableName, tableName);
+            Logger.Debug(CultureInfo.InvariantCulture, "Renamed new_{0} to {1}", tableName, tableName);
 
             // 8. Use CREATE INDEX, CREATE TRIGGER, and CREATE VIEW to reconstruct indexes, triggers, and views associated with table X. Perhaps use the old format of the triggers, indexes, and views saved from step 3 above as a guide, making changes as appropriate for the alteration.
             // Use CREATE INDEX, CREATE TRIGGER, and CREATE VIEW to reconstruct indexes, triggers, and views associated with table X
@@ -14055,7 +14055,7 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
                 }
             }
 
-            Logger.Debug("Views affected: {0}", viewSqlsModified.Count);
+            Logger.Debug(CultureInfo.InvariantCulture, "Views affected: {0}", viewSqlsModified.Count);
 
             Logger.Info(CultureInfo.InvariantCulture, "Altered table {0} successfully", tableName);
         }
@@ -14081,7 +14081,7 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
                 createTable.ExecuteNonQuery();
             }
 
-            Logger.Debug("Created table if not exists new_{0}", tableName);
+            Logger.Debug(CultureInfo.InvariantCulture, "Created table if not exists new_{0}", tableName);
 
             // 5. Transfer content from X into new_X using a statement like: INSERT INTO new_X SELECT ... FROM X.
             // Transfer content from X into new_X using a statement like: INSERT INTO new_X SELECT ... FROM X
@@ -14094,7 +14094,7 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
                 transferDataCmd.ExecuteNonQuery();
             }
 
-            Logger.Debug("Transferred data from {0} to new_{1}", tableName, tableName);
+            Logger.Debug(CultureInfo.InvariantCulture, "Transferred data from {0} to new_{1}", tableName, tableName);
 
             // 6. Drop the old table X: DROP TABLE X.
             // Drop the old table X
@@ -14103,7 +14103,7 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
                 dropTable.ExecuteNonQuery();
             }
 
-            Logger.Debug("Deleted table {0}", tableName);
+            Logger.Debug(CultureInfo.InvariantCulture, "Deleted table {0}", tableName);
 
             // 7. Change the name of new_X to X using: ALTER TABLE new_X RENAME TO X.
             // Change the name of new_X to X using: ALTER TABLE new_X RENAME TO X
@@ -14112,7 +14112,7 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
                 renameTable.ExecuteNonQuery();
             }
 
-            Logger.Debug("Renamed new_{0} to {1}", tableName, tableName);
+            Logger.Debug(CultureInfo.InvariantCulture, "Renamed new_{0} to {1}", tableName, tableName);
 
             // 8. Use CREATE INDEX, CREATE TRIGGER, and CREATE VIEW to reconstruct indexes, triggers, and views associated with table X. Perhaps use the old format of the triggers, indexes, and views saved from step 3 above as a guide, making changes as appropriate for the alteration.
             // Recreate indexes, triggers, and views associated with the original table "QuestAttempts".
@@ -14133,7 +14133,7 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
         {
             // Roll back the transaction if any errors occur
             Logger.Error(ex, "Could not alter table {0}", tableName);
-            LoggingService.WriteCrashLog(ex, string.Format("Could not alter table {0}", tableName));
+            LoggingService.WriteCrashLog(ex, string.Format(CultureInfo.InvariantCulture, "Could not alter table {0}", tableName));
         }
     }
 
@@ -14152,7 +14152,7 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
                 createTable.ExecuteNonQuery();
             }
 
-            Logger.Debug("Created table if not exists new_{0}", tableName);
+            Logger.Debug(CultureInfo.InvariantCulture, "Created table if not exists new_{0}", tableName);
 
             // 5. Transfer content from X into new_X using a statement like: INSERT INTO new_X SELECT ... FROM X.
             // Transfer content from X into new_X using a statement like: INSERT INTO new_X SELECT ... FROM X
@@ -14174,7 +14174,7 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
                 dropTable.ExecuteNonQuery();
             }
 
-            Logger.Debug("Deleted table {0}", tableName);
+            Logger.Debug(CultureInfo.InvariantCulture, "Deleted table {0}", tableName);
 
             // 7. Change the name of new_X to X using: ALTER TABLE new_X RENAME TO X.
             // Change the name of new_X to X using: ALTER TABLE new_X RENAME TO X
@@ -14204,7 +14204,7 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
         {
             // Roll back the transaction if any errors occur
             Logger.Error(ex, "Could not alter table {0}", tableName);
-            LoggingService.WriteCrashLog(ex, string.Format("Could not alter table {0}", tableName));
+            LoggingService.WriteCrashLog(ex, string.Format(CultureInfo.InvariantCulture, "Could not alter table {0}", tableName));
         }
     }
 
@@ -14251,14 +14251,14 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
                 createTable.ExecuteNonQuery();
             }
 
-            Logger.Debug("Created table if not exists new_{0}", tableName);
+            Logger.Debug(CultureInfo.InvariantCulture, "Created table if not exists new_{0}", tableName);
 
             // 5. Transfer content from X into new_X using a statement like: INSERT INTO new_X SELECT ... FROM X.
             // Transfer content from X into new_X using a statement like: INSERT INTO new_X SELECT ... FROM X
             var countQuery = "SELECT COUNT(*) FROM GameFolder";
             using (var command = new SQLiteCommand(countQuery, connection))
             {
-                var rowCount = Convert.ToInt32(command.ExecuteScalar());
+                var rowCount = Convert.ToInt32(command.ExecuteScalar(), CultureInfo.InvariantCulture);
 
                 Logger.Debug("Inserting default values into new_GameFolder");
 
@@ -14306,7 +14306,7 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
                 dropTable.ExecuteNonQuery();
             }
 
-            Logger.Debug("Deleted table {0}", tableName);
+            Logger.Debug(CultureInfo.InvariantCulture, "Deleted table {0}", tableName);
 
             // 7. Change the name of new_X to X using: ALTER TABLE new_X RENAME TO X.
             // Change the name of new_X to X using: ALTER TABLE new_X RENAME TO X
@@ -14382,7 +14382,7 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
                 }
             }
 
-            Logger.Debug("Views affected: {0}", viewSqlsModified.Count);
+            Logger.Debug(CultureInfo.InvariantCulture, "Views affected: {0}", viewSqlsModified.Count);
 
             Logger.Info(CultureInfo.InvariantCulture, "Altered table {0} successfully", tableName);
         }
@@ -14390,7 +14390,7 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
         {
             // Roll back the transaction if any errors occur
             Logger.Error(ex, "Could not alter table {0}", tableName);
-            LoggingService.WriteCrashLog(ex, string.Format("Could not alter table {0}", tableName));
+            LoggingService.WriteCrashLog(ex, string.Format(CultureInfo.InvariantCulture, "Could not alter table {0}", tableName));
         }
     }
 
@@ -14441,7 +14441,7 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
                 createTable.ExecuteNonQuery();
             }
 
-            Logger.Debug("Created table new_{0}", tableName);
+            Logger.Debug(CultureInfo.InvariantCulture, "Created table new_{0}", tableName);
 
             // 5. Transfer content from X into new_X using a statement like: INSERT INTO new_X SELECT ... FROM X.
             // Transfer content from X into new_X using a statement like: INSERT INTO new_X SELECT ... FROM X
@@ -14460,7 +14460,7 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
                 dropTable.ExecuteNonQuery();
             }
 
-            Logger.Debug("Deleted table {0}", tableName);
+            Logger.Debug(CultureInfo.InvariantCulture, "Deleted table {0}", tableName);
 
             // 7. Change the name of new_X to X using: ALTER TABLE new_X RENAME TO X.
             // Change the name of new_X to X using: ALTER TABLE new_X RENAME TO X
@@ -14536,7 +14536,7 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
                 }
             }
 
-            Logger.Debug("Views affected: {0}", viewSqlsModified.Count);
+            Logger.Debug(CultureInfo.InvariantCulture, "Views affected: {0}", viewSqlsModified.Count);
 
             Logger.Info(CultureInfo.InvariantCulture, "Altered table {0} successfully", tableName);
         }
@@ -14544,7 +14544,7 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
         {
             // Roll back the transaction if any errors occur
             Logger.Error(ex, "Could not alter table {0}", tableName);
-            LoggingService.WriteCrashLog(ex, string.Format("Could not alter table {0}", tableName));
+            LoggingService.WriteCrashLog(ex, string.Format(CultureInfo.InvariantCulture, "Could not alter table {0}", tableName));
         }
     }
 

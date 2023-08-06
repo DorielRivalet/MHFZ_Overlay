@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using MHFZ_Overlay.Models;
 using MHFZ_Overlay.Models.Structures;
+using Octokit;
 
 /// <summary>
 /// Achievements dictionary. TODO.

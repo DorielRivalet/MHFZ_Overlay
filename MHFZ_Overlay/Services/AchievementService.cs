@@ -210,7 +210,7 @@ public sealed class AchievementService : IAchievementService
         {
             default:
             {
-                LoggerInstance.Error("Achievement ID {0} not found", achievementID);
+                LoggerInstance.Error(CultureInfo.InvariantCulture, "Achievement ID {0} not found", achievementID);
                 return false;
             }
 

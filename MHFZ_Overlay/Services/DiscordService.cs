@@ -35,8 +35,8 @@ public sealed class DiscordService
     // sky corridor prologue: 21729
     // raviente 62105
     // raviente carve 62108
-    //violent raviente 62101
-    //violent carve 62104
+    // violent raviente 62101
+    // violent carve 62104
     // berserk slay practice 55796
     // berserk support practice 1 55802
     // berserk support practice 2 55803

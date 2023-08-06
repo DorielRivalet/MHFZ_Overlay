@@ -1514,7 +1514,7 @@ TreeScope.Children, condition);
         var success = int.TryParse(this.ATK, NumberStyles.Number, CultureInfo.InvariantCulture, out var playerTrueRaw);
         if (!success)
         {
-            LoggerInstance.Warn("Could not parse player true raw as integer: {0}", this.ATK);
+            LoggerInstance.Warn(CultureInfo.InvariantCulture, "Could not parse player true raw as integer: {0}", this.ATK);
         }
         else
         {
@@ -2390,7 +2390,7 @@ TreeScope.Children, condition);
             {
                 // Handle the case when Monster1MaxHP cannot be parsed to an int
                 // For example, you can return an error message, set a default value or throw an exception
-                LoggerInstance.Warn("Could not parse Monster1MaxHP to get pace: {0}", this.Monster1MaxHP);
+                LoggerInstance.Warn(CultureInfo.InvariantCulture, "Could not parse Monster1MaxHP to get pace: {0}", this.Monster1MaxHP);
                 return "#f5e0dc";
             }
 
@@ -2470,7 +2470,7 @@ TreeScope.Children, condition);
             {
                 // Handle the case when Monster1MaxHP cannot be parsed to an int
                 // For example, you can return an error message, set a default value or throw an exception
-                LoggerInstance.Warn("Could not parse Monster1MaxHP to get best pace: {0}", this.Monster1MaxHP);
+                LoggerInstance.Warn(CultureInfo.InvariantCulture, "Could not parse Monster1MaxHP to get best pace: {0}", this.Monster1MaxHP);
                 return "#f5e0dc";
             }
 
@@ -2490,7 +2490,7 @@ TreeScope.Children, condition);
             {
                 // Handle the case when PersonalBestTimePercent cannot be parsed to an int
                 // For example, you can return an error message, set a default value or throw an exception
-                LoggerInstance.Warn("Could not parse Monster1MaxHP to get best pace: {0}", this.Monster1MaxHP);
+                LoggerInstance.Warn(CultureInfo.InvariantCulture, "Could not parse Monster1MaxHP to get best pace: {0}", this.Monster1MaxHP);
                 return "#f5e0dc";
             }
 
@@ -2647,7 +2647,7 @@ TreeScope.Children, condition);
             }
             else
             {
-                LoggerInstance.Warn("Could not parse monster attack multiplier to double: {0}", this.AtkMult);
+                LoggerInstance.Warn(CultureInfo.InvariantCulture, "Could not parse monster attack multiplier to double: {0}", this.AtkMult);
             }
 
             if (decimal.TryParse(this.DefMult, NumberStyles.Any, CultureInfo.InvariantCulture, out var defMultResult))
@@ -2659,7 +2659,7 @@ TreeScope.Children, condition);
             }
             else
             {
-                LoggerInstance.Warn("Could not parse monster defense multiplier to decimal: {0}", this.DefMult);
+                LoggerInstance.Warn(CultureInfo.InvariantCulture, "Could not parse monster defense multiplier to decimal: {0}", this.DefMult);
             }
 
             return weaponRaw.ToString(CultureInfo.InvariantCulture);
@@ -4697,7 +4697,7 @@ TreeScope.Children, condition);
         return s.GenderExport ?? "Male";
     }
 
-    public static string GetRealWeaponNameForRunID(string className, string weaponName, long styleID, long weaponID, string weaponSlot1, string weaponSlot2, string weaponSlot3)
+    public static string GetRealWeaponNameForRunID(string className, long styleID, long weaponID, string weaponSlot1, string weaponSlot2, string weaponSlot3)
     {
         var style = styleID switch
         {
@@ -5425,7 +5425,7 @@ TreeScope.Children, condition);
 
     public static string GetCaravanSkillsForRunID(int skill1, int skill2, int skill3)
     {
-        var SkillName = string.Empty;
+        var caravanSkillName = string.Empty;
         var skills = new int[] { skill1, skill2, skill3 };
         for (var i = 0; i < skills.Length; i++)
         {
@@ -5433,20 +5433,20 @@ TreeScope.Children, condition);
             if (SkillCaravan.IDName.TryGetValue(skillId, out var skillName)
                 && skillName != "None" && skillName != string.Empty)
             {
-                SkillName += skillName;
+                caravanSkillName += skillName;
                 if (i != skills.Length - 1)
                 {
-                    SkillName += ", ";
+                    caravanSkillName += ", ";
                 }
 
                 if (i % 5 == 4)
                 {
-                    SkillName += "\n";
+                    caravanSkillName += "\n";
                 }
             }
         }
 
-        return string.IsNullOrEmpty(SkillName) ? "None" : SkillName;
+        return string.IsNullOrEmpty(caravanSkillName) ? "None" : caravanSkillName;
     }
 
     /// <summary>
@@ -5617,7 +5617,7 @@ TreeScope.Children, condition);
 
     public static string GetZenithSkillsForRunID(int skill1, int skill2, int skill3, int skill4, int skill5, int skill6, int skill7)
     {
-        var SkillName = string.Empty;
+        var zenithSkillName = string.Empty;
         var skills = new int[] { skill1, skill2, skill3, skill4, skill5, skill6, skill7 };
         for (var i = 0; i < skills.Length; i++)
         {
@@ -5626,31 +5626,31 @@ TreeScope.Children, condition);
             {
                 if (skillName != "None" && skillName != string.Empty)
                 {
-                    SkillName += skillName;
+                    zenithSkillName += skillName;
                     if (i != skills.Length - 1)
                     {
-                        SkillName += ", ";
+                        zenithSkillName += ", ";
                     }
 
                     if (i % 5 == 4)
                     {
-                        SkillName += "\n";
+                        zenithSkillName += "\n";
                     }
                 }
             }
         }
 
-        if (string.IsNullOrEmpty(SkillName))
+        if (string.IsNullOrEmpty(zenithSkillName))
         {
             return "None";
         }
 
-        return SkillName;
+        return zenithSkillName;
     }
 
     public static string GetArmorSkillsForRunID(int skill1, int skill2, int skill3, int skill4, int skill5, int skill6, int skill7, int skill8, int skill9, int skill10, int skill11, int skill12, int skill13, int skill14, int skill15, int skill16, int skill17, int skill18, int skill19)
     {
-        var SkillName = string.Empty;
+        var armorSkillName = string.Empty;
         var skills = new int[] { skill1, skill2, skill3, skill4, skill5, skill6, skill7, skill8, skill9, skill10, skill11, skill12, skill13, skill14, skill15, skill16, skill17, skill18, skill19 };
         for (var i = 0; i < skills.Length; i++)
         {
@@ -5659,26 +5659,26 @@ TreeScope.Children, condition);
             {
                 if (skillName != "None" && skillName != string.Empty)
                 {
-                    SkillName += skillName;
+                    armorSkillName += skillName;
                     if (i != skills.Length - 1)
                     {
-                        SkillName += ", ";
+                        armorSkillName += ", ";
                     }
 
                     if (i % 5 == 4)
                     {
-                        SkillName += "\n";
+                        armorSkillName += "\n";
                     }
                 }
             }
         }
 
-        if (string.IsNullOrEmpty(SkillName))
+        if (string.IsNullOrEmpty(armorSkillName))
         {
             return "None";
         }
 
-        return SkillName;
+        return armorSkillName;
     }
 
     /// <summary>
@@ -5742,7 +5742,7 @@ TreeScope.Children, condition);
 
     public static string GetAutomaticSkillsForRunID(int skill1, int skill2, int skill3, int skill4, int skill5, int skill6)
     {
-        var SkillName = string.Empty;
+        var automaticSkillName = string.Empty;
         var skills = new int[] { skill1, skill2, skill3, skill4, skill5, skill6 };
         for (var i = 0; i < skills.Length; i++)
         {
@@ -5751,26 +5751,26 @@ TreeScope.Children, condition);
             {
                 if (skillName != "None" && skillName != string.Empty)
                 {
-                    SkillName += skillName;
+                    automaticSkillName += skillName;
                     if (i != skills.Length - 1)
                     {
-                        SkillName += ", ";
+                        automaticSkillName += ", ";
                     }
 
                     if (i % 5 == 4)
                     {
-                        SkillName += "\n";
+                        automaticSkillName += "\n";
                     }
                 }
             }
         }
 
-        if (string.IsNullOrEmpty(SkillName))
+        if (string.IsNullOrEmpty(automaticSkillName))
         {
             return "None";
         }
 
-        return SkillName;
+        return automaticSkillName;
     }
 
     /// <summary>
@@ -5892,7 +5892,7 @@ TreeScope.Children, condition);
 
     public static string GetGSRSkillsForRunID(int skill1, int skill2)
     {
-        var SkillName = string.Empty;
+        var styleRankSkillName = string.Empty;
         var skills = new int[] { skill1, skill2 };
         for (var i = 0; i < skills.Length; i++)
         {
@@ -5901,26 +5901,26 @@ TreeScope.Children, condition);
             {
                 if (skillName != "None" && skillName != string.Empty)
                 {
-                    SkillName += skillName;
+                    styleRankSkillName += skillName;
                     if (i != skills.Length - 1)
                     {
-                        SkillName += ", ";
+                        styleRankSkillName += ", ";
                     }
 
                     if (i % 5 == 4)
                     {
-                        SkillName += "\n";
+                        styleRankSkillName += "\n";
                     }
                 }
             }
         }
 
-        if (string.IsNullOrEmpty(SkillName))
+        if (string.IsNullOrEmpty(styleRankSkillName))
         {
             return "None";
         }
 
-        return SkillName;
+        return styleRankSkillName;
     }
 
     /// <summary>
@@ -7485,7 +7485,7 @@ TreeScope.Children, condition);
                         0
                         : playerGear.GunnerWeaponID
                     : playerGear.BlademasterWeaponID);
-            var realweaponName = GetRealWeaponNameForRunID(this.GetWeaponClass((int)playerGear.WeaponClassID), GetWeaponNameFromType((int)playerGear.WeaponTypeID), playerGear.StyleID, weaponID, playerGear.WeaponSlot1, playerGear.WeaponSlot2, playerGear.WeaponSlot3);
+            var realweaponName = GetRealWeaponNameForRunID(this.GetWeaponClass((int)playerGear.WeaponClassID), playerGear.StyleID, weaponID, playerGear.WeaponSlot1, playerGear.WeaponSlot2, playerGear.WeaponSlot3);
             var head = this.GetArmorHeadNameForRunID((int)playerGear.HeadID, (int)playerGear.HeadSlot1ID, (int)playerGear.HeadSlot2ID, (int)playerGear.HeadSlot3ID);
             var chest = this.GetArmorChestNameForRunID((int)playerGear.ChestID, (int)playerGear.ChestSlot1ID, (int)playerGear.ChestSlot2ID, (int)playerGear.ChestSlot3ID);
             var arms = this.GetArmorArmNameForRunID((int)playerGear.ArmsID, (int)playerGear.ArmsSlot1ID, (int)playerGear.ArmsSlot2ID, (int)playerGear.ArmsSlot3ID);
@@ -7768,7 +7768,7 @@ Party Size: {32}",
     /// Generates the compendium.
     /// </summary>
     /// <returns></returns>
-    public string GenerateCompendium(DataLoader dataLoader)
+    public string GenerateCompendium()
     {
         var createdBy = GetFullCurrentProgramVersion();
         var createdAt = DateTime.UtcNow;
@@ -10706,7 +10706,9 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 "Some required files are missing from the game folder. Please make sure that the game folder contains the following files: "
             + string.Join(", ", findFiles) + "\n" +
             "gameFolderFiles: " + string.Join(", ", gameFolderFiles),
-                Messages.WarningTitle, MessageBoxButton.OK, MessageBoxImage.Warning);
+                Messages.WarningTitle,
+                MessageBoxButton.OK,
+                MessageBoxImage.Warning);
             LoggerInstance.Warn(CultureInfo.InvariantCulture, "Missing game files");
             s.EnableQuestLogging = false;
             s.Save();
@@ -12481,7 +12483,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         {
             // Handle the case when Monster1HP cannot be parsed to an int
             // For example, you can return an error message or set some default value
-            LoggerInstance.Warn("Could not parse monster 1 HP to get monster 1 EHP Percent: {0}", this.Monster1HP);
+            LoggerInstance.Warn(CultureInfo.InvariantCulture, "Could not parse monster 1 HP to get monster 1 EHP Percent: {0}", this.Monster1HP);
             return " (0%)";
         }
 

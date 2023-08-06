@@ -600,7 +600,13 @@ public sealed class FileService
 
 Original file: {1}
 
-Destination: {2}", logMessage, file, destination), Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
+Destination: {2}",
+                logMessage,
+                file,
+                destination),
+                Messages.InfoTitle,
+                MessageBoxButton.OK,
+                MessageBoxImage.Information);
         }
     }
 
@@ -682,7 +688,7 @@ Destination: {2}", logMessage, file, destination), Messages.InfoTitle, MessageBo
             }
             else
             {
-                Logger.Info("File does exist, canceling creation: {0}", path);
+                Logger.Info(CultureInfo.InvariantCulture, "File does exist, canceling creation: {0}", path);
             }
 
             return doesExist;

@@ -76,7 +76,7 @@ public enum GetterMode
     /// <summary>
     /// Gets a single object/primitive
     /// </summary>
-    Single,
+    One,
 
     /// <summary>
     /// Gets the count of the object

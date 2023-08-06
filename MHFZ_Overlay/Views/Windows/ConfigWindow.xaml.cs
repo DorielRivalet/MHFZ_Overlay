@@ -493,7 +493,7 @@ public partial class ConfigWindow : FluentWindow
         // Start the stopwatch
         stopwatch.Start();
 
-        InitializeComponent();
+        this.InitializeComponent();
         Logger.Info(CultureInfo.InvariantCulture, $"ConfigWindow initialized");
 
         this.Topmost = true;
@@ -510,15 +510,15 @@ public partial class ConfigWindow : FluentWindow
         var background9 = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Background/9.png";
 
         // https://stackoverflow.com/questions/30839173/change-background-image-in-wpf-using-c-sharp
-        GeneralContent.Background = new ImageBrush(new BitmapImage(new Uri(background1)));
-        HunterNotesContent.Background = new ImageBrush(new BitmapImage(new Uri(background2)));
-        MonsterHPContent.Background = new ImageBrush(new BitmapImage(new Uri(background3)));
-        MonsterStatusContent.Background = new ImageBrush(new BitmapImage(new Uri(background4)));
-        DiscordRPCContent.Background = new ImageBrush(new BitmapImage(new Uri(background5)));
-        CreditsContent.Background = new ImageBrush(new BitmapImage(new Uri(background6)));
-        MonsterInfoContent.Background = new ImageBrush(new BitmapImage(new Uri(background7)));
-        QuestLogContent.Background = new ImageBrush(new BitmapImage(new Uri(background8)));
-        PlayerContent.Background = new ImageBrush(new BitmapImage(new Uri(background9)));
+        this.GeneralContent.Background = new ImageBrush(new BitmapImage(new Uri(background1)));
+        this.HunterNotesContent.Background = new ImageBrush(new BitmapImage(new Uri(background2)));
+        this.MonsterHPContent.Background = new ImageBrush(new BitmapImage(new Uri(background3)));
+        this.MonsterStatusContent.Background = new ImageBrush(new BitmapImage(new Uri(background4)));
+        this.DiscordRPCContent.Background = new ImageBrush(new BitmapImage(new Uri(background5)));
+        this.CreditsContent.Background = new ImageBrush(new BitmapImage(new Uri(background6)));
+        this.MonsterInfoContent.Background = new ImageBrush(new BitmapImage(new Uri(background7)));
+        this.QuestLogContent.Background = new ImageBrush(new BitmapImage(new Uri(background8)));
+        this.PlayerContent.Background = new ImageBrush(new BitmapImage(new Uri(background9)));
 
         // TODO: test this
         this.DataContext = this.MainWindow.DataLoader.Model;
@@ -528,10 +528,10 @@ public partial class ConfigWindow : FluentWindow
             this.monsters[i].Hunted = this.GetHuntedCount(this.monsters[i].ID);
         }
 
-        HuntLogDataGrid.ItemsSource = this.monsters;
-        HuntLogDataGrid.Items.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
-        FilterBox.ItemsSource = new string[] { "All", "Large Monster", "Small Monster" };
-        HuntLogDataGrid.Items.Filter = MonsterFilterAll;
+        this.HuntLogDataGrid.ItemsSource = this.monsters;
+        this.HuntLogDataGrid.Items.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
+        this.FilterBox.ItemsSource = new string[] { "All", "Large Monster", "Small Monster" };
+        this.HuntLogDataGrid.Items.Filter = MonsterFilterAll;
 
         // See: https://stackoverflow.com/questions/22285866/why-relaycommand
         // Or use MVVM Light to obtain RelayCommand.
@@ -542,7 +542,7 @@ public partial class ConfigWindow : FluentWindow
             monsterNameList.Add(this.monsterInfos[i].Name);
         }
 
-        MonsterNameComboBox.ItemsSource = monsterNameList;
+        this.MonsterNameComboBox.ItemsSource = monsterNameList;
 
         _ = this.GetRepoStats();
 
@@ -554,7 +554,7 @@ public partial class ConfigWindow : FluentWindow
         ISnackbarService snackbarService = new SnackbarService();
 
         // Replace 'snackbarControl' with your actual snackbar control instance
-        snackbarService.SetSnackbarPresenter(ConfigWindowSnackBarPresenter);
+        snackbarService.SetSnackbarPresenter(this.ConfigWindowSnackBarPresenter);
 
         // Stop the stopwatch
         stopwatch.Stop();
@@ -578,7 +578,7 @@ public partial class ConfigWindow : FluentWindow
         return s.TextFormatExport ?? "None";
     }
 
-    public Predicate<object> GetFilter() => (FilterBox.SelectedItem as string) switch
+    public Predicate<object> GetFilter() => (this.FilterBox.SelectedItem as string) switch
     {
         "Large Monster" => MonsterFilterLarge,
         "Small Monster" => MonsterFilterSmall,
@@ -789,9 +789,9 @@ public partial class ConfigWindow : FluentWindow
     // TODO does this cover everything?
     private void DisposeAllWebViews()
     {
-        webViewFerias.Dispose();
-        webViewDamageCalculator.Dispose();
-        webViewMonsterInfo.Dispose();
+        this.webViewFerias.Dispose();
+        this.webViewDamageCalculator.Dispose();
+        this.webViewMonsterInfo.Dispose();
     }
 
     /// <summary>
@@ -931,7 +931,7 @@ public partial class ConfigWindow : FluentWindow
     /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
     private void BtnSaveFile_Click(object sender, RoutedEventArgs e)
     {
-        var textToSave = GearStats.Text;
+        var textToSave = this.GearStats.Text;
 
         if (GetTextFormatMode() == "Code Block")
         {
@@ -942,7 +942,7 @@ public partial class ConfigWindow : FluentWindow
             textToSave = this.MainWindow.DataLoader.Model.MarkdownSavedGearStats;
         }
 
-        var snackbar = new Snackbar(ConfigWindowSnackBarPresenter);
+        var snackbar = new Snackbar(this.ConfigWindowSnackBarPresenter);
         FileService.SaveTextFile(snackbar, textToSave, "GearStats");
     }
 
@@ -953,7 +953,7 @@ public partial class ConfigWindow : FluentWindow
     /// <param name="e"></param>
     private void BtnCopyFile_Click(object sender, RoutedEventArgs e)
     {
-        var textToSave = GearStats.Text;
+        var textToSave = this.GearStats.Text;
 
         if (GetTextFormatMode() == "Code Block")
         {
@@ -965,20 +965,20 @@ public partial class ConfigWindow : FluentWindow
         }
         else if (GetTextFormatMode() == "Image")
         {
-            var previousBackground = GearTextGrid.Background;
-            GearTextGrid.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
-            var snackbar = new Snackbar(ConfigWindowSnackBarPresenter)
+            var previousBackground = this.GearTextGrid.Background;
+            this.GearTextGrid.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
+            var snackbar = new Snackbar(this.ConfigWindowSnackBarPresenter)
             {
                 Style = (Style)this.FindResource("CatppuccinMochaSnackBar"),
             };
-            FileService.CopyUIElementToClipboard(GearTextGrid, snackbar);
-            GearTextGrid.Background = previousBackground;
+            FileService.CopyUIElementToClipboard(this.GearTextGrid, snackbar);
+            this.GearTextGrid.Background = previousBackground;
             return;
         }
 
         // https://stackoverflow.com/questions/3546016/how-to-copy-data-to-clipboard-in-c-sharp
         Clipboard.SetText(textToSave);
-        var snackbarSuccess = new Snackbar(ConfigWindowSnackBarPresenter)
+        var snackbarSuccess = new Snackbar(this.ConfigWindowSnackBarPresenter)
         {
             Style = (Style)this.FindResource("CatppuccinMochaSnackBar"),
             Title = Messages.InfoTitle,
@@ -990,7 +990,7 @@ public partial class ConfigWindow : FluentWindow
         snackbarSuccess.Show();
     }
 
-    private void FilterBox_SelectionChanged(object sender, SelectionChangedEventArgs e) => HuntLogDataGrid.Items.Filter = this.GetFilter();
+    private void FilterBox_SelectionChanged(object sender, SelectionChangedEventArgs e) => this.HuntLogDataGrid.Items.Filter = this.GetFilter();
 
     private void Config_Closed(object sender, EventArgs e)
     {
@@ -1003,7 +1003,7 @@ public partial class ConfigWindow : FluentWindow
 
     private void ChangeMonsterInfo()
     {
-        if (webViewMonsterInfo == null)
+        if (this.webViewMonsterInfo == null)
         {
             return;
         }
@@ -1025,45 +1025,45 @@ public partial class ConfigWindow : FluentWindow
 
         // see this
         // string selectedOverlayMode = ((ComboBoxItem)configWindow.OverlayModeComboBox.SelectedItem).Content.ToString();
-        string? selectedName = MonsterNameComboBox.SelectedItem.ToString();
+        string? selectedName = this.MonsterNameComboBox.SelectedItem.ToString();
         if (string.IsNullOrEmpty(selectedName))
         {
             selectedName = string.Empty;
         }
 
-        var selectedMatchup = $"{((ComboBoxItem)WeaponMatchupComboBox.SelectedItem).Content} {selectedName}";
+        var selectedMatchup = $"{((ComboBoxItem)this.WeaponMatchupComboBox.SelectedItem).Content} {selectedName}";
 
         if (!monsterFeriasOptionDictionary.TryGetValue(selectedName, out var val1) || !monsterWikiOptionDictionary.TryGetValue(selectedName, out var val2))
         {
             return;
         }
 
-        if (webViewMonsterInfo.CoreWebView2 == null)
+        if (this.webViewMonsterInfo.CoreWebView2 == null)
         {
             return;
         }
 
-        switch (MonsterInfoViewOptionComboBox.SelectedIndex)
+        switch (this.MonsterInfoViewOptionComboBox.SelectedIndex)
         {
             default:
                 return;
             case 0: // ferias
                 // https://stackoverflow.com/questions/1265812/howto-define-the-auto-width-of-the-wpf-gridview-column-in-code
-                DockPanelMonsterInfo.Width = double.NaN; // Auto
-                DockPanelMonsterInfo.Height = double.NaN; // Auto
-                webViewMonsterInfo.CoreWebView2.Navigate(monsterFeriasOptionDictionary[MonsterNameComboBox.SelectedItem.ToString() + string.Empty]);
+                this.DockPanelMonsterInfo.Width = double.NaN; // Auto
+                this.DockPanelMonsterInfo.Height = double.NaN; // Auto
+                this.webViewMonsterInfo.CoreWebView2.Navigate(monsterFeriasOptionDictionary[this.MonsterNameComboBox.SelectedItem.ToString() + string.Empty]);
                 return;
             case 1: // wiki
-                DockPanelMonsterInfo.Width = double.NaN; // Auto
-                DockPanelMonsterInfo.Height = double.NaN; // Auto
-                webViewMonsterInfo.CoreWebView2.Navigate(monsterWikiOptionDictionary[MonsterNameComboBox.SelectedItem.ToString() + string.Empty]);
+                this.DockPanelMonsterInfo.Width = double.NaN; // Auto
+                this.DockPanelMonsterInfo.Height = double.NaN; // Auto
+                this.webViewMonsterInfo.CoreWebView2.Navigate(monsterWikiOptionDictionary[this.MonsterNameComboBox.SelectedItem.ToString() + string.Empty]);
                 return;
             case 2: // youtube
                 if (monsterVideoLinkOptionDictionary.TryGetValue(selectedMatchup, out var videoval) && monsterVideoLinkOptionDictionary[selectedMatchup] != string.Empty)
                 {
-                    DockPanelMonsterInfo.Width = 854;
-                    DockPanelMonsterInfo.Height = 480;
-                    webViewMonsterInfo.CoreWebView2.Navigate(monsterVideoLinkOptionDictionary[selectedMatchup]);
+                    this.DockPanelMonsterInfo.Width = 854;
+                    this.DockPanelMonsterInfo.Height = 480;
+                    this.webViewMonsterInfo.CoreWebView2.Navigate(monsterVideoLinkOptionDictionary[selectedMatchup]);
                 }
                 else
                 {
@@ -1093,8 +1093,6 @@ public partial class ConfigWindow : FluentWindow
 
     private readonly ListView? mostRecentRunsListView;
 
-    private readonly ListView? top20RunsListView;
-
     private CartesianChart? weaponUsageChart;
 
     // TODO optimize
@@ -1104,74 +1102,74 @@ public partial class ConfigWindow : FluentWindow
 
         if (info != null)
         {
-            OctokitInfo.Text = string.Format(CultureInfo.InvariantCulture, "Server Time Difference: {0}, Max Requests/hr: {1}, Requests remaining: {2}, Current Rate Limit Window Reset: {3}", info.ServerTimeDifference, info.RateLimit.Limit, info.RateLimit.Remaining, info.RateLimit.Reset);
+            this.OctokitInfo.Text = string.Format(CultureInfo.InvariantCulture, "Server Time Difference: {0}, Max Requests/hr: {1}, Requests remaining: {2}, Current Rate Limit Window Reset: {3}", info.ServerTimeDifference, info.RateLimit.Limit, info.RateLimit.Remaining, info.RateLimit.Reset);
         }
 
         var issuesForOctokit = await this.client.Issue.GetAllForRepository("DorielRivalet", "MHFZ_Overlay");
 
         // TODO
-        IssuesTextBlock.Text = (issuesForOctokit.Count - 2).ToString(CultureInfo.InvariantCulture) + " Issue(s)";
+        this.IssuesTextBlock.Text = (issuesForOctokit.Count - 2).ToString(CultureInfo.InvariantCulture) + " Issue(s)";
 
         var watchers = await this.client.Activity.Watching.GetAllWatchers("DorielRivalet", "MHFZ_Overlay");
-        WatchersTextBlock.Text = watchers.Count.ToString(CultureInfo.InvariantCulture) + " Watcher(s)";
+        this.WatchersTextBlock.Text = watchers.Count.ToString(CultureInfo.InvariantCulture) + " Watcher(s)";
 
         info = this.client.GetLastApiInfo();
 
         if (info != null)
         {
-            OctokitInfo.Text = string.Format(CultureInfo.InvariantCulture, "Server Time Difference: {0}, Max Requests/hr: {1}, Requests remaining: {2}, Current Rate Limit Window Reset: {3}", info.ServerTimeDifference, info.RateLimit.Limit, info.RateLimit.Remaining, info.RateLimit.Reset);
+            this.OctokitInfo.Text = string.Format(CultureInfo.InvariantCulture, "Server Time Difference: {0}, Max Requests/hr: {1}, Requests remaining: {2}, Current Rate Limit Window Reset: {3}", info.ServerTimeDifference, info.RateLimit.Limit, info.RateLimit.Remaining, info.RateLimit.Reset);
         }
 
         info = this.client.GetLastApiInfo();
 
         if (info != null)
         {
-            OctokitInfo.Text = string.Format(CultureInfo.InvariantCulture, "Server Time Difference: {0}, Max Requests/hr: {1}, Requests remaining: {2}, Reset Time: {3}", info.ServerTimeDifference, info.RateLimit.Limit, info.RateLimit.Remaining, info.RateLimit.Reset);
+            this.OctokitInfo.Text = string.Format(CultureInfo.InvariantCulture, "Server Time Difference: {0}, Max Requests/hr: {1}, Requests remaining: {2}, Reset Time: {3}", info.ServerTimeDifference, info.RateLimit.Limit, info.RateLimit.Remaining, info.RateLimit.Reset);
         }
     }
 
     private void Fumo_MediaEnded(object sender, RoutedEventArgs e)
     {
-        if (myFumo == null)
+        if (this.myFumo == null)
         {
             return;
         }
 
-        myFumo.Position = new TimeSpan(0, 0, 1);
-        myFumo.Play();
+        this.myFumo.Position = new TimeSpan(0, 0, 1);
+        this.myFumo.Play();
     }
 
     private void Krill_MediaEnded(object sender, RoutedEventArgs e)
     {
-        if (myKrill == null)
+        if (this.myKrill == null)
         {
             return;
         }
 
-        myKrill.Position = new TimeSpan(0, 0, 1);
-        myKrill.Play();
+        this.myKrill.Position = new TimeSpan(0, 0, 1);
+        this.myKrill.Play();
     }
 
     private void Stars_MediaEnded(object sender, RoutedEventArgs e)
     {
-        if (myAnime == null)
+        if (this.myAnime == null)
         {
             return;
         }
 
-        myAnime.Position = new TimeSpan(0, 0, 1);
-        myAnime.Play();
+        this.myAnime.Position = new TimeSpan(0, 0, 1);
+        this.myAnime.Play();
     }
 
     private void Watcher_MediaEnded(object sender, RoutedEventArgs e)
     {
-        if (myWatcher == null)
+        if (this.myWatcher == null)
         {
             return;
         }
 
-        myWatcher.Position = new TimeSpan(0, 0, 1);
-        myWatcher.Play();
+        this.myWatcher.Position = new TimeSpan(0, 0, 1);
+        this.myWatcher.Play();
     }
 
     /// <summary>
@@ -1179,14 +1177,14 @@ public partial class ConfigWindow : FluentWindow
     /// </summary>
     private void DeletexNames_OnClosed()
     {
-        if (myWatcher != null)
+        if (this.myWatcher != null)
         {
             this.UnregisterName("myWatcher");
-            myWatcher = null;
+            this.myWatcher = null;
         }
     }
 
-    private void OpenOverlayFolder_Click(object sender, RoutedEventArgs e) => FileService.OpenApplicationFolder(ConfigWindowSnackBarPresenter, (Style)this.FindResource("CatppuccinMochaSnackBar"), this.SnackbarTimeOut);
+    private void OpenOverlayFolder_Click(object sender, RoutedEventArgs e) => FileService.OpenApplicationFolder(this.ConfigWindowSnackBarPresenter, (Style)this.FindResource("CatppuccinMochaSnackBar"), this.SnackbarTimeOut);
 
     private void OpenSettingsFolder_Click(object sender, RoutedEventArgs e)
     {
@@ -1197,7 +1195,7 @@ public partial class ConfigWindow : FluentWindow
             if (!Directory.Exists(settingsFileDirectoryName))
             {
                 Logger.Error(CultureInfo.InvariantCulture, "Could not open settings folder");
-                var snackbar = new Snackbar(ConfigWindowSnackBarPresenter)
+                var snackbar = new Snackbar(this.ConfigWindowSnackBarPresenter)
                 {
                     Style = (Style)this.FindResource("CatppuccinMochaSnackBar"),
                     Title = Messages.ErrorTitle,
@@ -1218,7 +1216,7 @@ public partial class ConfigWindow : FluentWindow
         catch (Exception ex)
         {
             Logger.Error(ex);
-            var snackbar = new Snackbar(ConfigWindowSnackBarPresenter)
+            var snackbar = new Snackbar(this.ConfigWindowSnackBarPresenter)
             {
                 Style = (Style)this.FindResource("CatppuccinMochaSnackBar"),
                 Title = Messages.ErrorTitle,
@@ -1299,66 +1297,66 @@ public partial class ConfigWindow : FluentWindow
     private void CountryComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         var s = (Settings)Application.Current.TryFindResource("Settings");
-        s.PlayerNationalityIndex = CountryComboBox.SelectedIndex;
+        s.PlayerNationalityIndex = this.CountryComboBox.SelectedIndex;
     }
 
     private void QuestIDButton_Click(object sender, RoutedEventArgs e)
     {
-        if (!string.IsNullOrEmpty(QuestIDTextBox.Text))
+        if (!string.IsNullOrEmpty(this.QuestIDTextBox.Text))
         {
-            SetDefaultInfoInQuestIDWeaponSection();
+            this.SetDefaultInfoInQuestIDWeaponSection();
             DatabaseManager.QuestIDButtonClick(sender, e, this);
         }
     }
 
     private void SetDefaultInfoInQuestIDWeaponSection()
     {
-        SwordAndShieldBestTimeTextBlock.Text = Messages.TimerNotLoaded;
-        SwordAndShieldRunIDTextBlock.Text = Messages.RunNotFound;
+        this.SwordAndShieldBestTimeTextBlock.Text = Messages.TimerNotLoaded;
+        this.SwordAndShieldRunIDTextBlock.Text = Messages.RunNotFound;
 
-        GreatSwordBestTimeTextBlock.Text = Messages.TimerNotLoaded;
-        GreatSwordRunIDTextBlock.Text = Messages.RunNotFound;
+        this.GreatSwordBestTimeTextBlock.Text = Messages.TimerNotLoaded;
+        this.GreatSwordRunIDTextBlock.Text = Messages.RunNotFound;
 
-        DualSwordsBestTimeTextBlock.Text = Messages.TimerNotLoaded;
-        DualSwordsRunIDTextBlock.Text = Messages.RunNotFound;
+        this.DualSwordsBestTimeTextBlock.Text = Messages.TimerNotLoaded;
+        this.DualSwordsRunIDTextBlock.Text = Messages.RunNotFound;
 
-        LongSwordBestTimeTextBlock.Text = Messages.TimerNotLoaded;
-        LongSwordRunIDTextBlock.Text = Messages.RunNotFound;
+        this.LongSwordBestTimeTextBlock.Text = Messages.TimerNotLoaded;
+        this.LongSwordRunIDTextBlock.Text = Messages.RunNotFound;
 
-        LanceBestTimeTextBlock.Text = Messages.TimerNotLoaded;
-        LanceRunIDTextBlock.Text = Messages.RunNotFound;
+        this.LanceBestTimeTextBlock.Text = Messages.TimerNotLoaded;
+        this.LanceRunIDTextBlock.Text = Messages.RunNotFound;
 
-        GunlanceBestTimeTextBlock.Text = Messages.TimerNotLoaded;
-        GunlanceRunIDTextBlock.Text = Messages.RunNotFound;
+        this.GunlanceBestTimeTextBlock.Text = Messages.TimerNotLoaded;
+        this.GunlanceRunIDTextBlock.Text = Messages.RunNotFound;
 
-        HammerBestTimeTextBlock.Text = Messages.TimerNotLoaded;
-        HammerRunIDTextBlock.Text = Messages.RunNotFound;
+        this.HammerBestTimeTextBlock.Text = Messages.TimerNotLoaded;
+        this.HammerRunIDTextBlock.Text = Messages.RunNotFound;
 
-        HuntingHornBestTimeTextBlock.Text = Messages.TimerNotLoaded;
-        HuntingHornRunIDTextBlock.Text = Messages.RunNotFound;
+        this.HuntingHornBestTimeTextBlock.Text = Messages.TimerNotLoaded;
+        this.HuntingHornRunIDTextBlock.Text = Messages.RunNotFound;
 
-        TonfaBestTimeTextBlock.Text = Messages.TimerNotLoaded;
-        TonfaRunIDTextBlock.Text = Messages.RunNotFound;
+        this.TonfaBestTimeTextBlock.Text = Messages.TimerNotLoaded;
+        this.TonfaRunIDTextBlock.Text = Messages.RunNotFound;
 
-        SwitchAxeFBestTimeTextBlock.Text = Messages.TimerNotLoaded;
-        SwitchAxeFRunIDTextBlock.Text = Messages.RunNotFound;
+        this.SwitchAxeFBestTimeTextBlock.Text = Messages.TimerNotLoaded;
+        this.SwitchAxeFRunIDTextBlock.Text = Messages.RunNotFound;
 
-        MagnetSpikeBestTimeTextBlock.Text = Messages.TimerNotLoaded;
-        MagnetSpikeRunIDTextBlock.Text = Messages.RunNotFound;
+        this.MagnetSpikeBestTimeTextBlock.Text = Messages.TimerNotLoaded;
+        this.MagnetSpikeRunIDTextBlock.Text = Messages.RunNotFound;
 
-        LightBowgunBestTimeTextBlock.Text = Messages.TimerNotLoaded;
-        LightBowgunRunIDTextBlock.Text = Messages.RunNotFound;
+        this.LightBowgunBestTimeTextBlock.Text = Messages.TimerNotLoaded;
+        this.LightBowgunRunIDTextBlock.Text = Messages.RunNotFound;
 
-        HeavyBowgunBestTimeTextBlock.Text = Messages.TimerNotLoaded;
-        HeavyBowgunRunIDTextBlock.Text = Messages.RunNotFound;
+        this.HeavyBowgunBestTimeTextBlock.Text = Messages.TimerNotLoaded;
+        this.HeavyBowgunRunIDTextBlock.Text = Messages.RunNotFound;
 
-        BowBestTimeTextBlock.Text = Messages.TimerNotLoaded;
-        BowRunIDTextBlock.Text = Messages.RunNotFound;
+        this.BowBestTimeTextBlock.Text = Messages.TimerNotLoaded;
+        this.BowRunIDTextBlock.Text = Messages.RunNotFound;
 
-        SelectedQuestObjectiveImage.Source = new BitmapImage(new Uri(@"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/random.png"));
-        SelectedQuestNameTextBlock.Text = Messages.QuestNotFound;
-        SelectedQuestObjectiveTextBlock.Text = Messages.InvalidQuest;
-        CurrentTimeTextBlock.Text = Messages.NotANumber;
+        this.SelectedQuestObjectiveImage.Source = new BitmapImage(new Uri(@"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/random.png"));
+        this.SelectedQuestNameTextBlock.Text = Messages.QuestNotFound;
+        this.SelectedQuestObjectiveTextBlock.Text = Messages.InvalidQuest;
+        this.CurrentTimeTextBlock.Text = Messages.NotANumber;
     }
 
     private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -1537,7 +1535,7 @@ public partial class ConfigWindow : FluentWindow
     private void UpdateYoutubeLink_ButtonClick(object sender, RoutedEventArgs e)
     {
         // Get the quest ID and new YouTube link from the textboxes
-        var runID = long.Parse(RunIDTextBox.Text.Trim(), CultureInfo.InvariantCulture);
+        var runID = long.Parse(this.RunIDTextBox.Text.Trim(), CultureInfo.InvariantCulture);
         if (this.youtubeLinkTextBox == null)
         {
             return;
@@ -1546,7 +1544,7 @@ public partial class ConfigWindow : FluentWindow
         var youtubeLink = this.youtubeLinkTextBox.Text.Trim();
         if (DatabaseManager.UpdateYoutubeLink(sender, e, runID, youtubeLink))
         {
-            var snackbar = new Snackbar(ConfigWindowSnackBarPresenter)
+            var snackbar = new Snackbar(this.ConfigWindowSnackBarPresenter)
             {
                 Style = (Style)this.FindResource("CatppuccinMochaSnackBar"),
                 Title = Messages.InfoTitle,
@@ -1559,7 +1557,7 @@ public partial class ConfigWindow : FluentWindow
         }
         else
         {
-            var snackbar = new Snackbar(ConfigWindowSnackBarPresenter)
+            var snackbar = new Snackbar(this.ConfigWindowSnackBarPresenter)
             {
                 Style = (Style)this.FindResource("CatppuccinMochaSnackBar"),
                 Title = Messages.ErrorTitle,
@@ -1574,7 +1572,7 @@ public partial class ConfigWindow : FluentWindow
 
     private void YoutubeIconButton_Click(object sender, RoutedEventArgs e)
     {
-        var runID = long.Parse(RunIDTextBox.Text.Trim(), CultureInfo.InvariantCulture);
+        var runID = long.Parse(this.RunIDTextBox.Text.Trim(), CultureInfo.InvariantCulture);
         var youtubeLink = DatabaseManager.GetYoutubeLinkForRunID(runID);
         if (youtubeLink != string.Empty)
         {
@@ -1609,7 +1607,7 @@ public partial class ConfigWindow : FluentWindow
     // Declare flags to track event subscription
     private bool isConfigureButtonClickedSubscribed;
 
-    private ISeries[] ? Series { get; set; }
+    private ISeries[]? Series { get; set; }
 
     // TODO to another class
     public static void SaveCSVFromListOfRecentRuns(List<RecentRuns> recentRuns, string filePath)
@@ -1664,7 +1662,7 @@ public partial class ConfigWindow : FluentWindow
 
         if (this.top20RunsDescriptionTextblock != null)
         {
-            this.top20RunsDescriptionTextblock.Text = $"Top 20 fastest solo runs of quest ID {QuestIDTextBox.Text} by category {OverlayModeComboBox.Text}";
+            this.top20RunsDescriptionTextblock.Text = $"Top 20 fastest solo runs of quest ID {this.QuestIDTextBox.Text} by category {this.OverlayModeComboBox.Text}";
         }
     }
 
@@ -1675,7 +1673,7 @@ public partial class ConfigWindow : FluentWindow
             return;
         }
 
-        var runID = long.Parse(RunIDTextBox.Text.Trim(), CultureInfo.InvariantCulture);
+        var runID = long.Parse(this.RunIDTextBox.Text.Trim(), CultureInfo.InvariantCulture);
         textBlock.Text = this.MainWindow.DataLoader.Model.GenerateGearStats(runID);
         this.questLogGearStatsTextBlock = textBlock;
     }
@@ -1691,8 +1689,8 @@ public partial class ConfigWindow : FluentWindow
         textToSave = string.Format(CultureInfo.InvariantCulture, "```text\n{0}\n```", textToSave);
         var fileName = "Set";
         var beginningFileName = "Run";
-        var beginningText = RunIDTextBox.Text.Trim();
-        var snackbar = new Snackbar(ConfigWindowSnackBarPresenter)
+        var beginningText = this.RunIDTextBox.Text.Trim();
+        var snackbar = new Snackbar(this.ConfigWindowSnackBarPresenter)
         {
             Style = (Style)this.FindResource("CatppuccinMochaSnackBar"),
         };
@@ -1708,7 +1706,7 @@ public partial class ConfigWindow : FluentWindow
 
         var previousBackground = this.questLogGearStatsTextBlock.Background;
         this.questLogGearStatsTextBlock.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
-        var snackbar = new Snackbar(ConfigWindowSnackBarPresenter)
+        var snackbar = new Snackbar(this.ConfigWindowSnackBarPresenter)
         {
             Style = (Style)this.FindResource("CatppuccinMochaSnackBar"),
         };
@@ -1723,7 +1721,7 @@ public partial class ConfigWindow : FluentWindow
             return;
         }
 
-        textBlock.Text = this.MainWindow.DataLoader.Model.GenerateCompendium(this.MainWindow.DataLoader);
+        textBlock.Text = this.MainWindow.DataLoader.Model.GenerateCompendium();
         this.compendiumTextBlock = textBlock;
     }
 
@@ -1736,7 +1734,7 @@ public partial class ConfigWindow : FluentWindow
 
         var textToSave = this.compendiumTextBlock.Text;
         textToSave = string.Format(CultureInfo.InvariantCulture, "```text\n{0}\n```", textToSave);
-        var snackbar = new Snackbar(ConfigWindowSnackBarPresenter)
+        var snackbar = new Snackbar(this.ConfigWindowSnackBarPresenter)
         {
             Style = (Style)this.FindResource("CatppuccinMochaSnackBar"),
         };
@@ -1752,7 +1750,7 @@ public partial class ConfigWindow : FluentWindow
 
         var previousBackground = this.compendiumInformationStackPanel.Background;
         this.compendiumInformationStackPanel.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
-        var snackbar = new Snackbar(ConfigWindowSnackBarPresenter)
+        var snackbar = new Snackbar(this.ConfigWindowSnackBarPresenter)
         {
             Style = (Style)this.FindResource("CatppuccinMochaSnackBar"),
         };
@@ -1862,7 +1860,7 @@ public partial class ConfigWindow : FluentWindow
 
         var previousBackground = this.calendarDataGrid.Background;
         this.calendarDataGrid.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
-        var snackbar = new Snackbar(ConfigWindowSnackBarPresenter)
+        var snackbar = new Snackbar(this.ConfigWindowSnackBarPresenter)
         {
             Style = (Style)this.FindResource("CatppuccinMochaSnackBar"),
         };
@@ -1877,8 +1875,8 @@ public partial class ConfigWindow : FluentWindow
             return;
         }
 
-        var fileName = $"PersonalBest-Quest_{QuestIDTextBox.Text}-{OverlayModeComboBox.Text}-{this.personalBestSelectedType}-{this.personalBestSelectedWeapon}".Trim().Replace(" ", "_");
-        var snackbar = new Snackbar(ConfigWindowSnackBarPresenter)
+        var fileName = $"PersonalBest-Quest_{this.QuestIDTextBox.Text}-{this.OverlayModeComboBox.Text}-{this.personalBestSelectedType}-{this.personalBestSelectedWeapon}".Trim().Replace(" ", "_");
+        var snackbar = new Snackbar(this.ConfigWindowSnackBarPresenter)
         {
             Style = (Style)this.FindResource("CatppuccinMochaSnackBar"),
         };
@@ -1894,7 +1892,7 @@ public partial class ConfigWindow : FluentWindow
 
         var previousBackground = this.personalBestMainGrid.Background;
         this.personalBestMainGrid.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
-        var snackbar = new Snackbar(ConfigWindowSnackBarPresenter)
+        var snackbar = new Snackbar(this.ConfigWindowSnackBarPresenter)
         {
             Style = (Style)this.FindResource("CatppuccinMochaSnackBar"),
         };
@@ -1923,7 +1921,7 @@ public partial class ConfigWindow : FluentWindow
             dateTime = dateTime.Replace("/", "-");
             dateTime = dateTime.Replace(" ", "_");
             dateTime = dateTime.Replace(":", "-");
-            saveFileDialog.FileName = string.Format(CultureInfo.InvariantCulture, "FastestRuns-Quest_{0}-{1}-{2}-{3}", QuestIDTextBox.Text, OverlayModeComboBox.Text, this.top20RunsSelectedWeapon, DateTime.UtcNow.ToString("yy/MM/dd", CultureInfo.InvariantCulture).Replace("/", "-"));
+            saveFileDialog.FileName = string.Format(CultureInfo.InvariantCulture, "FastestRuns-Quest_{0}-{1}-{2}-{3}", this.QuestIDTextBox.Text, this.OverlayModeComboBox.Text, this.top20RunsSelectedWeapon, DateTime.UtcNow.ToString("yy/MM/dd", CultureInfo.InvariantCulture).Replace("/", "-"));
             if (saveFileDialog.ShowDialog() == true)
             {
                 var filePath = saveFileDialog.FileName;
@@ -1946,7 +1944,7 @@ public partial class ConfigWindow : FluentWindow
 
         var previousBackground = this.top20MainGrid.Background;
         this.top20MainGrid.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
-        var snackbar = new Snackbar(ConfigWindowSnackBarPresenter)
+        var snackbar = new Snackbar(this.ConfigWindowSnackBarPresenter)
         {
             Style = (Style)this.FindResource("CatppuccinMochaSnackBar"),
         };
@@ -2003,7 +2001,7 @@ public partial class ConfigWindow : FluentWindow
 
         var previousBackground = this.weaponStatsMainGrid.Background;
         this.weaponStatsMainGrid.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
-        var snackbar = new Snackbar(ConfigWindowSnackBarPresenter)
+        var snackbar = new Snackbar(this.ConfigWindowSnackBarPresenter)
         {
             Style = (Style)this.FindResource("CatppuccinMochaSnackBar"),
         };
@@ -2055,7 +2053,7 @@ public partial class ConfigWindow : FluentWindow
 
         var previousBackground = this.mostRecentRunsDataGrid.Background;
         this.mostRecentRunsDataGrid.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
-        var snackbar = new Snackbar(ConfigWindowSnackBarPresenter)
+        var snackbar = new Snackbar(this.ConfigWindowSnackBarPresenter)
         {
             Style = (Style)this.FindResource("CatppuccinMochaSnackBar"),
         };
@@ -2071,7 +2069,7 @@ public partial class ConfigWindow : FluentWindow
         }
 
         var fileName = $"StatsGraphs-{this.statsGraphsSelectedOption}";
-        var snackbar = new Snackbar(ConfigWindowSnackBarPresenter)
+        var snackbar = new Snackbar(this.ConfigWindowSnackBarPresenter)
         {
             Style = (Style)this.FindResource("CatppuccinMochaSnackBar"),
         };
@@ -2087,7 +2085,7 @@ public partial class ConfigWindow : FluentWindow
 
         var previousBackground = this.statsGraphsMainGrid.Background;
         this.statsGraphsMainGrid.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
-        var snackbar = new Snackbar(ConfigWindowSnackBarPresenter)
+        var snackbar = new Snackbar(this.ConfigWindowSnackBarPresenter)
         {
             Style = (Style)this.FindResource("CatppuccinMochaSnackBar"),
         };
@@ -2104,11 +2102,11 @@ public partial class ConfigWindow : FluentWindow
 
         var textToSave = this.statsTextTextBlock.Text;
         textToSave = string.Format(CultureInfo.InvariantCulture, "```text\n{0}\n```", textToSave);
-        var snackbar = new Snackbar(ConfigWindowSnackBarPresenter)
+        var snackbar = new Snackbar(this.ConfigWindowSnackBarPresenter)
         {
             Style = (Style)this.FindResource("CatppuccinMochaSnackBar"),
         };
-        FileService.SaveTextFile(snackbar, textToSave, $"StatsText-Run_{RunIDTextBox.Text}-{this.statsTextSelectedOption}");
+        FileService.SaveTextFile(snackbar, textToSave, $"StatsText-Run_{this.RunIDTextBox.Text}-{this.statsTextSelectedOption}");
     }
 
     private void StatsTextButtonCopyFile_Click(object sender, RoutedEventArgs e)
@@ -2120,7 +2118,7 @@ public partial class ConfigWindow : FluentWindow
 
         var previousBackground = this.statsTextTextBlock.Background;
         this.statsTextTextBlock.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
-        var snackbar = new Snackbar(ConfigWindowSnackBarPresenter)
+        var snackbar = new Snackbar(this.ConfigWindowSnackBarPresenter)
         {
             Style = (Style)this.FindResource("CatppuccinMochaSnackBar"),
         };
@@ -2130,45 +2128,45 @@ public partial class ConfigWindow : FluentWindow
 
     private void PersonalBestsOverviewButtonSaveFile_Click(object sender, RoutedEventArgs e)
     {
-        if (DiscordEmbedWeaponPersonalBest == null || QuestIDTextBox == null)
+        if (this.DiscordEmbedWeaponPersonalBest == null || this.QuestIDTextBox == null)
         {
             return;
         }
 
-        var fileName = $"PersonalBestsOverview-Quest_{QuestIDTextBox.Text}-{DateTime.UtcNow.ToString("yy/MM/dd", CultureInfo.InvariantCulture).Replace("/", "-")}";
-        var snackbar = new Snackbar(ConfigWindowSnackBarPresenter)
+        var fileName = $"PersonalBestsOverview-Quest_{this.QuestIDTextBox.Text}-{DateTime.UtcNow.ToString("yy/MM/dd", CultureInfo.InvariantCulture).Replace("/", "-")}";
+        var snackbar = new Snackbar(this.ConfigWindowSnackBarPresenter)
         {
             Style = (Style)this.FindResource("CatppuccinMochaSnackBar"),
         };
-        FileService.SaveElementAsImageFile(DiscordEmbedWeaponPersonalBest, fileName, snackbar, false);
+        FileService.SaveElementAsImageFile(this.DiscordEmbedWeaponPersonalBest, fileName, snackbar, false);
     }
 
     private void PersonalBestsOverviewButtonCopyFile_Click(object sender, RoutedEventArgs e)
     {
-        if (DiscordEmbedWeaponPersonalBest == null)
+        if (this.DiscordEmbedWeaponPersonalBest == null)
         {
             return;
         }
 
-        var previousBackground = DiscordEmbedWeaponPersonalBest.Background;
-        DiscordEmbedWeaponPersonalBest.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
-        var snackbar = new Snackbar(ConfigWindowSnackBarPresenter)
+        var previousBackground = this.DiscordEmbedWeaponPersonalBest.Background;
+        this.DiscordEmbedWeaponPersonalBest.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
+        var snackbar = new Snackbar(this.ConfigWindowSnackBarPresenter)
         {
             Style = (Style)this.FindResource("CatppuccinMochaSnackBar"),
         };
-        FileService.CopyUIElementToClipboard(DiscordEmbedWeaponPersonalBest, snackbar);
-        DiscordEmbedWeaponPersonalBest.Background = previousBackground;
+        FileService.CopyUIElementToClipboard(this.DiscordEmbedWeaponPersonalBest, snackbar);
+        this.DiscordEmbedWeaponPersonalBest.Background = previousBackground;
     }
 
-    private Axis[] ? XAxes { get; set; }
+    private Axis[]? XAxes { get; set; }
 
-    private Axis[] ? YAxes { get; set; }
+    private Axis[]? YAxes { get; set; }
 
-    private ISeries[] ? PersonalBestSeries { get; set; }
+    private ISeries[]? PersonalBestSeries { get; set; }
 
-    private Axis[] ? PersonalBestXAxes { get; set; }
+    private Axis[]? PersonalBestXAxes { get; set; }
 
-    private Axis[] ? PersonalBestYAxes { get; set; }
+    private Axis[]? PersonalBestYAxes { get; set; }
 
     public void SetPlayerHealthStamina(Dictionary<int, int> hp, Dictionary<int, int> stamina)
     {
@@ -3140,7 +3138,7 @@ public partial class ConfigWindow : FluentWindow
 
         List<ISeries> series = new ();
 
-        ObservableCollection<double> performanceCollection = new()
+        ObservableCollection<double> performanceCollection = new ()
         {
             performanceCompendium.HighestTrueRaw != 0 ? performanceCompendium.TrueRawMedian / performanceCompendium.HighestTrueRaw : 0,
             performanceCompendium.HighestSingleHitDamage != 0 ? performanceCompendium.SingleHitDamageMedian / performanceCompendium.HighestSingleHitDamage : 0,
@@ -3227,7 +3225,7 @@ public partial class ConfigWindow : FluentWindow
             },
         };
 
-        var runID = long.Parse(RunIDTextBox.Text.Trim(), CultureInfo.InvariantCulture);
+        var runID = long.Parse(this.RunIDTextBox.Text.Trim(), CultureInfo.InvariantCulture);
 
         switch (selectedOption)
         {
@@ -3494,7 +3492,7 @@ public partial class ConfigWindow : FluentWindow
 
         this.statsTextTextBlock.Text = string.Empty;
 
-        var runID = long.Parse(RunIDTextBox.Text.Trim(), CultureInfo.InvariantCulture);
+        var runID = long.Parse(this.RunIDTextBox.Text.Trim(), CultureInfo.InvariantCulture);
 
         switch (selectedOption)
         {
@@ -3627,16 +3625,16 @@ public partial class ConfigWindow : FluentWindow
             },
         };
 
-        var questID = long.Parse(QuestIDTextBox.Text.Trim(), CultureInfo.InvariantCulture);
+        var questID = long.Parse(this.QuestIDTextBox.Text.Trim(), CultureInfo.InvariantCulture);
         var weaponTypeID = WeaponType.IDName.FirstOrDefault(x => x.Value == this.personalBestSelectedWeapon).Key;
 
         switch (this.personalBestSelectedType)
         {
             case "(Quest ID) Personal Best by Date":
-                this.SetStepLineSeriesForPersonalBestByDate(DatabaseManager.GetPersonalBestsByDate(questID, weaponTypeID, OverlayModeComboBox.Text));
+                this.SetStepLineSeriesForPersonalBestByDate(DatabaseManager.GetPersonalBestsByDate(questID, weaponTypeID, this.OverlayModeComboBox.Text));
                 break;
             case "(Quest ID) Personal Best by Attempts":
-                this.SetStepLineSeriesForPersonalBestByAttempts(DatabaseManager.GetPersonalBestsByAttempts(questID, weaponTypeID, OverlayModeComboBox.Text));
+                this.SetStepLineSeriesForPersonalBestByAttempts(DatabaseManager.GetPersonalBestsByAttempts(questID, weaponTypeID, this.OverlayModeComboBox.Text));
                 break;
             default:
                 this.personalBestChart.Series = this.PersonalBestSeries ?? Array.Empty<ISeries>(); // TODO test
@@ -3647,7 +3645,7 @@ public partial class ConfigWindow : FluentWindow
 
         if (this.personalBestDescriptionTextBlock != null)
         {
-            this.personalBestDescriptionTextBlock.Text = $"Personal best of solo runs of quest ID {QuestIDTextBox.Text} by category {OverlayModeComboBox.Text}";
+            this.personalBestDescriptionTextBlock.Text = $"Personal best of solo runs of quest ID {this.QuestIDTextBox.Text} by category {this.OverlayModeComboBox.Text}";
         }
     }
 
@@ -3698,7 +3696,9 @@ public partial class ConfigWindow : FluentWindow
     }
 
     private void Calendar_DataGridLoaded(object sender, RoutedEventArgs e) => this.calendarDataGrid = (DataGrid)sender;
+
     private bool isDefaultButtonClickedSubscribed;
+
     private bool isSaveButtonClickedSubscribed;
 
     // https://stackoverflow.com/questions/36128148/pass-click-event-of-child-control-to-the-parent-control
@@ -3891,7 +3891,7 @@ public partial class ConfigWindow : FluentWindow
 
     private void FumoImage_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
-        var snackbar = new Snackbar(ConfigWindowSnackBarPresenter)
+        var snackbar = new Snackbar(this.ConfigWindowSnackBarPresenter)
         {
             Style = (Style)this.FindResource("CatppuccinMochaSnackBar"),
         };
@@ -3909,7 +3909,7 @@ public partial class ConfigWindow : FluentWindow
             Duration = TimeSpan.FromSeconds(10), // Adjust the duration to control the rotation speed
             RepeatBehavior = RepeatBehavior.Forever,
         };
-        Rotation.BeginAnimation(AxisAngleRotation3D.AngleProperty, animation);
+        this.Rotation.BeginAnimation(AxisAngleRotation3D.AngleProperty, animation);
         storyboard.Begin();
     }
 
@@ -3929,41 +3929,39 @@ public partial class ConfigWindow : FluentWindow
             return;
         }
 
-        if (AchievementsListView.SelectedItem is Achievement selectedAchievement)
+        if (this.AchievementsListView.SelectedItem is Achievement selectedAchievement)
         {
             // Update the other grid's UI elements based on the selected achievement
             // For example:
-            AchievementSelectionInfoImage.Source = new BitmapImage(new Uri(selectedAchievement.Image));
+            this.AchievementSelectionInfoImage.Source = new BitmapImage(new Uri(selectedAchievement.Image));
             if (selectedAchievement.CompletionDate == DateTime.UnixEpoch)
             {
-                AchievementSelectionInfoTitle.Text = selectedAchievement.Title;
-                AchievementSelectionInfoImage.Opacity = .25;
+                this.AchievementSelectionInfoTitle.Text = selectedAchievement.Title;
+                this.AchievementSelectionInfoImage.Opacity = .25;
             }
             else
             {
-                AchievementSelectionInfoImage.Opacity = 1;
-                AchievementSelectionInfoTitle.Text = $"{selectedAchievement.Title} | {selectedAchievement.CompletionDate:yy/MM/dd HH:mm:ss}";
+                this.AchievementSelectionInfoImage.Opacity = 1;
+                this.AchievementSelectionInfoTitle.Text = $"{selectedAchievement.Title} | {selectedAchievement.CompletionDate:yy/MM/dd HH:mm:ss}";
             }
 
             var brushConverter = new BrushConverter();
 
             if (selectedAchievement.IsSecret && selectedAchievement.CompletionDate == DateTime.UnixEpoch)
             {
-                AchievementSelectionInfoObjective.Text = string.Empty;
-                AchievementSelectionInfoTitle.Fill = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Text"]);
+                this.AchievementSelectionInfoObjective.Text = string.Empty;
+                this.AchievementSelectionInfoTitle.Fill = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Text"]);
             }
             else
             {
-                AchievementSelectionInfoObjective.Text = selectedAchievement.Objective;
-                AchievementSelectionInfoTitle.Fill = selectedAchievement.GetBrushColorFromRank();
+                this.AchievementSelectionInfoObjective.Text = selectedAchievement.Objective;
+                this.AchievementSelectionInfoTitle.Fill = selectedAchievement.GetBrushColorFromRank();
             }
 
-            AchievementSelectionInfoHint.Text = selectedAchievement.Hint;
+            this.AchievementSelectionInfoHint.Text = selectedAchievement.Hint;
 
-            AchievementFrontSide.ImageSource = new BitmapImage(new Uri($"{selectedAchievement.Image}"));
-            AchievementBackSide.ImageSource = new BitmapImage(new Uri($"{selectedAchievement.GetTrophyImageLinkFromRank()}"));
-
-            // ...
+            this.AchievementFrontSide.ImageSource = new BitmapImage(new Uri($"{selectedAchievement.Image}"));
+            this.AchievementBackSide.ImageSource = new BitmapImage(new Uri($"{selectedAchievement.GetTrophyImageLinkFromRank()}"));
         }
     }
 
@@ -3974,7 +3972,7 @@ public partial class ConfigWindow : FluentWindow
         var obtainedSecretAchievements = this.MainWindow.DataLoader.Model.PlayerAchievements.Count(a => a.CompletionDate != DateTime.UnixEpoch && a.IsSecret);
         var totalSecretAchievements = this.MainWindow.DataLoader.Model.PlayerAchievements.Count(a => a.IsSecret);
         var progressPercentage = (obtainedAchievements * 100.0 / totalAchievements) == 100 ? (obtainedAchievements * 100.0 / totalAchievements) + (obtainedSecretAchievements / totalSecretAchievements) : (obtainedAchievements * 100.0 / totalAchievements);
-        AchievementsProgressBar.Value = progressPercentage;
+        this.AchievementsProgressBar.Value = progressPercentage;
 
         var totalBronzeAchievements = this.MainWindow.DataLoader.Model.PlayerAchievements.Count(a => a.IsSecret == false && a.Rank == AchievementRank.Bronze);
         var totalSilverAchievements = this.MainWindow.DataLoader.Model.PlayerAchievements.Count(a => a.IsSecret == false && a.Rank == AchievementRank.Silver);
@@ -3986,47 +3984,47 @@ public partial class ConfigWindow : FluentWindow
         var obtainedGoldAchievements = this.MainWindow.DataLoader.Model.PlayerAchievements.Count(a => a.CompletionDate != DateTime.UnixEpoch && a.Rank == AchievementRank.Gold);
         var obtainedPlatinumAchievements = this.MainWindow.DataLoader.Model.PlayerAchievements.Count(a => a.CompletionDate != DateTime.UnixEpoch && a.Rank == AchievementRank.Platinum);
 
-        TrophyBronzeCountTextBlock.Text = $"{obtainedBronzeAchievements}/{totalBronzeAchievements}";
-        TrophySilverCountTextBlock.Text = $"{obtainedSilverAchievements}/{totalSilverAchievements}";
-        TrophyGoldCountTextBlock.Text = $"{obtainedGoldAchievements}/{totalGoldAchievements}";
-        TrophyPlatinumCountTextBlock.Text = $"{obtainedPlatinumAchievements}/{totalPlatinumAchievements}";
+        this.TrophyBronzeCountTextBlock.Text = $"{obtainedBronzeAchievements}/{totalBronzeAchievements}";
+        this.TrophySilverCountTextBlock.Text = $"{obtainedSilverAchievements}/{totalSilverAchievements}";
+        this.TrophyGoldCountTextBlock.Text = $"{obtainedGoldAchievements}/{totalGoldAchievements}";
+        this.TrophyPlatinumCountTextBlock.Text = $"{obtainedPlatinumAchievements}/{totalPlatinumAchievements}";
 
         var brushConverter = new BrushConverter();
 
         if (obtainedAchievements is >= 50 and < 100) // unlock Bingo + Gacha
         {
-            AchievementsProgressBar.Foreground = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Maroon"]);
-            AchievementsProgressTextBlock.Fill = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Maroon"]);
-            AchievementTotalProgressTextBlock.Fill = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Maroon"]);
-            AchievementTotalProgressPercentTextBlock.Fill = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Maroon"]);
+            this.AchievementsProgressBar.Foreground = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Maroon"]);
+            this.AchievementsProgressTextBlock.Fill = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Maroon"]);
+            this.AchievementTotalProgressTextBlock.Fill = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Maroon"]);
+            this.AchievementTotalProgressPercentTextBlock.Fill = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Maroon"]);
         }
         else if (obtainedAchievements is >= 100 and < 150) // unlock zenith gauntlet
         {
-            AchievementsProgressBar.Foreground = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Lavender"]);
-            AchievementsProgressTextBlock.Fill = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Lavender"]);
-            AchievementTotalProgressTextBlock.Fill = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Lavender"]);
-            AchievementTotalProgressPercentTextBlock.Fill = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Lavender"]);
+            this.AchievementsProgressBar.Foreground = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Lavender"]);
+            this.AchievementsProgressTextBlock.Fill = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Lavender"]);
+            this.AchievementTotalProgressTextBlock.Fill = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Lavender"]);
+            this.AchievementTotalProgressPercentTextBlock.Fill = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Lavender"]);
         }
         else if (obtainedAchievements is >= 150 and < 200) // unlock solstice gauntlet
         {
-            AchievementsProgressBar.Foreground = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Yellow"]);
-            AchievementsProgressTextBlock.Fill = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Yellow"]);
-            AchievementTotalProgressTextBlock.Fill = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Yellow"]);
-            AchievementTotalProgressPercentTextBlock.Fill = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Yellow"]);
+            this.AchievementsProgressBar.Foreground = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Yellow"]);
+            this.AchievementsProgressTextBlock.Fill = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Yellow"]);
+            this.AchievementTotalProgressTextBlock.Fill = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Yellow"]);
+            this.AchievementTotalProgressPercentTextBlock.Fill = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Yellow"]);
         }
         else if (obtainedAchievements is >= 200 and < 300) // unlock musou gauntlet
         {
-            AchievementsProgressBar.Foreground = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Teal"]);
-            AchievementsProgressTextBlock.Fill = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Teal"]);
-            AchievementTotalProgressTextBlock.Fill = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Teal"]);
-            AchievementTotalProgressPercentTextBlock.Fill = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Teal"]);
+            this.AchievementsProgressBar.Foreground = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Teal"]);
+            this.AchievementsProgressTextBlock.Fill = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Teal"]);
+            this.AchievementTotalProgressTextBlock.Fill = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Teal"]);
+            this.AchievementTotalProgressPercentTextBlock.Fill = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Teal"]);
         }
         else if (obtainedAchievements == totalAchievements) // all
         {
-            AchievementsProgressBar.Foreground = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Teal"]);
-            AchievementsProgressTextBlock.Fill = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Teal"]);
-            AchievementTotalProgressTextBlock.Fill = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Teal"]);
-            AchievementTotalProgressPercentTextBlock.Fill = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Teal"]);
+            this.AchievementsProgressBar.Foreground = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Teal"]);
+            this.AchievementsProgressTextBlock.Fill = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Teal"]);
+            this.AchievementTotalProgressTextBlock.Fill = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Teal"]);
+            this.AchievementTotalProgressPercentTextBlock.Fill = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Teal"]);
 
             // Create and apply the DropShadowEffect to the ProgressBar and TextBlock
             var dropShadowEffect = new DropShadowEffect
@@ -4037,21 +4035,21 @@ public partial class ConfigWindow : FluentWindow
                 Opacity = 1,
             };
 
-            AchievementsProgressBar.Effect = dropShadowEffect;
-            AchievementsProgressTextBlock.Effect = dropShadowEffect;
-            AchievementTotalProgressTextBlock.Effect = dropShadowEffect;
-            AchievementTotalProgressPercentTextBlock.Effect = dropShadowEffect;
+            this.AchievementsProgressBar.Effect = dropShadowEffect;
+            this.AchievementsProgressTextBlock.Effect = dropShadowEffect;
+            this.AchievementTotalProgressTextBlock.Effect = dropShadowEffect;
+            this.AchievementTotalProgressPercentTextBlock.Effect = dropShadowEffect;
         }
         else
         {
-            AchievementsProgressTextBlock.Fill = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Text"]);
-            AchievementTotalProgressTextBlock.Fill = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Text"]);
-            AchievementTotalProgressPercentTextBlock.Fill = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Text"]);
+            this.AchievementsProgressTextBlock.Fill = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Text"]);
+            this.AchievementTotalProgressTextBlock.Fill = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Text"]);
+            this.AchievementTotalProgressPercentTextBlock.Fill = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Text"]);
         }
 
-        AchievementsProgressTextBlock.Text = $"{obtainedAchievements}/{totalAchievements}";
-        AchievementTotalProgressPercentTextBlock.Text = $"{progressPercentage:F2}%";
-        AchievementSelectionInfoHint.Text = $"There are 5 types of trophies: bronze, silver, gold, platinum and secret. For every secret trophy you find, you gain {1.0 / totalSecretAchievements:F2}% more progress if you have already obtained every non-secret achievement already. You have obtained {obtainedSecretAchievements} out of {totalSecretAchievements} secret trophies ({obtainedSecretAchievements * 100.0 / totalSecretAchievements:F2}%).";
+        this.AchievementsProgressTextBlock.Text = $"{obtainedAchievements}/{totalAchievements}";
+        this.AchievementTotalProgressPercentTextBlock.Text = $"{progressPercentage:F2}%";
+        this.AchievementSelectionInfoHint.Text = $"There are 5 types of trophies: bronze, silver, gold, platinum and secret. For every secret trophy you find, you gain {1.0 / totalSecretAchievements:F2}% more progress if you have already obtained every non-secret achievement already. You have obtained {obtainedSecretAchievements} out of {totalSecretAchievements} secret trophies ({obtainedSecretAchievements * 100.0 / totalSecretAchievements:F2}%).";
     }
 
     private void AchievementSelectedInfoGrid_Loaded(object sender, RoutedEventArgs e) => this.achievementsSelectedInfoGrid = (Grid)sender;
@@ -4060,7 +4058,7 @@ public partial class ConfigWindow : FluentWindow
     {
         if (sender is MenuItem menuItem && menuItem.Parent is ContextMenu contextMenu && contextMenu.PlacementTarget is FrameworkElement element)
         {
-            var snackbar = new Snackbar(ConfigWindowSnackBarPresenter)
+            var snackbar = new Snackbar(this.ConfigWindowSnackBarPresenter)
             {
                 Style = (Style)this.FindResource("CatppuccinMochaSnackBar"),
             };
@@ -4136,7 +4134,9 @@ public partial class ConfigWindow : FluentWindow
                     {
                         FileService.SaveRecordsAsCSVFile(
                             AchievementService.FilterAchievementsToCompletedOnly(
-                                this.MainWindow.DataLoader.Model.PlayerAchievements).ToArray(), snackbar, "Achievements");
+                                this.MainWindow.DataLoader.Model.PlayerAchievements).ToArray(),
+                            snackbar,
+                            "Achievements");
                     }
                     else
                     {
@@ -4170,22 +4170,22 @@ public partial class ConfigWindow : FluentWindow
     private void AchievementsSearchButton_Click(object sender, RoutedEventArgs e)
     {
         // Check if the text in the AutoSuggestBox is empty
-        if (string.IsNullOrWhiteSpace(AchievementsSearchComboBox.Text))
+        if (string.IsNullOrWhiteSpace(this.AchievementsSearchComboBox.Text))
         {
             // If the text is empty, show the original list in the ListView
-            AchievementsListView.ItemsSource = this.MainWindow.DataLoader.Model.PlayerAchievements;
+            this.AchievementsListView.ItemsSource = this.MainWindow.DataLoader.Model.PlayerAchievements;
         }
         else
         {
             // If the text is not empty, set the ItemsSource to null temporarily to clear the ListView
-            AchievementsListView.ItemsSource = null;
+            this.AchievementsListView.ItemsSource = null;
 
             // Then, set the ItemsSource back to the filtered achievements list based on the user's input
-            var userInput = AchievementsSearchComboBox.Text;
+            var userInput = this.AchievementsSearchComboBox.Text;
             var filteredAchievements = this.MainWindow.DataLoader.Model.PlayerAchievements
                 .Where(achievement => achievement.Title.Contains(userInput, StringComparison.OrdinalIgnoreCase))
                 .ToList();
-            AchievementsListView.ItemsSource = filteredAchievements;
+            this.AchievementsListView.ItemsSource = filteredAchievements;
         }
     }
 
@@ -4205,21 +4205,21 @@ public partial class ConfigWindow : FluentWindow
         }
     }
 
-    private void GameInfoNavigationCommandsBrowseBack(object sender, RoutedEventArgs e) => webViewFerias.GoBack();
+    private void GameInfoNavigationCommandsBrowseBack(object sender, RoutedEventArgs e) => this.webViewFerias.GoBack();
 
-    private void GameInfoNavigationCommandsBrowseForward(object sender, RoutedEventArgs e) => webViewFerias.GoForward();
+    private void GameInfoNavigationCommandsBrowseForward(object sender, RoutedEventArgs e) => this.webViewFerias.GoForward();
 
-    private void GameInfoNavigationCommandsRefresh(object sender, RoutedEventArgs e) => webViewFerias.Reload();
+    private void GameInfoNavigationCommandsRefresh(object sender, RoutedEventArgs e) => this.webViewFerias.Reload();
 
-    private void GameInfoNavigationCommandsBrowseStop(object sender, RoutedEventArgs e) => webViewFerias.Stop();
+    private void GameInfoNavigationCommandsBrowseStop(object sender, RoutedEventArgs e) => this.webViewFerias.Stop();
 
     private void GameInfoNavigationCommandsGoToPage(object sender, RoutedEventArgs e)
     {
         try
         {
-            if (webViewFerias != null && webViewFerias.CoreWebView2 != null)
+            if (this.webViewFerias != null && this.webViewFerias.CoreWebView2 != null)
             {
-                webViewFerias.CoreWebView2.Navigate(GameInfoURL.Text);
+                this.webViewFerias.CoreWebView2.Navigate(this.GameInfoURL.Text);
             }
         }
         catch

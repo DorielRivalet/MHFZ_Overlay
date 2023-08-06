@@ -98,7 +98,7 @@ public partial class App : Application
         loggingRules[0].SetLoggingLevels(LoggingService.GetLogLevel(s.LogLevel), NLog.LogLevel.Fatal);
         Logger.Info(CultureInfo.InvariantCulture, "Started WPF application");
         Logger.Trace(CultureInfo.InvariantCulture, "Call stack: {0}", new StackTrace().ToString());
-        Logger.Debug("OS: {0}, is64BitOS: {1}, is64BitProcess: {2}, CLR version: {3}", Environment.OSVersion, Environment.Is64BitOperatingSystem, Environment.Is64BitProcess, Environment.Version);
+        Logger.Debug(CultureInfo.InvariantCulture, "OS: {0}, is64BitOS: {1}, is64BitProcess: {2}, CLR version: {3}", Environment.OSVersion, Environment.Is64BitOperatingSystem, Environment.Is64BitProcess, Environment.Version);
 
         // TODO: test if this doesnt conflict with squirrel update
         CurrentProgramVersion = $"v{GetAssemblyVersion}";
@@ -143,14 +143,14 @@ public partial class App : Application
     private static void App_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e) =>
 
         // Log/inspect the inspection here
-        Logger.Error("Unhandled exception\n\nMessage: {0}\n\nStack Trace: {1}\n\nHelp Link: {2}\n\nHResult: {3}\n\nSource: {4}\n\nTarget Site: {5}", e.Exception.Message, e.Exception.StackTrace, e.Exception.HelpLink, e.Exception.HResult, e.Exception.Source, e.Exception.TargetSite);
+        Logger.Error(CultureInfo.InvariantCulture, "Unhandled exception\n\nMessage: {0}\n\nStack Trace: {1}\n\nHelp Link: {2}\n\nHResult: {3}\n\nSource: {4}\n\nTarget Site: {5}", e.Exception.Message, e.Exception.StackTrace, e.Exception.HelpLink, e.Exception.HResult, e.Exception.Source, e.Exception.TargetSite);
 
     private static void SetRenderingMode(string renderingMode)
     {
         RenderOptions.ProcessRenderMode = renderingMode == "Hardware"
             ? RenderMode.Default
             : RenderMode.SoftwareOnly;
-        Logger.Info($"Rendering mode: {renderingMode}");
+        Logger.Info(CultureInfo.InvariantCulture, $"Rendering mode: {renderingMode}");
     }
 
     // https://github.com/Squirrel/Squirrel.Windows/issues/198#issuecomment-299262613
