@@ -3802,5 +3802,113 @@ namespace MHFZ_Overlay {
                 this["BingoProgressShown"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.5")]
+        public float VolumeMain {
+            get {
+                return ((float)(this["VolumeMain"]));
+            }
+            set {
+                this["VolumeMain"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public float VolumeAchievementUnlock {
+            get {
+                return ((float)(this["VolumeAchievementUnlock"]));
+            }
+            set {
+                this["VolumeAchievementUnlock"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public float VolumeChallengeUnlock {
+            get {
+                return ((float)(this["VolumeChallengeUnlock"]));
+            }
+            set {
+                this["VolumeChallengeUnlock"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public float VolumeChallengeStart {
+            get {
+                return ((float)(this["VolumeChallengeStart"]));
+            }
+            set {
+                this["VolumeChallengeStart"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public float VolumeHover {
+            get {
+                return ((float)(this["VolumeHover"]));
+            }
+            set {
+                this["VolumeHover"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public float VolumeGachaUnlock {
+            get {
+                return ((float)(this["VolumeGachaUnlock"]));
+            }
+            set {
+                this["VolumeGachaUnlock"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public float VolumeGachaTrial {
+            get {
+                return ((float)(this["VolumeGachaTrial"]));
+            }
+            set {
+                this["VolumeGachaTrial"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public float VolumeSelect {
+            get {
+                return ((float)(this["VolumeSelect"]));
+            }
+            set {
+                this["VolumeSelect"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public float VolumeGachaRare {
+            get {
+                return ((float)(this["VolumeGachaRare"]));
+            }
+            set {
+                this["VolumeGachaRare"] = value;
+            }
+        }
     }
 }

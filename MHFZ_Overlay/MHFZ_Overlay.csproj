@@ -50,6 +50,7 @@
   <ItemGroup>
     <None Remove=".stylecop.json" />
     <None Remove="Assets\Background\1.png" />
+    <None Remove="Assets\Background\10.png" />
     <None Remove="Assets\Background\2.png" />
     <None Remove="Assets\Background\3.png" />
     <None Remove="Assets\Background\4.png" />
@@ -723,7 +724,11 @@
     <None Remove="Assets\Icons\png\world.png" />
     <None Remove="Assets\Sounds\challenge_unlock.wav" />
     <None Remove="Assets\Sounds\gacha_rare.wav" />
+    <None Remove="Assets\Sounds\gacha_trial.wav" />
     <None Remove="Assets\Sounds\gacha_unlock.wav" />
+    <None Remove="Assets\Sounds\hover.wav" />
+    <None Remove="Assets\Sounds\select.wav" />
+    <None Remove="Assets\Sounds\start_challenge.wav" />
     <None Remove="Assets\Sounds\victory.wav" />
     <None Remove="NLog.config" />
   </ItemGroup>
@@ -802,7 +807,19 @@
     <Content Include="Assets\Sounds\gacha_rare.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\Sounds\gacha_trial.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\Sounds\gacha_unlock.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Sounds\hover.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Sounds\select.wav">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Sounds\start_challenge.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="mhfzoverlay128.png">
@@ -816,6 +833,9 @@
     </Content>
     <AdditionalFiles Include=".stylecop.json" />
     <Resource Include="Assets\Background\1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Background\10.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Assets\Background\2.png">
@@ -1651,7 +1671,7 @@
     <PackageReference Include="CsvHelper" Version="30.0.1" />
     <PackageReference Include="DiscordRichPresence" Version="1.2.1.24" />
     <PackageReference Include="DotNetProjects.Extended.Wpf.Toolkit" Version="5.0.103" />
-    <PackageReference Include="EZlion" Version="6.0.0-beta" />
+    <PackageReference Include="EZlion" Version="6.0.1-beta" />
     <PackageReference Include="FontAwesome.Sharp" Version="6.3.0" />
     <PackageReference Include="LiveChartsCore.SkiaSharpView.WPF" Version="2.0.0-beta.911" />
     <PackageReference Include="Memory.dll.x86" Version="1.2.24" />
