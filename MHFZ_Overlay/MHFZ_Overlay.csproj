@@ -1679,7 +1679,7 @@
     <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.1901.177" />
     <PackageReference Include="MouseKeyHook" Version="5.7.1" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="NLog" Version="5.2.2" />
+    <PackageReference Include="NLog" Version="5.2.3" />
     <PackageReference Include="NuGet.CommandLine" Version="6.6.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -1694,7 +1694,7 @@
     <PackageReference Include="System.Data.SQLite.Core" Version="1.0.118" />
     <PackageReference Include="System.Drawing.Common" Version="7.0.0" />
     <PackageReference Include="VirtualizingWrapPanel" Version="1.5.7" />
-    <PackageReference Include="WPF-UI" Version="3.0.0-preview.4" />
+    <PackageReference Include="WPF-UI" Version="3.0.0-preview.5" />
     <PackageReference Include="WpfAnimatedGif" Version="2.0.2" />
     <PackageReference Include="XamlAnimatedGif" Version="2.2.0" />
     <PackageReference Include="XInputium" Version="1.2.0" />
