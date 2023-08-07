@@ -2096,6 +2096,7 @@ The process may take some time, as the program attempts to download from GitHub 
         }
     }
 
+    // TODO: its finicky
     private void GlobalHookKeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
     {
         if (this.keyImages.TryGetValue(e.KeyCode, out var image))

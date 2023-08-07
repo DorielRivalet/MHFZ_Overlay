@@ -2377,7 +2377,7 @@ public sealed class AchievementService : IAchievementService
                     return false;
                 }
 
-            case 361: // TODO gacha stuff
+            case 361: // TODO challenges stuff
             case 362:
             case 363:
             case 364:
@@ -2420,12 +2420,114 @@ public sealed class AchievementService : IAchievementService
             case 401:
             case 402:
             case 403:
-            case 404:
-            case 405:
-            case 406:
-            case 407:
-            {
                 return false;
+            case 404:
+                completedQuests = from quest in databaseManagerInstance.AllQuests
+                                  join activeSkills in databaseManagerInstance.AllActiveSkills on quest.RunID equals activeSkills.RunID
+                                  where quest.QuestID == Numbers.QuestIDLV9999CrimsonFatalis && quest.PartySize == 1 &&
+                                  !(activeSkills.ActiveSkill1ID == 193 || activeSkills.ActiveSkill1ID == 194 ||
+                                  activeSkills.ActiveSkill2ID == 193 || activeSkills.ActiveSkill2ID == 194 ||
+                                  activeSkills.ActiveSkill3ID == 193 || activeSkills.ActiveSkill3ID == 194 ||
+                                  activeSkills.ActiveSkill4ID == 193 || activeSkills.ActiveSkill4ID == 194 ||
+                                  activeSkills.ActiveSkill5ID == 193 || activeSkills.ActiveSkill5ID == 194 ||
+                                  activeSkills.ActiveSkill6ID == 193 || activeSkills.ActiveSkill6ID == 194 ||
+                                  activeSkills.ActiveSkill7ID == 193 || activeSkills.ActiveSkill7ID == 194 ||
+                                  activeSkills.ActiveSkill8ID == 193 || activeSkills.ActiveSkill8ID == 194 ||
+                                  activeSkills.ActiveSkill9ID == 193 || activeSkills.ActiveSkill9ID == 194 ||
+                                  activeSkills.ActiveSkill10ID == 193 || activeSkills.ActiveSkill10ID == 194 ||
+                                  activeSkills.ActiveSkill11ID == 193 || activeSkills.ActiveSkill11ID == 194 ||
+                                  activeSkills.ActiveSkill12ID == 193 || activeSkills.ActiveSkill12ID == 194 ||
+                                  activeSkills.ActiveSkill13ID == 193 || activeSkills.ActiveSkill13ID == 194 ||
+                                  activeSkills.ActiveSkill14ID == 193 || activeSkills.ActiveSkill14ID == 194 ||
+                                  activeSkills.ActiveSkill15ID == 193 || activeSkills.ActiveSkill15ID == 194 ||
+                                  activeSkills.ActiveSkill16ID == 193 || activeSkills.ActiveSkill16ID == 194 ||
+                                  activeSkills.ActiveSkill17ID == 193 || activeSkills.ActiveSkill17ID == 194 ||
+                                  activeSkills.ActiveSkill18ID == 193 || activeSkills.ActiveSkill18ID == 194 ||
+                                  activeSkills.ActiveSkill19ID == 193 || activeSkills.ActiveSkill19ID == 194)
+                                  select quest;
+                if (completedQuests != null && completedQuests.Any())
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            case 405:
+                completedQuests = from quest in databaseManagerInstance.AllQuests
+                                  join playerGear in databaseManagerInstance.AllPlayerGear on quest.RunID equals playerGear.RunID
+                                  where quest.QuestID == Numbers.QuestIDZ4Gasurabazura && quest.PartySize == 1 && playerGear.PlayerInventoryDictionary != null &&
+                                  !(JsonConvert.DeserializeObject<Dictionary<int, List<Dictionary<int, int>>>>(playerGear.PlayerInventoryDictionary)?.Values
+                                    .SelectMany(list => list)
+                                    .Any(innerDict => innerDict.ContainsKey(13607)) ?? false)
+                                  select quest;
+                if (completedQuests != null && completedQuests.Any())
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            case 406:
+                return false;
+            case 407: // TODO test
+                completedQuests = from quest in databaseManagerInstance.AllQuests
+                                  join playerGear in databaseManagerInstance.AllPlayerGear on quest.RunID equals playerGear.RunID
+                                  where quest.QuestID == Numbers.QuestIDUpperShitenUnknown &&
+                                  quest.PartySize == 1 &&
+                                  playerGear.PlayerInventoryDictionary != null &&
+                                  (JsonConvert.DeserializeObject<Dictionary<int, List<Dictionary<int, int>>>>(playerGear.PlayerInventoryDictionary)?.Values
+                                    .SelectMany(list => list)
+                                    .All(innerDict => innerDict.ContainsKey(0)) ?? false)
+                                  select quest;
+                if (completedQuests != null && completedQuests.Any())
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            case 408:
+                return false;
+            case 409:
+            {
+                var keyboardCode = new List<string> { "W", "W", "S", "S", "A", "D", "A", "D", "D2", "D1", };
+                var gamepadCode = new List<string> { "DPadUp", "DPadUp", "DPadDown", "DPadDown", "DPadLeft", "DPadRight", "DPadLeft", "DPadRight", "B", "A", };
+
+                var foundData = from quest in databaseManagerInstance.AllQuests
+                                where (quest.KeyStrokesDictionary != null &&
+                                JsonConvert.DeserializeObject<Dictionary<int, string>>(quest.KeyStrokesDictionary) != null &&
+                                quest.GamepadInputDictionary != null &&
+                                JsonConvert.DeserializeObject<Dictionary<int, string>>(quest.GamepadInputDictionary) != null)
+                                select quest;
+
+                if (foundData == null)
+                {
+                    return false;
+                }
+
+                var foundCode = from quest in databaseManagerInstance.AllQuests
+                                      where (JsonConvert.DeserializeObject<Dictionary<int, string>>(quest.KeyStrokesDictionary)?.Values
+                                            .Select((keyValue) => keyValue.Trim())
+                                            .Take(keyboardCode.Count)
+                                            .SequenceEqual(keyboardCode) ?? false)
+                                            ||
+                                            (JsonConvert.DeserializeObject<Dictionary<int, string>>(quest.GamepadInputDictionary)?.Values
+                                            .Select((keyValue) => keyValue.Trim())
+                                            .Take(gamepadCode.Count)
+                                            .SequenceEqual(gamepadCode) ?? false)
+                                      select quest;
+
+                if (foundCode != null && foundCode.Any())
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
         }
     }

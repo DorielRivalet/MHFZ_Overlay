@@ -5309,7 +5309,7 @@ Just now, reduced to ashes",
             Description = string.Empty,
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/extreme_poison.png",
-            Objective = "Defeat Zenith★4 Gasurabazura solo without Poison Cure.",
+            Objective = "Defeat Zenith★4 Gasurabazura solo without Anti-Venom.",
             IsSecret = true,
             Hint = "No cures allowed! But your halk is allowed to help.",
             }
@@ -5338,6 +5338,32 @@ Just now, reduced to ashes",
             Objective = "Defeat Upper Shiten Unknown solo without any items.",
             IsSecret = false,
             Hint = string.Empty,
+            }
+        },
+        {
+            408, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Challenge Acepted",
+            Description = string.Empty,
+            Rank = AchievementRank.Silver,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/stamp.jpg",
+            Objective = "Accept a rare gacha challenge.",
+            IsSecret = false,
+            Hint = string.Empty,
+            }
+        },
+        {
+            409, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "No cheats allowed!",
+            Description = string.Empty,
+            Rank = AchievementRank.Bronze,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/unknown_red.jpg",
+            Objective = "Enter the Konami Code on the start of a quest.",
+            IsSecret = true,
+            Hint = "Sorry, but that cheat code won't give you 30 more tries on this quest.",
             }
         },
     });
