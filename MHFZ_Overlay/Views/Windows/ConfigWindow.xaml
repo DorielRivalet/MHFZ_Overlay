@@ -10,6 +10,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:gif="http://wpfanimatedgif.codeplex.com"
         xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
+        xmlns:tray="http://schemas.lepo.co/wpfui/2022/xaml/tray"
         d:DataContext="{d:DesignInstance Type=windows:AddressModel}"
         xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
         xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
@@ -1964,7 +1965,7 @@
                                         <TextBlock Foreground="{StaticResource Text}" Text="Challenges" Margin="4,0,0,0" VerticalAlignment="Center" />
                                     </StackPanel>
                                 </TabItem.Header>
-                                <Grid Background="Transparent" Margin="20" x:Name="ChallengesGrid" ToolTip="Right-click for more options">
+                                <Grid Background="Transparent" Margin="20" x:Name="ChallengesGrid">
                                     <ScrollViewer IsDeferredScrollingEnabled="True" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Disabled">
                                         <Grid Background="Transparent" Style="{StaticResource ConfigSingleGrid}" Margin="0" Height="Auto" Width="Auto">
                                             <StackPanel Orientation="Vertical">

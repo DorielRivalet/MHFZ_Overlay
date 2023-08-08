@@ -64,7 +64,7 @@ using Image = System.Windows.Controls.Image;
 using MessageBoxButton = System.Windows.MessageBoxButton;
 using MessageBoxResult = System.Windows.MessageBoxResult;
 using MouseEventArgs = System.Windows.Input.MouseEventArgs;
-using NotifyIcon = Wpf.Ui.Controls.NotifyIcon;
+using NotifyIcon = Wpf.Ui.Tray.Controls.NotifyIcon;
 using Point = System.Windows.Point;
 using Window = System.Windows.Window;
 

@@ -162,7 +162,7 @@
             https://stackoverflow.com/questions/3425720/xaml-the-property-resources-is-set-more-than-once#3425956
             -->
             <ResourceDictionary.MergedDictionaries>
-                <ui:ThemesDictionary Theme="Dark" />
+                <ui:ThemesDictionary ApplicationTheme="Dark" />
                 <ui:ControlsDictionary />
                 <ResourceDictionary Source="./Assets/Themes/CatppuccinMocha.xaml" />
                 <!--<materialDesign:CustomColorTheme BaseTheme="Dark" PrimaryColor="#a6e3a1" SecondaryColor="#b4befe" />-->
