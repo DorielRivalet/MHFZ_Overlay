@@ -233,4 +233,12 @@ public static class Numbers
     public const int QuestIDHalloweenSpeedster = 53325;
 
     public const int QuestIDVR = 53232;
+
+    public const int MezFesSRankNyanrendo = 10340;
+
+    public const int MezFesSRankDokkanBattleCats = 110750;
+
+    public const int MezFesSRankPanicHoney = 100;
+
+    public const int MezFesSRankGuukuScoop = 106980;
 }

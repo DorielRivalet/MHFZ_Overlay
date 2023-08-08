@@ -2840,7 +2840,7 @@ public static class Achievements
             Description = string.Empty,
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/medal_stamp.jpg",
-            Objective = "Obtain S Rank in all single-player MezFes minigames",
+            Objective = "Obtain S Rank in Nyanrendo, Dokkan Battle Cats, Guuku Scoop and Panic Honey.",
             IsSecret = true,
             Hint = "Do you like minigames?",
             }

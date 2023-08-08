@@ -1779,7 +1779,7 @@ public sealed class AchievementService : IAchievementService
                     return false;
                 }
 
-            case 215: // TODO test
+            case 215:
                 if (dataLoader.Model.DivaBond() >= 999)
                 {
                     return true;
@@ -1789,9 +1789,14 @@ public sealed class AchievementService : IAchievementService
                     return false;
                 }
 
-            case 216: // TODO Obtain S Rank in all single-player MezFes minigames
+            case 216:
             {
-                return false;
+                return databaseManagerInstance.AllMezFes.Any(minigame =>
+                (minigame.Score >= Numbers.MezFesSRankGuukuScoop && minigame.MezFesMinigameID == 466) &&
+                (minigame.Score >= Numbers.MezFesSRankNyanrendo && minigame.MezFesMinigameID == 467) &&
+                (minigame.Score >= Numbers.MezFesSRankPanicHoney && minigame.MezFesMinigameID == 468) &&
+                (minigame.Score >= Numbers.MezFesSRankDokkanBattleCats && minigame.MezFesMinigameID == 469)
+                );
             }
 
             case 217:
@@ -2229,7 +2234,7 @@ public sealed class AchievementService : IAchievementService
 
                     return false; // Handle invalid TotalTimeElapsed values
                 });
-            case 340: // TODO discord rich presence
+            case 340:
                 return s.EnableRichPresence;
             case 341:
                 if (dataLoader.Model.GetOverlayMode().Contains("Zen"))
