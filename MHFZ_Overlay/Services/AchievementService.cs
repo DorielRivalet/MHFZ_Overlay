@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Media;
@@ -26,6 +27,7 @@ using Wpf.Ui.Controls;
 public sealed class AchievementService : IAchievementService
 {
     private static readonly DatabaseService DatabaseManagerInstance = DatabaseService.GetInstance();
+    private static readonly AudioService AudioServiceInstance = AudioService.GetInstance();
 
     public static TimeSpan SnackbarTimeOut { get; set; } = TimeSpan.FromSeconds(5);
 
@@ -46,7 +48,9 @@ public sealed class AchievementService : IAchievementService
 
     public static void ShowMany(SnackbarPresenter snackbarPresenter, List<int> achievementsID, Style style)
     {
-        MainWindow.MainWindowSoundPlayer?.Play();
+        var s = (Settings)Application.Current.TryFindResource("Settings");
+        var fileName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Assets\Sounds\victory.wav");
+        AudioServiceInstance.Play(fileName, MainWindow.MainWindowMediaPlayer, s.VolumeMain, s.VolumeAchievementUnlock);
 
         const int maxAchievementsToShow = 5;
         var remainingAchievements = achievementsID.Count - maxAchievementsToShow;

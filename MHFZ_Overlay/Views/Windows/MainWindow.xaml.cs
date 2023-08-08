@@ -1731,7 +1731,7 @@ The process may take some time, as the program attempts to download from GitHub 
     // TODO fix alt tab issues?
     private IKeyboardMouseEvents GlobalHook;
 
-    public static SoundPlayer? MainWindowSoundPlayer { get; private set; }
+    public static MediaPlayer? MainWindowMediaPlayer { get; private set; }
 
     private double PressedInputOpacity { get; set; } = 0.5;
 
@@ -2623,7 +2623,7 @@ The process may take some time, as the program attempts to download from GitHub 
             LoggingService.WriteCrashLog(new Exception("Target process not found"));
         }
 
-        MainWindowSoundPlayer = new SoundPlayer(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Assets\Sounds\victory.wav"));
+        MainWindowMediaPlayer = new MediaPlayer();
     }
 
     private static void OnboardEndUser()

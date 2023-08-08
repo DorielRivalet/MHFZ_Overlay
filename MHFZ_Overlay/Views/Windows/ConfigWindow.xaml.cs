@@ -76,9 +76,11 @@ public partial class ConfigWindow : FluentWindow
 
     private static readonly string RandomMonsterImage = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/random.png";
 
+    // TODO: change manager to service
     private static readonly DatabaseService DatabaseManager = DatabaseService.GetInstance();
     private static readonly AchievementService AchievementManager = AchievementService.GetInstance();
     private static readonly OverlaySettingsService OverlaySettingsManager = OverlaySettingsService.GetInstance();
+    private static readonly AudioService AudioServiceInstance = AudioService.GetInstance();
 
     // TODO put this in a read-only dictionary thing
     private readonly MonsterLog[] monsters = new MonsterLog[]
