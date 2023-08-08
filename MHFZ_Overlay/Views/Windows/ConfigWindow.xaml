@@ -2062,7 +2062,108 @@
                     </TabControl>
                 </Grid>
             </TabItem>
-            <TabItem ToolTip="Player Settings" Background="{StaticResource Mantle}" Foreground="{StaticResource Text}">
+                <TabItem ToolTip="Audio Settings" Background="{StaticResource Mantle}" Foreground="{StaticResource Text}">
+                    <TabItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="../../Assets/Icons/png/note_pink.png" Width="32" Height="32"/>
+                            <TextBlock Foreground="#ff985d" Text="Audio" Margin="4,0,0,0" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </TabItem.Header>
+                    <Grid x:Name="AudioContent" Height="Auto"  Width="Auto">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="1*"/>
+                            <RowDefinition Height="100"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions >
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <!--https://stackoverflow.com/questions/17946487/how-to-scroll-a-grid-->
+                        <ScrollViewer VerticalScrollBarVisibility="Visible" Grid.Row="0" CanContentScroll="True" IsDeferredScrollingEnabled="True">
+                            <Grid Height="Auto" Width="Auto" Background="Transparent" Style="{StaticResource ConfigSingleGrid}"  Grid.Row="0" Grid.Column="1" Margin="20,20,20,20" Grid.ColumnSpan="2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="40"/>
+                                    <RowDefinition Height="40"/>
+                                    <RowDefinition Height="40"/>
+                                    <RowDefinition Height="40"/>
+                                    <RowDefinition Height="40"/>
+                                    <RowDefinition Height="40"/>
+                                    <RowDefinition Height="40"/>
+                                    <RowDefinition Height="40"/>
+                                    <RowDefinition Height="40"/>
+                                </Grid.RowDefinitions>
+
+                                <TextBlock Text="Main Volume" Margin="5" ToolTip="Adjust the main volume" Style="{StaticResource ConfigTextBox}" Grid.Row="0" Grid.Column="0"/>
+                                <DockPanel Grid.Row="0" Grid.Column="1">
+                                    <ui:TextBlock Text="{Binding Path=VolumeMain, Source={StaticResource Settings}, StringFormat={}{0:P0}}" DockPanel.Dock="Right" TextAlignment="Center" Width="80" VerticalAlignment="Center">
+                                    </ui:TextBlock>
+                                    <Slider IsSnapToTickEnabled="True" TickFrequency="0.05" TickPlacement="Both" Minimum="0" Maximum="1" Value="{Binding Path=VolumeMain, Source={StaticResource Settings}}"  />
+                                </DockPanel>
+
+                                <TextBlock Text="Achievement Unlock Volume" Margin="5" ToolTip="Adjust the volume" Style="{StaticResource ConfigTextBox}" Grid.Row="1" Grid.Column="0"/>
+                                <DockPanel Grid.Row="1" Grid.Column="1">
+                                    <ui:TextBlock Text="{Binding Path=VolumeAchievementUnlock, Source={StaticResource Settings}, StringFormat={}{0:P0}}" DockPanel.Dock="Right" TextAlignment="Center" Width="80" VerticalAlignment="Center">
+                                    </ui:TextBlock>
+                                    <Slider IsSnapToTickEnabled="True" TickFrequency="0.05" TickPlacement="Both" Minimum="0" Maximum="1" Value="{Binding Path=VolumeAchievementUnlock, Source={StaticResource Settings}}"  />
+                                </DockPanel>
+
+                                <TextBlock Text="Challenge Unlock Volume" Margin="5" ToolTip="Adjust the volume" Style="{StaticResource ConfigTextBox}" Grid.Row="2" Grid.Column="0"/>
+                                <DockPanel Grid.Row="2" Grid.Column="1">
+                                    <ui:TextBlock Text="{Binding Path=VolumeChallengeUnlock, Source={StaticResource Settings}, StringFormat={}{0:P0}}" DockPanel.Dock="Right" TextAlignment="Center" Width="80" VerticalAlignment="Center">
+                                    </ui:TextBlock>
+                                    <Slider IsSnapToTickEnabled="True" TickFrequency="0.05" TickPlacement="Both" Minimum="0" Maximum="1" Value="{Binding Path=VolumeChallengeUnlock, Source={StaticResource Settings}}"  />
+                                </DockPanel>
+
+                                <TextBlock Text="Challenge Start Volume" Margin="5" ToolTip="Adjust the volume" Style="{StaticResource ConfigTextBox}" Grid.Row="3" Grid.Column="0"/>
+                                <DockPanel Grid.Row="3" Grid.Column="1">
+                                    <ui:TextBlock Text="{Binding Path=VolumeChallengeStart, Source={StaticResource Settings}, StringFormat={}{0:P0}}" DockPanel.Dock="Right" TextAlignment="Center" Width="80" VerticalAlignment="Center">
+                                    </ui:TextBlock>
+                                    <Slider IsSnapToTickEnabled="True" TickFrequency="0.05" TickPlacement="Both" Minimum="0" Maximum="1" Value="{Binding Path=VolumeChallengeStart, Source={StaticResource Settings}}"  />
+                                </DockPanel>
+
+                                <TextBlock Text="Gacha Unlock Volume" Margin="5" ToolTip="Adjust the volume" Style="{StaticResource ConfigTextBox}" Grid.Row="4" Grid.Column="0"/>
+                                <DockPanel Grid.Row="4" Grid.Column="1">
+                                    <ui:TextBlock Text="{Binding Path=VolumeGachaUnlock, Source={StaticResource Settings}, StringFormat={}{0:P0}}" DockPanel.Dock="Right" TextAlignment="Center" Width="80" VerticalAlignment="Center">
+                                    </ui:TextBlock>
+                                    <Slider IsSnapToTickEnabled="True" TickFrequency="0.05" TickPlacement="Both" Minimum="0" Maximum="1" Value="{Binding Path=VolumeGachaUnlock, Source={StaticResource Settings}}"  />
+                                </DockPanel>
+
+                                <TextBlock Text="Gacha Trial Volume" Margin="5" ToolTip="Adjust the volume" Style="{StaticResource ConfigTextBox}" Grid.Row="5" Grid.Column="0"/>
+                                <DockPanel Grid.Row="5" Grid.Column="1">
+                                    <ui:TextBlock Text="{Binding Path=VolumeGachaTrial, Source={StaticResource Settings}, StringFormat={}{0:P0}}" DockPanel.Dock="Right" TextAlignment="Center" Width="80" VerticalAlignment="Center">
+                                    </ui:TextBlock>
+                                    <Slider IsSnapToTickEnabled="True" TickFrequency="0.05" TickPlacement="Both" Minimum="0" Maximum="1" Value="{Binding Path=VolumeGachaTrial, Source={StaticResource Settings}}"  />
+                                </DockPanel>
+
+                                <TextBlock Text="Gacha Rare Volume" Margin="5" ToolTip="Adjust the volume" Style="{StaticResource ConfigTextBox}" Grid.Row="6" Grid.Column="0"/>
+                                <DockPanel Grid.Row="6" Grid.Column="1">
+                                    <ui:TextBlock Text="{Binding Path=VolumeGachaRare, Source={StaticResource Settings}, StringFormat={}{0:P0}}" DockPanel.Dock="Right" TextAlignment="Center" Width="80" VerticalAlignment="Center">
+                                    </ui:TextBlock>
+                                    <Slider IsSnapToTickEnabled="True" TickFrequency="0.05" TickPlacement="Both" Minimum="0" Maximum="1" Value="{Binding Path=VolumeGachaRare, Source={StaticResource Settings}}"  />
+                                </DockPanel>
+
+                                <TextBlock Text="Hover Volume" Margin="5" ToolTip="Adjust the volume" Style="{StaticResource ConfigTextBox}" Grid.Row="7" Grid.Column="0"/>
+                                <DockPanel Grid.Row="7" Grid.Column="1">
+                                    <ui:TextBlock Text="{Binding Path=VolumeHover, Source={StaticResource Settings}, StringFormat={}{0:P0}}" DockPanel.Dock="Right" TextAlignment="Center" Width="80" VerticalAlignment="Center">
+                                    </ui:TextBlock>
+                                    <Slider IsSnapToTickEnabled="True" TickFrequency="0.05" TickPlacement="Both" Minimum="0" Maximum="1" Value="{Binding Path=VolumeHover, Source={StaticResource Settings}}"  />
+                                </DockPanel>
+
+                                <TextBlock Text="Select Volume" Margin="5" ToolTip="Adjust the volume" Style="{StaticResource ConfigTextBox}" Grid.Row="8" Grid.Column="0"/>
+                                <DockPanel Grid.Row="8" Grid.Column="1">
+                                    <ui:TextBlock Text="{Binding Path=VolumeSelect, Source={StaticResource Settings}, StringFormat={}{0:P0}}" DockPanel.Dock="Right" TextAlignment="Center" Width="80" VerticalAlignment="Center">
+                                    </ui:TextBlock>
+                                    <Slider IsSnapToTickEnabled="True" TickFrequency="0.05" TickPlacement="Both" Minimum="0" Maximum="1" Value="{Binding Path=VolumeSelect, Source={StaticResource Settings}}"  />
+                                </DockPanel>
+                            </Grid>
+                        </ScrollViewer>
+                        <customcontrols:MainConfigurationActions Grid.Row="1" Grid.ColumnSpan="1" Loaded="MainConfigurationActions_Loaded" Unloaded="MainConfigurationActions_Unloaded"/>
+                    </Grid>
+                </TabItem>
+                <TabItem ToolTip="Player Settings" Background="{StaticResource Mantle}" Foreground="{StaticResource Text}">
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
                         <Image Source="../../Assets/Icons/png/helm.png" Width="32" Height="32"/>

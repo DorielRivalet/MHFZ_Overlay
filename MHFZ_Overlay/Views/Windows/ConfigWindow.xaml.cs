@@ -508,6 +508,7 @@ public partial class ConfigWindow : FluentWindow
         var background7 = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Background/7.png";
         var background8 = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Background/8.png";
         var background9 = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Background/9.png";
+        var background10 = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Background/10.png";
 
         // https://stackoverflow.com/questions/30839173/change-background-image-in-wpf-using-c-sharp
         this.GeneralContent.Background = new ImageBrush(new BitmapImage(new Uri(background1)));
@@ -519,6 +520,7 @@ public partial class ConfigWindow : FluentWindow
         this.MonsterInfoContent.Background = new ImageBrush(new BitmapImage(new Uri(background7)));
         this.QuestLogContent.Background = new ImageBrush(new BitmapImage(new Uri(background8)));
         this.PlayerContent.Background = new ImageBrush(new BitmapImage(new Uri(background9)));
+        this.AudioContent.Background = new ImageBrush(new BitmapImage(new Uri(background10)));
 
         // TODO: test this
         this.DataContext = this.MainWindow.DataLoader.Model;
