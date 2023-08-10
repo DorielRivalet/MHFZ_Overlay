@@ -3,10 +3,15 @@
 // found in the LICENSE file.
 
 namespace MHFZ_Overlay.Models;
+
+using System;
 using System.Windows;
+using System.Windows.Input;
 
 public sealed class Challenge
 {
+    public ICommand? StartChallengeCommand { get; set; }
+
     /// <summary>
     /// Gets or sets the link to the banner image.
     /// </summary>
@@ -56,4 +61,9 @@ public sealed class Challenge
     /// Gets or sets the name of the achievement id required.
     /// </summary>
     public string AchievementNameRequired { get; set; } = string.Empty;
+
+    /// <summary>
+    /// The date when the challenge was unlocked
+    /// </summary>
+    public DateTime UnlockDate { get; set; } = DateTime.UnixEpoch;
 }

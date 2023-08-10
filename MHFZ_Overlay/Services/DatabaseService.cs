@@ -5027,6 +5027,18 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                     cmd.ExecuteNonQuery();
                 }
 
+                // Instead of using foreign keys, just combine the Dictionary with the UnlockDate here.
+                sql = @"CREATE TABLE IF NOT EXISTS PlayerChallenges(
+                PlayerChallengesID INTEGER PRIMARY KEY AUTOINCREMENT,
+                UnlockDate TEXT NOT NULL,
+                ChallengeID INTEGER NOT NULL,
+                UNIQUE(ChallengeID) ON CONFLICT IGNORE
+                )";
+                using (var cmd = new SQLiteCommand(sql, conn))
+                {
+                    cmd.ExecuteNonQuery();
+                }
+
                 // a mh game but like a MUD. hunt in-game to get many kinds of points for this game. hunt and tame monsters. challenge other CPU players/monsters.
                 sql = @"CREATE TABLE IF NOT EXISTS GachaMaterial(
                     GachaMaterialID INTEGER PRIMARY KEY,
@@ -9901,6 +9913,63 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         return achievements;
+    }
+
+    /// <summary>
+    /// Get a list of all achievements where the completion date is set or not by the player.
+    /// </summary>
+    /// <returns></returns>
+    public ReadOnlyDictionary<int, Challenge> GetPlayerChallenges()
+    {
+        var data = Challenges.IDChallenge;
+        if (string.IsNullOrEmpty(this.dataSource))
+        {
+            Logger.Warn(CultureInfo.InvariantCulture, "Cannot get player challenges collection. dataSource: {0}", this.dataSource);
+            return data;
+        }
+
+        using (var conn = new SQLiteConnection(this.dataSource))
+        {
+            conn.Open();
+            using (var transaction = conn.BeginTransaction())
+            {
+                try
+                {
+                    var sql = @"SELECT * FROM PlayerChallenges ORDER BY ChallengeID ASC";
+
+                    using (var cmd = new SQLiteCommand(sql, conn))
+                    {
+                        using (var reader = cmd.ExecuteReader())
+                        {
+                            if (reader == null || !reader.HasRows)
+                            {
+                                return data;
+                            }
+
+                            if (reader.HasRows)
+                            {
+                                while (reader.Read())
+                                {
+                                    var challengeID = reader.GetInt32(reader.GetOrdinal("ChallengeID"));
+                                    data[challengeID].UnlockDate = reader.IsDBNull(reader.GetOrdinal("UnlockDate"))
+? DateTime.UnixEpoch
+: DateTime.Parse(reader.GetString(reader.GetOrdinal("UnlockDate")), CultureInfo.InvariantCulture);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    HandleError(transaction, ex);
+                }
+            }
+        }
+
+        return data;
     }
 
     public ObservableCollection<RecentRuns> GetRecentRuns()

@@ -4,6 +4,8 @@
 
 namespace MHFZ_Overlay.Services.Contracts;
 
+using MHFZ_Overlay.Models;
+
 public interface IChallenge
 {
     /// <summary>
@@ -15,23 +17,23 @@ public interface IChallenge
     /// <param name="platinumCount"></param>
     /// <param name="secretID"></param>
     /// <returns>false if the requirements are not met</returns>
-    bool CheckAchievementRequirements(int bronzeCount, int silverCount, int goldCount, int platinumCount, int secretID);
+    bool CheckRequirements(Challenge challenge);
 
     /// <summary>
     /// Unlocks the challenge.
     /// </summary>
     /// <param name="checkRequirements"></param>
     /// <returns>false if the challenge could not be unlocked</returns>
-    bool Unlock(bool checkRequirements);
+    bool Unlock(Challenge challenge);
 
     /// <summary>
     /// Starts the challenge. If there is already a challenge in progress, that challenge is canceled.
     /// </summary>
     /// <returns>false if the challenge could not be started</returns>
-    bool Start();
+    bool Start(Challenge challenge);
 
     /// <summary>
     /// Cancels the challenge.
     /// </summary>
-    void Cancel();
+    void Cancel(Challenge challenge);
 }

@@ -4,15 +4,18 @@
 
 namespace MHFZ_Overlay.Models.Collections;
 
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 public static class Challenges
 {
-    public static List<Challenge> ChallengeList { get; private set; } = new List<Challenge>
+    public static ReadOnlyDictionary<int, Challenge> IDChallenge { get; } = new(new Dictionary<int, Challenge>
     {
         {
-            new Challenge()
+            0, new Challenge()
             {
+                UnlockDate = DateTime.UnixEpoch,
                 BannerImageLink = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/unknown_black.jpg",
                 Name = "Bingo",
                 AchievementIDRequired = 214, // Zenny Galore
@@ -29,8 +32,9 @@ Try to complete a fully diagonal, vertical or horizontal line in order to finish
             }
         },
         {
-            new Challenge()
+            1, new Challenge()
             {
+                UnlockDate = DateTime.UnixEpoch,
                 BannerImageLink = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/unknown_black.jpg",
                 Name = "Gacha",
                 AchievementIDRequired = 212, // Quiz Time!
@@ -44,8 +48,9 @@ Try to complete a fully diagonal, vertical or horizontal line in order to finish
             }
         },
         {
-            new Challenge()
+            2, new Challenge()
             {
+                UnlockDate = DateTime.UnixEpoch,
                 BannerImageLink = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/unknown_black.jpg",
                 Name = "Zenith Gauntlet",
                 AchievementIDRequired = 405, // Crushing Palms
@@ -59,8 +64,9 @@ Try to complete a fully diagonal, vertical or horizontal line in order to finish
             }
         },
         {
-            new Challenge()
+            3, new Challenge()
             {
+                UnlockDate = DateTime.UnixEpoch,
                 BannerImageLink = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/unknown_black.jpg",
                 Name = "Solstice Gauntlet",
                 AchievementIDRequired = 404, // The Embodiment of Scarlet Devil
@@ -74,8 +80,9 @@ Try to complete a fully diagonal, vertical or horizontal line in order to finish
             }
         },
         {
-            new Challenge()
+            4, new Challenge()
             {
+                UnlockDate = DateTime.UnixEpoch,
                 BannerImageLink = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/unknown_black.jpg",
                 Name = "Musou Gauntlet",
                 AchievementIDRequired = 195, // Seriously Thirsty
@@ -91,5 +98,5 @@ Try to complete a fully diagonal, vertical or horizontal line in order to finish
 This merciless gauntlet demands more than mere strength; it calls for tactical finesse and the will to triumph against insurmountable odds. Only those who can surmount this grueling challenge shall earn the title of Unstoppable, showcasing their prowess to the world.",
             }
         },
-    };
+    });
 }

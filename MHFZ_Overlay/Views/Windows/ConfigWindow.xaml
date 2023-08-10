@@ -54,6 +54,8 @@
             <converter:DateTimeToStringConverter x:Key="DateTimeToStringConverter"/>
             <converter:BooleanToOpacityConverter x:Key="BooleanToOpacityConverter"/>
             <converter:AchievementToColorConverter x:Key="AchievementToColorConverter"/>
+            <converter:UnlockChallengeButtonContentConverter x:Key="UnlockChallengeButtonContentConverter"/>
+
             <!-- Define the reusable context menu in a resource dictionary or at a higher level in your XAML hierarchy -->
             <ContextMenu x:Key="HunterNotesContextMenu" x:Name="HunterNotesContextMenu">
                 <ui:MenuItem x:Name="HunterNotesCopyTextMenuItem" Click="HunterNotesGridMenuItem_Click">
@@ -1972,7 +1974,7 @@
                                                 <ui:InfoBar x:Name="ChallengesInfoBar" Grid.ColumnSpan="2" Foreground="{StaticResource Text}" Title="What are Challenges?" 
                                 Message="CURRENTLY IN DEVELOPMENT. Challenges are an optional endeavor where you are presented with various kinds of objectives.&#x0a;&#x0a;To start a challenge you need to have unlocked the challenge first.&#x0a;&#x0a;In order to unlock a challenge, check the required amount of trophies in the bottom right corner of each challenge section,&#x0a;along with having obtained the secret achievement needed by the challenge.&#x0a;&#x0a;Happy Hunting!" 
                                 IsClosable="True" IsOpen="True" Severity="Informational" MouseDoubleClick="ChallengesInfoBar_MouseDoubleClick"/>
-                                                <ListBox x:Name="ChallengesListBox" SelectionChanged="ChallengesListBox_SelectionChanged" ItemsSource="{Binding Source={x:Static collections:Challenges.ChallengeList}}" SelectionMode="Single">
+                                                <ListBox Loaded="ChallengesListBox_Loaded" x:Name="ChallengesListBox" SelectionChanged="ChallengesListBox_SelectionChanged" SelectionMode="Single">
                                                     <ListBox.ItemTemplate>
                                                         <DataTemplate>
                                                             <Border BorderBrush="{StaticResource Base}" BorderThickness="1" CornerRadius="4" Background="#7f1e1e2e">
@@ -2043,7 +2045,11 @@
                                                                                     <StackPanel Orientation="Vertical">
                                                                                         <ui:Image HorizontalAlignment="Center" Margin="0,10,0,0" Width="32" Source="../../Assets/Icons/achievement/secret_trophy.png"/>
                                                                                         <ui:TextBlock HorizontalAlignment="Center" Margin="0,10,0,0" d:Text="Zenny Galore" Text="{Binding AchievementNameRequired}" TextWrapping="Wrap"/>
-                                                                                        <ui:Button Margin="0,10,0,0" HorizontalAlignment="Center" Content="Unlock" Appearance="Primary" IsEnabled="False"/>
+                                                                                        <ui:Button Margin="0,10,0,0"
+                                                                                                   HorizontalAlignment="Center"
+                                                                                                   Content="{Binding UnlockDate, Converter={StaticResource UnlockChallengeButtonContentConverter}}" Appearance="Primary"
+                                                                                                   Command="{Binding StartChallengeCommand}"
+                                                                                                   CommandParameter="{Binding}"/>
                                                                                     </StackPanel>
                                                                                 </Grid>
                                                                             </Grid>

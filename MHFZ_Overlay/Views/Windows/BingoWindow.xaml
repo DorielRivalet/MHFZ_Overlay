@@ -1,0 +1,71 @@
+<!--
+// © 2023 The mhfz-overlay developers.
+// Use of this source code is governed by a MIT license that can be
+// found in the LICENSE file.
+-->
+<ui:FluentWindow x:Class="MHFZ_Overlay.Views.Windows.BingoWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MHFZ_Overlay.Views.Windows"
+        xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+        xmlns:gif="http://wpfanimatedgif.codeplex.com"
+        xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
+        xmlns:tray="http://schemas.lepo.co/wpfui/2022/xaml/tray"
+        d:DataContext="{d:DesignInstance Type=windows:AddressModel}"
+        xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
+        xmlns:converter="clr-namespace:MHFZ_Overlay.Services.Converter"
+        xmlns:customcontrols="clr-namespace:MHFZ_Overlay.Views.CustomControls"
+        xmlns:validationrules="clr-namespace:MHFZ_Overlay.Services.ValidationRule"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:viewmodels="clr-namespace:MHFZ_Overlay.ViewModels.Windows"
+        xmlns:collections="clr-namespace:MHFZ_Overlay.Models.Collections"
+        xmlns:windows="clr-namespace:MHFZ_Overlay.ViewModels.Windows"
+        xmlns:vwp="clr-namespace:WpfToolkit.Controls;assembly=VirtualizingWrapPanel"
+        mc:Ignorable="d"
+        x:Name="BingoWindowObject"
+        Title="Monster Hunter Frontier Z Overlay Bingo"
+        Height="720" Width="1280" ResizeMode="CanResize"
+        Foreground="{StaticResource Text}"
+        Background="{StaticResource Base}"
+        TextElement.Foreground="{StaticResource Text}"
+        TextElement.FontWeight="Medium"
+        TextElement.FontSize="14"
+        FontFamily="{StaticResource Segoe UI Variable}"
+        BorderBrush="#b4befe"
+        ExtendsContentIntoTitleBar="True"
+        WindowBackdropType="Mica"
+        WindowCornerPreference="Round"
+        WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <ui:TitleBar
+            Title="Monster Hunter Frontier Z Overlay Bingo"
+            Background="{StaticResource Crust}"
+            Grid.Row="0"/>
+            <Grid Grid.Row="1" Margin="20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center">
+                    <ComboBox x:Name="BingoDifficultyComboBox" SelectedIndex="0" ToolTip="Choose Bingo difficulty">
+                        <ComboBoxItem>Easy</ComboBoxItem>
+                        <ComboBoxItem>Medium</ComboBoxItem>
+                        <ComboBoxItem>Hard</ComboBoxItem>
+                        <ComboBoxItem>Extreme</ComboBoxItem>
+                    </ComboBox>
+                    <ui:Button Margin="10,0,0,0" Content="Start" Foreground="{StaticResource Crust}" Background="{StaticResource Green}"/>
+                </StackPanel>
+                <Grid x:Name="BingoGrid" Grid.RowSpan="3" Grid.Row="1">
+
+                </Grid>
+            </Grid>
+        </Grid>
+    </Grid>
+</ui:FluentWindow>

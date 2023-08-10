@@ -166,3 +166,16 @@ public enum SetterMode
     /// </summary>
     ClearAll,
 }
+
+public enum ChallengeState
+{
+    /// <summary>
+    /// The challenge is available for start
+    /// </summary>
+    Idle,
+
+    /// <summary>
+    /// The challenge is currently in progress, other challenges cannot be running and must be idle.
+    /// </summary>
+    Running,
+}

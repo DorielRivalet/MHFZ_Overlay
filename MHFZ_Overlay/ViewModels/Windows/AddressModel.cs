@@ -12347,6 +12347,8 @@ After all that you’ve unlocked magnet spike! You should get a material to make
 
     public List<Achievement> PlayerAchievements { get; set; } = new ();
 
+    public ReadOnlyDictionary<int, Challenge> PlayerChallenges { get; set; }
+
     public ObservableCollection<QuestLogsOption> QuestLogsSearchOption { get; set; } = new ObservableCollection<QuestLogsOption>()
     {
         new QuestLogsOption { Name = "Compendium", IsSelected = false },

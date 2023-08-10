@@ -81,6 +81,8 @@ public partial class ConfigWindow : FluentWindow
     private static readonly AchievementService AchievementManager = AchievementService.GetInstance();
     private static readonly OverlaySettingsService OverlaySettingsManager = OverlaySettingsService.GetInstance();
     private static readonly AudioService AudioServiceInstance = AudioService.GetInstance();
+    private static readonly ChallengeService ChallengeServiceInstance = ChallengeService.GetInstance();
+
 
     // TODO put this in a read-only dictionary thing
     private readonly MonsterLog[] monsters = new MonsterLog[]
@@ -565,6 +567,8 @@ public partial class ConfigWindow : FluentWindow
 
         // Get the elapsed time in milliseconds
         var elapsedTimeMs = stopwatch.Elapsed.TotalMilliseconds;
+
+        StartChallengeCommand = new RelayCommand<Challenge?>(StartChallenge);
 
         // Print the elapsed time
         Logger.Debug($"ConfigWindow ctor Elapsed Time: {elapsedTimeMs} ms");
@@ -4230,6 +4234,63 @@ public partial class ConfigWindow : FluentWindow
         {
             Logger.Error("Could not navigate in WebView2");
         }
+    }
+
+    public ICommand StartChallengeCommand { get; private set; }
+
+    private void StartChallenge(Challenge? challenge)
+    {
+        if (challenge == null)
+        {
+            Logger.Warn("Challenge not found, canceling start process");
+            return;
+        }
+
+        // Implement the logic to unlock or start the specific challenge.
+        // You can access the properties of the challenge object here.
+
+        // Challenge unlock date is not default, can skip requirements check.
+        if (challenge.UnlockDate != DateTime.UnixEpoch)
+        {
+            ChallengeServiceInstance.Start(challenge);
+            return;
+        }
+
+        if (ChallengeServiceInstance.CheckRequirements(challenge))
+        {
+            ChallengeServiceInstance.Unlock(challenge);
+        }
+        else
+        {
+            var brushConverter = new BrushConverter();
+            var brushColor = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Crust"]);
+            var snackbar = new Snackbar(ConfigWindowSnackBarPresenter)
+            {
+                Title = "Challenge locked!",
+                Content = "Check the information bar at the top of this section in order to view unlocking instructions.",
+                Icon = new SymbolIcon()
+                {
+                    Symbol = SymbolRegular.LockClosed32,
+                    Foreground = brushColor ?? Brushes.Black,
+                },
+                Appearance = ControlAppearance.Info,
+                Timeout = SnackbarTimeOut,
+                Style = (Style)this.FindResource("CatppuccinMochaSnackBar"),
+            };
+            ConfigWindowSnackBarPresenter.AddToQue(snackbar);
+        }
+    }
+
+    private void ChallengesListBox_Loaded(object sender, RoutedEventArgs e)
+    {
+        var listBox = (ListBox)sender;
+        this.MainWindow.DataLoader.Model.PlayerChallenges = DatabaseManager.GetPlayerChallenges();
+        listBox.ItemsSource = this.MainWindow.DataLoader.Model.PlayerChallenges.Values.ToList();
+        foreach (var challenge in (List<Challenge>)listBox.ItemsSource)
+        {
+            challenge.StartChallengeCommand = StartChallengeCommand;
+        }
+        listBox.Items.Refresh();
     }
 }
 
