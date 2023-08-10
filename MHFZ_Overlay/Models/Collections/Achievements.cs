@@ -5366,5 +5366,50 @@ Just now, reduced to ashes",
             Hint = "Sorry, but that cheat code won't give you 30 more tries on this quest.",
             }
         },
+        {
+            410, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Blinky",
+            Description = string.Empty,
+            Rank = AchievementRank.Platinum,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/unknown_blue.jpg",
+            Objective = "Complete 1 Blinking Nargacuga True Slay quest with a certain Switch Axe F.",
+            IsSecret = true,
+            Hint = @"You found a book and a weapon.
+
+The book reads:
+""For those who are new to this environment, perfection is not something you achieve but something all must eventually fall into the ranks to.
+
+It is a forced compulsion to be better, and that is what's enjoyable about entering this community.
+
+In time, I will steal everything there is to need in order to trivialise content as people have done.
+
+Well, the alternative is to believe you're a failure who will never survive in this game which I am not pessimistic about.
+
+So yuh, it will be worthwhile because inevitably you will be forced to be stronger, even if you have to beat up your body just so that it cooperates.
+
+Well, no merits are earned yet to justify a personality. So in the meantime, being humble and full of self-doubt is correct. At least until you proved your place in this game as, not being a failure.
+
+The only question is how long it'll take to be competent, hmmm.""
+
+You turn the pages...
+
+""I feel like garbage right now, because I haven't done anything. But instead of looking up at those people and being awe-inspired about how they're better than me, I seek to take that for myself. Because that's how you survive in this community, it is a compulsory progression, otherwise you can screw off and die somewhere.
+
+I have the utmost gratitude for people who are strong, but it's also the source of dissatisfaction that I will settle for nothing less than to take that for myself.
+
+Otherwise, crash and burn if I'm not good enough.
+I'm sure everyone will do great in the end o wo
+
+As long as they don't quit.
+
+That's why we came here, right? We wouldn't find this place if we err, sucked at MH.""
+
+Having read the inspiring notes, you decide to equip the Black Savage Charaxt and embark on a quest.
+
+During the travel to your destination, the top of the Great Forest, you notice that the weapon seems to have been made before Zeniths were known.",
+            }
+        },
     });
 }

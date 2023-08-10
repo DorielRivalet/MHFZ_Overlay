@@ -2538,6 +2538,22 @@ public sealed class AchievementService : IAchievementService
                     return false;
                 }
             }
+            case 410:
+            {
+                completedQuests = from quest in databaseManagerInstance.AllQuests
+                                  join playerGear in databaseManagerInstance.AllPlayerGear on quest.RunID equals playerGear.RunID
+                                  where quest.QuestID == Numbers.QuestIDBlinkingNargacugaForest &&
+                                  playerGear.BlademasterWeaponID == 14854
+                                  select quest;
+                if (completedQuests != null && completedQuests.Any())
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
         }
     }
 
