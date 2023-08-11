@@ -722,13 +722,13 @@
     <None Remove="Assets\Icons\png\unknown.png" />
     <None Remove="Assets\Icons\png\whetstone.png" />
     <None Remove="Assets\Icons\png\world.png" />
+    <None Remove="Assets\Sounds\challenge_start.wav" />
     <None Remove="Assets\Sounds\challenge_unlock.wav" />
     <None Remove="Assets\Sounds\gacha_rare.wav" />
     <None Remove="Assets\Sounds\gacha_trial.wav" />
     <None Remove="Assets\Sounds\gacha_unlock.wav" />
     <None Remove="Assets\Sounds\hover.wav" />
     <None Remove="Assets\Sounds\select.wav" />
-    <None Remove="Assets\Sounds\start_challenge.wav" />
     <None Remove="Assets\Sounds\victory.wav" />
     <None Remove="NLog.config" />
   </ItemGroup>
@@ -819,7 +819,7 @@
     <Content Include="Assets\Sounds\select.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Sounds\start_challenge.wav">
+    <Content Include="Assets\Sounds\challenge_start.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="mhfzoverlay128.png">

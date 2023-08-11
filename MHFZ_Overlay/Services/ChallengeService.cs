@@ -69,7 +69,7 @@ public sealed class ChallengeService : IChallenge
     public bool Start(Challenge challenge)
     {
         // TODO
-        return false;
+        return true;
     }
 
     /// <inheritdoc/>

@@ -4251,7 +4251,18 @@ public partial class ConfigWindow : FluentWindow
         // Challenge unlock date is not default, can skip requirements check.
         if (challenge.UnlockDate != DateTime.UnixEpoch)
         {
-            ChallengeServiceInstance.Start(challenge);
+            var successful = ChallengeServiceInstance.Start(challenge);
+
+            if (!successful)
+            {
+                Logger.Warn(CultureInfo.InvariantCulture, "Could not start challenge");
+                return;
+            }
+
+            var s = (Settings)Application.Current.TryFindResource("Settings");
+            var fileName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Assets\Sounds\challenge_start.wav");
+            AudioServiceInstance.Play(fileName, MainWindow.MainWindowMediaPlayer, s.VolumeMain, s.VolumeChallengeStart);
+
             return;
         }
 
@@ -4287,11 +4298,11 @@ public partial class ConfigWindow : FluentWindow
                 Content = $"Congratulations on unlocking {challenge.Name}, you can now start it by pressing the Start button inside that challenge section.",
                 Icon = new SymbolIcon()
                 {
-                    Symbol = SymbolRegular.LockOpen32,
+                    Symbol = SymbolRegular.LockOpen28,
                     Foreground = brushColor ?? Brushes.Black,
                 },
                 Appearance = ControlAppearance.Info,
-                Timeout = SnackbarTimeOut,
+                Timeout = TimeSpan.FromSeconds(10),
                 Style = (Style)this.FindResource("CatppuccinMochaSnackBar"),
             };
 
