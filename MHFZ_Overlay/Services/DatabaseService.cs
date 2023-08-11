@@ -3177,6 +3177,59 @@ Message: {7}",
         return achievementIDList;
     }
 
+    /// <summary>
+    /// Unlocks the challenge and stores the unlock date of the challenge.
+    /// </summary>
+    /// <param name="challenge"></param>
+    /// <returns>false if the challenge unlock date could not be stored</returns>
+    public bool UnlockChallenge(Challenge challenge, int challengeID)
+    {
+        if (challenge.UnlockDate != DateTime.UnixEpoch)
+        {
+            Logger.Error(CultureInfo.InvariantCulture, "Challenge {0} is already unlocked ({1})", challenge.Name, challenge.UnlockDate);
+            return false;
+        }
+
+        if (string.IsNullOrEmpty(this.dataSource))
+        {
+            Logger.Warn(CultureInfo.InvariantCulture, "Cannot unlock challenge. dataSource: {0}", this.dataSource);
+            return false;
+        }
+
+        using (var conn = new SQLiteConnection(this.dataSource))
+        {
+            conn.Open();
+            using (var transaction = conn.BeginTransaction())
+            {
+                try
+                {
+                    var sql = @"INSERT INTO PlayerChallenges (
+                            UnlockDate,
+                            ChallengeID
+                            ) VALUES (
+                            @UnlockDate,
+                            @ChallengeID)";
+
+                    using (var cmd = new SQLiteCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@UnlockDate", DateTime.UtcNow);
+                        cmd.Parameters.AddWithValue("@ChallengeID", challengeID);
+
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    transaction.Commit();
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    HandleError(transaction, ex);
+                    return false;
+                }
+            }
+        }
+    }
+
     private static bool IsDatabaseLocked(SQLiteConnection connection)
     {
         // Query the database to check if it's locked
@@ -9916,7 +9969,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
     }
 
     /// <summary>
-    /// Get a list of all achievements where the completion date is set or not by the player.
+    /// Get a list of all challenges where the unlock date is set or not by the player.
     /// </summary>
     /// <returns></returns>
     public ReadOnlyDictionary<int, Challenge> GetPlayerChallenges()

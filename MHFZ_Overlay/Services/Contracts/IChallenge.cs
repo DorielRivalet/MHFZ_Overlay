@@ -11,18 +11,12 @@ public interface IChallenge
     /// <summary>
     /// Checks the requirements to unlock the challenge.
     /// </summary>
-    /// <param name="bronzeCount"></param>
-    /// <param name="silverCount"></param>
-    /// <param name="goldCount"></param>
-    /// <param name="platinumCount"></param>
-    /// <param name="secretID"></param>
     /// <returns>false if the requirements are not met</returns>
     bool CheckRequirements(Challenge challenge);
 
     /// <summary>
-    /// Unlocks the challenge.
+    /// Unlocks the challenge. If using a data structure to avoid querying databases, that data structure should also be updated after storing the unlock date with this method.
     /// </summary>
-    /// <param name="checkRequirements"></param>
     /// <returns>false if the challenge could not be unlocked</returns>
     bool Unlock(Challenge challenge);
 
@@ -35,5 +29,7 @@ public interface IChallenge
     /// <summary>
     /// Cancels the challenge.
     /// </summary>
-    void Cancel(Challenge challenge);
+    /// <param name="challenge"></param>
+    /// <returns>The challenge that was cancelled</returns>
+    Challenge Cancel(Challenge challenge);
 }

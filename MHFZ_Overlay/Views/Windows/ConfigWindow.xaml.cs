@@ -49,6 +49,7 @@ using Application = System.Windows.Application;
 using Clipboard = System.Windows.Clipboard;
 using ComboBox = System.Windows.Controls.ComboBox;
 using DataGrid = Wpf.Ui.Controls.DataGrid;
+using ListBox = System.Windows.Controls.ListBox;
 using ListView = System.Windows.Controls.ListView;
 using MenuItem = Wpf.Ui.Controls.MenuItem;
 using MessageBox = System.Windows.MessageBox;
@@ -1537,6 +1538,7 @@ public partial class ConfigWindow : FluentWindow
     private Grid? statsTextMainGrid;
     private ListView? achievementsListView;
     private Grid? achievementsSelectedInfoGrid;
+    private ListBox? challengesListBox;
 
     private string top20RunsSelectedWeapon = string.Empty;
 
@@ -4240,14 +4242,11 @@ public partial class ConfigWindow : FluentWindow
 
     private void StartChallenge(Challenge? challenge)
     {
-        if (challenge == null)
+        if (challenge == null || this.challengesListBox == null)
         {
-            Logger.Warn("Challenge not found, canceling start process");
+            Logger.Warn(CultureInfo.InvariantCulture, "Challenge not found, canceling start process");
             return;
         }
-
-        // Implement the logic to unlock or start the specific challenge.
-        // You can access the properties of the challenge object here.
 
         // Challenge unlock date is not default, can skip requirements check.
         if (challenge.UnlockDate != DateTime.UnixEpoch)
@@ -4258,7 +4257,45 @@ public partial class ConfigWindow : FluentWindow
 
         if (ChallengeServiceInstance.CheckRequirements(challenge))
         {
-            ChallengeServiceInstance.Unlock(challenge);
+            Logger.Info(CultureInfo.InvariantCulture, "Meets requirements for challenge unlock, unlocking challenge {0}", challenge.Name);
+            var successful = ChallengeServiceInstance.Unlock(challenge);
+
+            if (!successful)
+            {
+                Logger.Error(CultureInfo.InvariantCulture, "Could not unlock challenge");
+                return;
+            }
+
+            this.MainWindow.DataLoader.Model.PlayerChallenges = DatabaseManager.GetPlayerChallenges();
+            this.challengesListBox.ItemsSource = this.MainWindow.DataLoader.Model.PlayerChallenges.Values.ToList();
+            foreach (var item in (List<Challenge>)this.challengesListBox.ItemsSource)
+            {
+                item.StartChallengeCommand = StartChallengeCommand;
+            }
+
+            this.challengesListBox.Items.Refresh();
+
+            var s = (Settings)Application.Current.TryFindResource("Settings");
+            var fileName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Assets\Sounds\challenge_unlock.wav");
+            AudioServiceInstance.Play(fileName, MainWindow.MainWindowMediaPlayer, s.VolumeMain, s.VolumeChallengeUnlock);
+
+            var brushConverter = new BrushConverter();
+            var brushColor = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Crust"]);
+            var snackbar = new Snackbar(ConfigWindowSnackBarPresenter)
+            {
+                Title = "Challenge unlocked!",
+                Content = $"Congratulations on unlocking {challenge.Name}, you can now start it by pressing the Start button inside that challenge section.",
+                Icon = new SymbolIcon()
+                {
+                    Symbol = SymbolRegular.LockOpen32,
+                    Foreground = brushColor ?? Brushes.Black,
+                },
+                Appearance = ControlAppearance.Info,
+                Timeout = SnackbarTimeOut,
+                Style = (Style)this.FindResource("CatppuccinMochaSnackBar"),
+            };
+
+            ConfigWindowSnackBarPresenter.AddToQue(snackbar);
         }
         else
         {
@@ -4277,20 +4314,22 @@ public partial class ConfigWindow : FluentWindow
                 Timeout = SnackbarTimeOut,
                 Style = (Style)this.FindResource("CatppuccinMochaSnackBar"),
             };
+
             ConfigWindowSnackBarPresenter.AddToQue(snackbar);
         }
     }
 
     private void ChallengesListBox_Loaded(object sender, RoutedEventArgs e)
     {
-        var listBox = (ListBox)sender;
+        this.challengesListBox = (ListBox)sender;
         this.MainWindow.DataLoader.Model.PlayerChallenges = DatabaseManager.GetPlayerChallenges();
-        listBox.ItemsSource = this.MainWindow.DataLoader.Model.PlayerChallenges.Values.ToList();
-        foreach (var challenge in (List<Challenge>)listBox.ItemsSource)
+        this.challengesListBox.ItemsSource = this.MainWindow.DataLoader.Model.PlayerChallenges.Values.ToList();
+        foreach (var challenge in (List<Challenge>)this.challengesListBox.ItemsSource)
         {
             challenge.StartChallengeCommand = StartChallengeCommand;
         }
-        listBox.Items.Refresh();
+
+        this.challengesListBox.Items.Refresh();
     }
 }
 
