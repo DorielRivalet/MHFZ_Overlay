@@ -393,7 +393,7 @@ As an added bonus:
 - Effective HP is the HP taking into account the monster's defense rate. Burning Freezing Elzelion has 1,000,000 EHP because his True HP is 30,000 and his defense rate is 0.03.
 
 ```math
-Effective HP = \frac{True HP}{Defense rate}
+Effective HP = \frac{True HP}{DefenseRate} \\
 1,000,000 = \frac{30,000}{0.03}
 ```
 
