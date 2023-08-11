@@ -37,7 +37,8 @@
         ExtendsContentIntoTitleBar="True"
         WindowBackdropType="Mica"
         WindowCornerPreference="Round"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen"
+        Closed="BingoWindowObject_Closed">
     <Grid>
         <Grid>
             <Grid.RowDefinitions>

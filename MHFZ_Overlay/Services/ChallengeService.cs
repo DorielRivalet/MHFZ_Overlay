@@ -13,9 +13,13 @@ using MHFZ_Overlay.Models.Collections;
 using MHFZ_Overlay.Models.Constant;
 using MHFZ_Overlay.Models.Structures;
 using MHFZ_Overlay.Services.Contracts;
+using MHFZ_Overlay.Views.Windows;
 
 public sealed class ChallengeService : IChallenge
 {
+    /// <inheritdoc/>
+    public ChallengeState State { get; set; }
+
     public static ChallengeService GetInstance()
     {
         if (instance == null)
@@ -64,19 +68,39 @@ public sealed class ChallengeService : IChallenge
         return false;
     }
 
-
     /// <inheritdoc/>
     public bool Start(Challenge challenge)
     {
-        // TODO
-        return true;
+        if (State == ChallengeState.Running)
+        {
+            return false;
+        }
+        else
+        {
+            var success = OpenChallengeWindow(challenge);
+
+            if (success)
+            {
+                State = ChallengeState.Running;
+            }
+
+            return success;
+        }
     }
 
     /// <inheritdoc/>
-    public Challenge Cancel(Challenge challenge)
+    public bool OpenChallengeWindow(Challenge challenge)
     {
-        // TODO use enum?
-        return challenge;
+        switch (challenge.Name)
+        {
+            default:
+                Logger.Error(CultureInfo.InvariantCulture, "Could not find window for challenge {0}", challenge.Name);
+                return false;
+            case "Bingo":
+                var window = new BingoWindow();
+                window.Show();
+                return true;
+        }
     }
 
     private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();

@@ -4255,13 +4255,37 @@ public partial class ConfigWindow : FluentWindow
 
             if (!successful)
             {
-                Logger.Warn(CultureInfo.InvariantCulture, "Could not start challenge");
+                Logger.Warn(CultureInfo.InvariantCulture, "Could not start challenge {0}", challenge.Name);
+
+                if (ChallengeServiceInstance.State == ChallengeState.Running)
+                {
+                    var brushConverter = new BrushConverter();
+                    var brushColor = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Crust"]);
+                    var snackbar = new Snackbar(ConfigWindowSnackBarPresenter)
+                    {
+                        Title = "Challenge currently in progress!",
+                        Content = "A challenge is already in progress. Please cancel it before starting another one.",
+                        Icon = new SymbolIcon()
+                        {
+                            Symbol = SymbolRegular.Warning28,
+                            Foreground = brushColor ?? Brushes.Black,
+                        },
+                        Appearance = ControlAppearance.Caution,
+                        Timeout = TimeSpan.FromSeconds(10),
+                        Style = (Style)this.FindResource("CatppuccinMochaSnackBar"),
+                    };
+
+                    ConfigWindowSnackBarPresenter.AddToQue(snackbar);
+                }
+
                 return;
             }
 
             var s = (Settings)Application.Current.TryFindResource("Settings");
             var fileName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Assets\Sounds\challenge_start.wav");
             AudioServiceInstance.Play(fileName, MainWindow.MainWindowMediaPlayer, s.VolumeMain, s.VolumeChallengeStart);
+
+            this.Close();
 
             return;
         }

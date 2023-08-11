@@ -5,9 +5,22 @@
 namespace MHFZ_Overlay.Services.Contracts;
 
 using MHFZ_Overlay.Models;
+using MHFZ_Overlay.Models.Structures;
 
 public interface IChallenge
 {
+    /// <summary>
+    /// The state of the challenges.
+    /// </summary>
+    ChallengeState State { get; }
+
+    /// <summary>
+    /// Opens the window for the particular challenge.
+    /// </summary>
+    /// <param name="challenge"></param>
+    /// <returns>false if the challenge doesn't have a corresponding window</returns>
+    bool OpenChallengeWindow(Challenge challenge);
+
     /// <summary>
     /// Checks the requirements to unlock the challenge.
     /// </summary>
@@ -25,11 +38,4 @@ public interface IChallenge
     /// </summary>
     /// <returns>false if the challenge could not be started</returns>
     bool Start(Challenge challenge);
-
-    /// <summary>
-    /// Cancels the challenge.
-    /// </summary>
-    /// <param name="challenge"></param>
-    /// <returns>The challenge that was cancelled</returns>
-    Challenge Cancel(Challenge challenge);
 }

@@ -6,6 +6,7 @@ namespace MHFZ_Overlay.Views.Windows;
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,6 +18,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using MHFZ_Overlay.Services;
 using Wpf.Ui.Controls;
 
 /// <summary>
@@ -28,4 +30,13 @@ public partial class BingoWindow : FluentWindow
     {
         InitializeComponent();
     }
+
+    private void BingoWindowObject_Closed(object sender, EventArgs e)
+    {
+        ChallengeServiceInstance.State = Models.Structures.ChallengeState.Idle;
+    }
+
+    private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
+
+    private static readonly ChallengeService ChallengeServiceInstance = ChallengeService.GetInstance();
 }
