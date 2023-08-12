@@ -179,3 +179,70 @@ public enum ChallengeState
     /// </summary>
     Running,
 }
+
+/// <summary>
+/// The category of the bingo or gauntlet challenges.
+/// </summary>
+public enum BingoGauntletCategory
+{
+    GreatSword,
+    LongSword,
+    DualSwords,
+    SwordAndShield,
+    Hammer,
+    HuntingHorn,
+    Lance,
+    Gunlance,
+    LightBowgun,
+    HeavyBowgun,
+    Bow,
+    Tonfa,
+    SwitchAxeF,
+    MagnetSpike,
+
+    /// <summary>
+    /// If you used more than 1 weapon type in any quests during a bingo/gauntlet.
+    /// </summary>
+    Multiple,
+
+    /// <summary>
+    /// If the party size was greater than 1 in any quests during a bingo/gauntlet. Overrides Multiple.
+    /// </summary>
+    Multiplayer,
+}
+
+/// <summary>
+/// The type of bingo upgrade.
+/// </summary>
+public enum BingoUpgradeType
+{
+    /// <summary>
+    /// Flat increase to the base score before multiplying by BaseScoreMultiplier.
+    /// </summary>
+    BaseScoreFlatIncrease,
+
+    /// <summary>
+    /// Multiplies the base score.
+    /// </summary>
+    BaseScoreMultiplier,
+
+    /// <summary>
+    /// The multiplier for using a certain weapon type.
+    /// </summary>
+    WeaponMultiplier,
+
+    /// <summary>
+    /// Flat increase with score varying by the amount of carts.
+    /// </summary>
+    CartsScore,
+
+    /// <summary>
+    /// Flat increase to the score, as final calculation, unaffected by any multiplier.
+    /// </summary>
+    BonusScore,
+
+    /// <summary>
+    /// The multiplier for the middle square being completed.
+    /// </summary>
+    MiddleSquareMultiplier,
+}

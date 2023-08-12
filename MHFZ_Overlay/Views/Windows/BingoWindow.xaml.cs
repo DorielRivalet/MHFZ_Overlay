@@ -19,6 +19,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using MHFZ_Overlay.Services;
+using MHFZ_Overlay.ViewModels.Windows;
 using Wpf.Ui.Controls;
 
 /// <summary>
