@@ -4059,7 +4059,7 @@ public partial class ConfigWindow : FluentWindow
 
         this.AchievementsProgressTextBlock.Text = $"{obtainedAchievements}/{totalAchievements}";
         this.AchievementTotalProgressPercentTextBlock.Text = $"{progressPercentage:F2}%";
-        this.AchievementSelectionInfoHint.Text = $"There are 5 types of trophies: bronze, silver, gold, platinum and secret. For every secret trophy you find, you gain {1.0 / totalSecretAchievements:F2}% more progress if you have already obtained every non-secret achievement already. You have obtained {obtainedSecretAchievements} out of {totalSecretAchievements} secret trophies ({obtainedSecretAchievements * 100.0 / totalSecretAchievements:F2}%).";
+        this.AchievementSelectionInfoHint.Text = $"Most achievements requirements are checked when you are at the quest completion rewards screen. There are 5 types of trophies: bronze, silver, gold, platinum and secret. For every secret trophy you find, you gain {1.0 / totalSecretAchievements:F2}% more progress if you have already obtained every non-secret achievement already. You have obtained {obtainedSecretAchievements} out of {totalSecretAchievements} secret trophies ({obtainedSecretAchievements * 100.0 / totalSecretAchievements:F2}%). Custom quests are not counted for progress for almost all achievements.";
     }
 
     private void AchievementSelectedInfoGrid_Loaded(object sender, RoutedEventArgs e) => this.achievementsSelectedInfoGrid = (Grid)sender;
