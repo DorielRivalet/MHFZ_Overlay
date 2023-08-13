@@ -30,6 +30,7 @@ public partial class BingoWindow : FluentWindow
     public BingoWindow()
     {
         InitializeComponent();
+        DataContext = new BingoWindowViewModel();
     }
 
     private void BingoWindowObject_Closed(object sender, EventArgs e)

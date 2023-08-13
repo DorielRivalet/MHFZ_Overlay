@@ -128,6 +128,15 @@ public sealed class BingoService
         }
     }
 
+    /// <summary>
+    /// Starts a simulation of bingo runs.
+    /// </summary>
+    /// <param name="runs"></param>
+    public void SimulateBingoRuns(int runs)
+    {
+        // TODO statistics
+    }
+
     private BingoService() => LoggerInstance.Info($"Service initialized");
     private static readonly Logger LoggerInstance = LogManager.GetCurrentClassLogger();
     private static readonly DatabaseService DatabaseServiceInsance = DatabaseService.GetInstance();

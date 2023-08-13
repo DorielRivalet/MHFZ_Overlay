@@ -185,6 +185,7 @@ public enum ChallengeState
 /// </summary>
 public enum BingoGauntletCategory
 {
+    Unknown,
     GreatSword,
     LongSword,
     DualSwords,

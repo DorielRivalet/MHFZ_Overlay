@@ -33,6 +33,28 @@ public sealed class ChallengeService : IChallenge
         return instance;
     }
 
+    public static BingoGauntletCategory ConvertToBingoGauntletCategory(long category) => category switch
+    {
+        0 => BingoGauntletCategory.Unknown,
+        1 => BingoGauntletCategory.GreatSword,
+        2 => BingoGauntletCategory.LongSword,
+        3 => BingoGauntletCategory.DualSwords,
+        4 => BingoGauntletCategory.SwordAndShield,
+        5 => BingoGauntletCategory.Hammer,
+        6 => BingoGauntletCategory.HuntingHorn,
+        7 => BingoGauntletCategory.Lance,
+        8 => BingoGauntletCategory.Gunlance,
+        9 => BingoGauntletCategory.LightBowgun,
+        10 => BingoGauntletCategory.HeavyBowgun,
+        11 => BingoGauntletCategory.Bow,
+        12 => BingoGauntletCategory.Tonfa,
+        13 => BingoGauntletCategory.SwitchAxeF,
+        14 => BingoGauntletCategory.MagnetSpike,
+        15 => BingoGauntletCategory.Multiple,
+        16 => BingoGauntletCategory.Multiplayer,
+        _ => BingoGauntletCategory.Unknown,
+    };
+
     /// <inheritdoc/>
     public bool CheckRequirements(Challenge challenge)
     {

@@ -20,11 +20,13 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
+using CommunityToolkit.Mvvm.Messaging;
 using EZlion.Mapper;
 using MHFZ_Overlay;
 using MHFZ_Overlay.Models;
 using MHFZ_Overlay.Models.Collections;
 using MHFZ_Overlay.Models.Constant;
+using MHFZ_Overlay.Models.Messengers;
 using MHFZ_Overlay.Models.Structures;
 using MHFZ_Overlay.Views.Windows;
 using Newtonsoft.Json;
@@ -429,12 +431,13 @@ public sealed class DatabaseService
     /// </summary>
     /// <param name="dataLoader"></param>
     /// <param name="attempts"></param>
-    /// <returns></returns>
-    public int InsertQuestData(DataLoader dataLoader, int attempts)
+    /// <returns>the run ID and the quest ID</returns>
+    public (int, int) InsertQuestData(DataLoader dataLoader, int attempts)
     {
         Logger.Info(CultureInfo.InvariantCulture, "Inserting quest data");
 
         var runID = 0;
+        var questID = dataLoader.Model.QuestID();
         var actualOverlayMode = string.Empty;
         dataLoader.Model.ShowSaveIcon = true;
 
@@ -442,13 +445,13 @@ public sealed class DatabaseService
 
         if (!ViewModels.Windows.AddressModel.ValidateGameFolder() || !s.EnableQuestLogging || !dataLoader.Model.QuestCleared)
         {
-            return runID;
+            return (runID, questID);
         }
 
         if (string.IsNullOrEmpty(this.dataSource))
         {
             Logger.Warn(CultureInfo.InvariantCulture, "Cannot insert quest data. dataSource: {0}", this.dataSource);
-            return runID;
+            return (runID, questID);
         }
 
         using (var conn = new SQLiteConnection(this.dataSource))
@@ -583,7 +586,6 @@ public sealed class DatabaseService
 
                     using (var cmd = new SQLiteCommand(sql, conn))
                     {
-                        var questID = model.QuestID();
                         var timeLeft = model.TimeInt(); // Example value of the TimeLeft variable
                         var finalTimeValue = model.TimeDefInt() - model.TimeInt();
 
@@ -809,7 +811,6 @@ public sealed class DatabaseService
                     if (dataLoader.Model.PartySize() == 1)
                     {
                         long personalBest = 0;
-                        var questID = dataLoader.Model.QuestID();
                         var weaponType = dataLoader.Model.WeaponType();
                         var improvedPersonalBest = false;
 
@@ -2123,9 +2124,11 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
             this.UpdateHashSets(conn);
         }
 
-        Logger.Debug(CultureInfo.InvariantCulture, "Inserted quest data, returning runID {0}", runID);
+        Logger.Debug(CultureInfo.InvariantCulture, "Inserted quest data, returning runID {0} and questID {1}", runID, questID);
+        WeakReferenceMessenger.Default.Send(new RunIDMessage(runID));
+        WeakReferenceMessenger.Default.Send(new QuestIDMessage(questID));
         dataLoader.Model.ShowSaveIcon = false;
-        return runID;
+        return (runID, questID);
     }
 
     public static void MakeDeserealizedQuestInfoDictionariesFromRunID(SQLiteConnection conn, DataLoader dataLoader, int runID)
@@ -4885,6 +4888,15 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                     cmd.ExecuteNonQuery();
                 }
 
+                sql = @"CREATE TABLE IF NOT EXISTS PlayerBingoPoints(
+                    PlayerBingoPointsID INTEGER PRIMARY KEY,
+                    Points INTEGER NOT NULL DEFAULT 0
+                    )";
+                using (var cmd = new SQLiteCommand(sql, conn))
+                {
+                    cmd.ExecuteNonQuery();
+                }
+
                 sql = @"CREATE TABLE IF NOT EXISTS MezFesMinigames(
                     MezFesMinigameID INTEGER PRIMARY KEY AUTOINCREMENT,
                     MezFesMinigameName TEXT NOT NULL
@@ -6718,7 +6730,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                                 Score = long.Parse(reader["Score"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
                                 MonsterList = JsonConvert.DeserializeObject<List<int>>(reader["MonsterList"]?.ToString() ?? "{}") ?? new List<int> { },
                                 WeaponType = reader["WeaponType"]?.ToString() ?? string.Empty,
-                                Category = reader["Category"]?.ToString() ?? string.Empty,
+                                Category = ChallengeService.ConvertToBingoGauntletCategory(reader.GetInt64(reader.GetOrdinal("Category"))),
                                 TotalFramesElapsed = long.Parse(reader["TotalFramesElapsed"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
                                 TotalTimeElapsed = reader["TotalTimeElapsed"]?.ToString() ?? string.Empty,
                             };
@@ -6735,6 +6747,74 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         return last;
+    }
+
+    private long GetPlayerBingoPoints(SQLiteConnection conn)
+    {
+        long points = 0;
+        using (var transaction = conn.BeginTransaction())
+        {
+            try
+            {
+                using (var cmd = new SQLiteCommand("SELECT Points FROM PlayerBingoPoints WHERE PlayerBingoPointsID = 1", conn))
+                {
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            points = long.Parse(reader["Points"]?.ToString() ?? "0", CultureInfo.InvariantCulture);
+                        }
+                    }
+                }
+
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                HandleError(transaction, ex);
+            }
+        }
+
+        return points;
+    }
+
+    private void SetPlayerBingoPoints(SQLiteConnection conn, int points)
+    {
+        using (var transaction = conn.BeginTransaction())
+        {
+            try
+            {
+                // Create a command that will be used to insert multiple rows in a batch
+                using (var cmd = new SQLiteCommand(conn))
+                {
+                    // Set the command text to insert a single row
+                    cmd.CommandText = @"INSERT OR REPLACE INTO PlayerBingoPoints (
+                        PlayerBingoPointsID, 
+                        Points
+                        ) VALUES (
+                        @PlayerBingoPointsID, 
+                        @Points)";
+
+                    // Add the parameter placeholders
+                    cmd.Parameters.Add("@PlayerBingoPointsID", DbType.Int64);
+                    cmd.Parameters.Add("@Points", DbType.Int64);
+
+                    // Set the parameter values
+                    cmd.Parameters["@PlayerBingoPointsID"].Value = 1;
+                    cmd.Parameters["@Points"].Value = points;
+
+                    cmd.ExecuteNonQuery();
+                }
+
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                HandleError(transaction, ex);
+            }
+        }
+
+        Logger.Debug("Inserted into PlayerBingoPoints table");
     }
 
     private ZenithGauntlet GetLastZenithGauntlet(SQLiteConnection conn)
@@ -7882,7 +7962,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                                 Difficulty = (Difficulty)long.Parse(reader["Difficulty"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
                                 MonsterList = JsonConvert.DeserializeObject<List<int>>(reader["MonsterList"]?.ToString() ?? "{}") ?? new List<int> { },
                                 WeaponType = reader["WeaponType"]?.ToString() ?? "0",
-                                Category = reader["Category"]?.ToString() ?? "0",
+                                Category = ChallengeService.ConvertToBingoGauntletCategory(reader.GetInt64(reader.GetOrdinal("Category"))),
                                 TotalFramesElapsed = long.Parse(reader["TotalFramesElapsed"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
                                 TotalTimeElapsed = reader["TotalTimeElapsed"]?.ToString() ?? "0",
                                 Score = long.Parse(reader["Score"]?.ToString() ?? "0", CultureInfo.InvariantCulture),

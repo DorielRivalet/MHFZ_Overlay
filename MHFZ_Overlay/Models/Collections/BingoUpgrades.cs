@@ -10,7 +10,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using MHFZ_Overlay.Models.Structures;
 
-public sealed class BingoUpgrades
+public static class BingoUpgrades
 {
     public static ReadOnlyDictionary<int, BingoUpgrade> IDBingoUpgrade { get; } = new(new Dictionary<int, BingoUpgrade>
     {
