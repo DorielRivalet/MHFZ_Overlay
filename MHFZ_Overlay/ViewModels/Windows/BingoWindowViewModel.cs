@@ -6,6 +6,7 @@ namespace MHFZ_Overlay.ViewModels.Windows;
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -37,11 +38,8 @@ public partial class BingoWindowViewModel : ObservableRecipient
         BingoWindowSnackbarPresenter = snackbarPresenter;
     }
 
-    public BingoCell[,]? Cells
-    {
-        get => _cells;
-        set => SetProperty(ref _cells, value);
-    }
+    [ObservableProperty]
+    public IEnumerable<BingoCell>? flatCells;
 
     public string? PlayerBingoPointsText => $"Bingo Points: {PlayerBingoPoints}";
 
@@ -63,7 +61,8 @@ public partial class BingoWindowViewModel : ObservableRecipient
 
     private static readonly BingoService BingoServiceInstance = BingoService.GetInstance();
 
-    private BingoCell[,]? _cells = new BingoCell[5, 5];
+    [ObservableProperty]
+    private BingoCell[,]? cells = new BingoCell[5, 5];
 
     // TODO
     private void UpdateBingoBoard(int questID)
@@ -96,7 +95,6 @@ public partial class BingoWindowViewModel : ObservableRecipient
             StopBingo();
         }
     }
-
 
     private void UpdateRunIDs(int runID)
     {
@@ -225,6 +223,7 @@ public partial class BingoWindowViewModel : ObservableRecipient
         var monsters = BingoMonsters.DifficultyBingoMonster[bingoMonsterListDifficulty].ToList();
 
         PopulateBingoBoardCells(boardSize, difficulty, monsters);
+        FlatCells = Cells.Cast<BingoCell>();
     }
 
     private void PopulateBingoBoardCells(int boardSize, Difficulty difficulty, List<BingoMonster> monsters)
@@ -244,7 +243,6 @@ public partial class BingoWindowViewModel : ObservableRecipient
                 int index = rng.Next(monsters.Count); // Get a random index
                 BingoMonster selectedMonster = monsters[index]; // Select a monster
 
-                // TODO test if magspike shows
                 Cells[i, j] = new BingoCell
                 {
                     Monster = selectedMonster,
@@ -257,7 +255,8 @@ public partial class BingoWindowViewModel : ObservableRecipient
         {
             Cells[boardSize / 2, boardSize / 2] = new BingoCell
             {
-                Monster = BingoMonsters.DifficultyBingoMonster[Difficulty.Hard].FirstOrDefault(monster => monster.Name == "Burning Freezing Elzelion")
+                Monster = BingoMonsters.DifficultyBingoMonster[Difficulty.Hard].FirstOrDefault(monster => monster.Name == "Burning Freezing Elzelion"),
+                WeaponTypeBonus = (FrontierWeaponTypes)rng.Next(Enum.GetValues(typeof(FrontierWeaponTypes)).Length),
             };
         }
     }

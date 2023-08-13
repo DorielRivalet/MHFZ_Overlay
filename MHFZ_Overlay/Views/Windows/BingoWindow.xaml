@@ -20,6 +20,7 @@
         xmlns:validationrules="clr-namespace:MHFZ_Overlay.Services.ValidationRule"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:viewmodels="clr-namespace:MHFZ_Overlay.ViewModels.Windows"
+        xmlns:models="clr-namespace:MHFZ_Overlay.Models"
         xmlns:collections="clr-namespace:MHFZ_Overlay.Models.Collections"
         xmlns:windows="clr-namespace:MHFZ_Overlay.ViewModels.Windows"
         xmlns:vwp="clr-namespace:WpfToolkit.Controls;assembly=VirtualizingWrapPanel"
@@ -39,6 +40,16 @@
         WindowCornerPreference="Round"
         WindowStartupLocation="CenterScreen"
         Closed="BingoWindowObject_Closed">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ObjectDataProvider x:Key="FontFamilies"
+                        MethodName="GetFontFamilies"
+                        ObjectType="{x:Type fonts:Fonts}"
+                        xmlns:fonts="clr-namespace:System.Windows.Media;assembly=PresentationCore"/>
+            <converter:XamlIconToViewBoxConverter x:Key="XamlIconToViewBoxConverter"/>
+            <converter:BooleanToOpacityConverter x:Key="BooleanToOpacityConverter"/>
+        </ResourceDictionary>
+    </Window.Resources>
     <Grid>
         <Grid>
             <Grid.RowDefinitions>
@@ -82,8 +93,24 @@
                                     <ui:Button d:Content="Start"  Content="{Binding BingoButtonText}" Margin="10,0,0,0" Foreground="{StaticResource Crust}" Background="{StaticResource Green}" Command="{Binding StartBingoCommand}"/>
                                     <ui:Button Margin="10,0,0,0" d:Content="Reroll weapon bonuses (2 Bingo Points)"  Content="{Binding WeaponRerollButtonContent}" Foreground="{StaticResource Crust}" Background="{StaticResource Green}" Command="{Binding WeaponRerollCommand}"/>
                                 </StackPanel>
-                                <Grid x:Name="BingoGrid" Grid.RowSpan="3" Grid.Row="1">
-
+                                <Grid Grid.RowSpan="3" Grid.Row="1">
+                                    <ItemsControl ItemsSource="{Binding FlatCells}">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <!-- Update the Rows and Columns properties when the size of the board changes -->
+                                                <UniformGrid Rows="5" Columns="5"/>
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate DataType="{x:Type models:BingoCell}">
+                                                <Grid>
+                                                    <!-- Show the monster's image and name -->
+                                                    <Image Source="{Binding Monster.Image}" />
+                                                    <TextBlock Text="{Binding Monster.Name}"/>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
                                 </Grid>
                             </Grid>
                         </ScrollViewer>
