@@ -76,7 +76,9 @@
                                     <RowDefinition Height="*"/>
                                 </Grid.RowDefinitions>
                                 <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center">
-                                    <ComboBox x:Name="BingoDifficultyComboBox" SelectedIndex="0" ToolTip="Choose Bingo difficulty">
+                                    <ui:Image Source="../../Assets/Icons/achievement/stamp.jpg"/>
+                                    <customcontrols:OutlinedTextBlock d:Text="Bingo Points: 9999999" FontSize="18" FontWeight="SemiBold" Margin="10,0,0,0" Fill="{StaticResource Text}" Stroke="{StaticResource Crust}" Text="{Binding PlayerBingoPointsText}" VerticalAlignment="Center"/>
+                                    <ComboBox x:Name="BingoDifficultyComboBox" SelectedIndex="0" ToolTip="Choose Bingo difficulty" Margin="10,0,0,0">
                                         <ComboBoxItem>Easy</ComboBoxItem>
                                         <ComboBoxItem>Medium</ComboBoxItem>
                                         <ComboBoxItem>Hard</ComboBoxItem>
@@ -146,5 +148,6 @@
                 </TabItem>
             </TabControl>
         </Grid>
+        <ui:SnackbarPresenter Grid.ZIndex="2" x:Name="BingoWindowSnackBarPresenter" d:Visibility="Hidden"/>
     </Grid>
 </ui:FluentWindow>

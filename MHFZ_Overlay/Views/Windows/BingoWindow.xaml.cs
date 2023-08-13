@@ -20,7 +20,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using MHFZ_Overlay.Services;
 using MHFZ_Overlay.ViewModels.Windows;
+using Wpf.Ui.Contracts;
 using Wpf.Ui.Controls;
+using Wpf.Ui.Services;
 
 /// <summary>
 /// Interaction logic for Window1.xaml
@@ -30,7 +32,9 @@ public partial class BingoWindow : FluentWindow
     public BingoWindow()
     {
         InitializeComponent();
-        DataContext = new BingoWindowViewModel();
+        ISnackbarService snackbarService = new SnackbarService();
+        snackbarService.SetSnackbarPresenter(this.BingoWindowSnackBarPresenter);
+        DataContext = new BingoWindowViewModel(this.BingoWindowSnackBarPresenter);
     }
 
     private void BingoWindowObject_Closed(object sender, EventArgs e)

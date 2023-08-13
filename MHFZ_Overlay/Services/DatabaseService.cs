@@ -19,6 +19,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Media.Imaging;
 using CommunityToolkit.Mvvm.Messaging;
 using EZlion.Mapper;
@@ -6749,68 +6750,90 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
         return last;
     }
 
-    private long GetPlayerBingoPoints(SQLiteConnection conn)
+    public long GetPlayerBingoPoints()
     {
         long points = 0;
-        using (var transaction = conn.BeginTransaction())
+
+        if (string.IsNullOrEmpty(this.dataSource))
         {
-            try
+            Logger.Warn(CultureInfo.InvariantCulture, "Cannot get player bingo points. dataSource: {0}", this.dataSource);
+            return points;
+        }
+
+        using (var conn = new SQLiteConnection(this.dataSource))
+        {
+            conn.Open();
+
+            using (var transaction = conn.BeginTransaction())
             {
-                using (var cmd = new SQLiteCommand("SELECT Points FROM PlayerBingoPoints WHERE PlayerBingoPointsID = 1", conn))
+                try
                 {
-                    using (var reader = cmd.ExecuteReader())
+                    using (var cmd = new SQLiteCommand("SELECT Points FROM PlayerBingoPoints WHERE PlayerBingoPointsID = 1", conn))
                     {
-                        if (reader.Read())
+                        using (var reader = cmd.ExecuteReader())
                         {
-                            points = long.Parse(reader["Points"]?.ToString() ?? "0", CultureInfo.InvariantCulture);
+                            if (reader.Read())
+                            {
+                                points = long.Parse(reader["Points"]?.ToString() ?? "0", CultureInfo.InvariantCulture);
+                            }
                         }
                     }
-                }
 
-                transaction.Commit();
-            }
-            catch (Exception ex)
-            {
-                HandleError(transaction, ex);
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    HandleError(transaction, ex);
+                }
             }
         }
 
         return points;
     }
 
-    private void SetPlayerBingoPoints(SQLiteConnection conn, int points)
+    public void SetPlayerBingoPoints(long points)
     {
-        using (var transaction = conn.BeginTransaction())
+        if (string.IsNullOrEmpty(this.dataSource))
         {
-            try
+            Logger.Warn(CultureInfo.InvariantCulture, "Cannot set player bingo points. dataSource: {0}", this.dataSource);
+            return;
+        }
+
+        using (var conn = new SQLiteConnection(this.dataSource))
+        {
+            conn.Open();
+            using (var transaction = conn.BeginTransaction())
             {
-                // Create a command that will be used to insert multiple rows in a batch
-                using (var cmd = new SQLiteCommand(conn))
+                try
                 {
-                    // Set the command text to insert a single row
-                    cmd.CommandText = @"INSERT OR REPLACE INTO PlayerBingoPoints (
+                    // Create a command that will be used to insert multiple rows in a batch
+                    using (var cmd = new SQLiteCommand(conn))
+                    {
+                        // Set the command text to insert a single row
+                        cmd.CommandText = @"INSERT OR REPLACE INTO PlayerBingoPoints (
                         PlayerBingoPointsID, 
                         Points
                         ) VALUES (
                         @PlayerBingoPointsID, 
                         @Points)";
 
-                    // Add the parameter placeholders
-                    cmd.Parameters.Add("@PlayerBingoPointsID", DbType.Int64);
-                    cmd.Parameters.Add("@Points", DbType.Int64);
+                        // Add the parameter placeholders
+                        cmd.Parameters.Add("@PlayerBingoPointsID", DbType.Int64);
+                        cmd.Parameters.Add("@Points", DbType.Int64);
 
-                    // Set the parameter values
-                    cmd.Parameters["@PlayerBingoPointsID"].Value = 1;
-                    cmd.Parameters["@Points"].Value = points;
+                        // Set the parameter values
+                        cmd.Parameters["@PlayerBingoPointsID"].Value = 1;
+                        cmd.Parameters["@Points"].Value = points;
 
-                    cmd.ExecuteNonQuery();
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    transaction.Commit();
                 }
-
-                transaction.Commit();
-            }
-            catch (Exception ex)
-            {
-                HandleError(transaction, ex);
+                catch (Exception ex)
+                {
+                    HandleError(transaction, ex);
+                }
             }
         }
 

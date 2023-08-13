@@ -41,24 +41,59 @@ public sealed class BingoService
 
     public double CartsScore { get; set; }
 
-    public int PlayerBingoPoints { get; set; }
+    /// <summary>
+    /// Looks redundant but I want to make sure the flow is View -> ViewModel -> Service -> Database
+    /// </summary>
+    /// <returns>The player bingo points.</returns>
+    public long GetPlayerBingoPoints() => DatabaseServiceInstance.GetPlayerBingoPoints();
 
-    public void ApplyUpgrade(BingoUpgrade upgrade)
+    /// <summary>
+    /// Buys the weapon rerolls.
+    /// </summary>
+    /// <param name="cost"></param>
+    /// <returns>false if could not buy weapon rerolls.</returns>
+    public bool BuyWeaponReroll(long cost)
     {
-        if (upgrade.CurrentLevel < upgrade.MaxLevel)
-        {
-            // Calculate the cost for the next level based on cost progression
-            var costProgression = BingoUpgradeCostProgressions.CostProgressions[upgrade.Type];
-            int nextLevel = upgrade.CurrentLevel + 1;
-            int nextCost = costProgression.CalculateUpgradeCost(nextLevel);
+        var currentPlayerBingoPoints = DatabaseServiceInstance.GetPlayerBingoPoints();
 
-            if (PlayerBingoPoints >= nextCost)
-            {
-                PlayerBingoPoints -= nextCost;
-                upgrade.CurrentLevel++;
-                ApplyUpgradeValue(upgrade);
-            }
+        if (currentPlayerBingoPoints < cost)
+        {
+            return false;
         }
+
+        currentPlayerBingoPoints -= cost;
+        DatabaseServiceInstance.SetPlayerBingoPoints(currentPlayerBingoPoints);
+        return true;
+    }
+
+    /// <summary>
+    /// Applies the bingo upgrade.
+    /// </summary>
+    /// <param name="upgrade"></param>
+    /// <returns>false if the upgrade could not be applied.</returns>
+    public bool ApplyUpgrade(BingoUpgrade upgrade)
+    {
+        if (upgrade.CurrentLevel >= upgrade.MaxLevel)
+        {
+            return false;
+        }
+
+        // Calculate the cost for the next level based on cost progression
+        var costProgression = BingoUpgradeCostProgressions.CostProgressions[upgrade.Type];
+        int nextLevel = upgrade.CurrentLevel + 1;
+        int nextCost = costProgression.CalculateUpgradeCost(nextLevel);
+        var playerBingoPoints = DatabaseServiceInstance.GetPlayerBingoPoints();
+
+        if (playerBingoPoints < nextCost)
+        {
+            return false;
+        }
+
+        playerBingoPoints -= nextCost;
+        DatabaseServiceInstance.SetPlayerBingoPoints(playerBingoPoints);
+        upgrade.CurrentLevel++;
+        ApplyUpgradeValue(upgrade);
+        return true;
     }
 
     /// <summary>
@@ -139,6 +174,6 @@ public sealed class BingoService
 
     private BingoService() => LoggerInstance.Info($"Service initialized");
     private static readonly Logger LoggerInstance = LogManager.GetCurrentClassLogger();
-    private static readonly DatabaseService DatabaseServiceInsance = DatabaseService.GetInstance();
+    private static readonly DatabaseService DatabaseServiceInstance = DatabaseService.GetInstance();
     private static BingoService? instance;
 }

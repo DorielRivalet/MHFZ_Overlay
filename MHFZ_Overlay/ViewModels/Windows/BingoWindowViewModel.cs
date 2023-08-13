@@ -18,15 +18,21 @@ using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using EZlion.Mapper;
 using MHFZ_Overlay.Models;
+using MHFZ_Overlay.Models.Constant;
 using MHFZ_Overlay.Models.Messengers;
 using MHFZ_Overlay.Services;
+using MHFZ_Overlay.Views.Windows;
+using Wpf.Ui.Common;
+using Wpf.Ui.Controls;
+using MessageBox = System.Windows.MessageBox;
 
 public partial class BingoWindowViewModel : ObservableRecipient
 {
-    public BingoWindowViewModel()
+    public BingoWindowViewModel(SnackbarPresenter snackbarPresenter)
     {
         WeakReferenceMessenger.Default.Register<QuestIDMessage>(this, OnReceivedQuestID);
         WeakReferenceMessenger.Default.Register<RunIDMessage>(this, OnReceivedRunID);
+        BingoWindowSnackbarPresenter = snackbarPresenter;
     }
 
     private static readonly BingoService BingoServiceInstance = BingoService.GetInstance();
@@ -34,7 +40,7 @@ public partial class BingoWindowViewModel : ObservableRecipient
     // TODO
     private void UpdateBingoBoard(int questID)
     {
-        MessageBox.Show($"Updated bingo, questID {questID}");
+        MessageBox.Show($"Updated bingo board, questID {questID}");
     }
 
     private void UpdateRunIDs(int runID)
@@ -102,6 +108,18 @@ public partial class BingoWindowViewModel : ObservableRecipient
     private List<int> runIDs = new();
 
     /// <summary>
+    /// The number of carts in the bingo board.
+    /// </summary>
+    [ObservableProperty]
+    private List<int> carts = new();
+
+    /// <summary>
+    /// The weapon type bonuses in the bingo board.
+    /// </summary>
+    [ObservableProperty]
+    private List<int> weaponTypeBonuses = new();
+
+    /// <summary>
     /// The bingo board holding a list of bingo monsters.
     /// </summary>
     [ObservableProperty]
@@ -119,9 +137,22 @@ public partial class BingoWindowViewModel : ObservableRecipient
     /// </summary>
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(WeaponRerollButtonContent))]
-    private int weaponRerollCost = 2;
+    private long weaponRerollCost = 2;
+
+    /// <summary>
+    /// The player bingo points. For view purposes only.
+    /// </summary>
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(PlayerBingoPointsText))]
+    private long playerBingoPoints = BingoServiceInstance.GetPlayerBingoPoints();
+
+    public string? PlayerBingoPointsText => $"Bingo Points: {PlayerBingoPoints}";
 
     public string? WeaponRerollButtonContent => $"Reroll weapon bonuses ({WeaponRerollCost} Bingo Points)";
+
+    public bool IsBingoNotRunning => IsBingoRunning == false;
+
+    public SnackbarPresenter BingoWindowSnackbarPresenter { get; }
 
     [RelayCommand]
     private void StartBingo()
@@ -152,11 +183,42 @@ public partial class BingoWindowViewModel : ObservableRecipient
         BingoButtonText = "Start";
         BingoBoard.Clear();
         RunIDs.Clear();
+        Carts.Clear();
+        WeaponTypeBonuses.Clear();
         ReceivedQuestID = 0;
         ReceivedRunID = 0;
         WeaponRerollCost = 2;
     }
 
+    /// <summary>
+    /// Rerolls the weapon bonuses in each cell of the bingo board.
+    /// </summary>
+    private void RerollWeaponBonuses()
+    {
+        PlayerBingoPoints -= WeaponRerollCost;
+        WeaponRerollCost *= 2;
+        // TODO 
+    }
+
     [RelayCommand(CanExecute = nameof(IsBingoRunning))]
-    private void WeaponReroll() => WeaponRerollCost *= 2;
+    private void WeaponReroll()
+    {
+        if (BingoServiceInstance.BuyWeaponReroll(WeaponRerollCost))
+        {
+            RerollWeaponBonuses();
+        }
+        else
+        {
+            var snackbar = new Snackbar(BingoWindowSnackbarPresenter)
+            {
+                Style = (Style)Application.Current.FindResource("CatppuccinMochaSnackBar"),
+                Title = "Not enough bingo points!",
+                Content = "You need more bingo points in order to buy more weapon rerolls.",
+                Icon = new SymbolIcon(SymbolRegular.ErrorCircle24),
+                Appearance = ControlAppearance.Danger,
+                Timeout = TimeSpan.FromSeconds(5),
+            };
+            snackbar.Show();
+        }
+    }
 }
