@@ -82,8 +82,8 @@
                                         <ComboBoxItem>Hard</ComboBoxItem>
                                         <ComboBoxItem>Extreme</ComboBoxItem>
                                     </ComboBox>
-                                    <ui:Button Content="Start" Margin="10,0,0,0" Foreground="{StaticResource Crust}" Background="{StaticResource Green}" Command="{Binding StartBingoCommand}"/>
-                                    <ui:Button Margin="10,0,0,0" Content="Reroll weapon bonuses" Foreground="{StaticResource Crust}" Background="{StaticResource Green}" IsEnabled="False" Command="{Binding WeaponRerollCommand}"/>
+                                    <ui:Button d:Content="Start"  Content="{Binding BingoButtonText}" Margin="10,0,0,0" Foreground="{StaticResource Crust}" Background="{StaticResource Green}" Command="{Binding StartBingoCommand}"/>
+                                    <ui:Button Margin="10,0,0,0" d:Content="Reroll weapon bonuses (2 Bingo Points)"  Content="{Binding WeaponRerollButtonContent}" Foreground="{StaticResource Crust}" Background="{StaticResource Green}" Command="{Binding WeaponRerollCommand}"/>
                                 </StackPanel>
                                 <Grid x:Name="BingoGrid" Grid.RowSpan="3" Grid.Row="1">
 
