@@ -78,12 +78,7 @@
                                 <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center">
                                     <ui:Image Source="../../Assets/Icons/achievement/stamp.jpg"/>
                                     <customcontrols:OutlinedTextBlock d:Text="Bingo Points: 9999999" FontSize="18" FontWeight="SemiBold" Margin="10,0,0,0" Fill="{StaticResource Text}" Stroke="{StaticResource Crust}" Text="{Binding PlayerBingoPointsText}" VerticalAlignment="Center"/>
-                                    <ComboBox x:Name="BingoDifficultyComboBox" SelectedIndex="0" ToolTip="Choose Bingo difficulty" Margin="10,0,0,0">
-                                        <ComboBoxItem>Easy</ComboBoxItem>
-                                        <ComboBoxItem>Medium</ComboBoxItem>
-                                        <ComboBoxItem>Hard</ComboBoxItem>
-                                        <ComboBoxItem>Extreme</ComboBoxItem>
-                                    </ComboBox>
+                                    <ComboBox ItemsSource="{Binding Difficulties}" SelectedItem="{Binding SelectedDifficulty}" ToolTip="Choose Bingo difficulty" Margin="10,0,0,0"/>
                                     <ui:Button d:Content="Start"  Content="{Binding BingoButtonText}" Margin="10,0,0,0" Foreground="{StaticResource Crust}" Background="{StaticResource Green}" Command="{Binding StartBingoCommand}"/>
                                     <ui:Button Margin="10,0,0,0" d:Content="Reroll weapon bonuses (2 Bingo Points)"  Content="{Binding WeaponRerollButtonContent}" Foreground="{StaticResource Crust}" Background="{StaticResource Green}" Command="{Binding WeaponRerollCommand}"/>
                                 </StackPanel>

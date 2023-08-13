@@ -18,8 +18,10 @@ using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using EZlion.Mapper;
 using MHFZ_Overlay.Models;
+using MHFZ_Overlay.Models.Collections;
 using MHFZ_Overlay.Models.Constant;
 using MHFZ_Overlay.Models.Messengers;
+using MHFZ_Overlay.Models.Structures;
 using MHFZ_Overlay.Services;
 using MHFZ_Overlay.Views.Windows;
 using Wpf.Ui.Common;
@@ -35,13 +37,66 @@ public partial class BingoWindowViewModel : ObservableRecipient
         BingoWindowSnackbarPresenter = snackbarPresenter;
     }
 
+    public BingoCell[,]? Cells
+    {
+        get => _cells;
+        set => SetProperty(ref _cells, value);
+    }
+
+    public string? PlayerBingoPointsText => $"Bingo Points: {PlayerBingoPoints}";
+
+    public string? WeaponRerollButtonContent => $"Reroll weapon bonuses ({WeaponRerollCost} Bingo Points)";
+
+    public bool IsBingoNotRunning => IsBingoRunning == false;
+
+    public SnackbarPresenter BingoWindowSnackbarPresenter { get; }
+
+    public IEnumerable<Difficulty> Difficulties
+    {
+        get
+        {
+            return Enum.GetValues(typeof(Difficulty))
+                       .Cast<Difficulty>()
+                       .Where(difficulty => difficulty != Difficulty.Unknown);
+        }
+    }
+
     private static readonly BingoService BingoServiceInstance = BingoService.GetInstance();
+
+    private BingoCell[,]? _cells = new BingoCell[5, 5];
 
     // TODO
     private void UpdateBingoBoard(int questID)
     {
+        if (Cells == null)
+        {
+            MessageBox.Show($"Null cells");
+            return;
+        }
+
         MessageBox.Show($"Updated bingo board, questID {questID}");
+
+        foreach (var cell in Cells)
+        {
+            if (cell == null || cell.Monster == null || cell.Monster.QuestIDs == null)
+            {
+                continue;
+            }
+
+            if (cell.Monster.QuestIDs.Contains(questID))
+            {
+                cell.IsComplete = true;
+            }
+        }
+
+        if (CheckForBingoCompletion())
+        {
+            // The game is over, perform any necessary actions.
+            MessageBox.Show($"Game over");
+            StopBingo();
+        }
     }
+
 
     private void UpdateRunIDs(int runID)
     {
@@ -91,7 +146,7 @@ public partial class BingoWindowViewModel : ObservableRecipient
     /// The received Quest ID.
     /// </summary>
     [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(BingoBoard))]
+    [NotifyPropertyChangedFor(nameof(Cells))]
     private int receivedQuestID;
 
     /// <summary>
@@ -102,28 +157,10 @@ public partial class BingoWindowViewModel : ObservableRecipient
     private int receivedRunID;
 
     /// <summary>
-    /// The MonsterList field in Bingo table.
+    /// The MonsterList field in Bingo table. Works in conjunction with Carts and WeaponTypeBonuses in order to calculate the final score.
     /// </summary>
     [ObservableProperty]
     private List<int> runIDs = new();
-
-    /// <summary>
-    /// The number of carts in the bingo board.
-    /// </summary>
-    [ObservableProperty]
-    private List<int> carts = new();
-
-    /// <summary>
-    /// The weapon type bonuses in the bingo board.
-    /// </summary>
-    [ObservableProperty]
-    private List<int> weaponTypeBonuses = new();
-
-    /// <summary>
-    /// The bingo board holding a list of bingo monsters.
-    /// </summary>
-    [ObservableProperty]
-    private List<BingoMonster> bingoBoard = new ();
 
     /// <summary>
     /// Whether bingo was started.
@@ -146,13 +183,8 @@ public partial class BingoWindowViewModel : ObservableRecipient
     [NotifyPropertyChangedFor(nameof(PlayerBingoPointsText))]
     private long playerBingoPoints = BingoServiceInstance.GetPlayerBingoPoints();
 
-    public string? PlayerBingoPointsText => $"Bingo Points: {PlayerBingoPoints}";
-
-    public string? WeaponRerollButtonContent => $"Reroll weapon bonuses ({WeaponRerollCost} Bingo Points)";
-
-    public bool IsBingoNotRunning => IsBingoRunning == false;
-
-    public SnackbarPresenter BingoWindowSnackbarPresenter { get; }
+    [ObservableProperty]
+    private Difficulty selectedDifficulty = Difficulty.Easy;
 
     [RelayCommand]
     private void StartBingo()
@@ -170,6 +202,7 @@ public partial class BingoWindowViewModel : ObservableRecipient
             // TODO Do you want to restart notice
             // Implement your logic to start bingo here
             BingoButtonText = "Cancel";
+            GenerateBoard(selectedDifficulty);
         }
         else
         {
@@ -177,14 +210,64 @@ public partial class BingoWindowViewModel : ObservableRecipient
         }
     }
 
+    private void GenerateBoard(Difficulty difficulty)
+    {
+        if (Cells == null)
+        {
+            MessageBox.Show($"Null cells");
+            return;
+        }
+
+        int boardSize = (difficulty == Difficulty.Extreme) ? 10 : 5;
+        Cells = new BingoCell[boardSize, boardSize];
+        var bingoMonsterListDifficulty = difficulty == Difficulty.Extreme ? Difficulty.Hard : difficulty;
+
+        var monsters = BingoMonsters.DifficultyBingoMonster[bingoMonsterListDifficulty].ToList();
+
+        PopulateBingoBoardCells(boardSize, difficulty, monsters);
+    }
+
+    private void PopulateBingoBoardCells(int boardSize, Difficulty difficulty, List<BingoMonster> monsters)
+    {
+        if (Cells == null)
+        {
+            MessageBox.Show($"Null cells");
+            return;
+        }
+
+        // Shuffle the list of monsters.
+        var rng = new Random();
+        for (int i = 0; i < boardSize; i++)
+        {
+            for (int j = 0; j < boardSize; j++)
+            {
+                int index = rng.Next(monsters.Count); // Get a random index
+                BingoMonster selectedMonster = monsters[index]; // Select a monster
+
+                // TODO test if magspike shows
+                Cells[i, j] = new BingoCell
+                {
+                    Monster = selectedMonster,
+                    WeaponTypeBonus = (FrontierWeaponTypes)rng.Next(Enum.GetValues(typeof(FrontierWeaponTypes)).Length),
+                };
+            }
+        }
+
+        if (difficulty == Difficulty.Extreme)
+        {
+            Cells[boardSize / 2, boardSize / 2] = new BingoCell
+            {
+                Monster = BingoMonsters.DifficultyBingoMonster[Difficulty.Hard].FirstOrDefault(monster => monster.Name == "Burning Freezing Elzelion")
+            };
+        }
+    }
+
     private void StopBingo()
     {
         IsBingoRunning = false;
         BingoButtonText = "Start";
-        BingoBoard.Clear();
         RunIDs.Clear();
-        Carts.Clear();
-        WeaponTypeBonuses.Clear();
+        Cells = new BingoCell[0, 0];
         ReceivedQuestID = 0;
         ReceivedRunID = 0;
         WeaponRerollCost = 2;
@@ -220,5 +303,46 @@ public partial class BingoWindowViewModel : ObservableRecipient
             };
             snackbar.Show();
         }
+    }
+
+    private bool CheckForBingoCompletion()
+    {
+        if (Cells == null)
+        {
+            MessageBox.Show($"Null cells");
+            return false;
+        }
+
+        // Check each row.
+        for (int i = 0; i < Cells.GetLength(0); i++)
+        {
+            if (Enumerable.Range(0, Cells.GetLength(1)).All(j => Cells[i, j].IsComplete))
+            {
+                return true;
+            }
+        }
+
+        // Check each column.
+        for (int j = 0; j < Cells.GetLength(1); j++)
+        {
+            if (Enumerable.Range(0, Cells.GetLength(0)).All(i => Cells[i, j].IsComplete))
+            {
+                return true;
+            }
+        }
+
+        // Check the diagonal from top-left to bottom-right.
+        if (Enumerable.Range(0, Cells.GetLength(0)).All(i => Cells[i, i].IsComplete))
+        {
+            return true;
+        }
+
+        // Check the diagonal from top-right to bottom-left.
+        if (Enumerable.Range(0, Cells.GetLength(0)).All(i => Cells[i, Cells.GetLength(0) - 1 - i].IsComplete))
+        {
+            return true;
+        }
+
+        return false;
     }
 }

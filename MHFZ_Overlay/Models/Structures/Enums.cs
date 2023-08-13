@@ -247,3 +247,21 @@ public enum BingoUpgradeType
     /// </summary>
     MiddleSquareMultiplier,
 }
+
+public enum FrontierWeaponTypes
+{
+    GreatSword,
+    HeavyBowgun,
+    Hammer,
+    Lance,
+    SwordAndShield,
+    LightBowgun,
+    DualSwords,
+    LongSword,
+    HuntingHorn,
+    Gunlance,
+    Bow,
+    Tonfa,
+    SwitchAxeF,
+    MagnetSpike,
+}
