@@ -399,6 +399,8 @@ We recommend consulting the appropriate documentation file based on your needs. 
 ![GitHub repo size](https://img.shields.io/github/repo-size/DorielRivalet/mhfz-overlay?style=flat)
 [![wakatime](https://wakatime.com/badge/user/958e2c62-03f7-4c2a-82df-75c8df9ee232/project/db4298ba-fbc4-4fc2-aa24-67938f65ee8a.svg)](https://wakatime.com/badge/user/958e2c62-03f7-4c2a-82df-75c8df9ee232/project/db4298ba-fbc4-4fc2-aa24-67938f65ee8a)
 
+[![Automate Git Stats](https://github.com/DorielRivalet/mhfz-overlay/actions/workflows/automate-git-stats.yml/badge.svg?event=schedule)](https://github.com/DorielRivalet/mhfz-overlay/actions/workflows/automate-git-stats.yml)
+
 ![Repository Commits Stats 1](./scripts/output/commit_types.png)
 
 ![Repository Commits Stats 2](./scripts/output/commits_over_time.png)
