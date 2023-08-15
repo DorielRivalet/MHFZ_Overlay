@@ -37,7 +37,7 @@ public class FrontierWeaponTypeToIconsConverter : IValueConverter
             };
         }
 
-        return CatppuccinMochaColors.NameHex["Base"];
+        return @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/unknown.png";
     }
 
     /// <inheritdoc/>
