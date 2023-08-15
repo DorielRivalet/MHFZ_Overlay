@@ -1844,7 +1844,7 @@ public sealed class AchievementService : IAchievementService
             case 222:
                 return databaseManagerInstance.AllPersonalBestAttempts.Any(pbAttempts => pbAttempts.Attempts >= 100);
             case 223:
-                if (dataLoader.Model.SecondDistrictDuremudiraSlays() >= 50)
+                if (dataLoader.Model.SecondDistrictDuremudiraSlays() >= 25)
                 {
                     return true;
                 }

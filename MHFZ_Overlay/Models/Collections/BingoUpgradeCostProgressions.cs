@@ -14,36 +14,63 @@ using MHFZ_Overlay.Models.Structures;
 /// </summary>
 public static class BingoUpgradeCostProgressions
 {
-    public static ReadOnlyDictionary<BingoUpgradeType, BingoUpgradeCostProgression> CostProgressions { get; } = new (new Dictionary<BingoUpgradeType, BingoUpgradeCostProgression>
+    public static ReadOnlyDictionary<BingoUpgradeType, LevelProgressionLinear> LinearCostProgressions { get; } = new(new Dictionary<BingoUpgradeType, LevelProgressionLinear>
         {
             {
-                BingoUpgradeType.BaseScoreMultiplier,
-                new BingoUpgradeCostProgression { InitialCost = 50, CostIncreaseFactor = 1.8 }
+                BingoUpgradeType.MiddleSquareRerollChance,
+                new LevelProgressionLinear { InitialValue = 1000, ValueIncreasePerLevel = 990 }
             },
+        });
 
+    public static ReadOnlyDictionary<BingoUpgradeType, LevelProgressionExponential> ExponentialCostProgressions { get; } = new (new Dictionary<BingoUpgradeType, LevelProgressionExponential>
+        {
             {
                 BingoUpgradeType.BaseScoreFlatIncrease,
-                new BingoUpgradeCostProgression { InitialCost = 10, CostIncreaseFactor = 2 }
+                new LevelProgressionExponential { InitialValue = 10, ValueIncreaseFactor = 2 }
             },
-
             {
-                BingoUpgradeType.CartsScore,
-                new BingoUpgradeCostProgression { InitialCost = 250, CostIncreaseFactor = 1.6 }
+                BingoUpgradeType.BaseScoreMultiplier,
+                new LevelProgressionExponential { InitialValue = 50, ValueIncreaseFactor = 1.8 }
             },
-
-            {
-                BingoUpgradeType.BonusScore,
-                new BingoUpgradeCostProgression { InitialCost = 1200, CostIncreaseFactor = 1.2 }
-            },
-
-            {
-                BingoUpgradeType.MiddleSquareMultiplier,
-                new BingoUpgradeCostProgression { InitialCost = 2500, CostIncreaseFactor = 1.1 }
-            },
-
             {
                 BingoUpgradeType.WeaponMultiplier,
-                new BingoUpgradeCostProgression { InitialCost = 500, CostIncreaseFactor = 1.4 }
+                new LevelProgressionExponential { InitialValue = 500, ValueIncreaseFactor = 1.4 }
+            },
+            {
+                BingoUpgradeType.CartsScore,
+                new LevelProgressionExponential { InitialValue = 250, ValueIncreaseFactor = 1.6 }
+            },
+            {
+                BingoUpgradeType.BonusScore,
+                new LevelProgressionExponential { InitialValue = 1200, ValueIncreaseFactor = 1.2 }
+            },
+            {
+                BingoUpgradeType.MiddleSquareMultiplier,
+                new LevelProgressionExponential { InitialValue = 2500, ValueIncreaseFactor = 1.1 }
+            },
+            {
+                BingoUpgradeType.ExtraCarts,
+                new LevelProgressionExponential { InitialValue = 1000, ValueIncreaseFactor = 2 }
+            },
+            {
+                BingoUpgradeType.StartingCostReduction,
+                new LevelProgressionExponential { InitialValue = 800, ValueIncreaseFactor = 1.5 }
+            },
+            {
+                BingoUpgradeType.BurningFreezingElzelionRerolls,
+                new LevelProgressionExponential { InitialValue = 500, ValueIncreaseFactor = 1.4 }
+            },
+            {
+                BingoUpgradeType.BurningFreezingElzelionRerollChance,
+                new LevelProgressionExponential { InitialValue = 500, ValueIncreaseFactor = 1.4 }
+            },
+            {
+                BingoUpgradeType.AchievementMultiplier,
+                new LevelProgressionExponential { InitialValue = 500, ValueIncreaseFactor = 1.4 }
+            },
+            {
+                BingoUpgradeType.SecretAchievementMultiplier,
+                new LevelProgressionExponential { InitialValue = 500, ValueIncreaseFactor = 1.4 }
             },
         });
 }

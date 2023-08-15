@@ -39,7 +39,7 @@ public partial class BingoWindowViewModel : ObservableRecipient
     }
 
     [ObservableProperty]
-    public IEnumerable<BingoCell>? flatCells;
+    private IEnumerable<BingoCell>? flatCells;
 
     public string? PlayerBingoPointsText => $"Bingo Points: {PlayerBingoPoints}";
 
@@ -58,6 +58,8 @@ public partial class BingoWindowViewModel : ObservableRecipient
                        .Where(difficulty => difficulty != Difficulty.Unknown);
         }
     }
+
+    public IEnumerable<BingoLineColorOption> BingoLineOptions => (IEnumerable<BingoLineColorOption>)Enum.GetValues(typeof(BingoLineColorOption));
 
     private static readonly BingoService BingoServiceInstance = BingoService.GetInstance();
 
@@ -184,6 +186,12 @@ public partial class BingoWindowViewModel : ObservableRecipient
     [ObservableProperty]
     private Difficulty selectedDifficulty = Difficulty.Easy;
 
+    [ObservableProperty]
+    private BingoLineColorOption selectedBingoLineOption = BingoLineColorOption.Hardest;
+
+    [ObservableProperty]
+    private int boardSize;
+
     [RelayCommand]
     private void StartBingo()
     {
@@ -216,17 +224,17 @@ public partial class BingoWindowViewModel : ObservableRecipient
             return;
         }
 
-        int boardSize = (difficulty == Difficulty.Extreme) ? 10 : 5;
-        Cells = new BingoCell[boardSize, boardSize];
+        BoardSize = (difficulty == Difficulty.Extreme) ? 10 : 5;
+        Cells = new BingoCell[BoardSize, BoardSize];
         var bingoMonsterListDifficulty = difficulty == Difficulty.Extreme ? Difficulty.Hard : difficulty;
 
         var monsters = BingoMonsters.DifficultyBingoMonster[bingoMonsterListDifficulty].ToList();
 
-        PopulateBingoBoardCells(boardSize, difficulty, monsters);
+        PopulateBingoBoardCells(difficulty, monsters);
         FlatCells = Cells.Cast<BingoCell>();
     }
 
-    private void PopulateBingoBoardCells(int boardSize, Difficulty difficulty, List<BingoMonster> monsters)
+    private void PopulateBingoBoardCells(Difficulty difficulty, List<BingoMonster> monsters)
     {
         if (Cells == null)
         {
@@ -236,9 +244,9 @@ public partial class BingoWindowViewModel : ObservableRecipient
 
         // Shuffle the list of monsters.
         var rng = new Random();
-        for (int i = 0; i < boardSize; i++)
+        for (int i = 0; i < BoardSize; i++)
         {
-            for (int j = 0; j < boardSize; j++)
+            for (int j = 0; j < BoardSize; j++)
             {
                 int index = rng.Next(monsters.Count); // Get a random index
                 BingoMonster selectedMonster = monsters[index]; // Select a monster
@@ -246,17 +254,17 @@ public partial class BingoWindowViewModel : ObservableRecipient
                 Cells[i, j] = new BingoCell
                 {
                     Monster = selectedMonster,
-                    WeaponTypeBonus = (FrontierWeaponTypes)rng.Next(Enum.GetValues(typeof(FrontierWeaponTypes)).Length),
+                    WeaponTypeBonus = (FrontierWeaponType)rng.Next(Enum.GetValues(typeof(FrontierWeaponType)).Length),
                 };
             }
         }
 
         if (difficulty == Difficulty.Extreme)
         {
-            Cells[boardSize / 2, boardSize / 2] = new BingoCell
+            Cells[BoardSize / 2, BoardSize / 2] = new BingoCell
             {
                 Monster = BingoMonsters.DifficultyBingoMonster[Difficulty.Hard].FirstOrDefault(monster => monster.Name == "Burning Freezing Elzelion"),
-                WeaponTypeBonus = (FrontierWeaponTypes)rng.Next(Enum.GetValues(typeof(FrontierWeaponTypes)).Length),
+                WeaponTypeBonus = (FrontierWeaponType)rng.Next(Enum.GetValues(typeof(FrontierWeaponType)).Length),
             };
         }
     }
@@ -267,6 +275,7 @@ public partial class BingoWindowViewModel : ObservableRecipient
         BingoButtonText = "Start";
         RunIDs.Clear();
         Cells = new BingoCell[0, 0];
+        BoardSize = 0;
         ReceivedQuestID = 0;
         ReceivedRunID = 0;
         WeaponRerollCost = 2;

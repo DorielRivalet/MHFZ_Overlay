@@ -14,36 +14,63 @@ using MHFZ_Overlay.Models.Structures;
 /// </summary>
 public static class BingoUpgradeValueProgressions
 {
-    public static ReadOnlyDictionary<BingoUpgradeType, BingoUpgradeValueProgression> ValueProgressions { get; } = new (new Dictionary<BingoUpgradeType, BingoUpgradeValueProgression>
+    public static ReadOnlyDictionary<BingoUpgradeType, LevelProgressionLinear> ValueProgressions { get; } = new (new Dictionary<BingoUpgradeType, LevelProgressionLinear>
         {
             {
                 BingoUpgradeType.BaseScoreMultiplier,
-                new BingoUpgradeValueProgression { InitialValue = 1, ValueIncreasePerLevel = 0.1 }
+                new LevelProgressionLinear { InitialValue = 1.1, ValueIncreasePerLevel = 0.1 }
             },
-
             {
                 BingoUpgradeType.BaseScoreFlatIncrease,
-                new BingoUpgradeValueProgression { InitialValue = 0, ValueIncreasePerLevel = 2 }
+                new LevelProgressionLinear { InitialValue = 2, ValueIncreasePerLevel = 2 }
             },
-
             {
                 BingoUpgradeType.CartsScore,
-                new BingoUpgradeValueProgression { InitialValue = 0, ValueIncreasePerLevel = 3 }
+                new LevelProgressionLinear { InitialValue = 3, ValueIncreasePerLevel = 3 }
             },
-
             {
                 BingoUpgradeType.BonusScore,
-                new BingoUpgradeValueProgression { InitialValue = 0, ValueIncreasePerLevel = 10 }
+                new LevelProgressionLinear { InitialValue = 10, ValueIncreasePerLevel = 10 }
             },
-
             {
                 BingoUpgradeType.MiddleSquareMultiplier,
-                new BingoUpgradeValueProgression { InitialValue = 1, ValueIncreasePerLevel = 0.05 }
+                new LevelProgressionLinear { InitialValue = 1.05, ValueIncreasePerLevel = 0.05 }
             },
-
             {
                 BingoUpgradeType.WeaponMultiplier,
-                new BingoUpgradeValueProgression { InitialValue = 1, ValueIncreasePerLevel = 0.02 }
+                new LevelProgressionLinear { InitialValue = 1.02, ValueIncreasePerLevel = 0.02 }
+            },
+            {
+                BingoUpgradeType.ExtraCarts,
+                new LevelProgressionLinear { InitialValue = 0, ValueIncreasePerLevel = 1 }
+            },
+            {
+                BingoUpgradeType.StartingCostReduction,
+                new LevelProgressionLinear { InitialValue = 0.05, ValueIncreasePerLevel = 0.05 }
+            },
+            {
+                BingoUpgradeType.MiddleSquareRerollChance,
+                new LevelProgressionLinear { InitialValue = 0.0001, ValueIncreasePerLevel = 0.0001 }
+            },
+            {
+                BingoUpgradeType.BurningFreezingElzelionRerolls,
+                new LevelProgressionLinear { InitialValue = 1, ValueIncreasePerLevel = 1 }
+            },
+            {
+                BingoUpgradeType.BurningFreezingElzelionRerollChance,
+                new LevelProgressionLinear { InitialValue = 0.01, ValueIncreasePerLevel = 0.01 }
+            },
+            {
+                BingoUpgradeType.AchievementMultiplier,
+                new LevelProgressionLinear { InitialValue = 0.001, ValueIncreasePerLevel = 0.001 }
+            },
+            {
+                BingoUpgradeType.SecretAchievementMultiplier,
+                new LevelProgressionLinear { InitialValue = 1, ValueIncreasePerLevel = 1 }
+            },
+            {
+                BingoUpgradeType.BingoCompletionsMultiplier,
+                new LevelProgressionLinear { InitialValue = 1.1, ValueIncreasePerLevel = 0.1 }
             },
         });
 }

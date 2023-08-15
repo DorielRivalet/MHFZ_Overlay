@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
+using MHFZ_Overlay.Models.Collections;
 using MHFZ_Overlay.Models.Structures;
 
 /// <summary>
@@ -17,6 +18,11 @@ using MHFZ_Overlay.Models.Structures;
 /// </summary>
 public class BingoCell
 {
+    /// <summary>
+    /// The background color of the cell. Blue: Highest points line, Green: Completed, Yellow: Completed with 1 cart, Red: Completed with 2 or more carts.
+    /// </summary>
+    public string? BackgroundColor { get; set; } = CatppuccinMochaColors.NameHex["Crust"];
+
     /// <summary>
     /// Whether the cell is completed. Changes opacity via converter.
     /// </summary>
@@ -35,5 +41,5 @@ public class BingoCell
     /// <summary>
     /// The weapon type bonuses in the bingo board. Used for increasing scores in each cell and for rerolls.
     /// </summary>
-    public FrontierWeaponTypes WeaponTypeBonus { get; internal set; }
+    public FrontierWeaponType WeaponTypeBonus { get; internal set; }
 }

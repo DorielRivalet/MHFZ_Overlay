@@ -48,6 +48,8 @@
                         xmlns:fonts="clr-namespace:System.Windows.Media;assembly=PresentationCore"/>
             <converter:XamlIconToViewBoxConverter x:Key="XamlIconToViewBoxConverter"/>
             <converter:BooleanToOpacityConverter x:Key="BooleanToOpacityConverter"/>
+            <converter:QuestIDsToNamesConverter x:Key="QuestIDsToNamesConverter"/>
+            <converter:FrontierWeaponTypeToIconsConverter x:Key="FrontierWeaponTypeToIconsConverter"/>
         </ResourceDictionary>
     </Window.Resources>
     <Grid>
@@ -73,40 +75,68 @@
                         </StackPanel>
                     </TabItem.Header>
                     <Grid Height="Auto"  Width="Auto">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="1*"/>
-                            <RowDefinition Height="100"/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions >
-                            <ColumnDefinition Width="1*"/>
-                        </Grid.ColumnDefinitions>
-                        <ScrollViewer CanContentScroll="True" IsDeferredScrollingEnabled="True" VerticalScrollBarVisibility="Visible" Grid.Row="0">
+                        <ScrollViewer CanContentScroll="True" IsDeferredScrollingEnabled="True" VerticalScrollBarVisibility="Visible" Grid.Row="0" HorizontalScrollBarVisibility="Auto">
                             <Grid Height="Auto" Width="Auto" Background="Transparent" Style="{StaticResource ConfigSingleGrid}" Grid.Row="0" Grid.Column="0" Margin="20" >
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="40"/>
                                     <RowDefinition Height="*"/>
                                 </Grid.RowDefinitions>
-                                <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center">
+                                <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Left">
                                     <ui:Image Source="../../Assets/Icons/achievement/stamp.jpg"/>
                                     <customcontrols:OutlinedTextBlock d:Text="Bingo Points: 9999999" FontSize="18" FontWeight="SemiBold" Margin="10,0,0,0" Fill="{StaticResource Text}" Stroke="{StaticResource Crust}" Text="{Binding PlayerBingoPointsText}" VerticalAlignment="Center"/>
                                     <ComboBox ItemsSource="{Binding Difficulties}" SelectedItem="{Binding SelectedDifficulty}" ToolTip="Choose Bingo difficulty" Margin="10,0,0,0"/>
                                     <ui:Button d:Content="Start"  Content="{Binding BingoButtonText}" Margin="10,0,0,0" Foreground="{StaticResource Crust}" Background="{StaticResource Green}" Command="{Binding StartBingoCommand}"/>
                                     <ui:Button Margin="10,0,0,0" d:Content="Reroll weapon bonuses (2 Bingo Points)"  Content="{Binding WeaponRerollButtonContent}" Foreground="{StaticResource Crust}" Background="{StaticResource Green}" Command="{Binding WeaponRerollCommand}"/>
+                                    <ComboBox Margin="10,0,0,0" ItemsSource="{Binding BingoLineOptions}" SelectedItem="{Binding SelectedBingoLineOption}" ToolTip="Choose bingo line options (will be marked as blue)"/>
                                 </StackPanel>
-                                <Grid Grid.RowSpan="3" Grid.Row="1">
-                                    <ItemsControl ItemsSource="{Binding FlatCells}">
+                                <Grid Grid.RowSpan="3" Grid.Row="1" Margin="0,10,0,0">
+                                    <ItemsControl x:Name="BingoItemsControl" ItemsSource="{Binding FlatCells}" VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Standard">
                                         <ItemsControl.ItemsPanel>
                                             <ItemsPanelTemplate>
                                                 <!-- Update the Rows and Columns properties when the size of the board changes -->
-                                                <UniformGrid Rows="5" Columns="5"/>
+                                                <UniformGrid Rows="{Binding DataContext.BoardSize,
+                               Source={x:Reference BingoItemsControl}}" Columns="{Binding DataContext.BoardSize,
+                               Source={x:Reference BingoItemsControl}}"/>
                                             </ItemsPanelTemplate>
                                         </ItemsControl.ItemsPanel>
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate DataType="{x:Type models:BingoCell}">
                                                 <Grid>
-                                                    <!-- Show the monster's image and name -->
-                                                    <Image Source="{Binding Monster.Image}" />
-                                                    <TextBlock Text="{Binding Monster.Name}"/>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="*"/>
+                                                        <RowDefinition Height="Auto"/>
+                                                    </Grid.RowDefinitions>
+
+                                                    <!-- Outer Border with rounded square bevel effect -->
+                                                    <Border Width="96" Height="96" CornerRadius="16">
+                                                        <Border.Background>
+                                                            <SolidColorBrush Color="#6c7086" Opacity="1"/>
+                                                        </Border.Background>
+                                                        <Border.Effect>
+                                                            <DropShadowEffect ShadowDepth="2" Color="#7f849c" Opacity="0.5" BlurRadius="4"/>
+                                                        </Border.Effect>
+
+                                                        <!-- Inner Border with background color -->
+                                                        <Border Background="{Binding BackgroundColor}" CornerRadius="16">
+                                                            <Grid>
+                                                                <!-- Show the monster's image and name -->
+                                                                <ui:Image CornerRadius="4" BorderBrush="#33000000" Source="{Binding Monster.Image}" Width="64" HorizontalAlignment="Center" VerticalAlignment="Center" ToolTip="{Binding Monster.QuestIDs, Converter={StaticResource QuestIDsToNamesConverter}}" Opacity="{Binding IsComplete, Converter={StaticResource BooleanToOpacityConverter}}"/>
+
+                                                                <Grid Panel.ZIndex="2" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="64,64,0,0">
+                                                                    <!-- Image inside the circular background -->
+                                                                    <Border Background="{StaticResource Mantle}" BorderBrush="{StaticResource Overlay0}" BorderThickness="2" CornerRadius="20">
+                                                                        <ui:Image Background="Transparent" Width="24" Height="24" ToolTip="{Binding WeaponTypeBonus}" Source="{Binding WeaponTypeBonus, Converter={StaticResource FrontierWeaponTypeToIconsConverter}}" />
+                                                                    </Border>
+                                                                </Grid>
+                                                            </Grid>
+                                                        </Border>
+                                                    </Border>
+
+                                                    <StackPanel Orientation="Vertical" Grid.Row="1" Margin="5">
+                                                        <TextBlock Text="{Binding Monster.Name}" HorizontalAlignment="Center" Margin="5"/>
+                                                        <!--TODO: this should be the max final score instead-->
+                                                        <TextBlock Text="{Binding Monster.BaseScore}" HorizontalAlignment="Center" Margin="5"/>
+                                                    </StackPanel>
                                                 </Grid>
                                             </DataTemplate>
                                         </ItemsControl.ItemTemplate>

@@ -218,12 +218,12 @@ public enum BingoGauntletCategory
 public enum BingoUpgradeType
 {
     /// <summary>
-    /// Flat increase to the base score before multiplying by BaseScoreMultiplier.
+    /// The flat increase to the base score before multiplying by BaseScoreMultiplier.
     /// </summary>
     BaseScoreFlatIncrease,
 
     /// <summary>
-    /// Multiplies the base score.
+    /// The multiplier for the base score.
     /// </summary>
     BaseScoreMultiplier,
 
@@ -233,12 +233,12 @@ public enum BingoUpgradeType
     WeaponMultiplier,
 
     /// <summary>
-    /// Flat increase with score varying by the amount of carts.
+    /// The score varying by the amount of carts.
     /// </summary>
     CartsScore,
 
     /// <summary>
-    /// Flat increase to the score, as final calculation, unaffected by any multiplier.
+    /// The flat increase to the score, as final calculation, unaffected by any multiplier.
     /// </summary>
     BonusScore,
 
@@ -246,9 +246,84 @@ public enum BingoUpgradeType
     /// The multiplier for the middle square being completed.
     /// </summary>
     MiddleSquareMultiplier,
+
+    /// <summary>
+    /// The amount of extra carts when starting a bingo run.
+    /// </summary>
+    ExtraCarts,
+
+    /// <summary>
+    /// The reduction for the price of starting a bingo depending on difficulty.
+    /// </summary>
+    StartingCostReduction,
+
+    /// <summary>
+    /// The chance for the middle square in an extreme difficulty bingo to be rerolled.
+    /// </summary>
+    MiddleSquareRerollChance,
+
+    /// <summary>
+    /// The amount of times an extreme difficulty bingo board can be rerolled so that Burning Freezing Elzelion can show on a random cell, depending on BurningFreezingElzelionRerollChance.
+    /// </summary>
+    BurningFreezingElzelionRerolls,
+
+    /// <summary>
+    /// The chance for a Burning Freezing Elzelion to show in a random cell if rerolled.
+    /// </summary>
+    BurningFreezingElzelionRerollChance,
+
+    /// <summary>
+    /// The multiplier with value varying by the amount of obtained achievements, except secret achievements.
+    /// </summary>
+    AchievementMultiplier,
+
+    /// <summary>
+    /// The score varying by the amount of obtained secret achievements.
+    /// </summary>
+    SecretAchievementMultiplier,
+
+    /// <summary>
+    /// The multiplier with value varying by the amount of bingo runs completed (multiplies the bingo run completions by this multiplier then does log 2).
+    /// </summary>
+    BingoCompletionsMultiplier,
+
+    /// <summary>
+    /// The multiplier for the square completed containing a zenith monster.
+    /// </summary>
+    ZenithMultiplier,
+
+    /// <summary>
+    /// The multiplier for the square completed containing a conquest or shiten monster.
+    /// </summary>
+    SolsticeMultiplier,
+
+    /// <summary>
+    /// The multiplier for the square completed containing a musou monster.
+    /// </summary>
+    MusouMultiplier,
+
+    /// <summary>
+    /// The multiplier for the bingo run being completed on an horizontal line.
+    /// </summary>
+    HorizontalLineCompletionMultiplier,
+
+    /// <summary>
+    /// The multiplier for the bingo run being completed on a vertical line.
+    /// </summary>
+    VerticalLineCompletionMultiplier,
+
+    /// <summary>
+    /// The multiplier for the bingo run being completed on a diagonal line.
+    /// </summary>
+    DiagonalLineCompletionMultiplier,
+
+    /// <summary>
+    /// The multiplier for the time it took to complete the bingo from start button press to the moment the last square is completed on a line. Affected by certain multipliers, calculated right before BonusScore.
+    /// </summary>
+    RealTimeMultiplier,
 }
 
-public enum FrontierWeaponTypes
+public enum FrontierWeaponType
 {
     GreatSword,
     HeavyBowgun,
@@ -264,4 +339,63 @@ public enum FrontierWeaponTypes
     Tonfa,
     SwitchAxeF,
     MagnetSpike,
+}
+
+public enum BingoLineColorOption
+{
+    /// <summary>
+    /// The board will mark blue the run that gives the most points.
+    /// </summary>
+    Hardest,
+
+    /// <summary>
+    /// The board will mark blue the run that gives the least points.
+    /// </summary>
+    Easiest,
+}
+
+public enum BingoSquareMonsterType
+{
+    /// <summary>
+    /// The default monster type.
+    /// </summary>
+    Default,
+
+    /// <summary>
+    /// The monster is a zenith.
+    /// </summary>
+    Zenith,
+
+    /// <summary>
+    /// The monster is a conquest or shiten monster.
+    /// </summary>
+    Solstice,
+
+    /// <summary>
+    /// The monster is a musou.
+    /// </summary>
+    Musou,
+}
+
+public enum BingoLineCompletionType
+{
+    /// <summary>
+    /// The line is not known.
+    /// </summary>
+    Unknown,
+
+    /// <summary>
+    /// The bingo run was completed with a horizontal line.
+    /// </summary>
+    Horizontal,
+
+    /// <summary>
+    /// The bingo run was completed with a vertical line.
+    /// </summary>
+    Vertical,
+
+    /// <summary>
+    /// The bingo run was completed with a diagonal line.
+    /// </summary>
+    Diagonal,
 }

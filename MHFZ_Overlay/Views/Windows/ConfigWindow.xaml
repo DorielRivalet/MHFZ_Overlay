@@ -2072,7 +2072,7 @@
                     <TabItem.Header>
                         <StackPanel Orientation="Horizontal">
                             <Image Source="../../Assets/Icons/png/note_pink.png" Width="32" Height="32"/>
-                            <TextBlock Foreground="#ff985d" Text="Audio" Margin="4,0,0,0" VerticalAlignment="Center" />
+                            <TextBlock Foreground="{StaticResource Pink}" Text="Audio" Margin="4,0,0,0" VerticalAlignment="Center" />
                         </StackPanel>
                     </TabItem.Header>
                     <Grid x:Name="AudioContent" Height="Auto"  Width="Auto">

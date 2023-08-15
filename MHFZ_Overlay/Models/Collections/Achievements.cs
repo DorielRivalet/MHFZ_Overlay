@@ -2931,7 +2931,7 @@ public static class Achievements
             Description = string.Empty,
             Rank = AchievementRank.Bronze,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/duremudira.jpg",
-            Objective = "Defeat 2nd District Duremudira 50 times.",
+            Objective = "Defeat 2nd District Duremudira 25 times.",
             IsSecret = true,
             Hint = "You killed that many monsters?!",
             }
