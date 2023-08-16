@@ -76,6 +76,11 @@ public sealed class ChallengeService : IChallenge
     /// <inheritdoc/>
     public bool Unlock(Challenge challenge)
     {
+        if (!CheckChallengeWindow(challenge))
+        {
+            return false;
+        }
+
         // Find the challenge ID by iterating through the ReadOnlyDictionary
         foreach (var kvp in Challenges.IDChallenge)
         {
@@ -116,11 +121,28 @@ public sealed class ChallengeService : IChallenge
         switch (challenge.Name)
         {
             default:
-                Logger.Error(CultureInfo.InvariantCulture, "Could not find window for challenge {0}", challenge.Name);
+                Logger.Error(CultureInfo.InvariantCulture, "Could not find window for challenge {0}. The challenge has yet to be made by the developer.", challenge.Name);
                 return false;
             case "Bingo":
                 var window = new BingoWindow();
                 window.Show();
+                return true;
+        }
+    }
+
+    /// <summary>
+    /// Checks if there exists a window for the challenge.
+    /// </summary>
+    /// <param name="challenge"></param>
+    /// <returns>False if a window could not be found for the selected challenge.</returns>
+    public bool CheckChallengeWindow(Challenge challenge)
+    {
+        switch (challenge.Name)
+        {
+            default:
+                Logger.Info(CultureInfo.InvariantCulture, "Could not find window for challenge {0}. The challenge has yet to be made by the developer.", challenge.Name);
+                return false;
+            case "Bingo":
                 return true;
         }
     }

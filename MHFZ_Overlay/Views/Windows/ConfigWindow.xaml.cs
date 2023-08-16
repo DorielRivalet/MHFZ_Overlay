@@ -4240,6 +4240,92 @@ public partial class ConfigWindow : FluentWindow
 
     public ICommand StartChallengeCommand { get; private set; }
 
+    private void CheckForChallengeRequirementsForStart(Challenge challenge)
+    {
+        var brushConverter = new BrushConverter();
+        var brushColor = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Crust"]);
+        var snackbar = new Snackbar(ConfigWindowSnackBarPresenter) { };
+
+        if (ChallengeServiceInstance.CheckRequirements(challenge))
+        {
+            Logger.Info(CultureInfo.InvariantCulture, "Meets requirements for challenge unlock, unlocking challenge {0}", challenge.Name);
+            var successful = ChallengeServiceInstance.Unlock(challenge);
+
+            if (!successful)
+            {
+                Logger.Error(CultureInfo.InvariantCulture, "Could not unlock challenge");
+                snackbar = new Snackbar(ConfigWindowSnackBarPresenter)
+                {
+                    Title = "Challenge locked!",
+                    Content = $"{challenge.Name} could not be unlocked, it may currently be in development.",
+                    Icon = new SymbolIcon()
+                    {
+                        Symbol = SymbolRegular.LockOpen28,
+                        Foreground = brushColor ?? Brushes.Black,
+                    },
+                    Appearance = ControlAppearance.Info,
+                    Timeout = TimeSpan.FromSeconds(10),
+                    Style = (Style)this.FindResource("CatppuccinMochaSnackBar"),
+                };
+
+                ConfigWindowSnackBarPresenter.AddToQue(snackbar);
+                return;
+            }
+
+            if (this.challengesListBox == null)
+            {
+                Logger.Error(CultureInfo.InvariantCulture, "Challenges ListBox not found");
+                return;
+            }
+
+            this.MainWindow.DataLoader.Model.PlayerChallenges = DatabaseManager.GetPlayerChallenges();
+            this.challengesListBox.ItemsSource = this.MainWindow.DataLoader.Model.PlayerChallenges.Values.ToList();
+            foreach (var item in (List<Challenge>)this.challengesListBox.ItemsSource)
+            {
+                item.StartChallengeCommand = StartChallengeCommand;
+            }
+
+            this.challengesListBox.Items.Refresh();
+
+            var s = (Settings)Application.Current.TryFindResource("Settings");
+            var fileName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Assets\Sounds\challenge_unlock.wav");
+            AudioServiceInstance.Play(fileName, MainWindow.MainWindowMediaPlayer, s.VolumeMain, s.VolumeChallengeUnlock);
+            snackbar = new Snackbar(ConfigWindowSnackBarPresenter)
+            {
+                Title = "Challenge unlocked!",
+                Content = $"Congratulations on unlocking {challenge.Name}, you can now start it by pressing the Start button inside that challenge section.",
+                Icon = new SymbolIcon()
+                {
+                    Symbol = SymbolRegular.LockOpen28,
+                    Foreground = brushColor ?? Brushes.Black,
+                },
+                Appearance = ControlAppearance.Info,
+                Timeout = TimeSpan.FromSeconds(10),
+                Style = (Style)this.FindResource("CatppuccinMochaSnackBar"),
+            };
+
+            ConfigWindowSnackBarPresenter.AddToQue(snackbar);
+        }
+        else
+        {
+            snackbar = new Snackbar(ConfigWindowSnackBarPresenter)
+            {
+                Title = "Challenge locked!",
+                Content = "Check the information bar at the top of this section in order to view unlocking instructions.",
+                Icon = new SymbolIcon()
+                {
+                    Symbol = SymbolRegular.LockClosed32,
+                    Foreground = brushColor ?? Brushes.Black,
+                },
+                Appearance = ControlAppearance.Info,
+                Timeout = SnackbarTimeOut,
+                Style = (Style)this.FindResource("CatppuccinMochaSnackBar"),
+            };
+
+            ConfigWindowSnackBarPresenter.AddToQue(snackbar);
+        }
+    }
+
     private void StartChallenge(Challenge? challenge)
     {
         if (challenge == null || this.challengesListBox == null)
@@ -4263,8 +4349,8 @@ public partial class ConfigWindow : FluentWindow
                     var brushColor = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Crust"]);
                     var snackbar = new Snackbar(ConfigWindowSnackBarPresenter)
                     {
-                        Title = "Challenge currently in progress!",
-                        Content = "A challenge is already in progress. Please cancel it before starting another one.",
+                        Title = "Could not start challenge",
+                        Content = "A challenge might already be in progress. If you have a challenge window open, please close it before starting another one.",
                         Icon = new SymbolIcon()
                         {
                             Symbol = SymbolRegular.Warning28,
@@ -4289,68 +4375,9 @@ public partial class ConfigWindow : FluentWindow
 
             return;
         }
-
-        if (ChallengeServiceInstance.CheckRequirements(challenge))
-        {
-            Logger.Info(CultureInfo.InvariantCulture, "Meets requirements for challenge unlock, unlocking challenge {0}", challenge.Name);
-            var successful = ChallengeServiceInstance.Unlock(challenge);
-
-            if (!successful)
-            {
-                Logger.Error(CultureInfo.InvariantCulture, "Could not unlock challenge");
-                return;
-            }
-
-            this.MainWindow.DataLoader.Model.PlayerChallenges = DatabaseManager.GetPlayerChallenges();
-            this.challengesListBox.ItemsSource = this.MainWindow.DataLoader.Model.PlayerChallenges.Values.ToList();
-            foreach (var item in (List<Challenge>)this.challengesListBox.ItemsSource)
-            {
-                item.StartChallengeCommand = StartChallengeCommand;
-            }
-
-            this.challengesListBox.Items.Refresh();
-
-            var s = (Settings)Application.Current.TryFindResource("Settings");
-            var fileName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Assets\Sounds\challenge_unlock.wav");
-            AudioServiceInstance.Play(fileName, MainWindow.MainWindowMediaPlayer, s.VolumeMain, s.VolumeChallengeUnlock);
-
-            var brushConverter = new BrushConverter();
-            var brushColor = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Crust"]);
-            var snackbar = new Snackbar(ConfigWindowSnackBarPresenter)
-            {
-                Title = "Challenge unlocked!",
-                Content = $"Congratulations on unlocking {challenge.Name}, you can now start it by pressing the Start button inside that challenge section.",
-                Icon = new SymbolIcon()
-                {
-                    Symbol = SymbolRegular.LockOpen28,
-                    Foreground = brushColor ?? Brushes.Black,
-                },
-                Appearance = ControlAppearance.Info,
-                Timeout = TimeSpan.FromSeconds(10),
-                Style = (Style)this.FindResource("CatppuccinMochaSnackBar"),
-            };
-
-            ConfigWindowSnackBarPresenter.AddToQue(snackbar);
-        }
         else
         {
-            var brushConverter = new BrushConverter();
-            var brushColor = (Brush?)brushConverter.ConvertFromString(CatppuccinMochaColors.NameHex["Crust"]);
-            var snackbar = new Snackbar(ConfigWindowSnackBarPresenter)
-            {
-                Title = "Challenge locked!",
-                Content = "Check the information bar at the top of this section in order to view unlocking instructions.",
-                Icon = new SymbolIcon()
-                {
-                    Symbol = SymbolRegular.LockClosed32,
-                    Foreground = brushColor ?? Brushes.Black,
-                },
-                Appearance = ControlAppearance.Info,
-                Timeout = SnackbarTimeOut,
-                Style = (Style)this.FindResource("CatppuccinMochaSnackBar"),
-            };
-
-            ConfigWindowSnackBarPresenter.AddToQue(snackbar);
+            CheckForChallengeRequirementsForStart(challenge);
         }
     }
 
