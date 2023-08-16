@@ -169,6 +169,7 @@ The location of any previous settings are in the subfolders of `%LocalAppData%/D
 5. Drag and drop the file.
 6. Copy/Paste into Output Comparer the hash provided by the developer.
 7. You should get the message `The hashes are the same.`.
+8. Close DevToys.
 
 ### Command Line Interface
 
