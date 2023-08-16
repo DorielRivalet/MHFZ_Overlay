@@ -98,5 +98,22 @@ Try to complete a fully diagonal, vertical or horizontal line in order to finish
 This merciless gauntlet demands more than mere strength; it calls for tactical finesse and the will to triumph against insurmountable odds. Only those who can surmount this grueling challenge shall earn the title of Unstoppable, showcasing their prowess to the world.",
             }
         },
+        {
+            5, new Challenge()
+            {
+                UnlockDate = DateTime.UnixEpoch,
+                BannerImageLink = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/unknown_black.jpg",
+                Name = "Sky Corridor",
+                AchievementIDRequired = 223, // Chilling Monster Count
+                AchievementNameRequired = Achievements.IDAchievement[223].Title,
+                AchievementsBronzeRequired = 0,
+                AchievementsSilverRequired = 0,
+                AchievementsGoldRequired = 0,
+                AchievementsPlatinumRequired = 0,
+                ChallengeDataTemplateKey = null,
+                Description =
+@"CURRENTLY UNAVAILABLE. You are tasked with progressing through the Sky Corridor, where puzzles and many dangers are present. There are rumors of there being a guardian in certain floors of the Tower, but no one knows what awaits at the top...",
+            }
+        },
     });
 }
