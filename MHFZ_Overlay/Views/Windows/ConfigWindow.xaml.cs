@@ -3418,7 +3418,7 @@ public partial class ConfigWindow : FluentWindow
         foreach (var entry in inventory)
         {
             var time = entry.Key;
-            var timeString = TimeSpan.FromSeconds((double)time / Numbers.FramesPerSecond).ToString(TimeFormats.MinutesSecondsMilliseconds, CultureInfo.InvariantCulture);
+            var timeString = TimeSpan.FromSeconds(time / (double)Numbers.FramesPerSecond).ToString(TimeFormats.MinutesSecondsMilliseconds, CultureInfo.InvariantCulture);
             var items = entry.Value;
             var count = 0;
             sb.AppendLine(timeString + " ");
@@ -3457,7 +3457,7 @@ public partial class ConfigWindow : FluentWindow
         foreach (var entry in areas)
         {
             var time = entry.Key;
-            var timeString = TimeSpan.FromSeconds((double)time / Numbers.FramesPerSecond).ToString(TimeFormats.MinutesSecondsMilliseconds, CultureInfo.InvariantCulture);
+            var timeString = TimeSpan.FromSeconds(time / (double)Numbers.FramesPerSecond).ToString(TimeFormats.MinutesSecondsMilliseconds, CultureInfo.InvariantCulture);
             var area = entry.Value;
             sb.AppendLine(timeString + " ");
 

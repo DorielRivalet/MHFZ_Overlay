@@ -246,6 +246,14 @@
     <None Remove="Assets\Icons\png\gamepad_start.png" />
     <None Remove="Assets\Icons\png\gamepad_x.png" />
     <None Remove="Assets\Icons\png\gamepad_y.png" />
+    <None Remove="Assets\Icons\png\gauntlet_blue.png" />
+    <None Remove="Assets\Icons\png\gauntlet_cyan.png" />
+    <None Remove="Assets\Icons\png\gauntlet_green.png" />
+    <None Remove="Assets\Icons\png\gauntlet_max.png" />
+    <None Remove="Assets\Icons\png\gauntlet_orange.png" />
+    <None Remove="Assets\Icons\png\gauntlet_purple.png" />
+    <None Remove="Assets\Icons\png\gauntlet_red.png" />
+    <None Remove="Assets\Icons\png\gauntlet_white.png" />
     <None Remove="Assets\Icons\png\guild_food.png" />
     <None Remove="Assets\Icons\png\helm.png" />
     <None Remove="Assets\Icons\png\here.png" />
@@ -1165,6 +1173,14 @@
     <Resource Include="Assets\Icons\png\gamepad_start.png" />
     <Resource Include="Assets\Icons\png\gamepad_x.png" />
     <Resource Include="Assets\Icons\png\gamepad_y.png" />
+    <Resource Include="Assets\Icons\png\gauntlet_blue.png" />
+    <Resource Include="Assets\Icons\png\gauntlet_cyan.png" />
+    <Resource Include="Assets\Icons\png\gauntlet_green.png" />
+    <Resource Include="Assets\Icons\png\gauntlet_max.png" />
+    <Resource Include="Assets\Icons\png\gauntlet_orange.png" />
+    <Resource Include="Assets\Icons\png\gauntlet_purple.png" />
+    <Resource Include="Assets\Icons\png\gauntlet_red.png" />
+    <Resource Include="Assets\Icons\png\gauntlet_white.png" />
     <Resource Include="Assets\Icons\png\guild_food.png" />
     <Resource Include="Assets\Icons\png\helm.png" />
     <Resource Include="Assets\Icons\png\here.png" />
@@ -1665,6 +1681,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="BenchmarkDotNet" Version="0.13.7" />
     <PackageReference Include="Clowd.Squirrel" Version="2.9.42" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1" />
     <PackageReference Include="CompiledBindings.WPF" Version="1.0.16" />

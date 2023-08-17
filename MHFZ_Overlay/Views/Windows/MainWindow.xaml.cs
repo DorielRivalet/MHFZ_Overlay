@@ -349,7 +349,7 @@ public partial class MainWindow : Window
 
         DispatcherTimer timer1Frame = new ()
         {
-            Interval = new TimeSpan(0, 0, 0, 0, 1_000 / Numbers.FramesPerSecond),
+            Interval = new TimeSpan(0, 0, 0, 0, 1_000 / (int)Numbers.FramesPerSecond),
         };
         timer1Frame.Tick += this.Timer1Frame_Tick;
         timer1Frame.Start();

@@ -9,11 +9,11 @@ public static class Numbers
     /// <summary>
     /// The frames per second in the game.
     /// </summary>
-    public const int FramesPerSecond = 30;
+    public const decimal FramesPerSecond = 30;
 
-    public const int Frames1Minute = FramesPerSecond * 60;
+    public const decimal Frames1Minute = FramesPerSecond * 60;
 
-    public const int Frames1Hour = Frames1Minute * 60;
+    public const decimal Frames1Hour = Frames1Minute * 60;
 
     public const int RequiredCompletionsMonsterSlayer = 10;
 

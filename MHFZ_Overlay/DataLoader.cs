@@ -415,24 +415,25 @@ public sealed class DataLoader
     /// </value>
     public AddressModel Model { get; } // TODO: fix null warning
 
-    public string GetQuestTimeCompletion()
+    /// <summary>
+    /// Gets the quest time elapsed. TODO: move somewhere else.
+    /// </summary>
+    /// <returns>The quest time elapsed.</returns>
+    public string GetQuestTimeElapsed()
     {
-        var totalQuestDuration = (double)this.Model.TimeDefInt() / Numbers.FramesPerSecond; // Total duration of the quest in seconds
-        var timeRemainingInQuest = (double)this.Model.TimeInt() / Numbers.FramesPerSecond; // Time left in the quest in seconds
+        decimal totalQuestDurationSeconds = (decimal)this.Model.TimeDefInt() / Numbers.FramesPerSecond; // Total duration of the quest in seconds
+        decimal timeRemainingInSeconds = (decimal)this.Model.TimeInt() / Numbers.FramesPerSecond; // Time left in the quest in seconds
 
         // Calculate the elapsed time by subtracting the time left from the total duration
-        var elapsedTime = totalQuestDuration - timeRemainingInQuest;
+        decimal elapsedTimeSeconds = totalQuestDurationSeconds - timeRemainingInSeconds;
 
-        // Convert the elapsed time from seconds to milliseconds
-        elapsedTime *= 1_000;
-
-        // Convert the elapsed time to a TimeSpan object
-        var timeSpan = TimeSpan.FromMilliseconds(elapsedTime);
+        // Create a TimeSpan object directly from elapsed time in seconds
+        TimeSpan elapsedTime = TimeSpan.FromSeconds((double)elapsedTimeSeconds);
 
         // Format the TimeSpan object as a string
-        var formattedTime = timeSpan.ToString(TimeFormats.MinutesSecondsMilliseconds, CultureInfo.InvariantCulture);
+        string formattedElapsedTime = elapsedTime.ToString(TimeFormats.MinutesSecondsMilliseconds, CultureInfo.InvariantCulture);
 
-        return formattedTime;
+        return formattedElapsedTime;
     }
 
     /// <summary>

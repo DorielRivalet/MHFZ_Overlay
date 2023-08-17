@@ -591,7 +591,7 @@ public sealed class DatabaseService
                         var finalTimeValue = model.TimeDefInt() - model.TimeInt();
 
                         // Calculate the elapsed time of the quest
-                        var finalTimeDisplay = dataLoader.GetQuestTimeCompletion();
+                        var finalTimeDisplay = dataLoader.GetQuestTimeElapsed();
 
                         // Convert the elapsed time to a DateTime object
                         string objectiveImage;
@@ -3894,7 +3894,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
     {
         var minutes = framesElapsed / (Numbers.FramesPerSecond * 60);
         var seconds = (framesElapsed % (Numbers.FramesPerSecond * 60)) / Numbers.FramesPerSecond;
-        var milliseconds = ((framesElapsed % (Numbers.FramesPerSecond * 60)) % Numbers.FramesPerSecond) / double.Parse(Numbers.FramesPerSecond.ToString(CultureInfo.InvariantCulture), CultureInfo.InvariantCulture);
+        var milliseconds = ((framesElapsed % ((double)Numbers.FramesPerSecond * 60)) % (double)Numbers.FramesPerSecond) / double.Parse(Numbers.FramesPerSecond.ToString(CultureInfo.InvariantCulture), CultureInfo.InvariantCulture);
         return $"{minutes:D2}:{seconds:D2}.{(int)(milliseconds * 1000):D3}";
     }
 

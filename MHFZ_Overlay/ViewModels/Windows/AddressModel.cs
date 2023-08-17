@@ -2118,9 +2118,9 @@ TreeScope.Children, condition);
     {
         get
         {
-            if (this.TimeDefInt() < this.TimeInt())
+            if (this.TimeDefInt() < this.TimeInt() || this.TimeDefInt() <= 0)
             {
-                return "0";
+                return string.Empty;
             }
             else
             {
@@ -2156,6 +2156,9 @@ TreeScope.Children, condition);
         }
     }
 
+    private StringBuilder sbForTimer = new StringBuilder();
+
+
     /// <summary>
     /// Gets quest time in the format of mm:ss.fff. This should only be used for display purposes.
     /// </summary>
@@ -2163,59 +2166,32 @@ TreeScope.Children, condition);
     {
         get
         {
-            int time;
+            decimal time;
 
             if (GetTimerMode() == "Time Elapsed")
             {
                 time = this.TimeDefInt() - this.TimeInt();
-            }
-            else if (GetTimerMode() == "Time Left")
-            {
-                time = this.TimeInt();
             }
             else // default to Time Left mode
             {
                 time = this.TimeInt();
             }
 
-            if (time > 0)
-            {
-                if (ShowTimeLeftPercentage())
-                {
-                    this.timeLeftPercent = this.TimeLeftPercentNumber;
-                }
-                else
-                {
-                    this.timeLeftPercent = string.Empty;
-                }
+            decimal framesPerSecond = Numbers.FramesPerSecond;
+            decimal totalSeconds = time / framesPerSecond;
+            decimal minutes = Math.Floor(totalSeconds / 60);
+            decimal seconds = Math.Floor(totalSeconds % 60);
+            decimal milliseconds = Math.Round((time % framesPerSecond) * (1000M / framesPerSecond));
 
-                if (time / Numbers.FramesPerSecond / 60 < 10)
-                {
-                    if ((time / Numbers.FramesPerSecond) % 60 < 10)
-                    {
-                        return string.Format(CultureInfo.InvariantCulture, "{0:00}:{1:00}.{2:000}", time / Numbers.FramesPerSecond / 60, (time / Numbers.FramesPerSecond) % 60, (int)Math.Round((float)((time % Numbers.FramesPerSecond) * 100) / 3)) + this.timeLeftPercent; // should work fine
-                    }
-                    else
-                    {
-                        return string.Format(CultureInfo.InvariantCulture, "{0:00}:{1}.{2:000}", time / Numbers.FramesPerSecond / 60, (time / Numbers.FramesPerSecond) % 60, (int)Math.Round((float)((time % Numbers.FramesPerSecond) * 100) / 3)) + this.timeLeftPercent;
-                    }
-                }
-                else
-                {
-                    if ((time / Numbers.FramesPerSecond) % 60 < 10)
-                    {
-                        return string.Format(CultureInfo.InvariantCulture, "{0}:{1:00}.{2:000}", time / Numbers.FramesPerSecond / 60, (time / Numbers.FramesPerSecond) % 60, (int)Math.Round((float)((time % Numbers.FramesPerSecond) * 100) / 3)) + this.timeLeftPercent;
-                    }
-                    else
-                    {
-                        return string.Format(CultureInfo.InvariantCulture, "{0}:{1}.{2:000}", time / Numbers.FramesPerSecond / 60, (time / Numbers.FramesPerSecond) % 60, (int)Math.Round((float)((time % Numbers.FramesPerSecond) * 100) / 3)) + this.timeLeftPercent;
-                    }
-                }
-            }
-            else
-            {
-                return string.Format(CultureInfo.InvariantCulture, "{0:00}:{1:00}.{2:000}", time / Numbers.FramesPerSecond / 60, (time / Numbers.FramesPerSecond) % 60, (int)Math.Round((float)((time % Numbers.FramesPerSecond) * 100) / 3)) + this.timeLeftPercent;
-            }
+            this.timeLeftPercent = ShowTimeLeftPercentage() ? this.TimeLeftPercentNumber : string.Empty;
+
+            StringBuilder sb = new StringBuilder();
+            sb.AppendFormat(CultureInfo.InvariantCulture, "{0:00}:{1:00}.{2:000}", minutes, seconds, milliseconds);
+            sb.Append(this.timeLeftPercent);
+
+            MessageBox.Show(TimeService.TestTimerMethods(324_000M)); // 1 hour
+
+            return sb.ToString();
         }
     }
 
@@ -10008,14 +9984,15 @@ After all that you’ve unlocked magnet spike! You should get a material to make
 
     public static string GetTimeElapsed(double frames)
     {
-        var elapsedTime = TimeSpan.FromSeconds(frames / Numbers.FramesPerSecond);
+        var elapsedTime = TimeSpan.FromSeconds(frames / (double)Numbers.FramesPerSecond);
         var elapsedTimeString = elapsedTime.ToString("mm\\:ss", CultureInfo.InvariantCulture);
         return elapsedTimeString;
     }
 
+    // TODO this is capped
     public static string GetMinutesSecondsMillisecondsFromFrames(long frames)
     {
-        var elapsedTime = TimeSpan.FromSeconds((double)frames / Numbers.FramesPerSecond);
+        var elapsedTime = TimeSpan.FromSeconds(frames / (double)Numbers.FramesPerSecond);
         var elapsedTimeString = elapsedTime.ToString(TimeFormats.MinutesSecondsMilliseconds, CultureInfo.InvariantCulture);
         return elapsedTimeString;
     }
@@ -10789,7 +10766,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         double timeElapsedIn30FPS = this.TimeDefInt() - this.TimeInt();
 
         // Calculate and return the DPS
-        return damageDealt / (timeElapsedIn30FPS / Numbers.FramesPerSecond);
+        return damageDealt / (timeElapsedIn30FPS / (double)Numbers.FramesPerSecond);
     }
 
     // TODO: gamepad
@@ -10806,7 +10783,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         double timeElapsedIn30FPS = this.TimeDefInt() - this.TimeInt();
 
         // Calculate and return the DPS
-        return this.TotalHitsTakenBlocked / (timeElapsedIn30FPS / Numbers.FramesPerSecond);
+        return this.TotalHitsTakenBlocked / (timeElapsedIn30FPS / (double)Numbers.FramesPerSecond);
     }
 
     public double CalculateHitsPerSecond()
@@ -10815,8 +10792,8 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         {
             return 0;
         }
-
-        return this.HitCountInt() / ((double)(this.TimeDefInt() - this.TimeInt()) / Numbers.FramesPerSecond);
+        // TODO is this correct?
+        return this.HitCountInt() / ((double)(this.TimeDefInt() - this.TimeInt()) / (double)Numbers.FramesPerSecond);
     }
 
     public Dictionary<int, double>? DamagePerSecondDictionaryDeserealized { get; set; }
@@ -11288,7 +11265,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             return 0;
         }
 
-        return (double)(this.TimeDefInt() - this.TimeInt()) / Numbers.FramesPerSecond;
+        return (double)(this.TimeDefInt() - this.TimeInt()) / (double)Numbers.FramesPerSecond;
     }
 
     /// <summary>
