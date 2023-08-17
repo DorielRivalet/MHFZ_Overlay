@@ -12,19 +12,19 @@ public sealed class LevelProgressionLinear
     /// <summary>
     /// The initial value of the first level.
     /// </summary>
-    public double InitialValue { get; set; }
+    public decimal InitialValue { get; set; }
 
     /// <summary>
     /// The linear increase of the values. This factor determines how much the value increases with each level. For example, if ValueIncreasePerLevel is 10, then the value will increase by 10 with each level.
     /// </summary>
-    public double ValueIncreasePerLevel { get; set; }
+    public decimal ValueIncreasePerLevel { get; set; }
 
     /// <summary>
     /// Calculate the value based on the level.
     /// </summary>
     /// <param name="level"></param>
     /// <returns></returns>
-    public double CalculateLinearValueForLevel(int level)
+    public decimal CalculateLinearValueForLevel(int level)
     {
         return InitialValue + (ValueIncreasePerLevel * (level - 1));
     }
@@ -34,9 +34,9 @@ public sealed class LevelProgressionLinear
     /// </summary>
     /// <param name="maxLevel"></param>
     /// <returns>The cumulative value at max level.</returns>
-    public double CalculateCumulativeValueForMaxLevel(int maxLevel)
+    public decimal CalculateCumulativeValueForMaxLevel(int maxLevel)
     {
-        var cumulativeValue = 0.0;
+        var cumulativeValue = 0M;
         for (int level = 1; level <= maxLevel; level++)
         {
             cumulativeValue += CalculateLinearValueForLevel(level);

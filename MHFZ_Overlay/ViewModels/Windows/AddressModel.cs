@@ -2118,6 +2118,7 @@ TreeScope.Children, condition);
     {
         get
         {
+            // TODO: Does this work with dure/road?
             if (this.TimeDefInt() < this.TimeInt() || this.TimeDefInt() <= 0)
             {
                 return string.Empty;

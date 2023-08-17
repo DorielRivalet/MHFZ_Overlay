@@ -18,21 +18,21 @@ public sealed class LevelProgressionExponential
     /// <summary>
     /// The initial value of the first level.
     /// </summary>
-    public int InitialValue { get; set; }
+    public decimal InitialValue { get; set; }
 
     /// <summary>
     /// The exponential increase of the value. This factor determines how much the value increases with each level. For example, if ValueIncreaseFactor is 1.5, then the value will increase by 50% with each level.
     /// </summary>
-    public double ValueIncreaseFactor { get; set; }
+    public decimal ValueIncreaseFactor { get; set; }
 
     /// <summary>
     /// Calculates the value for that particular level.
     /// </summary>
     /// <param name="level"></param>
     /// <returns>The calculated value.</returns>
-    public int CalculateExponentialValueForLevel(int level)
+    public decimal CalculateExponentialValueForLevel(int level)
     {
-        return (int)Math.Ceiling(InitialValue * Math.Pow(ValueIncreaseFactor, level - 1));
+        return (decimal)Math.Ceiling(InitialValue * (decimal)Math.Pow((double)ValueIncreaseFactor, level - 1));
     }
 
     /// <summary>
@@ -40,9 +40,9 @@ public sealed class LevelProgressionExponential
     /// </summary>
     /// <param name="maxLevel"></param>
     /// <returns>The cumulative value at max level.</returns>
-    public int CalculateCumulativeValueForMaxLevel(int maxLevel)
+    public decimal CalculateCumulativeValueForMaxLevel(int maxLevel)
     {
-        var cumulativeValue = 0;
+        var cumulativeValue = 0M;
         for (int level = 1; level <= maxLevel; level++)
         {
             cumulativeValue += CalculateExponentialValueForLevel(level);

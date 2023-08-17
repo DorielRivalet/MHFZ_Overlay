@@ -30,23 +30,23 @@ public static class BingoUpgradeCostProgressions
             },
             {
                 BingoUpgradeType.BaseScoreMultiplier,
-                new LevelProgressionExponential { InitialValue = 50, ValueIncreaseFactor = 1.8 }
+                new LevelProgressionExponential { InitialValue = 50, ValueIncreaseFactor = 1.8M }
             },
             {
                 BingoUpgradeType.WeaponMultiplier,
-                new LevelProgressionExponential { InitialValue = 500, ValueIncreaseFactor = 1.4 }
+                new LevelProgressionExponential { InitialValue = 500, ValueIncreaseFactor = 1.4M }
             },
             {
                 BingoUpgradeType.CartsScore,
-                new LevelProgressionExponential { InitialValue = 250, ValueIncreaseFactor = 1.6 }
+                new LevelProgressionExponential { InitialValue = 250, ValueIncreaseFactor = 1.6M }
             },
             {
                 BingoUpgradeType.BonusScore,
-                new LevelProgressionExponential { InitialValue = 1200, ValueIncreaseFactor = 1.2 }
+                new LevelProgressionExponential { InitialValue = 1200, ValueIncreaseFactor = 1.2M }
             },
             {
                 BingoUpgradeType.MiddleSquareMultiplier,
-                new LevelProgressionExponential { InitialValue = 2500, ValueIncreaseFactor = 1.1 }
+                new LevelProgressionExponential { InitialValue = 2500, ValueIncreaseFactor = 1.1M }
             },
             {
                 BingoUpgradeType.ExtraCarts,
@@ -54,23 +54,23 @@ public static class BingoUpgradeCostProgressions
             },
             {
                 BingoUpgradeType.StartingCostReduction,
-                new LevelProgressionExponential { InitialValue = 800, ValueIncreaseFactor = 1.5 }
+                new LevelProgressionExponential { InitialValue = 800, ValueIncreaseFactor = 1.5M }
             },
             {
                 BingoUpgradeType.BurningFreezingElzelionRerolls,
-                new LevelProgressionExponential { InitialValue = 500, ValueIncreaseFactor = 1.4 }
+                new LevelProgressionExponential { InitialValue = 500, ValueIncreaseFactor = 1.4M }
             },
             {
                 BingoUpgradeType.BurningFreezingElzelionRerollChance,
-                new LevelProgressionExponential { InitialValue = 500, ValueIncreaseFactor = 1.4 }
+                new LevelProgressionExponential { InitialValue = 500, ValueIncreaseFactor = 1.4M }
             },
             {
                 BingoUpgradeType.AchievementMultiplier,
-                new LevelProgressionExponential { InitialValue = 500, ValueIncreaseFactor = 1.4 }
+                new LevelProgressionExponential { InitialValue = 500, ValueIncreaseFactor = 1.4M }
             },
             {
                 BingoUpgradeType.SecretAchievementMultiplier,
-                new LevelProgressionExponential { InitialValue = 500, ValueIncreaseFactor = 1.4 }
+                new LevelProgressionExponential { InitialValue = 500, ValueIncreaseFactor = 1.4M }
             },
         });
 }

@@ -35,52 +35,52 @@ public sealed class BingoService
     // TODO database
 
     /// <inheritdoc cref="BingoUpgradeType.BaseScoreMultiplier"/>
-    public double BaseScoreMultiplier { get; set; }
+    public decimal BaseScoreMultiplier { get; set; }
 
     /// <inheritdoc cref="BingoUpgradeType.BaseScoreFlatIncrease"/>
-    public double BaseScoreFlatIncrease { get; set; }
+    public decimal BaseScoreFlatIncrease { get; set; }
 
     /// <inheritdoc cref="BingoUpgradeType.WeaponMultiplier"/>
-    public double WeaponMultiplier { get; set; }
+    public decimal WeaponMultiplier { get; set; }
 
     /// <inheritdoc cref="BingoUpgradeType.MiddleSquareMultiplier"/>
-    public double MiddleSquareMultiplier { get; set; }
+    public decimal MiddleSquareMultiplier { get; set; }
 
     /// <inheritdoc cref="BingoUpgradeType.BonusScore"/>
-    public double BonusScore { get; set; }
+    public decimal BonusScore { get; set; }
 
     /// <inheritdoc cref="BingoUpgradeType.CartsScore"/>
-    public double CartsScore { get; set; }
+    public decimal CartsScore { get; set; }
 
     /// <inheritdoc cref="BingoUpgradeType.AchievementMultiplier"/>
-    public double AchievementMultiplier { get; set; }
+    public decimal AchievementMultiplier { get; set; }
 
     /// <inheritdoc cref="BingoUpgradeType.SecretAchievementFlatIncrease"/>
-    public double SecretAchievementFlatIncrease { get; set; }
+    public decimal SecretAchievementFlatIncrease { get; set; }
 
     /// <inheritdoc cref="BingoUpgradeType.BingoCompletionsMultiplier"/>
-    public double BingoCompletionsMultiplier { get; set; }
+    public decimal BingoCompletionsMultiplier { get; set; }
 
     /// <inheritdoc cref="BingoUpgradeType.ZenithMultiplier"/>
-    public double ZenithMultiplier { get; set; }
+    public decimal ZenithMultiplier { get; set; }
 
     /// <inheritdoc cref="BingoUpgradeType.SolsticeMultiplier"/>
-    public double SolsticeMultiplier { get; set; }
+    public decimal SolsticeMultiplier { get; set; }
 
     /// <inheritdoc cref="BingoUpgradeType.MusouMultiplier"/>
-    public double MusouMultiplier { get; set; }
+    public decimal MusouMultiplier { get; set; }
 
     /// <inheritdoc cref="BingoUpgradeType.HorizontalLineCompletionMultiplier"/>
-    public double HorizontalLineCompletionMultiplier { get; set; }
+    public decimal HorizontalLineCompletionMultiplier { get; set; }
 
     /// <inheritdoc cref="BingoUpgradeType.VerticalLineCompletionMultiplier"/>
-    public double VerticalLineCompletionMultiplier { get; set; }
+    public decimal VerticalLineCompletionMultiplier { get; set; }
 
     /// <inheritdoc cref="BingoUpgradeType.DiagonalLineCompletionMultiplier"/>
-    public double DiagonalLineCompletionMultiplier { get; set; }
+    public decimal DiagonalLineCompletionMultiplier { get; set; }
 
     /// <inheritdoc cref="BingoUpgradeType.RealTimeMultiplier"/>
-    public double RealTimeMultiplier { get; set; }
+    public decimal RealTimeMultiplier { get; set; }
 
     /// <summary>
     /// Gets the player bingo points. Used for relegation. The data flow is View <-> ViewModel <-> Service <-> Database
@@ -124,8 +124,8 @@ public sealed class BingoService
         if (upgrade.Type == BingoUpgradeType.MiddleSquareRerollChance)
         {
             var costProgression = BingoUpgradeCostProgressions.LinearCostProgressions[upgrade.Type];
-            int nextLevel = upgrade.CurrentLevel + 1;
-            int nextCost = (int)costProgression.CalculateLinearValueForLevel(nextLevel);
+            var nextLevel = upgrade.CurrentLevel + 1;
+            var nextCost = costProgression.CalculateLinearValueForLevel(nextLevel);
             var playerBingoPoints = GetPlayerBingoPoints();
 
             if (playerBingoPoints < nextCost)
@@ -133,7 +133,7 @@ public sealed class BingoService
                 return false;
             }
 
-            playerBingoPoints -= nextCost;
+            playerBingoPoints -= (long)nextCost;
             DatabaseServiceInstance.SetPlayerBingoPoints(playerBingoPoints);
             upgrade.CurrentLevel++;
             ApplyUpgradeValue(upgrade);
@@ -142,8 +142,8 @@ public sealed class BingoService
         else
         {
             var costProgression = BingoUpgradeCostProgressions.ExponentialCostProgressions[upgrade.Type];
-            int nextLevel = upgrade.CurrentLevel + 1;
-            int nextCost = costProgression.CalculateExponentialValueForLevel(nextLevel);
+            var nextLevel = upgrade.CurrentLevel + 1;
+            var nextCost = costProgression.CalculateExponentialValueForLevel(nextLevel);
             var playerBingoPoints = GetPlayerBingoPoints();
 
             if (playerBingoPoints < nextCost)
@@ -151,7 +151,7 @@ public sealed class BingoService
                 return false;
             }
 
-            playerBingoPoints -= nextCost;
+            playerBingoPoints -= (long)nextCost;
             DatabaseServiceInstance.SetPlayerBingoPoints(playerBingoPoints);
             upgrade.CurrentLevel++;
             ApplyUpgradeValue(upgrade);
@@ -176,7 +176,7 @@ public sealed class BingoService
         var weaponBonusActive = false;
 
         var monsterType = BingoSquareMonsterType.Default;
-        var monsterTypeMultiplier = 1.0;
+        var monsterTypeMultiplier = 1M;
         switch (monsterType)
         {
             case BingoSquareMonsterType.Zenith:
@@ -191,7 +191,7 @@ public sealed class BingoService
         }
 
         var bingoLineType = BingoLineCompletionType.Unknown;
-        var bingoLineTypeMultiplier = 1.0;
+        var bingoLineTypeMultiplier = 1M;
         switch (bingoLineType)
         {
             case BingoLineCompletionType.Diagonal:
@@ -216,7 +216,7 @@ public sealed class BingoService
         var obtainedSecretAchievementsScore = SecretAchievementFlatIncrease * obtainedSecretAchievements;
 
         // TODO
-        var bingoCompletionsLogMultiplier = Math.Log2(1 + (bingoCompletions * BingoCompletionsMultiplier));
+        decimal bingoCompletionsLogMultiplier = (decimal)Math.Log2((double)(1 + (bingoCompletions * BingoCompletionsMultiplier)));
 
         // TODO
         var elapsedRealTimeInSeconds = 0;
@@ -224,7 +224,7 @@ public sealed class BingoService
         // TODO
         var realTimeScore = RealTimeMultiplier * extremeDifficultyMultiplier * 1;
         var maxRealTimeScore = 1000;
-        int maxRealTimeScoreSecondsLimit = (int)TimeSpan.FromMinutes(10 * extremeDifficultyMultiplier).TotalSeconds;
+        var maxRealTimeScoreSecondsLimit = Math.Ceiling(TimeSpan.FromMinutes(10 * extremeDifficultyMultiplier).TotalSeconds);
 
         if (elapsedRealTimeInSeconds <= maxRealTimeScoreSecondsLimit)
         {
@@ -244,19 +244,27 @@ public sealed class BingoService
         return (int)Math.Ceiling(finalScore);
     }
 
-    public float CalculateRealTimeScore(int elapsedRealTimeInSeconds, double realTimeScore, int maxRealTimeScore, int extremeDifficultyMultiplier)
+    public decimal CalculateRealTimeScore(int elapsedRealTimeInSeconds, decimal realTimeScore, int maxRealTimeScore, int extremeDifficultyMultiplier)
     {
-        var maxRealTimeScoreLastSecond = TimeSpan.FromMinutes(30 * extremeDifficultyMultiplier).TotalSeconds;
-        var fastDecreaseFromMaxScoreLastSecond = TimeSpan.FromMinutes(30 * extremeDifficultyMultiplier).TotalSeconds;
-        var slowDecreaseFromHalvedScoreLastSecond = TimeSpan.FromMinutes(30 * extremeDifficultyMultiplier).TotalSeconds;
-        var fastDecreaseFinalLastSecond = TimeSpan.FromMinutes(30 * extremeDifficultyMultiplier).TotalSeconds;
+        var maxRealTimeScoreMinuteLimit = 10 * extremeDifficultyMultiplier;
+        var maxRealTimeScoreLastSecond = TimeSpan.FromMinutes(maxRealTimeScoreMinuteLimit).TotalSeconds;
+        var fastDecreaseFromMaxScoreLastSecond = TimeSpan.FromMinutes(maxRealTimeScoreMinuteLimit * 1.2).TotalSeconds;
+        var slowDecreaseFromHalvedScoreLastSecond = TimeSpan.FromMinutes(maxRealTimeScoreMinuteLimit * 1.4).TotalSeconds;
+        var fastDecreaseFinalLastSecond = TimeSpan.FromMinutes(maxRealTimeScoreMinuteLimit * 1.6).TotalSeconds;
 
         // Initialize your Bezier curve with the control points
+        //BezierCurve curve = new BezierCurve(
+        //    new Vector2((float)maxRealTimeScoreLastSecond, maxRealTimeScore),
+        //    new Vector2((float)fastDecreaseFromMaxScoreLastSecond, (float)(maxRealTimeScore * 0.75)),
+        //    new Vector2((float)slowDecreaseFromHalvedScoreLastSecond, (float)(maxRealTimeScore * 0.50)),
+        //    new Vector2((float)fastDecreaseFinalLastSecond, (float)(maxRealTimeScore * 0.25))
+        //);
+
         BezierCurve curve = new BezierCurve(
-            new Vector2((float)maxRealTimeScoreLastSecond, maxRealTimeScore),
-            new Vector2(2000, (float)(maxRealTimeScore * 0.75)),
-            new Vector2(2500, (float)(maxRealTimeScore * 0.50)),
-            new Vector2(3000, (float)(maxRealTimeScore * 0.25))
+            new Vector2(2 * 60 * 60, 0),
+            new Vector2(2 * 60 * 60, 1000),
+            new Vector2(10 * 60, 0),
+            new Vector2(10 * 60, 1000)
         );
 
         // Calculate the elapsed time (in seconds)
@@ -266,13 +274,13 @@ public sealed class BingoService
         float totalTime = 10000;
 
         // Calculate the t parameter
-        float t = elapsedTime / totalTime;
+        float t = Math.Min(elapsedTime / totalTime, 1);
 
         // Calculate the score
         Vector2 scorePoint = curve.Evaluate(t);
         var score = scorePoint.Y;
 
-        return score;
+        return (decimal)score;
     }
 
     /// <summary>
@@ -280,24 +288,24 @@ public sealed class BingoService
     /// </summary>
     /// <param name="baseScore"></param>
     /// <returns>The bingo points obtained.</returns>
-    public double CalculateBingoSquarePoints(int baseScore, int carts, double monsterTypeMultiplier, bool isMiddleSquare, bool weaponBonusActive)
+    public decimal CalculateBingoSquarePoints(int baseScore, int carts, decimal monsterTypeMultiplier, bool isMiddleSquare, bool weaponBonusActive)
     {
         // bingo points for a square = ((((base score + base score flat increase) * base score multiplier) + total carts score) * weapon multiplier * middle square multiplier)
-        var cartsPenalty = 1.0;
+        var cartsPenalty = 1M;
         switch (carts)
         {
             case 1:
-                cartsPenalty = 2.0;
+                cartsPenalty = 2M;
                 break;
             case >= 2:
-                cartsPenalty = 3.0;
+                cartsPenalty = 3M;
                 break;
         }
         var totalCartsScore = CartsScore / cartsPenalty;
         
         var weaponMultiplier = weaponBonusActive ? WeaponMultiplier : 1;
         var middleSquareMultiplier = isMiddleSquare ? MiddleSquareMultiplier : 1;
-        double score =
+        var score =
             (
                 (
                     (
@@ -318,7 +326,7 @@ public sealed class BingoService
         if (BingoUpgradeValueProgressions.ValueProgressions.TryGetValue(upgrade.Type, out var valueProgression))
         {
             // Apply the upgrade's effects on the bingo game using the value progression
-            double valueIncrease = valueProgression.CalculateLinearValueForLevel(upgrade.CurrentLevel);
+            decimal valueIncrease = valueProgression.CalculateLinearValueForLevel(upgrade.CurrentLevel);
 
             switch (upgrade.Type)
             {

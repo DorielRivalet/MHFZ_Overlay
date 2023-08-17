@@ -18,7 +18,7 @@ public static class BingoUpgradeValueProgressions
         {
             {
                 BingoUpgradeType.BaseScoreMultiplier,
-                new LevelProgressionLinear { InitialValue = 1.1, ValueIncreasePerLevel = 0.1 }
+                new LevelProgressionLinear { InitialValue = 1.1M, ValueIncreasePerLevel = 0.1M }
             },
             {
                 BingoUpgradeType.BaseScoreFlatIncrease,
@@ -34,11 +34,11 @@ public static class BingoUpgradeValueProgressions
             },
             {
                 BingoUpgradeType.MiddleSquareMultiplier,
-                new LevelProgressionLinear { InitialValue = 1.05, ValueIncreasePerLevel = 0.05 }
+                new LevelProgressionLinear { InitialValue = 1.05M, ValueIncreasePerLevel = 0.05M }
             },
             {
                 BingoUpgradeType.WeaponMultiplier,
-                new LevelProgressionLinear { InitialValue = 1.02, ValueIncreasePerLevel = 0.02 }
+                new LevelProgressionLinear { InitialValue = 1.02M, ValueIncreasePerLevel = 0.02M }
             },
             {
                 BingoUpgradeType.ExtraCarts,
@@ -46,11 +46,11 @@ public static class BingoUpgradeValueProgressions
             },
             {
                 BingoUpgradeType.StartingCostReduction,
-                new LevelProgressionLinear { InitialValue = 0.05, ValueIncreasePerLevel = 0.05 }
+                new LevelProgressionLinear { InitialValue = 0.05M, ValueIncreasePerLevel = 0.05M }
             },
             {
                 BingoUpgradeType.MiddleSquareRerollChance,
-                new LevelProgressionLinear { InitialValue = 0.0001, ValueIncreasePerLevel = 0.0001 }
+                new LevelProgressionLinear { InitialValue = 0.0001M, ValueIncreasePerLevel = 0.0001M }
             },
             {
                 BingoUpgradeType.BurningFreezingElzelionRerolls,
@@ -58,11 +58,11 @@ public static class BingoUpgradeValueProgressions
             },
             {
                 BingoUpgradeType.BurningFreezingElzelionRerollChance,
-                new LevelProgressionLinear { InitialValue = 0.01, ValueIncreasePerLevel = 0.01 }
+                new LevelProgressionLinear { InitialValue = 0.01M, ValueIncreasePerLevel = 0.01M }
             },
             {
                 BingoUpgradeType.AchievementMultiplier,
-                new LevelProgressionLinear { InitialValue = 0.001, ValueIncreasePerLevel = 0.001 }
+                new LevelProgressionLinear { InitialValue = 0.001M, ValueIncreasePerLevel = 0.001M }
             },
             {
                 BingoUpgradeType.SecretAchievementMultiplier,
@@ -70,7 +70,7 @@ public static class BingoUpgradeValueProgressions
             },
             {
                 BingoUpgradeType.BingoCompletionsMultiplier,
-                new LevelProgressionLinear { InitialValue = 1.1, ValueIncreasePerLevel = 0.1 }
+                new LevelProgressionLinear { InitialValue = 1.1M, ValueIncreasePerLevel = 0.1M }
             },
         });
 }

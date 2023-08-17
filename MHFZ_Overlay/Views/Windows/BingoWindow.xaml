@@ -78,25 +78,82 @@
                         <ScrollViewer CanContentScroll="True" IsDeferredScrollingEnabled="True" VerticalScrollBarVisibility="Visible" Grid.Row="0" HorizontalScrollBarVisibility="Auto">
                             <Grid Height="Auto" Width="Auto" Background="Transparent" Style="{StaticResource ConfigSingleGrid}" Grid.Row="0" Grid.Column="0" Margin="20" >
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="40"/>
                                     <RowDefinition Height="*"/>
                                 </Grid.RowDefinitions>
-                                <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Left">
-                                    <ui:Image Source="../../Assets/Icons/achievement/stamp.jpg"/>
-                                    <customcontrols:OutlinedTextBlock d:Text="Bingo Points: 9999999" FontSize="18" FontWeight="SemiBold" Margin="10,0,0,0" Fill="{StaticResource Text}" Stroke="{StaticResource Crust}" Text="{Binding PlayerBingoPointsText}" VerticalAlignment="Center"/>
-                                    <ComboBox ItemsSource="{Binding Difficulties}" SelectedItem="{Binding SelectedDifficulty}" ToolTip="Choose Bingo difficulty" Margin="10,0,0,0"/>
-                                    <ui:Button d:Content="Start"  Content="{Binding BingoButtonText}" Margin="10,0,0,0" Foreground="{StaticResource Crust}" Background="{StaticResource Green}" Command="{Binding StartBingoCommand}"/>
-                                    <ui:Button Margin="10,0,0,0" d:Content="Reroll weapon bonuses (2 Bingo Points)"  Content="{Binding WeaponRerollButtonContent}" Foreground="{StaticResource Crust}" Background="{StaticResource Green}" Command="{Binding WeaponRerollCommand}"/>
-                                    <ComboBox Margin="10,0,0,0" ItemsSource="{Binding BingoLineOptions}" SelectedItem="{Binding SelectedBingoLineOption}" ToolTip="Choose bingo line options (will be marked as blue)"/>
-                                </StackPanel>
-                                <Grid Grid.RowSpan="3" Grid.Row="1" Margin="0,10,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="360"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="40"/>
+                                        <RowDefinition Height="40"/>
+                                        <RowDefinition Height="40"/>
+                                        <RowDefinition Height="40"/>
+                                        <RowDefinition Height="40"/>
+                                        <RowDefinition Height="40"/>
+                                        <RowDefinition Height="40"/>
+                                        <RowDefinition Height="40"/>
+                                        <RowDefinition Height="40"/>
+                                        <RowDefinition Height="40"/>
+                                        <RowDefinition Height="40"/>
+                                        <RowDefinition Height="40"/>
+                                        <RowDefinition Height="40"/>
+                                        <RowDefinition Height="40"/>
+                                    </Grid.RowDefinitions>
+                                    <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2">
+                                        <ui:Image Source="../../Assets/Icons/achievement/stamp.jpg" Width="48"/>
+                                        <customcontrols:OutlinedTextBlock ToolTip="Bingo Points" d:Text="9999999" FontSize="18" FontWeight="SemiBold" Fill="{StaticResource Text}" Stroke="{StaticResource Crust}" Text="{Binding PlayerBingoPointsText}" VerticalAlignment="Center"/>
+                                    </StackPanel>
+
+                                    <ui:TextBlock Grid.ColumnSpan="2" Grid.Row="1" Text="00:00.000" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24"/>
+
+                                    <ui:Button Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" d:Content="Start"  Content="{Binding BingoButtonText}" Foreground="{StaticResource Crust}" Background="{StaticResource Green}" Command="{Binding StartBingoCommand}"/>
+
+                                    <ui:TextBlock Grid.Row="2" Text="Difficulty" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                    <ComboBox Grid.Row="2" Grid.Column="1" ItemsSource="{Binding Difficulties}" SelectedItem="{Binding SelectedDifficulty}" ToolTip="Choose Bingo difficulty" />
+
+                                    <ui:TextBlock Grid.Row="3" Text="Blue Square Option" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                    <ComboBox Grid.Row="3" Grid.Column="1" ItemsSource="{Binding BingoLineOptions}" SelectedItem="{Binding SelectedBingoLineOption}" ToolTip="Choose bingo line options (will be marked as blue)"/>
+
+                                    <ui:TextBlock Grid.Row="4" Text="Zenith Gauntlet Boost" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                    <Grid Grid.Column="1" Grid.Row="4">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel Orientation="Horizontal">
+                                            
+                                        </StackPanel>
+                                        <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="4" Grid.Column="1"/>
+                                    </Grid>
+
+                                    <ui:TextBlock Grid.Row="5" Text="Solstice Gauntlet Boost" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                    <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="5" Grid.Column="1"/>
+
+                                    <ui:TextBlock Grid.Row="6" Text="Musou Gauntlet Boost" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                    <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="6" Grid.Column="1"/>
+
+                                    <ui:TextBlock Grid.Row="7" Text="Musou Elzelion Boost" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                    <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="7" Grid.Column="1"/>
+
+                                    
+                                    <ui:Button Grid.Row="9" Grid.ColumnSpan="2" d:Content="Reroll weapon bonuses (2 Bingo Points)"  Content="{Binding WeaponRerollButtonContent}" Foreground="{StaticResource Crust}" Background="{StaticResource Green}" Command="{Binding WeaponRerollCommand}"/>
+
+                                </Grid>
+                                <Grid Grid.Column="1" Margin="10,0,0,0">
+                                    <ui:InfoBar IsClosable="False" IsOpen="True" Severity="Informational" Title="What is Bingo?" Message="Bingo is a challenge where you are presented with a bingo board that you have to complete.&#x0a;In order to complete a square, you have to hunt the monster shown in that cell in-game.&#x0a;&#x0a;You can hover over the monster icon in order to view the quest names.&#x0a;If you complete a square with the weapon icon shown, you gain extra points.&#x0a;The numbers at the bottom is the maximum possible score for that cell.&#x0a;&#x0a;The game ends when you complete the squares in a horizontal, vertical or diagonal line.&#x0a;You can complete as many cells as possible, as long as the last square is the first to complete one or multiple lines.&#x0a;At game completion, you are awarded bingo points, which you can use to buy upgrades in the bingo shop."/>
                                     <ItemsControl x:Name="BingoItemsControl" ItemsSource="{Binding FlatCells}" VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Standard">
                                         <ItemsControl.ItemsPanel>
                                             <ItemsPanelTemplate>
                                                 <!-- Update the Rows and Columns properties when the size of the board changes -->
                                                 <UniformGrid Rows="{Binding DataContext.BoardSize,
-                               Source={x:Reference BingoItemsControl}}" Columns="{Binding DataContext.BoardSize,
-                               Source={x:Reference BingoItemsControl}}"/>
+                               ElementName=BingoItemsControl}" Columns="{Binding DataContext.BoardSize,
+                               ElementName=BingoItemsControl}"/>
                                             </ItemsPanelTemplate>
                                         </ItemsControl.ItemsPanel>
                                         <ItemsControl.ItemTemplate>
@@ -186,14 +243,53 @@
                     <Grid Height="Auto"  Width="Auto">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="1*"/>
-                            <RowDefinition Height="100"/>
+                            <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions >
                             <ColumnDefinition Width="1*"/>
                         </Grid.ColumnDefinitions>
                         <ScrollViewer CanContentScroll="True" IsDeferredScrollingEnabled="True" VerticalScrollBarVisibility="Visible" Grid.Row="0">
                             <Grid Height="Auto" Width="Auto" Background="Transparent" Style="{StaticResource ConfigSingleGrid}" Grid.Row="0" Grid.Column="0" Margin="20" >
-
+                                <StackPanel Orientation="Horizontal">
+                                    <Grid Width="200">
+                                        <StackPanel Orientation="Vertical">
+                                            <ui:Button Content="Refresh Points" Command="{Binding RefreshPointsCommand}"/>
+                                            <StackPanel Orientation="Horizontal">
+                                                <ui:TextBlock Text="X0" VerticalAlignment="Center"/>
+                                                <ui:TextBox MinWidth="100" PlaceholderText="X0" x:Name="X0" Text="{Binding X0}"/>
+                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal">
+                                                <ui:TextBlock Text="Y0" VerticalAlignment="Center"/>
+                                                <ui:TextBox MinWidth="100" PlaceholderText="Y0" x:Name="Y0" Text="{Binding Y0}"/>
+                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal">
+                                                <ui:TextBlock Text="X1" VerticalAlignment="Center"/>
+                                                <ui:TextBox MinWidth="100" PlaceholderText="X1" x:Name="X1" Text="{Binding X1}"/>
+                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal">
+                                                <ui:TextBlock Text="Y1" VerticalAlignment="Center"/>
+                                                <ui:TextBox MinWidth="100" PlaceholderText="Y1" x:Name="Y1" Text="{Binding Y1}"/>
+                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal">
+                                                <ui:TextBlock Text="X2" VerticalAlignment="Center"/>
+                                                <ui:TextBox MinWidth="100" PlaceholderText="X2" x:Name="X2" Text="{Binding X2}"/>
+                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal">
+                                                <ui:TextBlock Text="X0" VerticalAlignment="Center"/>
+                                                <ui:TextBox MinWidth="100" PlaceholderText="Y2" x:Name="Y2" Text="{Binding Y2}"/>
+                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal">
+                                                <ui:TextBlock Text="X3" VerticalAlignment="Center"/>
+                                                <ui:TextBox MinWidth="100" PlaceholderText="X3" x:Name="X3" Text="{Binding X3}"/>
+                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal">
+                                                <ui:TextBlock Text="Y3" VerticalAlignment="Center"/>
+                                                <ui:TextBox MinWidth="100" PlaceholderText="Y3" x:Name="Y3" Text="{Binding Y3}"/>
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </Grid>
+                                    <lvc:CartesianChart x:Name="CartesianChartLineSeries" Width="720" Height="Auto" Series="{Binding Series}"/>
+                                </StackPanel>
                             </Grid>
                         </ScrollViewer>
                     </Grid>

@@ -18,6 +18,9 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using EZlion.Mapper;
+using LiveChartsCore.SkiaSharpView.Painting;
+using LiveChartsCore.SkiaSharpView;
+using LiveChartsCore;
 using MHFZ_Overlay.Models;
 using MHFZ_Overlay.Models.Collections;
 using MHFZ_Overlay.Models.Constant;
@@ -25,17 +28,64 @@ using MHFZ_Overlay.Models.Messengers;
 using MHFZ_Overlay.Models.Structures;
 using MHFZ_Overlay.Services;
 using MHFZ_Overlay.Views.Windows;
+using SkiaSharp;
 using Wpf.Ui.Common;
 using Wpf.Ui.Controls;
 using MessageBox = System.Windows.MessageBox;
+using LiveChartsCore.SkiaSharpView.VisualElements;
+using System.Numerics;
+using LiveChartsCore.Defaults;
+using LiveChartsCore.Kernel.Sketches;
+using System.Windows.Markup;
 
 public partial class BingoWindowViewModel : ObservableRecipient
 {
+    private ObservableCollection<ObservableValue> _observableValues { get; set; }
+
     public BingoWindowViewModel(SnackbarPresenter snackbarPresenter)
     {
         WeakReferenceMessenger.Default.Register<QuestIDMessage>(this, OnReceivedQuestID);
         WeakReferenceMessenger.Default.Register<RunIDMessage>(this, OnReceivedRunID);
         BingoWindowSnackbarPresenter = snackbarPresenter;
+        SetGraphs();
+    }
+
+    private void SetGraphs()
+    {
+        // Use ObservableCollections to let the chart listen for changes (or any INotifyCollectionChanged). 
+        _observableValues = new ObservableCollection<ObservableValue>
+        {
+            // Use the ObservableValue or ObservablePoint types to let the chart listen for property changes 
+            // or use any INotifyPropertyChanged implementation 
+            new ObservableValue(2),
+            new(5), // the ObservableValue type is redundant and inferred by the compiler (C# 9 and above)
+            new(4),
+            new(5),
+            new(2),
+            new(6),
+            new(6),
+            new(6),
+            new(4),
+            new(2),
+            new(3),
+            new(4),
+            new(3)
+        };
+
+        Series = new ObservableCollection<ISeries>
+        {
+            new LineSeries<ObservableValue>
+            {
+                Values = _observableValues,
+                Fill = null
+            }
+        };
+
+        // in the following sample notice that the type int does not implement INotifyPropertyChanged
+        // and our Series.Values property is of type List<T>
+        // List<T> does not implement INotifyCollectionChanged
+        // this means the following series is not listening for changes.
+        // Series.Add(new ColumnSeries<int> { Values = new List<int> { 2, 4, 6, 1, 7, -2 } }); 
     }
 
     [ObservableProperty]
@@ -65,6 +115,8 @@ public partial class BingoWindowViewModel : ObservableRecipient
 
     [ObservableProperty]
     private BingoCell[,]? cells = new BingoCell[5, 5];
+
+    public ObservableCollection<ISeries> Series { get; set; }
 
     // TODO
     private void UpdateBingoBoard(int questID)
@@ -192,6 +244,30 @@ public partial class BingoWindowViewModel : ObservableRecipient
     [ObservableProperty]
     private int boardSize;
 
+    [ObservableProperty]
+    private float x0;
+
+    [ObservableProperty]
+    private float y0;
+
+    [ObservableProperty]
+    private float x1;
+
+    [ObservableProperty]
+    private float y1;
+
+    [ObservableProperty]
+    private float x2;
+
+    [ObservableProperty]
+    private float y2;
+
+    [ObservableProperty]
+    private float x3;
+
+    [ObservableProperty]
+    private float y3;
+
     [RelayCommand]
     private void StartBingo()
     {
@@ -214,6 +290,83 @@ public partial class BingoWindowViewModel : ObservableRecipient
         {
             StopBingo();
         }
+    }
+
+    public ObservableCollection<Vector2> CurvePoints = new ObservableCollection<Vector2>();
+
+    public ISeries[] Series2 { get; set; } =
+    {
+        new LineSeries<double>
+        {
+            Values = new double[] { 2, 1, 3, 5, 3, 4, 6 },
+        }
+    };
+
+
+    [RelayCommand]
+    private void RefreshPoints()
+    {
+        BezierCurve curve = new BezierCurve(
+                    new Vector2(X0, Y0),
+                    new Vector2(X1, Y1),
+                    new Vector2(X2, Y2),
+                    new Vector2(X3, Y3)
+                );
+
+        BezierCurve curve2 = new BezierCurve(
+            new Vector2(2 * 60 * 60, 0),
+            new Vector2(2 * 60 * 60, 1000),
+            new Vector2(10 * 60, 0),
+            new Vector2(10 * 60, 1000)
+        );
+
+        for (float t = 0; t <= 1; t += 0.01f)
+        {
+            CurvePoints.Add(curve2.Evaluate(t));
+        }
+
+        ObservableCollection<ISeries> series = new();
+        ObservableCollection<ObservablePoint> collection = new();
+
+        foreach (var entry in CurvePoints)
+        {
+            collection.Add(new ObservablePoint(entry.X, entry.Y));
+        }
+
+        series.Add(new LineSeries<ObservablePoint>
+        {
+            Values = collection,
+            LineSmoothness = .5,
+            GeometrySize = 0,
+            Stroke = new SolidColorPaint(new SKColor(0xff,0xff,0xff)) { StrokeThickness = 2 },
+            Fill = new SolidColorPaint(new SKColor(0x74, 0xc7, 0xec)) { StrokeThickness = 2 },
+        });
+
+        Series = series;
+
+        //Series =
+        //{
+        //    new LineSeries
+        //    {
+        //        Values = new ChartValues<ObservablePoint>(CurvePoints.Select(p => new ObservablePoint(p.X, p.Y))),
+        //        Fill = null
+        //    }
+        //};
+
+        //// Calculate the elapsed time (in seconds)
+        //float elapsedTime = 3000;
+
+        //// Calculate the total time (in seconds)
+        //float totalTime = 10000;
+
+        //// Calculate the t parameter
+        //float t = Math.Min(elapsedTime / totalTime, 1);
+
+        //// Calculate the score
+        //Vector2 scorePoint = curve.Evaluate(t);
+        //var score = scorePoint.Y;
+
+        //return score;
     }
 
     private void GenerateBoard(Difficulty difficulty)

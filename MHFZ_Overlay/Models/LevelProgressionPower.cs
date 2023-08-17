@@ -18,21 +18,21 @@ public sealed class LevelProgressionPower
     /// <summary>
     /// The initial value of the first level.
     /// </summary>
-    public int InitialValue { get; set; }
+    public decimal InitialValue { get; set; }
 
     /// <summary>
     /// The exponent that determines the rate of change. This factor determines how the value changes with each level. For example, if Exponent is 2, then the value will increase squared with each level.
     /// </summary>
-    public double Exponent { get; set; }
+    public decimal Exponent { get; set; }
 
     /// <summary>
     /// Calculate the value based on the level.
     /// </summary>
     /// <param name="level"></param>
     /// <returns>The calculated value.</returns>
-    public int CalculatePowerValueForLevel(int level)
+    public decimal CalculatePowerValueForLevel(int level)
     {
-        return (int)Math.Ceiling(InitialValue * Math.Pow(level, Exponent));
+        return (decimal)Math.Ceiling(InitialValue * (decimal)Math.Pow(level, (double)Exponent));
     }
 
     /// <summary>
@@ -40,9 +40,9 @@ public sealed class LevelProgressionPower
     /// </summary>
     /// <param name="maxLevel"></param>
     /// <returns>The cumulative value at max level.</returns>
-    public int CalculateCumulativeValueForMaxLevel(int maxLevel)
+    public decimal CalculateCumulativeValueForMaxLevel(int maxLevel)
     {
-        var cumulativeValue = 0;
+        var cumulativeValue = 0M;
         for (int level = 1; level <= maxLevel; level++)
         {
             cumulativeValue += CalculatePowerValueForLevel(level);
