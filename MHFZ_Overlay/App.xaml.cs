@@ -11,9 +11,11 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Reflection;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Interop;
+using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Threading;
 using MHFZ_Overlay.Models.Constant;
@@ -93,6 +95,19 @@ public partial class App : Application
 
         // Start the stopwatch
         stopwatch.Start();
+
+        CultureInfo culture = CultureInfo.InvariantCulture;
+
+        Thread.CurrentThread.CurrentCulture = culture;
+        Thread.CurrentThread.CurrentUICulture = culture;
+
+        CultureInfo.DefaultThreadCurrentCulture = culture;
+        CultureInfo.DefaultThreadCurrentUICulture = culture;
+
+        FrameworkElement.LanguageProperty.OverrideMetadata(
+            typeof(FrameworkElement),
+            new FrameworkPropertyMetadata(XmlLanguage.GetLanguage(CultureInfo.CurrentCulture.Name)));
+
         var loggingRules = NLog.LogManager.Configuration.LoggingRules;
         var s = (Settings)Current.TryFindResource("Settings");
         loggingRules[0].SetLoggingLevels(LoggingService.GetLogLevel(s.LogLevel), NLog.LogLevel.Fatal);
