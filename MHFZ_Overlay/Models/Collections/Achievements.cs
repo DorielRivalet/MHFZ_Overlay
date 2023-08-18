@@ -2615,7 +2615,7 @@ public static class Achievements
             199, new Achievement()
             {
             CompletionDate = DateTime.UnixEpoch,
-            Title = "A lonely and starving wolf",
+            Title = "A Lonely and Starving Wolf",
             Description = string.Empty,
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_blue2.jpg",
@@ -2771,7 +2771,7 @@ public static class Achievements
             211, new Achievement()
             {
             CompletionDate = DateTime.UnixEpoch,
-            Title = "Oh noes! My sunglasses!",
+            Title = "Oh Noes! My Sunglasses!",
             Description = string.Empty,
             Rank = AchievementRank.Bronze,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_red2.jpg",
@@ -2957,7 +2957,7 @@ public static class Achievements
             Description = string.Empty,
             Rank = AchievementRank.Bronze,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/unknown_red.jpg",
-            Objective = "Click a Fumo.",
+            Objective = "Click a Fumo in the configuration window.",
             IsSecret = true,
             Hint = "Fumo.",
             }
@@ -4552,7 +4552,7 @@ public static class Achievements
             348, new Achievement()
             {
             CompletionDate = DateTime.UnixEpoch,
-            Title = "20% more damage for 99% more effort",
+            Title = "20% More Damage for 99% More Effort",
             Description = string.Empty,
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/berserk_raviente.jpg",
@@ -4660,7 +4660,7 @@ public static class Achievements
             Description = string.Empty,
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/stamp.jpg",
-            Objective = "Obtain 1000 Bingo points or more in 1 bingo card completion.",
+            Objective = "Complete a bingo run without fainting and with 4 lines being crossed at once.",
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -4777,7 +4777,7 @@ public static class Achievements
             Description = string.Empty,
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/zenny.jpg",
-            Objective = "Generate 10000 gacha pulls.",
+            Objective = "Generate 10,000 gacha pulls.",
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -4903,7 +4903,7 @@ public static class Achievements
             375, new Achievement()
             {
             CompletionDate = DateTime.UnixEpoch,
-            Title = "In search of a new frontier",
+            Title = "In Search of a New Frontier",
             Description = string.Empty,
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/stamp.jpg",
@@ -5072,7 +5072,7 @@ public static class Achievements
             388, new Achievement()
             {
             CompletionDate = DateTime.UnixEpoch,
-            Title = "One star to rule them all",
+            Title = "One Star to Rule Them All",
             Description = string.Empty,
             Rank = AchievementRank.Gold,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/stamp.jpg",
@@ -5085,7 +5085,7 @@ public static class Achievements
             389, new Achievement()
             {
             CompletionDate = DateTime.UnixEpoch,
-            Title = "Two stars make a supernova",
+            Title = "Two Stars Make a Supernova",
             Description = string.Empty,
             Rank = AchievementRank.Gold,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/stamp.jpg",
@@ -5124,7 +5124,7 @@ public static class Achievements
             392, new Achievement()
             {
             CompletionDate = DateTime.UnixEpoch,
-            Title = "A 5-Star collection",
+            Title = "A 5-Star Collection",
             Description = string.Empty,
             Rank = AchievementRank.Gold,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/stamp.jpg",
@@ -5202,7 +5202,7 @@ public static class Achievements
             398, new Achievement()
             {
             CompletionDate = DateTime.UnixEpoch,
-            Title = "Gacha up to eleven",
+            Title = "Gacha Up To Eleven",
             Description = string.Empty,
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/stamp.jpg",
@@ -5344,7 +5344,7 @@ Just now, reduced to ashes",
             408, new Achievement()
             {
             CompletionDate = DateTime.UnixEpoch,
-            Title = "Challenge Acepted",
+            Title = "Challenge Accepted",
             Description = string.Empty,
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/stamp.jpg",
@@ -5357,7 +5357,7 @@ Just now, reduced to ashes",
             409, new Achievement()
             {
             CompletionDate = DateTime.UnixEpoch,
-            Title = "No cheats allowed!",
+            Title = "No Cheats Allowed!",
             Description = string.Empty,
             Rank = AchievementRank.Bronze,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/unknown_red.jpg",
@@ -5409,6 +5409,45 @@ That's why we came here, right? We wouldn't find this place if we err, sucked at
 Having read the inspiring notes, you decide to equip the Black Savage Charaxt and embark on a quest.
 
 During the travel to your destination, the top of the Great Forest, you notice that the weapon seems to have been made before Zeniths were known.",
+            }
+        },
+        {
+            411, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "A Very Stylish Hunter",
+            Description = string.Empty,
+            Rank = AchievementRank.Bronze,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/hunter.jpg",
+            Objective = "Complete a quest with Stylish Assault Up and Stylish Up.",
+            IsSecret = false,
+            Hint = string.Empty,
+            }
+        },
+        {
+            412, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "The Rarest Guild Card",
+            Description = string.Empty,
+            Rank = AchievementRank.Bronze,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/unknown_red.jpg",
+            Objective = "Hunt 100 Ashen Lao-Shan Lung.",
+            IsSecret = false,
+            Hint = string.Empty,
+            }
+        },
+        {
+            413, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Apparently Immortal Monsters",
+            Description = string.Empty,
+            Rank = AchievementRank.Bronze,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/unknown_red.jpg",
+            Objective = "Hunt 1 Ashen Lao-Shan Lung, HR3 Yama Tsukami and HR3 Shen Gaoren.",
+            IsSecret = true,
+            Hint = "These monsters only die when they want to.",
             }
         },
     });
