@@ -506,7 +506,13 @@ public static class BingoMonsters
                         Name = "Zenith★2 Harudomerugu",
                         QuestIDs = new List<int> {  55930,  },
                         BaseScore = 12,
-                    },    
+                    },
+                new BingoMonster {
+                        Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/duremudira.png",
+                        Name = "1st District Duremudira",
+                        QuestIDs = new List<int> {  Numbers.QuestIDFirstDistrictDuremudira,  },
+                        BaseScore = 15,
+                    },
             }
         },
         {
