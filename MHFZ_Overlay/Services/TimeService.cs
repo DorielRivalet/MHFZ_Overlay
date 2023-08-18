@@ -12,7 +12,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MHFZ_Overlay.Models.Constant;
+using MHFZ_Overlay.Models.Structures;
 using NLog;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
 
 /// <summary>
 /// A service for doing time and date manipulation. Consult the benchmarks project for the performance.
@@ -31,6 +33,34 @@ public static class TimeService
         return TimeSpan.FromSeconds((double)frames / (double)Numbers.FramesPerSecond);
     }
 
+    public static string GetTimeLeftPercent(decimal timeDefInt, decimal timeInt, bool isDure)
+    {
+        if (timeDefInt < timeInt)
+        {
+            return " (?)";
+        }
+        else
+        {
+            return string.Format(CultureInfo.InvariantCulture, " ({0:0}%)", timeInt / timeDefInt * 100.0M);
+        }
+    }
+
+    public static decimal GetTimeValue(TimerMode mode, decimal timeDefInt, decimal timeInt)
+    {
+        decimal time;
+
+        if (mode == TimerMode.Elapsed)
+        {
+            time = timeDefInt - timeInt;
+        }
+        else // default to Time Left mode
+        {
+            time = timeInt;
+        }
+
+        return time;
+    }
+
     /// <summary>
     /// Test the timer methods for equality up until the specified max time in frames.
     /// </summary>
@@ -39,50 +69,58 @@ public static class TimeService
     public static string TestTimerMethods(decimal timeDefInt)
     {
         decimal timeInt = timeDefInt;
-        var maxTime = timeDefInt.ToString(TimeFormats.HoursMinutesSecondsMilliseconds, CultureInfo.InvariantCulture);
-        for (decimal i = timeDefInt; i > 0M; i--)
-        {
-            var timer1Result = StringBuilderTimer(timeInt, timeDefInt);
-            var timer2Result = TimeSpanTimer(timeInt, timeDefInt);
-            var fastestResult = FastestTimer(timeDefInt - timeInt);
+        var maxTime = TimeSpan.FromSeconds((double)(timeDefInt / Numbers.FramesPerSecond));
+        string timer1Result = string.Empty;
+        string timer2Result = string.Empty;
+        string timer3Result = string.Empty;
 
-            if (timer1Result != timer2Result || fastestResult != timer1Result || fastestResult != timer2Result)
+        for (decimal i = timeInt; i >= 0M; i--)
+        {
+            timer1Result = StringBuilderTimer(timeInt, timeDefInt, true, GetTimeLeftPercent(timeDefInt, timeInt, true), TimerMode.Elapsed);
+            timer2Result = TimeSpanTimer(timeInt, timeDefInt, true, GetTimeLeftPercent(timeDefInt, timeInt, true), TimerMode.Elapsed);
+            timer3Result = SimpleTimer(timeInt, timeDefInt, true, GetTimeLeftPercent(timeDefInt, timeInt, true), TimerMode.Elapsed);
+
+            if (timer1Result != timer2Result || timer3Result != timer1Result || timer3Result != timer2Result)
             {
-                return $"timeDefInt: {timeDefInt} ({maxTime}) timeInt: {timeInt} | StringBuilder: {timer1Result} | TimeSpan: {timer2Result}";
+                return @$"timeDefInt: {timeDefInt} ({maxTime}) | timeInt: {timeInt}
+StringBuilder: {timer1Result}
+TimeSpan: {timer2Result}
+Simple: {timer3Result}";
             }
 
             timeInt--;
         }
 
-        return $"No inequalities found.";
+        return @$"No inequalities found.
+
+timeDefInt: {timeDefInt} ({maxTime}) | timeInt: {timeInt}
+StringBuilder: {timer1Result}
+TimeSpan: {timer2Result}
+Simple: {timer3Result}";
     }
 
-    public static string FastestTimer(decimal time)
+    public static string SimpleTimer(decimal timeInt, decimal timeDefInt, bool timeLeftPercentShown = false, string timeLeftPercentNumber = "", TimerMode timerMode = TimerMode.Elapsed)
     {
-        decimal frameValue = time; // Example frame value
-
-        decimal milliseconds = frameValue / 30 * 1000;
-        decimal minutes = Math.Floor(milliseconds / 60000);
+        decimal time = timerMode == TimerMode.Elapsed || timeInt >= timeDefInt ? time = timeDefInt - timeInt : time = timeInt;
+        decimal milliseconds = time / 30 * 1000;
+        decimal totalMinutes = Math.Floor(milliseconds / 60000);
+        decimal minutes = totalMinutes >= 60 ? totalMinutes : Math.Floor(milliseconds / 60000);
         decimal seconds = Math.Floor((milliseconds - (minutes * 60000)) / 1000);
         decimal remainingMilliseconds = milliseconds - (minutes * 60000) - (seconds * 1000);
+        var timeLeftPercent = timeLeftPercentShown ? timeLeftPercentNumber : string.Empty;
 
-        return $"{minutes:00}:{seconds:00}.{remainingMilliseconds:000}";
+        return $"{minutes:00}:{seconds:00}.{remainingMilliseconds:000}" + timeLeftPercent;
     }
 
-    public static string StringBuilderTimer(decimal timeInt, decimal timeDefInt, bool timeLeftPercentShown = false, string timeLeftPercentNumber = "")
+    public static string StringBuilderTimer(decimal timeInt, decimal timeDefInt, bool timeLeftPercentShown = false, string timeLeftPercentNumber = "", TimerMode timerMode = TimerMode.Elapsed)
     {
-        if (timeInt <= 0M)
-        {
-            return "00:00.000";
-        }
-
-        decimal time = timeDefInt - timeInt;
+        decimal time = timerMode == TimerMode.Elapsed || timeInt >= timeDefInt ? time = timeDefInt - timeInt : time = timeInt;
         decimal framesPerSecond = Numbers.FramesPerSecond;
         decimal totalSeconds = time / framesPerSecond;
-        decimal minutes = Math.Floor(totalSeconds / 60);
+        decimal totalMinutes = Math.Floor(totalSeconds / 60);
+        decimal minutes = totalMinutes >= 60 ? totalMinutes : Math.Floor(totalSeconds / 60);
         decimal seconds = Math.Floor(totalSeconds % 60);
         decimal milliseconds = Math.Round((time % framesPerSecond) * (1000M / framesPerSecond));
-
         var timeLeftPercent = timeLeftPercentShown ? timeLeftPercentNumber : string.Empty;
 
         StringBuilder sb = new StringBuilder();
@@ -92,25 +130,18 @@ public static class TimeService
         return sb.ToString();
     }
 
-    public static string TimeSpanTimer(decimal timeInt, decimal timeDefInt)
+    public static string TimeSpanTimer(decimal timeInt, decimal timeDefInt, bool timeLeftPercentShown = false, string timeLeftPercentNumber = "", TimerMode timerMode = TimerMode.Elapsed)
     {
-        if (timeInt <= 0M)
-        {
-            return "00:00.000";
-        }
-
-        decimal totalQuestDurationSeconds = timeDefInt / Numbers.FramesPerSecond; // Total duration of the quest in seconds
-        decimal timeRemainingInSeconds = timeInt / Numbers.FramesPerSecond; // Time left in the quest in seconds
-
-        // Calculate the elapsed time by subtracting the time left from the total duration
-        decimal elapsedTimeSeconds = totalQuestDurationSeconds - timeRemainingInSeconds;
-
-        // Create a TimeSpan object directly from elapsed time in seconds
-        TimeSpan elapsedTime = TimeSpan.FromSeconds((double)elapsedTimeSeconds);
+        decimal time = timerMode == TimerMode.Elapsed || timeInt >= timeDefInt ? time = timeDefInt - timeInt : time = timeInt;
+        decimal timeInSeconds = time / Numbers.FramesPerSecond;
+        TimeSpan timeInSecondsSpan = TimeSpan.FromSeconds((double)timeInSeconds);
+        int roundedMilliseconds = (int)(Math.Round(timeInSecondsSpan.TotalMilliseconds) % 1000);
+        var totalMinutes = Math.Floor(timeInSecondsSpan.TotalSeconds / 60);
+        var minutes = totalMinutes >= 60 ? totalMinutes : timeInSecondsSpan.Minutes;
+        var timeLeftPercent = timeLeftPercentShown ? timeLeftPercentNumber : string.Empty;
 
         // Format the TimeSpan object as a string
-        string formattedElapsedTime = elapsedTime.ToString(TimeFormats.MinutesSecondsMilliseconds, CultureInfo.InvariantCulture);
-
-        return formattedElapsedTime;
+        return $"{minutes:00}:{timeInSecondsSpan.Seconds:00}.{roundedMilliseconds:000}" + timeLeftPercent;
     }
+
 }

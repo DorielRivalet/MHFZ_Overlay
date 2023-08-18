@@ -399,3 +399,10 @@ public enum BingoLineCompletionType
     /// </summary>
     Diagonal,
 }
+
+// TODO enums for settings
+public enum TimerMode
+{
+    TimeLeft,
+    Elapsed,
+}

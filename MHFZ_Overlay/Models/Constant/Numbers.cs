@@ -218,6 +218,8 @@ public static class Numbers
 
     public const int QuestIDMultiplayerRoad = 23527;
 
+    public const int QuestIDFirstDistrictDuremudira = 21731;
+
     public const int QuestIDSecondDistrictDuremudira = 21746;
 
     public const int QuestIDTwinheadRajangsHistoric = 55937;
@@ -241,4 +243,16 @@ public static class Numbers
     public const int MezFesSRankPanicHoney = 100;
 
     public const int MezFesSRankGuukuScoop = 106980;
+
+    /// <summary>
+    /// Not musou.
+    /// </summary>
+    public const int DuremudiraTimeLimitMinutes = 20;
+
+    public const int ArrogantDuremudiraTimeLimitMinutes = 10;
+
+    /// <summary>
+    /// Not musou.
+    /// </summary>
+    public const decimal DuremudiraTimeLimitFrames = 36_000M;
 }

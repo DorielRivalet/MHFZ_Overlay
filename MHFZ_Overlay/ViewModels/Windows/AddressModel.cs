@@ -25,10 +25,13 @@ using MHFZ_Overlay;
 using MHFZ_Overlay.Models;
 using MHFZ_Overlay.Models.Collections;
 using MHFZ_Overlay.Models.Constant;
+using MHFZ_Overlay.Models.Structures;
 using MHFZ_Overlay.Services;
+using MHFZ_Overlay.Services.Converter;
 using RESTCountries.NET.Models;
 using RESTCountries.NET.Services;
 using SkiaSharp;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
 using Application = System.Windows.Application;
 
 /// <summary>
@@ -2114,22 +2117,6 @@ TreeScope.Children, condition);
         }
     }
 
-    public string TimeLeftPercentNumber
-    {
-        get
-        {
-            // TODO: Does this work with dure/road?
-            if (this.TimeDefInt() < this.TimeInt() || this.TimeDefInt() <= 0)
-            {
-                return string.Empty;
-            }
-            else
-            {
-                return string.Format(CultureInfo.InvariantCulture, " ({0:0}%)", (float)this.TimeInt() / this.TimeDefInt() * 100.0);
-            }
-        }
-    }
-
     public string SharpnessPercentNumber
     {
         get
@@ -2159,7 +2146,6 @@ TreeScope.Children, condition);
 
     private StringBuilder sbForTimer = new StringBuilder();
 
-
     /// <summary>
     /// Gets quest time in the format of mm:ss.fff. This should only be used for display purposes.
     /// </summary>
@@ -2167,30 +2153,26 @@ TreeScope.Children, condition);
     {
         get
         {
-            decimal time;
+            // check for 1st and 2nd district dure
+            // TODO: find timedefint address for dures
+            var isDure = QuestID() == 21731 || QuestID() == 21746;
+            decimal timeDefInt = isDure ? Numbers.DuremudiraTimeLimitFrames : TimeDefInt();
 
-            if (GetTimerMode() == "Time Elapsed")
-            {
-                time = this.TimeDefInt() - this.TimeInt();
-            }
-            else // default to Time Left mode
-            {
-                time = this.TimeInt();
-            }
-
+            var timerMode = GetTimerMode() == "Time Elapsed" ? TimerMode.Elapsed : TimerMode.TimeLeft;
+            decimal time = TimeService.GetTimeValue(timerMode, timeDefInt, (decimal)TimeInt());
             decimal framesPerSecond = Numbers.FramesPerSecond;
             decimal totalSeconds = time / framesPerSecond;
             decimal minutes = Math.Floor(totalSeconds / 60);
             decimal seconds = Math.Floor(totalSeconds % 60);
             decimal milliseconds = Math.Round((time % framesPerSecond) * (1000M / framesPerSecond));
 
-            this.timeLeftPercent = ShowTimeLeftPercentage() ? this.TimeLeftPercentNumber : string.Empty;
+            this.timeLeftPercent = ShowTimeLeftPercentage() ? TimeService.GetTimeLeftPercent(timeDefInt, TimeInt(), isDure) : string.Empty;
 
             StringBuilder sb = new StringBuilder();
             sb.AppendFormat(CultureInfo.InvariantCulture, "{0:00}:{1:00}.{2:000}", minutes, seconds, milliseconds);
             sb.Append(this.timeLeftPercent);
 
-            MessageBox.Show(TimeService.TestTimerMethods(324_000M)); // 1 hour
+            // MessageBox.Show(TimeService.TestTimerMethods(216_000 * 10)); // 2 hours at 30 fps
 
             return sb.ToString();
         }
