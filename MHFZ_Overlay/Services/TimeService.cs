@@ -15,7 +15,7 @@ using MHFZ_Overlay.Models.Constant;
 using NLog;
 
 /// <summary>
-/// A service for doing time and date manipulation.
+/// A service for doing time and date manipulation. Consult the benchmarks project for the performance.
 /// </summary>
 public static class TimeService
 {
@@ -40,41 +40,6 @@ public static class TimeService
     {
         decimal timeInt = timeDefInt;
         var maxTime = timeDefInt.ToString(TimeFormats.HoursMinutesSecondsMilliseconds, CultureInfo.InvariantCulture);
-
-        var stopwatch = new Stopwatch();
-        stopwatch.Start();
-        for (decimal i = timeDefInt; i > 0; i--)
-        {
-            StringBuilderTimer(timeInt, timeDefInt);
-            timeInt--;
-        }
-
-        stopwatch.Stop();
-        var stringBuilderTime = $"Total execution time for StringBuilderTimer: {stopwatch.ElapsedMilliseconds} ms";
-
-        timeInt = timeDefInt;
-        stopwatch.Start();
-        for (decimal i = timeDefInt; i > 0; i--)
-        {
-            TimeSpanTimer(timeInt, timeDefInt);
-            timeInt--;
-        }
-
-        stopwatch.Stop();
-        var timeSpanTime = $"Total execution time for TimeSpanTimer: {stopwatch.ElapsedMilliseconds} ms";
-
-        timeInt = timeDefInt;
-        stopwatch.Start();
-        for (decimal i = timeDefInt; i > 0; i--)
-        {
-            FastestTimer(timeDefInt - timeInt);
-            timeInt--;
-        }
-
-        stopwatch.Stop();
-        var fastestTime = $"Total execution time for FastestTimer: {stopwatch.ElapsedMilliseconds} ms";
-
-        timeInt = timeDefInt;
         for (decimal i = timeDefInt; i > 0M; i--)
         {
             var timer1Result = StringBuilderTimer(timeInt, timeDefInt);
@@ -83,7 +48,7 @@ public static class TimeService
 
             if (timer1Result != timer2Result || fastestResult != timer1Result || fastestResult != timer2Result)
             {
-                return $"timeDefInt: {timeDefInt} ({maxTime}) timeInt: {timeInt} | StringBuilder: {timer1Result} | TimeSpan: {timer2Result} | Fastest: {fastestResult} | {fastestTime} | {stringBuilderTime} | {timeSpanTime}";
+                return $"timeDefInt: {timeDefInt} ({maxTime}) timeInt: {timeInt} | StringBuilder: {timer1Result} | TimeSpan: {timer2Result}";
             }
 
             timeInt--;
