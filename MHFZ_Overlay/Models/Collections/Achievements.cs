@@ -5450,5 +5450,18 @@ During the travel to your destination, the top of the Great Forest, you notice t
             Hint = "These monsters only die when they want to.",
             }
         },
+        {
+            414, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Obtaining All the Buffs",
+            Description = string.Empty,
+            Rank = AchievementRank.Platinum,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/unknown_blue.jpg",
+            Objective = "Complete 1 Arrogant Duremudira True Slay quest with Secret Technique.",
+            IsSecret = true,
+            Hint = "Who said it's only useful for the knife attack?",
+            }
+        },
     });
 }

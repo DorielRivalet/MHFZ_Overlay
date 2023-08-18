@@ -2557,6 +2557,7 @@ public sealed class AchievementService : IAchievementService
             case 411:
             case 412:
             case 413:
+            case 414:
                 return false;
         }
     }
