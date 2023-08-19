@@ -8,4 +8,3 @@ using System.Management;
 using MHFZOverlayBenchmark.Comparisons;
 
 var summary = BenchmarkRunner.Run<TimerComparison>();
-

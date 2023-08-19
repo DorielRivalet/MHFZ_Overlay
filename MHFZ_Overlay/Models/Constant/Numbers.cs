@@ -252,7 +252,7 @@ public static class Numbers
     public const int ArrogantDuremudiraTimeLimitMinutes = 10;
 
     /// <summary>
-    /// Not musou.
+    /// TODO: This should be replaced when finding timedefint for dure quests. Not musou.
     /// </summary>
     public const decimal DuremudiraTimeLimitFrames = 36_000M;
 }

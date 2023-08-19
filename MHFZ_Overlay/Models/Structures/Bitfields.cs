@@ -191,5 +191,135 @@ public enum QuestState : uint
     UNK5 = 32,
     UNK6 = 64,
     UNK7 = 128,
-    QuestClear = AchievedMainObjective | UNK7,
+    RewardScreen = AchievedMainObjective | UNK7,
+}
+
+/// <summary>
+/// Quest banned weapons.
+/// </summary>
+[Flags]
+[JsonConverter(typeof(JsonStringEnumConverter))]
+public enum QuestBannedWeapons : uint
+{
+    [DefaultValue(None)]
+    None = 0,
+    Tower = 1,
+    Evolution = 2,
+    Master = 4,
+    HC = 8,
+    SP = 16,
+    RNGou = 32,
+    Gou = 64,
+    Heaven = 128,
+    Supremacy = 256,
+    GSupremacy = 512,
+    Burst = 1024,
+    GRank = 2048,
+    GLevel = 4096,
+    Origin = 8192,
+    Other = 16384,
+    Exotic = 32768,
+    Prayer = 65536,
+    Zenith = 131072,
+}
+
+/// <summary>
+/// Quest weapon types disabled.
+/// </summary>
+[Flags]
+[JsonConverter(typeof(JsonStringEnumConverter))]
+public enum QuestWeaponTypesDisabled : uint
+{
+    [DefaultValue(None)]
+    None = 0,
+    GreatSword = 1,
+    HeavyBowgun = 2,
+    Hammer = 4,
+    Lance = 8,
+    SwordAndShield = 16,
+    LightBowgun = 32,
+    DualSwords = 64,
+    LongSword = 128,
+    HuntingHorn = 256,
+    Gunlance = 512,
+    Bow = 1024,
+    Tonfa = 2048,
+    SwitchAxeF = 4096,
+    // MS Flag 64
+}
+
+/// <summary>
+/// Quest variant 1.
+/// </summary>
+[Flags]
+[JsonConverter(typeof(JsonStringEnumConverter))]
+public enum QuestVariant1 : uint
+{
+    [DefaultValue(HR)]
+    HR = 0,
+    Hiden = 1,
+    HardcoreFixed = 2,
+    HardcoreUnlimitedToggle = 4,
+    GRank = 8,
+    UNK1 = 16,
+    Diva = 32,
+    HarcoreNormalToggle = 64,
+    UnlimitedFixed = 128,
+}
+
+/// <summary>
+/// Quest variant 2.
+/// </summary>
+[Flags]
+[JsonConverter(typeof(JsonStringEnumConverter))]
+public enum QuestVariant2 : uint
+{
+    [DefaultValue(None)]
+    None = 0,
+    Level1 = 1,
+    DisableHalkPotion = 2,
+    DisableHalkPoogie = 4,
+    Timer = 8,
+    DisableActiveFeature = 16,
+    FixedDifficulty = 32,
+    Level9999 = 64,
+    Road = 128,
+}
+
+/// <summary>
+/// Quest variant 3.
+/// </summary>
+[Flags]
+[JsonConverter(typeof(JsonStringEnumConverter))]
+public enum QuestVariant3 : uint
+{
+    [DefaultValue(None)]
+    None = 0,
+    DisableRewardBonus = 1,
+    RequireGRank = 2,
+    UNK1 = 4,
+    UNK2 = 8,
+    Zenith = 16,
+    DivaDefense = 32,
+    UNK3Course = 64,
+    DisabledSigil = 128,
+}
+
+/// <summary>
+/// Quest variant 4.
+/// </summary>
+[Flags]
+[JsonConverter(typeof(JsonStringEnumConverter))]
+public enum QuestVariant4 : uint
+{
+    [DefaultValue(None)]
+    None = 0,
+    UNK0 = 1,
+    UNK1 = 2,
+    UNK2 = 4,
+    UNK3 = 8,
+    UNK4 = 16,
+    UNK5 = 32,
+    UNK6 = 64,
+    UNK7 = 128,
 }

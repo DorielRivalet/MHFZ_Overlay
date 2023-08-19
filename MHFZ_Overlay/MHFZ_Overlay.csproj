@@ -1681,7 +1681,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="BenchmarkDotNet" Version="0.13.7" />
     <PackageReference Include="Clowd.Squirrel" Version="2.9.42" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1" />
     <PackageReference Include="CompiledBindings.WPF" Version="1.0.16" />
