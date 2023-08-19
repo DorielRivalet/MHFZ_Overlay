@@ -4,6 +4,8 @@
 
 namespace MHFZ_Overlay.Models.Structures;
 
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text.Json.Serialization;
 
 [JsonConverter(typeof(JsonStringEnumConverter))]
@@ -405,4 +407,11 @@ public enum TimerMode
 {
     TimeLeft,
     Elapsed,
+}
+
+public enum TimerFormat
+{
+    MinutesSeconds,
+    MinutesSecondsMilliseconds,
+    HoursMinutesSeconds,
 }

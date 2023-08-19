@@ -323,3 +323,43 @@ public enum QuestVariant4 : uint
     UNK6 = 64,
     UNK7 = 128,
 }
+
+/// <summary>
+/// Quest objective type.
+/// </summary>
+[Flags]
+[JsonConverter(typeof(JsonStringEnumConverter))]
+public enum QuestObjectiveType : uint
+{
+    [DefaultValue (None)]
+    None = 0,
+    Hunt = 1,
+    Deliver = 2,
+    UNK1 = 4,
+    UNK2 = 8,
+
+    /// <summary>
+    /// TODO: what is this for?
+    /// </summary>
+    EsotericAction = 16,
+    UNK3 = 32,
+    UNK4 = 64,
+    UNK5 = 128,
+    UNK6 = 256,
+    Capture = Hunt | UNK6,
+    UNK7 = 512,
+    Slay = Hunt | UNK7,
+    UNK8 = 1_024,
+    UNK9 = 2_048,
+    UNK10 = 4_096,
+    DeliverFlag = Deliver | UNK10,
+    UNK11 = 8192,
+    UNK12 = 16_384,
+    PartBreak = UNK1 | UNK12,
+    UNK13 = 32_768,
+    Damage = UNK1 | UNK13,
+    UNK14 = 65_536,
+    SlayDamage = UNK14 | UNK13 | UNK1,
+    SlayTotal = 131_072,
+    SlayAll = 262_144,
+}
