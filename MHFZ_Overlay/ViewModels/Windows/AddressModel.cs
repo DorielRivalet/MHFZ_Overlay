@@ -2474,21 +2474,24 @@ TreeScope.Children, condition);
     {
         get
         {
-            if (this.PersonalBestLoaded != Messages.TimerNotLoaded && ShowPersonalBestPaceColor())
+            if (this.PersonalBestLoaded != Messages.TimerNotLoaded &&
+                ShowPersonalBestPaceColor() &&
+                !this.PersonalBestLoaded.Contains("-"))
             {
-                const int framesPerSecond = 30;
-                var personalBestInFrames = (int)(framesPerSecond * TimeSpan.ParseExact(this.PersonalBestLoaded, "mm':'ss'.'fff", CultureInfo.InvariantCulture).TotalSeconds);
+                // TODO does this work for times over 59m?
+                var personalBestInFrames = (int)((int)Numbers.FramesPerSecond * TimeSpan.ParseExact(this.PersonalBestLoaded, "mm':'ss'.'fff", CultureInfo.InvariantCulture).TotalSeconds);
                 var personalBestTimeFramesElapsed = 0;
+                var timeDefInt = this.QuestID() == Numbers.QuestIDFirstDistrictDuremudira || this.QuestID() == Numbers.QuestIDSecondDistrictDuremudira ? Numbers.DuremudiraTimeLimitFrames : this.TimeDefInt();
                 if (GetTimerMode() == "Time Left")
                 {
-                    personalBestTimeFramesElapsed = this.TimeDefInt() - personalBestInFrames;
+                    personalBestTimeFramesElapsed = (int)(timeDefInt - personalBestInFrames);
                 }
                 else
                 {
                     personalBestTimeFramesElapsed = personalBestInFrames;
                 }
 
-                var elapsedPersonalBestTimePercent = this.CalculatePersonalBestInFramesPercent(personalBestTimeFramesElapsed);
+                var elapsedPersonalBestTimePercent = this.CalculatePersonalBestInFramesPercent(personalBestTimeFramesElapsed, (int)timeDefInt);
 
                 return string.Format(CultureInfo.InvariantCulture, "{0:0}%", elapsedPersonalBestTimePercent);
             }
@@ -2518,7 +2521,7 @@ TreeScope.Children, condition);
 
     private double HighestAttackMult { get; set; }
 
-    public double CalculatePersonalBestInFramesPercent(double personalBestInFramesElapsed)
+    public double CalculatePersonalBestInFramesPercent(double personalBestInFramesElapsed, int timeDefInt)
     {
         if (personalBestInFramesElapsed <= 0)
         {
@@ -2526,7 +2529,7 @@ TreeScope.Children, condition);
         }
         else
         {
-            return 100 - ((this.TimeDefInt() - this.TimeInt()) / personalBestInFramesElapsed * 100.0);
+            return 100 - ((timeDefInt - this.TimeInt()) / personalBestInFramesElapsed * 100.0);
         }
     }
 
@@ -7977,9 +7980,9 @@ Session Duration (Highest/Lowest/Average/Median): {111} / {112} / {113} / {114}
             mostAttemptedQuestID,
             totalQuestsCompleted,
             totalQuestsAttempted,
-            GetMinutesSecondsMillisecondsFromFrames((long)questCompletionTimeElapsedAverage),
-            GetMinutesSecondsMillisecondsFromFrames((long)questCompletionTimeElapsedMedian),
-            GetMinutesSecondsMillisecondsFromFrames(totalTimeElapsedDuringQuest),
+            TimeService.GetMinutesSecondsMillisecondsFromFrames((long)questCompletionTimeElapsedAverage),
+            TimeService.GetMinutesSecondsMillisecondsFromFrames((long)questCompletionTimeElapsedMedian),
+            TimeService.GetMinutesSecondsMillisecondsFromFrames(totalTimeElapsedDuringQuest),
             mostCompletedQuestWithCarts,
             mostCompletedQuestWithCartsQuestID,
             totalCartsInQuest,
@@ -9958,28 +9961,6 @@ After all that you’ve unlocked magnet spike! You should get a material to make
 
     public List<ISeries> WeaponUsageSeries { get; set; } = new ();
 
-    public static string StaticGetTimeElapsed(double seconds)
-    {
-        var elapsedTime = TimeSpan.FromSeconds(seconds);
-        var elapsedTimeString = elapsedTime.ToString("mm\\:ss", CultureInfo.InvariantCulture);
-        return elapsedTimeString;
-    }
-
-    public static string GetTimeElapsed(double frames)
-    {
-        var elapsedTime = TimeSpan.FromSeconds(frames / (double)Numbers.FramesPerSecond);
-        var elapsedTimeString = elapsedTime.ToString("mm\\:ss", CultureInfo.InvariantCulture);
-        return elapsedTimeString;
-    }
-
-    // TODO this is capped
-    public static string GetMinutesSecondsMillisecondsFromFrames(long frames)
-    {
-        var elapsedTime = TimeSpan.FromSeconds(frames / (double)Numbers.FramesPerSecond);
-        var elapsedTimeString = elapsedTime.ToString(TimeFormats.MinutesSecondsMilliseconds, CultureInfo.InvariantCulture);
-        return elapsedTimeString;
-    }
-
     // since the x axis for all of my graphs is the time elapsed in seconds in a quest, i only need 1 definition
     public Axis[] XAxes { get; set; } =
     {
@@ -9989,7 +9970,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             // LiveCharts provides some common formatters
             // in this case we are using the currency formatter.
             TextSize = 12,
-            Labeler = (value) => StaticGetTimeElapsed(value),
+            Labeler = (value) => TimeService.GetMinutesSecondsFromSeconds(value),
             NamePaint = new SolidColorPaint(new SKColor(StaticHexColorToDecimal("#a6adc8"))),
             LabelsPaint = new SolidColorPaint(new SKColor(StaticHexColorToDecimal("#a6adc8"))),
 

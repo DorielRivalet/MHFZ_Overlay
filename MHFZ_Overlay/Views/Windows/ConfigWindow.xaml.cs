@@ -2229,7 +2229,7 @@ public partial class ConfigWindow : FluentWindow
             new Axis
             {
                 TextSize = 12,
-                Labeler = (value) => ViewModels.Windows.AddressModel.GetTimeElapsed(value),
+                Labeler = (value) => TimeService.GetMinutesSecondsFromFrames(value),
                 NamePaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
                 LabelsPaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
             },
@@ -2404,7 +2404,7 @@ public partial class ConfigWindow : FluentWindow
             new Axis
             {
                 TextSize = 12,
-                Labeler = (value) => ViewModels.Windows.AddressModel.GetTimeElapsed(value),
+                Labeler = (value) => TimeService.GetMinutesSecondsFromFrames(value),
                 NamePaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
                 LabelsPaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
             },
@@ -2458,7 +2458,7 @@ public partial class ConfigWindow : FluentWindow
             new Axis
             {
                 TextSize = 12,
-                Labeler = (value) => ViewModels.Windows.AddressModel.GetTimeElapsed(value),
+                Labeler = (value) => TimeService.GetMinutesSecondsFromFrames(value),
                 NamePaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
                 LabelsPaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
             },
@@ -2500,7 +2500,7 @@ public partial class ConfigWindow : FluentWindow
         {
             Values = collection,
             TooltipLabelFormatter = (chartPoint) =>
-            $"Attempt {chartPoint.SecondaryValue}: {ViewModels.Windows.AddressModel.GetMinutesSecondsMillisecondsFromFrames((long)chartPoint.PrimaryValue)}",
+            $"Attempt {chartPoint.SecondaryValue}: {TimeService.GetMinutesSecondsMillisecondsFromFrames((long)chartPoint.PrimaryValue)}",
             GeometrySize = 0,
             Stroke = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#fff38ba8"))) { StrokeThickness = 2 },
             Fill = new LinearGradientPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#fff38ba8", "7f")), new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#fff38ba8", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
@@ -2574,7 +2574,7 @@ public partial class ConfigWindow : FluentWindow
             Stroke = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#fff38ba8"))) { StrokeThickness = 2 },
             Fill = new LinearGradientPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#fff38ba8", "7f")), new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#fff38ba8", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
             TooltipLabelFormatter = (chartPoint) =>
-            $"{new DateTime((long)chartPoint.SecondaryValue):yy-MM-dd}: {ViewModels.Windows.AddressModel.GetMinutesSecondsMillisecondsFromFrames((long)chartPoint.PrimaryValue)}",
+            $"{new DateTime((long)chartPoint.SecondaryValue):yy-MM-dd}: {TimeService.GetMinutesSecondsMillisecondsFromFrames((long)chartPoint.PrimaryValue)}",
         });
 
         this.PersonalBestXAxes = new Axis[]
@@ -2654,7 +2654,7 @@ public partial class ConfigWindow : FluentWindow
             new Axis
             {
                 TextSize = 12,
-                Labeler = (value) => ViewModels.Windows.AddressModel.GetTimeElapsed(value),
+                Labeler = (value) => TimeService.GetMinutesSecondsFromFrames(value),
                 NamePaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
                 LabelsPaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
             },
@@ -2707,7 +2707,7 @@ public partial class ConfigWindow : FluentWindow
             new Axis
             {
                 TextSize = 12,
-                Labeler = (value) => ViewModels.Windows.AddressModel.GetTimeElapsed(value),
+                Labeler = (value) => TimeService.GetMinutesSecondsFromFrames(value),
                 NamePaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
                 LabelsPaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
             },
@@ -2760,7 +2760,7 @@ public partial class ConfigWindow : FluentWindow
             new Axis
             {
                 TextSize = 12,
-                Labeler = (value) => ViewModels.Windows.AddressModel.GetTimeElapsed(value),
+                Labeler = (value) => TimeService.GetMinutesSecondsFromFrames(value),
                 NamePaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
                 LabelsPaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
             },
@@ -2884,7 +2884,7 @@ public partial class ConfigWindow : FluentWindow
             new Axis
             {
                 TextSize = 12,
-                Labeler = (value) => ViewModels.Windows.AddressModel.GetTimeElapsed(value),
+                Labeler = (value) => TimeService.GetMinutesSecondsFromFrames(value),
                 NamePaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
                 LabelsPaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
             },
@@ -3105,7 +3105,7 @@ public partial class ConfigWindow : FluentWindow
             new Axis
             {
                 TextSize = 12,
-                Labeler = (value) => ViewModels.Windows.AddressModel.GetTimeElapsed(value),
+                Labeler = (value) => TimeService.GetMinutesSecondsFromFrames(value),
                 NamePaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
                 LabelsPaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
             },

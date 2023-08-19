@@ -1782,15 +1782,31 @@ The process may take some time, as the program attempts to download from GitHub 
         var weaponType = this.DataLoader.Model.WeaponType();
         long questID = this.DataLoader.Model.QuestID();
 
-        var attempts = await DatabaseManagerInstance.UpsertQuestAttemptsAsync(questID, weaponType, category);
+        var attempts = await Task.Run(() => DatabaseManagerInstance.UpsertQuestAttemptsAsync(questID, weaponType, category));
         var s = (Settings)Application.Current.TryFindResource("Settings");
         var completions = string.Empty;
         if (s.EnableQuestCompletionsCounter)
         {
-            completions = await DatabaseManagerInstance.GetQuestCompletionsAsync(questID, category, weaponType) + "/";
+            completions = await Task.Run(() => DatabaseManagerInstance.GetQuestCompletionsAsync(questID, category, weaponType)) + "/";
         }
 
-        this.questAttemptsTextBlock.Text = $"{completions}{attempts}";
+        var _ = Dispatcher.BeginInvoke((Action)(() =>
+        {
+            this.questAttemptsTextBlock.Text = $"{completions}{attempts}";
+        }));
+    }
+
+    private async Task UpdatePersonalBestDisplay()
+    {
+        var category = this.OverlayModeWatermarkTextBlock.Text;
+        var weaponType = this.DataLoader.Model.WeaponType();
+        long questID = this.DataLoader.Model.QuestID();
+
+        this.DataLoader.Model.PersonalBestLoaded = await Task.Run(() => DatabaseManagerInstance.GetPersonalBestAsync(questID, weaponType, category, ViewModels.Windows.AddressModel.QuestTimeMode, this.DataLoader));
+        var _ = Dispatcher.BeginInvoke((Action)(() =>
+        {
+            this.personalBestTextBlock.Text = this.DataLoader.Model.PersonalBestLoaded;
+        }));
     }
 
     private async Task UpdatePersonalBestAttempts()
@@ -1799,8 +1815,11 @@ The process may take some time, as the program attempts to download from GitHub 
         var weaponType = this.DataLoader.Model.WeaponType();
         long questID = this.DataLoader.Model.QuestID();
 
-        var attempts = await DatabaseManagerInstance.UpsertPersonalBestAttemptsAsync(questID, weaponType, category);
-        this.personalBestAttemptsTextBlock.Text = attempts.ToString(CultureInfo.InvariantCulture);
+        var attempts = await Task.Run(() => DatabaseManagerInstance.UpsertPersonalBestAttemptsAsync(questID, weaponType, category));
+        var _ = Dispatcher.BeginInvoke((Action)(() =>
+        {
+            this.personalBestAttemptsTextBlock.Text = attempts.ToString(CultureInfo.InvariantCulture);
+        }));
     }
 
     /// <summary>
@@ -1884,7 +1903,7 @@ The process may take some time, as the program attempts to download from GitHub 
     }
 
     // TODO: optimization
-    private async Task CheckQuestStateForDatabaseLogging()
+    private Task CheckQuestStateForDatabaseLogging()
     {
         var s = (Settings)Application.Current.TryFindResource("Settings");
         var playerAtk = 0;
@@ -1909,11 +1928,13 @@ The process may take some time, as the program attempts to download from GitHub 
             this.DataLoader.Model.InsertQuestInfoIntoDictionaries();
 
             // TODO: test on dure/etc
-            if (!this.calculatedPersonalBest && this.DataLoader.Model.TimeDefInt() > this.DataLoader.Model.TimeInt() && playerAtk > 0)
+            if (!this.calculatedPersonalBest
+                && this.DataLoader.Model.TimeDefInt() > this.DataLoader.Model.TimeInt()
+                && playerAtk > 0
+                && this.DataLoader.Model.TimeDefInt() - this.DataLoader.Model.TimeInt() >= 30)
             {
                 this.calculatedPersonalBest = true;
-                this.personalBestTextBlock.Text = await DatabaseManagerInstance.GetPersonalBestAsync(this.DataLoader.Model.QuestID(), this.DataLoader.Model.WeaponType(), this.OverlayModeWatermarkTextBlock.Text, ViewModels.Windows.AddressModel.QuestTimeMode, this.DataLoader);
-                this.DataLoader.Model.PersonalBestLoaded = this.personalBestTextBlock.Text;
+                var updatePersonalBestDisplayTask = this.UpdatePersonalBestDisplay(); // Start the task without awaiting
             }
 
             if (!this.calculatedQuestAttempts
@@ -1922,8 +1943,8 @@ The process may take some time, as the program attempts to download from GitHub 
                 && this.DataLoader.Model.TimeDefInt() - this.DataLoader.Model.TimeInt() >= 30)
             {
                 this.calculatedQuestAttempts = true;
-                await this.UpdateQuestAttempts();
-                await this.UpdatePersonalBestAttempts();
+                var updateQuestAttemptsTask = this.UpdateQuestAttempts(); // Start the task without awaiting
+                var updatePersonalBestAttemptsTask = this.UpdatePersonalBestAttempts(); // Start the task without awaiting
             }
         }
 
@@ -1938,98 +1959,17 @@ The process may take some time, as the program attempts to download from GitHub 
             this.personalBestTextBlock.Text = Messages.TimerNotLoaded;
             this.calculatedPersonalBest = false;
             this.calculatedQuestAttempts = false;
-            return;
+            return Task.CompletedTask;
         }
         else if (!this.DataLoader.Model.LoadedItemsAtQuestStart && this.DataLoader.Model.QuestState() == 0 && this.DataLoader.Model.QuestID() != 0)
         {
             this.DataLoader.Model.LoadedItemsAtQuestStart = true;
-            this.DataLoader.Model.PouchItem1IDAtQuestStart = this.DataLoader.Model.PouchItem1ID();
-            this.DataLoader.Model.PouchItem2IDAtQuestStart = this.DataLoader.Model.PouchItem2ID();
-            this.DataLoader.Model.PouchItem3IDAtQuestStart = this.DataLoader.Model.PouchItem3ID();
-            this.DataLoader.Model.PouchItem4IDAtQuestStart = this.DataLoader.Model.PouchItem4ID();
-            this.DataLoader.Model.PouchItem5IDAtQuestStart = this.DataLoader.Model.PouchItem5ID();
-            this.DataLoader.Model.PouchItem6IDAtQuestStart = this.DataLoader.Model.PouchItem6ID();
-            this.DataLoader.Model.PouchItem7IDAtQuestStart = this.DataLoader.Model.PouchItem7ID();
-            this.DataLoader.Model.PouchItem8IDAtQuestStart = this.DataLoader.Model.PouchItem8ID();
-            this.DataLoader.Model.PouchItem9IDAtQuestStart = this.DataLoader.Model.PouchItem9ID();
-            this.DataLoader.Model.PouchItem10IDAtQuestStart = this.DataLoader.Model.PouchItem10ID();
-            this.DataLoader.Model.PouchItem11IDAtQuestStart = this.DataLoader.Model.PouchItem11ID();
-            this.DataLoader.Model.PouchItem12IDAtQuestStart = this.DataLoader.Model.PouchItem12ID();
-            this.DataLoader.Model.PouchItem13IDAtQuestStart = this.DataLoader.Model.PouchItem13ID();
-            this.DataLoader.Model.PouchItem14IDAtQuestStart = this.DataLoader.Model.PouchItem14ID();
-            this.DataLoader.Model.PouchItem15IDAtQuestStart = this.DataLoader.Model.PouchItem15ID();
-            this.DataLoader.Model.PouchItem16IDAtQuestStart = this.DataLoader.Model.PouchItem16ID();
-            this.DataLoader.Model.PouchItem17IDAtQuestStart = this.DataLoader.Model.PouchItem17ID();
-            this.DataLoader.Model.PouchItem18IDAtQuestStart = this.DataLoader.Model.PouchItem18ID();
-            this.DataLoader.Model.PouchItem19IDAtQuestStart = this.DataLoader.Model.PouchItem19ID();
-            this.DataLoader.Model.PouchItem20IDAtQuestStart = this.DataLoader.Model.PouchItem20ID();
-            this.DataLoader.Model.PouchItem1QuantityAtQuestStart = this.DataLoader.Model.PouchItem1Qty();
-            this.DataLoader.Model.PouchItem2QuantityAtQuestStart = this.DataLoader.Model.PouchItem2Qty();
-            this.DataLoader.Model.PouchItem3QuantityAtQuestStart = this.DataLoader.Model.PouchItem3Qty();
-            this.DataLoader.Model.PouchItem4QuantityAtQuestStart = this.DataLoader.Model.PouchItem4Qty();
-            this.DataLoader.Model.PouchItem5QuantityAtQuestStart = this.DataLoader.Model.PouchItem5Qty();
-            this.DataLoader.Model.PouchItem6QuantityAtQuestStart = this.DataLoader.Model.PouchItem6Qty();
-            this.DataLoader.Model.PouchItem7QuantityAtQuestStart = this.DataLoader.Model.PouchItem7Qty();
-            this.DataLoader.Model.PouchItem8QuantityAtQuestStart = this.DataLoader.Model.PouchItem8Qty();
-            this.DataLoader.Model.PouchItem9QuantityAtQuestStart = this.DataLoader.Model.PouchItem9Qty();
-            this.DataLoader.Model.PouchItem10QuantityAtQuestStart = this.DataLoader.Model.PouchItem10Qty();
-            this.DataLoader.Model.PouchItem11QuantityAtQuestStart = this.DataLoader.Model.PouchItem11Qty();
-            this.DataLoader.Model.PouchItem12QuantityAtQuestStart = this.DataLoader.Model.PouchItem12Qty();
-            this.DataLoader.Model.PouchItem13QuantityAtQuestStart = this.DataLoader.Model.PouchItem13Qty();
-            this.DataLoader.Model.PouchItem14QuantityAtQuestStart = this.DataLoader.Model.PouchItem14Qty();
-            this.DataLoader.Model.PouchItem15QuantityAtQuestStart = this.DataLoader.Model.PouchItem15Qty();
-            this.DataLoader.Model.PouchItem16QuantityAtQuestStart = this.DataLoader.Model.PouchItem16Qty();
-            this.DataLoader.Model.PouchItem17QuantityAtQuestStart = this.DataLoader.Model.PouchItem17Qty();
-            this.DataLoader.Model.PouchItem18QuantityAtQuestStart = this.DataLoader.Model.PouchItem18Qty();
-            this.DataLoader.Model.PouchItem19QuantityAtQuestStart = this.DataLoader.Model.PouchItem19Qty();
-            this.DataLoader.Model.PouchItem20QuantityAtQuestStart = this.DataLoader.Model.PouchItem20Qty();
-
-            this.DataLoader.Model.AmmoPouchItem1IDAtQuestStart = this.DataLoader.Model.AmmoPouchItem1ID();
-            this.DataLoader.Model.AmmoPouchItem2IDAtQuestStart = this.DataLoader.Model.AmmoPouchItem1ID();
-            this.DataLoader.Model.AmmoPouchItem3IDAtQuestStart = this.DataLoader.Model.AmmoPouchItem1ID();
-            this.DataLoader.Model.AmmoPouchItem4IDAtQuestStart = this.DataLoader.Model.AmmoPouchItem1ID();
-            this.DataLoader.Model.AmmoPouchItem5IDAtQuestStart = this.DataLoader.Model.AmmoPouchItem1ID();
-            this.DataLoader.Model.AmmoPouchItem6IDAtQuestStart = this.DataLoader.Model.AmmoPouchItem1ID();
-            this.DataLoader.Model.AmmoPouchItem7IDAtQuestStart = this.DataLoader.Model.AmmoPouchItem1ID();
-            this.DataLoader.Model.AmmoPouchItem8IDAtQuestStart = this.DataLoader.Model.AmmoPouchItem1ID();
-            this.DataLoader.Model.AmmoPouchItem9IDAtQuestStart = this.DataLoader.Model.AmmoPouchItem1ID();
-            this.DataLoader.Model.AmmoPouchItem10IDAtQuestStart = this.DataLoader.Model.AmmoPouchItem1ID();
-            this.DataLoader.Model.AmmoPouchItem1QuantityAtQuestStart = this.DataLoader.Model.AmmoPouchItem1Qty();
-            this.DataLoader.Model.AmmoPouchItem2QuantityAtQuestStart = this.DataLoader.Model.AmmoPouchItem1Qty();
-            this.DataLoader.Model.AmmoPouchItem3QuantityAtQuestStart = this.DataLoader.Model.AmmoPouchItem1Qty();
-            this.DataLoader.Model.AmmoPouchItem4QuantityAtQuestStart = this.DataLoader.Model.AmmoPouchItem1Qty();
-            this.DataLoader.Model.AmmoPouchItem5QuantityAtQuestStart = this.DataLoader.Model.AmmoPouchItem1Qty();
-            this.DataLoader.Model.AmmoPouchItem6QuantityAtQuestStart = this.DataLoader.Model.AmmoPouchItem1Qty();
-            this.DataLoader.Model.AmmoPouchItem7QuantityAtQuestStart = this.DataLoader.Model.AmmoPouchItem1Qty();
-            this.DataLoader.Model.AmmoPouchItem8QuantityAtQuestStart = this.DataLoader.Model.AmmoPouchItem1Qty();
-            this.DataLoader.Model.AmmoPouchItem9QuantityAtQuestStart = this.DataLoader.Model.AmmoPouchItem1Qty();
-            this.DataLoader.Model.AmmoPouchItem10QuantityAtQuestStart = this.DataLoader.Model.AmmoPouchItem1Qty();
-
-            this.DataLoader.Model.PartnyaBagItem1IDAtQuestStart = this.DataLoader.Model.PartnyaBagItem1ID();
-            this.DataLoader.Model.PartnyaBagItem2IDAtQuestStart = this.DataLoader.Model.PartnyaBagItem1ID();
-            this.DataLoader.Model.PartnyaBagItem3IDAtQuestStart = this.DataLoader.Model.PartnyaBagItem1ID();
-            this.DataLoader.Model.PartnyaBagItem4IDAtQuestStart = this.DataLoader.Model.PartnyaBagItem1ID();
-            this.DataLoader.Model.PartnyaBagItem5IDAtQuestStart = this.DataLoader.Model.PartnyaBagItem1ID();
-            this.DataLoader.Model.PartnyaBagItem6IDAtQuestStart = this.DataLoader.Model.PartnyaBagItem1ID();
-            this.DataLoader.Model.PartnyaBagItem7IDAtQuestStart = this.DataLoader.Model.PartnyaBagItem1ID();
-            this.DataLoader.Model.PartnyaBagItem8IDAtQuestStart = this.DataLoader.Model.PartnyaBagItem1ID();
-            this.DataLoader.Model.PartnyaBagItem9IDAtQuestStart = this.DataLoader.Model.PartnyaBagItem1ID();
-            this.DataLoader.Model.PartnyaBagItem10IDAtQuestStart = this.DataLoader.Model.PartnyaBagItem1ID();
-            this.DataLoader.Model.PartnyaBagItem1QuantityAtQuestStart = this.DataLoader.Model.PartnyaBagItem1Qty();
-            this.DataLoader.Model.PartnyaBagItem2QuantityAtQuestStart = this.DataLoader.Model.PartnyaBagItem1Qty();
-            this.DataLoader.Model.PartnyaBagItem3QuantityAtQuestStart = this.DataLoader.Model.PartnyaBagItem1Qty();
-            this.DataLoader.Model.PartnyaBagItem4QuantityAtQuestStart = this.DataLoader.Model.PartnyaBagItem1Qty();
-            this.DataLoader.Model.PartnyaBagItem5QuantityAtQuestStart = this.DataLoader.Model.PartnyaBagItem1Qty();
-            this.DataLoader.Model.PartnyaBagItem6QuantityAtQuestStart = this.DataLoader.Model.PartnyaBagItem1Qty();
-            this.DataLoader.Model.PartnyaBagItem7QuantityAtQuestStart = this.DataLoader.Model.PartnyaBagItem1Qty();
-            this.DataLoader.Model.PartnyaBagItem8QuantityAtQuestStart = this.DataLoader.Model.PartnyaBagItem1Qty();
-            this.DataLoader.Model.PartnyaBagItem9QuantityAtQuestStart = this.DataLoader.Model.PartnyaBagItem1Qty();
-            this.DataLoader.Model.PartnyaBagItem10QuantityAtQuestStart = this.DataLoader.Model.PartnyaBagItem1Qty();
+            LoadInventoriesAtQuestStart();
         }
 
         if (this.DataLoader.Model.QuestState() == 0)
         {
-            return;
+            return Task.CompletedTask;
         }
 
         // check if quest clear
@@ -2050,7 +1990,7 @@ The process may take some time, as the program attempts to download from GitHub 
             this.DataLoader.Model.LoadedItemsAtQuestStart = false;
             if (s.EnableQuestLogging)
             {
-                DatabaseManagerInstance.InsertQuestData(this.DataLoader, (int)DatabaseManagerInstance.GetQuestAttempts((long)this.DataLoader.Model.QuestID(), this.DataLoader.Model.WeaponType(), this.OverlayModeWatermarkTextBlock.Text));
+                DatabaseManagerInstance.InsertQuestData(this.DataLoader, (int)DatabaseManagerInstance.GetQuestAttempts(this.DataLoader.Model.QuestID(), this.DataLoader.Model.WeaponType(), this.OverlayModeWatermarkTextBlock.Text));
             }
         }
 
@@ -2063,6 +2003,94 @@ The process may take some time, as the program attempts to download from GitHub 
             // We await since we are dealing with database?
             AchievementServiceInstance.CheckForAchievements(this.MainWindowSnackBarPresenter, this.DataLoader, DatabaseManagerInstance, s, (Style)this.FindResource("CatppuccinMochaSnackBar"));
         }
+
+        return Task.CompletedTask;
+    }
+
+    private void LoadInventoriesAtQuestStart()
+    {
+        this.DataLoader.Model.PouchItem1IDAtQuestStart = this.DataLoader.Model.PouchItem1ID();
+        this.DataLoader.Model.PouchItem2IDAtQuestStart = this.DataLoader.Model.PouchItem2ID();
+        this.DataLoader.Model.PouchItem3IDAtQuestStart = this.DataLoader.Model.PouchItem3ID();
+        this.DataLoader.Model.PouchItem4IDAtQuestStart = this.DataLoader.Model.PouchItem4ID();
+        this.DataLoader.Model.PouchItem5IDAtQuestStart = this.DataLoader.Model.PouchItem5ID();
+        this.DataLoader.Model.PouchItem6IDAtQuestStart = this.DataLoader.Model.PouchItem6ID();
+        this.DataLoader.Model.PouchItem7IDAtQuestStart = this.DataLoader.Model.PouchItem7ID();
+        this.DataLoader.Model.PouchItem8IDAtQuestStart = this.DataLoader.Model.PouchItem8ID();
+        this.DataLoader.Model.PouchItem9IDAtQuestStart = this.DataLoader.Model.PouchItem9ID();
+        this.DataLoader.Model.PouchItem10IDAtQuestStart = this.DataLoader.Model.PouchItem10ID();
+        this.DataLoader.Model.PouchItem11IDAtQuestStart = this.DataLoader.Model.PouchItem11ID();
+        this.DataLoader.Model.PouchItem12IDAtQuestStart = this.DataLoader.Model.PouchItem12ID();
+        this.DataLoader.Model.PouchItem13IDAtQuestStart = this.DataLoader.Model.PouchItem13ID();
+        this.DataLoader.Model.PouchItem14IDAtQuestStart = this.DataLoader.Model.PouchItem14ID();
+        this.DataLoader.Model.PouchItem15IDAtQuestStart = this.DataLoader.Model.PouchItem15ID();
+        this.DataLoader.Model.PouchItem16IDAtQuestStart = this.DataLoader.Model.PouchItem16ID();
+        this.DataLoader.Model.PouchItem17IDAtQuestStart = this.DataLoader.Model.PouchItem17ID();
+        this.DataLoader.Model.PouchItem18IDAtQuestStart = this.DataLoader.Model.PouchItem18ID();
+        this.DataLoader.Model.PouchItem19IDAtQuestStart = this.DataLoader.Model.PouchItem19ID();
+        this.DataLoader.Model.PouchItem20IDAtQuestStart = this.DataLoader.Model.PouchItem20ID();
+        this.DataLoader.Model.PouchItem1QuantityAtQuestStart = this.DataLoader.Model.PouchItem1Qty();
+        this.DataLoader.Model.PouchItem2QuantityAtQuestStart = this.DataLoader.Model.PouchItem2Qty();
+        this.DataLoader.Model.PouchItem3QuantityAtQuestStart = this.DataLoader.Model.PouchItem3Qty();
+        this.DataLoader.Model.PouchItem4QuantityAtQuestStart = this.DataLoader.Model.PouchItem4Qty();
+        this.DataLoader.Model.PouchItem5QuantityAtQuestStart = this.DataLoader.Model.PouchItem5Qty();
+        this.DataLoader.Model.PouchItem6QuantityAtQuestStart = this.DataLoader.Model.PouchItem6Qty();
+        this.DataLoader.Model.PouchItem7QuantityAtQuestStart = this.DataLoader.Model.PouchItem7Qty();
+        this.DataLoader.Model.PouchItem8QuantityAtQuestStart = this.DataLoader.Model.PouchItem8Qty();
+        this.DataLoader.Model.PouchItem9QuantityAtQuestStart = this.DataLoader.Model.PouchItem9Qty();
+        this.DataLoader.Model.PouchItem10QuantityAtQuestStart = this.DataLoader.Model.PouchItem10Qty();
+        this.DataLoader.Model.PouchItem11QuantityAtQuestStart = this.DataLoader.Model.PouchItem11Qty();
+        this.DataLoader.Model.PouchItem12QuantityAtQuestStart = this.DataLoader.Model.PouchItem12Qty();
+        this.DataLoader.Model.PouchItem13QuantityAtQuestStart = this.DataLoader.Model.PouchItem13Qty();
+        this.DataLoader.Model.PouchItem14QuantityAtQuestStart = this.DataLoader.Model.PouchItem14Qty();
+        this.DataLoader.Model.PouchItem15QuantityAtQuestStart = this.DataLoader.Model.PouchItem15Qty();
+        this.DataLoader.Model.PouchItem16QuantityAtQuestStart = this.DataLoader.Model.PouchItem16Qty();
+        this.DataLoader.Model.PouchItem17QuantityAtQuestStart = this.DataLoader.Model.PouchItem17Qty();
+        this.DataLoader.Model.PouchItem18QuantityAtQuestStart = this.DataLoader.Model.PouchItem18Qty();
+        this.DataLoader.Model.PouchItem19QuantityAtQuestStart = this.DataLoader.Model.PouchItem19Qty();
+        this.DataLoader.Model.PouchItem20QuantityAtQuestStart = this.DataLoader.Model.PouchItem20Qty();
+
+        this.DataLoader.Model.AmmoPouchItem1IDAtQuestStart = this.DataLoader.Model.AmmoPouchItem1ID();
+        this.DataLoader.Model.AmmoPouchItem2IDAtQuestStart = this.DataLoader.Model.AmmoPouchItem1ID();
+        this.DataLoader.Model.AmmoPouchItem3IDAtQuestStart = this.DataLoader.Model.AmmoPouchItem1ID();
+        this.DataLoader.Model.AmmoPouchItem4IDAtQuestStart = this.DataLoader.Model.AmmoPouchItem1ID();
+        this.DataLoader.Model.AmmoPouchItem5IDAtQuestStart = this.DataLoader.Model.AmmoPouchItem1ID();
+        this.DataLoader.Model.AmmoPouchItem6IDAtQuestStart = this.DataLoader.Model.AmmoPouchItem1ID();
+        this.DataLoader.Model.AmmoPouchItem7IDAtQuestStart = this.DataLoader.Model.AmmoPouchItem1ID();
+        this.DataLoader.Model.AmmoPouchItem8IDAtQuestStart = this.DataLoader.Model.AmmoPouchItem1ID();
+        this.DataLoader.Model.AmmoPouchItem9IDAtQuestStart = this.DataLoader.Model.AmmoPouchItem1ID();
+        this.DataLoader.Model.AmmoPouchItem10IDAtQuestStart = this.DataLoader.Model.AmmoPouchItem1ID();
+        this.DataLoader.Model.AmmoPouchItem1QuantityAtQuestStart = this.DataLoader.Model.AmmoPouchItem1Qty();
+        this.DataLoader.Model.AmmoPouchItem2QuantityAtQuestStart = this.DataLoader.Model.AmmoPouchItem1Qty();
+        this.DataLoader.Model.AmmoPouchItem3QuantityAtQuestStart = this.DataLoader.Model.AmmoPouchItem1Qty();
+        this.DataLoader.Model.AmmoPouchItem4QuantityAtQuestStart = this.DataLoader.Model.AmmoPouchItem1Qty();
+        this.DataLoader.Model.AmmoPouchItem5QuantityAtQuestStart = this.DataLoader.Model.AmmoPouchItem1Qty();
+        this.DataLoader.Model.AmmoPouchItem6QuantityAtQuestStart = this.DataLoader.Model.AmmoPouchItem1Qty();
+        this.DataLoader.Model.AmmoPouchItem7QuantityAtQuestStart = this.DataLoader.Model.AmmoPouchItem1Qty();
+        this.DataLoader.Model.AmmoPouchItem8QuantityAtQuestStart = this.DataLoader.Model.AmmoPouchItem1Qty();
+        this.DataLoader.Model.AmmoPouchItem9QuantityAtQuestStart = this.DataLoader.Model.AmmoPouchItem1Qty();
+        this.DataLoader.Model.AmmoPouchItem10QuantityAtQuestStart = this.DataLoader.Model.AmmoPouchItem1Qty();
+
+        this.DataLoader.Model.PartnyaBagItem1IDAtQuestStart = this.DataLoader.Model.PartnyaBagItem1ID();
+        this.DataLoader.Model.PartnyaBagItem2IDAtQuestStart = this.DataLoader.Model.PartnyaBagItem1ID();
+        this.DataLoader.Model.PartnyaBagItem3IDAtQuestStart = this.DataLoader.Model.PartnyaBagItem1ID();
+        this.DataLoader.Model.PartnyaBagItem4IDAtQuestStart = this.DataLoader.Model.PartnyaBagItem1ID();
+        this.DataLoader.Model.PartnyaBagItem5IDAtQuestStart = this.DataLoader.Model.PartnyaBagItem1ID();
+        this.DataLoader.Model.PartnyaBagItem6IDAtQuestStart = this.DataLoader.Model.PartnyaBagItem1ID();
+        this.DataLoader.Model.PartnyaBagItem7IDAtQuestStart = this.DataLoader.Model.PartnyaBagItem1ID();
+        this.DataLoader.Model.PartnyaBagItem8IDAtQuestStart = this.DataLoader.Model.PartnyaBagItem1ID();
+        this.DataLoader.Model.PartnyaBagItem9IDAtQuestStart = this.DataLoader.Model.PartnyaBagItem1ID();
+        this.DataLoader.Model.PartnyaBagItem10IDAtQuestStart = this.DataLoader.Model.PartnyaBagItem1ID();
+        this.DataLoader.Model.PartnyaBagItem1QuantityAtQuestStart = this.DataLoader.Model.PartnyaBagItem1Qty();
+        this.DataLoader.Model.PartnyaBagItem2QuantityAtQuestStart = this.DataLoader.Model.PartnyaBagItem1Qty();
+        this.DataLoader.Model.PartnyaBagItem3QuantityAtQuestStart = this.DataLoader.Model.PartnyaBagItem1Qty();
+        this.DataLoader.Model.PartnyaBagItem4QuantityAtQuestStart = this.DataLoader.Model.PartnyaBagItem1Qty();
+        this.DataLoader.Model.PartnyaBagItem5QuantityAtQuestStart = this.DataLoader.Model.PartnyaBagItem1Qty();
+        this.DataLoader.Model.PartnyaBagItem6QuantityAtQuestStart = this.DataLoader.Model.PartnyaBagItem1Qty();
+        this.DataLoader.Model.PartnyaBagItem7QuantityAtQuestStart = this.DataLoader.Model.PartnyaBagItem1Qty();
+        this.DataLoader.Model.PartnyaBagItem8QuantityAtQuestStart = this.DataLoader.Model.PartnyaBagItem1Qty();
+        this.DataLoader.Model.PartnyaBagItem9QuantityAtQuestStart = this.DataLoader.Model.PartnyaBagItem1Qty();
+        this.DataLoader.Model.PartnyaBagItem10QuantityAtQuestStart = this.DataLoader.Model.PartnyaBagItem1Qty();
     }
 
     private void GlobalHookKeyPress(object sender, KeyPressEventArgs e)

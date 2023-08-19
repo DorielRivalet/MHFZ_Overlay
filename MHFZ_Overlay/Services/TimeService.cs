@@ -35,7 +35,7 @@ public static class TimeService
 
     public static string GetTimeLeftPercent(decimal timeDefInt, decimal timeInt, bool isDure)
     {
-        if (timeDefInt < timeInt)
+        if (timeDefInt < timeInt || timeDefInt <= 0)
         {
             return " (?)";
         }
@@ -76,7 +76,7 @@ public static class TimeService
 
         for (decimal i = timeInt; i >= 0M; i--)
         {
-            timer1Result = StringBuilderTimer(timeInt, timeDefInt, true, GetTimeLeftPercent(timeDefInt, timeInt, true), TimerMode.Elapsed);
+            timer1Result = StringBuilderTimer(timeInt, TimerFormat.MinutesSecondsMilliseconds, true, timeDefInt, true, GetTimeLeftPercent(timeDefInt, timeInt, true), TimerMode.Elapsed);
             timer2Result = TimeSpanTimer(timeInt, timeDefInt, true, GetTimeLeftPercent(timeDefInt, timeInt, true), TimerMode.Elapsed);
             timer3Result = SimpleTimer(timeInt, timeDefInt, true, GetTimeLeftPercent(timeDefInt, timeInt, true), TimerMode.Elapsed);
 
@@ -99,9 +99,10 @@ TimeSpan: {timer2Result}
 Simple: {timer3Result}";
     }
 
-    public static string SimpleTimer(decimal timeInt, decimal timeDefInt, bool timeLeftPercentShown = false, string timeLeftPercentNumber = "", TimerMode timerMode = TimerMode.Elapsed)
+    public static string SimpleTimer(decimal timeInt, decimal timeDefInt = 0, bool timeLeftPercentShown = false, string timeLeftPercentNumber = "", TimerMode timerMode = TimerMode.Elapsed)
     {
-        decimal time = timerMode == TimerMode.Elapsed || timeInt >= timeDefInt ? time = timeDefInt - timeInt : time = timeInt;
+        // TODO wrong conditionals for timeint >= timedefint?
+        decimal time = timerMode == TimerMode.Elapsed && timeInt <= timeDefInt ? time = timeDefInt - timeInt : time = timeInt;
         decimal milliseconds = time / 30 * 1000;
         decimal totalMinutes = Math.Floor(milliseconds / 60000);
         decimal minutes = totalMinutes >= 60 ? totalMinutes : Math.Floor(milliseconds / 60000);
@@ -112,10 +113,10 @@ Simple: {timer3Result}";
         return $"{minutes:00}:{seconds:00}.{remainingMilliseconds:000}" + timeLeftPercent;
     }
 
-    public static string StringBuilderTimer(decimal timeInt, decimal timeDefInt, bool timeLeftPercentShown = false, string timeLeftPercentNumber = "", TimerMode timerMode = TimerMode.Elapsed)
+    public static string StringBuilderTimer(decimal timeInt, TimerFormat timerFormat, bool isFrames = true, decimal timeDefInt = 0, bool timeLeftPercentShown = false, string timeLeftPercentNumber = "", TimerMode timerMode = TimerMode.Elapsed)
     {
-        decimal time = timerMode == TimerMode.Elapsed || timeInt >= timeDefInt ? time = timeDefInt - timeInt : time = timeInt;
-        decimal framesPerSecond = Numbers.FramesPerSecond;
+        decimal time = timerMode == TimerMode.Elapsed && timeInt <= timeDefInt ? time = timeDefInt - timeInt : time = timeInt;
+        decimal framesPerSecond = isFrames ? Numbers.FramesPerSecond : 1;
         decimal totalSeconds = time / framesPerSecond;
         decimal totalMinutes = Math.Floor(totalSeconds / 60);
         decimal minutes = totalMinutes >= 60 ? totalMinutes : Math.Floor(totalSeconds / 60);
@@ -124,15 +125,26 @@ Simple: {timer3Result}";
         var timeLeftPercent = timeLeftPercentShown ? timeLeftPercentNumber : string.Empty;
 
         StringBuilder sb = new StringBuilder();
-        sb.AppendFormat(CultureInfo.InvariantCulture, "{0:00}:{1:00}.{2:000}", minutes, seconds, milliseconds);
+        switch (timerFormat)
+        {
+            default:
+                sb.AppendFormat(CultureInfo.InvariantCulture, "{0:00}:{1:00}.{2:000}", minutes, seconds, milliseconds);
+                break;
+            case TimerFormat.MinutesSeconds:
+                sb.AppendFormat(CultureInfo.InvariantCulture, "{0:00}:{1:00}", minutes, seconds);
+                break;
+            case TimerFormat.MinutesSecondsMilliseconds:
+                sb.AppendFormat(CultureInfo.InvariantCulture, "{0:00}:{1:00}.{2:000}", minutes, seconds, milliseconds);
+                break;
+        }
         sb.Append(timeLeftPercent);
 
         return sb.ToString();
     }
 
-    public static string TimeSpanTimer(decimal timeInt, decimal timeDefInt, bool timeLeftPercentShown = false, string timeLeftPercentNumber = "", TimerMode timerMode = TimerMode.Elapsed)
+    public static string TimeSpanTimer(decimal timeInt, decimal timeDefInt = 0, bool timeLeftPercentShown = false, string timeLeftPercentNumber = "", TimerMode timerMode = TimerMode.Elapsed)
     {
-        decimal time = timerMode == TimerMode.Elapsed || timeInt >= timeDefInt ? time = timeDefInt - timeInt : time = timeInt;
+        decimal time = timerMode == TimerMode.Elapsed && timeInt <= timeDefInt ? time = timeDefInt - timeInt : time = timeInt;
         decimal timeInSeconds = time / Numbers.FramesPerSecond;
         TimeSpan timeInSecondsSpan = TimeSpan.FromSeconds((double)timeInSeconds);
         int roundedMilliseconds = (int)(Math.Round(timeInSecondsSpan.TotalMilliseconds) % 1000);
@@ -144,4 +156,31 @@ Simple: {timer3Result}";
         return $"{minutes:00}:{timeInSecondsSpan.Seconds:00}.{roundedMilliseconds:000}" + timeLeftPercent;
     }
 
+    /// <summary>
+    /// Gets the elapsed time in the desired format.
+    /// </summary>
+    /// <param name="frames"></param>
+    /// <returns></returns>
+    public static string GetMinutesSecondsFromSeconds(double seconds) => StringBuilderTimer((long)seconds, TimerFormat.MinutesSeconds, false);
+
+    /// <summary>
+    /// Gets the elapsed time in the desired format.
+    /// </summary>
+    /// <param name="frames"></param>
+    /// <returns></returns>
+    public static string GetMinutesSecondsFromFrames(double frames) => StringBuilderTimer((long)frames, TimerFormat.MinutesSeconds);
+
+    /// <summary>
+    /// Gets the elapsed time in the desired format.
+    /// </summary>
+    /// <param name="frames"></param>
+    /// <returns></returns>
+    public static string GetMinutesSecondsMillisecondsFromFrames(double frames) => StringBuilderTimer((long)frames, TimerFormat.MinutesSecondsMilliseconds);
+
+    /// <summary>
+    /// Gets the elapsed time in the desired format.
+    /// </summary>
+    /// <param name="frames"></param>
+    /// <returns></returns>
+    public static string GetMinutesSecondsMillisecondsFromFrames(long frames) => StringBuilderTimer(frames, TimerFormat.MinutesSecondsMilliseconds);
 }

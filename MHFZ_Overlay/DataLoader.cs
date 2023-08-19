@@ -416,27 +416,6 @@ public sealed class DataLoader
     public AddressModel Model { get; } // TODO: fix null warning
 
     /// <summary>
-    /// Gets the quest time elapsed. TODO: move somewhere else.
-    /// </summary>
-    /// <returns>The quest time elapsed.</returns>
-    public string GetQuestTimeElapsed()
-    {
-        decimal totalQuestDurationSeconds = (decimal)this.Model.TimeDefInt() / Numbers.FramesPerSecond; // Total duration of the quest in seconds
-        decimal timeRemainingInSeconds = (decimal)this.Model.TimeInt() / Numbers.FramesPerSecond; // Time left in the quest in seconds
-
-        // Calculate the elapsed time by subtracting the time left from the total duration
-        decimal elapsedTimeSeconds = totalQuestDurationSeconds - timeRemainingInSeconds;
-
-        // Create a TimeSpan object directly from elapsed time in seconds
-        TimeSpan elapsedTime = TimeSpan.FromSeconds((double)elapsedTimeSeconds);
-
-        // Format the TimeSpan object as a string
-        string formattedElapsedTime = elapsedTime.ToString(TimeFormats.MinutesSecondsMilliseconds, CultureInfo.InvariantCulture);
-
-        return formattedElapsedTime;
-    }
-
-    /// <summary>
     /// Creates the code cave.
     /// </summary>
     /// <param name="pID">The pid.</param>

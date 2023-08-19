@@ -441,6 +441,15 @@ public sealed class DatabaseService
         var questID = dataLoader.Model.QuestID();
         var actualOverlayMode = string.Empty;
         dataLoader.Model.ShowSaveIcon = true;
+        var timeLeft = dataLoader.Model.TimeInt();
+
+        // TODO dure timedefint address
+        var timeDefIint = questID != Numbers.QuestIDFirstDistrictDuremudira && questID != Numbers.QuestIDSecondDistrictDuremudira ? dataLoader.Model.TimeDefInt() : Numbers.DuremudiraTimeLimitFrames;
+
+        var finalTimeValue = timeDefIint - timeLeft;
+
+        // Calculate the elapsed time of the quest
+        var finalTimeDisplay = TimeService.GetMinutesSecondsMillisecondsFromFrames((long)finalTimeValue);
 
         var s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
 
@@ -587,19 +596,18 @@ public sealed class DatabaseService
 
                     using (var cmd = new SQLiteCommand(sql, conn))
                     {
-                        var timeLeft = model.TimeInt(); // Example value of the TimeLeft variable
-                        var finalTimeValue = model.TimeDefInt() - model.TimeInt();
-
-                        // Calculate the elapsed time of the quest
-                        var finalTimeDisplay = dataLoader.GetQuestTimeElapsed();
-
                         // Convert the elapsed time to a DateTime object
                         string objectiveImage;
 
                         // Gathering/etc
-                        if ((dataLoader.Model.ObjectiveType() == 0x0 || dataLoader.Model.ObjectiveType() == 0x02 || dataLoader.Model.ObjectiveType() == 0x1002) && dataLoader.Model.QuestID() != 23527 && dataLoader.Model.QuestID() != 23628 && dataLoader.Model.QuestID() != 21731 && dataLoader.Model.QuestID() != 21749 && dataLoader.Model.QuestID() != 21746 && dataLoader.Model.QuestID() != 21750)
+                        if ((dataLoader.Model.ObjectiveType() == 0x0 || dataLoader.Model.ObjectiveType() == 0x02 || dataLoader.Model.ObjectiveType() == 0x1002) && dataLoader.Model.QuestID() != 23527 && dataLoader.Model.QuestID() != 23628 && dataLoader.Model.QuestID() != 21749 && dataLoader.Model.QuestID() != 21750 && dataLoader.Model.QuestID() != Numbers.QuestIDFirstDistrictDuremudira && dataLoader.Model.QuestID() != Numbers.QuestIDSecondDistrictDuremudira)
                         {
                             objectiveImage = ViewModels.Windows.AddressModel.GetAreaIconFromID(dataLoader.Model.AreaID());
+                        }
+
+                        else if (dataLoader.Model.QuestID() == Numbers.QuestIDSecondDistrictDuremudira || dataLoader.Model.QuestID() == Numbers.QuestIDFirstDistrictDuremudira)
+                        {
+                            objectiveImage = dataLoader.Model.GetMonsterIcon(132);
                         }
 
                         // Tenrou Sky Corridor areas
@@ -856,7 +864,6 @@ public sealed class DatabaseService
                             @Attempts)";
                         using (var cmd = new SQLiteCommand(sql, conn))
                         {
-                            var finalTimeValue = model.TimeDefInt() - model.TimeInt();
                             if (finalTimeValue < personalBest || personalBest == 0)
                             {
                                 improvedPersonalBest = true;
@@ -5769,7 +5776,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                                 time = reader.GetInt64(reader.GetOrdinal("TimeLeft"));
                             }
 
-                            personalBest = ViewModels.Windows.AddressModel.GetMinutesSecondsMillisecondsFromFrames(time);
+                            personalBest = TimeService.GetMinutesSecondsMillisecondsFromFrames(time);
                         }
                         else
                         {
@@ -5803,10 +5810,14 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
             await conn.OpenAsync();
             using (var transaction = conn.BeginTransaction())
             {
-                try
+                var numRetries = 0;
+                var success = false;
+                while (!success && numRetries < 3)
                 {
-                    using (var cmd = new SQLiteCommand(
-                        @"SELECT 
+                    try
+                    {
+                        using (var cmd = new SQLiteCommand(
+                            @"SELECT 
                             TimeLeft, 
                             FinalTimeValue,
                             FinalTimeDisplay,
@@ -5824,37 +5835,51 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                         ORDER BY 
                             FinalTimeValue ASC
                         LIMIT 1", conn))
-                    {
-                        cmd.Parameters.AddWithValue("@questID", questID);
-                        cmd.Parameters.AddWithValue("@weaponTypeID", weaponTypeID);
-                        cmd.Parameters.AddWithValue("@category", category);
-
-                        var reader = await cmd.ExecuteReaderAsync();
-                        if (await reader.ReadAsync())
                         {
-                            long time = 0;
-                            if (timerMode == "Elapsed")
+                            cmd.Parameters.AddWithValue("@questID", questID);
+                            cmd.Parameters.AddWithValue("@weaponTypeID", weaponTypeID);
+                            cmd.Parameters.AddWithValue("@category", category);
+
+                            var reader = await cmd.ExecuteReaderAsync();
+                            if (await reader.ReadAsync())
                             {
-                                time = reader.GetInt64(reader.GetOrdinal("FinalTimeValue"));
+                                long time = 0;
+                                if (timerMode == "Elapsed")
+                                {
+                                    time = reader.GetInt64(reader.GetOrdinal("FinalTimeValue"));
+                                }
+                                else
+                                {
+                                    time = reader.GetInt64(reader.GetOrdinal("TimeLeft"));
+                                }
+
+                                personalBest = TimeService.GetMinutesSecondsMillisecondsFromFrames(time);
                             }
                             else
                             {
-                                time = reader.GetInt64(reader.GetOrdinal("TimeLeft"));
+                                personalBest = Messages.TimerNotLoaded;
                             }
+                        }
 
-                            personalBest = ViewModels.Windows.AddressModel.GetMinutesSecondsMillisecondsFromFrames(time);
+                        transaction.Commit();
+                        success = true;
+                    }
+                    catch (SQLiteException ex)
+                    {
+                        if (ex.ResultCode is SQLiteErrorCode.Locked or SQLiteErrorCode.Busy)
+                        {
+                            // Database is locked, retry after a short delay
+                            numRetries++;
+                            Logger.Warn(CultureInfo.InvariantCulture, ex);
+                            Thread.Sleep(1_000);
                         }
                         else
                         {
-                            personalBest = Messages.TimerNotLoaded;
+                            // Some other error occurred, abort the transaction
+                            HandleError(transaction, ex);
+                            break;
                         }
                     }
-
-                    transaction.Commit();
-                }
-                catch (Exception ex)
-                {
-                    HandleError(transaction, ex);
                 }
             }
         }
@@ -6101,6 +6126,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                         {
                             // Database is locked, retry after a short delay
                             numRetries++;
+                            Logger.Warn(CultureInfo.InvariantCulture, ex);
                             Thread.Sleep(1_000);
                         }
                         else
@@ -6168,6 +6194,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                         {
                             // Database is locked, retry after a short delay
                             numRetries++;
+                            Logger.Warn(CultureInfo.InvariantCulture, ex);
                             Thread.Sleep(1_000);
                         }
                         else
@@ -6235,6 +6262,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                         {
                             // Database is locked, retry after a short delay
                             numRetries++;
+                            Logger.Warn(CultureInfo.InvariantCulture, ex);
                             await Task.Delay(1_000);
                         }
                         else
@@ -6302,6 +6330,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                         {
                             // Database is locked, retry after a short delay
                             numRetries++;
+                            Logger.Warn(CultureInfo.InvariantCulture, ex);
                             await Task.Delay(1_000);
                         }
                         else
