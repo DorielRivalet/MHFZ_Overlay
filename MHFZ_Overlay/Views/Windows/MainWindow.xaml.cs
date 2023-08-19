@@ -38,9 +38,11 @@ using Memory;
 using MHFZ_Overlay.Models;
 using MHFZ_Overlay.Models.Collections;
 using MHFZ_Overlay.Models.Constant;
+using MHFZ_Overlay.Models.Structures;
 using MHFZ_Overlay.Services;
 using MHFZ_Overlay.Services.Converter;
 using MHFZ_Overlay.Services.Hotkey;
+using MHFZ_Overlay.ViewModels.Windows;
 using MHFZ_Overlay.Views.CustomControls;
 using Microsoft.Extensions.DependencyModel;
 using NLog;
@@ -268,7 +270,7 @@ public partial class MainWindow : Window
 
     private readonly GitHubClient ghClient = new (new ProductHeaderValue("MHFZ_Overlay"));
 
-    private double? xOffset;
+    private double? xOffset { get; set; }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="MainWindow"/> class.
@@ -599,7 +601,11 @@ The process may take some time, as the program attempts to download from GitHub 
         }
     }
 
-    // TODO: optimization
+    /// <summary>
+    /// TODO: optimization. The main loop of the program, affected by Refresh Rate.
+    /// </summary>
+    /// <param name="obj"></param>
+    /// <param name="e"></param>
     private async void Timer_Tick(object? obj, EventArgs e)
     {
         try
@@ -706,6 +712,7 @@ The process may take some time, as the program attempts to download from GitHub 
         if (this.DataLoader.Model.PreviousQuestID != this.DataLoader.Model.QuestID() && this.DataLoader.Model.QuestID() != 0)
         {
             this.DataLoader.Model.PreviousQuestID = this.DataLoader.Model.QuestID();
+            LoggerInstance.Info(CultureInfo.InvariantCulture, $"In quest: ID {this.DataLoader.Model.PreviousQuestID} | {AddressModel.GetQuestNameFromID(this.DataLoader.Model.PreviousQuestID)}");
             this.ShowQuestName();
         }
         else if (this.DataLoader.Model.QuestID() == 0 && this.DataLoader.Model.PreviousQuestID != 0)
@@ -1321,13 +1328,13 @@ The process may take some time, as the program attempts to download from GitHub 
         this.DataLoader.Model.ShowPersonalBestAttemptsInfo = v && s.PersonalBestAttemptsShown;
     }
 
-    private double? yOffset;
+    private double? yOffset { get; set; }
 
-    private FrameworkElement? movingObject;
+    private FrameworkElement? movingObject { get; set; }
 
-    private bool clickThrough = true;
+    private bool clickThrough { get; set; } = true;
 
-    private bool calculatedPersonalBest;
+    private bool calculatedPersonalBest { get; set; }
 
     private ConfigWindow? ConfigWindow { get; set; }
 
@@ -1726,10 +1733,10 @@ The process may take some time, as the program attempts to download from GitHub 
 
     private void CommandBinding_Executed(object sender, ExecutedRoutedEventArgs e) => this.DisableDragAndDrop();
 
-    private bool calculatedQuestAttempts;
+    private bool calculatedQuestAttempts { get; set; }
 
     // TODO fix alt tab issues?
-    private IKeyboardMouseEvents GlobalHook;
+    private IKeyboardMouseEvents GlobalHook { get; set; }
 
     public static MediaPlayer? MainWindowMediaPlayer { get; private set; }
 
