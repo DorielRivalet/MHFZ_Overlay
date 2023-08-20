@@ -684,7 +684,7 @@
       <Value Profile="(Default)">180</Value>
     </Setting>
     <Setting Name="ShowDiscordRPCOverlayMode" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
+      <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="QuestAttemptsShown" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
@@ -973,6 +973,12 @@
     </Setting>
     <Setting Name="VolumeGachaRare" Type="System.Single" Scope="User">
       <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="OverlayWatermarkMode" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Final</Value>
+    </Setting>
+    <Setting Name="DiscordOverlayMode" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Automatic</Value>
     </Setting>
   </Settings>
 </SettingsFile>

@@ -415,3 +415,28 @@ public enum TimerFormat
     MinutesSecondsMilliseconds,
     HoursMinutesSeconds,
 }
+
+public enum OverlayMode
+{
+    Unknown,
+    Standard,
+    Configuring,
+    ClosedGame,
+    Launcher,
+    NoGame,
+    MainMenu,
+    WorldSelect,
+    TimeAttack,
+    FreestyleSecretTech,
+    Freestyle,
+    Zen,
+}
+
+public enum ConfigurationPreset
+{
+    None,
+    Speedrun,
+    Zen,
+    HPOnly,
+    All,
+}

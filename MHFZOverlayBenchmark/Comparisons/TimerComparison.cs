@@ -12,8 +12,33 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
+[RPlotExporter]
+[MedianColumn, MinColumn, MaxColumn]
+[UnicodeConsoleLogger]
 public class TimerComparison
 {
+    [Params(0, 216_000)] // 2 hours at 30fps
+    public int TimeDefInt { get; set; }
+
+    [Params(0, 216_000)]
+    public int TimeInt { get; set; }
+
+    [Params(true, false)] // Arguments can be combined with Params
+    public bool TimePercentShown;
+
+    [Benchmark]
+    [Arguments(100, 10)]
+    [Arguments(100, 20)]
+    [Arguments(200, 10)]
+    [Arguments(200, 20)]
+    public void Benchmark(int a, int b)
+    {
+        if (TimePercentShown)
+            Thread.Sleep(a + b + 5);
+        else
+            Thread.Sleep(a + b);
+    }
+
     private const int N = 10000;
     private readonly byte[] data;
 

@@ -150,8 +150,8 @@
             <customcontrols:OutlinedTextBlock   HorizontalAlignment="Left" Grid.Column="1" Grid.Row="0"  FontSize="{Binding Path=SecondaryFontSize, Source={StaticResource Settings}}" FontFamily="{Binding Path=SecondaryFontFamily, Source={StaticResource Settings}}" FontWeight="{Binding Path=SecondaryFontWeight, Source={StaticResource Settings}}" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding Source={StaticResource Settings},Path=TextColor}" x:Name="sessionTimeTextBlock" Text="{Binding CurrentSessionTime, StringFormat=hh\\:mm\\:ss}" Margin="4,0,0,0"/>
         </Grid>
         <Grid x:Name="OverlayModeWatermark" Canvas.Left="{Binding Source={StaticResource Settings},Path=OverlayModeWatermarkX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=OverlayModeWatermarkY}" Width="360" Height="30" MouseLeftButtonDown="ElementMouseLeftButtonDown" Background="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}" Visibility="{Binding ElementName=Window, Path=DataLoader.Model.ShowOverlayModeWatermark, Converter={StaticResource BoolToVis}}">
-            <Grid.ColumnDefinitions >
-                <ColumnDefinition  Width="1*" />
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>

@@ -696,8 +696,8 @@ public sealed class DatabaseService
 
                         // check if its grabbing a TimeDefInt from a previous quest
                         // TODO is this enough?
-                        if ((overlayModeDictionary.Count == 2 && overlayModeDictionary.Last().Value == string.Empty) ||
-                            (overlayModeDictionary.Count == 1 && overlayModeDictionary.First().Value == string.Empty) ||
+                        if ((overlayModeDictionary.Count == 2 && overlayModeDictionary.Last().Value == "Standard") ||
+                            (overlayModeDictionary.Count == 1 && overlayModeDictionary.First().Value == "Standard") ||
                             overlayModeDictionary.Count > 2)
                         {
                             actualOverlayMode = "Standard";
@@ -705,7 +705,7 @@ public sealed class DatabaseService
                         else
                         {
                             // TODO: test
-                            if (overlayModeDictionary.Count == 2 && overlayModeDictionary.First().Value == string.Empty)
+                            if (overlayModeDictionary.Count == 2 && overlayModeDictionary.First().Value == "Standard")
                             {
                                 actualOverlayMode = overlayModeDictionary.Last().Value;
                             }
@@ -714,6 +714,7 @@ public sealed class DatabaseService
                                 actualOverlayMode = overlayModeDictionary.First().Value;
                             }
 
+                            // TODO probably not needed anymore
                             actualOverlayMode = actualOverlayMode.Replace(")", string.Empty);
                             actualOverlayMode = actualOverlayMode.Replace("(", string.Empty);
                             actualOverlayMode = actualOverlayMode.Trim();

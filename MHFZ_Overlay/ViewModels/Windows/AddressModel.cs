@@ -1493,12 +1493,76 @@ TreeScope.Children, condition);
         }
     }
 
+    public string GetOverlayModeForStorage()
+    {
+        return this.GetOverlayMode() switch
+        {
+            OverlayMode.Unknown => "Unknown",
+            OverlayMode.Standard => "Standard",
+            OverlayMode.Configuring => "Configuring",
+            OverlayMode.ClosedGame => "Closed Game",
+            OverlayMode.Launcher => "Launcher",
+            OverlayMode.NoGame => "No Game",
+            OverlayMode.MainMenu => "Main Menu",
+            OverlayMode.WorldSelect => "World Select",
+            OverlayMode.TimeAttack => "Time Attack",
+            OverlayMode.FreestyleSecretTech => "Freestyle w/ Secret Tech",
+            OverlayMode.Freestyle => "Freestyle No Secret Tech",
+            OverlayMode.Zen => "Zen",
+            _ => "Not Found",
+        };
+    }
+
+    public string GetFinalOverlayMode()
+    {
+        if ((OverlayModeDictionary.Count == 2 && OverlayModeDictionary.Last().Value == "Standard") ||
+                            (OverlayModeDictionary.Count == 1 && OverlayModeDictionary.First().Value == "Standard") ||
+                            OverlayModeDictionary.Count > 2 || OverlayModeDictionary.Count == 0)
+        {
+            return "Standard+";
+        }
+        else
+        {
+            // TODO: test
+            if (OverlayModeDictionary.Count == 2 && OverlayModeDictionary.First().Value == "Standard")
+            {
+                return OverlayModeDictionary.Last().Value + "+";
+            }
+            else
+            {
+                return OverlayModeDictionary.First().Value + "+";
+            }
+        }
+    }
+
     public string GetOverlayModeForRPC()
     {
         var s = (Settings)Application.Current.TryFindResource("Settings");
         if (s.ShowDiscordRPCOverlayMode)
         {
-            return this.GetOverlayMode();
+            if (s.DiscordOverlayMode == "Final" || (s.DiscordOverlayMode == "Automatic" && s.OverlayWatermarkMode == "Final"))
+            {
+                return $"{GetFinalOverlayMode()} | ";
+            }
+            else
+            {
+                return this.GetOverlayMode() switch
+                {
+                    OverlayMode.Standard => "Standard | ",
+                    OverlayMode.Configuring => "Configuring | ",
+                    OverlayMode.ClosedGame => "Closed Game | ",
+                    OverlayMode.Launcher => "Launcher | ",
+                    OverlayMode.NoGame => "Game not found | ",
+                    OverlayMode.MainMenu => "Main menu | ",
+                    OverlayMode.WorldSelect => "World Select | ",
+                    OverlayMode.TimeAttack => "Time Attack | ",
+                    OverlayMode.FreestyleSecretTech => "Freestyle Secret Tech | ",
+                    OverlayMode.Freestyle => "Freestyle | ", // TODO rename?
+                    OverlayMode.Zen => "Zen | ",
+                    _ => string.Empty,
+
+                };
+            }
         }
         else
         {
@@ -1510,7 +1574,7 @@ TreeScope.Children, condition);
     /// Gets the overlay mode.
     /// </summary>
     /// <returns></returns>
-    public string GetOverlayMode()
+    public OverlayMode GetOverlayMode()
     {
         var s = (Settings)Application.Current.TryFindResource("Settings");
         var playerAtk = 0;
@@ -1526,27 +1590,27 @@ TreeScope.Children, condition);
 
         if (this.Configuring)
         {
-            return "(Configuring) ";
+            return OverlayMode.Configuring;
         }
         else if (this.ClosedGame)
         {
-            return "(Closed Game) ";
+            return OverlayMode.ClosedGame;
         }
         else if (this.IsInLauncherBool || this.IsInLauncher() == "Yes") // works?
         {
-            return "(Launcher) ";
+            return OverlayMode.Launcher;
         }
         else if (this.IsInLauncher() == "NULL")
         {
-            return "(No game detected) ";
+            return OverlayMode.NoGame;
         }
         else if (this.QuestID() == 0 && this.AreaID() == 0 && this.BlademasterWeaponID() == 0 && this.GunnerWeaponID() == 0)
         {
-            return "(Main Menu) ";
+            return OverlayMode.MainMenu;
         }
         else if (this.QuestID() == 0 && this.AreaID() == 200 && this.BlademasterWeaponID() == 0 && this.GunnerWeaponID() == 0)
         {
-            return "(World Select) ";
+            return OverlayMode.WorldSelect;
         } // TODO do i need to check for road and dure?
         else if (
             !(
@@ -1582,26 +1646,26 @@ TreeScope.Children, condition);
             || s.PersonalBestTimePercentShown
             || s.EnablePersonalBestPaceColor) // TODO monster 1 overview? and update README
         {
-            return string.Empty;
+            return OverlayMode.Standard;
         }
         else if (s.TimerInfoShown && s.EnableInputLogging && s.EnableQuestLogging && this.PartySize() == 1 && s.OverlayModeWatermarkShown)
         {
             if (this.DivaSkillUsesLeft() == 0 && this.StyleRank1() != 15 && this.StyleRank2() != 15)
             {
-                return "(Time Attack) ";
+                return OverlayMode.TimeAttack;
             }
             else if (this.StyleRank1() == 15 || this.StyleRank2() == 15)
             {
-                return "(Freestyle w/ Secret Tech) ";
+                return OverlayMode.FreestyleSecretTech;
             }
             else
             {
-                return "(Freestyle No Secret Tech) ";
+                return OverlayMode.Freestyle;
             }
         }
         else
         {
-            return "(Zen) ";
+            return OverlayMode.Zen;
         }
     }
 
@@ -10933,7 +10997,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
 
     public double PreviousActionsPerMinute { get; set; }
 
-    public string PreviousOverlayMode { get; set; } = "N/A";
+    public OverlayMode PreviousOverlayMode { get; set; } = OverlayMode.Unknown;
 
     public double PreviousMonster1AttackMultiplier { get; set; }
 
@@ -11822,7 +11886,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             try
             {
                 this.PreviousOverlayMode = this.GetOverlayMode();
-                this.OverlayModeDictionary.Add(this.TimeInt(), this.GetOverlayMode());
+                this.OverlayModeDictionary.Add(this.TimeInt(), GetOverlayModeForStorage());
             }
             catch (Exception ex)
             {
@@ -12165,7 +12229,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         this.PreviousPlayerStamina = 0;
         this.PreviousHitsPerSecond = 0;
         this.PreviousActionsPerMinute = 0;
-        this.PreviousOverlayMode = "N/A";
+        this.PreviousOverlayMode = OverlayMode.Unknown;
         this.PreviousRoadFloor = 0;
 
         this.PreviousMonster1AttackMultiplier = 0;
@@ -12260,22 +12324,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         }
     }
 
-    public string OverlayModeWatermarkText
-    {
-        get
-        {
-            var overlayMode = this.GetOverlayMode();
-            overlayMode = overlayMode.Replace("(", string.Empty);
-            overlayMode = overlayMode.Replace(")", string.Empty);
-            overlayMode = overlayMode.Trim();
-            if (overlayMode == null || overlayMode == string.Empty)
-            {
-                overlayMode = "Standard";
-            }
-
-            return overlayMode;
-        }
-    }
+    public string OverlayModeWatermarkText => ShowOverlayModeFinalMode() ? GetFinalOverlayMode() : GetOverlayModeForStorage();
 
     public string QuestIDBind => this.QuestID().ToString(CultureInfo.InvariantCulture);
 
@@ -12396,6 +12445,12 @@ After all that you’ve unlocked magnet spike! You should get a material to make
     {
         var s = (Settings)Application.Current.TryFindResource("Settings");
         return s.EnableCurrentHPPercentage;
+    }
+
+    public static bool ShowOverlayModeFinalMode()
+    {
+        var s = (Settings)Application.Current.TryFindResource("Settings");
+        return s.OverlayWatermarkMode == "Final";
     }
 
     public static string FindAreaIcon(int id)

@@ -12,7 +12,7 @@ namespace MHFZ_Overlay {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.6.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.7.0.0")]
     public sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -2749,7 +2749,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool ShowDiscordRPCOverlayMode {
             get {
                 return ((bool)(this["ShowDiscordRPCOverlayMode"]));
@@ -3908,6 +3908,30 @@ namespace MHFZ_Overlay {
             }
             set {
                 this["VolumeGachaRare"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Final")]
+        public string OverlayWatermarkMode {
+            get {
+                return ((string)(this["OverlayWatermarkMode"]));
+            }
+            set {
+                this["OverlayWatermarkMode"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Automatic")]
+        public string DiscordOverlayMode {
+            get {
+                return ((string)(this["DiscordOverlayMode"]));
+            }
+            set {
+                this["DiscordOverlayMode"] = value;
             }
         }
     }

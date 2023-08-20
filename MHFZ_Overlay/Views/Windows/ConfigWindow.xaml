@@ -1384,6 +1384,7 @@
                                             <RowDefinition Height="40"/>
                                             <RowDefinition Height="40"/>
                                             <RowDefinition Height="40"/>
+                                            <RowDefinition Height="40"/>
                                         </Grid.RowDefinitions>
                                         <TextBlock Margin="5" ToolTip="{Binding Source={StaticResource Settings}, Path=GameFolderPath}" Style="{StaticResource ConfigTextBox}" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" Grid.ColumnSpan="2" Text="Hover to view game folder path (automatically set by checking the folder location of the current mhf.exe at overlay startup)"/>
                                         <TextBlock Margin="5" ToolTip="{Binding Source={StaticResource Settings}, Path=DatabaseFilePath}" Style="{StaticResource ConfigTextBox}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" Text="Hover to view database file path"/>
@@ -1399,11 +1400,20 @@
                                         <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="3" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=EnableInputLogging}"/>
                                         <StackPanel Margin="5" Orientation="Horizontal" Grid.Row="4" Grid.Column="0" >
                                             <ui:SymbolIcon Symbol="Info28" FontSize="28" Foreground="{StaticResource Blue}" Margin="0,0,5,0" ToolTip="Required for Speedrun Modes"/>
-                                            <TextBlock ToolTip="Show a watermark that has to be visible at all times during a YouTube video of a quest run in order for the run to be verified" Style="{StaticResource ConfigTextBox}" Text="Overlay Mode Watermark" />
+                                            <TextBlock ToolTip="Show a watermark that displays the overlay mode" Style="{StaticResource ConfigTextBox}" Text="Overlay Mode Watermark" />
                                         </StackPanel>
                                         <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="4" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=OverlayModeWatermarkShown}"/>
 
-                                        <Grid Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2">
+                                        <StackPanel Margin="5" Orientation="Horizontal" Grid.Row="5" Grid.Column="0" >
+                                            <ui:SymbolIcon Symbol="Info28" FontSize="28" Foreground="{StaticResource Lavender}" Margin="0,0,5,0" ToolTip="Recommended for Speedrun Modes (Final option)"/>
+                                            <TextBlock ToolTip="Set the overlay mode option. Current: the current mode. Final: the mode that would be stored in database. Recommended to use Final for Speedrun modes." Style="{StaticResource ConfigTextBox}" Text="Overlay Mode Watermark Option" />
+                                        </StackPanel>
+                                        <ComboBox Grid.Column="1" Grid.Row="5" SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=OverlayWatermarkMode}">
+                                            <ComboBoxItem>Current</ComboBoxItem>
+                                            <ComboBoxItem>Final</ComboBoxItem>
+                                        </ComboBox>
+
+                                        <Grid Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2">
                                             <StackPanel Orientation="Horizontal">
                                                 <Button BorderThickness="0"  Background="Transparent" Width="48" Height="32">
                                                     <Button.Content>
@@ -1414,92 +1424,92 @@
                                             </StackPanel>
                                         </Grid>
 
-                                        <StackPanel Orientation="Horizontal" Margin="5" Grid.Row="6" Grid.Column="0" ToolTip="If disabled, your nationality will be shown as 'World' in the database, regardless of the nationality selected below.">
-                                            <Image Source="../../Assets/Icons/png/world.png" Margin="0,0,5,0"/>
-                                            <TextBlock Style="{StaticResource ConfigTextBox}" Text="Show Nationality"/>
-                                        </StackPanel>
-                                        <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="6" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=EnableNationality}"/>
-                                        <TextBlock Margin="5" ToolTip="Select nationality to display on website for quest records" Style="{StaticResource ConfigTextBox}" Grid.Row="7" Grid.Column="0"  Text="Player Nationality"/>
-                                        <ComboBox VirtualizingStackPanel.IsVirtualizing="True" SelectedIndex="{Binding Source={StaticResource Settings}, Path=PlayerNationalityIndex}" Grid.Column="1" Grid.Row="7"  x:Name="CountryComboBox" ItemsSource="{Binding Countries,Mode=OneTime}" SelectionChanged="CountryComboBox_SelectionChanged">
-                                            <ComboBox.ItemTemplate>
-                                                <DataTemplate>
-                                                    <VirtualizingStackPanel Orientation="Horizontal">
-                                                        <Image Source="{Binding Flag.Png}" Width="20" Height="20" Margin="0,0,5,0"/>
-                                                        <TextBlock Text="{Binding Name.Common}"/>
-                                                    </VirtualizingStackPanel>
-                                                </DataTemplate>
-                                            </ComboBox.ItemTemplate>
-                                        </ComboBox>
-                                        <StackPanel Orientation="Horizontal" Margin="5" Grid.Row="8" Grid.Column="0" ToolTip="Show the current Quest ID in overlay">
-                                            <Image Source="../../Assets/Icons/png/quest_host.png" Margin="0,0,5,0"/>
-                                            <TextBlock Style="{StaticResource ConfigTextBox}" Text="Quest ID" />
-                                        </StackPanel>
-                                        <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="8" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=QuestIDShown}"/>
-                                        <TextBlock Margin="5" Style="{StaticResource ConfigTextBox}" Grid.Row="9" Grid.Column="0"  Text="Quest ID Position"/>
-                                        <StackPanel Orientation="Horizontal" Grid.Row="9" Grid.Column="1" HorizontalAlignment="Center">
-                                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center" PlaceholderText="X" Text="{Binding Source={StaticResource Settings},Path=QuestIDX}"  PreviewTextInput="ValidateNumber"/>
-                                            <ui:TextBox Margin="5,0,0,0" IsUndoEnabled="False" TextAlignment="Center" PlaceholderText="Y" Text="{Binding Source={StaticResource Settings},Path=QuestIDY}"  PreviewTextInput="ValidateNumber"/>
-                                        </StackPanel>
-                                        <StackPanel Orientation="Horizontal" Margin="5" Grid.Row="10" Grid.Column="0" ToolTip="Show the personal best of the selected quest with the selected weapon type and overlay mode">
-                                            <Image Source="../../Assets/Icons/png/quest_clock.png" Margin="0,0,5,0"/>
-                                            <TextBlock Style="{StaticResource ConfigTextBox}" Text="Personal Best"/>
-                                        </StackPanel>
-                                        <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="10" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=PersonalBestShown}"/>
-                                        <TextBlock Margin="5" Style="{StaticResource ConfigTextBox}" Grid.Row="11" Grid.Column="0"  Text="Personal Best Position"/>
-                                        <StackPanel Orientation="Horizontal" Grid.Row="11" Grid.Column="1" HorizontalAlignment="Center">
-                                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="X" Text="{Binding Source={StaticResource Settings},Path=PersonalBestX}"  PreviewTextInput="ValidateNumber"/>
-                                            <ui:TextBox Margin="5,0,0,0" IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="Y" Text="{Binding Source={StaticResource Settings},Path=PersonalBestY}"  PreviewTextInput="ValidateNumber"/>
-                                        </StackPanel>
-                                        <TextBlock Margin="5" Grid.Row="12" Grid.Column="0" Style="{StaticResource ConfigTextBox}" Text="Personal Best Pace Color" ToolTip="Mark PB time as red if the current pace is greater than the personal best pace (approximation)" />
-                                        <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="12" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=EnablePersonalBestPaceColor}"/>
+                                        <StackPanel Orientation="Horizontal" Margin="5" Grid.Row="7" Grid.Column="0" ToolTip="If disabled, your nationality will be shown as 'World' in the database, regardless of the nationality selected below.">
+                                        <Image Source="../../Assets/Icons/png/world.png" Margin="0,0,5,0"/>
+                                        <TextBlock Style="{StaticResource ConfigTextBox}" Text="Show Nationality"/>
+                                    </StackPanel>
+                                    <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="7" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=EnableNationality}"/>
+                                    <TextBlock Margin="5" ToolTip="Select nationality to display on website for quest records" Style="{StaticResource ConfigTextBox}" Grid.Row="8" Grid.Column="0"  Text="Player Nationality"/>
+                                    <ComboBox VirtualizingStackPanel.IsVirtualizing="True" SelectedIndex="{Binding Source={StaticResource Settings}, Path=PlayerNationalityIndex}" Grid.Column="1" Grid.Row="8"  x:Name="CountryComboBox" ItemsSource="{Binding Countries,Mode=OneTime}" SelectionChanged="CountryComboBox_SelectionChanged">
+                                        <ComboBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <VirtualizingStackPanel Orientation="Horizontal">
+                                                    <Image Source="{Binding Flag.Png}" Width="20" Height="20" Margin="0,0,5,0"/>
+                                                    <TextBlock Text="{Binding Name.Common}"/>
+                                                </VirtualizingStackPanel>
+                                            </DataTemplate>
+                                        </ComboBox.ItemTemplate>
+                                    </ComboBox>
+                                    <StackPanel Orientation="Horizontal" Margin="5" Grid.Row="9" Grid.Column="0" ToolTip="Show the current Quest ID in overlay">
+                                        <Image Source="../../Assets/Icons/png/quest_host.png" Margin="0,0,5,0"/>
+                                        <TextBlock Style="{StaticResource ConfigTextBox}" Text="Quest ID" />
+                                    </StackPanel>
+                                    <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="9" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=QuestIDShown}"/>
+                                    <TextBlock Margin="5" Style="{StaticResource ConfigTextBox}" Grid.Row="10" Grid.Column="0"  Text="Quest ID Position"/>
+                                    <StackPanel Orientation="Horizontal" Grid.Row="10" Grid.Column="1" HorizontalAlignment="Center">
+                                        <ui:TextBox IsUndoEnabled="False" TextAlignment="Center" PlaceholderText="X" Text="{Binding Source={StaticResource Settings},Path=QuestIDX}"  PreviewTextInput="ValidateNumber"/>
+                                        <ui:TextBox Margin="5,0,0,0" IsUndoEnabled="False" TextAlignment="Center" PlaceholderText="Y" Text="{Binding Source={StaticResource Settings},Path=QuestIDY}"  PreviewTextInput="ValidateNumber"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" Margin="5" Grid.Row="11" Grid.Column="0" ToolTip="Show the personal best of the selected quest with the selected weapon type and overlay mode">
+                                        <Image Source="../../Assets/Icons/png/quest_clock.png" Margin="0,0,5,0"/>
+                                        <TextBlock Style="{StaticResource ConfigTextBox}" Text="Personal Best"/>
+                                    </StackPanel>
+                                    <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="11" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=PersonalBestShown}"/>
+                                    <TextBlock Margin="5" Style="{StaticResource ConfigTextBox}" Grid.Row="12" Grid.Column="0"  Text="Personal Best Position"/>
+                                    <StackPanel Orientation="Horizontal" Grid.Row="12" Grid.Column="1" HorizontalAlignment="Center">
+                                        <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="X" Text="{Binding Source={StaticResource Settings},Path=PersonalBestX}"  PreviewTextInput="ValidateNumber"/>
+                                        <ui:TextBox Margin="5,0,0,0" IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="Y" Text="{Binding Source={StaticResource Settings},Path=PersonalBestY}"  PreviewTextInput="ValidateNumber"/>
+                                    </StackPanel>
+                                    <TextBlock Margin="5" Grid.Row="13" Grid.Column="0" Style="{StaticResource ConfigTextBox}" Text="Personal Best Pace Color" ToolTip="Mark PB time as red if the current pace is greater than the personal best pace (approximation)" />
+                                    <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="13" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=EnablePersonalBestPaceColor}"/>
 
-                                        <StackPanel Orientation="Horizontal" Margin="5" Grid.Row="13" Grid.Column="0" ToolTip="Show Personal Best Time Percent">
-                                            <Image Margin="0,0,5,0">
-                                                <Image.Source>
-                                                    <DrawingImage>
-                                                        <DrawingImage.Drawing>
-                                                            <GeometryDrawing>
-                                                                <GeometryDrawing.Geometry>
-                                                                    <PathGeometry Figures="M32 0C49.7 0 64 14.3 64 32V48l69-17.2c38.1-9.5 78.3-5.1 113.5 12.5c46.3 23.2 100.8 23.2 147.1 0l9.6-4.8C423.8 28.1 448 43.1 448 66.1V345.8c0 13.3-8.3 25.3-20.8 30l-34.7 13c-46.2 17.3-97.6 14.6-141.7-7.4c-37.9-19-81.4-23.7-122.5-13.4L64 384v96c0 17.7-14.3 32-32 32s-32-14.3-32-32V400 334 64 32C0 14.3 14.3 0 32 0zM64 187.1l64-13.9v65.5L64 252.6V318l48.8-12.2c5.1-1.3 10.1-2.4 15.2-3.3V238.7l38.9-8.4c8.3-1.8 16.7-2.5 25.1-2.1l0-64c13.6 .4 27.2 2.6 40.4 6.4l23.6 6.9v66.7l-41.7-12.3c-7.3-2.1-14.8-3.4-22.3-3.8v71.4c21.8 1.9 43.3 6.7 64 14.4V244.2l22.7 6.7c13.5 4 27.3 6.4 41.3 7.4V194c-7.8-.8-15.6-2.3-23.2-4.5l-40.8-12v-62c-13-3.8-25.8-8.8-38.2-15c-8.2-4.1-16.9-7-25.8-8.8v72.4c-13-.4-26 .8-38.7 3.6L128 173.2V98L64 114v73.1zM320 335.7c16.8 1.5 33.9-.7 50-6.8l14-5.2V251.9l-7.9 1.8c-18.4 4.3-37.3 5.7-56.1 4.5v77.4zm64-149.4V115.4c-20.9 6.1-42.4 9.1-64 9.1V194c13.9 1.4 28 .5 41.7-2.6l22.3-5.2z" FillRule="NonZero"/>
-                                                                </GeometryDrawing.Geometry>
-                                                                <GeometryDrawing.Brush>
-                                                                    <SolidColorBrush Color="#11111b" />
-                                                                </GeometryDrawing.Brush>
-                                                            </GeometryDrawing>
-                                                        </DrawingImage.Drawing>
-                                                    </DrawingImage>
-                                                </Image.Source>
-                                            </Image>
-                                            <TextBlock Style="{StaticResource ConfigTextBox}" Text="Personal Best Time Percent" />
+                                    <StackPanel Orientation="Horizontal" Margin="5" Grid.Row="14" Grid.Column="0" ToolTip="Show Personal Best Time Percent">
+                                        <Image Margin="0,0,5,0">
+                                            <Image.Source>
+                                                <DrawingImage>
+                                                    <DrawingImage.Drawing>
+                                                        <GeometryDrawing>
+                                                            <GeometryDrawing.Geometry>
+                                                                <PathGeometry Figures="M32 0C49.7 0 64 14.3 64 32V48l69-17.2c38.1-9.5 78.3-5.1 113.5 12.5c46.3 23.2 100.8 23.2 147.1 0l9.6-4.8C423.8 28.1 448 43.1 448 66.1V345.8c0 13.3-8.3 25.3-20.8 30l-34.7 13c-46.2 17.3-97.6 14.6-141.7-7.4c-37.9-19-81.4-23.7-122.5-13.4L64 384v96c0 17.7-14.3 32-32 32s-32-14.3-32-32V400 334 64 32C0 14.3 14.3 0 32 0zM64 187.1l64-13.9v65.5L64 252.6V318l48.8-12.2c5.1-1.3 10.1-2.4 15.2-3.3V238.7l38.9-8.4c8.3-1.8 16.7-2.5 25.1-2.1l0-64c13.6 .4 27.2 2.6 40.4 6.4l23.6 6.9v66.7l-41.7-12.3c-7.3-2.1-14.8-3.4-22.3-3.8v71.4c21.8 1.9 43.3 6.7 64 14.4V244.2l22.7 6.7c13.5 4 27.3 6.4 41.3 7.4V194c-7.8-.8-15.6-2.3-23.2-4.5l-40.8-12v-62c-13-3.8-25.8-8.8-38.2-15c-8.2-4.1-16.9-7-25.8-8.8v72.4c-13-.4-26 .8-38.7 3.6L128 173.2V98L64 114v73.1zM320 335.7c16.8 1.5 33.9-.7 50-6.8l14-5.2V251.9l-7.9 1.8c-18.4 4.3-37.3 5.7-56.1 4.5v77.4zm64-149.4V115.4c-20.9 6.1-42.4 9.1-64 9.1V194c13.9 1.4 28 .5 41.7-2.6l22.3-5.2z" FillRule="NonZero"/>
+                                                            </GeometryDrawing.Geometry>
+                                                            <GeometryDrawing.Brush>
+                                                                <SolidColorBrush Color="#11111b" />
+                                                            </GeometryDrawing.Brush>
+                                                        </GeometryDrawing>
+                                                    </DrawingImage.Drawing>
+                                                </DrawingImage>
+                                            </Image.Source>
+                                        </Image>
+                                        <TextBlock Style="{StaticResource ConfigTextBox}" Text="Personal Best Time Percent" />
                                         </StackPanel>
-                                        <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="13" Grid.Column="1" IsChecked="{Binding Source={StaticResource Settings}, Path=PersonalBestTimePercentShown}"/>
-                                        <TextBlock Margin="5" Style="{StaticResource ConfigTextBox}" Grid.Row="14" Grid.Column="0"  Text="Personal Best Time Percent Position"/>
-                                        <StackPanel Orientation="Horizontal" Grid.Row="14" Grid.Column="1" HorizontalAlignment="Center">
+                                        <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="14" Grid.Column="1" IsChecked="{Binding Source={StaticResource Settings}, Path=PersonalBestTimePercentShown}"/>
+                                        <TextBlock Margin="5" Style="{StaticResource ConfigTextBox}" Grid.Row="15" Grid.Column="0"  Text="Personal Best Time Percent Position"/>
+                                        <StackPanel Orientation="Horizontal" Grid.Row="15" Grid.Column="1" HorizontalAlignment="Center">
                                             <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="X" Text="{Binding Source={StaticResource Settings},Path=PersonalBestTimePercentX}"  PreviewTextInput="ValidateNumber"/>
                                             <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="Y" Margin="5,0,0,0" Text="{Binding Source={StaticResource Settings},Path=PersonalBestTimePercentY}"  PreviewTextInput="ValidateNumber"/>
                                         </StackPanel>
-                                        <StackPanel Orientation="Horizontal" Margin="5" Grid.Row="15" Grid.Column="0" ToolTip="Show Personal Best Attempts divided by overlay mode and weapon type. Resets to 0 if a new Personal Best is achieved.">
+                                        <StackPanel Orientation="Horizontal" Margin="5" Grid.Row="16" Grid.Column="0" ToolTip="Show Personal Best Attempts divided by overlay mode and weapon type. Resets to 0 if a new Personal Best is achieved.">
                                             <Image Source="../../Assets/Icons/png/quest_1.png" Margin="0,0,5,0"/>
                                             <TextBlock Style="{StaticResource ConfigTextBox}" Text="(Quest Logging required) Personal Best Attempts" />
                                         </StackPanel>
-                                        <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="15" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=PersonalBestAttemptsShown}"/>
-                                        <TextBlock Margin="5" Style="{StaticResource ConfigTextBox}" Grid.Row="16" Grid.Column="0"  Text="Personal Best Attempts Position"/>
-                                        <StackPanel Orientation="Horizontal" Grid.Row="16" Grid.Column="1" HorizontalAlignment="Center">
+                                        <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="16" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=PersonalBestAttemptsShown}"/>
+                                        <TextBlock Margin="5" Style="{StaticResource ConfigTextBox}" Grid.Row="17" Grid.Column="0"  Text="Personal Best Attempts Position"/>
+                                        <StackPanel Orientation="Horizontal" Grid.Row="17" Grid.Column="1" HorizontalAlignment="Center">
                                             <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="X" Text="{Binding Source={StaticResource Settings},Path=PersonalBestAttemptsX}"  PreviewTextInput="ValidateNumber"/>
                                             <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="Y" Margin="5,0,0,0" Text="{Binding Source={StaticResource Settings},Path=PersonalBestAttemptsY}"  PreviewTextInput="ValidateNumber"/>
                                         </StackPanel>
-                                        <StackPanel Orientation="Horizontal" Margin="5" Grid.Row="17" Grid.Column="0" ToolTip="Show Quest Attempts divided by overlay mode and weapon type">
+                                        <StackPanel Orientation="Horizontal" Margin="5" Grid.Row="18" Grid.Column="0" ToolTip="Show Quest Attempts divided by overlay mode and weapon type">
                                             <Image Source="../../Assets/Icons/png/ticket.png" Margin="0,0,5,0"/>
                                             <TextBlock Style="{StaticResource ConfigTextBox}" Text="Quest Attempts" />
                                         </StackPanel>
-                                        <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="17" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=QuestAttemptsShown}"/>
-                                        <TextBlock Margin="5" Style="{StaticResource ConfigTextBox}" Grid.Row="18" Grid.Column="0"  Text="Quest Attempts Position"/>
-                                        <StackPanel Orientation="Horizontal" Grid.Row="18" Grid.Column="1" HorizontalAlignment="Center">
+                                        <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="18" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=QuestAttemptsShown}"/>
+                                        <TextBlock Margin="5" Style="{StaticResource ConfigTextBox}" Grid.Row="19" Grid.Column="0"  Text="Quest Attempts Position"/>
+                                        <StackPanel Orientation="Horizontal" Grid.Row="19" Grid.Column="1" HorizontalAlignment="Center">
                                             <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="X" Text="{Binding Source={StaticResource Settings},Path=QuestAttemptsX}"  PreviewTextInput="ValidateNumber"/>
                                             <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="Y" Margin="5,0,0,0" Text="{Binding Source={StaticResource Settings},Path=QuestAttemptsY}"  PreviewTextInput="ValidateNumber"/>
                                         </StackPanel>
-                                        <TextBlock Margin="5" Style="{StaticResource ConfigTextBox}" Grid.Row="19" Grid.Column="0"  Text="Quest Completions Counter" ToolTip="Show quest completions next to the attempts"/>
-                                        <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="19" Grid.Column="1" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableQuestCompletionsCounter}"/>
+                                        <TextBlock Margin="5" Style="{StaticResource ConfigTextBox}" Grid.Row="20" Grid.Column="0"  Text="Quest Completions Counter" ToolTip="Show quest completions next to the attempts"/>
+                                        <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="20" Grid.Column="1" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableQuestCompletionsCounter}"/>
                                         <!--TODO: speedrun mode in overlay takes into account these settings + other things-->
                                     </Grid>
                                 </ScrollViewer>
@@ -3992,6 +4002,7 @@ Thunder Clad, Vigorous" Text="{Binding GetActiveSkillsForImage,Mode=OneTime}" Fo
                                 <RowDefinition Height="40"/>
                                 <RowDefinition Height="40"/>
                                 <RowDefinition Height="40"/>
+                                <RowDefinition Height="40"/>
                             </Grid.RowDefinitions>
                             <!--<TextBlock Margin="5" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Grid.ColumnSpan="2" Foreground="{StaticResource Text}">
                                        1. My Account -> Activity Privacy -> Check "Display current activity as a status message"
@@ -4050,6 +4061,12 @@ Thunder Clad, Vigorous" Text="{Binding GetActiveSkillsForImage,Mode=OneTime}" Fo
                             <TextBlock Margin="5" ToolTip="Show Overlay Mode" Style="{StaticResource ConfigTextBox}" Grid.Row="13" Grid.Column="0"  Text="Overlay Mode"/>
                             <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="13" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=ShowDiscordRPCOverlayMode}"/>
 
+                            <TextBlock Margin="5" ToolTip="Set Overlay Mode Option. Current: the current mode. Final: the mode that would be stored in database. Automatic: changes depending on overlay mode option found in the Quest Logs settings tab." Style="{StaticResource ConfigTextBox}" Grid.Row="14" Grid.Column="0"  Text="Overlay Mode Option"/>
+                            <ComboBox Grid.Column="1" Grid.Row="14" SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=DiscordOverlayMode}">
+                                <ComboBoxItem>Automatic</ComboBoxItem>
+                                <ComboBoxItem>Current</ComboBoxItem>
+                                <ComboBoxItem>Final</ComboBoxItem>
+                            </ComboBox>
                         </Grid>
                     </ScrollViewer>
                     <customcontrols:MainConfigurationActions Grid.Row="1" Grid.ColumnSpan="1" Loaded="MainConfigurationActions_Loaded" Unloaded="MainConfigurationActions_Unloaded"/>

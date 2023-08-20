@@ -7,11 +7,13 @@ namespace MHFZ_Overlay.Services;
 using System;
 using System.Diagnostics;
 using System.Globalization;
+using System.Windows;
 using DiscordRPC;
 using EZlion.Mapper;
 using MHFZ_Overlay;
 using MHFZ_Overlay.Models.Collections;
 using MHFZ_Overlay.Models.Constant;
+using MHFZ_Overlay.Models.Structures;
 
 /// <summary>
 /// Handles the Discord Rich Presence. Should not operate if the user is not enabling it.
@@ -216,13 +218,13 @@ public sealed class DiscordService
         }
 
         // TODO also need to handle the other fields lengths
-        if (string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}{3}{4}{5}", this.GetPartySize(dataLoader), GetQuestState(dataLoader), GetCaravanScore(dataLoader), dataLoader.Model.GetOverlayModeForRPC(), dataLoader.Model.GetAreaName(dataLoader.Model.AreaID()), GetGameMode(dataLoader.IsHighGradeEdition)).Length >= 95)
+        if (string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}{3}{4}{5}", dataLoader.Model.GetOverlayModeForRPC(), this.GetPartySize(dataLoader), GetQuestState(dataLoader), GetCaravanScore(dataLoader), dataLoader.Model.GetAreaName(dataLoader.Model.AreaID()), GetGameMode(dataLoader.IsHighGradeEdition)).Length >= 95)
         {
-            PresenceTemplate.Details = string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}", GetQuestState(dataLoader), dataLoader.Model.GetOverlayModeForRPC(), dataLoader.Model.GetAreaName(dataLoader.Model.AreaID()));
+            PresenceTemplate.Details = string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}", dataLoader.Model.GetOverlayModeForRPC(), GetQuestState(dataLoader), dataLoader.Model.GetAreaName(dataLoader.Model.AreaID()));
         }
         else
         {
-            PresenceTemplate.Details = string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}{3}{4}{5}", this.GetPartySize(dataLoader), GetQuestState(dataLoader), GetCaravanScore(dataLoader), dataLoader.Model.GetOverlayModeForRPC(), dataLoader.Model.GetAreaName(dataLoader.Model.AreaID()), GetGameMode(dataLoader.IsHighGradeEdition));
+            PresenceTemplate.Details = string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}{3}{4}{5}", dataLoader.Model.GetOverlayModeForRPC(), this.GetPartySize(dataLoader), GetQuestState(dataLoader), GetCaravanScore(dataLoader), dataLoader.Model.GetAreaName(dataLoader.Model.AreaID()), GetGameMode(dataLoader.IsHighGradeEdition));
         }
 
         var stateString = string.Empty;

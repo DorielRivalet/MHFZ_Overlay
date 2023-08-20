@@ -2237,7 +2237,7 @@ public sealed class AchievementService : IAchievementService
             case 340:
                 return s.EnableRichPresence;
             case 341:
-                if (dataLoader.Model.GetOverlayMode().Contains("Zen"))
+                if (dataLoader.Model.GetOverlayMode() == OverlayMode.Zen)
                 {
                     return true;
                 }
@@ -2247,7 +2247,7 @@ public sealed class AchievementService : IAchievementService
                 }
 
             case 342:
-                if (dataLoader.Model.GetOverlayMode().Contains("Freestyle"))
+                if (dataLoader.Model.GetOverlayMode() is OverlayMode.Freestyle or OverlayMode.FreestyleSecretTech )
                 {
                     return true;
                 }
