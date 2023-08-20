@@ -38,17 +38,21 @@ using LiveChartsCore.Defaults;
 using LiveChartsCore.Kernel.Sketches;
 using System.Windows.Markup;
 
-public partial class BingoWindowViewModel : ObservableRecipient
+public partial class BingoWindowViewModel : ObservableRecipient, IRecipient<QuestIDMessage>, IRecipient<RunIDMessage>
 {
-    private ObservableCollection<ObservableValue> _observableValues { get; set; }
+    private ObservableCollection<ObservableValue>? _observableValues { get; set; }
+
+    private static readonly NLog.Logger LoggerInstance = NLog.LogManager.GetCurrentClassLogger();
 
     public BingoWindowViewModel(SnackbarPresenter snackbarPresenter)
     {
-        WeakReferenceMessenger.Default.Register<QuestIDMessage>(this, OnReceivedQuestID);
-        WeakReferenceMessenger.Default.Register<RunIDMessage>(this, OnReceivedRunID);
         BingoWindowSnackbarPresenter = snackbarPresenter;
         SetGraphs();
     }
+
+    public void Receive(QuestIDMessage message) => OnReceivedQuestID(message);
+
+    public void Receive(RunIDMessage message) => OnReceivedRunID(message);
 
     private void SetGraphs()
     {
@@ -116,7 +120,7 @@ public partial class BingoWindowViewModel : ObservableRecipient
     [ObservableProperty]
     private BingoCell[,]? cells = new BingoCell[5, 5];
 
-    public ObservableCollection<ISeries> Series { get; set; }
+    public ObservableCollection<ISeries>? Series { get; set; }
 
     // TODO
     private void UpdateBingoBoard(int questID)
@@ -160,28 +164,22 @@ public partial class BingoWindowViewModel : ObservableRecipient
 
     partial void OnReceivedRunIDChanged(int value) => UpdateRunIDs(value);
 
-    private void OnReceivedQuestID(object recipient, QuestIDMessage message)
+    private void OnReceivedQuestID(QuestIDMessage message)
     {
-        // Handle the message here, with r being the recipient and m being the
-        // input message. Using the recipient passed as input makes it so that
-        // the lambda expression doesn't capture "this", improving performance.
-        MessageBox.Show(nameof(recipient));
         if (!IsBingoRunning)
         {
+            LoggerInstance.Info("Received Quest {0} but bingo is not running.", message);
             return;
         }
 
         ReceivedQuestID = message.Value;
     }
 
-    private void OnReceivedRunID(object recipient, RunIDMessage message)
+    private void OnReceivedRunID(RunIDMessage message)
     {
-        // Handle the message here, with r being the recipient and m being the
-        // input message. Using the recipient passed as input makes it so that
-        // the lambda expression doesn't capture "this", improving performance.
-        MessageBox.Show(nameof(recipient));
         if (!IsBingoRunning)
         {
+            LoggerInstance.Info("Received Run {0} but bingo is not running.", message);
             return;
         }
 

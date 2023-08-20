@@ -13,6 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MHFZ_Overlay.Models.Constant;
 using MHFZ_Overlay.Models.Structures;
+using MHFZ_Overlay.Services.Contracts;
 using NLog;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
 
@@ -23,12 +24,12 @@ public static class TimeService
 {
     private static readonly Logger LoggerInstance = LogManager.GetCurrentClassLogger();
 
-    public static double GetFramesFromTimeSpan(TimeSpan time)
+    private static double GetFramesFromTimeSpan(TimeSpan time)
     {
         return TimeSpan.FromSeconds(time.TotalSeconds * (double)Numbers.FramesPerSecond).TotalSeconds * (double)Numbers.FramesPerSecond;
     }
 
-    public static TimeSpan GetTimeSpanFromFrames(decimal frames)
+    private static TimeSpan GetTimeSpanFromFrames(decimal frames)
     {
         return TimeSpan.FromSeconds((double)frames / (double)Numbers.FramesPerSecond);
     }
@@ -99,7 +100,7 @@ TimeSpan: {timer2Result}
 Simple: {timer3Result}";
     }
 
-    public static string SimpleTimer(decimal timeInt, decimal timeDefInt = 0, bool timeLeftPercentShown = false, string timeLeftPercentNumber = "", TimerMode timerMode = TimerMode.Elapsed)
+    private static string SimpleTimer(decimal timeInt, decimal timeDefInt = 0, bool timeLeftPercentShown = false, string timeLeftPercentNumber = "", TimerMode timerMode = TimerMode.Elapsed)
     {
         // TODO wrong conditionals for timeint >= timedefint?
         decimal time = timerMode == TimerMode.Elapsed && timeInt <= timeDefInt ? time = timeDefInt - timeInt : time = timeInt;
@@ -113,7 +114,7 @@ Simple: {timer3Result}";
         return $"{minutes:00}:{seconds:00}.{remainingMilliseconds:000}" + timeLeftPercent;
     }
 
-    public static string StringBuilderTimer(decimal timeInt, TimerFormat timerFormat, bool isFrames = true, decimal timeDefInt = 0, bool timeLeftPercentShown = false, string timeLeftPercentNumber = "", TimerMode timerMode = TimerMode.Elapsed)
+    private static string StringBuilderTimer(decimal timeInt, TimerFormat timerFormat, bool isFrames = true, decimal timeDefInt = 0, bool timeLeftPercentShown = false, string timeLeftPercentNumber = "", TimerMode timerMode = TimerMode.Elapsed)
     {
         decimal time = timerMode == TimerMode.Elapsed && timeInt <= timeDefInt ? time = timeDefInt - timeInt : time = timeInt;
         decimal framesPerSecond = isFrames ? Numbers.FramesPerSecond : 1;
@@ -142,7 +143,7 @@ Simple: {timer3Result}";
         return sb.ToString();
     }
 
-    public static string TimeSpanTimer(decimal timeInt, decimal timeDefInt = 0, bool timeLeftPercentShown = false, string timeLeftPercentNumber = "", TimerMode timerMode = TimerMode.Elapsed)
+    private static string TimeSpanTimer(decimal timeInt, decimal timeDefInt = 0, bool timeLeftPercentShown = false, string timeLeftPercentNumber = "", TimerMode timerMode = TimerMode.Elapsed)
     {
         decimal time = timerMode == TimerMode.Elapsed && timeInt <= timeDefInt ? time = timeDefInt - timeInt : time = timeInt;
         decimal timeInSeconds = time / Numbers.FramesPerSecond;
