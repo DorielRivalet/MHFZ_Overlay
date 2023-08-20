@@ -1258,6 +1258,15 @@ public abstract class AddressModel : INotifyPropertyChanged
 
     public abstract int PartnyaBagItem10Qty();
 
+    /// <summary>
+    /// Normal/HC/UL. Set at quest counter option selection.
+    /// </summary>
+    /// <returns></returns>
+    public abstract int QuestToggleMonsterMode();
+
+    // TODO Prayer gems, bento, sharpness table, pvp, zenith in road, guild pugi, gear rarity colors.
+    // Database would store prayer gems, bento, sharpness table, pvp, guild pugi.
+
     public bool HasMonster2
     {
         get
@@ -4383,6 +4392,17 @@ TreeScope.Children, condition);
         }
     }
 
+    public string DetermineQuestToggleMonsterModeSelected(int mode)
+    {
+        return mode switch
+        {
+            (int)QuestToggleMonsterModeOption.Normal => @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/unknown.png",
+            (int)QuestToggleMonsterModeOption.Hardcore => @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/flame_hc.png",
+            (int)QuestToggleMonsterModeOption.Unlimited => @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/flame_ul.png",
+            _ => @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/unknown.png",
+        };
+    }
+
     public string Monster2HPBarColor => this.DetermineMonsterHPBarColor(2);
 
     public string Monster3HPBarColor => this.DetermineMonsterHPBarColor(3);
@@ -4413,6 +4433,10 @@ TreeScope.Children, condition);
     public string Monster3HPModeText { get; set; } = "THP";
 
     public string Monster4HPModeText { get; set; } = "THP";
+
+    public string QuestToggleModeSelected => this.DetermineQuestToggleMonsterModeSelected(QuestToggleMonsterMode());
+
+    public string QuestToggleModeSelectedShown => this.QuestToggleMonsterMode() is (int)QuestToggleMonsterModeOption.Hardcore or (int)QuestToggleMonsterModeOption.Unlimited ? "Visible" : "Collapsed";
 
     public string CurrentMap
     {

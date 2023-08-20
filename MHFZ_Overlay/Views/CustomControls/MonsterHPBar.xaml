@@ -8,7 +8,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-            xmlns:customcontrols="clr-namespace:MHFZ_Overlay.Views.CustomControls"
+            xmlns:customcontrols="clr-namespace:MHFZ_Overlay.Views.CustomControls" xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
              x:Name="window">
@@ -21,11 +21,13 @@
         <StackPanel Orientation="Vertical" Grid.Column="1">
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <customcontrols:OutlinedTextBlock Margin="10,0,0,0" Grid.Column="0" d:Text="Burning Freezing Elzelion" d:Fill="{StaticResource Blue}" Visibility="{Binding ElementName=window, Path=DescriptionShown, UpdateSourceTrigger=PropertyChanged}" x:Name="Descriptor" VerticalAlignment="Center" HorizontalAlignment="Left" Text="{Binding ElementName=window, Path=Desc, UpdateSourceTrigger=PropertyChanged}" FontSize="{Binding Path=PrimaryFontSize, Source={StaticResource Settings}}" FontFamily="{Binding Path=PrimaryFontFamily, Source={StaticResource Settings}}" FontWeight="{Binding Path=PrimaryFontWeight, Source={StaticResource Settings}}" StrokeThickness="4" Stroke="{Binding ElementName=window, Path=StrokeColor}" Fill="{Binding ElementName=window, Path=BarColor}"/>
-                <customcontrols:OutlinedTextBlock Margin="10,0,0,0" Grid.Column="1" d:Text="EHP" d:Fill="{StaticResource Text}" Visibility="{Binding ElementName=window, Path=HPModeShown, UpdateSourceTrigger=PropertyChanged}" x:Name="HPModeTextBlock" VerticalAlignment="Center" HorizontalAlignment="Right" Text="{Binding ElementName=window, Path=HPModeText, UpdateSourceTrigger=PropertyChanged}" FontSize="{Binding Path=SecondaryFontSize, Source={StaticResource Settings}}" FontFamily="{Binding Path=SecondaryFontFamily, Source={StaticResource Settings}}" FontWeight="{Binding Path=SecondaryFontWeight, Source={StaticResource Settings}}" StrokeThickness="4" Stroke="{StaticResource Base}" Fill="{StaticResource Text}"/>
+                <ui:Image d:Visibility="Visible" Visibility="{Binding ElementName=window, Path=QuestToggleModeShown, UpdateSourceTrigger=PropertyChanged}" Source="{Binding ElementName=window, Path=QuestToggleModeText, UpdateSourceTrigger=PropertyChanged}" x:Name="QuestToggleMonsterModeImage" Grid.Column="0" Margin="10,0,0,0" MaxWidth="16" d:Source="pack://application:,,,/Assets/Icons/png/flame_hc.png"/>
+                <customcontrols:OutlinedTextBlock Margin="10,0,0,0" Grid.Column="1" d:Text="Burning Freezing Elzelion" d:Fill="{StaticResource Blue}" Visibility="{Binding ElementName=window, Path=DescriptionShown, UpdateSourceTrigger=PropertyChanged}" x:Name="Descriptor" VerticalAlignment="Center" HorizontalAlignment="Left" Text="{Binding ElementName=window, Path=Desc, UpdateSourceTrigger=PropertyChanged}" FontSize="{Binding Path=PrimaryFontSize, Source={StaticResource Settings}}" FontFamily="{Binding Path=PrimaryFontFamily, Source={StaticResource Settings}}" FontWeight="{Binding Path=PrimaryFontWeight, Source={StaticResource Settings}}" StrokeThickness="4" Stroke="{Binding ElementName=window, Path=StrokeColor}" Fill="{Binding ElementName=window, Path=BarColor}"/>
+                <customcontrols:OutlinedTextBlock Margin="10,0,0,0" Grid.Column="2" d:Text="EHP" d:Fill="{StaticResource Text}" Visibility="{Binding ElementName=window, Path=HPModeShown, UpdateSourceTrigger=PropertyChanged}" x:Name="HPModeTextBlock" VerticalAlignment="Center" HorizontalAlignment="Right" Text="{Binding ElementName=window, Path=HPModeText, UpdateSourceTrigger=PropertyChanged}" FontSize="{Binding Path=SecondaryFontSize, Source={StaticResource Settings}}" FontFamily="{Binding Path=SecondaryFontFamily, Source={StaticResource Settings}}" FontWeight="{Binding Path=SecondaryFontWeight, Source={StaticResource Settings}}" StrokeThickness="4" Stroke="{StaticResource Base}" Fill="{StaticResource Text}"/>
             </Grid>
             <Grid Margin="5,5,0,0">
                 <Border d:BorderThickness="2" d:BorderBrush="{StaticResource Crust}" BorderBrush="{Binding ElementName=window, Path=BorderColor}" CornerRadius="2">

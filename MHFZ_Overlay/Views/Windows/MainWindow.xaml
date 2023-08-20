@@ -387,7 +387,9 @@
                                BarColor="{Binding  ElementName=Window, Path=DataLoader.Model.Monster1HPBarColor}" 
                                StrokeColor="{Binding  ElementName=Window, Path=DataLoader.Model.Monster1StrokeColor}"
                                HPMode="{Binding ElementName=Window, Path=DataLoader.Model.Monster1HPModeText}"
-                               BorderColor="{Binding ElementName=Window, Path=DataLoader.Model.Monster1BarBorderColor}"/>
+                               BorderColor="{Binding ElementName=Window, Path=DataLoader.Model.Monster1BarBorderColor}"
+                               QuestToggleMode="{Binding ElementName=Window, Path=DataLoader.Model.QuestToggleModeSelected}"
+                               QuestToggleModeShown="{Binding ElementName=Window, Path=DataLoader.Model.QuestToggleModeSelectedShown}"/>
         </Grid>
         <Grid Background="{Binding Source={StaticResource Settings},Path=HPBackGroundColor}" x:Name="Monster2HpBar" Canvas.Left="{Binding Source={StaticResource Settings},Path=Monster2HealthBarX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=Monster2HealthBarY}" MouseLeftButtonDown="ElementMouseLeftButtonDown"
               Visibility="{Binding ElementName=Window, Path=DataLoader.Model.ShowMonster2HPBar, Converter={StaticResource BoolToVis}}">

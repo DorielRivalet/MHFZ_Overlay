@@ -3934,5 +3934,29 @@ namespace MHFZ_Overlay {
                 this["DiscordOverlayMode"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool QuestToggleMonsterModeShown {
+            get {
+                return ((bool)(this["QuestToggleMonsterModeShown"]));
+            }
+            set {
+                this["QuestToggleMonsterModeShown"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool DiscordQuestToggleMonsterModeShown {
+            get {
+                return ((bool)(this["DiscordQuestToggleMonsterModeShown"]));
+            }
+            set {
+                this["DiscordQuestToggleMonsterModeShown"] = value;
+            }
+        }
     }
 }

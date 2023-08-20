@@ -7,7 +7,7 @@ namespace MHFZ_Overlay.Services.Contracts;
 using MHFZ_Overlay.Models;
 using MHFZ_Overlay.Models.Structures;
 
-public interface IChallenge
+public interface IChallengeService
 {
     /// <summary>
     /// The state of the challenges.

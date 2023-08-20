@@ -15,7 +15,7 @@ using MHFZ_Overlay.Models.Structures;
 using MHFZ_Overlay.Services.Contracts;
 using MHFZ_Overlay.Views.Windows;
 
-public sealed class ChallengeService : IChallenge
+public sealed class ChallengeService : IChallengeService
 {
     /// <inheritdoc/>
     public ChallengeState State { get; set; }

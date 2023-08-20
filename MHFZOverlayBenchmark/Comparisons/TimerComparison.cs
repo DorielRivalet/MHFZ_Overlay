@@ -12,6 +12,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
+// TODO optimize
 [RPlotExporter]
 [MedianColumn, MinColumn, MaxColumn]
 [UnicodeConsoleLogger]

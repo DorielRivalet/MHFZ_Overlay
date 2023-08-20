@@ -363,3 +363,17 @@ public enum QuestObjectiveType : uint
     SlayTotal = 131_072,
     SlayAll = 262_144,
 }
+
+/// <summary>
+/// Quest toggle monster mode option.
+/// </summary>
+[Flags]
+[JsonConverter(typeof(JsonStringEnumConverter))]
+public enum QuestToggleMonsterModeOption : uint
+{
+    [DefaultValue(Normal)]
+    Normal = 0,
+    Hardcore = 1,
+    UNK1 = 2,
+    Unlimited = Hardcore | UNK1,
+}
