@@ -1287,12 +1287,12 @@ public abstract class AddressModel : INotifyPropertyChanged
 
             if (this.CaravanOverride())
             {
-                return (this.CaravanMonster2ID() > 0 && this.Monster2HPInt() != 0 && this.GetNotRoad()) || this.Configuring;
+                return this.ShowHPBar(this.CaravanMonster2ID(), this.Monster2HPInt()) && this.GetNotRoad();
             }
             else
             {
                 // road check since the 2nd choice is used as the monster #1
-                return (this.LargeMonster2ID() > 0 && this.Monster2HPInt() != 0 && this.GetNotRoad()) || this.Configuring;
+                return this.ShowHPBar(this.LargeMonster2ID(), this.Monster2HPInt()) && this.GetNotRoad();
             }
         }
     }
@@ -4445,7 +4445,21 @@ TreeScope.Children, condition);
 
     public string QuestToggleModeSelected => this.DetermineQuestToggleMonsterModeSelected(QuestToggleMonsterMode());
 
-    public string QuestToggleModeSelectedShown => this.QuestToggleMonsterMode() is (int)QuestToggleMonsterModeOption.Hardcore or (int)QuestToggleMonsterModeOption.Unlimited ? "Visible" : "Collapsed";
+    public string QuestToggleModeSelectedShown
+    {
+        get
+        {
+            var s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
+
+            if (s.QuestToggleMonsterModeShown && (this.QuestToggleMonsterMode() is (int)QuestToggleMonsterModeOption.Hardcore or (int)QuestToggleMonsterModeOption.Unlimited))
+            {
+                return "Visible";
+            }
+            else{
+                return "Collapsed";
+            }
+        }
+    }
 
     public string CurrentMap
     {

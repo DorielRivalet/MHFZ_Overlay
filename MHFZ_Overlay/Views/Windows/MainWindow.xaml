@@ -406,8 +406,11 @@
                                NumMax="{Binding  ElementName=Window, Path=DataLoader.Model.Monster2MaxHP}"
                                BarColor="{Binding  ElementName=Window, Path=DataLoader.Model.Monster2HPBarColor}" 
                                StrokeColor="{Binding  ElementName=Window, Path=DataLoader.Model.Monster2StrokeColor}"
-                                HPMode="{Binding ElementName=Window, Path=DataLoader.Model.Monster2HPModeText}" BorderColor="{Binding ElementName=Window, Path=DataLoader.Model.Monster2BarBorderColor}"
-/>
+                                HPMode="{Binding ElementName=Window, Path=DataLoader.Model.Monster2HPModeText}"
+                                BorderColor="{Binding ElementName=Window, Path=DataLoader.Model.Monster2BarBorderColor}"
+                                QuestToggleMode="{Binding ElementName=Window, Path=DataLoader.Model.QuestToggleModeSelected}"
+                               QuestToggleModeShown="{Binding ElementName=Window, Path=DataLoader.Model.QuestToggleModeSelectedShown}"
+                                                 />
         </Grid>
         <Grid Background="{Binding Source={StaticResource Settings},Path=HPBackGroundColor}" x:Name="Monster3HpBar" Canvas.Left="{Binding Source={StaticResource Settings},Path=Monster3HealthBarX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=Monster3HealthBarY}" MouseLeftButtonDown="ElementMouseLeftButtonDown"
               Visibility="{Binding ElementName=Window, Path=DataLoader.Model.ShowMonster3HPBar, Converter={StaticResource BoolToVis}}">
@@ -426,6 +429,8 @@
                                StrokeColor="{Binding  ElementName=Window, Path=DataLoader.Model.Monster3StrokeColor}"
                                 HPMode="{Binding ElementName=Window, Path=DataLoader.Model.Monster3HPModeText}"
                                 BorderColor="{Binding ElementName=Window, Path=DataLoader.Model.Monster3BarBorderColor}"
+                                QuestToggleMode="{Binding ElementName=Window, Path=DataLoader.Model.QuestToggleModeSelected}"
+                               QuestToggleModeShown="{Binding ElementName=Window, Path=DataLoader.Model.QuestToggleModeSelectedShown}"
                             />
         </Grid>
         <Grid Background="{Binding Source={StaticResource Settings},Path=HPBackGroundColor}" x:Name="Monster4HpBar" Canvas.Left="{Binding Source={StaticResource Settings},Path=Monster4HealthBarX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=Monster4HealthBarY}" MouseLeftButtonDown="ElementMouseLeftButtonDown"
@@ -444,7 +449,9 @@
                                BarColor="{Binding  ElementName=Window, Path=DataLoader.Model.Monster4HPBarColor}" 
                                StrokeColor="{Binding  ElementName=Window, Path=DataLoader.Model.Monster4StrokeColor}"
                                 HPMode="{Binding ElementName=Window, Path=DataLoader.Model.Monster4HPModeText}"
-                                BorderColor="{Binding ElementName=Window, Path=DataLoader.Model.Monster4BarBorderColor}"/>
+                                BorderColor="{Binding ElementName=Window, Path=DataLoader.Model.Monster4BarBorderColor}"
+                                QuestToggleMode="{Binding ElementName=Window, Path=DataLoader.Model.QuestToggleModeSelected}"
+                               QuestToggleModeShown="{Binding ElementName=Window, Path=DataLoader.Model.QuestToggleModeSelectedShown}"/>
         </Grid>
         <Grid Background="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}" x:Name="MonsterAtkMultInfo"  Canvas.Left="{Binding Source={StaticResource Settings},Path=MonsterAtkMultX}"  Canvas.Top="{Binding Source={StaticResource Settings},Path=MonsterAtkMultY}" Width="Auto" Height="Auto" MouseLeftButtonDown="ElementMouseLeftButtonDown"
                Visibility="{Binding ElementName=Window, Path=DataLoader.Model.ShowMonsterAtkMult, Converter={StaticResource BoolToVis}}">
