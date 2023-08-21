@@ -158,7 +158,7 @@ As an alternative to hotkeys, you can use the system tray options by right-click
 
 - [x] Monster Effective HP Bars (*e.g.* Burning Freezing Elzelion's 1,000,000 HP!).
 
-You can also see the monster icons or renders, and there is an option for automatic bar colors depending on the monster. You can adjust the font size, color, family and weight; in addition to that you can hide/show any sub-component.
+You can also see the monster icons or renders, and there is an option for automatic bar colors depending on the monster. You can adjust the font size, color, family and weight; in addition to that you can hide/show any sub-component. Includes Hardcore and Unlimited icons.
 
 ![Monster HP Bars 1](./demo/hp1.png)
 ![Monster HP Bars 2](./demo/hp2.png)
@@ -315,7 +315,6 @@ Some sections have context menus where you can save the section contents to a fi
 - Handle multiple objectives information.
 - Zenith information in Road.
 - Raviente Support Part Info.
-- Detect UL/HC.
 - Guild Pugi address.
 - Armor Set Website links.
 - Sky Corridor.
