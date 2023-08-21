@@ -1264,8 +1264,17 @@ public abstract class AddressModel : INotifyPropertyChanged
     /// <returns></returns>
     public abstract int QuestToggleMonsterMode();
 
-    // TODO Prayer gems, bento, sharpness table, pvp, zenith in road, guild pugi, gear rarity colors.
-    // Database would store prayer gems, bento, sharpness table, pvp, guild pugi.
+    /// <TODO>
+    /// [] Not Done
+    /// [X] Done
+    /// [O] WIP
+    /// [] Prayer gems, 
+    /// [] bento, 
+    /// [] sharpness table, 
+    /// [] pvp, 
+    /// [] zenith in road, guild pugi, gear rarity colors.
+    /// [] Database would store prayer gems, bento, sharpness table, pvp, guild pugi. Should i use separate table?
+    /// </TODO>
 
     public bool HasMonster2
     {

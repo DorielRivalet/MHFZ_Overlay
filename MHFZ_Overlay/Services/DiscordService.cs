@@ -291,7 +291,7 @@ public sealed class DiscordService
                     }
                     else
                     {
-                        stateString = string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}{3}{4}{5}{6} | True Raw: {7} (Max {8}) | Hits: {9}", ViewModels.Windows.AddressModel.GetQuestNameFromID(dataLoader.Model.QuestID()), ViewModels.Windows.AddressModel.GetObjectiveNameFromID(dataLoader.Model.ObjectiveType()), string.Empty, dataLoader.Model.GetObjective1Quantity(), dataLoader.Model.GetRankNameFromID(dataLoader.Model.RankBand()), dataLoader.Model.GetStarGrade(), dataLoader.Model.GetRealMonsterName(), dataLoader.Model.ATK, dataLoader.Model.HighestAtk, dataLoader.Model.HitCountInt());
+                        stateString = string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}{3}{4}{5}{6} | True Raw: {7} (Max {8}) | Hits: {9}", ViewModels.Windows.AddressModel.GetQuestNameFromID(dataLoader.Model.QuestID()), ViewModels.Windows.AddressModel.GetObjectiveNameFromID(dataLoader.Model.ObjectiveType()), dataLoader.Model.GetObjective1Quantity(), dataLoader.Model.GetRankNameFromID(dataLoader.Model.RankBand()), GetQuestToggleMode(dataLoader.Model.QuestToggleMonsterMode()).TrimStart(), dataLoader.Model.GetStarGrade(), dataLoader.Model.GetRealMonsterName(), dataLoader.Model.ATK, dataLoader.Model.HighestAtk, dataLoader.Model.HitCountInt());
                         PresenceTemplate.State = stateString.Length <= MaxDiscordRPCStringLength ? stateString : string.Concat(stateString.AsSpan(0, MaxDiscordRPCStringLength - 3), "...");
                     }
 
@@ -1234,7 +1234,7 @@ public sealed class DiscordService
                     }
                     else
                     {
-                        return string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}{3}{4}{5} | ", ViewModels.Windows.AddressModel.GetObjectiveNameFromID(dataLoader.Model.ObjectiveType(), true), string.Empty, dataLoader.Model.GetObjective1Quantity(true), dataLoader.Model.GetRankNameFromID(dataLoader.Model.RankBand(), true), dataLoader.Model.GetStarGrade(true), dataLoader.Model.GetRealMonsterName(true));
+                        return string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}{3}{4}{5}{6} | ", ViewModels.Windows.AddressModel.GetObjectiveNameFromID(dataLoader.Model.ObjectiveType(), true), string.Empty, dataLoader.Model.GetObjective1Quantity(true), dataLoader.Model.GetRankNameFromID(dataLoader.Model.RankBand(), true), GetQuestToggleMode(dataLoader.Model.QuestToggleMonsterMode()), dataLoader.Model.GetStarGrade(true), dataLoader.Model.GetRealMonsterName(true));
                     }
             }
         }
@@ -1258,6 +1258,17 @@ public sealed class DiscordService
         {
             return string.Format(CultureInfo.InvariantCulture, "Party: {0}/{1} | ", dataLoader.Model.PartySize(), GetPartySizeMax(dataLoader));
         }
+    }
+
+    private static string GetQuestToggleMode(int option)
+    {
+        return option switch
+        {
+            (int)QuestToggleMonsterModeOption.Normal => string.Empty,
+            (int)QuestToggleMonsterModeOption.Hardcore => " HC ",
+            (int)QuestToggleMonsterModeOption.Unlimited => " UL ",
+            _ => string.Empty,
+        };
     }
 
     private static int GetPartySizeMax(DataLoader dataLoader)
