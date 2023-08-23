@@ -377,3 +377,17 @@ public enum QuestToggleMonsterModeOption : uint
     UNK1 = 2,
     Unlimited = Hardcore | UNK1,
 }
+
+/// <summary>
+/// Gauntlet Boost for Bingo.
+/// </summary>
+[Flags]
+[JsonConverter(typeof(JsonStringEnumConverter))]
+public enum GauntletBoost : uint
+{
+    [DefaultValue(None)]
+    None = 0,
+    Zenith = 1,
+    Solstice = 2,
+    Musou = 4,
+}
