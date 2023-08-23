@@ -2953,7 +2953,7 @@ public static class Achievements
             225, new Achievement()
             {
             CompletionDate = DateTime.UnixEpoch,
-            Title = "Fumo",
+            Title = "Fumo #1",
             Description = string.Empty,
             Rank = AchievementRank.Bronze,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/unknown_red.jpg",
@@ -5461,6 +5461,115 @@ During the travel to your destination, the top of the Great Forest, you notice t
             Objective = "Complete 1 Arrogant Duremudira True Slay quest with Secret Technique.",
             IsSecret = true,
             Hint = "Who said it's only useful for the knife attack?",
+            }
+        },
+        {
+            415, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "The Bingo Gauntlet",
+            Description = string.Empty,
+            Rank = AchievementRank.Gold,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/gauntlet_max.png",
+            Objective = "Start a bingo run with all gauntlet boosts active.",
+            IsSecret = false,
+            Hint = string.Empty,
+            }
+        },
+        {
+            416, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Master of Bingo",
+            Description = string.Empty,
+            Rank = AchievementRank.Platinum,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/zenny.jpg",
+            Objective = "Buy all Bingo challenge upgrades.",
+            IsSecret = false,
+            Hint = string.Empty,
+            }
+        },
+        {
+            417, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "The Sky's the Limit",
+            Description = string.Empty,
+            Rank = AchievementRank.Platinum,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/zenny.jpg",
+            Objective = "Buy all Sky Corridor challenge upgrades.",
+            IsSecret = false,
+            Hint = string.Empty,
+            }
+        },
+        {
+            418, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "No more upgrades!",
+            Description = string.Empty,
+            Rank = AchievementRank.Platinum,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/zenny.jpg",
+            Objective = "Buy all Gacha challenge upgrades.",
+            IsSecret = false,
+            Hint = string.Empty,
+            }
+        },  
+        {
+            419, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Fumo #2",
+            Description = string.Empty,
+            Rank = AchievementRank.Bronze,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/unknown_red.jpg",
+            Objective = "Click a fumo in Bingo challenge.",
+            IsSecret = true,
+            Hint =
+@"[] [] [] [] [S]
+[] [] [] [O] []
+[] [] [M] [] []
+[] [U] [] [] []
+[F] [] [] [] []",
+            }
+        },
+        {
+            420, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Fumo #3",
+            Description = string.Empty,
+            Rank = AchievementRank.Bronze,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/unknown_red.jpg",
+            Objective = "Click a fumo in Gacha challenge. Or not, it's probably a scam.",
+            IsSecret = true,
+            Hint = "Fumo is very expensive.",
+            }
+        },
+        {
+            421, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Fumo #4",
+            Description = string.Empty,
+            Rank = AchievementRank.Bronze,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/unknown_red.jpg",
+            Objective = "Click a fumo in Sky Corridor challenge. Looks like it underestimated your power.",
+            IsSecret = true,
+            Hint = "Fumo says it's over, it has the high ground.",
+            }
+        },
+        {
+            422, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Fumo #5",
+            Description = string.Empty,
+            Rank = AchievementRank.Bronze,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/unknown_red.jpg",
+            Objective = "Click a fumo in Frontier Compendium website and follow the hints.",
+            IsSecret = true,
+            Hint = "Get a hint from a fumo, not here!",
             }
         },
     });

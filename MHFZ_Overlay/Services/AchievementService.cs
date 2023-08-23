@@ -2558,6 +2558,14 @@ public sealed class AchievementService : IAchievementService
             case 412:
             case 413:
             case 414:
+            case 415:
+            case 416:
+            case 417:
+            case 418:
+            case 419:
+            case 420:
+            case 421:
+            case 422:
                 return false;
         }
     }
