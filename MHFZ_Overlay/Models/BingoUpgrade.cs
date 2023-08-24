@@ -22,6 +22,11 @@ public sealed class BingoUpgrade
     public string Description { get; set; } = string.Empty;
 
     /// <summary>
+    /// The icon of the upgrade.
+    /// </summary>
+    public string Icon { get; set; } = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/unknown.png";
+
+    /// <summary>
     /// The type of the bingo upgrade.
     /// </summary>
     public BingoUpgradeType Type { get; set; }
