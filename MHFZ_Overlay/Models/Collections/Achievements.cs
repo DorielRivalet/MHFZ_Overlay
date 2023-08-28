@@ -5572,5 +5572,83 @@ During the travel to your destination, the top of the Great Forest, you notice t
             Hint = "Get a hint from a fumo, not here!",
             }
         },
+        {
+            423, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "New Game+",
+            Description = string.Empty,
+            Rank = AchievementRank.Platinum,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/unknown_blue.jpg",
+            Objective = "Fully transcend once in a Bingo challenge.",
+            IsSecret = true,
+            Hint = "There's more to bingo than meets the eye.",
+            }
+        },
+        {
+            424, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "The Infinity Gauntlet",
+            Description = string.Empty,
+            Rank = AchievementRank.Platinum,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/unknown_blue.jpg",
+            Objective = "Use the ancient gauntlet to get an infinite amount of points in Sky Corridor. Or at least, try to.",
+            IsSecret = true,
+            Hint = "There's not one, but multiple gauntlets.",
+            }
+        },
+        {
+            425, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "No More Heroes in Ruins",
+            Description = string.Empty,
+            Rank = AchievementRank.Platinum,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/unknown_blue.jpg",
+            Objective = "Complete Tome I of the Book of Secrets (Challenge).",
+            IsSecret = false,
+            Hint = string.Empty,
+            }
+        },
+        {
+            426, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Dubito, Ergo Cogito, Ergo Sum",
+            Description = string.Empty,
+            Rank = AchievementRank.Platinum,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/unknown_blue.jpg",
+            Objective = "Complete Tome II of the Book of Secrets (Challenge).",
+            IsSecret = false,
+            Hint = string.Empty,
+            }
+        },
+        {
+            427, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Friend or Foe",
+            Description = string.Empty,
+            Rank = AchievementRank.Platinum,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/unknown_blue.jpg",
+            Objective = "Complete Tome III of the Book of Secrets (Challenge).",
+            IsSecret = false,
+            Hint = string.Empty,
+            }
+        },
+        {
+            428, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Shattered Dimensions",
+            Description = string.Empty,
+            Rank = AchievementRank.Platinum,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/unknown_blue.jpg",
+            Objective = "Complete Tome IV of the Book of Secrets (Challenge).",
+            IsSecret = false,
+            Hint = string.Empty,
+            }
+        },
     });
 }
