@@ -323,6 +323,46 @@ public enum BingoUpgradeType
     /// The multiplier for the time it took to complete the bingo from start button press to the moment the last square is completed on a line. Affected by certain multipliers, calculated right before BonusScore.
     /// </summary>
     RealTimeMultiplier,
+
+    /// <summary>
+    /// The chance of finding a page in a cell at board generation.
+    /// </summary>
+    PageFinderChance,
+
+    /// <summary>
+    /// The chance of finding an ancient dragon part's scraps in a cell at board generation.
+    /// </summary>
+    AncientDragonPartScrapChance,
+
+    /// <summary>
+    /// The rate for the compound interest of the bingo points. It compounds x times where x is the amount of bingo cells completed in a run.
+    /// </summary>
+    BingoPointsCompoundInterestRate,
+
+    /// <summary>
+    /// The cost reduction for the bingo shop upgrades.
+    /// </summary>
+    BingoShopUpgradeReduction,
+
+    /// <summary>
+    /// The rate/speed at which the transcend meter fills.
+    /// </summary>
+    TranscendMeterFillRate,
+
+    /// <summary>
+    /// The cost reduction of a true transcend (essentially lowers the meter capacity, which might be a drawback for using normal transcend).
+    /// </summary>
+    TrueTranscendCostReduction,
+
+    /// <summary>
+    /// Decreases the rate at which the transcend meter drains.
+    /// </summary>
+    TranscendMeterDrainReduction,
+
+    /// <summary>
+    /// Increases the grace period for obtaining the maximum time score.
+    /// </summary>
+    MaxTimeScoreGracePeriodIncrease,
 }
 
 public enum FrontierWeaponType
@@ -439,4 +479,34 @@ public enum ConfigurationPreset
     Zen,
     HPOnly,
     All,
+}
+
+public enum FrontierSharpness
+{
+    Red,
+    Orange,
+    Yellow,
+    Green,
+    Blue,
+    White,
+    Purple,
+    Cyan,
+}
+
+public enum FrontierMonsterType
+{
+    /// <summary>
+    /// ???, Unclassified, Unknown, etc.
+    /// </summary>
+    Other,
+
+    ElderDragon,
+    Carapaceon,
+    FlyingWyvern,
+    BruteWyvern,
+    PiscineWyvern,
+    BirdWyvern,
+    FangedBeast,
+    Leviathan,
+    FangedWyvern,
 }
