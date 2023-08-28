@@ -96,6 +96,7 @@ public partial class App : Application
         // Start the stopwatch
         stopwatch.Start();
 
+        // https://stackoverflow.com/questions/12729922/how-to-set-cultureinfo-invariantculture-default
         CultureInfo culture = CultureInfo.InvariantCulture;
 
         Thread.CurrentThread.CurrentCulture = culture;
