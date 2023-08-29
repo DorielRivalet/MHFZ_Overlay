@@ -78,9 +78,9 @@ Unlock an upgrade for increasing the chance of finding an ancient dragon part's 
                         Description = "Massive, membranous wings sprout from the sides, granting it the gift of flight. These wings bear testament to the creature's draconic heritage, allowing it to soar through the skies with an awe-inspiring presence. Their size and structure mirror those of legendary dragons, giving it both a fearsome aspect and unmatched aerial capabilities.",
                         Name = "Wings",
                         ImageLink = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/unknown.png",
-                        Effect = "Unlock the ability to rearrange monster cells during a run once, at a cost.",
-                        SynergyEffect = "Unlock the ability to rearrange monster cells during a run, up to 2 times, at a cost. Effects do not stack.",
-                        SourceEffect = "Unlock the ability to rearrange monster cells without any cost, up to 3 times. Effects do not stack.",
+                        Effect = "Unlock the ability to randomly rearrange cells at a cost.",
+                        SynergyEffect = "Unlock the ability to rearrange the weapon bonuses up to 3 cells of your choice per run once, at a cost.",
+                        SourceEffect = "Unlock the ability to rearrange up to 10 cells of your choice per run once, without any cost.",
                         GemsRequiredForScrap = new Dictionary<FrontierMonsterType, int>
                         {
                             { FrontierMonsterType.Other, 1 },
@@ -146,7 +146,7 @@ Unlock an upgrade for increasing the time score multiplier.",
                         Description = "A sturdy and stout tail extends from its rear, completing its fearsome form. This tail, like the rest of its body, is encased in armor, reinforcing its defensive capabilities. The tail's design is not just for appearance; it contributes to the creature's balance and agility, ensuring that it maintains control even during its most dynamic maneuvers.",
                         Name = "Tail",
                         ImageLink = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/unknown.png",
-                        Effect = "Unlock the ability to keep a certain amount of your current bingo points after doing a true transcend.",
+                        Effect = "Unlock the ability to keep a certain amount of your current bingo points after doing a true transcend. A maximum of 20,000 Bingo Points can be transferred if you have 100,000 Bingo Points or more.",
                         SynergyEffect = "Unlock the ability to keep one upgrade in its first level after doing a true transcend, at a cost.",
                         SourceEffect = "Unlock the ability to exchange gauntlet gems for bingo points, and vice versa.",
                         GemsRequiredForScrap = new Dictionary<FrontierMonsterType, int>
