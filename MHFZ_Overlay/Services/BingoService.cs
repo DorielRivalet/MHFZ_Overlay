@@ -11,6 +11,7 @@ using System.Globalization;
 using System.Linq;
 using System.Numerics;
 using System.Threading;
+using LiveChartsCore.Geo;
 using MHFZ_Overlay.Models;
 using MHFZ_Overlay.Models.Collections;
 using MHFZ_Overlay.Models.Constant;
@@ -89,11 +90,11 @@ public sealed class BingoService
     public long GetPlayerBingoPoints() => DatabaseServiceInstance.GetPlayerBingoPoints();
 
     /// <summary>
-    /// Buys the weapon rerolls.
+    /// Spends the bingo points according to the cost.
     /// </summary>
     /// <param name="cost"></param>
-    /// <returns>false if could not buy weapon rerolls.</returns>
-    public bool BuyWeaponReroll(long cost)
+    /// <returns>false if could not spend points.</returns>
+    public bool SpendBingoPoints(long cost)
     {
         var currentPlayerBingoPoints = GetPlayerBingoPoints();
 
@@ -209,6 +210,9 @@ public sealed class BingoService
         // The below function would be called here and at board generation to show the max possible score on the squares.
         var squareBingoPoints = CalculateBingoSquarePoints(baseScore, carts, monsterTypeMultiplier, isMiddleSquare, weaponBonusActive);
         var squares = 5;
+
+        // TODO number of lines crossing, max 4.
+        var linesCrossing = 4;
         var totalSquaresBingoPoints = squares * squareBingoPoints;
 
         var extremeDifficultyMultiplier = difficulty == Difficulty.Extreme ? 2 : 1;
@@ -220,31 +224,35 @@ public sealed class BingoService
 
         // TODO
         var elapsedRealTimeInSeconds = 0;
+        var elapsedRealTimeInHours = elapsedRealTimeInSeconds / 3600M;
 
         // TODO
-        var realTimeScore = RealTimeMultiplier * extremeDifficultyMultiplier * 1;
-        var maxRealTimeScore = 1000;
-        var maxRealTimeScoreSecondsLimit = Math.Ceiling(TimeSpan.FromMinutes(10 * extremeDifficultyMultiplier).TotalSeconds);
+        // f(x) = 1/(e^x) where x is the hours elapsed.
+        var realTimeScoreMultiplier = (1M + (1M / (decimal)Math.Pow(Math.E, (double)elapsedRealTimeInHours)) * (RealTimeMultiplier * extremeDifficultyMultiplier)); // max multi at infinite time tends to 4. max multi is 8.
+        var maxRealTimeScore = BingoStartCosts.DifficultyCosts[difficulty];
+        decimal maxRealTimeScoreSecondsLimit = (decimal)Math.Ceiling(TimeSpan.FromMinutes(10 * extremeDifficultyMultiplier).TotalSeconds);
 
+        decimal realTimeScore = 0;
+        // TODO maybe remove grace period. or make it an upgrade.
         if (elapsedRealTimeInSeconds <= maxRealTimeScoreSecondsLimit)
         {
             realTimeScore = maxRealTimeScore;
         }
         else
         {
-            realTimeScore = CalculateRealTimeScore(elapsedRealTimeInSeconds, realTimeScore, maxRealTimeScore, extremeDifficultyMultiplier);
+            realTimeScore = CalculateRealTimeScore(elapsedRealTimeInSeconds, realTimeScoreMultiplier, maxRealTimeScore, extremeDifficultyMultiplier);
         }
 
         // TODO
         // bingo ponts for final score = (total squares bingo points * extreme difficulty multiplier) +  + bonus score
-        var finalScore = (totalSquaresBingoPoints * extremeDifficultyMultiplier) +
-        (realTimeScore * bingoCompletionsLogMultiplier * obtainedAchievementsMultiplier) +
-        obtainedSecretAchievementsScore +
-        BonusScore;
+        // TODO see which one of the 2 affects the score the most (bingoBoardScore vs extraScore)
+        var bingoBoardScore = totalSquaresBingoPoints * linesCrossing * extremeDifficultyMultiplier;
+        var extraScore = realTimeScore * bingoCompletionsLogMultiplier * obtainedAchievementsMultiplier;
+        var finalScore = bingoBoardScore + extraScore + obtainedSecretAchievementsScore + BonusScore;
         return (int)Math.Ceiling(finalScore);
     }
 
-    public decimal CalculateRealTimeScore(int elapsedRealTimeInSeconds, decimal realTimeScore, int maxRealTimeScore, int extremeDifficultyMultiplier)
+    public decimal CalculateRealTimeScore(int elapsedRealTimeInSeconds, decimal realTimeScoreMultiplier, int maxRealTimeScore, int extremeDifficultyMultiplier)
     {
         var maxRealTimeScoreMinuteLimit = 10 * extremeDifficultyMultiplier;
         var maxRealTimeScoreLastSecond = TimeSpan.FromMinutes(maxRealTimeScoreMinuteLimit).TotalSeconds;
@@ -363,6 +371,78 @@ public sealed class BingoService
     public void SimulateBingoRuns(int runs)
     {
         // TODO statistics
+    }
+
+    /// <summary>
+    /// TODO upgrades affecting cost.
+    /// </summary>
+    /// <param name="gauntletBoost"></param>
+    /// <param name="difficulty"></param>
+    /// <param name="musouElzelionBoost"></param>
+    /// <returns></returns>
+    public int CalculateBingoStartCost(GauntletBoost gauntletBoost, Difficulty difficulty, bool musouElzelionBoost)
+    {
+        var cost = 0;
+
+        // Base cost based on difficulty
+        if (BingoStartCosts.DifficultyCosts.TryGetValue(difficulty, out var difficultyCost))
+        {
+            cost = difficultyCost;
+        }
+
+        // Additional cost based on gauntlet boost
+        if (gauntletBoost.HasFlag(GauntletBoost.Zenith))
+        {
+            cost += BingoStartCosts.GauntletBoostCosts[GauntletBoost.Zenith];
+        }
+
+        if (gauntletBoost.HasFlag(GauntletBoost.Solstice))
+        {
+            cost += BingoStartCosts.GauntletBoostCosts[GauntletBoost.Solstice];
+        }
+
+        if (gauntletBoost.HasFlag(GauntletBoost.Musou))
+        {
+            cost += BingoStartCosts.GauntletBoostCosts[GauntletBoost.Musou];
+        }
+
+        // Additional cost based on Musou Elzelion boost
+        if (musouElzelionBoost)
+        {
+            cost += BingoStartCosts.MusouElzelionBoostCost;
+        }
+
+        // Additional cost based on number of players
+        // cost += numberOfPlayers * 20;
+        return cost;
+    }
+
+    /// <summary>
+    /// Calculates the carts depending on difficulty selected, for bingo start.
+    /// </summary>
+    /// <param name="difficulty"></param>
+    /// <returns></returns>
+    public int CalculateCartsAtBingoStartFromSelectedDifficulty(Difficulty difficulty)
+    {
+        var carts = 0;
+
+        // Base carts based on difficulty
+        if (BingoDifficultyCarts.DifficultyCarts.TryGetValue(difficulty, out var difficultyCarts))
+        {
+            carts = difficultyCarts;
+        }
+
+        return carts;
+    }
+
+    /// <summary>
+    /// For testing only. TODO add for challenge unlocks.
+    /// </summary>
+    /// <param name="points"></param>
+    public long SetPlayerBingoPoints(long points)
+    {
+        DatabaseServiceInstance.SetPlayerBingoPoints(points);
+        return points;
     }
 
     private BingoService() => LoggerInstance.Info($"Service initialized");

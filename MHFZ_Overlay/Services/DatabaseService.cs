@@ -6867,7 +6867,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
 
-        Logger.Debug("Inserted into PlayerBingoPoints table");
+        Logger.Debug("Inserted into PlayerBingoPoints table value {0}", points);
     }
 
     private ZenithGauntlet GetLastZenithGauntlet(SQLiteConnection conn)

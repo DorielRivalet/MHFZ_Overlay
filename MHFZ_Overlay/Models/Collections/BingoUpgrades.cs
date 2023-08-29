@@ -188,7 +188,7 @@ public static class BingoUpgrades
             17, new BingoUpgrade
             {
                 CurrentLevel = 1,
-                Description = "Increases the score by a set multiplier depending if the completed bingo run was done with an horizontal line. Modifies bingo run final score.",
+                Description = "Increases the score by a set multiplier depending if the completed bingo run was done with a horizontal line. Modifies bingo run final score.",
                 MaxLevel = 10,
                 Name = "Horizontal Line Bingo Completion Multiplier",
                 Type = BingoUpgradeType.HorizontalLineCompletionMultiplier,
@@ -198,7 +198,7 @@ public static class BingoUpgrades
             18, new BingoUpgrade
             {
                 CurrentLevel = 1,
-                Description = "Increases the score by a set multiplier depending if the completed bingo run was done with an vertical line. Modifies bingo run final score.",
+                Description = "Increases the score by a set multiplier depending if the completed bingo run was done with a vertical line. Modifies bingo run final score.",
                 MaxLevel = 10,
                 Name = "Vertical Line Bingo Completion Multiplier",
                 Type = BingoUpgradeType.VerticalLineCompletionMultiplier,
@@ -208,7 +208,7 @@ public static class BingoUpgrades
             19, new BingoUpgrade
             {
                 CurrentLevel = 1,
-                Description = "Increases the score by a set multiplier depending if the completed bingo run was done with an diagonal line. Modifies bingo run final score.",
+                Description = "Increases the score by a set multiplier depending if the completed bingo run was done with a diagonal line. Modifies bingo run final score.",
                 MaxLevel = 10,
                 Name = "Diagonal Line Bingo Completion Multiplier",
                 Type = BingoUpgradeType.DiagonalLineCompletionMultiplier,
@@ -222,6 +222,86 @@ public static class BingoUpgrades
                 MaxLevel = 10,
                 Name = "Bingo Run Time Completion Multiplier",
                 Type = BingoUpgradeType.RealTimeMultiplier,
+            }
+        },
+        {
+            21, new BingoUpgrade
+            {
+                CurrentLevel = 1,
+                Description = "Increases the chance of finding a page in a cell at board generation.",
+                MaxLevel = 10,
+                Name = "Page Finder Chance",
+                Type = BingoUpgradeType.PageFinderChance,
+            }
+        },
+        {
+            22, new BingoUpgrade
+            {
+                CurrentLevel = 1,
+                Description = "Increases the chance of finding an ancient dragon part's scraps in a cell at board generation.",
+                MaxLevel = 10,
+                Name = "Scrap Finder Chance",
+                Type = BingoUpgradeType.AncientDragonPartScrapChance,
+            }
+        },
+        {
+            23, new BingoUpgrade
+            {
+                CurrentLevel = 1,
+                Description = "Increases the rate for the compound interest of the currently stored bingo points. It compounds x times where x is the amount of bingo cells completed in a run. The compound interest is calculated at the end of a run, taking into account the points obtained in the run plus the currently stored points.",
+                MaxLevel = 10,
+                Name = "Bingo Points Compound Interest Rate",
+                Type = BingoUpgradeType.BingoPointsCompoundInterestRate,
+            }
+        },
+        {
+            24, new BingoUpgrade
+            {
+                CurrentLevel = 1,
+                Description = "Reduces the cost of upgrades.",
+                MaxLevel = 10,
+                Name = "Upgrade Cost Reduction",
+                Type = BingoUpgradeType.BingoShopUpgradeReduction,
+            }
+        },
+        {
+            25, new BingoUpgrade
+            {
+                CurrentLevel = 1,
+                Description = "Increases the rate or speed at which the transcend meter fills.",
+                MaxLevel = 10,
+                Name = "Transcend Meter Fill Rate",
+                Type = BingoUpgradeType.TranscendMeterFillRate,
+            }
+        },
+        {
+            26, new BingoUpgrade
+            {
+                CurrentLevel = 1,
+                Description = "Reduces the cost of a true transcend. Lowers the transcend meter capacity, which might be a drawback when using normal transcend.",
+                MaxLevel = 10,
+                Name = "True Transcend Cost Reduction",
+                Type = BingoUpgradeType.TrueTranscendCostReduction,
+            }
+        },
+        {
+            27, new BingoUpgrade
+            {
+                CurrentLevel = 1,
+                Description = "Decreases the rate at which the transcend meter drains.",
+                MaxLevel = 10,
+                Name = "Transcend Meter Drain Reduction",
+                Type = BingoUpgradeType.TranscendMeterDrainReduction,
+            }
+        },
+        {
+            28, new BingoUpgrade
+            {
+                CurrentLevel = 1,
+                Description = "Increases the grace period for obtaining the maximum time score.",
+                MaxLevel = 10,
+                Name = "Maximum Time Score Grace Period Increase",
+                Type = BingoUpgradeType.MaxTimeScoreGracePeriodIncrease,
             }
         },
     });

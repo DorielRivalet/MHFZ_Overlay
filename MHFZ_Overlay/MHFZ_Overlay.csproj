@@ -59,6 +59,8 @@
     <None Remove="Assets\Background\7.png" />
     <None Remove="Assets\Background\8.png" />
     <None Remove="Assets\Background\9.png" />
+    <None Remove="Assets\Background\background_noise.png" />
+    <None Remove="Assets\Background\background_pattern1.png" />
     <None Remove="Assets\Fonts\Meslo LG M Regular Nerd Font Complete Mono Windows Compatible.ttf" />
     <None Remove="Assets\Fonts\Monster hunter type 2.ttf" />
     <None Remove="Assets\Fonts\OpenSans-Bold.ttf" />
@@ -870,6 +872,8 @@
     <Resource Include="Assets\Background\9.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Assets\Background\background_noise.png" />
+    <Resource Include="Assets\Background\background_pattern1.png" />
     <Resource Include="Assets\Fonts\Meslo LG M Regular Nerd Font Complete Mono Windows Compatible.ttf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>

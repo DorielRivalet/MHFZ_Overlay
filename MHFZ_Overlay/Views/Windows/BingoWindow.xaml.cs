@@ -6,6 +6,7 @@ namespace MHFZ_Overlay.Views.Windows;
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -16,6 +17,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using MHFZ_Overlay.Services;
@@ -33,6 +35,8 @@ public partial class BingoWindow : FluentWindow
     {
         InitializeComponent();
         ISnackbarService snackbarService = new SnackbarService();
+
+        // dependency injection?
         snackbarService.SetSnackbarPresenter(this.BingoWindowSnackBarPresenter);
         DataContext = new BingoWindowViewModel(this.BingoWindowSnackBarPresenter);
     }

@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MHFZ_Overlay.Models.Structures;
 
 public sealed class BingoMonster
 {
@@ -16,6 +17,11 @@ public sealed class BingoMonster
     /// The name of the monster
     /// </summary>
     public string Name { get; set; } = string.Empty;
+
+    /// <summary>
+    /// The type of the monster. Used to determine the scraps type to give.
+    /// </summary>
+    public FrontierMonsterType Type { get; set; }
 
     /// <summary>
     /// The image of the monster

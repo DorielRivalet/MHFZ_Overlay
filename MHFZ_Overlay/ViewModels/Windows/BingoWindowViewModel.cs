@@ -2,6 +2,9 @@
 // Use of this source code is governed by a MIT license that can be
 // found in the LICENSE file.
 
+using CommunityToolkit.Mvvm.Input;
+using System.Windows.Input;
+
 namespace MHFZ_Overlay.ViewModels.Windows;
 
 using System;
@@ -37,6 +40,9 @@ using System.Numerics;
 using LiveChartsCore.Defaults;
 using LiveChartsCore.Kernel.Sketches;
 using System.Windows.Markup;
+using System.Collections;
+using System.Runtime.CompilerServices;
+using System.Windows.Media.Animation;
 
 public partial class BingoWindowViewModel : ObservableRecipient, IRecipient<QuestIDMessage>, IRecipient<RunIDMessage>
 {
@@ -56,6 +62,7 @@ public partial class BingoWindowViewModel : ObservableRecipient, IRecipient<Ques
 
     private void SetGraphs()
     {
+        return;
         // Use ObservableCollections to let the chart listen for changes (or any INotifyCollectionChanged). 
         _observableValues = new ObservableCollection<ObservableValue>
         {
@@ -99,7 +106,23 @@ public partial class BingoWindowViewModel : ObservableRecipient, IRecipient<Ques
 
     public string? WeaponRerollButtonContent => $"Reroll weapon bonuses ({WeaponRerollCost} Bingo Points)";
 
-    public bool IsBingoNotRunning => IsBingoRunning == false;
+    public string? CartsBuyButtonContent => $"Buy carts ({CartsCost} Bingo Points)";
+
+    public string? BingoStartButtonContent => IsBingoRunning ? "Cancel" : $"Start ({BingoStartCost} Bingo Points)";
+
+    public string? BingoStartButtonIcon => IsBingoRunning ? "ArrowCounterClockwise20" : "Play20";
+
+    public string? BingoStartButtonBackground => IsBingoRunning ? CatppuccinMochaColors.NameHex["Red"] : CatppuccinMochaColors.NameHex["Green"];
+
+    public string? ZenithBoostText => $"Zenith Boost ({ZenithGauntletItems} left)";
+
+    public string? SolsticeBoostText => $"Solstice Boost ({SolsticeGauntletItems} left)";
+
+    public string? MusouBoostText => $"Musou Boost ({MusouGauntletItems} left)";
+
+    public bool IsGauntletBoostMax => GauntletBoost.HasFlag(GauntletBoost.Zenith) &&
+                    GauntletBoost.HasFlag(GauntletBoost.Solstice) &&
+                    GauntletBoost.HasFlag(GauntletBoost.Musou);
 
     public SnackbarPresenter BingoWindowSnackbarPresenter { get; }
 
@@ -164,6 +187,65 @@ public partial class BingoWindowViewModel : ObservableRecipient, IRecipient<Ques
 
     partial void OnReceivedRunIDChanged(int value) => UpdateRunIDs(value);
 
+    partial void OnSelectedDifficultyChanged(Difficulty value) => UpdateBingoStatsFromSelectedDifficulty(value);
+
+    partial void OnIsMusouElzelionBoostActiveChanged(bool value) => BingoStartCost = BingoServiceInstance.CalculateBingoStartCost(GauntletBoost, SelectedDifficulty, value);
+
+    partial void OnZenithBoostCheckedChanged(bool value)
+    {
+        if (value)
+        {
+            GauntletBoost |= GauntletBoost.Zenith;
+        }
+        else
+        {
+            GauntletBoost &= ~GauntletBoost.Zenith;
+        }
+
+        BingoStartCost = BingoServiceInstance.CalculateBingoStartCost(GauntletBoost, SelectedDifficulty, IsMusouElzelionBoostActive);
+    }
+
+    partial void OnSolsticeBoostCheckedChanged(bool value)
+    {
+        if (value)
+        {
+            GauntletBoost |= GauntletBoost.Solstice;
+        }
+        else
+        {
+            GauntletBoost &= ~GauntletBoost.Solstice;
+        }
+
+        BingoStartCost = BingoServiceInstance.CalculateBingoStartCost(GauntletBoost, SelectedDifficulty, IsMusouElzelionBoostActive);
+    }
+
+    partial void OnMusouBoostCheckedChanged(bool value)
+    {
+        if (value)
+        {
+            GauntletBoost |= GauntletBoost.Musou;
+        }
+        else
+        {
+            GauntletBoost &= ~GauntletBoost.Musou;
+        }
+
+        BingoStartCost = BingoServiceInstance.CalculateBingoStartCost(GauntletBoost, SelectedDifficulty, IsMusouElzelionBoostActive);
+    }
+
+    private void UpdateBingoStatsFromSelectedDifficulty(Difficulty difficulty)
+    {
+        // TODO disable controls if bingo is running
+        if (IsBingoRunning)
+        {
+            return;
+        }
+
+        BingoStartCost = BingoServiceInstance.CalculateBingoStartCost(GauntletBoost, difficulty, IsMusouElzelionBoostActive);
+        Carts = BingoServiceInstance.CalculateCartsAtBingoStartFromSelectedDifficulty(difficulty);
+    }
+
+
     private void OnReceivedQuestID(QuestIDMessage message)
     {
         if (!IsBingoRunning)
@@ -185,12 +267,6 @@ public partial class BingoWindowViewModel : ObservableRecipient, IRecipient<Ques
 
         ReceivedRunID = message.Value;
     }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    [ObservableProperty]
-    private string? bingoButtonText = "Start";
 
     /// <summary>
     /// The received Quest ID.
@@ -217,6 +293,16 @@ public partial class BingoWindowViewModel : ObservableRecipient, IRecipient<Ques
     /// </summary>
     [ObservableProperty]
     [NotifyCanExecuteChangedFor(nameof(WeaponRerollCommand))]
+    [NotifyCanExecuteChangedFor(nameof(CartsBuyCommand))]
+    [NotifyCanExecuteChangedFor(nameof(SetPointsCommand))]
+    [NotifyPropertyChangedFor(nameof(BingoNotRunning))]
+    [NotifyCanExecuteChangedFor(nameof(TranscendCommand))]
+    [NotifyCanExecuteChangedFor(nameof(ShuffleBingoCellsCommand))]
+    [NotifyCanExecuteChangedFor(nameof(SelectCellsOrderCommand))]
+    [NotifyCanExecuteChangedFor(nameof(SelectWeaponOrderCommand))]
+    [NotifyPropertyChangedFor(nameof(BingoStartButtonContent))]
+    [NotifyPropertyChangedFor(nameof(BingoStartButtonIcon))]
+    [NotifyPropertyChangedFor(nameof(BingoStartButtonBackground))]
     private bool isBingoRunning;
 
     /// <summary>
@@ -225,6 +311,26 @@ public partial class BingoWindowViewModel : ObservableRecipient, IRecipient<Ques
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(WeaponRerollButtonContent))]
     private long weaponRerollCost = 2;
+
+    /// <summary>
+    /// The cost for buying more carts during a bingo run.
+    /// </summary>
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(CartsBuyButtonContent))]
+    private long cartsCost = 2;
+
+    /// <summary>
+    /// The amount of carts.
+    /// </summary>
+    [ObservableProperty]
+    private long carts;
+
+    /// <summary>
+    /// The cost for starting bingo.
+    /// </summary>
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(BingoStartButtonContent))]
+    private long bingoStartCost = 0;
 
     /// <summary>
     /// The player bingo points. For view purposes only.
@@ -237,7 +343,26 @@ public partial class BingoWindowViewModel : ObservableRecipient, IRecipient<Ques
     private Difficulty selectedDifficulty = Difficulty.Easy;
 
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(IsGauntletBoostMax))]
+    private GauntletBoost gauntletBoost = GauntletBoost.None;
+
+    [ObservableProperty]
     private BingoLineColorOption selectedBingoLineOption = BingoLineColorOption.Hardest;
+
+    [ObservableProperty]
+    private bool bingoExplanationShown = true;
+
+    [ObservableProperty]
+    private bool zenithBoostChecked = false;
+
+    [ObservableProperty]
+    private bool solsticeBoostChecked = false;
+
+    [ObservableProperty]
+    private bool musouBoostChecked = false;
+
+    [ObservableProperty]
+    private bool isMusouElzelionBoostActive = false;
 
     [ObservableProperty]
     private int boardSize;
@@ -266,6 +391,18 @@ public partial class BingoWindowViewModel : ObservableRecipient, IRecipient<Ques
     [ObservableProperty]
     private float y3;
 
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(ZenithBoostText))]
+    private int zenithGauntletItems;
+
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(SolsticeBoostText))]
+    private int solsticeGauntletItems;
+
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(MusouBoostText))]
+    private int musouGauntletItems;
+
     [RelayCommand]
     private void StartBingo()
     {
@@ -276,12 +413,29 @@ public partial class BingoWindowViewModel : ObservableRecipient, IRecipient<Ques
             return;
         }
 
+        if (!BingoServiceInstance.SpendBingoPoints(BingoStartCost) && !IsBingoRunning)
+        {
+            var snackbar = new Snackbar(BingoWindowSnackbarPresenter)
+            {
+                Style = (Style)Application.Current.FindResource("CatppuccinMochaSnackBar"),
+                Title = "Not enough bingo points!",
+                Content = "You need more bingo points in order to start a bingo run. Try starting at Easy difficulty without any boosts.",
+                Icon = new SymbolIcon(SymbolRegular.ErrorCircle24),
+                Appearance = ControlAppearance.Danger,
+                Timeout = TimeSpan.FromSeconds(5),
+            };
+
+            snackbar.Show();
+            return;
+        }
+
         if (!IsBingoRunning)
         {
             IsBingoRunning = true;
+            BingoExplanationShown = false;
             // TODO Do you want to restart notice
             // Implement your logic to start bingo here
-            BingoButtonText = "Cancel";
+            PlayerBingoPoints -= BingoStartCost;
             GenerateBoard(selectedDifficulty);
         }
         else
@@ -423,13 +577,14 @@ public partial class BingoWindowViewModel : ObservableRecipient, IRecipient<Ques
     private void StopBingo()
     {
         IsBingoRunning = false;
-        BingoButtonText = "Start";
         RunIDs.Clear();
         Cells = new BingoCell[0, 0];
         BoardSize = 0;
+        Carts = 0;
         ReceivedQuestID = 0;
         ReceivedRunID = 0;
         WeaponRerollCost = 2;
+        CartsCost = 100;
     }
 
     /// <summary>
@@ -439,13 +594,59 @@ public partial class BingoWindowViewModel : ObservableRecipient, IRecipient<Ques
     {
         PlayerBingoPoints -= WeaponRerollCost;
         WeaponRerollCost *= 2;
-        // TODO 
+        // TODO upgrades affecting cost.
+    }
+
+    /// <summary>
+    /// Buys the cart.
+    /// </summary>
+    private void BuyCart()
+    {
+        PlayerBingoPoints -= CartsCost;
+        CartsCost *= 2;
+        Carts += 1;
+        // TODO upgrades affecting cost.
+    }
+
+    [RelayCommand(CanExecute = nameof(IsBingoNotRunning))]
+    private void Transcend()
+    {
+        // var AllGems = new List<ChallengeAncientDragonPart>();
+
+        // Show the player the gems that they have not yet obtained
+        //var availableGems = AllGems.Where(g => !g.IsObtained).ToList();
+
+        // Allow the player to choose a gem
+        //var chosenGem = ChooseGem(availableGems);
+
+        // Add the chosen gem to the player's gauntlet
+        // Player.Gauntlet.Gems.Add(chosenGem);
+
+        // Reset the player's progress
+    }
+
+    [RelayCommand(CanExecute = nameof(IsBingoRunning))]
+    private void ShuffleBingoCells()
+    {
+
+    }
+
+    [RelayCommand(CanExecute = nameof(IsBingoRunning))]
+    private void SelectWeaponOrder()
+    {
+
+    }
+
+    [RelayCommand(CanExecute = nameof(IsBingoRunning))]
+    private void SelectCellsOrder()
+    {
+
     }
 
     [RelayCommand(CanExecute = nameof(IsBingoRunning))]
     private void WeaponReroll()
     {
-        if (BingoServiceInstance.BuyWeaponReroll(WeaponRerollCost))
+        if (BingoServiceInstance.SpendBingoPoints(WeaponRerollCost))
         {
             RerollWeaponBonuses();
         }
@@ -463,6 +664,41 @@ public partial class BingoWindowViewModel : ObservableRecipient, IRecipient<Ques
             snackbar.Show();
         }
     }
+
+    [RelayCommand(CanExecute = nameof(IsBingoRunning))]
+    private void CartsBuy()
+    {
+        if (BingoServiceInstance.SpendBingoPoints(WeaponRerollCost))
+        {
+            BuyCart();
+        }
+        else
+        {
+            var snackbar = new Snackbar(BingoWindowSnackbarPresenter)
+            {
+                Style = (Style)Application.Current.FindResource("CatppuccinMochaSnackBar"),
+                Title = "Not enough bingo points!",
+                Content = "You need more bingo points in order to buy more carts.",
+                Icon = new SymbolIcon(SymbolRegular.ErrorCircle24),
+                Appearance = ControlAppearance.Danger,
+                Timeout = TimeSpan.FromSeconds(5),
+            };
+            snackbar.Show();
+        }
+    }
+
+    [RelayCommand(CanExecute = nameof(IsBingoNotRunning))]
+    private void SetPoints()
+    {
+        PlayerBingoPoints = BingoServiceInstance.SetPlayerBingoPoints(99_999);
+    }
+
+    public bool IsBingoNotRunning()
+    {
+        return !IsBingoRunning;
+    }
+
+    public bool BingoNotRunning => IsBingoNotRunning();
 
     private bool CheckForBingoCompletion()
     {
@@ -503,5 +739,11 @@ public partial class BingoWindowViewModel : ObservableRecipient, IRecipient<Ques
         }
 
         return false;
+    }
+
+    // TODO
+    private ChallengeAncientDragonPart ChooseGem(List<ChallengeAncientDragonPart> availableGems)
+    {
+        return new ChallengeAncientDragonPart();
     }
 }

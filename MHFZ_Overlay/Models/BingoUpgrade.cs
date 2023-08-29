@@ -40,4 +40,9 @@ public sealed class BingoUpgrade
     /// The current level of the upgrade.
     /// </summary>
     public int CurrentLevel { get; set; }
+
+    /// <summary>
+    /// Whether the upgrade is unlocked or not.
+    /// </summary>
+    public bool IsUnlocked { get; set; }
 }

@@ -42,4 +42,14 @@ public class BingoCell
     /// The weapon type bonuses in the bingo board. Used for increasing scores in each cell and for rerolls.
     /// </summary>
     public FrontierWeaponType WeaponTypeBonus { get; internal set; }
+
+    /// <summary>
+    /// Whether the cell contains a book of secrets page.
+    /// </summary>
+    public bool ContainsBookOfSecretsPage { get; set; }
+
+    /// <summary>
+    /// Whether the cell contains a random ancient dragon part's scrap.
+    /// </summary>
+    public bool ContainsAncientDragonPartScrap { get; set; }
 }

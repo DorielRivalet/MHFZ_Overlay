@@ -50,6 +50,10 @@
             <converter:BooleanToOpacityConverter x:Key="BooleanToOpacityConverter"/>
             <converter:QuestIDsToNamesConverter x:Key="QuestIDsToNamesConverter"/>
             <converter:FrontierWeaponTypeToIconsConverter x:Key="FrontierWeaponTypeToIconsConverter"/>
+            <converter:GauntletBoostToImageConverter x:Key="GauntletBoostToImageConverter"/>
+            <converter:BingoMonsterInfoToToolTipConverter x:Key="BingoMonsterInfoToToolTipConverter"/>
+
+            
         </ResourceDictionary>
     </Window.Resources>
     <Grid>
@@ -63,7 +67,7 @@
             Background="{StaticResource Crust}"
             Grid.Row="0"/>
             <TabControl Grid.Row="1" Margin="0" BorderBrush="Transparent" Background="Transparent">
-                <TabItem ToolTip="Bingo Board" Background="{StaticResource Mantle}" Foreground="{StaticResource Text}">
+                <TabItem Background="{StaticResource Mantle}" Foreground="{StaticResource Text}">
                     <TabItem.Header>
                         <StackPanel Background="Transparent" Orientation="Horizontal">
                             <Button BorderThickness="0" Background="Transparent" Width="48" Height="32">
@@ -74,79 +78,115 @@
                             <TextBlock Background="Transparent" Text="Board" Margin="4,0,0,0" VerticalAlignment="Center" Foreground="#f5e0dc"/>
                         </StackPanel>
                     </TabItem.Header>
-                    <Grid Height="Auto"  Width="Auto">
-                        <ScrollViewer CanContentScroll="True" IsDeferredScrollingEnabled="True" VerticalScrollBarVisibility="Visible" Grid.Row="0" HorizontalScrollBarVisibility="Auto">
-                            <Grid Height="Auto" Width="Auto" Background="Transparent" Style="{StaticResource ConfigSingleGrid}" Grid.Row="0" Grid.Column="0" Margin="20" >
+                    <Grid Height="Auto" Width="Auto">
+                        <Grid.Background>
+                            <ImageBrush Opacity=".5" ImageSource="/MHFZ_Overlay;component/Assets/Background/background_noise.png"/>
+                        </Grid.Background>
+                            <Grid Height="Auto" Width="Auto" Background="Transparent" Style="{StaticResource ConfigSingleGrid}" Grid.Row="0" Grid.Column="0" Margin="0">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="*"/>
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="360"/>
-                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="400"/>
+                                    <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="40"/>
-                                        <RowDefinition Height="40"/>
-                                        <RowDefinition Height="40"/>
-                                        <RowDefinition Height="40"/>
-                                        <RowDefinition Height="40"/>
-                                        <RowDefinition Height="40"/>
-                                        <RowDefinition Height="40"/>
-                                        <RowDefinition Height="40"/>
-                                        <RowDefinition Height="40"/>
-                                        <RowDefinition Height="40"/>
-                                        <RowDefinition Height="40"/>
-                                        <RowDefinition Height="40"/>
-                                        <RowDefinition Height="40"/>
-                                        <RowDefinition Height="40"/>
-                                    </Grid.RowDefinitions>
-                                    <StackPanel Orientation="Horizontal" Grid.ColumnSpan="2">
-                                        <ui:Image Source="../../Assets/Icons/achievement/stamp.jpg" Width="48"/>
-                                        <customcontrols:OutlinedTextBlock ToolTip="Bingo Points" d:Text="9999999" FontSize="18" FontWeight="SemiBold" Fill="{StaticResource Text}" Stroke="{StaticResource Crust}" Text="{Binding PlayerBingoPointsText}" VerticalAlignment="Center"/>
-                                    </StackPanel>
-
-                                    <ui:TextBlock Grid.ColumnSpan="2" Grid.Row="1" Text="00:00.000" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24"/>
-
-                                    <ui:Button Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" d:Content="Start"  Content="{Binding BingoButtonText}" Foreground="{StaticResource Crust}" Background="{StaticResource Green}" Command="{Binding StartBingoCommand}"/>
-
-                                    <ui:TextBlock Grid.Row="2" Text="Difficulty" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                                    <ComboBox Grid.Row="2" Grid.Column="1" ItemsSource="{Binding Difficulties}" SelectedItem="{Binding SelectedDifficulty}" ToolTip="Choose Bingo difficulty" />
-
-                                    <ui:TextBlock Grid.Row="3" Text="Blue Square Option" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                                    <ComboBox Grid.Row="3" Grid.Column="1" ItemsSource="{Binding BingoLineOptions}" SelectedItem="{Binding SelectedBingoLineOption}" ToolTip="Choose bingo line options (will be marked as blue)"/>
-
-                                    <ui:TextBlock Grid.Row="4" Text="Zenith Gauntlet Boost" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                                    <Grid Grid.Column="1" Grid.Row="4">
+                            <ui:DynamicScrollViewer CanContentScroll="True" IsDeferredScrollingEnabled="True" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                                <Grid >
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="*"/>
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
-                                        <StackPanel Orientation="Horizontal">
-                                            
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="40"/>
+                                            <RowDefinition Height="40"/>
+                                            <RowDefinition Height="40"/>
+                                            <RowDefinition Height="40"/>
+                                            <RowDefinition Height="40"/>
+                                            <RowDefinition Height="40"/>
+                                            <RowDefinition Height="40"/>
+                                            <RowDefinition Height="40"/>
+                                            <RowDefinition Height="40"/>
+                                            <RowDefinition Height="40"/>
+                                            <RowDefinition Height="40"/>
+                                            <RowDefinition Height="40"/>
+                                            <RowDefinition Height="40"/>
+                                            <RowDefinition Height="40"/>
+                                            <RowDefinition Height="40"/>
+                                            <RowDefinition Height="40"/>
+
+                                        </Grid.RowDefinitions>
+                                        <Grid.Background>
+                                            <ImageBrush Viewport="0, 0, 32, 32" ViewportUnits="Absolute" TileMode="Tile" Opacity=".5" ImageSource="/MHFZ_Overlay;component/Assets/Background/background_pattern1.png"/>
+                                        </Grid.Background>
+                                        <StackPanel ToolTip="Bingo Points" Orientation="Horizontal" Grid.ColumnSpan="2">
+                                            <ui:Image Source="../../Assets/Icons/achievement/stamp.jpg" Width="48"/>
+                                            <customcontrols:OutlinedTextBlock  d:Text="99999000000343434334343499" FontSize="18" FontWeight="SemiBold" Fill="{StaticResource Text}" Stroke="{StaticResource Crust}" Text="{Binding PlayerBingoPointsText}" VerticalAlignment="Center"/>
                                         </StackPanel>
-                                        <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="4" Grid.Column="1"/>
+                                        <ui:Button Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" d:Content="Start (1000 Bingo Points)" Content="{Binding BingoStartButtonContent}" Foreground="{StaticResource Crust}" d:Background="{StaticResource Green}" Background="{Binding BingoStartButtonBackground}" Command="{Binding StartBingoCommand}">
+                                            <ui:Button.Icon>
+                                                <ui:SymbolIcon d:Symbol="Play20" Symbol="{Binding BingoStartButtonIcon}" FontSize="20"/>
+                                            </ui:Button.Icon>
+                                        </ui:Button>
+
+                                        <StackPanel ToolTip="Carts available during the bingo run. If it reaches zero, the bingo run fails. Only counts carts from completed quests." HorizontalAlignment="Center" Grid.Row="2" Orientation="Horizontal">
+                                            <ui:SymbolIcon Symbol="Cart24" FontSize="24" Foreground="{StaticResource Red}"/>
+                                            <ui:TextBlock Margin="5,0,0,0" d:Text="99" Text="{Binding Carts}" VerticalAlignment="Center" FontWeight="SemiBold" FontSize="24"/>
+                                        </StackPanel>
+                                        <ui:TextBlock Grid.Column="1" Grid.Row="2" FontWeight="SemiBold" Text="00:00.000" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24"/>
+
+                                        <ui:TextBlock ToolTip="Choose Bingo difficulty" Grid.Row="3" Text="Difficulty" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                        <ComboBox Grid.Row="3" Grid.Column="1" ItemsSource="{Binding Difficulties}" SelectedItem="{Binding SelectedDifficulty}" IsEnabled="{Binding BingoNotRunning}"/>
+
+                                        <ui:TextBlock Grid.Row="4" Text="Blue Square Option" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                        <ComboBox Grid.Row="4" Grid.Column="1" ItemsSource="{Binding BingoLineOptions}" SelectedItem="{Binding SelectedBingoLineOption}" ToolTip="Choose bingo line options (will be marked as blue)" IsEnabled="{Binding BingoNotRunning}"/>
+
+                                        <ui:Image Grid.RowSpan="3" ToolTip="Gauntlet Boost. To obtain gauntlet boost items, you have to complete a gauntlet challenge, which gives 1 per completion, with the type depending on the gauntlet completed." Grid.Row="5"  d:Source="pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/gauntlet_max.png" Source="{Binding GauntletBoost, Converter={StaticResource GauntletBoostToImageConverter}}"/>
+
+                                        <CheckBox ToolTip="Boost points when completing squares containing a zenith monster. Costs 1 Zenith Gauntlet item. Increases the cost to start a bingo run by 10." HorizontalAlignment="Left" d:Content="Zenith Boost (1000 left)" Content="{Binding ZenithBoostText}" IsChecked="{Binding ZenithBoostChecked}" Grid.Row="5" Grid.Column="1" IsEnabled="{Binding BingoNotRunning}"/>
+                                        <CheckBox ToolTip="Boost points when completing squares containing a conquest or shiten monster. Costs 1 Solstice Gauntlet item. Increases the cost to start a bingo run by 20." HorizontalAlignment="Left" d:Content="Solstice Boost (1000 left)" Content="{Binding SolsticeBoostText}" IsChecked="{Binding SolsticeBoostChecked}" Grid.Row="6" Grid.Column="1" IsEnabled="{Binding BingoNotRunning}"/>
+                                        <CheckBox ToolTip="Boost points when completing squares containing a musou monster. Costs 1 Musou Gauntlet item. Increases the cost to start a bingo run by 30." HorizontalAlignment="Left" d:Content="Musou Boost (1000 left)" Content="{Binding MusouBoostText}" IsChecked="{Binding MusouBoostChecked}" Grid.Row="7" Grid.Column="1" IsEnabled="{Binding BingoNotRunning}"/>
+
+                                        <ui:TextBlock ToolTip="Applies the Burning Freezing Elzelion bingo upgrades. Increases the cost to start a bingo run by 100." Grid.Row="8" Text="Musou Elzelion Boost" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                        <ui:ToggleSwitch Grid.Row="8" Grid.Column="1" HorizontalAlignment="Center" IsChecked="{Binding IsMusouElzelionBoostActive}" IsEnabled="{Binding BingoNotRunning}"/>
+
+                                        <ui:Button HorizontalAlignment="Center" Grid.Row="9" Grid.ColumnSpan="2" d:Content="Reroll weapon bonuses (2 Bingo Points)"  Content="{Binding WeaponRerollButtonContent}" Foreground="{StaticResource Crust}" Background="{StaticResource Green}" Command="{Binding WeaponRerollCommand}">
+                                            <ui:Button.Icon>
+                                                <ui:ImageIcon Height="20" Source="pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/unknown.png"/>
+                                            </ui:Button.Icon>
+                                        </ui:Button>
+                                        <ui:Button HorizontalAlignment="Center" Grid.Row="10" Grid.ColumnSpan="2" d:Content="Buy Carts (100 Bingo Points)"  Content="{Binding CartsBuyButtonContent}" Foreground="{StaticResource Crust}" Background="{StaticResource Green}" Command="{Binding CartsBuyCommand}">
+                                            <ui:Button.Icon>
+                                                <ui:SymbolIcon Symbol="Cart24" FontSize="20"/>
+                                            </ui:Button.Icon>
+                                        </ui:Button>
+                                        <ui:Button HorizontalAlignment="Center" Grid.Row="11" Grid.ColumnSpan="2" d:Content="Set Points"  Content="Set Points" Foreground="{StaticResource Crust}" Background="{StaticResource Green}" Command="{Binding SetPointsCommand}"/>
+                                        <ui:Button VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="12" Grid.Column="1" d:Content="Transcend"  Content="Transcend" Foreground="{StaticResource Text}" Background="{StaticResource Surface0}" Command="{Binding TranscendCommand}">
+                                            <ui:Button.Icon>
+                                                <ui:ImageIcon Height="24" Source="pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/transcend.png"/>
+                                            </ui:Button.Icon>
+                                        </ui:Button>
+                                        <ProgressBar Grid.Row="12" Maximum="10000" d:Value="5000" Foreground="{StaticResource Yellow}" Background="{StaticResource Crust}"/>
+                                    <ui:Button HorizontalAlignment="Center" Grid.Row="13" Grid.ColumnSpan="2" d:Content="Shuffle cells (99999 Bingo Points)"  Content="Shuffle cells (99999 Bingo Points)" Foreground="{StaticResource Crust}" Background="{StaticResource Blue}" Command="{Binding ShuffleBingoCellsCommand}">
+                                            <ui:Button.Icon>
+                                                <ui:SymbolIcon Symbol="ArrowShuffle20" FontSize="20"/>
+                                            </ui:Button.Icon>
+                                        </ui:Button>
+                                    <ui:Button HorizontalAlignment="Center" Grid.Row="14" Grid.ColumnSpan="2" d:Content="Select weapon order (9999 Bingo Points)"  Content="Select weapon order (9999 Bingo Points)" Foreground="{StaticResource Crust}" Background="{StaticResource Blue}" Command="{Binding SelectWeaponOrderCommand}">
+                                            <ui:Button.Icon>
+                                            <ui:ImageIcon Height="20" Source="pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/small_gs.png"/>
+                                            </ui:Button.Icon>
+                                        </ui:Button>
+                                    <ui:Button HorizontalAlignment="Center" Grid.Row="15" Grid.ColumnSpan="2" d:Content="Select cells order (10 left)" Content="Select cells order (10 left)" Foreground="{StaticResource Crust}" Background="{StaticResource Blue}" Command="{Binding SelectCellsOrderCommand}">
+                                            <ui:Button.Icon>
+                                                <ui:SymbolIcon Symbol="TableCellEdit20" FontSize="20"/>
+                                            </ui:Button.Icon>
+                                        </ui:Button>
+
                                     </Grid>
-
-                                    <ui:TextBlock Grid.Row="5" Text="Solstice Gauntlet Boost" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                                    <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="5" Grid.Column="1"/>
-
-                                    <ui:TextBlock Grid.Row="6" Text="Musou Gauntlet Boost" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                                    <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="6" Grid.Column="1"/>
-
-                                    <ui:TextBlock Grid.Row="7" Text="Musou Elzelion Boost" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                                    <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="7" Grid.Column="1"/>
-
-                                    
-                                    <ui:Button Grid.Row="9" Grid.ColumnSpan="2" d:Content="Reroll weapon bonuses (2 Bingo Points)"  Content="{Binding WeaponRerollButtonContent}" Foreground="{StaticResource Crust}" Background="{StaticResource Green}" Command="{Binding WeaponRerollCommand}"/>
-
-                                </Grid>
-                                <Grid Grid.Column="1" Margin="10,0,0,0">
-                                    <ui:InfoBar IsClosable="False" IsOpen="True" Severity="Informational" Title="What is Bingo?" Message="Bingo is a challenge where you are presented with a bingo board that you have to complete.&#x0a;In order to complete a square, you have to hunt the monster shown in that cell in-game.&#x0a;&#x0a;You can hover over the monster icon in order to view the quest names.&#x0a;If you complete a square with the weapon icon shown, you gain extra points.&#x0a;The numbers at the bottom is the maximum possible score for that cell.&#x0a;&#x0a;The game ends when you complete the squares in a horizontal, vertical or diagonal line.&#x0a;You can complete as many cells as possible, as long as the last square is the first to complete one or multiple lines.&#x0a;At game completion, you are awarded bingo points, which you can use to buy upgrades in the bingo shop."/>
+                                </ui:DynamicScrollViewer>
+                            <ui:DynamicScrollViewer Grid.Column="1" Margin="10,0,0,0" CanContentScroll="True" IsDeferredScrollingEnabled="True" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                                <Grid>
+                                    <ui:InfoBar IsClosable="False" d:IsOpen="True" IsOpen="{Binding BingoExplanationShown}" Severity="Informational" Title="What is Bingo?" Message="Bingo is a challenge where you are presented with a bingo board that you have to complete.&#x0a;The overlay mode must be in one of the speedrun modes.&#x0a;In order to complete a square, you have to hunt the monster shown in that cell in-game.&#x0a;&#x0a;You can hover over the monster icon in order to view the quest names.&#x0a;If you complete a square with the weapon icon shown, you gain extra points.&#x0a;If the monster is Unlimited (UL), any non-custom quest counts as completion.&#x0a;The numbers at the bottom is the maximum possible score for that cell.&#x0a;&#x0a;The game ends when you complete the squares in a horizontal, vertical or diagonal line.&#x0a;You can complete as many cells as possible,&#x0a;as long as the last square is the first to complete one or multiple lines.&#x0a;&#x0a;Keep in mind you have a limited amount of carts,&#x0a;for more information hover over the carts number.&#x0a;&#x0a;At game completion, you are awarded bingo points,&#x0a;which you can use to buy upgrades in the bingo shop."/>
                                     <ItemsControl x:Name="BingoItemsControl" ItemsSource="{Binding FlatCells}" VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Standard">
                                         <ItemsControl.ItemsPanel>
                                             <ItemsPanelTemplate>
@@ -177,7 +217,7 @@
                                                         <Border Background="{Binding BackgroundColor}" CornerRadius="16">
                                                             <Grid>
                                                                 <!-- Show the monster's image and name -->
-                                                                <ui:Image CornerRadius="4" BorderBrush="#33000000" Source="{Binding Monster.Image}" Width="64" HorizontalAlignment="Center" VerticalAlignment="Center" ToolTip="{Binding Monster.QuestIDs, Converter={StaticResource QuestIDsToNamesConverter}}" Opacity="{Binding IsComplete, Converter={StaticResource BooleanToOpacityConverter}}"/>
+                                                                <ui:Image CornerRadius="4" BorderBrush="#33000000" Source="{Binding Monster.Image}" Width="64" HorizontalAlignment="Center" VerticalAlignment="Center" ToolTip="{Binding Monster, Converter={StaticResource BingoMonsterInfoToToolTipConverter}}" Opacity="{Binding IsComplete, Converter={StaticResource BooleanToOpacityConverter}}"/>
 
                                                                 <Grid Panel.ZIndex="2" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="64,64,0,0">
                                                                     <!-- Image inside the circular background -->
@@ -199,11 +239,11 @@
                                         </ItemsControl.ItemTemplate>
                                     </ItemsControl>
                                 </Grid>
-                            </Grid>
-                        </ScrollViewer>
+                            </ui:DynamicScrollViewer>
+                        </Grid>
                     </Grid>
                 </TabItem>
-                <TabItem ToolTip="Bingo Shop" Background="{StaticResource Mantle}" Foreground="{StaticResource Text}">
+                <TabItem Background="{StaticResource Mantle}" Foreground="{StaticResource Text}">
                     <TabItem.Header>
                         <StackPanel Background="Transparent" Orientation="Horizontal">
                             <Button BorderThickness="0" Background="Transparent" Width="48" Height="32">
@@ -229,7 +269,33 @@
                         </ScrollViewer>
                     </Grid>
                 </TabItem>
-                <TabItem ToolTip="Bingo Statistics" Background="{StaticResource Mantle}" Foreground="{StaticResource Text}">
+                <TabItem Background="{StaticResource Mantle}" Foreground="{StaticResource Text}">
+                    <TabItem.Header>
+                        <StackPanel Background="Transparent" Orientation="Horizontal">
+                            <Button BorderThickness="0" Background="Transparent" Width="48" Height="32">
+                                <Button.Content>
+                                    <ui:SymbolIcon Symbol="Question24" Foreground="{StaticResource Mauve}" FontSize="24"/>
+                                </Button.Content>
+                            </Button>
+                            <TextBlock Background="Transparent" Text="Ancient Ruins" Margin="4,0,0,0" VerticalAlignment="Center" Foreground="#f5e0dc"/>
+                        </StackPanel>
+                    </TabItem.Header>
+                    <Grid Height="Auto"  Width="Auto">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="1*"/>
+                            <RowDefinition Height="100"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions >
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <ScrollViewer CanContentScroll="True" IsDeferredScrollingEnabled="True" VerticalScrollBarVisibility="Visible" Grid.Row="0">
+                            <Grid Height="Auto" Width="Auto" Background="Transparent" Style="{StaticResource ConfigSingleGrid}" Grid.Row="0" Grid.Column="0" Margin="20" >
+
+                            </Grid>
+                        </ScrollViewer>
+                    </Grid>
+                </TabItem>
+                <TabItem Background="{StaticResource Mantle}" Foreground="{StaticResource Text}">
                     <TabItem.Header>
                         <StackPanel Background="Transparent" Orientation="Horizontal">
                             <Button BorderThickness="0" Background="Transparent" Width="48" Height="32">
