@@ -729,6 +729,8 @@
     <None Remove="Assets\Icons\png\stun.png" />
     <None Remove="Assets\Icons\png\ticket.png" />
     <None Remove="Assets\Icons\png\transcend.png" />
+    <None Remove="Assets\Icons\png\transcend_active.png" />
+    <None Remove="Assets\Icons\png\true_transcend.png" />
     <None Remove="Assets\Icons\png\unknown.png" />
     <None Remove="Assets\Icons\png\whetstone.png" />
     <None Remove="Assets\Icons\png\world.png" />
@@ -744,6 +746,24 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Page Remove="Assets\Icons\AncientDragonAlacrityMantle.xaml" />
+    <Page Remove="Assets\Icons\AncientDragonCognisphere.xaml" />
+    <Page Remove="Assets\Icons\AncientDragonConquerorsCloak.xaml" />
+    <Page Remove="Assets\Icons\AncientDragonCranium.xaml" />
+    <Page Remove="Assets\Icons\AncientDragonDaoraPlating.xaml" />
+    <Page Remove="Assets\Icons\AncientDragonEmpyreanAura.xaml" />
+    <Page Remove="Assets\Icons\AncientDragonEtherealMatrix.xaml" />
+    <Page Remove="Assets\Icons\AncientDragonForelimbs.xaml" />
+    <Page Remove="Assets\Icons\AncientDragonHellfireAegis.xaml" />
+    <Page Remove="Assets\Icons\AncientDragonHindlegs.xaml" />
+    <Page Remove="Assets\Icons\AncientDragonInvisibleCore.xaml" />
+    <Page Remove="Assets\Icons\AncientDragonSpiritBreath.xaml" />
+    <Page Remove="Assets\Icons\AncientDragonTail.xaml" />
+    <Page Remove="Assets\Icons\AncientDragonThorax.xaml" />
+    <Page Remove="Assets\Icons\AncientDragonTrueClaws.xaml" />
+    <Page Remove="Assets\Icons\AncientDragonVigorousArmament.xaml" />
+    <Page Remove="Assets\Icons\AncientDragonVitalNexus.xaml" />
+    <Page Remove="Assets\Icons\AncientDragonWings.xaml" />
     <Page Remove="Assets\Icons\Antenna_Icon_White.xaml" />
     <Page Remove="Assets\Icons\Armor_Sphere_Icon_White.xaml" />
     <Page Remove="Assets\Icons\Ball_Icon_White.xaml" />
@@ -1039,7 +1059,13 @@
     <Resource Include="Assets\Icons\achievement\unknown_white.jpg" />
     <Resource Include="Assets\Icons\achievement\zenny.jpg" />
     <Resource Include="Assets\Icons\Antenna_Icon_White.xaml" />
+    <Resource Include="Assets\Icons\AncientDragonHellfireAegis.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Resource>
     <Resource Include="Assets\Icons\Armor_Sphere_Icon_White.xaml" />
+    <Resource Include="Assets\Icons\AncientDragonCognisphere.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Resource>
     <Resource Include="Assets\Icons\Ball_Icon_White.xaml" />
     <Resource Include="Assets\Icons\Blade_Icon_White.xaml" />
     <Resource Include="Assets\Icons\Blade_Oil_Icon_White.xaml" />
@@ -1047,8 +1073,14 @@
     <Resource Include="Assets\Icons\Bug_Icon_White.xaml" />
     <Resource Include="Assets\Icons\Carapace_Icon_White.xaml" />
     <Resource Include="Assets\Icons\Charm_Icon_White.xaml" />
+    <Resource Include="Assets\Icons\AncientDragonTrueClaws.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Resource>
     <Resource Include="Assets\Icons\Claw_Icon_White.xaml" />
     <Resource Include="Assets\Icons\Coin_Icon_White.xaml" />
+    <Resource Include="Assets\Icons\AncientDragonSpiritBreath.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Resource>
     <Resource Include="Assets\Icons\Dracolite_Icon_White.xaml" />
     <Resource Include="Assets\Icons\DragDropControl.xaml" />
     <Resource Include="Assets\Icons\Drink_Icon_White.xaml" />
@@ -1059,34 +1091,67 @@
     <Resource Include="Assets\Icons\Fin_Icon_White.xaml" />
     <Resource Include="Assets\Icons\flag-checkered-solid.xaml" />
     <Resource Include="Assets\Icons\Flask_Icon_White.xaml" />
+    <Resource Include="Assets\Icons\AncientDragonForelimbs.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Resource>
     <Resource Include="Assets\Icons\Flipper_Icon_White.xaml" />
     <Resource Include="Assets\Icons\Flower_Icon_White.xaml" />
     <Resource Include="Assets\Icons\Fluid_Icon_White.xaml" />
+    <Resource Include="Assets\Icons\AncientDragonEtherealMatrix.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Resource>
     <Resource Include="Assets\Icons\Frenzy_Crystal_Icon_White.xaml" />
     <Resource Include="Assets\Icons\Fruit_Icon_White.xaml" />
     <Resource Include="Assets\Icons\gif\scroll_rainbow.gif">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Assets\Icons\AncientDragonCranium.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Resource>
     <Resource Include="Assets\Icons\Head_Icon_White.xaml" />
+    <Resource Include="Assets\Icons\AncientDragonVitalNexus.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Resource>
     <Resource Include="Assets\Icons\Heart_Icon_White.xaml" />
     <Resource Include="Assets\Icons\Herb_Icon_White.xaml" />
+    <Resource Include="Assets\Icons\AncientDragonConquerorsCloak.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Resource>
     <Resource Include="Assets\Icons\Hide_Icon_White.xaml" />
     <Resource Include="Assets\Icons\Horn_Icon_White.xaml" />
     <Resource Include="Assets\Icons\Husk_Icon_White.xaml" />
     <Resource Include="Assets\Icons\ico\mhfzoverlayicon256.ico" />
     <Resource Include="Assets\Icons\issues.xaml" />
     <Resource Include="Assets\Icons\Jelly_Icon_White.xaml" />
+    <Resource Include="Assets\Icons\AncientDragonInvisibleCore.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Resource>
     <Resource Include="Assets\Icons\Jewel_Icon_White.xaml" />
+    <Resource Include="Assets\Icons\AncientDragonHindlegs.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Resource>
     <Resource Include="Assets\Icons\Leg_Carve_Icon_White.xaml" />
+    <Resource Include="Assets\Icons\AncientDragonEmpyreanAura.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Resource>
     <Resource Include="Assets\Icons\Mantle_Icon_White.xaml" />
     <Resource Include="Assets\Icons\Mask_Icon_White.xaml" />
     <Resource Include="Assets\Icons\Meat_Icon_White.xaml" />
     <Resource Include="Assets\Icons\Medicine_Icon_White.xaml" />
+    <Resource Include="Assets\Icons\AncientDragonVigorousArmament.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Resource>
     <Resource Include="Assets\Icons\Monster_Part_Icon_White.xaml" />
     <Resource Include="Assets\Icons\Nectar_Icon_White.xaml" />
+    <Resource Include="Assets\Icons\AncientDragonAlacrityMantle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Resource>
     <Resource Include="Assets\Icons\Ore_Icon_Special_001.xaml" />
     <Resource Include="Assets\Icons\Ore_Icon_White.xaml" />
     <Resource Include="Assets\Icons\Pill_Icon_White.xaml" />
+    <Resource Include="Assets\Icons\AncientDragonDaoraPlating.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Resource>
     <Resource Include="Assets\Icons\Plate_Icon_White.xaml" />
     <Resource Include="Assets\Icons\png\armor_skills.png" />
     <Resource Include="Assets\Icons\png\arrow_down.png" />
@@ -1658,6 +1723,8 @@
     <Resource Include="Assets\Icons\png\stun.png" />
     <Resource Include="Assets\Icons\png\ticket.png" />
     <Resource Include="Assets\Icons\png\transcend.png" />
+    <Resource Include="Assets\Icons\png\transcend_active.png" />
+    <Resource Include="Assets\Icons\png\true_transcend.png" />
     <Resource Include="Assets\Icons\png\unknown.png" />
     <Resource Include="Assets\Icons\png\whetstone.png" />
     <Resource Include="Assets\Icons\png\world.png" />
@@ -1668,7 +1735,13 @@
     <Resource Include="Assets\Icons\Spiderweb_Icon_White.xaml" />
     <Resource Include="Assets\Icons\star.xaml" />
     <Resource Include="Assets\Icons\Steak_Icon_White.xaml" />
+    <Resource Include="Assets\Icons\AncientDragonThorax.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Resource>
     <Resource Include="Assets\Icons\Sturdy_Shell_Icon_White.xaml" />
+    <Resource Include="Assets\Icons\AncientDragonTail.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Resource>
     <Resource Include="Assets\Icons\Tail_Icon_White.xaml" />
     <Resource Include="Assets\Icons\Talisman_Icon_White.xaml" />
     <Resource Include="Assets\Icons\Tentacle_Icon_White.xaml" />
@@ -1676,6 +1749,9 @@
     <Resource Include="Assets\Icons\Voucher_Icon_White.xaml" />
     <Resource Include="Assets\Icons\watch.xaml" />
     <Resource Include="Assets\Icons\Webbing_Icon_White.xaml" />
+    <Resource Include="Assets\Icons\AncientDragonWings.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Resource>
     <Resource Include="Assets\Icons\Wing_Icon_White.xaml" />
     <Resource Include="Assets\Icons\Wood_Icon_White.xaml" />
     <Content Include="Assets\Sounds\victory.wav">

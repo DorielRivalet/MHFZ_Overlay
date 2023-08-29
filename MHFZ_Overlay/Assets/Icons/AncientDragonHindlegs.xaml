@@ -24,7 +24,7 @@
           <PathGeometry Figures="m 8.4879559 13.580614 0.9796266 1.899411 0.9966345 -1.899411 z" FillRule="NonZero"/>
         </Path.Data>
       </Path>
-      <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path896" Fill="#FFFFFFFF" StrokeThickness="0.596011" StrokeMiterLimit="4" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round">
+            <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path896" Fill="#b4befe" StrokeThickness="0.596011" StrokeMiterLimit="4" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round">
         <Path.Data>
           <PathGeometry Figures="M 4.5601934 9.8789431 V 1.7633975 h 8.0380326 v 4.897344 H 11.448079 V 13.605374 H 4.5601934 v -1.921798 h 4.723545 V 9.8789431 Z" FillRule="NonZero"/>
         </Path.Data>
@@ -69,7 +69,8 @@
           <PathGeometry Figures="M 8.4879559 13.580614 V 12.560747" FillRule="NonZero"/>
         </Path.Data>
       </Path>
-            <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path992" Fill="#FFFFFFFF" StrokeThickness="1.99937" Stroke="#FF000000" StrokeMiterLimit="4" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round">
+
+            <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path992" Fill="#cdd6f4" StrokeThickness="1.99937" Stroke="#FF000000" StrokeMiterLimit="4" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round">
         <Path.Data>
           <PathGeometry Figures="M 5.4199219 10.511719 L 5.4199219 23.755859 L 12.041016 17.132812 L 5.4199219 10.511719 z M 58.580078 10.511719 L 51.958984 17.132812 L 58.580078 23.755859 L 58.580078 10.511719 z M 5.4199219 25.929688 L 5.4199219 39.173828 L 12.041016 32.550781 L 5.4199219 25.929688 z M 58.580078 25.929688 L 51.958984 32.550781 L 58.580078 39.173828 L 58.580078 25.929688 z M 5.4199219 41.416016 L 5.4199219 54.660156 L 12.041016 48.037109 L 5.4199219 41.416016 z M 58.580078 41.416016 L 51.958984 48.037109 L 58.580078 54.660156 L 58.580078 41.416016 z " FillRule="NonZero"/>
         </Path.Data>

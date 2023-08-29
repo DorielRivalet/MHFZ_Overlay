@@ -304,5 +304,16 @@ public static class BingoUpgrades
                 Type = BingoUpgradeType.MaxTimeScoreGracePeriodIncrease,
             }
         },
+        {
+            29, new BingoUpgrade
+            {
+                CurrentLevel = 1,
+                Description = "You found a very old book, the shop owner says you can take it if you complete a bingo.",
+                MaxLevel = 2,
+                Name = "Book of Secrets Tome I",
+                Type = BingoUpgradeType.BookOfSecretsTomeOne,
+                IsUnlocked = true,
+            }
+        },
     });
 }

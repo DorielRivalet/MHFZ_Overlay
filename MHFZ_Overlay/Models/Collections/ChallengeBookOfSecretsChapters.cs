@@ -24,6 +24,7 @@ public static class ChallengeBookOfSecretsChapters
                     Name = "Knowledge of Bingo I",
                     PagesRequired = 0,
                     Description = "Shop: Unlocks Base Score Increase and Base Score Multiplier",
+                    Details = "You unlocked the knowledge of bingo! Now you can purchase upgrades in the shop.",
                 }
             },
             {
@@ -32,6 +33,7 @@ public static class ChallengeBookOfSecretsChapters
                     Name = "Knowledge of Felynes",
                     PagesRequired = 0,
                     Description = "Investigation: Research more about Felynes.",
+                    Details = "A partnya was found who can help us obtain more book of secrets pages. With these pages, you can unlock more book of secrets chapters.",
                 }
             },
             {
@@ -40,6 +42,7 @@ public static class ChallengeBookOfSecretsChapters
                     Name = "Knowledge of Weapon Mastery",
                     PagesRequired = 2,
                     Description = "Shop: Unlocks Weapon Type Multiplier.",
+                    Details = "Equipping the weapon shown in the monster cells gives more points!",
                 }
             },
             {
@@ -48,6 +51,7 @@ public static class ChallengeBookOfSecretsChapters
                     Name = "Knowledge of Veggie Elders",
                     PagesRequired = 3,
                     Description = "Investigation: Research more about Veggie Elders.",
+                    Details = "Talking to the veggie elders now gives more pages in exchange for bingo points.",
                 }
             },
             {
@@ -56,6 +60,7 @@ public static class ChallengeBookOfSecretsChapters
                     Name = "Knowledge of Bingo II",
                     PagesRequired = 10,
                     Description = "Shop: Unlocks Carts Score.",
+                    Details = "More bingo knowledge!",
                 }
             },
             {
@@ -64,6 +69,7 @@ public static class ChallengeBookOfSecretsChapters
                     Name = "Knowledge of Bingo III",
                     PagesRequired = 20,
                     Description = "Shop: Unlocks Bonus Score.",
+                    Details = "This bingo upgrade may not seem like much, but it adds up!"
                 }
             },
             {
@@ -72,6 +78,7 @@ public static class ChallengeBookOfSecretsChapters
                     Name = "Knowledge of Bingo IV",
                     PagesRequired = 25,
                     Description = "Shop: Unlocks Middle Square Multiplier.",
+                    Details = "A bingo's middle square is important.",
                 }
             },
             {
@@ -80,6 +87,7 @@ public static class ChallengeBookOfSecretsChapters
                     Name = "Knowledge of Bingo V",
                     PagesRequired = 30,
                     Description = "Shop: Unlocks Extra Carts.",
+                    Details = "Now bingo runs won't be as risky!",
                 }
             },
             {
@@ -88,6 +96,7 @@ public static class ChallengeBookOfSecretsChapters
                     Name = "Knowledge of Bingo VI",
                     PagesRequired = 40,
                     Description = "Shop: Unlocks Starting Cost Reduction.",
+                    Details = "You gained more negotiation powers.",
                 }
             },
             {
@@ -96,6 +105,7 @@ public static class ChallengeBookOfSecretsChapters
                     Name = "Knowledge of Extreme Style I",
                     PagesRequired = 0,
                     Description = "Shop: Unlocks Middle Square Reroll Chance (Extreme Difficulty).",
+                    Details = "Why would anyone need this?",
                 }
             },
             {
@@ -104,6 +114,7 @@ public static class ChallengeBookOfSecretsChapters
                     Name = "Knowledge of Extreme Style II",
                     PagesRequired = 50,
                     Description = "Shop: Unlocks Burning Freezing Elzelion Rerolls (Extreme Difficulty).",
+                    Details = "Musou Elzelion gives the most points out of any monster.",
                 }
             },
             {
@@ -112,6 +123,7 @@ public static class ChallengeBookOfSecretsChapters
                     Name = "Knowledge of Extreme Style III",
                     PagesRequired = 100,
                     Description = "Shop: Unlocks Burning Freezing Elzelion Reroll Chance (Extreme Difficulty).",
+                    Details = "Musou Elzelion will show more often!",
                 }
             },
             {
@@ -120,6 +132,7 @@ public static class ChallengeBookOfSecretsChapters
                     Name = "Knowledge of Achievements I",
                     PagesRequired = 60,
                     Description = "Shop: Unlocks Achievements Multiplier.",
+                    Details = "I love achievements.",
                 }
             },
             {
@@ -128,6 +141,7 @@ public static class ChallengeBookOfSecretsChapters
                     Name = "Knowledge of Achievements II",
                     PagesRequired = 70,
                     Description = "Shop: Unlocks Secret Achievements Multiplier.",
+                    Details = "I'll tell you a secret: one of the secret achievements are in the configuration menu."
                 }
             },
             {
@@ -136,6 +150,7 @@ public static class ChallengeBookOfSecretsChapters
                     Name = "Knowledge of Bingo VII",
                     PagesRequired = 80,
                     Description = "Shop: Unlocks Bingo Completions Multiplier.",
+                    Details = "The more bingo runs you do, the more bingo points you get!"
                 }
             },
             {
@@ -144,6 +159,7 @@ public static class ChallengeBookOfSecretsChapters
                     Name = "Knowledge of Monsters I",
                     PagesRequired = 90,
                     Description = "Shop: Unlocks Zenith Square Multiplier.",
+                    Details = "You now have Bingo Up.",
                 }
             },
             {
@@ -152,6 +168,7 @@ public static class ChallengeBookOfSecretsChapters
                     Name = "Knowledge of Monsters II",
                     PagesRequired = 100,
                     Description = "Shop: Unlocks Conquest/Shiten Square Multiplier.",
+                    Details = "Bingo Lv9999 here we go!",
                 }
             },
             {
@@ -160,6 +177,7 @@ public static class ChallengeBookOfSecretsChapters
                     Name = "Knowledge of Monsters III",
                     PagesRequired = 120,
                     Description = "Shop: Unlocks Musou Square Multiplier.",
+                    Details = "These quest time limits sure are something.",
                 }
             },
             {
@@ -168,6 +186,7 @@ public static class ChallengeBookOfSecretsChapters
                     Name = "Knowledge of Bingo VIII",
                     PagesRequired = 140,
                     Description = "Shop: Unlocks Horizontal Line Bingo Completion Multiplier, Vertical Line Bingo Completion Multiplier and Diagonal Line Bingo Completion Multiplier.",
+                    Details = "B I N G O"
                 }
             },
             {
@@ -176,6 +195,7 @@ public static class ChallengeBookOfSecretsChapters
                     Name = "Knowledge of Time I",
                     PagesRequired = 0,
                     Description = "Shop: Unlocks Bingo Run Time Completion Multiplier.",
+                    Details = "We speedrunning now?",
                 }
             },
             {
@@ -184,6 +204,7 @@ public static class ChallengeBookOfSecretsChapters
                     Name = "Knowledge of Scavengers I",
                     PagesRequired = 0,
                     Description = "Shop: Unlocks an upgrade for increasing the chance of finding missing Book of Secrets pages.",
+                    Details = "Looks like these monsters were also hiding some pages.",
                 }
             },
             {
@@ -192,6 +213,7 @@ public static class ChallengeBookOfSecretsChapters
                     Name = "Knowledge of Scavengers II",
                     PagesRequired = 100,
                     Description = "Shop: Unlocks an upgrade for increasing the chance of finding an ancient dragon part's scraps.",
+                    Details = "Looks like some of these monsters were near an ancient dragon part, no wonder they are so strong.",
                 }
             },
             {
@@ -200,6 +222,7 @@ public static class ChallengeBookOfSecretsChapters
                     Name = "Knowledge of Actuaries I",
                     PagesRequired = 0,
                     Description = "Shop: Unlocks an upgrade for gaining more bingo points with compound interest.",
+                    Details = "I wonder what number do you get if you compound something countinously.",
                 }
             },
             {
@@ -208,6 +231,7 @@ public static class ChallengeBookOfSecretsChapters
                     Name = "Knowledge of Actuaries II",
                     PagesRequired = 100,
                     Description = "Shop: Unlocks an upgrade for reducing the cost of upgrades.",
+                    Details = "So this also reduces the cost of its own upgrade?",
                 }
             },
             {
@@ -216,6 +240,7 @@ public static class ChallengeBookOfSecretsChapters
                     Name = "Knowledge of Transcendence I",
                     PagesRequired = 100,
                     Description = "Investigation: Reseach about an ancient technique.",
+                    Details = "Transcendence is now unlocked!"
                 }
             },
             {
@@ -224,6 +249,7 @@ public static class ChallengeBookOfSecretsChapters
                     Name = "Knowledge of Transcendence II",
                     PagesRequired = 120,
                     Description = "Shop: Unlocks an upgrade for filling the transcend meter faster.",
+                    Details = "We can transcend faster now.",
                 }
             },
             {
@@ -232,6 +258,7 @@ public static class ChallengeBookOfSecretsChapters
                     Name = "Knowledge of Transcendence III",
                     PagesRequired = 140,
                     Description = "Shop: Unlock an upgrade for reducing the cost of a true transcend.",
+                    Details = "This might not be too beneficial for a normal transcend.",
                 }
             },
             {
@@ -240,6 +267,7 @@ public static class ChallengeBookOfSecretsChapters
                     Name = "Knowledge of Transcendence IV",
                     PagesRequired = 160,
                     Description = "Shop: Unlocks an upgrade for decreasing the rate at which the transcend meter drains.",
+                    Details = "This greatly helps in finishing a run before transcend runs out.",
                 }
             },
             {
@@ -248,6 +276,7 @@ public static class ChallengeBookOfSecretsChapters
                     Name = "Knowledge of Time II",
                     PagesRequired = 180,
                     Description = "Shop: Unlocks an upgrade that increases the grace period for obtaining the maximum time score.",
+                    Details = "We don't have to be as fast as those speedrunners now.",
                 }
             },
             {
@@ -256,6 +285,7 @@ public static class ChallengeBookOfSecretsChapters
                     Name = "Knowledge of the Ancient Civilization I",
                     PagesRequired = 200,
                     Description = "Investigation: Research more about the Ancient Civilization.", // new tab
+                    Details = "An investigation into the ancient civilization lead us to explore some ancient ruins near Schrade. During exploration you found something peculiar..."
                 }
             },
             {
@@ -264,6 +294,7 @@ public static class ChallengeBookOfSecretsChapters
                     Name = "Knowledge of the Ancient Civilization II",
                     PagesRequired = 250,
                     Description = "Investigation: Research more about ancient engineering.", // scraps
+                    Details = "If we want to rebuild this ancient dragon, we should grab some scraps. Let's see if our Partnyaa and the Veggie Elder can help us."
                 }
             },
             {
@@ -272,6 +303,7 @@ public static class ChallengeBookOfSecretsChapters
                     Name = "Knowledge of the Ancient Civilization III",
                     PagesRequired = 300,
                     Description = "Investigation: Research more about an ancient technique.", // true transcend
+                    Details = "This power... should not be possible. The problem is, if we use it then we will be drained for a very long time, or worse. The least risky way to use it is if we have our transcend meter at 100% first. Let's see if this can help us rebuild the ancient dragon!"
                 }
             },
             {
@@ -280,6 +312,7 @@ public static class ChallengeBookOfSecretsChapters
                     Name = "Knowledge of the Ancient Civilization IV",
                     PagesRequired = 500,
                     Description = "Investigation: Research more about ancient documents.", // blueprint at all 6 parts req.
+                    Details = "We managed to find a way to recreate this ancient dragon and even improve its design, and wrote down the knowledge into a blueprint. The blueprint can be used to rebuild a better ancient dragon in another challenge."
                 }
             },
         };

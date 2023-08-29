@@ -33,6 +33,11 @@ public sealed class ChallengeBookOfSecretsChapter
     public string Description { get; set; } = string.Empty;
 
     /// <summary>
+    /// The text shown after obtaining the chapter.
+    /// </summary>
+    public string Details { get; set; } = string.Empty;
+
+    /// <summary>
     /// The amount of pages required for the chapter.
     /// </summary>
     public int PagesRequired { get; set; }

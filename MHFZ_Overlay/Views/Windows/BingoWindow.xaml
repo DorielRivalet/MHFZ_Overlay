@@ -274,10 +274,10 @@
                         <StackPanel Background="Transparent" Orientation="Horizontal">
                             <Button BorderThickness="0" Background="Transparent" Width="48" Height="32">
                                 <Button.Content>
-                                    <ui:SymbolIcon Symbol="Question24" Foreground="{StaticResource Mauve}" FontSize="24"/>
+                                    <ui:SymbolIcon Symbol="BookQuestionMark24" Foreground="{StaticResource Mauve}" FontSize="24"/>
                                 </Button.Content>
                             </Button>
-                            <TextBlock Background="Transparent" Text="Ancient Ruins" Margin="4,0,0,0" VerticalAlignment="Center" Foreground="#f5e0dc"/>
+                            <TextBlock Background="Transparent" Text="Book of Secrets" Margin="4,0,0,0" VerticalAlignment="Center" Foreground="#f5e0dc"/>
                         </StackPanel>
                     </TabItem.Header>
                     <Grid Height="Auto"  Width="Auto">
@@ -293,6 +293,85 @@
 
                             </Grid>
                         </ScrollViewer>
+                    </Grid>
+                </TabItem>
+                <TabItem Background="{StaticResource Mantle}" Foreground="{StaticResource Text}">
+                    <TabItem.Header>
+                        <StackPanel Background="Transparent" Orientation="Horizontal">
+                            <Button BorderThickness="0" Background="Transparent" Width="48" Height="32">
+                                <Button.Content>
+                                    <ui:ImageIcon Height="20" Width="20" Source="pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/extreme_dragonblight.png"/>
+                                </Button.Content>
+                            </Button>
+                            <TextBlock Background="Transparent" Text="Ancient Ruins" Margin="4,0,0,0" VerticalAlignment="Center" Foreground="#f5e0dc"/>
+                        </StackPanel>
+                    </TabItem.Header>
+                    <Grid Height="Auto"  Width="Auto">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="400"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid Margin="5" Grid.Column="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Grid Grid.RowSpan="3">
+                                <StackPanel Orientation="Vertical">
+                                    <Border Margin="5" Background="{StaticResource Mantle}" BorderThickness="1" BorderBrush="{StaticResource Surface0}" CornerRadius="2" Width="128" Height="128" >
+                                        <Button HorizontalAlignment="Center"  BorderBrush="Transparent" Background="Transparent" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='Assets/Icons/AncientDragonWings.xaml'}"/>
+                                    </Border>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                        <Border  Margin="5" Background="{StaticResource Mantle}" BorderThickness="1" BorderBrush="{StaticResource Surface0}" CornerRadius="2" Width="128" Height="128" >
+                                            <Button  BorderBrush="Transparent" Background="Transparent" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='Assets/Icons/AncientDragonCranium.xaml'}"/>
+                                        </Border>
+                                        <Border  Margin="5" Background="{StaticResource Mantle}" BorderThickness="1" BorderBrush="{StaticResource Surface0}" CornerRadius="2" Width="128" Height="128" >
+                                            <Button  BorderBrush="Transparent" Background="Transparent" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='Assets/Icons/AncientDragonThorax.xaml'}"/>
+                                        </Border>
+                                        <Border  Margin="5" Background="{StaticResource Mantle}" BorderThickness="1" BorderBrush="{StaticResource Surface0}" CornerRadius="2" Width="128" Height="128" >
+                                            <Button  BorderBrush="Transparent" Background="Transparent" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='Assets/Icons/AncientDragonTail.xaml'}"/>
+                                        </Border>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                        <Border Margin="5" Background="{StaticResource Mantle}" BorderThickness="1" BorderBrush="{StaticResource Surface0}" CornerRadius="2" Width="128" Height="128" >
+                                            <Button BorderBrush="Transparent" Background="Transparent" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='Assets/Icons/AncientDragonForelimbs.xaml'}"/>
+                                        </Border>
+                                        <Border Margin="5" Background="{StaticResource Mantle}" BorderThickness="1" BorderBrush="{StaticResource Surface0}" CornerRadius="2" Width="128" Height="128" >
+                                            <Button BorderBrush="Transparent" Background="Transparent" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='Assets/Icons/AncientDragonHindlegs.xaml'}"/>
+                                        </Border>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Grid>
+                            <Grid Grid.Row="3">
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <Border Margin="5" Background="{StaticResource Mantle}" BorderThickness="1" BorderBrush="{StaticResource Surface0}" CornerRadius="2" Width="96" Height="96" >
+                                        <Button Opacity=".5" BorderBrush="Transparent" Background="Transparent" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='Assets/Icons/Head_Icon_White.xaml'}"/>
+                                    </Border>
+                                    <Border Margin="5" Background="{StaticResource Mantle}" BorderThickness="1" BorderBrush="{StaticResource Surface0}" CornerRadius="2" Width="96" Height="96" >
+                                        <Button Opacity=".5" BorderBrush="Transparent" Background="Transparent" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='Assets/Icons/Sturdy_Shell_Icon_White.xaml'}"/>
+                                    </Border>
+                                    <Border Margin="5" Background="{StaticResource Mantle}" BorderThickness="1" BorderBrush="{StaticResource Surface0}" CornerRadius="2" Width="96" Height="96" >
+                                        <Button Opacity=".5"  BorderBrush="Transparent" Background="Transparent" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='Assets/Icons/Mantle_Icon_White.xaml'}"/>
+                                    </Border>
+                                    <Border Margin="5" Background="{StaticResource Mantle}" BorderThickness="1" BorderBrush="{StaticResource Surface0}" CornerRadius="2" Width="96" Height="96" >
+                                        <Button Opacity=".5"  BorderBrush="Transparent" Background="Transparent" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='Assets/Icons/Wing_Icon_White.xaml'}"/>
+                                    </Border>
+                                    <Border Margin="5" Background="{StaticResource Mantle}" BorderThickness="1" BorderBrush="{StaticResource Surface0}" CornerRadius="2" Width="96" Height="96" >
+                                        <Button Opacity=".5"  BorderBrush="Transparent" Background="Transparent" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='Assets/Icons/Flipper_Icon_White.xaml'}"/>
+                                    </Border>
+                                    <Border Margin="5" Background="{StaticResource Mantle}" BorderThickness="1" BorderBrush="{StaticResource Surface0}" CornerRadius="2" Width="96" Height="96" >
+                                        <Button Opacity=".5" BorderBrush="Transparent" Background="Transparent" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='Assets/Icons/Leg_Carve_Icon_White.xaml'}"/>
+                                    </Border>
+                                </StackPanel>
+                            </Grid>
+                        </Grid>
+                        <ui:DynamicScrollViewer Margin="5" CanContentScroll="True" IsDeferredScrollingEnabled="True" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                            <Grid>
+                                <TextBlock TextWrapping="Wrap" Text="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"/>
+                            </Grid>
+                        </ui:DynamicScrollViewer>
                     </Grid>
                 </TabItem>
                 <TabItem Background="{StaticResource Mantle}" Foreground="{StaticResource Text}">

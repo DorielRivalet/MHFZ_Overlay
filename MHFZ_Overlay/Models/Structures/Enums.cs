@@ -363,6 +363,11 @@ public enum BingoUpgradeType
     /// Increases the grace period for obtaining the maximum time score.
     /// </summary>
     MaxTimeScoreGracePeriodIncrease,
+
+    /// <summary>
+    /// Unlocks the book of secrets tab.
+    /// </summary>
+    BookOfSecretsTomeOne,
 }
 
 public enum FrontierWeaponType
