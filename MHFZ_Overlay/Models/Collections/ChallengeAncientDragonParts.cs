@@ -248,7 +248,7 @@ Unlock an upgrade for increasing the chance of finding an ancient dragon part's 
                     },
                     new ChallengeAncientDragonPart
                     {
-                        Description = "Wrapped around the creature's form, the Conquerors' Cloak is a manifestation of its indomitable will. Woven from the threads of victory and conquest, this intangible shroud bolsters the dragon's resolve, empowering it to face any challenge with unwavering determination. It serves as a reminder that the creature is a force to be reckoned with. It is said that those who dare be near the cloak either faints or suffer a worse fate. It can also empower the Vigorous Armament.",
+                        Description = "Wrapped around the creature's form, the Conquerors' Cloak is a manifestation of its indomitable will. Woven from the threads of victory and conquest, this intangible shroud bolsters the dragon's resolve, empowering it to face any challenge with unwavering determination. It serves as a reminder that the creature is a force to be reckoned with. Should the creature be challenged, enemies will be struck down by black lightning. It is said that those who dare be near the cloak either faints or suffer a worse fate. It can also empower the Vigorous Armament.",
                         Name = "Conquerors' Cloak",
                         ImageLink = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/unknown.png",
                     },
