@@ -323,7 +323,7 @@
                                     <Border Margin="5" Background="{StaticResource Mantle}" BorderThickness="1" BorderBrush="{StaticResource Surface0}" CornerRadius="2" Width="128" Height="128" >
                                         <Button HorizontalAlignment="Center"  BorderBrush="Transparent" Background="Transparent" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='Assets/Icons/AncientDragonWings.xaml'}"/>
                                     </Border>
-                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                                         <Border  Margin="5" Background="{StaticResource Mantle}" BorderThickness="1" BorderBrush="{StaticResource Surface0}" CornerRadius="2" Width="128" Height="128" >
                                             <Button  BorderBrush="Transparent" Background="Transparent" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='Assets/Icons/AncientDragonCranium.xaml'}"/>
                                         </Border>
@@ -368,8 +368,60 @@
                             </Grid>
                         </Grid>
                         <ui:DynamicScrollViewer Margin="5" CanContentScroll="True" IsDeferredScrollingEnabled="True" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
-                            <Grid>
-                                <TextBlock TextWrapping="Wrap" Text="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"/>
+                            <Grid Background="{StaticResource Mantle}">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="64"/>
+                                    <RowDefinition Height="64"/>
+                                    <RowDefinition Height="64"/>
+                                    <RowDefinition Height="64"/>
+                                    <RowDefinition Height="64"/>
+                                    <RowDefinition Height="64"/>
+                                    <RowDefinition Height="64"/>
+                                    <RowDefinition Height="64"/>
+                                    <RowDefinition Height="64"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="64"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Button Width="64" Height="64" BorderBrush="Transparent" Background="Transparent" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='Assets/Icons/Head_Icon_White.xaml'}"/>
+                                <ui:SymbolIcon Foreground="{StaticResource Mauve}" Symbol="Question48" FontSize="48" Width="64" Height="64" Grid.Row="1"/>
+                                <ui:SymbolIcon Foreground="{StaticResource Blue}" Symbol="BookInformation24" FontSize="48" Width="64" Height="64" Grid.Row="2"/>
+                                <ui:SymbolIcon Foreground="{StaticResource Red}" Symbol="BookExclamationMark24" FontSize="48" Width="64" Height="64" Grid.Row="3"/>
+                                <ui:SymbolIcon Foreground="{StaticResource Yellow}" Symbol="StarEmphasis32" FontSize="48" Width="64" Height="64" Grid.Row="4"/>
+                                <ui:SymbolIcon Foreground="{StaticResource Green}" FontSize="48" Symbol="DeveloperBoardLightning20" Width="64" Height="64" Grid.Row="5"/>
+                                <ui:Image Grid.Row="7" Height="64" Source="pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/transcend.png"/>
+                                <Button Grid.Row="6" Width="64" Height="64" BorderBrush="Transparent" Background="Transparent" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='Assets/Icons/Scrap_Icon_White.xaml'}"/>
+
+                                <StackPanel Grid.Column="1" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <ui:TextBlock FontSize="24" Text="Ancient Dragon"/>
+                                    <ui:TextBlock FontSize="20" Text="Cranium" HorizontalAlignment="Center"/>
+                                </StackPanel>
+                                
+                                <ui:DynamicScrollViewer Grid.Row="1" Grid.Column="1" Margin="5" CanContentScroll="True" IsDeferredScrollingEnabled="True" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                                    <TextBlock TextWrapping="Wrap" Text="Discovery: The head of the dragon. Presents skull fractures."/>
+                                </ui:DynamicScrollViewer>
+                                <ui:DynamicScrollViewer Grid.Row="2" Grid.Column="1" Margin="5" CanContentScroll="True" IsDeferredScrollingEnabled="True" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                                    <TextBlock TextWrapping="Wrap" Text="Description: Imposing head, reminiscent of a true dragon's. With three distinct horns atop it, the central horn stands tall and vibrant in yellow, flanked by two shorter, white horns that curve downwards. A visor-like structure conceals any hint of visible eyes, but a fierce maw is fully exposed, exuding a sense of power."/>
+                                </ui:DynamicScrollViewer>
+                                <ui:DynamicScrollViewer Grid.Row="3" Grid.Column="1" Margin="5" CanContentScroll="True" IsDeferredScrollingEnabled="True" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                                    <TextBlock TextWrapping="Wrap" Text="Effects: Unlock the statistics tab."/>
+                                </ui:DynamicScrollViewer>
+                                <ui:DynamicScrollViewer Grid.Row="4" Grid.Column="1" Margin="5" CanContentScroll="True" IsDeferredScrollingEnabled="True" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                                    <TextBlock TextWrapping="Wrap">
+                                            Synergy Effects: Unlock all features of the statistics tab.
+                                            <LineBreak/>
+                                            Unlock an upgrade for increasing the chance of finding missing Book of Secrets pages.
+                                            <LineBreak/>
+Unlock an upgrade for increasing the chance of finding an ancient dragon part's scraps.
+                                    </TextBlock>
+                                </ui:DynamicScrollViewer>
+                                <ui:DynamicScrollViewer Grid.Row="5" Grid.Column="1" Margin="5" CanContentScroll="True" IsDeferredScrollingEnabled="True" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                                    <TextBlock TextWrapping="Wrap" Text="Source Effects: None."/>
+                                </ui:DynamicScrollViewer>
+                                <TextBlock FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="6" Grid.Column="1" TextWrapping="Wrap" d:Text="Scraps Found: 0/100"/>
+                                <ProgressBar Margin="4" Value="500" Grid.Column="1" Grid.Row="7" Maximum="1000"/>
+                                <Button HorizontalAlignment="Center" Grid.Row="8" Grid.ColumnSpan="2" Content="True Transcend" Foreground="{StaticResource Crust}" Background="{StaticResource Blue}"/>
                             </Grid>
                         </ui:DynamicScrollViewer>
                     </Grid>
