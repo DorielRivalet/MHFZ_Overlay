@@ -27,14 +27,24 @@ public sealed class ChallengeAncientDragonPart
     public string Name { get; set; } = string.Empty;
 
     /// <summary>
-    /// The description of the part.
+    /// The description of the inactive part.
     /// </summary>
-    public string Description { get; set; } = string.Empty;
+    public string InactivePartDescription { get; set; } = string.Empty;
 
     /// <summary>
-    /// The link of the part image.
+    /// The description of the active part.
     /// </summary>
-    public string ImageLink { get; set; } = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/unknown.png";
+    public string ActivePartDescription { get; set; } = string.Empty;
+
+    /// <summary>
+    /// The link of the part image before a true transcend.
+    /// </summary>
+    public string InactivePartImageLink { get; set; } = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/unknown.png";
+
+    /// <summary>
+    /// The link of the part image after a true transcend.
+    /// </summary>
+    public string ActivePartImageLink { get; set; } = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/unknown.png";
 
     /// <summary>
     /// Whether the part boosts all other parts (except itself).

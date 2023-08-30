@@ -105,7 +105,7 @@ public static class ChallengeBookOfSecretsChapters
                     Name = "Knowledge of Extreme Style I",
                     PagesRequired = 0,
                     Description = "Shop: Unlocks Middle Square Reroll Chance (Extreme Difficulty).",
-                    Details = "Why would anyone need this?",
+                    Details = "You go back a few pages to see who the author of this chapter is. It reads: Patchouli.",
                 }
             },
             {
@@ -285,7 +285,7 @@ public static class ChallengeBookOfSecretsChapters
                     Name = "Knowledge of the Ancient Civilization I",
                     PagesRequired = 200,
                     Description = "Investigation: Research more about the Ancient Civilization.", // new tab
-                    Details = "An investigation into the ancient civilization lead us to explore some ancient ruins near Schrade. During exploration you found something peculiar..."
+                    Details = "An investigation into the ancient civilization lead us to explore some ancient ruins near Schrade. During exploration you found some scattered ruins of an ancient dragon's parts and what appears to be a still working gauntlet."
                 }
             },
             {
