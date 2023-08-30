@@ -4252,17 +4252,14 @@ Thunder Clad, Vigorous" Text="{Binding GetActiveSkillsForImage,Mode=OneTime}" Fo
                                     <TextBlock ToolTip="View Stargazers" Grid.Row="8" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="32"><Hyperlink Foreground="{StaticResource Blue}" NavigateUri="https://github.com/DorielRivalet/mhfz-overlay/stargazers" RequestNavigate="LnkImg_RequestNavigate">View Stargazers</Hyperlink></TextBlock>
                                 </ScrollViewer>
                             </Grid>
-                            <MediaElement Grid.Row="3" Grid.Column="2"  MediaEnded="Stars_MediaEnded" x:Name="myAnime" UnloadedBehavior="Manual" Source="https://media.tenor.com/uMRSXoUOwpYAAAAC/anime-girl.gif" LoadedBehavior="Play"/>
                             <Button ToolTip="Watchers" BorderBrush="Transparent" Background="Transparent" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='Assets/Icons/watch.xaml'}" Width="128" Height="128" Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="1" Margin="10,0,0,10"/>
                             <Grid Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="1">
                                 <TextBlock FontSize="32" Text="Loading..." x:Name="WatchersTextBlock" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                             </Grid>
-                            <MediaElement Grid.Row="4" Grid.Column="2"  MediaEnded="Watcher_MediaEnded" x:Name="myWatcher" UnloadedBehavior="Manual" Source="https://media.tenor.com/IMNDZBkct8gAAAAC/anime-girl.gif" LoadedBehavior="Play"/>
                             <Button ToolTip="Issues" BorderBrush="Transparent" Background="Transparent" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='Assets/Icons/issues.xaml'}" Width="128" Height="128" Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="1" Margin="10,0,0,10"/>
                             <Grid Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="1">
                                 <TextBlock FontSize="32" Text="Loading..." x:Name="IssuesTextBlock" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                             </Grid>
-                            <MediaElement Grid.Row="5" Grid.Column="2"  MediaEnded="Krill_MediaEnded" x:Name="myKrill" UnloadedBehavior="Manual" Source="https://media.tenor.com/S5IodS2Ms_IAAAAC/krill-issue.gif" LoadedBehavior="Play"/>
                             <Button ToolTip="Thank You!" BorderBrush="Transparent" Background="Transparent" Width="128" Height="128" Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="1" Margin="10,0,0,10">
                                 <Button.Content>
                                     <ui:SymbolIcon Symbol="Heart48" Foreground="{StaticResource Red}" FontSize="96"/>
@@ -4272,14 +4269,14 @@ Thunder Clad, Vigorous" Text="{Binding GetActiveSkillsForImage,Mode=OneTime}" Fo
                                 <TextBlock FontSize="32" Text="Thanks for using the overlay!" x:Name="ThankYouTextBlock" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                             </Grid>
                             <!--https://stackoverflow.com/questions/19694640/animating-gif-in-wpf-->
-                            <MediaElement MouseLeftButtonDown="FumoImage_MouseLeftButtonDown" MediaEnded="Fumo_MediaEnded"  Grid.Row="6" Grid.Column="2" x:Name="myFumo" Width="Auto" Height="Auto" UnloadedBehavior="Manual"     Source="https://cdn.discordapp.com/attachments/324875367418429441/1032217078750531584/zenith_fumo.gif" LoadedBehavior="Play"/>
+                            <ui:Image MouseLeftButtonDown="FumoImage_MouseLeftButtonDown" Grid.Row="6" Grid.Column="2" x:Name="myFumo" Source="pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/touhou/zenith_fumo.gif"/>
 
                             <TextBlock TextWrapping="Wrap" Grid.RowSpan="2" Grid.Row="7" FontSize="32" Grid.ColumnSpan="3" Text="Loading..." x:Name="OctokitInfo"/>
 
                             <!--https://stackoverflow.com/questions/10238694/example-using-hyperlink-in-wpf-->
                             <TextBlock ToolTip="View Changelog" Grid.Row="8" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="32"><Hyperlink Foreground="{StaticResource Blue}" NavigateUri="https://github.com/DorielRivalet/mhfz-overlay/blob/main/CHANGELOG.md" RequestNavigate="LnkImg_RequestNavigate">View Changelog</Hyperlink></TextBlock>
                             <TextBlock ToolTip="View Releases Statistics (Put DorielRivalet as GitHub Username and MHFZ_Overlay as Repository Name)" Grid.Row="8" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="32"><Hyperlink Foreground="{StaticResource Blue}" NavigateUri="https://somsubhra.github.io/github-release-stats/" RequestNavigate="LnkImg_RequestNavigate">View Releases Statistics</Hyperlink></TextBlock>
-                            <TextBlock ToolTip="Download latest version as 7z file" Grid.Row="8" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="32"><Hyperlink Foreground="{StaticResource Blue}" NavigateUri="https://github.com/DorielRivalet/mhfz-overlay/releases/latest" RequestNavigate="LnkImg_RequestNavigate">Get latest version</Hyperlink></TextBlock>
+                            <TextBlock ToolTip="Go to GitHub Releases page" Grid.Row="8" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="32"><Hyperlink Foreground="{StaticResource Blue}" NavigateUri="https://github.com/DorielRivalet/mhfz-overlay/releases/latest" RequestNavigate="LnkImg_RequestNavigate">Get latest version</Hyperlink></TextBlock>
                             <TextBlock ToolTip="Total Program Usage Time" Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="3" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="32" Text="{Binding TotalTimeSpent, StringFormat=hh\\:mm\\:ss, Mode=OneTime}"/>
                         </Grid>
                     </ScrollViewer>

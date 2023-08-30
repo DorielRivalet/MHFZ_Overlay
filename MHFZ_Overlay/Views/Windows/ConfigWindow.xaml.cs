@@ -1007,7 +1007,6 @@ public partial class ConfigWindow : FluentWindow
         this.DisposeAllWebViews();
         s.Reload();
         this.Close();
-        this.DeletexNames_OnClosed();
     }
 
     private void ChangeMonsterInfo()
@@ -1134,62 +1133,6 @@ public partial class ConfigWindow : FluentWindow
         if (info != null)
         {
             this.OctokitInfo.Text = string.Format(CultureInfo.InvariantCulture, "Server Time Difference: {0}, Max Requests/hr: {1}, Requests remaining: {2}, Reset Time: {3}", info.ServerTimeDifference, info.RateLimit.Limit, info.RateLimit.Remaining, info.RateLimit.Reset);
-        }
-    }
-
-    private void Fumo_MediaEnded(object sender, RoutedEventArgs e)
-    {
-        if (this.myFumo == null)
-        {
-            return;
-        }
-
-        this.myFumo.Position = new TimeSpan(0, 0, 1);
-        this.myFumo.Play();
-    }
-
-    private void Krill_MediaEnded(object sender, RoutedEventArgs e)
-    {
-        if (this.myKrill == null)
-        {
-            return;
-        }
-
-        this.myKrill.Position = new TimeSpan(0, 0, 1);
-        this.myKrill.Play();
-    }
-
-    private void Stars_MediaEnded(object sender, RoutedEventArgs e)
-    {
-        if (this.myAnime == null)
-        {
-            return;
-        }
-
-        this.myAnime.Position = new TimeSpan(0, 0, 1);
-        this.myAnime.Play();
-    }
-
-    private void Watcher_MediaEnded(object sender, RoutedEventArgs e)
-    {
-        if (this.myWatcher == null)
-        {
-            return;
-        }
-
-        this.myWatcher.Position = new TimeSpan(0, 0, 1);
-        this.myWatcher.Play();
-    }
-
-    /// <summary>
-    /// might need to work on? is the memory reduction worth it?.
-    /// </summary>
-    private void DeletexNames_OnClosed()
-    {
-        if (this.myWatcher != null)
-        {
-            this.UnregisterName("myWatcher");
-            this.myWatcher = null;
         }
     }
 
