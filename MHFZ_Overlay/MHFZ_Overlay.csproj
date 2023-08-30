@@ -734,6 +734,22 @@
     <None Remove="Assets\Icons\png\unknown.png" />
     <None Remove="Assets\Icons\png\whetstone.png" />
     <None Remove="Assets\Icons\png\world.png" />
+    <None Remove="Assets\Icons\touhou\fumo1.png" />
+    <None Remove="Assets\Icons\touhou\fumo10.png" />
+    <None Remove="Assets\Icons\touhou\fumo11.png" />
+    <None Remove="Assets\Icons\touhou\fumo12.png" />
+    <None Remove="Assets\Icons\touhou\fumo13.png" />
+    <None Remove="Assets\Icons\touhou\fumo14.png" />
+    <None Remove="Assets\Icons\touhou\fumo15.png" />
+    <None Remove="Assets\Icons\touhou\fumo2.png" />
+    <None Remove="Assets\Icons\touhou\fumo3.png" />
+    <None Remove="Assets\Icons\touhou\fumo4.png" />
+    <None Remove="Assets\Icons\touhou\fumo5.png" />
+    <None Remove="Assets\Icons\touhou\fumo6.png" />
+    <None Remove="Assets\Icons\touhou\fumo7.png" />
+    <None Remove="Assets\Icons\touhou\fumo8.png" />
+    <None Remove="Assets\Icons\touhou\fumo9.png" />
+    <None Remove="Assets\Icons\touhou\zenith_fumo.gif" />
     <None Remove="Assets\Sounds\challenge_start.wav" />
     <None Remove="Assets\Sounds\challenge_unlock.wav" />
     <None Remove="Assets\Sounds\gacha_rare.wav" />
@@ -1745,6 +1761,54 @@
     <Resource Include="Assets\Icons\Tail_Icon_White.xaml" />
     <Resource Include="Assets\Icons\Talisman_Icon_White.xaml" />
     <Resource Include="Assets\Icons\Tentacle_Icon_White.xaml" />
+    <Resource Include="Assets\Icons\touhou\fumo1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Icons\touhou\fumo11.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Icons\touhou\fumo13.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Icons\touhou\fumo12.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Icons\touhou\fumo10.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Icons\touhou\fumo14.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Icons\touhou\fumo15.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Icons\touhou\fumo2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Icons\touhou\fumo6.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Icons\touhou\fumo7.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Icons\touhou\fumo5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Icons\touhou\fumo3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Icons\touhou\fumo4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Icons\touhou\fumo9.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Icons\touhou\fumo8.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Icons\touhou\zenith_fumo.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Assets\Icons\Vial_Icon_White.xaml" />
     <Resource Include="Assets\Icons\Voucher_Icon_White.xaml" />
     <Resource Include="Assets\Icons\watch.xaml" />

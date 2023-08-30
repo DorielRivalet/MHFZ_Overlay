@@ -353,16 +353,16 @@
                                         <Button Opacity=".5" BorderBrush="Transparent" Background="Transparent" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='Assets/Icons/Sturdy_Shell_Icon_White.xaml'}"/>
                                     </Border>
                                     <Border Margin="5" Background="{StaticResource Mantle}" BorderThickness="1" BorderBrush="{StaticResource Surface0}" CornerRadius="2" Width="96" Height="96" >
-                                        <Button Opacity=".5"  BorderBrush="Transparent" Background="Transparent" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='Assets/Icons/Mantle_Icon_White.xaml'}"/>
-                                    </Border>
-                                    <Border Margin="5" Background="{StaticResource Mantle}" BorderThickness="1" BorderBrush="{StaticResource Surface0}" CornerRadius="2" Width="96" Height="96" >
                                         <Button Opacity=".5"  BorderBrush="Transparent" Background="Transparent" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='Assets/Icons/Wing_Icon_White.xaml'}"/>
                                     </Border>
                                     <Border Margin="5" Background="{StaticResource Mantle}" BorderThickness="1" BorderBrush="{StaticResource Surface0}" CornerRadius="2" Width="96" Height="96" >
                                         <Button Opacity=".5"  BorderBrush="Transparent" Background="Transparent" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='Assets/Icons/Flipper_Icon_White.xaml'}"/>
                                     </Border>
                                     <Border Margin="5" Background="{StaticResource Mantle}" BorderThickness="1" BorderBrush="{StaticResource Surface0}" CornerRadius="2" Width="96" Height="96" >
-                                        <Button Opacity=".5" BorderBrush="Transparent" Background="Transparent" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='Assets/Icons/Leg_Carve_Icon_White.xaml'}"/>
+                                        <Button Opacity=".5"  BorderBrush="Transparent" Background="Transparent" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='Assets/Icons/Leg_Carve_Icon_White.xaml'}"/>
+                                    </Border>
+                                    <Border Margin="5" Background="{StaticResource Mantle}" BorderThickness="1" BorderBrush="{StaticResource Surface0}" CornerRadius="2" Width="96" Height="96" >
+                                        <Button Opacity=".5" BorderBrush="Transparent" Background="Transparent" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='Assets/Icons/Tail_Icon_White.xaml'}"/>
                                     </Border>
                                 </StackPanel>
                             </Grid>
