@@ -5519,7 +5519,7 @@ During the travel to your destination, the top of the Great Forest, you notice t
             419, new Achievement()
             {
             CompletionDate = DateTime.UnixEpoch,
-            Title = "Fumo #2",
+            Title = "Fumo #2", // Patchouli
             Description = string.Empty,
             Rank = AchievementRank.Bronze,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/unknown_red.jpg",
@@ -5537,7 +5537,7 @@ During the travel to your destination, the top of the Great Forest, you notice t
             420, new Achievement()
             {
             CompletionDate = DateTime.UnixEpoch,
-            Title = "Fumo #3",
+            Title = "Fumo #3", // Flande
             Description = string.Empty,
             Rank = AchievementRank.Bronze,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/unknown_red.jpg",
@@ -5550,7 +5550,7 @@ During the travel to your destination, the top of the Great Forest, you notice t
             421, new Achievement()
             {
             CompletionDate = DateTime.UnixEpoch,
-            Title = "Fumo #4",
+            Title = "Fumo #4", // Remilia
             Description = string.Empty,
             Rank = AchievementRank.Bronze,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/unknown_red.jpg",
@@ -5563,7 +5563,7 @@ During the travel to your destination, the top of the Great Forest, you notice t
             422, new Achievement()
             {
             CompletionDate = DateTime.UnixEpoch,
-            Title = "Fumo #5",
+            Title = "Fumo #5", // Yuyuko
             Description = string.Empty,
             Rank = AchievementRank.Bronze,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/unknown_red.jpg",
@@ -5648,6 +5648,149 @@ During the travel to your destination, the top of the Great Forest, you notice t
             Objective = "Complete Tome IV of the Book of Secrets (Challenge).",
             IsSecret = false,
             Hint = string.Empty,
+            }
+        },
+        {
+            429, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Fumo #6", // Tenshi
+            Description = string.Empty,
+            Rank = AchievementRank.Bronze,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/unknown_red.jpg",
+            Objective = "Click a fumo in a chest.",
+            IsSecret = true,
+            Hint = "These chests can hold many hidden treasures.",
+            }
+        },
+        {
+            430, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Fumo #7", // Inaba
+            Description = string.Empty,
+            Rank = AchievementRank.Bronze,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/unknown_red.jpg",
+            Objective = "Click a fumo in a box.",
+            IsSecret = true,
+            Hint = "These boxes can have more than just ammo.",
+            }
+        },
+        {
+            431, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Fumo #8", // Suika
+            Description = string.Empty,
+            Rank = AchievementRank.Bronze,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/unknown_red.jpg",
+            Objective = "Click a fumo near a monster.",
+            IsSecret = true,
+            Hint = "This fumo reminds me of a certain fanged beast.",
+            }
+        },
+        {
+            432, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Fumo #9", // Youmu
+            Description = string.Empty,
+            Rank = AchievementRank.Bronze,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/unknown_red.jpg",
+            Objective = "Click a fumo inside a wooden chest.",
+            IsSecret = true,
+            Hint = "Why was it hiding inside a wooden chest?",
+            }
+        },
+        {
+            433, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Fumo #10", // Cirno
+            Description = string.Empty,
+            Rank = AchievementRank.Silver,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/unknown_white.jpg",
+            Objective = "Click a fumo in the starry sky.",
+            IsSecret = true,
+            Hint = "You saw a comet and asked for a wish.",
+            }
+        },
+        {
+            434, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Fumo #11", // Sakuya
+            Description = string.Empty,
+            Rank = AchievementRank.Silver,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/unknown_white.jpg",
+            Objective = "Click a fumo near a knife.",
+            IsSecret = true,
+            Hint = "I wonder why we use transcend burst with the carving knife.",
+            }
+        },
+        {
+            435, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Fumo #12", // Suwako
+            Description = string.Empty,
+            Rank = AchievementRank.Silver,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/unknown_white.jpg",
+            Objective = "Click a fumo near a frog.",
+            IsSecret = true,
+            Hint = "This frog was hiding a secret!",
+            }
+        },
+        {
+            436, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Fumo #13", // Koishi
+            Description = string.Empty,
+            Rank = AchievementRank.Gold,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/unknown_black.jpg",
+            Objective = "Click a fumo near a monster's eye.",
+            IsSecret = true,
+            Hint = "We might find something if we go where these eyes are pointing.",
+            }
+        },
+        {
+            437, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Fumo #14", // Reimu
+            Description = string.Empty,
+            Rank = AchievementRank.Gold,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/unknown_black.jpg",
+            Objective = "Click a fumo in Frontier Compendium website and follow the hints.",
+            IsSecret = true,
+            Hint = "Get a hint from a fumo, not here!",
+            }
+        },
+        {
+            438, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Fumo #15", // Marisa
+            Description = string.Empty,
+            Rank = AchievementRank.Platinum,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/unknown_blue.jpg",
+            Objective = "Click a fumo in Sky Corridor Headquarters Entrance.",
+            IsSecret = true,
+            Hint = "Get a hint from a fumo, not here!",
+            }
+        },
+        {
+            439, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Back to the Land of Illusions",
+            Description = string.Empty,
+            Rank = AchievementRank.Platinum,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/unknown_blue.jpg",
+            Objective = "Help Marisa go back to her universe.",
+            IsSecret = true,
+            Hint = "Hopefully we don't have any more dimensional shenanigans.",
             }
         },
     });
