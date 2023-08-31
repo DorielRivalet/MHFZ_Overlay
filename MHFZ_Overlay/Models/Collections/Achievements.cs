@@ -5793,5 +5793,18 @@ During the travel to your destination, the top of the Great Forest, you notice t
             Hint = "Hopefully we don't have any more dimensional shenanigans.",
             }
         },
+        {
+            440, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Unlimited Power",
+            Description = string.Empty,
+            Rank = AchievementRank.Platinum,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/unknown_blue.jpg",
+            Objective = "Have the power to beat 100 Unlimited monsters.",
+            IsSecret = true,
+            Hint = "POWER!",
+            }
+        },
     });
 }
