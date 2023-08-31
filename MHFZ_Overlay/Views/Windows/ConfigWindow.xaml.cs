@@ -4271,6 +4271,8 @@ public partial class ConfigWindow : FluentWindow
 
     private void StartChallenge(Challenge? challenge)
     {
+        return; // TODO uncomment when in dev for now.
+
         if (challenge == null || this.challengesListBox == null)
         {
             Logger.Warn(CultureInfo.InvariantCulture, "Challenge not found, canceling start process");

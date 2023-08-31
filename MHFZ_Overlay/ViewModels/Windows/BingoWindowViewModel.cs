@@ -690,7 +690,7 @@ public partial class BingoWindowViewModel : ObservableRecipient, IRecipient<Ques
     [RelayCommand(CanExecute = nameof(IsBingoNotRunning))]
     private void SetPoints()
     {
-        PlayerBingoPoints = BingoServiceInstance.SetPlayerBingoPoints(99_999);
+        // PlayerBingoPoints = BingoServiceInstance.SetPlayerBingoPoints(99_999);
     }
 
     public bool IsBingoNotRunning()
