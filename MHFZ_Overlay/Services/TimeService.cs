@@ -75,11 +75,11 @@ public static class TimeService
         string timer2Result = string.Empty;
         string timer3Result = string.Empty;
 
-        for (decimal i = timeInt; i >= 0M; i--)
+        for (decimal i = timeInt; i >= -timeDefInt; i--)
         {
             timer1Result = StringBuilderTimer(timeInt, TimerFormat.MinutesSecondsMilliseconds, true, timeDefInt, true, GetTimeLeftPercent(timeDefInt, timeInt, true), TimerMode.Elapsed);
-            timer2Result = TimeSpanTimer(timeInt, TimerFormat.MinutesSecondsMilliseconds, timeDefInt, true, GetTimeLeftPercent(timeDefInt, timeInt, true), TimerMode.Elapsed);
-            timer3Result = SimpleTimer(timeInt, TimerFormat.MinutesSecondsMilliseconds, timeDefInt, true, GetTimeLeftPercent(timeDefInt, timeInt, true), TimerMode.Elapsed);
+            timer2Result = TimeSpanTimer(timeInt, TimerFormat.MinutesSecondsMilliseconds, true, timeDefInt, true, GetTimeLeftPercent(timeDefInt, timeInt, true), TimerMode.Elapsed);
+            timer3Result = SimpleTimer(timeInt, TimerFormat.MinutesSecondsMilliseconds, true, timeDefInt, true, GetTimeLeftPercent(timeDefInt, timeInt, true), TimerMode.Elapsed);
 
             if (timer1Result != timer2Result || timer3Result != timer1Result || timer3Result != timer2Result)
             {
@@ -100,11 +100,12 @@ TimeSpan: {timer2Result}
 Simple: {timer3Result}";
     }
 
-    private static string SimpleTimer(decimal timeInt, TimerFormat timerFormat, decimal timeDefInt = 0, bool timeLeftPercentShown = false, string timeLeftPercentNumber = "", TimerMode timerMode = TimerMode.Elapsed)
+    private static string SimpleTimer(decimal timeInt, TimerFormat timerFormat, bool isFrames = true, decimal timeDefInt = 0, bool timeLeftPercentShown = false, string timeLeftPercentNumber = "", TimerMode timerMode = TimerMode.Elapsed)
     {
         // TODO wrong conditionals for timeint >= timedefint?
         decimal time = timerMode == TimerMode.Elapsed && timeInt <= timeDefInt ? time = timeDefInt - timeInt : time = timeInt;
-        decimal milliseconds = time / 30 * 1000;
+        decimal framesPerSecond = isFrames ? Numbers.FramesPerSecond : 1;
+        decimal milliseconds = time / framesPerSecond * 1000;
         decimal totalMinutes = Math.Floor(milliseconds / 60000);
         decimal minutes = totalMinutes >= 60 ? totalMinutes : Math.Floor(milliseconds / 60000);
         decimal seconds = Math.Floor((milliseconds - (minutes * 60000)) / 1000);
@@ -148,10 +149,11 @@ Simple: {timer3Result}";
         return sb.ToString();
     }
 
-    private static string TimeSpanTimer(decimal timeInt, TimerFormat timerFormat, decimal timeDefInt = 0, bool timeLeftPercentShown = false, string timeLeftPercentNumber = "", TimerMode timerMode = TimerMode.Elapsed)
+    private static string TimeSpanTimer(decimal timeInt, TimerFormat timerFormat, bool isFrames = true, decimal timeDefInt = 0, bool timeLeftPercentShown = false, string timeLeftPercentNumber = "", TimerMode timerMode = TimerMode.Elapsed)
     {
         decimal time = timerMode == TimerMode.Elapsed && timeInt <= timeDefInt ? time = timeDefInt - timeInt : time = timeInt;
-        decimal timeInSeconds = time / Numbers.FramesPerSecond;
+        decimal framesPerSecond = isFrames ? Numbers.FramesPerSecond : 1;
+        decimal timeInSeconds = time / framesPerSecond;
         TimeSpan timeInSecondsSpan = TimeSpan.FromSeconds((double)timeInSeconds);
         int roundedMilliseconds = (int)(Math.Round(timeInSecondsSpan.TotalMilliseconds) % 1000);
         var totalMinutes = Math.Floor(timeInSecondsSpan.TotalSeconds / 60);
@@ -172,26 +174,26 @@ Simple: {timer3Result}";
     /// </summary>
     /// <param name="frames"></param>
     /// <returns></returns>
-    public static string GetMinutesSecondsFromSeconds(double seconds) => StringBuilderTimer((long)seconds, TimerFormat.MinutesSeconds, false);
+    public static string GetMinutesSecondsFromSeconds(double seconds) => TimeSpanTimer((long)seconds, TimerFormat.MinutesSeconds, false);
 
     /// <summary>
     /// Gets the elapsed time in the desired format.
     /// </summary>
     /// <param name="frames"></param>
     /// <returns></returns>
-    public static string GetMinutesSecondsFromFrames(double frames) => StringBuilderTimer((long)frames, TimerFormat.MinutesSeconds);
+    public static string GetMinutesSecondsFromFrames(double frames) => TimeSpanTimer((long)frames, TimerFormat.MinutesSeconds);
 
     /// <summary>
     /// Gets the elapsed time in the desired format.
     /// </summary>
     /// <param name="frames"></param>
     /// <returns></returns>
-    public static string GetMinutesSecondsMillisecondsFromFrames(double frames) => StringBuilderTimer((long)frames, TimerFormat.MinutesSecondsMilliseconds);
+    public static string GetMinutesSecondsMillisecondsFromFrames(double frames) => TimeSpanTimer((long)frames, TimerFormat.MinutesSecondsMilliseconds);
 
     /// <summary>
     /// Gets the elapsed time in the desired format.
     /// </summary>
     /// <param name="frames"></param>
     /// <returns></returns>
-    public static string GetMinutesSecondsMillisecondsFromFrames(long frames) => StringBuilderTimer(frames, TimerFormat.MinutesSecondsMilliseconds);
+    public static string GetMinutesSecondsMillisecondsFromFrames(long frames) => TimeSpanTimer(frames, TimerFormat.MinutesSecondsMilliseconds);
 }
