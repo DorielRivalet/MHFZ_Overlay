@@ -1338,7 +1338,7 @@
                         <TabItem ToolTip="Database Settings" Background="{StaticResource Crust}" Foreground="{StaticResource Text}">
                             <TabItem.Header>
                                 <StackPanel Orientation="Horizontal">
-                                    <Button BorderThickness="0"  Background="Transparent" Width="48" Height="32">
+                                    <Button IsHitTestVisible="False" BorderThickness="0"  Background="Transparent" Width="48" Height="32">
                                         <Button.Content>
                                             <ui:SymbolIcon Symbol="Settings32" Foreground="{StaticResource Green}" FontSize="24"/>
                                         </Button.Content>
@@ -1519,7 +1519,7 @@
                         <TabItem ToolTip="View Quest Statistics" Background="{StaticResource Crust}" Foreground="{StaticResource Text}">
                             <TabItem.Header>
                                 <StackPanel Orientation="Horizontal">
-                                    <Button BorderThickness="0"  Background="Transparent" Width="48" Height="32">
+                                    <Button IsHitTestVisible="False" BorderThickness="0"  Background="Transparent" Width="48" Height="32">
                                         <Button.Content>
                                             <ui:SymbolIcon Symbol="DataBarVertical32" Foreground="{StaticResource Rosewater}" FontSize="24"/>
                                         </Button.Content>
@@ -1743,7 +1743,7 @@
                         <TabItem ToolTip="View Achievements" Background="{StaticResource Crust}" Foreground="{StaticResource Text}">
                             <TabItem.Header>
                                 <StackPanel Orientation="Horizontal">
-                                    <Button BorderThickness="0" Background="Transparent" Width="48" Height="32">
+                                    <Button IsHitTestVisible="False" BorderThickness="0" Background="Transparent" Width="48" Height="32">
                                         <Button.Content>
                                             <ui:SymbolIcon Symbol="Trophy32" Foreground="{StaticResource Red}" FontSize="24"/>
                                         </Button.Content>

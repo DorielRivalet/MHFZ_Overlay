@@ -70,7 +70,7 @@
                 <TabItem Background="{StaticResource Mantle}" Foreground="{StaticResource Text}">
                     <TabItem.Header>
                         <StackPanel Background="Transparent" Orientation="Horizontal">
-                            <Button BorderThickness="0" Background="Transparent" Width="48" Height="32">
+                            <Button IsHitTestVisible="False" BorderThickness="0" Background="Transparent" Width="48" Height="32">
                                 <Button.Content>
                                     <ui:SymbolIcon Symbol="Board28" Foreground="{StaticResource Red}" FontSize="24"/>
                                 </Button.Content>
@@ -246,7 +246,7 @@
                 <TabItem Background="{StaticResource Mantle}" Foreground="{StaticResource Text}">
                     <TabItem.Header>
                         <StackPanel Background="Transparent" Orientation="Horizontal">
-                            <Button BorderThickness="0" Background="Transparent" Width="48" Height="32">
+                            <Button IsHitTestVisible="False" BorderThickness="0" Background="Transparent" Width="48" Height="32">
                                 <Button.Content>
                                     <ui:SymbolIcon Symbol="BuildingShop24" Foreground="{StaticResource Green}" FontSize="24"/>
                                 </Button.Content>
@@ -272,7 +272,7 @@
                 <TabItem Background="{StaticResource Mantle}" Foreground="{StaticResource Text}">
                     <TabItem.Header>
                         <StackPanel Background="Transparent" Orientation="Horizontal">
-                            <Button BorderThickness="0" Background="Transparent" Width="48" Height="32">
+                            <Button IsHitTestVisible="False" BorderThickness="0" Background="Transparent" Width="48" Height="32">
                                 <Button.Content>
                                     <ui:SymbolIcon Symbol="BookQuestionMark24" Foreground="{StaticResource Mauve}" FontSize="24"/>
                                 </Button.Content>
@@ -298,7 +298,7 @@
                 <TabItem Background="{StaticResource Mantle}" Foreground="{StaticResource Text}">
                     <TabItem.Header>
                         <StackPanel Background="Transparent" Orientation="Horizontal">
-                            <Button BorderThickness="0" Background="Transparent" Width="48" Height="32">
+                            <Button IsHitTestVisible="False" BorderThickness="0" Background="Transparent" Width="48" Height="32">
                                 <Button.Content>
                                     <ui:ImageIcon Height="20" Width="20" Source="pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/extreme_dragonblight.png"/>
                                 </Button.Content>
@@ -429,7 +429,7 @@ Unlock an upgrade for increasing the chance of finding an ancient dragon part's 
                 <TabItem Background="{StaticResource Mantle}" Foreground="{StaticResource Text}">
                     <TabItem.Header>
                         <StackPanel Background="Transparent" Orientation="Horizontal">
-                            <Button BorderThickness="0" Background="Transparent" Width="48" Height="32">
+                            <Button IsHitTestVisible="False" BorderThickness="0" Background="Transparent" Width="48" Height="32">
                                 <Button.Content>
                                     <ui:SymbolIcon Symbol="List28" Foreground="{StaticResource Blue}" FontSize="24"/>
                                 </Button.Content>
