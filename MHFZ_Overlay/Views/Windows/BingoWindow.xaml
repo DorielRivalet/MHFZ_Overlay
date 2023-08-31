@@ -379,6 +379,8 @@
                                     <RowDefinition Height="64"/>
                                     <RowDefinition Height="64"/>
                                     <RowDefinition Height="64"/>
+                                    <RowDefinition Height="64"/>
+                                    <RowDefinition Height="64"/>
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="64"/>
@@ -390,7 +392,7 @@
                                 <ui:SymbolIcon Foreground="{StaticResource Red}" Symbol="BookExclamationMark24" FontSize="48" Width="64" Height="64" Grid.Row="3"/>
                                 <ui:SymbolIcon Foreground="{StaticResource Yellow}" Symbol="StarEmphasis32" FontSize="48" Width="64" Height="64" Grid.Row="4"/>
                                 <ui:SymbolIcon Foreground="{StaticResource Green}" FontSize="48" Symbol="DeveloperBoardLightning20" Width="64" Height="64" Grid.Row="5"/>
-                                <ui:Image Grid.Row="7" Height="64" Source="pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/transcend.png"/>
+                                <ui:Image Grid.Row="7" Grid.ColumnSpan="2" Grid.RowSpan="4" HorizontalAlignment="Center" Height="64" Source="pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/transcend.png"/>
                                 <Button Grid.Row="6" Width="64" Height="64" BorderBrush="Transparent" Background="Transparent" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='Assets/Icons/Scrap_Icon_White.xaml'}"/>
 
                                 <StackPanel Grid.Column="1" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -419,9 +421,17 @@ Unlock an upgrade for increasing the chance of finding an ancient dragon part's 
                                 <ui:DynamicScrollViewer Grid.Row="5" Grid.Column="1" Margin="5" CanContentScroll="True" IsDeferredScrollingEnabled="True" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
                                     <TextBlock TextWrapping="Wrap" Text="Source Effects: None."/>
                                 </ui:DynamicScrollViewer>
-                                <TextBlock FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="6" Grid.Column="1" TextWrapping="Wrap" d:Text="Scraps Found: 0/100"/>
-                                <ProgressBar Margin="4" Value="500" Grid.Column="1" Grid.Row="7" Maximum="1000"/>
-                                <Button HorizontalAlignment="Center" Grid.Row="8" Grid.ColumnSpan="2" Content="True Transcend" Foreground="{StaticResource Crust}" Background="{StaticResource Blue}"/>
+                                <TextBlock FontSize="18" VerticalAlignment="Center" Grid.Row="6" Grid.Column="1" TextWrapping="Wrap" Text="Scraps Found: 0/100"/>
+                                <lvc:PieChart Width="Auto" Height="Auto" Grid.RowSpan="4" Grid.ColumnSpan="2"
+            Grid.Row="7"
+            Series="{Binding GaugeSeries}"
+            VisualElements="{Binding VisualElements}"
+            InitialRotation="-225"
+            MaxAngle="270"
+            MinValue="0"
+            MaxValue="100">
+                                </lvc:PieChart>
+                                <Button VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="10" Grid.ColumnSpan="2" Content="True Transcend" Foreground="{StaticResource Crust}" Background="{StaticResource Blue}" Command="{Binding DoRandomChangeCommand}"/>
                             </Grid>
                         </ui:DynamicScrollViewer>
                     </Grid>

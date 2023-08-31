@@ -43,9 +43,82 @@ using System.Windows.Markup;
 using System.Collections;
 using System.Runtime.CompilerServices;
 using System.Windows.Media.Animation;
+using LiveChartsCore.SkiaSharpView.Drawing;
+using LiveChartsCore.SkiaSharpView.Extensions;
+using LiveChartsCore.VisualElements;
+using Xunit.Abstractions;
+using System.Globalization;
 
 public partial class BingoWindowViewModel : ObservableRecipient, IRecipient<QuestIDMessage>, IRecipient<RunIDMessage>
 {
+    private readonly Random _random = new();
+
+    public IEnumerable<ISeries> GaugeSeries { get; set; }
+
+    public IEnumerable<VisualElement<SkiaSharpDrawingContext>> VisualElements { get; set; }
+
+    public NeedleVisual Needle { get; set; }
+
+    private static void SetStyle(
+        double sectionsOuter, double sectionsWidth, PieSeries<ObservableValue> series, int order)
+    {
+        series.OuterRadiusOffset = sectionsOuter;
+        series.MaxRadialColumnWidth = sectionsWidth;
+        switch (order)
+        {
+            default:
+                series.Fill = new SolidColorPaint(new SKColor(AddressModel.StaticHexColorToDecimal("#11111b")));
+                break;
+            case 1:
+                series.Fill = new SolidColorPaint(new SKColor(AddressModel.StaticHexColorToDecimal("#f9e2af")));
+                break;
+            case 2:
+                series.Fill = new SolidColorPaint(new SKColor(AddressModel.StaticHexColorToDecimal("#94e2d5")));
+                break;
+            case 3:
+                series.Fill = new SolidColorPaint(new SKColor(AddressModel.StaticHexColorToDecimal("#89b4fa")));
+                break;
+        }
+    }
+
+    [RelayCommand]
+    public void DoRandomChange()
+    {
+        // modifying the Value property updates and animates the chart automatically
+        Needle.Value = _random.Next(0, 100);
+    }
+
+    private void SetGauge()
+    {
+        var sectionsOuter = 130;
+        var sectionsWidth = 20;
+
+        Needle = new NeedleVisual
+        {
+            Value = 45,
+            Fill = new SolidColorPaint(SKColor.FromHsl(226, 64, 88, 127)),
+        };
+
+        GaugeSeries = GaugeGenerator.BuildAngularGaugeSections(
+            new GaugeItem(60, s => SetStyle(sectionsOuter, sectionsWidth, s, 1)),
+            new GaugeItem(30, s => SetStyle(sectionsOuter, sectionsWidth, s, 2)),
+            new GaugeItem(10, s => SetStyle(sectionsOuter, sectionsWidth, s, 3)));
+
+        VisualElements = new VisualElement<SkiaSharpDrawingContext>[]
+        {
+            new AngularTicksVisual
+            {
+                LabelsSize = 16,
+                LabelsOuterOffset = 15,
+                OuterOffset = 65,
+                TicksLength = 20,
+                LabelsPaint = new SolidColorPaint(new SKColor(AddressModel.StaticHexColorToDecimal("#cdd6f4"))),
+                Stroke = new SolidColorPaint(new SKColor(AddressModel.StaticHexColorToDecimal("#cdd6f4"))),
+            },
+            Needle
+        };
+    }  
+
     private ObservableCollection<ObservableValue>? _observableValues { get; set; }
 
     private static readonly NLog.Logger LoggerInstance = NLog.LogManager.GetCurrentClassLogger();
@@ -54,6 +127,7 @@ public partial class BingoWindowViewModel : ObservableRecipient, IRecipient<Ques
     {
         BingoWindowSnackbarPresenter = snackbarPresenter;
         SetGraphs();
+        SetGauge();
     }
 
     public void Receive(QuestIDMessage message) => OnReceivedQuestID(message);
