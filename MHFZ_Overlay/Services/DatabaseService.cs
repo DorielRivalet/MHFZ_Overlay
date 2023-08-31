@@ -3897,15 +3897,6 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
         }
     }
 
-    // TODO put somewhere else and test
-    public static string FormatTime(int framesElapsed)
-    {
-        var minutes = framesElapsed / (Numbers.FramesPerSecond * 60);
-        var seconds = (framesElapsed % (Numbers.FramesPerSecond * 60)) / Numbers.FramesPerSecond;
-        var milliseconds = ((framesElapsed % ((double)Numbers.FramesPerSecond * 60)) % (double)Numbers.FramesPerSecond) / double.Parse(Numbers.FramesPerSecond.ToString(CultureInfo.InvariantCulture), CultureInfo.InvariantCulture);
-        return $"{minutes:D2}:{seconds:D2}.{(int)(milliseconds * 1000):D3}";
-    }
-
     private void CreateDatabaseTables(SQLiteConnection conn, DataLoader dataLoader)
     {
         using (var transaction = conn.BeginTransaction())
@@ -10556,59 +10547,59 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                                 switch (weaponType)
                                 {
                                     case "Sword and Shield":
-                                        configWindow.SwordAndShieldBestTimeTextBlock.Text = FormatTime(bestTime);
+                                        configWindow.SwordAndShieldBestTimeTextBlock.Text = TimeService.GetMinutesSecondsMillisecondsFromFrames(bestTime);
                                         configWindow.SwordAndShieldRunIDTextBlock.Text = string.Format(CultureInfo.InvariantCulture, "Run ID: {0}", runID);
                                         break;
                                     case "Great Sword":
-                                        configWindow.GreatSwordBestTimeTextBlock.Text = FormatTime(bestTime);
+                                        configWindow.GreatSwordBestTimeTextBlock.Text = TimeService.GetMinutesSecondsMillisecondsFromFrames(bestTime);
                                         configWindow.GreatSwordRunIDTextBlock.Text = string.Format(CultureInfo.InvariantCulture, "Run ID: {0}", runID);
                                         break;
                                     case "Dual Swords":
-                                        configWindow.DualSwordsBestTimeTextBlock.Text = FormatTime(bestTime);
+                                        configWindow.DualSwordsBestTimeTextBlock.Text = TimeService.GetMinutesSecondsMillisecondsFromFrames(bestTime);
                                         configWindow.DualSwordsRunIDTextBlock.Text = string.Format(CultureInfo.InvariantCulture, "Run ID: {0}", runID);
                                         break;
                                     case "Long Sword":
-                                        configWindow.LongSwordBestTimeTextBlock.Text = FormatTime(bestTime);
+                                        configWindow.LongSwordBestTimeTextBlock.Text = TimeService.GetMinutesSecondsMillisecondsFromFrames(bestTime);
                                         configWindow.LongSwordRunIDTextBlock.Text = string.Format(CultureInfo.InvariantCulture, "Run ID: {0}", runID);
                                         break;
                                     case "Lance":
-                                        configWindow.LanceBestTimeTextBlock.Text = FormatTime(bestTime);
+                                        configWindow.LanceBestTimeTextBlock.Text = TimeService.GetMinutesSecondsMillisecondsFromFrames(bestTime);
                                         configWindow.LanceRunIDTextBlock.Text = string.Format(CultureInfo.InvariantCulture, "Run ID: {0}", runID);
                                         break;
                                     case "Gunlance":
-                                        configWindow.GunlanceBestTimeTextBlock.Text = FormatTime(bestTime);
+                                        configWindow.GunlanceBestTimeTextBlock.Text = TimeService.GetMinutesSecondsMillisecondsFromFrames(bestTime);
                                         configWindow.GunlanceRunIDTextBlock.Text = string.Format(CultureInfo.InvariantCulture, "Run ID: {0}", runID);
                                         break;
                                     case "Hammer":
-                                        configWindow.HammerBestTimeTextBlock.Text = FormatTime(bestTime);
+                                        configWindow.HammerBestTimeTextBlock.Text = TimeService.GetMinutesSecondsMillisecondsFromFrames(bestTime);
                                         configWindow.HammerRunIDTextBlock.Text = string.Format(CultureInfo.InvariantCulture, "Run ID: {0}", runID);
                                         break;
                                     case "Hunting Horn":
-                                        configWindow.HuntingHornBestTimeTextBlock.Text = FormatTime(bestTime);
+                                        configWindow.HuntingHornBestTimeTextBlock.Text = TimeService.GetMinutesSecondsMillisecondsFromFrames(bestTime);
                                         configWindow.HuntingHornRunIDTextBlock.Text = string.Format(CultureInfo.InvariantCulture, "Run ID: {0}", runID);
                                         break;
                                     case "Tonfa":
-                                        configWindow.TonfaBestTimeTextBlock.Text = FormatTime(bestTime);
+                                        configWindow.TonfaBestTimeTextBlock.Text = TimeService.GetMinutesSecondsMillisecondsFromFrames(bestTime);
                                         configWindow.TonfaRunIDTextBlock.Text = string.Format(CultureInfo.InvariantCulture, "Run ID: {0}", runID);
                                         break;
                                     case "Switch Axe F":
-                                        configWindow.SwitchAxeFBestTimeTextBlock.Text = FormatTime(bestTime);
+                                        configWindow.SwitchAxeFBestTimeTextBlock.Text = TimeService.GetMinutesSecondsMillisecondsFromFrames(bestTime);
                                         configWindow.SwitchAxeFRunIDTextBlock.Text = string.Format(CultureInfo.InvariantCulture, "Run ID: {0}", runID);
                                         break;
                                     case "Magnet Spike":
-                                        configWindow.MagnetSpikeBestTimeTextBlock.Text = FormatTime(bestTime);
+                                        configWindow.MagnetSpikeBestTimeTextBlock.Text = TimeService.GetMinutesSecondsMillisecondsFromFrames(bestTime);
                                         configWindow.MagnetSpikeRunIDTextBlock.Text = string.Format(CultureInfo.InvariantCulture, "Run ID: {0}", runID);
                                         break;
                                     case "Light Bowgun":
-                                        configWindow.LightBowgunBestTimeTextBlock.Text = FormatTime(bestTime);
+                                        configWindow.LightBowgunBestTimeTextBlock.Text = TimeService.GetMinutesSecondsMillisecondsFromFrames(bestTime);
                                         configWindow.LightBowgunRunIDTextBlock.Text = string.Format(CultureInfo.InvariantCulture, "Run ID: {0}", runID);
                                         break;
                                     case "Heavy Bowgun":
-                                        configWindow.HeavyBowgunBestTimeTextBlock.Text = FormatTime(bestTime);
+                                        configWindow.HeavyBowgunBestTimeTextBlock.Text = TimeService.GetMinutesSecondsMillisecondsFromFrames(bestTime);
                                         configWindow.HeavyBowgunRunIDTextBlock.Text = string.Format(CultureInfo.InvariantCulture, "Run ID: {0}", runID);
                                         break;
                                     case "Bow":
-                                        configWindow.BowBestTimeTextBlock.Text = FormatTime(bestTime);
+                                        configWindow.BowBestTimeTextBlock.Text = TimeService.GetMinutesSecondsMillisecondsFromFrames(bestTime);
                                         configWindow.BowRunIDTextBlock.Text = string.Format(CultureInfo.InvariantCulture, "Run ID: {0}", runID);
                                         break;
                                     default:

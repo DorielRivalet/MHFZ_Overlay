@@ -78,8 +78,8 @@ public static class TimeService
         for (decimal i = timeInt; i >= 0M; i--)
         {
             timer1Result = StringBuilderTimer(timeInt, TimerFormat.MinutesSecondsMilliseconds, true, timeDefInt, true, GetTimeLeftPercent(timeDefInt, timeInt, true), TimerMode.Elapsed);
-            timer2Result = TimeSpanTimer(timeInt, timeDefInt, true, GetTimeLeftPercent(timeDefInt, timeInt, true), TimerMode.Elapsed);
-            timer3Result = SimpleTimer(timeInt, timeDefInt, true, GetTimeLeftPercent(timeDefInt, timeInt, true), TimerMode.Elapsed);
+            timer2Result = TimeSpanTimer(timeInt, TimerFormat.MinutesSecondsMilliseconds, timeDefInt, true, GetTimeLeftPercent(timeDefInt, timeInt, true), TimerMode.Elapsed);
+            timer3Result = SimpleTimer(timeInt, TimerFormat.MinutesSecondsMilliseconds, timeDefInt, true, GetTimeLeftPercent(timeDefInt, timeInt, true), TimerMode.Elapsed);
 
             if (timer1Result != timer2Result || timer3Result != timer1Result || timer3Result != timer2Result)
             {
@@ -100,7 +100,7 @@ TimeSpan: {timer2Result}
 Simple: {timer3Result}";
     }
 
-    private static string SimpleTimer(decimal timeInt, decimal timeDefInt = 0, bool timeLeftPercentShown = false, string timeLeftPercentNumber = "", TimerMode timerMode = TimerMode.Elapsed)
+    private static string SimpleTimer(decimal timeInt, TimerFormat timerFormat, decimal timeDefInt = 0, bool timeLeftPercentShown = false, string timeLeftPercentNumber = "", TimerMode timerMode = TimerMode.Elapsed)
     {
         // TODO wrong conditionals for timeint >= timedefint?
         decimal time = timerMode == TimerMode.Elapsed && timeInt <= timeDefInt ? time = timeDefInt - timeInt : time = timeInt;
@@ -111,7 +111,12 @@ Simple: {timer3Result}";
         decimal remainingMilliseconds = milliseconds - (minutes * 60000) - (seconds * 1000);
         var timeLeftPercent = timeLeftPercentShown ? timeLeftPercentNumber : string.Empty;
 
-        return $"{minutes:00}:{seconds:00}.{remainingMilliseconds:000}" + timeLeftPercent;
+        return timerFormat switch
+        {
+            TimerFormat.MinutesSeconds => $"{minutes:00}:{seconds:00}" + timeLeftPercent,
+            TimerFormat.MinutesSecondsMilliseconds => $"{minutes:00}:{seconds:00}.{remainingMilliseconds:000}" + timeLeftPercent,
+            _ => $"{minutes:00}:{seconds:00}.{remainingMilliseconds:000}" + timeLeftPercent,
+        };
     }
 
     private static string StringBuilderTimer(decimal timeInt, TimerFormat timerFormat, bool isFrames = true, decimal timeDefInt = 0, bool timeLeftPercentShown = false, string timeLeftPercentNumber = "", TimerMode timerMode = TimerMode.Elapsed)
@@ -138,12 +143,12 @@ Simple: {timer3Result}";
                 sb.AppendFormat(CultureInfo.InvariantCulture, "{0:00}:{1:00}.{2:000}", minutes, seconds, milliseconds);
                 break;
         }
-        sb.Append(timeLeftPercent);
 
+        sb.Append(timeLeftPercent);
         return sb.ToString();
     }
 
-    private static string TimeSpanTimer(decimal timeInt, decimal timeDefInt = 0, bool timeLeftPercentShown = false, string timeLeftPercentNumber = "", TimerMode timerMode = TimerMode.Elapsed)
+    private static string TimeSpanTimer(decimal timeInt, TimerFormat timerFormat, decimal timeDefInt = 0, bool timeLeftPercentShown = false, string timeLeftPercentNumber = "", TimerMode timerMode = TimerMode.Elapsed)
     {
         decimal time = timerMode == TimerMode.Elapsed && timeInt <= timeDefInt ? time = timeDefInt - timeInt : time = timeInt;
         decimal timeInSeconds = time / Numbers.FramesPerSecond;
@@ -154,7 +159,12 @@ Simple: {timer3Result}";
         var timeLeftPercent = timeLeftPercentShown ? timeLeftPercentNumber : string.Empty;
 
         // Format the TimeSpan object as a string
-        return $"{minutes:00}:{timeInSecondsSpan.Seconds:00}.{roundedMilliseconds:000}" + timeLeftPercent;
+        return timerFormat switch
+        {
+            TimerFormat.MinutesSeconds => $"{minutes:00}:{timeInSecondsSpan.Seconds:00}" + timeLeftPercent,
+            TimerFormat.MinutesSecondsMilliseconds => $"{minutes:00}:{timeInSecondsSpan.Seconds:00}.{roundedMilliseconds:000}" + timeLeftPercent,
+            _ => $"{minutes:00}:{timeInSecondsSpan.Seconds:00}.{roundedMilliseconds:000}" + timeLeftPercent,
+        };
     }
 
     /// <summary>
