@@ -69,6 +69,8 @@ public sealed class DatabaseService
 
     public HashSet<ActiveSkills> AllActiveSkills { get; set; }
 
+    public HashSet<ZenithSkills> AllZenithSkills { get; set; }
+
     public HashSet<StyleRankSkills> AllStyleRankSkills { get; set; }
 
     public HashSet<QuestAttempts> AllQuestAttempts { get; set; }
@@ -2204,6 +2206,7 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
         var lastPersonalBestAttempt = this.GetLastPersonalBestAttempt(conn);
         var lastPlayerGear = this.GetLastPlayerGear(conn);
         var lastActiveSkills = this.GetLastActiveSkills(conn);
+        var lastZenithSkills = this.GetLastZenithSkills(conn);
         var lastStyleRankSkills = this.GetLastStyleRankSkills(conn);
         var lastQuestAttempts = this.GetLastQuestAttempt(conn);
         var lastGachaCard = this.GetLastGachaCard(conn);
@@ -2287,6 +2290,15 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
             if (!activeSkillsAdded)
             {
                 Logger.Warn(CultureInfo.InvariantCulture, "Last active skills already found in hash set");
+            }
+        }
+
+        if (lastZenithSkills.ZenithSkillsID != 0)
+        {
+            var zenithSkillsAdded = this.AllZenithSkills.Add(lastZenithSkills);
+            if (!zenithSkillsAdded)
+            {
+                Logger.Warn(CultureInfo.InvariantCulture, "Last zenith skills already found in hash set");
             }
         }
 
@@ -7218,6 +7230,48 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
         return last;
     }
 
+    private ZenithSkills GetLastZenithSkills(SQLiteConnection conn)
+    {
+        ZenithSkills last = new();
+        using (var transaction = conn.BeginTransaction())
+        {
+            try
+            {
+                using (var cmd = new SQLiteCommand("SELECT * FROM ZenithSkills ORDER BY ZenithSkillsID DESC LIMIT 1", conn))
+                {
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            last = new ZenithSkills
+                            {
+                                CreatedAt = DateTime.Parse(reader["CreatedAt"]?.ToString() ?? DateTime.UnixEpoch.ToString(CultureInfo.InvariantCulture), CultureInfo.InvariantCulture),
+                                CreatedBy = reader["CreatedBy"]?.ToString() ?? string.Empty,
+                                ZenithSkillsID = long.Parse(reader["ZenithSkillsID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                RunID = long.Parse(reader["RunID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                ZenithSkill1ID = long.Parse(reader["ZenithSkill1ID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                ZenithSkill2ID = long.Parse(reader["ZenithSkill2ID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                ZenithSkill3ID = long.Parse(reader["ZenithSkill3ID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                ZenithSkill4ID = long.Parse(reader["ZenithSkill4ID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                ZenithSkill5ID = long.Parse(reader["ZenithSkill5ID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                ZenithSkill6ID = long.Parse(reader["ZenithSkill6ID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                ZenithSkill7ID = long.Parse(reader["ZenithSkill7ID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                            };
+                        }
+                    }
+                }
+
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                HandleError(transaction, ex);
+            }
+        }
+
+        return last;
+    }
+
     private StyleRankSkills GetLastStyleRankSkills(SQLiteConnection conn)
     {
         StyleRankSkills last = new ();
@@ -7392,6 +7446,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                 this.AllPersonalBestAttempts = this.GetAllPersonalBestAttempts(conn);
                 this.AllPlayerGear = this.GetAllPlayerGear(conn);
                 this.AllActiveSkills = this.GetAllActiveSkills(conn);
+                this.AllZenithSkills = this.GetAllZenithSkills(conn);
                 this.AllStyleRankSkills = this.GetAllStyleRankSkills(conn);
                 this.AllQuestAttempts = this.GetAllQuestAttempts(conn);
                 this.AllGachaCards = this.GetAllGachaCards(conn);
@@ -7737,6 +7792,50 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                                 ActiveSkill17ID = long.Parse(reader["ActiveSkill17ID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
                                 ActiveSkill18ID = long.Parse(reader["ActiveSkill18ID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
                                 ActiveSkill19ID = long.Parse(reader["ActiveSkill19ID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                            };
+
+                            hashSet.Add(data);
+                        }
+                    }
+                }
+
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                HandleError(transaction, ex);
+            }
+        }
+
+        return hashSet;
+    }
+
+    private HashSet<ZenithSkills> GetAllZenithSkills(SQLiteConnection conn)
+    {
+        HashSet<ZenithSkills> hashSet = new();
+        using (var transaction = conn.BeginTransaction())
+        {
+            try
+            {
+                using (var cmd = new SQLiteCommand(@"SELECT * FROM ZenithSkills", conn))
+                {
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            ZenithSkills data = new()
+                            {
+                                ZenithSkillsID = long.Parse(reader["ZenithSkillsID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                CreatedAt = DateTime.Parse(reader["CreatedAt"]?.ToString() ?? DateTime.UnixEpoch.ToString(CultureInfo.InvariantCulture), CultureInfo.InvariantCulture),
+                                CreatedBy = reader["CreatedBy"]?.ToString() ?? string.Empty,
+                                RunID = long.Parse(reader["RunID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                ZenithSkill1ID = long.Parse(reader["ZenithSkill1ID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                ZenithSkill2ID = long.Parse(reader["ZenithSkill2ID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                ZenithSkill3ID = long.Parse(reader["ZenithSkill3ID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                ZenithSkill4ID = long.Parse(reader["ZenithSkill4ID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                ZenithSkill5ID = long.Parse(reader["ZenithSkill5ID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                ZenithSkill6ID = long.Parse(reader["ZenithSkill6ID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                ZenithSkill7ID = long.Parse(reader["ZenithSkill7ID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
                             };
 
                             hashSet.Add(data);

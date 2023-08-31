@@ -5792,7 +5792,7 @@ During the travel to your destination, the top of the Great Forest, you notice t
             IsSecret = true,
             Hint = "Hopefully we don't have any more dimensional shenanigans.",
             }
-        },
+        },  
         {
             440, new Achievement()
             {

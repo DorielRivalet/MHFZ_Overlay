@@ -255,4 +255,10 @@ public static class Numbers
     /// TODO: This should be replaced when finding timedefint for dure quests. Not musou.
     /// </summary>
     public const decimal DuremudiraTimeLimitFrames = 36_000M;
+
+    public const int AshenLaoQuestID = 21699;
+
+    public const int HR3ShenGaoren = 21696;
+
+    public const int HR3YamaTsukami = 26298;
 }

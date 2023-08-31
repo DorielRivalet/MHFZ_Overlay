@@ -2555,9 +2555,62 @@ public sealed class AchievementService : IAchievementService
                 }
             }
             case 411:
+                completedQuests = from quest in databaseManagerInstance.AllQuests
+                                  join zenithSkills in databaseManagerInstance.AllZenithSkills on quest.RunID equals zenithSkills.RunID
+                                  where
+                                  (zenithSkills.ZenithSkill1ID == 47 ||
+                                  zenithSkills.ZenithSkill2ID == 47 ||
+                                  zenithSkills.ZenithSkill3ID == 47 ||
+                                  zenithSkills.ZenithSkill4ID == 47 ||
+                                  zenithSkills.ZenithSkill5ID == 47 ||
+                                  zenithSkills.ZenithSkill6ID == 47 ||
+                                  zenithSkills.ZenithSkill7ID == 47)
+                                  &&
+                                  (zenithSkills.ZenithSkill1ID == 10 ||
+                                  zenithSkills.ZenithSkill2ID == 10 ||
+                                  zenithSkills.ZenithSkill3ID == 10 ||
+                                  zenithSkills.ZenithSkill4ID == 10 ||
+                                  zenithSkills.ZenithSkill5ID == 10 ||
+                                  zenithSkills.ZenithSkill6ID == 10 ||
+                                  zenithSkills.ZenithSkill7ID == 10)
+                                  select quest;
+                if (completedQuests != null && completedQuests.Any())
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             case 412:
+                return dataLoader.Model.AshenLaoShanLungHunted() >= 100;
             case 413:
+                // TODO test
+                List<int> targetQuestIDs = new List<int>
+                {
+                    Numbers.AshenLaoQuestID,
+                    Numbers.HR3YamaTsukami,
+                    Numbers.HR3ShenGaoren,
+                };
+
+                return targetQuestIDs.All(targetID =>
+                    databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == targetID));
             case 414:
+                completedQuests = from quest in databaseManagerInstance.AllQuests
+                                  join styleRankSkills in databaseManagerInstance.AllStyleRankSkills on quest.RunID equals styleRankSkills.RunID
+                                  where
+                                  (styleRankSkills.StyleRankSkill1ID == 15 ||
+                                  styleRankSkills.StyleRankSkill2ID == 15)
+                                  && quest.QuestID == Numbers.QuestIDArrogantDuremudira
+                                  select quest;
+                if (completedQuests != null && completedQuests.Any())
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             case 415:
             case 416:
             case 417:
@@ -2583,7 +2636,7 @@ public sealed class AchievementService : IAchievementService
             case 437:
             case 438:
             case 439:
-            case 440:
+            case 440: // TODO: 100 UL
                 return false;
         }
     }
