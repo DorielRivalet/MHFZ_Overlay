@@ -3679,16 +3679,31 @@ Thunder Clad, Vigorous" Text="{Binding GetActiveSkillsForImage,Mode=OneTime}" Fo
                             <ui:InfoBar Grid.ColumnSpan="2" Foreground="{StaticResource Text}" Title="How Monster HP Works" 
                             Message="Effective HP is the HP taking into account the monster's defense rate.&#x0a;Burning Freezing Elzelion has 1,000,000 EHP because his&#x0a;True HP is 30,000 and his defense rate is 0.03.&#x0a;&#x0a;Effective HP = True HP / Defense rate&#x0a;1,000,000 = 30,000 / 0.03&#x0a;&#x0a;True HP is the HP of the monster without taking into account the monster's defense rate." 
                             IsClosable="False" IsOpen="True" Severity="Informational"/>
-                            <TextBlock Margin="5" ToolTip="Show HP Mode (True/Effective)" Style="{StaticResource ConfigTextBox}" Grid.Row="1" Grid.Column="0" Text="Monster HP Mode Label"/>
-                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="1" Grid.Column="1" IsChecked="{Binding Source={StaticResource Settings}, Path=MonsterBarHPModeShown}"/>
-                            <TextBlock Margin="5" ToolTip="Show Monster Bar Icon" Style="{StaticResource ConfigTextBox}" Grid.Row="2" Grid.Column="0"  Text="Monster Bar Icon"/>
-                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="2" Grid.Column="1" IsChecked="{Binding Source={StaticResource Settings}, Path=MonsterBarIconShown}"/>
-                            <TextBlock Margin="5" ToolTip="Show Monster Name" Style="{StaticResource ConfigTextBox}" Grid.Row="3" Grid.Column="0"  Text="Monster Bar Name"/>
-                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="3" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=MonsterBarNameShown}"/>
-                            <TextBlock Margin="5" ToolTip="Show HP Numbers" Style="{StaticResource ConfigTextBox}" Grid.Row="4" Grid.Column="0"  Text="Monster HP Numbers"/>
-                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="4" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=MonsterBarNumbersShown}"/>
-                            <TextBlock Margin="5" ToolTip="Show the monster HP bar" Style="{StaticResource ConfigTextBox}" Grid.Row="5" Grid.Column="0"  Text="Monster HP Bar"/>
-                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="5" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=MonsterBarShown}"/>
+                            <StackPanel Margin="5" Orientation="Horizontal" Grid.Row="1" Grid.Column="0" >
+                                <ui:SymbolIcon Symbol="Info28" FontSize="28" Foreground="{StaticResource Yellow}" Margin="0,0,5,0" ToolTip="Overlay Restart Required"/>
+                                <TextBlock ToolTip="Show HP Mode (True/Effective)" Style="{StaticResource ConfigTextBox}" Text="Monster HP Mode Label"/>
+                            </StackPanel>
+                            <CheckBox HorizontalAlignment="Center" BorderBrush="{StaticResource Red}" BorderThickness="2"  Grid.Row="1" Grid.Column="1" IsChecked="{Binding Source={StaticResource Settings}, Path=MonsterBarHPModeShown}"/>
+                            <StackPanel Margin="5" Orientation="Horizontal" Grid.Row="2" Grid.Column="0" >
+                                <ui:SymbolIcon Symbol="Info28" FontSize="28" Foreground="{StaticResource Yellow}" Margin="0,0,5,0" ToolTip="Overlay Restart Required"/>
+                                <TextBlock ToolTip="Show Monster Bar Icon" Style="{StaticResource ConfigTextBox}" Text="Monster Bar Icon"/>
+                            </StackPanel>
+                            <CheckBox BorderBrush="{StaticResource Red}" HorizontalAlignment="Center" Grid.Row="2" Grid.Column="1" IsChecked="{Binding Source={StaticResource Settings}, Path=MonsterBarIconShown}"/>
+                            <StackPanel Margin="5" Orientation="Horizontal" Grid.Row="3" Grid.Column="0" >
+                                <ui:SymbolIcon Symbol="Info28" FontSize="28" Foreground="{StaticResource Yellow}" Margin="0,0,5,0" ToolTip="Overlay Restart Required"/>
+                                <TextBlock ToolTip="Show Monster Name" Style="{StaticResource ConfigTextBox}" Text="Monster Bar Name"/>
+                            </StackPanel>
+                            <CheckBox BorderBrush="{StaticResource Red}" HorizontalAlignment="Center" Grid.Row="3" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=MonsterBarNameShown}"/>
+                            <StackPanel Margin="5" Orientation="Horizontal" Grid.Row="4" Grid.Column="0" >
+                                <ui:SymbolIcon Symbol="Info28" FontSize="28" Foreground="{StaticResource Yellow}" Margin="0,0,5,0" ToolTip="Overlay Restart Required"/>
+                                <TextBlock ToolTip="Show HP Numbers" Style="{StaticResource ConfigTextBox}" Text="Monster HP Numbers"/>
+                            </StackPanel>
+                            <CheckBox BorderBrush="{StaticResource Red}" HorizontalAlignment="Center" Grid.Row="4" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=MonsterBarNumbersShown}"/>
+                            <StackPanel Margin="5" Orientation="Horizontal" Grid.Row="5" Grid.Column="0" >
+                                <ui:SymbolIcon Symbol="Info28" FontSize="28" Foreground="{StaticResource Yellow}" Margin="0,0,5,0" ToolTip="Overlay Restart Required"/>
+                                <TextBlock ToolTip="Show the monster HP bar" Style="{StaticResource ConfigTextBox}" Text="Monster HP Bar"/>
+                            </StackPanel>
+                            <CheckBox BorderBrush="{StaticResource Red}" HorizontalAlignment="Center" Grid.Row="5" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=MonsterBarShown}"/>
 
                             <TextBlock Margin="5" Foreground="{StaticResource Text}" Grid.Row="6" Grid.Column="0" Text="Monster HP Background Color" Style="{StaticResource ConfigTextBox}"/>
                             <xctk:ColorPicker Grid.Column="1" Grid.Row="6" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=HPBackGroundColor}"/>
