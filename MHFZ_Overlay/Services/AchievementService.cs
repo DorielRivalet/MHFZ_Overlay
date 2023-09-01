@@ -2636,8 +2636,16 @@ public sealed class AchievementService : IAchievementService
             case 437:
             case 438:
             case 439:
-            case 440: // TODO: 100 UL
                 return false;
+            case 440:
+                if (databaseManagerInstance.AllQuestsToggleMode.Count(questsToggleMode => questsToggleMode.QuestToggleMode == 3) >= 100)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
         }
     }
 

@@ -84,6 +84,8 @@ public sealed class DatabaseService
 
     public HashSet<PlayerInventory> AllPlayerInventories { get; set; }
 
+    public HashSet<QuestsToggleMode> AllQuestsToggleMode { get; set; }
+
     public TimeSpan SnackbarTimeOut { get; set; } = TimeSpan.FromSeconds(5);
 
     private string? connectionString { get; set; }
@@ -1814,6 +1816,25 @@ public sealed class DatabaseService
                         roadDureSkillsID = Convert.ToInt32(cmd.ExecuteScalar(), CultureInfo.InvariantCulture);
                     }
 
+                    sql = @"INSERT INTO QuestsToggleMode (
+                        QuestToggleMode,
+                        RunID
+                        ) VALUES (
+                        @QuestToggleMode,
+                        @RunID
+                        )";
+
+                    using (var cmd = new SQLiteCommand(sql, conn))
+                    {
+                        var questToggleMode = model.QuestToggleMonsterMode();         
+
+                        cmd.Parameters.AddWithValue("@QuestToggleMode", questToggleMode);
+                        cmd.Parameters.AddWithValue("@RunID", runID);
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    Logger.Debug("Inserted into QuestsToggleMode table");
+
                     var gearName = s.GearDescriptionExport;
                     if (string.IsNullOrEmpty(gearName))
                     {
@@ -2219,6 +2240,7 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
         var lastQuestAttempts = this.GetLastQuestAttempt(conn);
         var lastGachaCard = this.GetLastGachaCard(conn);
         var lastPlayerInventory = this.GetLastPlayerInventory(conn);
+        var lastQuestsToggleMode = this.GetLastQuestsToggleMode(conn);
 
         if (lastQuest.RunID != 0)
         {
@@ -2343,6 +2365,15 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
             if (!playerInventoryAdded)
             {
                 Logger.Warn(CultureInfo.InvariantCulture, "Last player inventory already found in hash set");
+            }
+        }
+
+        if (lastQuestsToggleMode.QuestsToggleModeID != 0)
+        {
+            var questsToggleModeAdded = this.AllQuestsToggleMode.Add(lastQuestsToggleMode);
+            if (!questsToggleModeAdded)
+            {
+                Logger.Warn(CultureInfo.InvariantCulture, "Last quests toggle mode already found in hash set");
             }
         }
     }
@@ -5124,6 +5155,17 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                     cmd.ExecuteNonQuery();
                 }
 
+                sql = @"CREATE TABLE IF NOT EXISTS QuestsToggleMode(
+                QuestsToggleModeID INTEGER PRIMARY KEY AUTOINCREMENT,
+                QuestToggleMode INTEGER NOT NULL DEFAULT 0,
+                RunID INTEGER NOT NULL,
+                FOREIGN KEY(RunID) REFERENCES Quests(RunID)
+                )";
+                using (var cmd = new SQLiteCommand(sql, conn))
+                {
+                    cmd.ExecuteNonQuery();
+                }
+
                 // a mh game but like a MUD. hunt in-game to get many kinds of points for this game. hunt and tame monsters. challenge other CPU players/monsters.
                 sql = @"CREATE TABLE IF NOT EXISTS GachaMaterial(
                     GachaMaterialID INTEGER PRIMARY KEY,
@@ -7425,6 +7467,40 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
         return last;
     }
 
+    private QuestsToggleMode GetLastQuestsToggleMode(SQLiteConnection conn)
+    {
+        QuestsToggleMode last = new();
+        using (var transaction = conn.BeginTransaction())
+        {
+            try
+            {
+                using (var cmd = new SQLiteCommand("SELECT * FROM QuestsToggleMode ORDER BY QuestsToggleModeID DESC LIMIT 1", conn))
+                {
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            last = new QuestsToggleMode
+                            {
+                                QuestsToggleModeID = long.Parse(reader["QuestsToggleModeID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                QuestToggleMode = long.Parse(reader["QuestToggleMode"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                RunID = long.Parse(reader["RunID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                            };
+                        }
+                    }
+                }
+
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                HandleError(transaction, ex);
+            }
+        }
+
+        return last;
+    }
+
     /// <summary>
     /// Loads the database data into hash sets. This is used to avoid querying the database when checking for achievement unlocks.
     /// When inserting into these hashsets, the database must also be updated, and viceversa.
@@ -7459,6 +7535,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                 this.AllQuestAttempts = this.GetAllQuestAttempts(conn);
                 this.AllGachaCards = this.GetAllGachaCards(conn);
                 this.AllPlayerInventories = this.GetAllPlayerInventories(conn);
+                this.AllQuestsToggleMode = this.GetAllQuestsToggleMode(conn);
             }
         }
         catch (Exception ex)
@@ -7579,6 +7656,42 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                                 Item19Quantity = long.Parse(reader["Item19Quantity"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
                                 Item20ID = long.Parse(reader["Item20ID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
                                 Item20Quantity = long.Parse(reader["Item20Quantity"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                            };
+
+                            hashSet.Add(data);
+                        }
+                    }
+                }
+
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                HandleError(transaction, ex);
+            }
+        }
+
+        return hashSet;
+    }
+
+    private HashSet<QuestsToggleMode> GetAllQuestsToggleMode(SQLiteConnection conn)
+    {
+        HashSet<QuestsToggleMode> hashSet = new();
+        using (var transaction = conn.BeginTransaction())
+        {
+            try
+            {
+                using (var cmd = new SQLiteCommand(@"SELECT * FROM QuestsToggleMode", conn))
+                {
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            QuestsToggleMode data = new()
+                            {
+                                QuestsToggleModeID = long.Parse(reader["QuestsToggleModeID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                QuestToggleMode = long.Parse(reader["QuestToggleMode"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                RunID = long.Parse(reader["RunID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
                             };
 
                             hashSet.Add(data);
