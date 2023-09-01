@@ -1426,7 +1426,7 @@ public abstract class AddressModel : INotifyPropertyChanged
     /// <returns></returns>
     public static string GetQuestNameFromID(int id)
     {
-        if (id > 63421)
+        if (id > 63421 && DiscordService.ShowDiscordQuestNames())
         {
             return $"Custom Quest {id}";
         }
