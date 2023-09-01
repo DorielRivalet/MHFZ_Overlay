@@ -4271,7 +4271,7 @@ public partial class ConfigWindow : FluentWindow
 
     private void StartChallenge(Challenge? challenge)
     {
-        return; // TODO uncomment when in dev for now.
+        return; // TODO uncomment when in release for now.
 
         if (challenge == null || this.challengesListBox == null)
         {
