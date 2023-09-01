@@ -10,6 +10,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:gif="http://wpfanimatedgif.codeplex.com"
         xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
+        xmlns:tray="http://schemas.lepo.co/wpfui/2022/xaml/tray"
         d:DataContext="{d:DesignInstance Type=windows:AddressModel}"
         xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
         xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
@@ -53,6 +54,8 @@
             <converter:DateTimeToStringConverter x:Key="DateTimeToStringConverter"/>
             <converter:BooleanToOpacityConverter x:Key="BooleanToOpacityConverter"/>
             <converter:AchievementToColorConverter x:Key="AchievementToColorConverter"/>
+            <converter:UnlockChallengeButtonContentConverter x:Key="UnlockChallengeButtonContentConverter"/>
+
             <!-- Define the reusable context menu in a resource dictionary or at a higher level in your XAML hierarchy -->
             <ContextMenu x:Key="HunterNotesContextMenu" x:Name="HunterNotesContextMenu">
                 <ui:MenuItem x:Name="HunterNotesCopyTextMenuItem" Click="HunterNotesGridMenuItem_Click">
@@ -1335,7 +1338,7 @@
                         <TabItem ToolTip="Database Settings" Background="{StaticResource Crust}" Foreground="{StaticResource Text}">
                             <TabItem.Header>
                                 <StackPanel Orientation="Horizontal">
-                                    <Button BorderThickness="0"  Background="Transparent" Width="48" Height="32">
+                                    <Button IsHitTestVisible="False" BorderThickness="0"  Background="Transparent" Width="48" Height="32">
                                         <Button.Content>
                                             <ui:SymbolIcon Symbol="Settings32" Foreground="{StaticResource Green}" FontSize="24"/>
                                         </Button.Content>
@@ -1381,6 +1384,7 @@
                                             <RowDefinition Height="40"/>
                                             <RowDefinition Height="40"/>
                                             <RowDefinition Height="40"/>
+                                            <RowDefinition Height="40"/>
                                         </Grid.RowDefinitions>
                                         <TextBlock Margin="5" ToolTip="{Binding Source={StaticResource Settings}, Path=GameFolderPath}" Style="{StaticResource ConfigTextBox}" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" Grid.ColumnSpan="2" Text="Hover to view game folder path (automatically set by checking the folder location of the current mhf.exe at overlay startup)"/>
                                         <TextBlock Margin="5" ToolTip="{Binding Source={StaticResource Settings}, Path=DatabaseFilePath}" Style="{StaticResource ConfigTextBox}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" Text="Hover to view database file path"/>
@@ -1396,11 +1400,20 @@
                                         <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="3" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=EnableInputLogging}"/>
                                         <StackPanel Margin="5" Orientation="Horizontal" Grid.Row="4" Grid.Column="0" >
                                             <ui:SymbolIcon Symbol="Info28" FontSize="28" Foreground="{StaticResource Blue}" Margin="0,0,5,0" ToolTip="Required for Speedrun Modes"/>
-                                            <TextBlock ToolTip="Show a watermark that has to be visible at all times during a YouTube video of a quest run in order for the run to be verified" Style="{StaticResource ConfigTextBox}" Text="Overlay Mode Watermark" />
+                                            <TextBlock ToolTip="Show a watermark that displays the overlay mode" Style="{StaticResource ConfigTextBox}" Text="Overlay Mode Watermark" />
                                         </StackPanel>
                                         <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="4" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=OverlayModeWatermarkShown}"/>
 
-                                        <Grid Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2">
+                                        <StackPanel Margin="5" Orientation="Horizontal" Grid.Row="5" Grid.Column="0" >
+                                            <ui:SymbolIcon Symbol="Info28" FontSize="28" Foreground="{StaticResource Lavender}" Margin="0,0,5,0" ToolTip="Recommended for Speedrun Modes (Final option)"/>
+                                            <TextBlock ToolTip="Set the overlay mode option. Current: the current mode. Final: the mode that would be stored in database. Recommended to use Final for Speedrun modes." Style="{StaticResource ConfigTextBox}" Text="Overlay Mode Watermark Option" />
+                                        </StackPanel>
+                                        <ComboBox Grid.Column="1" Grid.Row="5" SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=OverlayWatermarkMode}">
+                                            <ComboBoxItem>Current</ComboBoxItem>
+                                            <ComboBoxItem>Final</ComboBoxItem>
+                                        </ComboBox>
+
+                                        <Grid Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2">
                                             <StackPanel Orientation="Horizontal">
                                                 <Button BorderThickness="0"  Background="Transparent" Width="48" Height="32">
                                                     <Button.Content>
@@ -1411,92 +1424,92 @@
                                             </StackPanel>
                                         </Grid>
 
-                                        <StackPanel Orientation="Horizontal" Margin="5" Grid.Row="6" Grid.Column="0" ToolTip="If disabled, your nationality will be shown as 'World' in the database, regardless of the nationality selected below.">
-                                            <Image Source="../../Assets/Icons/png/world.png" Margin="0,0,5,0"/>
-                                            <TextBlock Style="{StaticResource ConfigTextBox}" Text="Show Nationality"/>
-                                        </StackPanel>
-                                        <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="6" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=EnableNationality}"/>
-                                        <TextBlock Margin="5" ToolTip="Select nationality to display on website for quest records" Style="{StaticResource ConfigTextBox}" Grid.Row="7" Grid.Column="0"  Text="Player Nationality"/>
-                                        <ComboBox VirtualizingStackPanel.IsVirtualizing="True" SelectedIndex="{Binding Source={StaticResource Settings}, Path=PlayerNationalityIndex}" Grid.Column="1" Grid.Row="7"  x:Name="CountryComboBox" ItemsSource="{Binding Countries,Mode=OneTime}" SelectionChanged="CountryComboBox_SelectionChanged">
-                                            <ComboBox.ItemTemplate>
-                                                <DataTemplate>
-                                                    <VirtualizingStackPanel Orientation="Horizontal">
-                                                        <Image Source="{Binding Flag.Png}" Width="20" Height="20" Margin="0,0,5,0"/>
-                                                        <TextBlock Text="{Binding Name.Common}"/>
-                                                    </VirtualizingStackPanel>
-                                                </DataTemplate>
-                                            </ComboBox.ItemTemplate>
-                                        </ComboBox>
-                                        <StackPanel Orientation="Horizontal" Margin="5" Grid.Row="8" Grid.Column="0" ToolTip="Show the current Quest ID in overlay">
-                                            <Image Source="../../Assets/Icons/png/quest_host.png" Margin="0,0,5,0"/>
-                                            <TextBlock Style="{StaticResource ConfigTextBox}" Text="Quest ID" />
-                                        </StackPanel>
-                                        <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="8" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=QuestIDShown}"/>
-                                        <TextBlock Margin="5" Style="{StaticResource ConfigTextBox}" Grid.Row="9" Grid.Column="0"  Text="Quest ID Position"/>
-                                        <StackPanel Orientation="Horizontal" Grid.Row="9" Grid.Column="1" HorizontalAlignment="Center">
-                                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center" PlaceholderText="X" Text="{Binding Source={StaticResource Settings},Path=QuestIDX}"  PreviewTextInput="ValidateNumber"/>
-                                            <ui:TextBox Margin="5,0,0,0" IsUndoEnabled="False" TextAlignment="Center" PlaceholderText="Y" Text="{Binding Source={StaticResource Settings},Path=QuestIDY}"  PreviewTextInput="ValidateNumber"/>
-                                        </StackPanel>
-                                        <StackPanel Orientation="Horizontal" Margin="5" Grid.Row="10" Grid.Column="0" ToolTip="Show the personal best of the selected quest with the selected weapon type and overlay mode">
-                                            <Image Source="../../Assets/Icons/png/quest_clock.png" Margin="0,0,5,0"/>
-                                            <TextBlock Style="{StaticResource ConfigTextBox}" Text="Personal Best"/>
-                                        </StackPanel>
-                                        <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="10" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=PersonalBestShown}"/>
-                                        <TextBlock Margin="5" Style="{StaticResource ConfigTextBox}" Grid.Row="11" Grid.Column="0"  Text="Personal Best Position"/>
-                                        <StackPanel Orientation="Horizontal" Grid.Row="11" Grid.Column="1" HorizontalAlignment="Center">
-                                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="X" Text="{Binding Source={StaticResource Settings},Path=PersonalBestX}"  PreviewTextInput="ValidateNumber"/>
-                                            <ui:TextBox Margin="5,0,0,0" IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="Y" Text="{Binding Source={StaticResource Settings},Path=PersonalBestY}"  PreviewTextInput="ValidateNumber"/>
-                                        </StackPanel>
-                                        <TextBlock Margin="5" Grid.Row="12" Grid.Column="0" Style="{StaticResource ConfigTextBox}" Text="Personal Best Pace Color" ToolTip="Mark PB time as red if the current pace is greater than the personal best pace (approximation)" />
-                                        <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="12" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=EnablePersonalBestPaceColor}"/>
+                                        <StackPanel Orientation="Horizontal" Margin="5" Grid.Row="7" Grid.Column="0" ToolTip="If disabled, your nationality will be shown as 'World' in the database, regardless of the nationality selected below.">
+                                        <Image Source="../../Assets/Icons/png/world.png" Margin="0,0,5,0"/>
+                                        <TextBlock Style="{StaticResource ConfigTextBox}" Text="Show Nationality"/>
+                                    </StackPanel>
+                                    <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="7" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=EnableNationality}"/>
+                                    <TextBlock Margin="5" ToolTip="Select nationality to display on website for quest records" Style="{StaticResource ConfigTextBox}" Grid.Row="8" Grid.Column="0"  Text="Player Nationality"/>
+                                    <ComboBox VirtualizingStackPanel.IsVirtualizing="True" SelectedIndex="{Binding Source={StaticResource Settings}, Path=PlayerNationalityIndex}" Grid.Column="1" Grid.Row="8"  x:Name="CountryComboBox" ItemsSource="{Binding Countries,Mode=OneTime}" SelectionChanged="CountryComboBox_SelectionChanged">
+                                        <ComboBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <VirtualizingStackPanel Orientation="Horizontal">
+                                                    <Image Source="{Binding Flag.Png}" Width="20" Height="20" Margin="0,0,5,0"/>
+                                                    <TextBlock Text="{Binding Name.Common}"/>
+                                                </VirtualizingStackPanel>
+                                            </DataTemplate>
+                                        </ComboBox.ItemTemplate>
+                                    </ComboBox>
+                                    <StackPanel Orientation="Horizontal" Margin="5" Grid.Row="9" Grid.Column="0" ToolTip="Show the current Quest ID in overlay">
+                                        <Image Source="../../Assets/Icons/png/quest_host.png" Margin="0,0,5,0"/>
+                                        <TextBlock Style="{StaticResource ConfigTextBox}" Text="Quest ID" />
+                                    </StackPanel>
+                                    <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="9" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=QuestIDShown}"/>
+                                    <TextBlock Margin="5" Style="{StaticResource ConfigTextBox}" Grid.Row="10" Grid.Column="0"  Text="Quest ID Position"/>
+                                    <StackPanel Orientation="Horizontal" Grid.Row="10" Grid.Column="1" HorizontalAlignment="Center">
+                                        <ui:TextBox IsUndoEnabled="False" TextAlignment="Center" PlaceholderText="X" Text="{Binding Source={StaticResource Settings},Path=QuestIDX}"  PreviewTextInput="ValidateNumber"/>
+                                        <ui:TextBox Margin="5,0,0,0" IsUndoEnabled="False" TextAlignment="Center" PlaceholderText="Y" Text="{Binding Source={StaticResource Settings},Path=QuestIDY}"  PreviewTextInput="ValidateNumber"/>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" Margin="5" Grid.Row="11" Grid.Column="0" ToolTip="Show the personal best of the selected quest with the selected weapon type and overlay mode">
+                                        <Image Source="../../Assets/Icons/png/quest_clock.png" Margin="0,0,5,0"/>
+                                        <TextBlock Style="{StaticResource ConfigTextBox}" Text="Personal Best"/>
+                                    </StackPanel>
+                                    <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="11" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=PersonalBestShown}"/>
+                                    <TextBlock Margin="5" Style="{StaticResource ConfigTextBox}" Grid.Row="12" Grid.Column="0"  Text="Personal Best Position"/>
+                                    <StackPanel Orientation="Horizontal" Grid.Row="12" Grid.Column="1" HorizontalAlignment="Center">
+                                        <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="X" Text="{Binding Source={StaticResource Settings},Path=PersonalBestX}"  PreviewTextInput="ValidateNumber"/>
+                                        <ui:TextBox Margin="5,0,0,0" IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="Y" Text="{Binding Source={StaticResource Settings},Path=PersonalBestY}"  PreviewTextInput="ValidateNumber"/>
+                                    </StackPanel>
+                                    <TextBlock Margin="5" Grid.Row="13" Grid.Column="0" Style="{StaticResource ConfigTextBox}" Text="Personal Best Pace Color" ToolTip="Mark PB time as red if the current pace is greater than the personal best pace (approximation)" />
+                                    <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="13" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=EnablePersonalBestPaceColor}"/>
 
-                                        <StackPanel Orientation="Horizontal" Margin="5" Grid.Row="13" Grid.Column="0" ToolTip="Show Personal Best Time Percent">
-                                            <Image Margin="0,0,5,0">
-                                                <Image.Source>
-                                                    <DrawingImage>
-                                                        <DrawingImage.Drawing>
-                                                            <GeometryDrawing>
-                                                                <GeometryDrawing.Geometry>
-                                                                    <PathGeometry Figures="M32 0C49.7 0 64 14.3 64 32V48l69-17.2c38.1-9.5 78.3-5.1 113.5 12.5c46.3 23.2 100.8 23.2 147.1 0l9.6-4.8C423.8 28.1 448 43.1 448 66.1V345.8c0 13.3-8.3 25.3-20.8 30l-34.7 13c-46.2 17.3-97.6 14.6-141.7-7.4c-37.9-19-81.4-23.7-122.5-13.4L64 384v96c0 17.7-14.3 32-32 32s-32-14.3-32-32V400 334 64 32C0 14.3 14.3 0 32 0zM64 187.1l64-13.9v65.5L64 252.6V318l48.8-12.2c5.1-1.3 10.1-2.4 15.2-3.3V238.7l38.9-8.4c8.3-1.8 16.7-2.5 25.1-2.1l0-64c13.6 .4 27.2 2.6 40.4 6.4l23.6 6.9v66.7l-41.7-12.3c-7.3-2.1-14.8-3.4-22.3-3.8v71.4c21.8 1.9 43.3 6.7 64 14.4V244.2l22.7 6.7c13.5 4 27.3 6.4 41.3 7.4V194c-7.8-.8-15.6-2.3-23.2-4.5l-40.8-12v-62c-13-3.8-25.8-8.8-38.2-15c-8.2-4.1-16.9-7-25.8-8.8v72.4c-13-.4-26 .8-38.7 3.6L128 173.2V98L64 114v73.1zM320 335.7c16.8 1.5 33.9-.7 50-6.8l14-5.2V251.9l-7.9 1.8c-18.4 4.3-37.3 5.7-56.1 4.5v77.4zm64-149.4V115.4c-20.9 6.1-42.4 9.1-64 9.1V194c13.9 1.4 28 .5 41.7-2.6l22.3-5.2z" FillRule="NonZero"/>
-                                                                </GeometryDrawing.Geometry>
-                                                                <GeometryDrawing.Brush>
-                                                                    <SolidColorBrush Color="#11111b" />
-                                                                </GeometryDrawing.Brush>
-                                                            </GeometryDrawing>
-                                                        </DrawingImage.Drawing>
-                                                    </DrawingImage>
-                                                </Image.Source>
-                                            </Image>
-                                            <TextBlock Style="{StaticResource ConfigTextBox}" Text="Personal Best Time Percent" />
+                                    <StackPanel Orientation="Horizontal" Margin="5" Grid.Row="14" Grid.Column="0" ToolTip="Show Personal Best Time Percent">
+                                        <Image Margin="0,0,5,0">
+                                            <Image.Source>
+                                                <DrawingImage>
+                                                    <DrawingImage.Drawing>
+                                                        <GeometryDrawing>
+                                                            <GeometryDrawing.Geometry>
+                                                                <PathGeometry Figures="M32 0C49.7 0 64 14.3 64 32V48l69-17.2c38.1-9.5 78.3-5.1 113.5 12.5c46.3 23.2 100.8 23.2 147.1 0l9.6-4.8C423.8 28.1 448 43.1 448 66.1V345.8c0 13.3-8.3 25.3-20.8 30l-34.7 13c-46.2 17.3-97.6 14.6-141.7-7.4c-37.9-19-81.4-23.7-122.5-13.4L64 384v96c0 17.7-14.3 32-32 32s-32-14.3-32-32V400 334 64 32C0 14.3 14.3 0 32 0zM64 187.1l64-13.9v65.5L64 252.6V318l48.8-12.2c5.1-1.3 10.1-2.4 15.2-3.3V238.7l38.9-8.4c8.3-1.8 16.7-2.5 25.1-2.1l0-64c13.6 .4 27.2 2.6 40.4 6.4l23.6 6.9v66.7l-41.7-12.3c-7.3-2.1-14.8-3.4-22.3-3.8v71.4c21.8 1.9 43.3 6.7 64 14.4V244.2l22.7 6.7c13.5 4 27.3 6.4 41.3 7.4V194c-7.8-.8-15.6-2.3-23.2-4.5l-40.8-12v-62c-13-3.8-25.8-8.8-38.2-15c-8.2-4.1-16.9-7-25.8-8.8v72.4c-13-.4-26 .8-38.7 3.6L128 173.2V98L64 114v73.1zM320 335.7c16.8 1.5 33.9-.7 50-6.8l14-5.2V251.9l-7.9 1.8c-18.4 4.3-37.3 5.7-56.1 4.5v77.4zm64-149.4V115.4c-20.9 6.1-42.4 9.1-64 9.1V194c13.9 1.4 28 .5 41.7-2.6l22.3-5.2z" FillRule="NonZero"/>
+                                                            </GeometryDrawing.Geometry>
+                                                            <GeometryDrawing.Brush>
+                                                                <SolidColorBrush Color="#11111b" />
+                                                            </GeometryDrawing.Brush>
+                                                        </GeometryDrawing>
+                                                    </DrawingImage.Drawing>
+                                                </DrawingImage>
+                                            </Image.Source>
+                                        </Image>
+                                        <TextBlock Style="{StaticResource ConfigTextBox}" Text="Personal Best Time Percent" />
                                         </StackPanel>
-                                        <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="13" Grid.Column="1" IsChecked="{Binding Source={StaticResource Settings}, Path=PersonalBestTimePercentShown}"/>
-                                        <TextBlock Margin="5" Style="{StaticResource ConfigTextBox}" Grid.Row="14" Grid.Column="0"  Text="Personal Best Time Percent Position"/>
-                                        <StackPanel Orientation="Horizontal" Grid.Row="14" Grid.Column="1" HorizontalAlignment="Center">
+                                        <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="14" Grid.Column="1" IsChecked="{Binding Source={StaticResource Settings}, Path=PersonalBestTimePercentShown}"/>
+                                        <TextBlock Margin="5" Style="{StaticResource ConfigTextBox}" Grid.Row="15" Grid.Column="0"  Text="Personal Best Time Percent Position"/>
+                                        <StackPanel Orientation="Horizontal" Grid.Row="15" Grid.Column="1" HorizontalAlignment="Center">
                                             <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="X" Text="{Binding Source={StaticResource Settings},Path=PersonalBestTimePercentX}"  PreviewTextInput="ValidateNumber"/>
                                             <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="Y" Margin="5,0,0,0" Text="{Binding Source={StaticResource Settings},Path=PersonalBestTimePercentY}"  PreviewTextInput="ValidateNumber"/>
                                         </StackPanel>
-                                        <StackPanel Orientation="Horizontal" Margin="5" Grid.Row="15" Grid.Column="0" ToolTip="Show Personal Best Attempts divided by overlay mode and weapon type. Resets to 0 if a new Personal Best is achieved.">
+                                        <StackPanel Orientation="Horizontal" Margin="5" Grid.Row="16" Grid.Column="0" ToolTip="Show Personal Best Attempts divided by overlay mode and weapon type. Resets to 0 if a new Personal Best is achieved.">
                                             <Image Source="../../Assets/Icons/png/quest_1.png" Margin="0,0,5,0"/>
                                             <TextBlock Style="{StaticResource ConfigTextBox}" Text="(Quest Logging required) Personal Best Attempts" />
                                         </StackPanel>
-                                        <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="15" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=PersonalBestAttemptsShown}"/>
-                                        <TextBlock Margin="5" Style="{StaticResource ConfigTextBox}" Grid.Row="16" Grid.Column="0"  Text="Personal Best Attempts Position"/>
-                                        <StackPanel Orientation="Horizontal" Grid.Row="16" Grid.Column="1" HorizontalAlignment="Center">
+                                        <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="16" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=PersonalBestAttemptsShown}"/>
+                                        <TextBlock Margin="5" Style="{StaticResource ConfigTextBox}" Grid.Row="17" Grid.Column="0"  Text="Personal Best Attempts Position"/>
+                                        <StackPanel Orientation="Horizontal" Grid.Row="17" Grid.Column="1" HorizontalAlignment="Center">
                                             <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="X" Text="{Binding Source={StaticResource Settings},Path=PersonalBestAttemptsX}"  PreviewTextInput="ValidateNumber"/>
                                             <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="Y" Margin="5,0,0,0" Text="{Binding Source={StaticResource Settings},Path=PersonalBestAttemptsY}"  PreviewTextInput="ValidateNumber"/>
                                         </StackPanel>
-                                        <StackPanel Orientation="Horizontal" Margin="5" Grid.Row="17" Grid.Column="0" ToolTip="Show Quest Attempts divided by overlay mode and weapon type">
+                                        <StackPanel Orientation="Horizontal" Margin="5" Grid.Row="18" Grid.Column="0" ToolTip="Show Quest Attempts divided by overlay mode and weapon type">
                                             <Image Source="../../Assets/Icons/png/ticket.png" Margin="0,0,5,0"/>
                                             <TextBlock Style="{StaticResource ConfigTextBox}" Text="Quest Attempts" />
                                         </StackPanel>
-                                        <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="17" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=QuestAttemptsShown}"/>
-                                        <TextBlock Margin="5" Style="{StaticResource ConfigTextBox}" Grid.Row="18" Grid.Column="0"  Text="Quest Attempts Position"/>
-                                        <StackPanel Orientation="Horizontal" Grid.Row="18" Grid.Column="1" HorizontalAlignment="Center">
+                                        <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="18" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=QuestAttemptsShown}"/>
+                                        <TextBlock Margin="5" Style="{StaticResource ConfigTextBox}" Grid.Row="19" Grid.Column="0"  Text="Quest Attempts Position"/>
+                                        <StackPanel Orientation="Horizontal" Grid.Row="19" Grid.Column="1" HorizontalAlignment="Center">
                                             <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="X" Text="{Binding Source={StaticResource Settings},Path=QuestAttemptsX}"  PreviewTextInput="ValidateNumber"/>
                                             <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="Y" Margin="5,0,0,0" Text="{Binding Source={StaticResource Settings},Path=QuestAttemptsY}"  PreviewTextInput="ValidateNumber"/>
                                         </StackPanel>
-                                        <TextBlock Margin="5" Style="{StaticResource ConfigTextBox}" Grid.Row="19" Grid.Column="0"  Text="Quest Completions Counter" ToolTip="Show quest completions next to the attempts"/>
-                                        <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="19" Grid.Column="1" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableQuestCompletionsCounter}"/>
+                                        <TextBlock Margin="5" Style="{StaticResource ConfigTextBox}" Grid.Row="20" Grid.Column="0"  Text="Quest Completions Counter" ToolTip="Show quest completions next to the attempts"/>
+                                        <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="20" Grid.Column="1" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableQuestCompletionsCounter}"/>
                                         <!--TODO: speedrun mode in overlay takes into account these settings + other things-->
                                     </Grid>
                                 </ScrollViewer>
@@ -1506,7 +1519,7 @@
                         <TabItem ToolTip="View Quest Statistics" Background="{StaticResource Crust}" Foreground="{StaticResource Text}">
                             <TabItem.Header>
                                 <StackPanel Orientation="Horizontal">
-                                    <Button BorderThickness="0"  Background="Transparent" Width="48" Height="32">
+                                    <Button IsHitTestVisible="False" BorderThickness="0"  Background="Transparent" Width="48" Height="32">
                                         <Button.Content>
                                             <ui:SymbolIcon Symbol="DataBarVertical32" Foreground="{StaticResource Rosewater}" FontSize="24"/>
                                         </Button.Content>
@@ -1730,7 +1743,7 @@
                         <TabItem ToolTip="View Achievements" Background="{StaticResource Crust}" Foreground="{StaticResource Text}">
                             <TabItem.Header>
                                 <StackPanel Orientation="Horizontal">
-                                    <Button BorderThickness="0" Background="Transparent" Width="48" Height="32">
+                                    <Button IsHitTestVisible="False" BorderThickness="0" Background="Transparent" Width="48" Height="32">
                                         <Button.Content>
                                             <ui:SymbolIcon Symbol="Trophy32" Foreground="{StaticResource Red}" FontSize="24"/>
                                         </Button.Content>
@@ -1824,7 +1837,7 @@
                                                         <StackPanel Orientation="Vertical" Margin="5">
                                                             <customcontrols:OutlinedTextBlock Fill="{StaticResource Text}" Stroke="{StaticResource Crust}" StrokeThickness="2" FontWeight="SemiBold" x:Name="AchievementSelectionInfoTitle" TextWrapping="Wrap" FontSize="24" Text="Select an achievement to view more information"/>
                                                             <TextBlock Margin="0,5,0,0" x:Name="AchievementSelectionInfoObjective" TextWrapping="Wrap" Text="Some achievements are currently unobtainable." FontSize="20"/>
-                                                            <TextBlock Margin="0,5,0,0" x:Name="AchievementSelectionInfoHint" TextWrapping="Wrap" d:Text="There are 5 types of trophies: bronze, silver, gold, platinum and secret. For every secret trophy you find, you gain 0.20% more progress. You have obtained 20 out of 100 secret trophies (20%)." FontSize="16"/>
+                                                            <TextBlock Margin="0,5,0,0" x:Name="AchievementSelectionInfoHint" TextWrapping="Wrap" d:Text="Most achievements requirements are checked when you are at the quest completion rewards screen. There are 5 types of trophies: bronze, silver, gold, platinum and secret. For every secret trophy you find, you gain 0.20% more progress. You have obtained 20 out of 100 secret trophies (20%). Custom quests are not counted for progress for almost all achievements." FontSize="16"/>
                                                         </StackPanel>
                                                     </ScrollViewer>
                                                 </Grid>
@@ -1964,14 +1977,14 @@
                                         <TextBlock Foreground="{StaticResource Text}" Text="Challenges" Margin="4,0,0,0" VerticalAlignment="Center" />
                                     </StackPanel>
                                 </TabItem.Header>
-                                <Grid Background="Transparent" Margin="20" x:Name="ChallengesGrid" ToolTip="Right-click for more options">
+                                <Grid Background="Transparent" Margin="20" x:Name="ChallengesGrid">
                                     <ScrollViewer IsDeferredScrollingEnabled="True" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Disabled">
                                         <Grid Background="Transparent" Style="{StaticResource ConfigSingleGrid}" Margin="0" Height="Auto" Width="Auto">
                                             <StackPanel Orientation="Vertical">
                                                 <ui:InfoBar x:Name="ChallengesInfoBar" Grid.ColumnSpan="2" Foreground="{StaticResource Text}" Title="What are Challenges?" 
-                                Message="CURRENTLY IN DEVELOPMENT. Challenges are an optional endeavor where you are presented with various kinds of objectives.&#x0a;&#x0a;To start a challenge you need to have unlocked the challenge first.&#x0a;&#x0a;In order to unlock a challenge, check the required amount of trophies in the bottom right corner of each challenge section,&#x0a;along with having obtained the secret achievement needed by the challenge.&#x0a;&#x0a;Happy Hunting!" 
+                                Message="CURRENTLY IN DEVELOPMENT. Challenges are an optional endeavor where you are presented with various kinds of minigames/objectives.&#x0a;&#x0a;To start a challenge you need to have unlocked the challenge first.&#x0a;&#x0a;In order to unlock a challenge, check the required amount of trophies in the bottom right corner of each challenge section,&#x0a;along with having obtained the secret achievement needed by the challenge.&#x0a;&#x0a;If you close the challenge window, the challenge is canceled. Custom quests do not count towards any progress.&#x0a;&#x0a;Happy Hunting!" 
                                 IsClosable="True" IsOpen="True" Severity="Informational" MouseDoubleClick="ChallengesInfoBar_MouseDoubleClick"/>
-                                                <ListBox x:Name="ChallengesListBox" SelectionChanged="ChallengesListBox_SelectionChanged" ItemsSource="{Binding Source={x:Static collections:Challenges.ChallengeList}}" SelectionMode="Single">
+                                                <ListBox Loaded="ChallengesListBox_Loaded" x:Name="ChallengesListBox" SelectionChanged="ChallengesListBox_SelectionChanged" SelectionMode="Single">
                                                     <ListBox.ItemTemplate>
                                                         <DataTemplate>
                                                             <Border BorderBrush="{StaticResource Base}" BorderThickness="1" CornerRadius="4" Background="#7f1e1e2e">
@@ -2042,7 +2055,11 @@
                                                                                     <StackPanel Orientation="Vertical">
                                                                                         <ui:Image HorizontalAlignment="Center" Margin="0,10,0,0" Width="32" Source="../../Assets/Icons/achievement/secret_trophy.png"/>
                                                                                         <ui:TextBlock HorizontalAlignment="Center" Margin="0,10,0,0" d:Text="Zenny Galore" Text="{Binding AchievementNameRequired}" TextWrapping="Wrap"/>
-                                                                                        <ui:Button Margin="0,10,0,0" HorizontalAlignment="Center" Content="Unlock" Appearance="Primary" IsEnabled="False"/>
+                                                                                        <ui:Button Margin="0,10,0,0"
+                                                                                                   HorizontalAlignment="Center"
+                                                                                                   Content="{Binding UnlockDate, Converter={StaticResource UnlockChallengeButtonContentConverter}}" Appearance="Primary"
+                                                                                                   Command="{Binding StartChallengeCommand}"
+                                                                                                   CommandParameter="{Binding}"/>
                                                                                     </StackPanel>
                                                                                 </Grid>
                                                                             </Grid>
@@ -2061,7 +2078,108 @@
                     </TabControl>
                 </Grid>
             </TabItem>
-            <TabItem ToolTip="Player Settings" Background="{StaticResource Mantle}" Foreground="{StaticResource Text}">
+                <TabItem ToolTip="Audio Settings" Background="{StaticResource Mantle}" Foreground="{StaticResource Text}">
+                    <TabItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="../../Assets/Icons/png/note_pink.png" Width="32" Height="32"/>
+                            <TextBlock Foreground="{StaticResource Pink}" Text="Audio" Margin="4,0,0,0" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </TabItem.Header>
+                    <Grid x:Name="AudioContent" Height="Auto"  Width="Auto">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="1*"/>
+                            <RowDefinition Height="100"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions >
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <!--https://stackoverflow.com/questions/17946487/how-to-scroll-a-grid-->
+                        <ScrollViewer VerticalScrollBarVisibility="Visible" Grid.Row="0" CanContentScroll="True" IsDeferredScrollingEnabled="True">
+                            <Grid Height="Auto" Width="Auto" Background="Transparent" Style="{StaticResource ConfigSingleGrid}"  Grid.Row="0" Grid.Column="1" Margin="20,20,20,20" Grid.ColumnSpan="2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="40"/>
+                                    <RowDefinition Height="40"/>
+                                    <RowDefinition Height="40"/>
+                                    <RowDefinition Height="40"/>
+                                    <RowDefinition Height="40"/>
+                                    <RowDefinition Height="40"/>
+                                    <RowDefinition Height="40"/>
+                                    <RowDefinition Height="40"/>
+                                    <RowDefinition Height="40"/>
+                                </Grid.RowDefinitions>
+
+                                <TextBlock Text="Main Volume" Margin="5" ToolTip="Adjust the main volume" Style="{StaticResource ConfigTextBox}" Grid.Row="0" Grid.Column="0"/>
+                                <DockPanel Grid.Row="0" Grid.Column="1">
+                                    <ui:TextBlock Text="{Binding Path=VolumeMain, Source={StaticResource Settings}, StringFormat={}{0:P0}}" DockPanel.Dock="Right" TextAlignment="Center" Width="80" VerticalAlignment="Center">
+                                    </ui:TextBlock>
+                                    <Slider IsSnapToTickEnabled="True" TickFrequency="0.05" TickPlacement="Both" Minimum="0" Maximum="1" Value="{Binding Path=VolumeMain, Source={StaticResource Settings}}"  />
+                                </DockPanel>
+
+                                <TextBlock Text="Achievement Unlock Volume" Margin="5" ToolTip="Adjust the volume" Style="{StaticResource ConfigTextBox}" Grid.Row="1" Grid.Column="0"/>
+                                <DockPanel Grid.Row="1" Grid.Column="1">
+                                    <ui:TextBlock Text="{Binding Path=VolumeAchievementUnlock, Source={StaticResource Settings}, StringFormat={}{0:P0}}" DockPanel.Dock="Right" TextAlignment="Center" Width="80" VerticalAlignment="Center">
+                                    </ui:TextBlock>
+                                    <Slider IsSnapToTickEnabled="True" TickFrequency="0.05" TickPlacement="Both" Minimum="0" Maximum="1" Value="{Binding Path=VolumeAchievementUnlock, Source={StaticResource Settings}}"  />
+                                </DockPanel>
+
+                                <TextBlock Text="Challenge Unlock Volume" Margin="5" ToolTip="Adjust the volume" Style="{StaticResource ConfigTextBox}" Grid.Row="2" Grid.Column="0"/>
+                                <DockPanel Grid.Row="2" Grid.Column="1">
+                                    <ui:TextBlock Text="{Binding Path=VolumeChallengeUnlock, Source={StaticResource Settings}, StringFormat={}{0:P0}}" DockPanel.Dock="Right" TextAlignment="Center" Width="80" VerticalAlignment="Center">
+                                    </ui:TextBlock>
+                                    <Slider IsSnapToTickEnabled="True" TickFrequency="0.05" TickPlacement="Both" Minimum="0" Maximum="1" Value="{Binding Path=VolumeChallengeUnlock, Source={StaticResource Settings}}"  />
+                                </DockPanel>
+
+                                <TextBlock Text="Challenge Start Volume" Margin="5" ToolTip="Adjust the volume" Style="{StaticResource ConfigTextBox}" Grid.Row="3" Grid.Column="0"/>
+                                <DockPanel Grid.Row="3" Grid.Column="1">
+                                    <ui:TextBlock Text="{Binding Path=VolumeChallengeStart, Source={StaticResource Settings}, StringFormat={}{0:P0}}" DockPanel.Dock="Right" TextAlignment="Center" Width="80" VerticalAlignment="Center">
+                                    </ui:TextBlock>
+                                    <Slider IsSnapToTickEnabled="True" TickFrequency="0.05" TickPlacement="Both" Minimum="0" Maximum="1" Value="{Binding Path=VolumeChallengeStart, Source={StaticResource Settings}}"  />
+                                </DockPanel>
+
+                                <TextBlock Text="Gacha Unlock Volume" Margin="5" ToolTip="Adjust the volume" Style="{StaticResource ConfigTextBox}" Grid.Row="4" Grid.Column="0"/>
+                                <DockPanel Grid.Row="4" Grid.Column="1">
+                                    <ui:TextBlock Text="{Binding Path=VolumeGachaUnlock, Source={StaticResource Settings}, StringFormat={}{0:P0}}" DockPanel.Dock="Right" TextAlignment="Center" Width="80" VerticalAlignment="Center">
+                                    </ui:TextBlock>
+                                    <Slider IsSnapToTickEnabled="True" TickFrequency="0.05" TickPlacement="Both" Minimum="0" Maximum="1" Value="{Binding Path=VolumeGachaUnlock, Source={StaticResource Settings}}"  />
+                                </DockPanel>
+
+                                <TextBlock Text="Gacha Trial Volume" Margin="5" ToolTip="Adjust the volume" Style="{StaticResource ConfigTextBox}" Grid.Row="5" Grid.Column="0"/>
+                                <DockPanel Grid.Row="5" Grid.Column="1">
+                                    <ui:TextBlock Text="{Binding Path=VolumeGachaTrial, Source={StaticResource Settings}, StringFormat={}{0:P0}}" DockPanel.Dock="Right" TextAlignment="Center" Width="80" VerticalAlignment="Center">
+                                    </ui:TextBlock>
+                                    <Slider IsSnapToTickEnabled="True" TickFrequency="0.05" TickPlacement="Both" Minimum="0" Maximum="1" Value="{Binding Path=VolumeGachaTrial, Source={StaticResource Settings}}"  />
+                                </DockPanel>
+
+                                <TextBlock Text="Gacha Rare Volume" Margin="5" ToolTip="Adjust the volume" Style="{StaticResource ConfigTextBox}" Grid.Row="6" Grid.Column="0"/>
+                                <DockPanel Grid.Row="6" Grid.Column="1">
+                                    <ui:TextBlock Text="{Binding Path=VolumeGachaRare, Source={StaticResource Settings}, StringFormat={}{0:P0}}" DockPanel.Dock="Right" TextAlignment="Center" Width="80" VerticalAlignment="Center">
+                                    </ui:TextBlock>
+                                    <Slider IsSnapToTickEnabled="True" TickFrequency="0.05" TickPlacement="Both" Minimum="0" Maximum="1" Value="{Binding Path=VolumeGachaRare, Source={StaticResource Settings}}"  />
+                                </DockPanel>
+
+                                <TextBlock Text="Hover Volume" Margin="5" ToolTip="Adjust the volume" Style="{StaticResource ConfigTextBox}" Grid.Row="7" Grid.Column="0"/>
+                                <DockPanel Grid.Row="7" Grid.Column="1">
+                                    <ui:TextBlock Text="{Binding Path=VolumeHover, Source={StaticResource Settings}, StringFormat={}{0:P0}}" DockPanel.Dock="Right" TextAlignment="Center" Width="80" VerticalAlignment="Center">
+                                    </ui:TextBlock>
+                                    <Slider IsSnapToTickEnabled="True" TickFrequency="0.05" TickPlacement="Both" Minimum="0" Maximum="1" Value="{Binding Path=VolumeHover, Source={StaticResource Settings}}"  />
+                                </DockPanel>
+
+                                <TextBlock Text="Select Volume" Margin="5" ToolTip="Adjust the volume" Style="{StaticResource ConfigTextBox}" Grid.Row="8" Grid.Column="0"/>
+                                <DockPanel Grid.Row="8" Grid.Column="1">
+                                    <ui:TextBlock Text="{Binding Path=VolumeSelect, Source={StaticResource Settings}, StringFormat={}{0:P0}}" DockPanel.Dock="Right" TextAlignment="Center" Width="80" VerticalAlignment="Center">
+                                    </ui:TextBlock>
+                                    <Slider IsSnapToTickEnabled="True" TickFrequency="0.05" TickPlacement="Both" Minimum="0" Maximum="1" Value="{Binding Path=VolumeSelect, Source={StaticResource Settings}}"  />
+                                </DockPanel>
+                            </Grid>
+                        </ScrollViewer>
+                        <customcontrols:MainConfigurationActions Grid.Row="1" Grid.ColumnSpan="1" Loaded="MainConfigurationActions_Loaded" Unloaded="MainConfigurationActions_Unloaded"/>
+                    </Grid>
+                </TabItem>
+                <TabItem ToolTip="Player Settings" Background="{StaticResource Mantle}" Foreground="{StaticResource Text}">
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
                         <Image Source="../../Assets/Icons/png/helm.png" Width="32" Height="32"/>
@@ -3556,20 +3674,36 @@ Thunder Clad, Vigorous" Text="{Binding GetActiveSkillsForImage,Mode=OneTime}" Fo
                                 <RowDefinition Height="40"/>
                                 <RowDefinition Height="40"/>
                                 <RowDefinition Height="40"/>
+                                <RowDefinition Height="40"/>
                             </Grid.RowDefinitions>
                             <ui:InfoBar Grid.ColumnSpan="2" Foreground="{StaticResource Text}" Title="How Monster HP Works" 
                             Message="Effective HP is the HP taking into account the monster's defense rate.&#x0a;Burning Freezing Elzelion has 1,000,000 EHP because his&#x0a;True HP is 30,000 and his defense rate is 0.03.&#x0a;&#x0a;Effective HP = True HP / Defense rate&#x0a;1,000,000 = 30,000 / 0.03&#x0a;&#x0a;True HP is the HP of the monster without taking into account the monster's defense rate." 
                             IsClosable="False" IsOpen="True" Severity="Informational"/>
-                            <TextBlock Margin="5" ToolTip="Show HP Mode (True/Effective)" Style="{StaticResource ConfigTextBox}" Grid.Row="1" Grid.Column="0" Text="Monster HP Mode Label"/>
-                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="1" Grid.Column="1" IsChecked="{Binding Source={StaticResource Settings}, Path=MonsterBarHPModeShown}"/>
-                            <TextBlock Margin="5" ToolTip="Show Monster Bar Icon" Style="{StaticResource ConfigTextBox}" Grid.Row="2" Grid.Column="0"  Text="Monster Bar Icon"/>
-                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="2" Grid.Column="1" IsChecked="{Binding Source={StaticResource Settings}, Path=MonsterBarIconShown}"/>
-                            <TextBlock Margin="5" ToolTip="Show Monster Name" Style="{StaticResource ConfigTextBox}" Grid.Row="3" Grid.Column="0"  Text="Monster Bar Name"/>
-                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="3" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=MonsterBarNameShown}"/>
-                            <TextBlock Margin="5" ToolTip="Show HP Numbers" Style="{StaticResource ConfigTextBox}" Grid.Row="4" Grid.Column="0"  Text="Monster HP Numbers"/>
-                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="4" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=MonsterBarNumbersShown}"/>
-                            <TextBlock Margin="5" ToolTip="Show the monster HP bar" Style="{StaticResource ConfigTextBox}" Grid.Row="5" Grid.Column="0"  Text="Monster HP Bar"/>
-                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="5" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=MonsterBarShown}"/>
+                            <StackPanel Margin="5" Orientation="Horizontal" Grid.Row="1" Grid.Column="0">
+                                <ui:SymbolIcon Symbol="Info28" FontSize="28" Foreground="{StaticResource Yellow}" Margin="0,0,5,0" ToolTip="Overlay Restart Required"/>
+                                <TextBlock ToolTip="Show HP Mode (True/Effective)" Style="{StaticResource ConfigTextBox}" Text="Monster HP Mode Label"/>
+                            </StackPanel>
+                            <CheckBox HorizontalAlignment="Center" BorderBrush="{StaticResource Red}" BorderThickness="2"  Grid.Row="1" Grid.Column="1" IsChecked="{Binding Source={StaticResource Settings}, Path=MonsterBarHPModeShown}"/>
+                            <StackPanel Margin="5" Orientation="Horizontal" Grid.Row="2" Grid.Column="0" >
+                                <ui:SymbolIcon Symbol="Info28" FontSize="28" Foreground="{StaticResource Yellow}" Margin="0,0,5,0" ToolTip="Overlay Restart Required"/>
+                                <TextBlock ToolTip="Show Monster Bar Icon" Style="{StaticResource ConfigTextBox}" Text="Monster Bar Icon"/>
+                            </StackPanel>
+                            <CheckBox BorderBrush="{StaticResource Red}" HorizontalAlignment="Center" Grid.Row="2" Grid.Column="1" IsChecked="{Binding Source={StaticResource Settings}, Path=MonsterBarIconShown}"/>
+                            <StackPanel Margin="5" Orientation="Horizontal" Grid.Row="3" Grid.Column="0" >
+                                <ui:SymbolIcon Symbol="Info28" FontSize="28" Foreground="{StaticResource Yellow}" Margin="0,0,5,0" ToolTip="Overlay Restart Required"/>
+                                <TextBlock ToolTip="Show Monster Name" Style="{StaticResource ConfigTextBox}" Text="Monster Bar Name"/>
+                            </StackPanel>
+                            <CheckBox BorderBrush="{StaticResource Red}" HorizontalAlignment="Center" Grid.Row="3" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=MonsterBarNameShown}"/>
+                            <StackPanel Margin="5" Orientation="Horizontal" Grid.Row="4" Grid.Column="0" >
+                                <ui:SymbolIcon Symbol="Info28" FontSize="28" Foreground="{StaticResource Yellow}" Margin="0,0,5,0" ToolTip="Overlay Restart Required"/>
+                                <TextBlock ToolTip="Show HP Numbers" Style="{StaticResource ConfigTextBox}" Text="Monster HP Numbers"/>
+                            </StackPanel>
+                            <CheckBox BorderBrush="{StaticResource Red}" HorizontalAlignment="Center" Grid.Row="4" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=MonsterBarNumbersShown}"/>
+                            <StackPanel Margin="5" Orientation="Horizontal" Grid.Row="5" Grid.Column="0" >
+                                <ui:SymbolIcon Symbol="Info28" FontSize="28" Foreground="{StaticResource Yellow}" Margin="0,0,5,0" ToolTip="Overlay Restart Required"/>
+                                <TextBlock ToolTip="Show the monster HP bar" Style="{StaticResource ConfigTextBox}" Text="Monster HP Bar"/>
+                            </StackPanel>
+                            <CheckBox BorderBrush="{StaticResource Red}" HorizontalAlignment="Center" Grid.Row="5" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=MonsterBarShown}"/>
 
                             <TextBlock Margin="5" Foreground="{StaticResource Text}" Grid.Row="6" Grid.Column="0" Text="Monster HP Background Color" Style="{StaticResource ConfigTextBox}"/>
                             <xctk:ColorPicker Grid.Column="1" Grid.Row="6" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=HPBackGroundColor}"/>
@@ -3644,17 +3778,19 @@ Thunder Clad, Vigorous" Text="{Binding GetActiveSkillsForImage,Mode=OneTime}" Fo
                             <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="31" Grid.Column="1" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableMonsterRenders}"/>
 
                             <TextBlock Margin="5" Style="{StaticResource ConfigTextBox}" Grid.Row="32" Grid.Column="0" Text="Monster 1 Bar Stroke Color"/>
-                                <xctk:ColorPicker Grid.Column="1" Grid.Row="32" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=Monster1BarStrokeColor}"/>
+                            <xctk:ColorPicker Grid.Column="1" Grid.Row="32" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=Monster1BarStrokeColor}"/>
 
-                                <TextBlock Margin="5" Style="{StaticResource ConfigTextBox}" Grid.Row="33" Grid.Column="0" Text="Monster 2 Bar Stroke Color"/>
-                                <xctk:ColorPicker Grid.Column="1" Grid.Row="33" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=Monster2BarStrokeColor}"/>
+                            <TextBlock Margin="5" Style="{StaticResource ConfigTextBox}" Grid.Row="33" Grid.Column="0" Text="Monster 2 Bar Stroke Color"/>
+                            <xctk:ColorPicker Grid.Column="1" Grid.Row="33" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=Monster2BarStrokeColor}"/>
 
-                                <TextBlock Margin="5" Style="{StaticResource ConfigTextBox}" Grid.Row="34" Grid.Column="0" Text="Monster 3 Bar Stroke Color"/>
-                                <xctk:ColorPicker Grid.Column="1" Grid.Row="34" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=Monster3BarStrokeColor}"/>
+                            <TextBlock Margin="5" Style="{StaticResource ConfigTextBox}" Grid.Row="34" Grid.Column="0" Text="Monster 3 Bar Stroke Color"/>
+                            <xctk:ColorPicker Grid.Column="1" Grid.Row="34" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=Monster3BarStrokeColor}"/>
 
-                                <TextBlock Margin="5" Style="{StaticResource ConfigTextBox}" Grid.Row="35" Grid.Column="0" Text="Monster 4 Bar Stroke Color"/>
+                            <TextBlock Margin="5" Style="{StaticResource ConfigTextBox}" Grid.Row="35" Grid.Column="0" Text="Monster 4 Bar Stroke Color"/>
                             <xctk:ColorPicker Grid.Column="1" Grid.Row="35" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=Monster4BarStrokeColor}"/>
 
+                            <TextBlock Margin="5" ToolTip="Show Hardcore/Unlimited Icon" Style="{StaticResource ConfigTextBox}" Grid.Row="36" Grid.Column="0"  Text="Hardcore/Unlimited Icon"/>
+                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="36" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=QuestToggleMonsterModeShown}"/>
                         </Grid>
                     </ScrollViewer>
                     <customcontrols:MainConfigurationActions Grid.Row="1" Grid.ColumnSpan="1" Loaded="MainConfigurationActions_Loaded" Unloaded="MainConfigurationActions_Unloaded"/>
@@ -3884,6 +4020,7 @@ Thunder Clad, Vigorous" Text="{Binding GetActiveSkillsForImage,Mode=OneTime}" Fo
                                 <RowDefinition Height="40"/>
                                 <RowDefinition Height="40"/>
                                 <RowDefinition Height="40"/>
+                                <RowDefinition Height="40"/>
                             </Grid.RowDefinitions>
                             <!--<TextBlock Margin="5" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Grid.ColumnSpan="2" Foreground="{StaticResource Text}">
                                        1. My Account -> Activity Privacy -> Check "Display current activity as a status message"
@@ -3942,6 +4079,12 @@ Thunder Clad, Vigorous" Text="{Binding GetActiveSkillsForImage,Mode=OneTime}" Fo
                             <TextBlock Margin="5" ToolTip="Show Overlay Mode" Style="{StaticResource ConfigTextBox}" Grid.Row="13" Grid.Column="0"  Text="Overlay Mode"/>
                             <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="13" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=ShowDiscordRPCOverlayMode}"/>
 
+                            <TextBlock Margin="5" ToolTip="Set Overlay Mode Option. Current: the current mode. Final: the mode that would be stored in database. Automatic: changes depending on overlay mode option found in the Quest Logs settings tab." Style="{StaticResource ConfigTextBox}" Grid.Row="14" Grid.Column="0"  Text="Overlay Mode Option"/>
+                            <ComboBox Grid.Column="1" Grid.Row="14" SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=DiscordOverlayMode}">
+                                <ComboBoxItem>Automatic</ComboBoxItem>
+                                <ComboBoxItem>Current</ComboBoxItem>
+                                <ComboBoxItem>Final</ComboBoxItem>
+                            </ComboBox>
                         </Grid>
                     </ScrollViewer>
                     <customcontrols:MainConfigurationActions Grid.Row="1" Grid.ColumnSpan="1" Loaded="MainConfigurationActions_Loaded" Unloaded="MainConfigurationActions_Unloaded"/>
@@ -4124,17 +4267,14 @@ Thunder Clad, Vigorous" Text="{Binding GetActiveSkillsForImage,Mode=OneTime}" Fo
                                     <TextBlock ToolTip="View Stargazers" Grid.Row="8" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="32"><Hyperlink Foreground="{StaticResource Blue}" NavigateUri="https://github.com/DorielRivalet/mhfz-overlay/stargazers" RequestNavigate="LnkImg_RequestNavigate">View Stargazers</Hyperlink></TextBlock>
                                 </ScrollViewer>
                             </Grid>
-                            <MediaElement Grid.Row="3" Grid.Column="2"  MediaEnded="Stars_MediaEnded" x:Name="myAnime" UnloadedBehavior="Manual" Source="https://media.tenor.com/uMRSXoUOwpYAAAAC/anime-girl.gif" LoadedBehavior="Play"/>
                             <Button ToolTip="Watchers" BorderBrush="Transparent" Background="Transparent" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='Assets/Icons/watch.xaml'}" Width="128" Height="128" Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="1" Margin="10,0,0,10"/>
                             <Grid Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="1">
                                 <TextBlock FontSize="32" Text="Loading..." x:Name="WatchersTextBlock" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                             </Grid>
-                            <MediaElement Grid.Row="4" Grid.Column="2"  MediaEnded="Watcher_MediaEnded" x:Name="myWatcher" UnloadedBehavior="Manual" Source="https://media.tenor.com/IMNDZBkct8gAAAAC/anime-girl.gif" LoadedBehavior="Play"/>
                             <Button ToolTip="Issues" BorderBrush="Transparent" Background="Transparent" Content="{Binding Converter={StaticResource XamlIconToViewBoxConverter },ConverterParameter='Assets/Icons/issues.xaml'}" Width="128" Height="128" Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="1" Margin="10,0,0,10"/>
                             <Grid Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="1">
                                 <TextBlock FontSize="32" Text="Loading..." x:Name="IssuesTextBlock" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                             </Grid>
-                            <MediaElement Grid.Row="5" Grid.Column="2"  MediaEnded="Krill_MediaEnded" x:Name="myKrill" UnloadedBehavior="Manual" Source="https://media.tenor.com/S5IodS2Ms_IAAAAC/krill-issue.gif" LoadedBehavior="Play"/>
                             <Button ToolTip="Thank You!" BorderBrush="Transparent" Background="Transparent" Width="128" Height="128" Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="1" Margin="10,0,0,10">
                                 <Button.Content>
                                     <ui:SymbolIcon Symbol="Heart48" Foreground="{StaticResource Red}" FontSize="96"/>
@@ -4144,14 +4284,14 @@ Thunder Clad, Vigorous" Text="{Binding GetActiveSkillsForImage,Mode=OneTime}" Fo
                                 <TextBlock FontSize="32" Text="Thanks for using the overlay!" x:Name="ThankYouTextBlock" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                             </Grid>
                             <!--https://stackoverflow.com/questions/19694640/animating-gif-in-wpf-->
-                            <MediaElement MouseLeftButtonDown="FumoImage_MouseLeftButtonDown" MediaEnded="Fumo_MediaEnded"  Grid.Row="6" Grid.Column="2" x:Name="myFumo" Width="Auto" Height="Auto" UnloadedBehavior="Manual"     Source="https://cdn.discordapp.com/attachments/324875367418429441/1032217078750531584/zenith_fumo.gif" LoadedBehavior="Play"/>
+                            <ui:Image MouseLeftButtonDown="FumoImage_MouseLeftButtonDown" Grid.Row="6" Grid.Column="2" x:Name="myFumo" Source="pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/touhou/zenith_fumo.gif"/>
 
                             <TextBlock TextWrapping="Wrap" Grid.RowSpan="2" Grid.Row="7" FontSize="32" Grid.ColumnSpan="3" Text="Loading..." x:Name="OctokitInfo"/>
 
                             <!--https://stackoverflow.com/questions/10238694/example-using-hyperlink-in-wpf-->
                             <TextBlock ToolTip="View Changelog" Grid.Row="8" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="32"><Hyperlink Foreground="{StaticResource Blue}" NavigateUri="https://github.com/DorielRivalet/mhfz-overlay/blob/main/CHANGELOG.md" RequestNavigate="LnkImg_RequestNavigate">View Changelog</Hyperlink></TextBlock>
                             <TextBlock ToolTip="View Releases Statistics (Put DorielRivalet as GitHub Username and MHFZ_Overlay as Repository Name)" Grid.Row="8" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="32"><Hyperlink Foreground="{StaticResource Blue}" NavigateUri="https://somsubhra.github.io/github-release-stats/" RequestNavigate="LnkImg_RequestNavigate">View Releases Statistics</Hyperlink></TextBlock>
-                            <TextBlock ToolTip="Download latest version as 7z file" Grid.Row="8" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="32"><Hyperlink Foreground="{StaticResource Blue}" NavigateUri="https://github.com/DorielRivalet/mhfz-overlay/releases/latest" RequestNavigate="LnkImg_RequestNavigate">Get latest version</Hyperlink></TextBlock>
+                            <TextBlock ToolTip="Go to GitHub Releases page" Grid.Row="8" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="32"><Hyperlink Foreground="{StaticResource Blue}" NavigateUri="https://github.com/DorielRivalet/mhfz-overlay/releases/latest" RequestNavigate="LnkImg_RequestNavigate">Get latest version</Hyperlink></TextBlock>
                             <TextBlock ToolTip="Total Program Usage Time" Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="3" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="32" Text="{Binding TotalTimeSpent, StringFormat=hh\\:mm\\:ss, Mode=OneTime}"/>
                         </Grid>
                     </ScrollViewer>
@@ -4159,6 +4299,6 @@ Thunder Clad, Vigorous" Text="{Binding GetActiveSkillsForImage,Mode=OneTime}" Fo
             </TabItem>
         </TabControl>
     </Grid>
-        <ui:SnackbarPresenter Grid.ZIndex="2" x:Name="ConfigWindowSnackBarPresenter" d:Visibility="Hidden"/>
+    <ui:SnackbarPresenter Grid.ZIndex="2" x:Name="ConfigWindowSnackBarPresenter" d:Visibility="Hidden"/>
     </Grid>
 </ui:FluentWindow>

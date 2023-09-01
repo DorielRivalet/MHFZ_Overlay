@@ -12,7 +12,7 @@ namespace MHFZ_Overlay {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.6.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.7.0.0")]
     public sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -2749,7 +2749,7 @@ namespace MHFZ_Overlay {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool ShowDiscordRPCOverlayMode {
             get {
                 return ((bool)(this["ShowDiscordRPCOverlayMode"]));
@@ -3800,6 +3800,150 @@ namespace MHFZ_Overlay {
             }
             set {
                 this["BingoProgressShown"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.5")]
+        public float VolumeMain {
+            get {
+                return ((float)(this["VolumeMain"]));
+            }
+            set {
+                this["VolumeMain"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public float VolumeAchievementUnlock {
+            get {
+                return ((float)(this["VolumeAchievementUnlock"]));
+            }
+            set {
+                this["VolumeAchievementUnlock"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public float VolumeChallengeUnlock {
+            get {
+                return ((float)(this["VolumeChallengeUnlock"]));
+            }
+            set {
+                this["VolumeChallengeUnlock"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public float VolumeChallengeStart {
+            get {
+                return ((float)(this["VolumeChallengeStart"]));
+            }
+            set {
+                this["VolumeChallengeStart"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public float VolumeHover {
+            get {
+                return ((float)(this["VolumeHover"]));
+            }
+            set {
+                this["VolumeHover"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public float VolumeGachaUnlock {
+            get {
+                return ((float)(this["VolumeGachaUnlock"]));
+            }
+            set {
+                this["VolumeGachaUnlock"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public float VolumeGachaTrial {
+            get {
+                return ((float)(this["VolumeGachaTrial"]));
+            }
+            set {
+                this["VolumeGachaTrial"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public float VolumeSelect {
+            get {
+                return ((float)(this["VolumeSelect"]));
+            }
+            set {
+                this["VolumeSelect"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public float VolumeGachaRare {
+            get {
+                return ((float)(this["VolumeGachaRare"]));
+            }
+            set {
+                this["VolumeGachaRare"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Final")]
+        public string OverlayWatermarkMode {
+            get {
+                return ((string)(this["OverlayWatermarkMode"]));
+            }
+            set {
+                this["OverlayWatermarkMode"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Automatic")]
+        public string DiscordOverlayMode {
+            get {
+                return ((string)(this["DiscordOverlayMode"]));
+            }
+            set {
+                this["DiscordOverlayMode"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool QuestToggleMonsterModeShown {
+            get {
+                return ((bool)(this["QuestToggleMonsterModeShown"]));
+            }
+            set {
+                this["QuestToggleMonsterModeShown"] = value;
             }
         }
     }

@@ -7,6 +7,7 @@ namespace MHFZ_Overlay.Services;
 using System.Diagnostics;
 using System.Globalization;
 using MHFZ_Overlay;
+using MHFZ_Overlay.Models.Structures;
 
 public sealed class OverlaySettingsService
 {
@@ -15,15 +16,6 @@ public sealed class OverlaySettingsService
     private static OverlaySettingsService? instance;
 
     private OverlaySettingsService() => Logger.Info($"Service initialized");
-
-    public enum ConfigurationPreset
-    {
-        None,
-        Speedrun,
-        Zen,
-        HPOnly,
-        All,
-    }
 
     public static OverlaySettingsService GetInstance()
     {

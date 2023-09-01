@@ -202,6 +202,56 @@ The application follows an architectural structure based on the MVVM pattern.
 - EZLion, a NuGet package, provides static game data to the Models.
 - Models include memory addresses, HGE and non-HGE addresses, and collections sourced from EZLion. Data is stored in an SQLite database. Models provide values to ViewModels.
 
+Example data flow:
+
+```mermaid
+flowchart TD
+    subgraph Views
+        bingowindow[BingoWindow.xaml]
+    end
+    subgraph ViewModels
+        bingowindowviewmodel["BingoWindowViewModel.cs (ObservableRecipient)"]
+    end
+    subgraph Models
+        upgrades[BingoUpgrades.cs]
+        upgrade[BingoUpgrade.cs]
+        monster[BingoMonster.cs]
+        bingo[Bingo.cs]
+        bingocell[BingoCell.cs]
+        messengerquest[QuestIDMessage.cs]
+        messengerrun[RunIDMessage.cs]
+    end
+    subgraph Services
+        s1[DatabaseService.cs]
+        s2[AchievementService.cs]
+        s3[BingoService.cs]
+        s4[DiscordService.cs]
+        s3 -->|Request/Store data| s1
+        s1 -->|Send data| s3
+    end
+    subgraph Assets
+        images[Icons]
+        sound[Sound]
+        colors[Colors]
+        fonts[Fonts]
+    end
+    Views <-->|Data Binding| ViewModels
+    ViewModels -->|Request logic| Services
+    Models -->|Give values| ViewModels & Services
+    Assets -->|Provided to| Views
+    Services -->|Assisting| ViewModels
+```
+
+- The "BingoWindow.xaml" view is bound to the "BingoWindowViewModel.cs" ViewModel.
+- The ViewModel requests logic from the Services, specifically "DatabaseService.cs", "AchievementService.cs", and "BingoService.cs".
+- The Services interact with the Models, which include "BingoUpgrades.cs", "BingoUpgrade.cs", "BingoMonster.cs", "Bingo.cs", "BingoCell.cs", "QuestIDMessage.cs", and "RunIDMessage.cs".
+- The Models provide values to the ViewModel and Services.
+- The "Assets" are provided to the "Views".
+
+BingoWindowViewModel is an ObservableRecipient. It receives game logic from BingoService. BingoWindowViewModel relegates BingoService for database logic requests (DatabaseService). BingoWindowViewmodel listens for received messages with QuestIDMessage and RunIDMessage. DatabaseService sends messages upon quest completion, and BingoWindowViewModel receives messages with the changed values, and updates the BingoWindowView according to the data binding specifications. The properties in BingoWindowViewModel are reactive, meaning the changes are reflected in the view upon updating.
+
+In short, the flow of data and control is from the Views to the ViewModels, then to the Services and Models, and back to the ViewModels and Views. The Services assist the ViewModels, and the Models store data structures and provide values. The Assets are used by the Views.
+
 ## Closing notes
 
 It's important to note that this and other documents are a high-level summary of the components and their interactions, is subject to change, and may or may not be outdated. For a more detailed explanation, you can further expand your understanding of each component and its functionality in the technical documentation files, along with reading the docblocks in source code.

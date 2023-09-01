@@ -16,9 +16,6 @@ using System.Windows.Media;
 /// </summary>
 public partial class MonsterStatusBar : UserControl, INotifyPropertyChanged
 {
-    public static readonly DependencyProperty DescriptionProperty =
-        DependencyProperty.Register("Description", typeof(string), typeof(MonsterStatusBar), new PropertyMetadata(string.Empty));
-
     public MonsterStatusBar()
     {
         this.InitializeComponent();
@@ -97,6 +94,9 @@ public partial class MonsterStatusBar : UserControl, INotifyPropertyChanged
         set => this.SetValue(IconSourceProperty, value);
     }
 
+    public static readonly DependencyProperty DescriptionProperty =
+        DependencyProperty.Register("Description", typeof(string), typeof(MonsterStatusBar), new PropertyMetadata(string.Empty));
+
     public static readonly DependencyProperty NumCurrProperty =
         DependencyProperty.Register("NumCurr", typeof(int), typeof(MonsterStatusBar), new PropertyMetadata(0));
 
@@ -110,7 +110,7 @@ public partial class MonsterStatusBar : UserControl, INotifyPropertyChanged
         DependencyProperty.Register("BorderColor", typeof(Brush), typeof(MonsterStatusBar), new PropertyMetadata(null));
 
     public static readonly DependencyProperty IconSourceProperty =
-        DependencyProperty.Register("IconSource", typeof(string), typeof(MonsterStatusBar), new PropertyMetadata(string.Empty));
+        DependencyProperty.Register("IconSource", typeof(string), typeof(MonsterStatusBar), new PropertyMetadata(@"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/poison.png"));
 
     public static readonly DependencyProperty StrokeColorProperty =
         DependencyProperty.Register("StrokeColor", typeof(Brush), typeof(MonsterStatusBar), new PropertyMetadata(null));

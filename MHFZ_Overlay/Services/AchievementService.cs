@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Media;
@@ -26,6 +27,7 @@ using Wpf.Ui.Controls;
 public sealed class AchievementService : IAchievementService
 {
     private static readonly DatabaseService DatabaseManagerInstance = DatabaseService.GetInstance();
+    private static readonly AudioService AudioServiceInstance = AudioService.GetInstance();
 
     public static TimeSpan SnackbarTimeOut { get; set; } = TimeSpan.FromSeconds(5);
 
@@ -46,7 +48,9 @@ public sealed class AchievementService : IAchievementService
 
     public static void ShowMany(SnackbarPresenter snackbarPresenter, List<int> achievementsID, Style style)
     {
-        MainWindow.MainWindowSoundPlayer?.Play();
+        var s = (Settings)Application.Current.TryFindResource("Settings");
+        var fileName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Assets\Sounds\victory.wav");
+        AudioServiceInstance.Play(fileName, MainWindow.MainWindowMediaPlayer, s.VolumeMain, s.VolumeAchievementUnlock);
 
         const int maxAchievementsToShow = 5;
         var remainingAchievements = achievementsID.Count - maxAchievementsToShow;
@@ -210,7 +214,7 @@ public sealed class AchievementService : IAchievementService
         {
             default:
             {
-                LoggerInstance.Error("Achievement ID {0} not found", achievementID);
+                LoggerInstance.Error(CultureInfo.InvariantCulture, "Achievement ID {0} not found", achievementID);
                 return false;
             }
 
@@ -1775,7 +1779,7 @@ public sealed class AchievementService : IAchievementService
                     return false;
                 }
 
-            case 215: // TODO test
+            case 215:
                 if (dataLoader.Model.DivaBond() >= 999)
                 {
                     return true;
@@ -1785,9 +1789,14 @@ public sealed class AchievementService : IAchievementService
                     return false;
                 }
 
-            case 216: // TODO Obtain S Rank in all single-player MezFes minigames
+            case 216:
             {
-                return false;
+                return databaseManagerInstance.AllMezFes.Any(minigame =>
+                (minigame.Score >= Numbers.MezFesSRankGuukuScoop && minigame.MezFesMinigameID == 466) &&
+                (minigame.Score >= Numbers.MezFesSRankNyanrendo && minigame.MezFesMinigameID == 467) &&
+                (minigame.Score >= Numbers.MezFesSRankPanicHoney && minigame.MezFesMinigameID == 468) &&
+                (minigame.Score >= Numbers.MezFesSRankDokkanBattleCats && minigame.MezFesMinigameID == 469)
+                );
             }
 
             case 217:
@@ -1835,7 +1844,7 @@ public sealed class AchievementService : IAchievementService
             case 222:
                 return databaseManagerInstance.AllPersonalBestAttempts.Any(pbAttempts => pbAttempts.Attempts >= 100);
             case 223:
-                if (dataLoader.Model.SecondDistrictDuremudiraSlays() >= 100)
+                if (dataLoader.Model.SecondDistrictDuremudiraSlays() >= 25)
                 {
                     return true;
                 }
@@ -2225,10 +2234,10 @@ public sealed class AchievementService : IAchievementService
 
                     return false; // Handle invalid TotalTimeElapsed values
                 });
-            case 340: // TODO discord rich presence
+            case 340:
                 return s.EnableRichPresence;
             case 341:
-                if (dataLoader.Model.GetOverlayMode().Contains("Zen"))
+                if (dataLoader.Model.GetOverlayMode() == OverlayMode.Zen)
                 {
                     return true;
                 }
@@ -2238,7 +2247,7 @@ public sealed class AchievementService : IAchievementService
                 }
 
             case 342:
-                if (dataLoader.Model.GetOverlayMode().Contains("Freestyle"))
+                if (dataLoader.Model.GetOverlayMode() is OverlayMode.Freestyle or OverlayMode.FreestyleSecretTech )
                 {
                     return true;
                 }
@@ -2377,7 +2386,7 @@ public sealed class AchievementService : IAchievementService
                     return false;
                 }
 
-            case 361: // TODO gacha stuff
+            case 361: // TODO challenges stuff
             case 362:
             case 363:
             case 364:
@@ -2420,12 +2429,223 @@ public sealed class AchievementService : IAchievementService
             case 401:
             case 402:
             case 403:
-            case 404:
-            case 405:
-            case 406:
-            {
                 return false;
+            case 404:
+                completedQuests = from quest in databaseManagerInstance.AllQuests
+                                  join activeSkills in databaseManagerInstance.AllActiveSkills on quest.RunID equals activeSkills.RunID
+                                  where quest.QuestID == Numbers.QuestIDLV9999CrimsonFatalis && quest.PartySize == 1 &&
+                                  !(activeSkills.ActiveSkill1ID == 193 || activeSkills.ActiveSkill1ID == 194 ||
+                                  activeSkills.ActiveSkill2ID == 193 || activeSkills.ActiveSkill2ID == 194 ||
+                                  activeSkills.ActiveSkill3ID == 193 || activeSkills.ActiveSkill3ID == 194 ||
+                                  activeSkills.ActiveSkill4ID == 193 || activeSkills.ActiveSkill4ID == 194 ||
+                                  activeSkills.ActiveSkill5ID == 193 || activeSkills.ActiveSkill5ID == 194 ||
+                                  activeSkills.ActiveSkill6ID == 193 || activeSkills.ActiveSkill6ID == 194 ||
+                                  activeSkills.ActiveSkill7ID == 193 || activeSkills.ActiveSkill7ID == 194 ||
+                                  activeSkills.ActiveSkill8ID == 193 || activeSkills.ActiveSkill8ID == 194 ||
+                                  activeSkills.ActiveSkill9ID == 193 || activeSkills.ActiveSkill9ID == 194 ||
+                                  activeSkills.ActiveSkill10ID == 193 || activeSkills.ActiveSkill10ID == 194 ||
+                                  activeSkills.ActiveSkill11ID == 193 || activeSkills.ActiveSkill11ID == 194 ||
+                                  activeSkills.ActiveSkill12ID == 193 || activeSkills.ActiveSkill12ID == 194 ||
+                                  activeSkills.ActiveSkill13ID == 193 || activeSkills.ActiveSkill13ID == 194 ||
+                                  activeSkills.ActiveSkill14ID == 193 || activeSkills.ActiveSkill14ID == 194 ||
+                                  activeSkills.ActiveSkill15ID == 193 || activeSkills.ActiveSkill15ID == 194 ||
+                                  activeSkills.ActiveSkill16ID == 193 || activeSkills.ActiveSkill16ID == 194 ||
+                                  activeSkills.ActiveSkill17ID == 193 || activeSkills.ActiveSkill17ID == 194 ||
+                                  activeSkills.ActiveSkill18ID == 193 || activeSkills.ActiveSkill18ID == 194 ||
+                                  activeSkills.ActiveSkill19ID == 193 || activeSkills.ActiveSkill19ID == 194)
+                                  select quest;
+                if (completedQuests != null && completedQuests.Any())
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            case 405:
+                completedQuests = from quest in databaseManagerInstance.AllQuests
+                                  join playerGear in databaseManagerInstance.AllPlayerGear on quest.RunID equals playerGear.RunID
+                                  where quest.QuestID == Numbers.QuestIDZ4Gasurabazura && quest.PartySize == 1 && playerGear.PlayerInventoryDictionary != null &&
+                                  !(JsonConvert.DeserializeObject<Dictionary<int, List<Dictionary<int, int>>>>(playerGear.PlayerInventoryDictionary)?.Values
+                                    .SelectMany(list => list)
+                                    .Any(innerDict => innerDict.ContainsKey(13607)) ?? false)
+                                  select quest;
+                if (completedQuests != null && completedQuests.Any())
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            case 406:
+                return false;
+            case 407: // TODO test
+                completedQuests = from quest in databaseManagerInstance.AllQuests
+                                  join playerGear in databaseManagerInstance.AllPlayerGear on quest.RunID equals playerGear.RunID
+                                  where quest.QuestID == Numbers.QuestIDUpperShitenUnknown &&
+                                  quest.PartySize == 1 &&
+                                  playerGear.PlayerInventoryDictionary != null &&
+                                  (JsonConvert.DeserializeObject<Dictionary<int, List<Dictionary<int, int>>>>(playerGear.PlayerInventoryDictionary)?.Values
+                                    .SelectMany(list => list)
+                                    .All(innerDict => innerDict.ContainsKey(0)) ?? false)
+                                  select quest;
+                if (completedQuests != null && completedQuests.Any())
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            case 408:
+                return false;
+            case 409:
+            {
+                var keyboardCode = new List<string> { "W", "W", "S", "S", "A", "D", "A", "D", "D2", "D1", };
+                var gamepadCode = new List<string> { "DPadUp", "DPadUp", "DPadDown", "DPadDown", "DPadLeft", "DPadRight", "DPadLeft", "DPadRight", "B", "A", };
+
+                var foundData = from quest in databaseManagerInstance.AllQuests
+                                where (quest.KeyStrokesDictionary != null &&
+                                JsonConvert.DeserializeObject<Dictionary<int, string>>(quest.KeyStrokesDictionary) != null &&
+                                quest.GamepadInputDictionary != null &&
+                                JsonConvert.DeserializeObject<Dictionary<int, string>>(quest.GamepadInputDictionary) != null)
+                                select quest;
+
+                if (foundData == null)
+                {
+                    return false;
+                }
+
+                var foundCode = from quest in databaseManagerInstance.AllQuests
+                                      where (JsonConvert.DeserializeObject<Dictionary<int, string>>(quest.KeyStrokesDictionary)?.Values
+                                            .Select((keyValue) => keyValue.Trim())
+                                            .Take(keyboardCode.Count)
+                                            .SequenceEqual(keyboardCode) ?? false)
+                                            ||
+                                            (JsonConvert.DeserializeObject<Dictionary<int, string>>(quest.GamepadInputDictionary)?.Values
+                                            .Select((keyValue) => keyValue.Trim())
+                                            .Take(gamepadCode.Count)
+                                            .SequenceEqual(gamepadCode) ?? false)
+                                      select quest;
+
+                if (foundCode != null && foundCode.Any())
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
+            case 410:
+            {
+                completedQuests = from quest in databaseManagerInstance.AllQuests
+                                  join playerGear in databaseManagerInstance.AllPlayerGear on quest.RunID equals playerGear.RunID
+                                  where quest.QuestID == Numbers.QuestIDBlinkingNargacugaForest &&
+                                  playerGear.BlademasterWeaponID == 14854
+                                  select quest;
+                if (completedQuests != null && completedQuests.Any())
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            case 411:
+                completedQuests = from quest in databaseManagerInstance.AllQuests
+                                  join zenithSkills in databaseManagerInstance.AllZenithSkills on quest.RunID equals zenithSkills.RunID
+                                  where
+                                  (zenithSkills.ZenithSkill1ID == 47 ||
+                                  zenithSkills.ZenithSkill2ID == 47 ||
+                                  zenithSkills.ZenithSkill3ID == 47 ||
+                                  zenithSkills.ZenithSkill4ID == 47 ||
+                                  zenithSkills.ZenithSkill5ID == 47 ||
+                                  zenithSkills.ZenithSkill6ID == 47 ||
+                                  zenithSkills.ZenithSkill7ID == 47)
+                                  &&
+                                  (zenithSkills.ZenithSkill1ID == 10 ||
+                                  zenithSkills.ZenithSkill2ID == 10 ||
+                                  zenithSkills.ZenithSkill3ID == 10 ||
+                                  zenithSkills.ZenithSkill4ID == 10 ||
+                                  zenithSkills.ZenithSkill5ID == 10 ||
+                                  zenithSkills.ZenithSkill6ID == 10 ||
+                                  zenithSkills.ZenithSkill7ID == 10)
+                                  select quest;
+                if (completedQuests != null && completedQuests.Any())
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            case 412:
+                return dataLoader.Model.AshenLaoShanLungHunted() >= 100;
+            case 413:
+                // TODO test
+                List<int> targetQuestIDs = new List<int>
+                {
+                    Numbers.AshenLaoQuestID,
+                    Numbers.HR3YamaTsukami,
+                    Numbers.HR3ShenGaoren,
+                };
+
+                return targetQuestIDs.All(targetID =>
+                    databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == targetID));
+            case 414:
+                completedQuests = from quest in databaseManagerInstance.AllQuests
+                                  join styleRankSkills in databaseManagerInstance.AllStyleRankSkills on quest.RunID equals styleRankSkills.RunID
+                                  where
+                                  (styleRankSkills.StyleRankSkill1ID == 15 ||
+                                  styleRankSkills.StyleRankSkill2ID == 15)
+                                  && quest.QuestID == Numbers.QuestIDArrogantDuremudira
+                                  select quest;
+                if (completedQuests != null && completedQuests.Any())
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            case 415:
+            case 416:
+            case 417:
+            case 418:
+            case 419:
+            case 420:
+            case 421:
+            case 422:
+            case 423:
+            case 424:
+            case 425:
+            case 426:
+            case 427:
+            case 428:
+            case 429:
+            case 430:
+            case 431:
+            case 432:
+            case 433:
+            case 434:
+            case 435:
+            case 436:
+            case 437:
+            case 438:
+            case 439:
+                return false;
+            case 440:
+                if (databaseManagerInstance.AllQuestsToggleMode.Count(questsToggleMode => questsToggleMode.QuestToggleMode == 3) >= 100)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
         }
     }
 

@@ -9,11 +9,11 @@ public static class Numbers
     /// <summary>
     /// The frames per second in the game.
     /// </summary>
-    public const int FramesPerSecond = 30;
+    public const decimal FramesPerSecond = 30;
 
-    public const int Frames1Minute = FramesPerSecond * 60;
+    public const decimal Frames1Minute = FramesPerSecond * 60;
 
-    public const int Frames1Hour = Frames1Minute * 60;
+    public const decimal Frames1Hour = Frames1Minute * 60;
 
     public const int RequiredCompletionsMonsterSlayer = 10;
 
@@ -218,6 +218,8 @@ public static class Numbers
 
     public const int QuestIDMultiplayerRoad = 23527;
 
+    public const int QuestIDFirstDistrictDuremudira = 21731;
+
     public const int QuestIDSecondDistrictDuremudira = 21746;
 
     public const int QuestIDTwinheadRajangsHistoric = 55937;
@@ -233,4 +235,30 @@ public static class Numbers
     public const int QuestIDHalloweenSpeedster = 53325;
 
     public const int QuestIDVR = 53232;
+
+    public const int MezFesSRankNyanrendo = 10340;
+
+    public const int MezFesSRankDokkanBattleCats = 110750;
+
+    public const int MezFesSRankPanicHoney = 100;
+
+    public const int MezFesSRankGuukuScoop = 106980;
+
+    /// <summary>
+    /// Not musou.
+    /// </summary>
+    public const int DuremudiraTimeLimitMinutes = 20;
+
+    public const int ArrogantDuremudiraTimeLimitMinutes = 10;
+
+    /// <summary>
+    /// TODO: This should be replaced when finding timedefint for dure quests. Not musou.
+    /// </summary>
+    public const decimal DuremudiraTimeLimitFrames = 36_000M;
+
+    public const int AshenLaoQuestID = 21699;
+
+    public const int HR3ShenGaoren = 21696;
+
+    public const int HR3YamaTsukami = 26298;
 }

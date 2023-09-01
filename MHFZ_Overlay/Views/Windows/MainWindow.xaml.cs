@@ -38,9 +38,11 @@ using Memory;
 using MHFZ_Overlay.Models;
 using MHFZ_Overlay.Models.Collections;
 using MHFZ_Overlay.Models.Constant;
+using MHFZ_Overlay.Models.Structures;
 using MHFZ_Overlay.Services;
 using MHFZ_Overlay.Services.Converter;
 using MHFZ_Overlay.Services.Hotkey;
+using MHFZ_Overlay.ViewModels.Windows;
 using MHFZ_Overlay.Views.CustomControls;
 using Microsoft.Extensions.DependencyModel;
 using NLog;
@@ -64,7 +66,7 @@ using Image = System.Windows.Controls.Image;
 using MessageBoxButton = System.Windows.MessageBoxButton;
 using MessageBoxResult = System.Windows.MessageBoxResult;
 using MouseEventArgs = System.Windows.Input.MouseEventArgs;
-using NotifyIcon = Wpf.Ui.Controls.NotifyIcon;
+using NotifyIcon = Wpf.Ui.Tray.Controls.NotifyIcon;
 using Point = System.Windows.Point;
 using Window = System.Windows.Window;
 
@@ -144,7 +146,7 @@ public partial class MainWindow : Window
 
     private void OptionChangelog_Click(object sender, RoutedEventArgs e) => OpenLink("https://github.com/DorielRivalet/mhfz-overlay/blob/main/CHANGELOG.md");
 
-    private void OptionOverlayFolder_Click(object sender, RoutedEventArgs e) => FileService.OpenApplicationFolder(MainWindowSnackBarPresenter, (Style)this.FindResource("CatppuccinMochaSnackBar"), this.MainWindowSnackbarTimeOut);
+    private void OptionOverlayFolder_Click(object sender, RoutedEventArgs e) => FileService.OpenApplicationFolder(this.MainWindowSnackBarPresenter, (Style)this.FindResource("CatppuccinMochaSnackBar"), this.MainWindowSnackbarTimeOut);
 
     private void OptionSettingsFolder_Click(object sender, RoutedEventArgs e)
     {
@@ -155,7 +157,7 @@ public partial class MainWindow : Window
             if (!Directory.Exists(settingsFileDirectoryName))
             {
                 LoggerInstance.Error(CultureInfo.InvariantCulture, "Could not open settings folder");
-                var snackbar = new Snackbar(MainWindowSnackBarPresenter)
+                var snackbar = new Snackbar(this.MainWindowSnackBarPresenter)
                 {
                     Style = (Style)this.FindResource("CatppuccinMochaSnackBar"),
                     Title = Messages.ErrorTitle,
@@ -176,7 +178,7 @@ public partial class MainWindow : Window
         catch (Exception ex)
         {
             LoggerInstance.Error(ex);
-            var snackbar = new Snackbar(MainWindowSnackBarPresenter)
+            var snackbar = new Snackbar(this.MainWindowSnackBarPresenter)
             {
                 Style = (Style)this.FindResource("CatppuccinMochaSnackBar"),
                 Title = Messages.ErrorTitle,
@@ -252,8 +254,6 @@ public partial class MainWindow : Window
     [DllImport("user32.dll")]
     public static extern int SetWindowLong(IntPtr hwnd, int index, int newStyle);
 
-    private readonly DateTime programEnd;
-
     // Declare a dictionary to map keys to images
     private readonly Dictionary<Keys, Image> keyImages = new ();
 
@@ -270,7 +270,7 @@ public partial class MainWindow : Window
 
     private readonly GitHubClient ghClient = new (new ProductHeaderValue("MHFZ_Overlay"));
 
-    private double? xOffset;
+    private double? xOffset { get; set; }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="MainWindow"/> class.
@@ -351,7 +351,7 @@ public partial class MainWindow : Window
 
         DispatcherTimer timer1Frame = new ()
         {
-            Interval = new TimeSpan(0, 0, 0, 0, 1_000 / Numbers.FramesPerSecond),
+            Interval = new TimeSpan(0, 0, 0, 0, 1_000 / (int)Numbers.FramesPerSecond),
         };
         timer1Frame.Tick += this.Timer1Frame_Tick;
         timer1Frame.Start();
@@ -586,7 +586,12 @@ public partial class MainWindow : Window
                     CultureInfo.InvariantCulture,
                     @"Detected different version ({0}) from latest ({1}). Do you want to update the overlay?
 
-The process may take some time, as the program attempts to download from GitHub Releases. You will get a notification once the process is complete.", App.CurrentProgramVersion, latest.TagName), "【MHF-Z】Overlay Update Available", MessageBoxButton.YesNo, MessageBoxImage.Asterisk, MessageBoxResult.No);
+The process may take some time, as the program attempts to download from GitHub Releases. You will get a notification once the process is complete.",
+                    App.CurrentProgramVersion, latest.TagName),
+                    "【MHF-Z】Overlay Update Available",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Asterisk,
+                    MessageBoxResult.No);
 
                 if (messageBoxResult.ToString() == "Yes")
                 {
@@ -596,7 +601,11 @@ The process may take some time, as the program attempts to download from GitHub 
         }
     }
 
-    // TODO: optimization
+    /// <summary>
+    /// TODO: optimization. The main loop of the program, affected by Refresh Rate.
+    /// </summary>
+    /// <param name="obj"></param>
+    /// <param name="e"></param>
     private async void Timer_Tick(object? obj, EventArgs e)
     {
         try
@@ -703,6 +712,7 @@ The process may take some time, as the program attempts to download from GitHub 
         if (this.DataLoader.Model.PreviousQuestID != this.DataLoader.Model.QuestID() && this.DataLoader.Model.QuestID() != 0)
         {
             this.DataLoader.Model.PreviousQuestID = this.DataLoader.Model.QuestID();
+            LoggerInstance.Info(CultureInfo.InvariantCulture, $"In quest: ID {this.DataLoader.Model.PreviousQuestID} | {AddressModel.GetQuestNameFromID(this.DataLoader.Model.PreviousQuestID)}");
             this.ShowQuestName();
         }
         else if (this.DataLoader.Model.QuestID() == 0 && this.DataLoader.Model.PreviousQuestID != 0)
@@ -784,7 +794,7 @@ The process may take some time, as the program attempts to download from GitHub 
         fadeInStoryboard.Begin();
     }
 
-    private bool IsInHubAreaID(DataLoader dataLoader) => this.DataLoader.Model.AreaID() switch
+    private bool IsInHubAreaID() => this.DataLoader.Model.AreaID() switch
     {
         // Mezeporta
         200 or 210 or 260 or 282 or 202 or 203 or 204 => true,
@@ -793,7 +803,7 @@ The process may take some time, as the program attempts to download from GitHub 
 
     private void CheckIfLocationChanged()
     {
-        if (this.IsInHubAreaID(this.DataLoader) && this.DataLoader.Model.QuestID() == 0)
+        if (this.IsInHubAreaID() && this.DataLoader.Model.QuestID() == 0)
         {
             this.DataLoader.Model.PreviousHubAreaID = this.DataLoader.Model.AreaID();
         }
@@ -1318,13 +1328,13 @@ The process may take some time, as the program attempts to download from GitHub 
         this.DataLoader.Model.ShowPersonalBestAttemptsInfo = v && s.PersonalBestAttemptsShown;
     }
 
-    private double? yOffset;
+    private double? yOffset { get; set; }
 
-    private FrameworkElement? movingObject;
+    private FrameworkElement? movingObject { get; set; }
 
-    private bool clickThrough = true;
+    private bool clickThrough { get; set; } = true;
 
-    private bool calculatedPersonalBest;
+    private bool calculatedPersonalBest { get; set; }
 
     private ConfigWindow? ConfigWindow { get; set; }
 
@@ -1345,8 +1355,8 @@ The process may take some time, as the program attempts to download from GitHub 
     public void DisableDragAndDrop()
     {
         this.IsDragConfigure = false;
-        ExitDragAndDrop.Visibility = Visibility.Hidden;
-        MainGrid.Background = (Brush?)new BrushConverter().ConvertFrom("#00FFFFFF");
+        this.ExitDragAndDrop.Visibility = Visibility.Hidden;
+        this.MainGrid.Background = (Brush?)new BrushConverter().ConvertFrom("#00FFFFFF");
         if (this.ConfigWindow != null)
         {
             this.ConfigWindow.Visibility = Visibility.Visible;
@@ -1723,12 +1733,12 @@ The process may take some time, as the program attempts to download from GitHub 
 
     private void CommandBinding_Executed(object sender, ExecutedRoutedEventArgs e) => this.DisableDragAndDrop();
 
-    private bool calculatedQuestAttempts;
+    private bool calculatedQuestAttempts { get; set; }
 
     // TODO fix alt tab issues?
-    private IKeyboardMouseEvents GlobalHook;
+    private IKeyboardMouseEvents GlobalHook { get; set; }
 
-    public static SoundPlayer? MainWindowSoundPlayer { get; private set; }
+    public static MediaPlayer? MainWindowMediaPlayer { get; private set; }
 
     private double PressedInputOpacity { get; set; } = 0.5;
 
@@ -1768,29 +1778,48 @@ The process may take some time, as the program attempts to download from GitHub 
 
     private async Task UpdateQuestAttempts()
     {
-        var category = OverlayModeWatermarkTextBlock.Text;
+        var category = this.OverlayModeWatermarkTextBlock.Text;
         var weaponType = this.DataLoader.Model.WeaponType();
         long questID = this.DataLoader.Model.QuestID();
 
-        var attempts = await DatabaseManagerInstance.UpsertQuestAttemptsAsync(questID, weaponType, category);
+        var attempts = await Task.Run(() => DatabaseManagerInstance.UpsertQuestAttemptsAsync(questID, weaponType, category));
         var s = (Settings)Application.Current.TryFindResource("Settings");
         var completions = string.Empty;
         if (s.EnableQuestCompletionsCounter)
         {
-            completions = await DatabaseManagerInstance.GetQuestCompletionsAsync(questID, category, weaponType) + "/";
+            completions = await Task.Run(() => DatabaseManagerInstance.GetQuestCompletionsAsync(questID, category, weaponType)) + "/";
         }
 
-        questAttemptsTextBlock.Text = $"{completions}{attempts}";
+        var _ = Dispatcher.BeginInvoke((Action)(() =>
+        {
+            this.questAttemptsTextBlock.Text = $"{completions}{attempts}";
+        }));
+    }
+
+    private async Task UpdatePersonalBestDisplay()
+    {
+        var category = this.OverlayModeWatermarkTextBlock.Text;
+        var weaponType = this.DataLoader.Model.WeaponType();
+        long questID = this.DataLoader.Model.QuestID();
+
+        this.DataLoader.Model.PersonalBestLoaded = await Task.Run(() => DatabaseManagerInstance.GetPersonalBestAsync(questID, weaponType, category, ViewModels.Windows.AddressModel.QuestTimeMode, this.DataLoader));
+        var _ = Dispatcher.BeginInvoke((Action)(() =>
+        {
+            this.personalBestTextBlock.Text = this.DataLoader.Model.PersonalBestLoaded;
+        }));
     }
 
     private async Task UpdatePersonalBestAttempts()
     {
-        var category = OverlayModeWatermarkTextBlock.Text;
+        var category = this.OverlayModeWatermarkTextBlock.Text;
         var weaponType = this.DataLoader.Model.WeaponType();
         long questID = this.DataLoader.Model.QuestID();
 
-        var attempts = await DatabaseManagerInstance.UpsertPersonalBestAttemptsAsync(questID, weaponType, category);
-        personalBestAttemptsTextBlock.Text = attempts.ToString(CultureInfo.InvariantCulture);
+        var attempts = await Task.Run(() => DatabaseManagerInstance.UpsertPersonalBestAttemptsAsync(questID, weaponType, category));
+        var _ = Dispatcher.BeginInvoke((Action)(() =>
+        {
+            this.personalBestAttemptsTextBlock.Text = attempts.ToString(CultureInfo.InvariantCulture);
+        }));
     }
 
     /// <summary>
@@ -1874,7 +1903,7 @@ The process may take some time, as the program attempts to download from GitHub 
     }
 
     // TODO: optimization
-    private async Task CheckQuestStateForDatabaseLogging()
+    private Task CheckQuestStateForDatabaseLogging()
     {
         var s = (Settings)Application.Current.TryFindResource("Settings");
         var playerAtk = 0;
@@ -1899,11 +1928,13 @@ The process may take some time, as the program attempts to download from GitHub 
             this.DataLoader.Model.InsertQuestInfoIntoDictionaries();
 
             // TODO: test on dure/etc
-            if (!this.calculatedPersonalBest && this.DataLoader.Model.TimeDefInt() > this.DataLoader.Model.TimeInt() && playerAtk > 0)
+            if (!this.calculatedPersonalBest
+                && this.DataLoader.Model.TimeDefInt() > this.DataLoader.Model.TimeInt()
+                && playerAtk > 0
+                && this.DataLoader.Model.TimeDefInt() - this.DataLoader.Model.TimeInt() >= 30)
             {
                 this.calculatedPersonalBest = true;
-                personalBestTextBlock.Text = await DatabaseManagerInstance.GetPersonalBestAsync(this.DataLoader.Model.QuestID(), this.DataLoader.Model.WeaponType(), OverlayModeWatermarkTextBlock.Text, ViewModels.Windows.AddressModel.QuestTimeMode, this.DataLoader);
-                this.DataLoader.Model.PersonalBestLoaded = personalBestTextBlock.Text;
+                var updatePersonalBestDisplayTask = this.UpdatePersonalBestDisplay(); // Start the task without awaiting
             }
 
             if (!this.calculatedQuestAttempts
@@ -1912,8 +1943,8 @@ The process may take some time, as the program attempts to download from GitHub 
                 && this.DataLoader.Model.TimeDefInt() - this.DataLoader.Model.TimeInt() >= 30)
             {
                 this.calculatedQuestAttempts = true;
-                await this.UpdateQuestAttempts();
-                await this.UpdatePersonalBestAttempts();
+                var updateQuestAttemptsTask = this.UpdateQuestAttempts(); // Start the task without awaiting
+                var updatePersonalBestAttemptsTask = this.UpdatePersonalBestAttempts(); // Start the task without awaiting
             }
         }
 
@@ -1925,101 +1956,20 @@ The process may take some time, as the program attempts to download from GitHub 
             this.DataLoader.Model.ClearGraphCollections();
             this.DataLoader.Model.ResetQuestInfoVariables();
             this.DataLoader.Model.PreviousRoadFloor = 0;
-            personalBestTextBlock.Text = Messages.TimerNotLoaded;
+            this.personalBestTextBlock.Text = Messages.TimerNotLoaded;
             this.calculatedPersonalBest = false;
             this.calculatedQuestAttempts = false;
-            return;
+            return Task.CompletedTask;
         }
         else if (!this.DataLoader.Model.LoadedItemsAtQuestStart && this.DataLoader.Model.QuestState() == 0 && this.DataLoader.Model.QuestID() != 0)
         {
             this.DataLoader.Model.LoadedItemsAtQuestStart = true;
-            this.DataLoader.Model.PouchItem1IDAtQuestStart = this.DataLoader.Model.PouchItem1ID();
-            this.DataLoader.Model.PouchItem2IDAtQuestStart = this.DataLoader.Model.PouchItem2ID();
-            this.DataLoader.Model.PouchItem3IDAtQuestStart = this.DataLoader.Model.PouchItem3ID();
-            this.DataLoader.Model.PouchItem4IDAtQuestStart = this.DataLoader.Model.PouchItem4ID();
-            this.DataLoader.Model.PouchItem5IDAtQuestStart = this.DataLoader.Model.PouchItem5ID();
-            this.DataLoader.Model.PouchItem6IDAtQuestStart = this.DataLoader.Model.PouchItem6ID();
-            this.DataLoader.Model.PouchItem7IDAtQuestStart = this.DataLoader.Model.PouchItem7ID();
-            this.DataLoader.Model.PouchItem8IDAtQuestStart = this.DataLoader.Model.PouchItem8ID();
-            this.DataLoader.Model.PouchItem9IDAtQuestStart = this.DataLoader.Model.PouchItem9ID();
-            this.DataLoader.Model.PouchItem10IDAtQuestStart = this.DataLoader.Model.PouchItem10ID();
-            this.DataLoader.Model.PouchItem11IDAtQuestStart = this.DataLoader.Model.PouchItem11ID();
-            this.DataLoader.Model.PouchItem12IDAtQuestStart = this.DataLoader.Model.PouchItem12ID();
-            this.DataLoader.Model.PouchItem13IDAtQuestStart = this.DataLoader.Model.PouchItem13ID();
-            this.DataLoader.Model.PouchItem14IDAtQuestStart = this.DataLoader.Model.PouchItem14ID();
-            this.DataLoader.Model.PouchItem15IDAtQuestStart = this.DataLoader.Model.PouchItem15ID();
-            this.DataLoader.Model.PouchItem16IDAtQuestStart = this.DataLoader.Model.PouchItem16ID();
-            this.DataLoader.Model.PouchItem17IDAtQuestStart = this.DataLoader.Model.PouchItem17ID();
-            this.DataLoader.Model.PouchItem18IDAtQuestStart = this.DataLoader.Model.PouchItem18ID();
-            this.DataLoader.Model.PouchItem19IDAtQuestStart = this.DataLoader.Model.PouchItem19ID();
-            this.DataLoader.Model.PouchItem20IDAtQuestStart = this.DataLoader.Model.PouchItem20ID();
-            this.DataLoader.Model.PouchItem1QuantityAtQuestStart = this.DataLoader.Model.PouchItem1Qty();
-            this.DataLoader.Model.PouchItem2QuantityAtQuestStart = this.DataLoader.Model.PouchItem2Qty();
-            this.DataLoader.Model.PouchItem3QuantityAtQuestStart = this.DataLoader.Model.PouchItem3Qty();
-            this.DataLoader.Model.PouchItem4QuantityAtQuestStart = this.DataLoader.Model.PouchItem4Qty();
-            this.DataLoader.Model.PouchItem5QuantityAtQuestStart = this.DataLoader.Model.PouchItem5Qty();
-            this.DataLoader.Model.PouchItem6QuantityAtQuestStart = this.DataLoader.Model.PouchItem6Qty();
-            this.DataLoader.Model.PouchItem7QuantityAtQuestStart = this.DataLoader.Model.PouchItem7Qty();
-            this.DataLoader.Model.PouchItem8QuantityAtQuestStart = this.DataLoader.Model.PouchItem8Qty();
-            this.DataLoader.Model.PouchItem9QuantityAtQuestStart = this.DataLoader.Model.PouchItem9Qty();
-            this.DataLoader.Model.PouchItem10QuantityAtQuestStart = this.DataLoader.Model.PouchItem10Qty();
-            this.DataLoader.Model.PouchItem11QuantityAtQuestStart = this.DataLoader.Model.PouchItem11Qty();
-            this.DataLoader.Model.PouchItem12QuantityAtQuestStart = this.DataLoader.Model.PouchItem12Qty();
-            this.DataLoader.Model.PouchItem13QuantityAtQuestStart = this.DataLoader.Model.PouchItem13Qty();
-            this.DataLoader.Model.PouchItem14QuantityAtQuestStart = this.DataLoader.Model.PouchItem14Qty();
-            this.DataLoader.Model.PouchItem15QuantityAtQuestStart = this.DataLoader.Model.PouchItem15Qty();
-            this.DataLoader.Model.PouchItem16QuantityAtQuestStart = this.DataLoader.Model.PouchItem16Qty();
-            this.DataLoader.Model.PouchItem17QuantityAtQuestStart = this.DataLoader.Model.PouchItem17Qty();
-            this.DataLoader.Model.PouchItem18QuantityAtQuestStart = this.DataLoader.Model.PouchItem18Qty();
-            this.DataLoader.Model.PouchItem19QuantityAtQuestStart = this.DataLoader.Model.PouchItem19Qty();
-            this.DataLoader.Model.PouchItem20QuantityAtQuestStart = this.DataLoader.Model.PouchItem20Qty();
-
-            this.DataLoader.Model.AmmoPouchItem1IDAtQuestStart = this.DataLoader.Model.AmmoPouchItem1ID();
-            this.DataLoader.Model.AmmoPouchItem2IDAtQuestStart = this.DataLoader.Model.AmmoPouchItem1ID();
-            this.DataLoader.Model.AmmoPouchItem3IDAtQuestStart = this.DataLoader.Model.AmmoPouchItem1ID();
-            this.DataLoader.Model.AmmoPouchItem4IDAtQuestStart = this.DataLoader.Model.AmmoPouchItem1ID();
-            this.DataLoader.Model.AmmoPouchItem5IDAtQuestStart = this.DataLoader.Model.AmmoPouchItem1ID();
-            this.DataLoader.Model.AmmoPouchItem6IDAtQuestStart = this.DataLoader.Model.AmmoPouchItem1ID();
-            this.DataLoader.Model.AmmoPouchItem7IDAtQuestStart = this.DataLoader.Model.AmmoPouchItem1ID();
-            this.DataLoader.Model.AmmoPouchItem8IDAtQuestStart = this.DataLoader.Model.AmmoPouchItem1ID();
-            this.DataLoader.Model.AmmoPouchItem9IDAtQuestStart = this.DataLoader.Model.AmmoPouchItem1ID();
-            this.DataLoader.Model.AmmoPouchItem10IDAtQuestStart = this.DataLoader.Model.AmmoPouchItem1ID();
-            this.DataLoader.Model.AmmoPouchItem1QuantityAtQuestStart = this.DataLoader.Model.AmmoPouchItem1Qty();
-            this.DataLoader.Model.AmmoPouchItem2QuantityAtQuestStart = this.DataLoader.Model.AmmoPouchItem1Qty();
-            this.DataLoader.Model.AmmoPouchItem3QuantityAtQuestStart = this.DataLoader.Model.AmmoPouchItem1Qty();
-            this.DataLoader.Model.AmmoPouchItem4QuantityAtQuestStart = this.DataLoader.Model.AmmoPouchItem1Qty();
-            this.DataLoader.Model.AmmoPouchItem5QuantityAtQuestStart = this.DataLoader.Model.AmmoPouchItem1Qty();
-            this.DataLoader.Model.AmmoPouchItem6QuantityAtQuestStart = this.DataLoader.Model.AmmoPouchItem1Qty();
-            this.DataLoader.Model.AmmoPouchItem7QuantityAtQuestStart = this.DataLoader.Model.AmmoPouchItem1Qty();
-            this.DataLoader.Model.AmmoPouchItem8QuantityAtQuestStart = this.DataLoader.Model.AmmoPouchItem1Qty();
-            this.DataLoader.Model.AmmoPouchItem9QuantityAtQuestStart = this.DataLoader.Model.AmmoPouchItem1Qty();
-            this.DataLoader.Model.AmmoPouchItem10QuantityAtQuestStart = this.DataLoader.Model.AmmoPouchItem1Qty();
-
-            this.DataLoader.Model.PartnyaBagItem1IDAtQuestStart = this.DataLoader.Model.PartnyaBagItem1ID();
-            this.DataLoader.Model.PartnyaBagItem2IDAtQuestStart = this.DataLoader.Model.PartnyaBagItem1ID();
-            this.DataLoader.Model.PartnyaBagItem3IDAtQuestStart = this.DataLoader.Model.PartnyaBagItem1ID();
-            this.DataLoader.Model.PartnyaBagItem4IDAtQuestStart = this.DataLoader.Model.PartnyaBagItem1ID();
-            this.DataLoader.Model.PartnyaBagItem5IDAtQuestStart = this.DataLoader.Model.PartnyaBagItem1ID();
-            this.DataLoader.Model.PartnyaBagItem6IDAtQuestStart = this.DataLoader.Model.PartnyaBagItem1ID();
-            this.DataLoader.Model.PartnyaBagItem7IDAtQuestStart = this.DataLoader.Model.PartnyaBagItem1ID();
-            this.DataLoader.Model.PartnyaBagItem8IDAtQuestStart = this.DataLoader.Model.PartnyaBagItem1ID();
-            this.DataLoader.Model.PartnyaBagItem9IDAtQuestStart = this.DataLoader.Model.PartnyaBagItem1ID();
-            this.DataLoader.Model.PartnyaBagItem10IDAtQuestStart = this.DataLoader.Model.PartnyaBagItem1ID();
-            this.DataLoader.Model.PartnyaBagItem1QuantityAtQuestStart = this.DataLoader.Model.PartnyaBagItem1Qty();
-            this.DataLoader.Model.PartnyaBagItem2QuantityAtQuestStart = this.DataLoader.Model.PartnyaBagItem1Qty();
-            this.DataLoader.Model.PartnyaBagItem3QuantityAtQuestStart = this.DataLoader.Model.PartnyaBagItem1Qty();
-            this.DataLoader.Model.PartnyaBagItem4QuantityAtQuestStart = this.DataLoader.Model.PartnyaBagItem1Qty();
-            this.DataLoader.Model.PartnyaBagItem5QuantityAtQuestStart = this.DataLoader.Model.PartnyaBagItem1Qty();
-            this.DataLoader.Model.PartnyaBagItem6QuantityAtQuestStart = this.DataLoader.Model.PartnyaBagItem1Qty();
-            this.DataLoader.Model.PartnyaBagItem7QuantityAtQuestStart = this.DataLoader.Model.PartnyaBagItem1Qty();
-            this.DataLoader.Model.PartnyaBagItem8QuantityAtQuestStart = this.DataLoader.Model.PartnyaBagItem1Qty();
-            this.DataLoader.Model.PartnyaBagItem9QuantityAtQuestStart = this.DataLoader.Model.PartnyaBagItem1Qty();
-            this.DataLoader.Model.PartnyaBagItem10QuantityAtQuestStart = this.DataLoader.Model.PartnyaBagItem1Qty();
+            LoadInventoriesAtQuestStart();
         }
 
         if (this.DataLoader.Model.QuestState() == 0)
         {
-            return;
+            return Task.CompletedTask;
         }
 
         // check if quest clear
@@ -2040,7 +1990,7 @@ The process may take some time, as the program attempts to download from GitHub 
             this.DataLoader.Model.LoadedItemsAtQuestStart = false;
             if (s.EnableQuestLogging)
             {
-                DatabaseManagerInstance.InsertQuestData(this.DataLoader, (int)DatabaseManagerInstance.GetQuestAttempts((long)this.DataLoader.Model.QuestID(), this.DataLoader.Model.WeaponType(), OverlayModeWatermarkTextBlock.Text));
+                DatabaseManagerInstance.InsertQuestData(this.DataLoader, (int)DatabaseManagerInstance.GetQuestAttempts(this.DataLoader.Model.QuestID(), this.DataLoader.Model.WeaponType(), this.OverlayModeWatermarkTextBlock.Text));
             }
         }
 
@@ -2051,8 +2001,96 @@ The process may take some time, as the program attempts to download from GitHub 
 
             // TODO: add logging check requirement in case the user needs the hash sets.
             // We await since we are dealing with database?
-            AchievementServiceInstance.CheckForAchievements(MainWindowSnackBarPresenter, this.DataLoader, DatabaseManagerInstance, s, (Style)this.FindResource("CatppuccinMochaSnackBar"));
+            AchievementServiceInstance.CheckForAchievements(this.MainWindowSnackBarPresenter, this.DataLoader, DatabaseManagerInstance, s, (Style)this.FindResource("CatppuccinMochaSnackBar"));
         }
+
+        return Task.CompletedTask;
+    }
+
+    private void LoadInventoriesAtQuestStart()
+    {
+        this.DataLoader.Model.PouchItem1IDAtQuestStart = this.DataLoader.Model.PouchItem1ID();
+        this.DataLoader.Model.PouchItem2IDAtQuestStart = this.DataLoader.Model.PouchItem2ID();
+        this.DataLoader.Model.PouchItem3IDAtQuestStart = this.DataLoader.Model.PouchItem3ID();
+        this.DataLoader.Model.PouchItem4IDAtQuestStart = this.DataLoader.Model.PouchItem4ID();
+        this.DataLoader.Model.PouchItem5IDAtQuestStart = this.DataLoader.Model.PouchItem5ID();
+        this.DataLoader.Model.PouchItem6IDAtQuestStart = this.DataLoader.Model.PouchItem6ID();
+        this.DataLoader.Model.PouchItem7IDAtQuestStart = this.DataLoader.Model.PouchItem7ID();
+        this.DataLoader.Model.PouchItem8IDAtQuestStart = this.DataLoader.Model.PouchItem8ID();
+        this.DataLoader.Model.PouchItem9IDAtQuestStart = this.DataLoader.Model.PouchItem9ID();
+        this.DataLoader.Model.PouchItem10IDAtQuestStart = this.DataLoader.Model.PouchItem10ID();
+        this.DataLoader.Model.PouchItem11IDAtQuestStart = this.DataLoader.Model.PouchItem11ID();
+        this.DataLoader.Model.PouchItem12IDAtQuestStart = this.DataLoader.Model.PouchItem12ID();
+        this.DataLoader.Model.PouchItem13IDAtQuestStart = this.DataLoader.Model.PouchItem13ID();
+        this.DataLoader.Model.PouchItem14IDAtQuestStart = this.DataLoader.Model.PouchItem14ID();
+        this.DataLoader.Model.PouchItem15IDAtQuestStart = this.DataLoader.Model.PouchItem15ID();
+        this.DataLoader.Model.PouchItem16IDAtQuestStart = this.DataLoader.Model.PouchItem16ID();
+        this.DataLoader.Model.PouchItem17IDAtQuestStart = this.DataLoader.Model.PouchItem17ID();
+        this.DataLoader.Model.PouchItem18IDAtQuestStart = this.DataLoader.Model.PouchItem18ID();
+        this.DataLoader.Model.PouchItem19IDAtQuestStart = this.DataLoader.Model.PouchItem19ID();
+        this.DataLoader.Model.PouchItem20IDAtQuestStart = this.DataLoader.Model.PouchItem20ID();
+        this.DataLoader.Model.PouchItem1QuantityAtQuestStart = this.DataLoader.Model.PouchItem1Qty();
+        this.DataLoader.Model.PouchItem2QuantityAtQuestStart = this.DataLoader.Model.PouchItem2Qty();
+        this.DataLoader.Model.PouchItem3QuantityAtQuestStart = this.DataLoader.Model.PouchItem3Qty();
+        this.DataLoader.Model.PouchItem4QuantityAtQuestStart = this.DataLoader.Model.PouchItem4Qty();
+        this.DataLoader.Model.PouchItem5QuantityAtQuestStart = this.DataLoader.Model.PouchItem5Qty();
+        this.DataLoader.Model.PouchItem6QuantityAtQuestStart = this.DataLoader.Model.PouchItem6Qty();
+        this.DataLoader.Model.PouchItem7QuantityAtQuestStart = this.DataLoader.Model.PouchItem7Qty();
+        this.DataLoader.Model.PouchItem8QuantityAtQuestStart = this.DataLoader.Model.PouchItem8Qty();
+        this.DataLoader.Model.PouchItem9QuantityAtQuestStart = this.DataLoader.Model.PouchItem9Qty();
+        this.DataLoader.Model.PouchItem10QuantityAtQuestStart = this.DataLoader.Model.PouchItem10Qty();
+        this.DataLoader.Model.PouchItem11QuantityAtQuestStart = this.DataLoader.Model.PouchItem11Qty();
+        this.DataLoader.Model.PouchItem12QuantityAtQuestStart = this.DataLoader.Model.PouchItem12Qty();
+        this.DataLoader.Model.PouchItem13QuantityAtQuestStart = this.DataLoader.Model.PouchItem13Qty();
+        this.DataLoader.Model.PouchItem14QuantityAtQuestStart = this.DataLoader.Model.PouchItem14Qty();
+        this.DataLoader.Model.PouchItem15QuantityAtQuestStart = this.DataLoader.Model.PouchItem15Qty();
+        this.DataLoader.Model.PouchItem16QuantityAtQuestStart = this.DataLoader.Model.PouchItem16Qty();
+        this.DataLoader.Model.PouchItem17QuantityAtQuestStart = this.DataLoader.Model.PouchItem17Qty();
+        this.DataLoader.Model.PouchItem18QuantityAtQuestStart = this.DataLoader.Model.PouchItem18Qty();
+        this.DataLoader.Model.PouchItem19QuantityAtQuestStart = this.DataLoader.Model.PouchItem19Qty();
+        this.DataLoader.Model.PouchItem20QuantityAtQuestStart = this.DataLoader.Model.PouchItem20Qty();
+
+        this.DataLoader.Model.AmmoPouchItem1IDAtQuestStart = this.DataLoader.Model.AmmoPouchItem1ID();
+        this.DataLoader.Model.AmmoPouchItem2IDAtQuestStart = this.DataLoader.Model.AmmoPouchItem1ID();
+        this.DataLoader.Model.AmmoPouchItem3IDAtQuestStart = this.DataLoader.Model.AmmoPouchItem1ID();
+        this.DataLoader.Model.AmmoPouchItem4IDAtQuestStart = this.DataLoader.Model.AmmoPouchItem1ID();
+        this.DataLoader.Model.AmmoPouchItem5IDAtQuestStart = this.DataLoader.Model.AmmoPouchItem1ID();
+        this.DataLoader.Model.AmmoPouchItem6IDAtQuestStart = this.DataLoader.Model.AmmoPouchItem1ID();
+        this.DataLoader.Model.AmmoPouchItem7IDAtQuestStart = this.DataLoader.Model.AmmoPouchItem1ID();
+        this.DataLoader.Model.AmmoPouchItem8IDAtQuestStart = this.DataLoader.Model.AmmoPouchItem1ID();
+        this.DataLoader.Model.AmmoPouchItem9IDAtQuestStart = this.DataLoader.Model.AmmoPouchItem1ID();
+        this.DataLoader.Model.AmmoPouchItem10IDAtQuestStart = this.DataLoader.Model.AmmoPouchItem1ID();
+        this.DataLoader.Model.AmmoPouchItem1QuantityAtQuestStart = this.DataLoader.Model.AmmoPouchItem1Qty();
+        this.DataLoader.Model.AmmoPouchItem2QuantityAtQuestStart = this.DataLoader.Model.AmmoPouchItem1Qty();
+        this.DataLoader.Model.AmmoPouchItem3QuantityAtQuestStart = this.DataLoader.Model.AmmoPouchItem1Qty();
+        this.DataLoader.Model.AmmoPouchItem4QuantityAtQuestStart = this.DataLoader.Model.AmmoPouchItem1Qty();
+        this.DataLoader.Model.AmmoPouchItem5QuantityAtQuestStart = this.DataLoader.Model.AmmoPouchItem1Qty();
+        this.DataLoader.Model.AmmoPouchItem6QuantityAtQuestStart = this.DataLoader.Model.AmmoPouchItem1Qty();
+        this.DataLoader.Model.AmmoPouchItem7QuantityAtQuestStart = this.DataLoader.Model.AmmoPouchItem1Qty();
+        this.DataLoader.Model.AmmoPouchItem8QuantityAtQuestStart = this.DataLoader.Model.AmmoPouchItem1Qty();
+        this.DataLoader.Model.AmmoPouchItem9QuantityAtQuestStart = this.DataLoader.Model.AmmoPouchItem1Qty();
+        this.DataLoader.Model.AmmoPouchItem10QuantityAtQuestStart = this.DataLoader.Model.AmmoPouchItem1Qty();
+
+        this.DataLoader.Model.PartnyaBagItem1IDAtQuestStart = this.DataLoader.Model.PartnyaBagItem1ID();
+        this.DataLoader.Model.PartnyaBagItem2IDAtQuestStart = this.DataLoader.Model.PartnyaBagItem1ID();
+        this.DataLoader.Model.PartnyaBagItem3IDAtQuestStart = this.DataLoader.Model.PartnyaBagItem1ID();
+        this.DataLoader.Model.PartnyaBagItem4IDAtQuestStart = this.DataLoader.Model.PartnyaBagItem1ID();
+        this.DataLoader.Model.PartnyaBagItem5IDAtQuestStart = this.DataLoader.Model.PartnyaBagItem1ID();
+        this.DataLoader.Model.PartnyaBagItem6IDAtQuestStart = this.DataLoader.Model.PartnyaBagItem1ID();
+        this.DataLoader.Model.PartnyaBagItem7IDAtQuestStart = this.DataLoader.Model.PartnyaBagItem1ID();
+        this.DataLoader.Model.PartnyaBagItem8IDAtQuestStart = this.DataLoader.Model.PartnyaBagItem1ID();
+        this.DataLoader.Model.PartnyaBagItem9IDAtQuestStart = this.DataLoader.Model.PartnyaBagItem1ID();
+        this.DataLoader.Model.PartnyaBagItem10IDAtQuestStart = this.DataLoader.Model.PartnyaBagItem1ID();
+        this.DataLoader.Model.PartnyaBagItem1QuantityAtQuestStart = this.DataLoader.Model.PartnyaBagItem1Qty();
+        this.DataLoader.Model.PartnyaBagItem2QuantityAtQuestStart = this.DataLoader.Model.PartnyaBagItem1Qty();
+        this.DataLoader.Model.PartnyaBagItem3QuantityAtQuestStart = this.DataLoader.Model.PartnyaBagItem1Qty();
+        this.DataLoader.Model.PartnyaBagItem4QuantityAtQuestStart = this.DataLoader.Model.PartnyaBagItem1Qty();
+        this.DataLoader.Model.PartnyaBagItem5QuantityAtQuestStart = this.DataLoader.Model.PartnyaBagItem1Qty();
+        this.DataLoader.Model.PartnyaBagItem6QuantityAtQuestStart = this.DataLoader.Model.PartnyaBagItem1Qty();
+        this.DataLoader.Model.PartnyaBagItem7QuantityAtQuestStart = this.DataLoader.Model.PartnyaBagItem1Qty();
+        this.DataLoader.Model.PartnyaBagItem8QuantityAtQuestStart = this.DataLoader.Model.PartnyaBagItem1Qty();
+        this.DataLoader.Model.PartnyaBagItem9QuantityAtQuestStart = this.DataLoader.Model.PartnyaBagItem1Qty();
+        this.DataLoader.Model.PartnyaBagItem10QuantityAtQuestStart = this.DataLoader.Model.PartnyaBagItem1Qty();
     }
 
     private void GlobalHookKeyPress(object sender, KeyPressEventArgs e)
@@ -2093,6 +2131,7 @@ The process may take some time, as the program attempts to download from GitHub 
         }
     }
 
+    // TODO: its finicky
     private void GlobalHookKeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
     {
         if (this.keyImages.TryGetValue(e.KeyCode, out var image))
@@ -2129,52 +2168,52 @@ The process may take some time, as the program attempts to download from GitHub 
     private void MapPlayerInputImages()
     {
         // Add the key-image pairs to the dictionary
-        this.keyImages.Add(Keys.D1, Key1);
-        this.keyImages.Add(Keys.D2, Key2);
-        this.keyImages.Add(Keys.D3, Key3);
-        this.keyImages.Add(Keys.D4, Key4);
-        this.keyImages.Add(Keys.D5, Key5);
-        this.keyImages.Add(Keys.Q, KeyQ);
-        this.keyImages.Add(Keys.W, KeyW);
-        this.keyImages.Add(Keys.E, KeyE);
-        this.keyImages.Add(Keys.R, KeyR);
-        this.keyImages.Add(Keys.T, KeyT);
-        this.keyImages.Add(Keys.A, KeyA);
-        this.keyImages.Add(Keys.S, KeyS);
-        this.keyImages.Add(Keys.D, KeyD);
-        this.keyImages.Add(Keys.F, KeyF);
-        this.keyImages.Add(Keys.G, KeyG);
-        this.keyImages.Add(Keys.LShiftKey, KeyShift);
-        this.keyImages.Add(Keys.Z, KeyZ);
-        this.keyImages.Add(Keys.X, KeyX);
-        this.keyImages.Add(Keys.C, KeyC);
-        this.keyImages.Add(Keys.V, KeyV);
-        this.keyImages.Add(Keys.LControlKey, KeyCtrl);
-        this.keyImages.Add(Keys.Space, KeySpace);
+        this.keyImages.Add(Keys.D1, this.Key1);
+        this.keyImages.Add(Keys.D2, this.Key2);
+        this.keyImages.Add(Keys.D3, this.Key3);
+        this.keyImages.Add(Keys.D4, this.Key4);
+        this.keyImages.Add(Keys.D5, this.Key5);
+        this.keyImages.Add(Keys.Q, this.KeyQ);
+        this.keyImages.Add(Keys.W, this.KeyW);
+        this.keyImages.Add(Keys.E, this.KeyE);
+        this.keyImages.Add(Keys.R, this.KeyR);
+        this.keyImages.Add(Keys.T, this.KeyT);
+        this.keyImages.Add(Keys.A, this.KeyA);
+        this.keyImages.Add(Keys.S, this.KeyS);
+        this.keyImages.Add(Keys.D, this.KeyD);
+        this.keyImages.Add(Keys.F, this.KeyF);
+        this.keyImages.Add(Keys.G, this.KeyG);
+        this.keyImages.Add(Keys.LShiftKey, this.KeyShift);
+        this.keyImages.Add(Keys.Z, this.KeyZ);
+        this.keyImages.Add(Keys.X, this.KeyX);
+        this.keyImages.Add(Keys.C, this.KeyC);
+        this.keyImages.Add(Keys.V, this.KeyV);
+        this.keyImages.Add(Keys.LControlKey, this.KeyCtrl);
+        this.keyImages.Add(Keys.Space, this.KeySpace);
 
-        this.mouseImages.Add(MouseButtons.Left, MouseLeftClick);
-        this.mouseImages.Add(MouseButtons.Middle, MouseMiddleClick);
-        this.mouseImages.Add(MouseButtons.Right, MouseRightClick);
+        this.mouseImages.Add(MouseButtons.Left, this.MouseLeftClick);
+        this.mouseImages.Add(MouseButtons.Middle, this.MouseMiddleClick);
+        this.mouseImages.Add(MouseButtons.Right, this.MouseRightClick);
     }
 
     private void AddGamepadImages()
     {
         LoggerInstance.Debug("Adding images. images count: {0}, triggers count: {1}, joystick count: {2}", this.gamepadImages.Count, this.gamepadTriggersImages.Count, this.gamepadJoystickImages.Count);
-        this.gamepadImages.Add(this.gamepad.Buttons.A, ButtonA);
-        this.gamepadImages.Add(this.gamepad.Buttons.B, ButtonB);
-        this.gamepadImages.Add(this.gamepad.Buttons.X, ButtonX);
-        this.gamepadImages.Add(this.gamepad.Buttons.Y, ButtonY);
-        this.gamepadImages.Add(this.gamepad.Buttons.Start, ButtonStart);
-        this.gamepadImages.Add(this.gamepad.Buttons.Back, ButtonSelect);
-        this.gamepadImages.Add(this.gamepad.Buttons.LS, LJoystick);
-        this.gamepadImages.Add(this.gamepad.Buttons.RS, RJoystick);
-        this.gamepadImages.Add(this.gamepad.Buttons.LB, ButtonL1);
-        this.gamepadImages.Add(this.gamepad.Buttons.RB, ButtonR1);
-        this.gamepadTriggersImages.Add(this.gamepad.LeftTrigger, ButtonL2);
-        this.gamepadTriggersImages.Add(this.gamepad.RightTrigger, ButtonR2);
-        this.gamepadJoystickImages.Add(this.gamepad.LeftJoystick, LJoystickMovement);
-        this.gamepadJoystickImages.Add(this.gamepad.RightJoystick, RJoystickMovement);
-        LoggerInstance.Debug("Added images. images count: {0}, triggers count: {1}, joystick count: {2}", this.gamepadImages.Count, this.gamepadTriggersImages.Count, this.gamepadJoystickImages.Count);
+        this.gamepadImages.Add(this.gamepad.Buttons.A, this.ButtonA);
+        this.gamepadImages.Add(this.gamepad.Buttons.B, this.ButtonB);
+        this.gamepadImages.Add(this.gamepad.Buttons.X, this.ButtonX);
+        this.gamepadImages.Add(this.gamepad.Buttons.Y, this.ButtonY);
+        this.gamepadImages.Add(this.gamepad.Buttons.Start, this.ButtonStart);
+        this.gamepadImages.Add(this.gamepad.Buttons.Back, this.ButtonSelect);
+        this.gamepadImages.Add(this.gamepad.Buttons.LS, this.LJoystick);
+        this.gamepadImages.Add(this.gamepad.Buttons.RS, this.RJoystick);
+        this.gamepadImages.Add(this.gamepad.Buttons.LB, this.ButtonL1);
+        this.gamepadImages.Add(this.gamepad.Buttons.RB, this.ButtonR1);
+        this.gamepadTriggersImages.Add(this.gamepad.LeftTrigger, this.ButtonL2);
+        this.gamepadTriggersImages.Add(this.gamepad.RightTrigger, this.ButtonR2);
+        this.gamepadJoystickImages.Add(this.gamepad.LeftJoystick, this.LJoystickMovement);
+        this.gamepadJoystickImages.Add(this.gamepad.RightJoystick, this.RJoystickMovement);
+        LoggerInstance.Debug(CultureInfo.InvariantCulture, "Added images. images count: {0}, triggers count: {1}, joystick count: {2}", this.gamepadImages.Count, this.gamepadTriggersImages.Count, this.gamepadJoystickImages.Count);
     }
 
     private double UnpressedInputOpacity { get; set; } = 0.2;
@@ -2209,11 +2248,11 @@ The process may take some time, as the program attempts to download from GitHub 
         }
         else if (e.Button == this.gamepad.Buttons.LS)
         {
-            this.Dispatcher.BeginInvoke(new Action(() => UpdateLeftStickImage(this.UnpressedInputOpacity)));
+            this.Dispatcher.BeginInvoke(new Action(() => this.UpdateLeftStickImage(this.UnpressedInputOpacity)));
         }
         else if (e.Button == this.gamepad.Buttons.RS)
         {
-            this.Dispatcher.BeginInvoke(new Action(() => UpdateRightStickImage(this.UnpressedInputOpacity)));
+            this.Dispatcher.BeginInvoke(new Action(() => this.UpdateRightStickImage(this.UnpressedInputOpacity)));
         }
         else if (this.gamepadImages.TryGetValue(e.Button, out var image))
         {
@@ -2346,14 +2385,14 @@ The process may take some time, as the program attempts to download from GitHub 
         var imagePath = JoystickImages.GetImage(direction);
 
         // Get the current image source of the left joystick
-        var currentImageSource = LJoystickMovement.Source as BitmapImage;
+        var currentImageSource = this.LJoystickMovement.Source as BitmapImage;
 
         // Compare the current image path with the new image path
         if (currentImageSource?.UriSource?.OriginalString != imagePath)
         {
             // Set the new image source for the left joystick
-            LJoystickMovement.Source = new BitmapImage(new Uri(imagePath, UriKind.Relative));
-            LJoystickMovement.Opacity = opacity;
+            this.LJoystickMovement.Source = new BitmapImage(new Uri(imagePath, UriKind.Relative));
+            this.LJoystickMovement.Opacity = opacity;
         }
 
         return direction;
@@ -2440,14 +2479,14 @@ The process may take some time, as the program attempts to download from GitHub 
         var imagePath = JoystickImages.GetImage(direction);
 
         // Get the current image source of the left joystick
-        var currentImageSource = RJoystickMovement.Source as BitmapImage;
+        var currentImageSource = this.RJoystickMovement.Source as BitmapImage;
 
         // Compare the current image path with the new image path
         if (currentImageSource?.UriSource?.OriginalString != imagePath)
         {
             // Set the new image source for the left joystick
-            RJoystickMovement.Source = new BitmapImage(new Uri(imagePath, UriKind.Relative));
-            RJoystickMovement.Opacity = opacity;
+            this.RJoystickMovement.Source = new BitmapImage(new Uri(imagePath, UriKind.Relative));
+            this.RJoystickMovement.Opacity = opacity;
         }
 
         return direction;
@@ -2457,7 +2496,7 @@ The process may take some time, as the program attempts to download from GitHub 
     {
         var s = (Settings)Application.Current.TryFindResource("Settings");
 
-        if (s.EnableInputLogging && !this.DataLoader.Model.GamepadInputDictionary.ContainsKey(this.DataLoader.Model.TimeInt()) && this.DataLoader.Model.QuestID() != 0 && this.DataLoader.Model.TimeInt() != this.DataLoader.Model.TimeDefInt() && this.DataLoader.Model.QuestState() == 0 && this.DataLoader.Model.PreviousTimeInt != this.DataLoader.Model.TimeInt() && DPad.Opacity == this.UnpressedInputOpacity)
+        if (s.EnableInputLogging && !this.DataLoader.Model.GamepadInputDictionary.ContainsKey(this.DataLoader.Model.TimeInt()) && this.DataLoader.Model.QuestID() != 0 && this.DataLoader.Model.TimeInt() != this.DataLoader.Model.TimeDefInt() && this.DataLoader.Model.QuestState() == 0 && this.DataLoader.Model.PreviousTimeInt != this.DataLoader.Model.TimeInt() && this.DPad.Opacity == this.UnpressedInputOpacity)
         {
             try
             {
@@ -2498,11 +2537,11 @@ The process may take some time, as the program attempts to download from GitHub 
 
             if (e.Button == this.gamepad.Buttons.LS)
             {
-                this.Dispatcher.BeginInvoke(new Action(() => UpdateLeftStickImage(this.PressedInputOpacity)));
+                this.Dispatcher.BeginInvoke(new Action(() => this.UpdateLeftStickImage(this.PressedInputOpacity)));
             }
             else if (e.Button == this.gamepad.Buttons.RS)
             {
-                this.Dispatcher.BeginInvoke(new Action(() => UpdateRightStickImage(this.PressedInputOpacity)));
+                this.Dispatcher.BeginInvoke(new Action(() => this.UpdateRightStickImage(this.PressedInputOpacity)));
             }
             else
             {
@@ -2517,16 +2556,16 @@ The process may take some time, as the program attempts to download from GitHub 
         var imagePath = JoystickImages.GetImage(Direction.None);
 
         // Get the current image source of the D-pad
-        var currentImageSource = RJoystick.Source as BitmapImage;
+        var currentImageSource = this.RJoystick.Source as BitmapImage;
 
         // Compare the current image path with the new image path
         if (currentImageSource?.UriSource?.OriginalString != imagePath)
         {
             // Set the new image source for the D-pad
-            RJoystick.Source = new BitmapImage(new Uri(imagePath, UriKind.Relative));
+            this.RJoystick.Source = new BitmapImage(new Uri(imagePath, UriKind.Relative));
         }
 
-        RJoystick.Opacity = opacity;
+        this.RJoystick.Opacity = opacity;
     }
 
     private void UpdateLeftStickImage(double opacity)
@@ -2535,16 +2574,16 @@ The process may take some time, as the program attempts to download from GitHub 
         var imagePath = JoystickImages.GetImage(Direction.None);
 
         // Get the current image source of the D-pad
-        var currentImageSource = LJoystick.Source as BitmapImage;
+        var currentImageSource = this.LJoystick.Source as BitmapImage;
 
         // Compare the current image path with the new image path
         if (currentImageSource?.UriSource?.OriginalString != imagePath)
         {
             // Set the new image source for the D-pad
-            LJoystick.Source = new BitmapImage(new Uri(imagePath, UriKind.Relative));
+            this.LJoystick.Source = new BitmapImage(new Uri(imagePath, UriKind.Relative));
         }
 
-        LJoystick.Opacity = opacity;
+        this.LJoystick.Opacity = opacity;
     }
 
     private void UpdateDpadImage(double opacity)
@@ -2576,16 +2615,16 @@ The process may take some time, as the program attempts to download from GitHub 
         var imagePath = DPadImages.GetImage(direction);
 
         // Get the current image source of the D-pad
-        var currentImageSource = DPad.Source as BitmapImage;
+        var currentImageSource = this.DPad.Source as BitmapImage;
 
         // Compare the current image path with the new image path
         if (currentImageSource?.UriSource?.OriginalString != imagePath)
         {
             // Set the new image source for the D-pad
-            DPad.Source = new BitmapImage(new Uri(imagePath, UriKind.Relative));
+            this.DPad.Source = new BitmapImage(new Uri(imagePath, UriKind.Relative));
         }
 
-        DPad.Opacity = opacity;
+        this.DPad.Opacity = opacity;
     }
 
     private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -2597,7 +2636,7 @@ The process may take some time, as the program attempts to download from GitHub 
 
         if (this.DataLoader.LoadedOutsideMezeporta)
         {
-            var snackbar = new Snackbar(MainWindowSnackBarPresenter)
+            var snackbar = new Snackbar(this.MainWindowSnackBarPresenter)
             {
                 Style = (Style)this.FindResource("CatppuccinMochaSnackBar"),
                 Title = Messages.WarningTitle,
@@ -2609,7 +2648,7 @@ The process may take some time, as the program attempts to download from GitHub 
             snackbar.Show();
         }
 
-        DatabaseManagerInstance.LoadDatabaseDataIntoHashSets(SaveIconGrid, this.DataLoader);
+        DatabaseManagerInstance.LoadDatabaseDataIntoHashSets(this.SaveIconGrid, this.DataLoader);
         AchievementServiceInstance.LoadPlayerAchievements();
 
         this.MhfProcess = Process.GetProcessesByName("mhf").First();
@@ -2619,7 +2658,7 @@ The process may take some time, as the program attempts to download from GitHub 
             LoggingService.WriteCrashLog(new Exception("Target process not found"));
         }
 
-        MainWindowSoundPlayer = new SoundPlayer(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Assets\Sounds\victory.wav"));
+        MainWindowMediaPlayer = new MediaPlayer();
     }
 
     private static void OnboardEndUser()

@@ -22,7 +22,7 @@ public interface IDatabase
     /// <param name="data"></param>
     /// <param name="mode"></param>
     /// <returns></returns>
-    object? GetData(object data, GetterMode mode = GetterMode.Single);
+    object? GetData(object data, GetterMode mode = GetterMode.One);
 
     void SetUpDatabase();
 }

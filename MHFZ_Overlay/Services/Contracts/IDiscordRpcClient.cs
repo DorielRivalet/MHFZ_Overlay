@@ -72,7 +72,7 @@ public interface IDiscordRpcClient : IDisposable
 
     void SetPresence(RichPresence presence);
 
-    RichPresence UpdateButtons(Button[]? button = null);
+    RichPresence UpdateButtons(Button[] ? button = null);
 
     RichPresence SetButton(Button button, int index = 0);
 

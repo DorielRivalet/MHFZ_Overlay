@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using MHFZ_Overlay.Models;
 using MHFZ_Overlay.Models.Structures;
+using Octokit;
 
 /// <summary>
 /// Achievements dictionary. TODO.
@@ -2614,7 +2615,7 @@ public static class Achievements
             199, new Achievement()
             {
             CompletionDate = DateTime.UnixEpoch,
-            Title = "A lonely and starving wolf",
+            Title = "A Lonely and Starving Wolf",
             Description = string.Empty,
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_blue2.jpg",
@@ -2770,7 +2771,7 @@ public static class Achievements
             211, new Achievement()
             {
             CompletionDate = DateTime.UnixEpoch,
-            Title = "Oh noes! My sunglasses!",
+            Title = "Oh Noes! My Sunglasses!",
             Description = string.Empty,
             Rank = AchievementRank.Bronze,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_red2.jpg",
@@ -2839,7 +2840,7 @@ public static class Achievements
             Description = string.Empty,
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/medal_stamp.jpg",
-            Objective = "Obtain S Rank in all single-player MezFes minigames",
+            Objective = "Obtain S Rank in Nyanrendo, Dokkan Battle Cats, Guuku Scoop and Panic Honey.",
             IsSecret = true,
             Hint = "Do you like minigames?",
             }
@@ -2930,7 +2931,7 @@ public static class Achievements
             Description = string.Empty,
             Rank = AchievementRank.Bronze,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/duremudira.jpg",
-            Objective = "Defeat 2nd District duremudira 100 times.",
+            Objective = "Defeat 2nd District Duremudira 25 times.",
             IsSecret = true,
             Hint = "You killed that many monsters?!",
             }
@@ -2952,11 +2953,11 @@ public static class Achievements
             225, new Achievement()
             {
             CompletionDate = DateTime.UnixEpoch,
-            Title = "Fumo",
+            Title = "Fumo #1",
             Description = string.Empty,
             Rank = AchievementRank.Bronze,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/unknown_red.jpg",
-            Objective = "Click a Fumo.",
+            Objective = "Click a Fumo in the configuration window.",
             IsSecret = true,
             Hint = "Fumo.",
             }
@@ -4551,7 +4552,7 @@ public static class Achievements
             348, new Achievement()
             {
             CompletionDate = DateTime.UnixEpoch,
-            Title = "20% more damage for 99% more effort",
+            Title = "20% More Damage for 99% More Effort",
             Description = string.Empty,
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/berserk_raviente.jpg",
@@ -4659,7 +4660,7 @@ public static class Achievements
             Description = string.Empty,
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/stamp.jpg",
-            Objective = "Obtain 1000 Bingo points or more in 1 bingo card completion.",
+            Objective = "Complete a bingo run without fainting and with 4 lines being crossed at once.",
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -4776,7 +4777,7 @@ public static class Achievements
             Description = string.Empty,
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/zenny.jpg",
-            Objective = "Generate 10000 gacha pulls.",
+            Objective = "Generate 10,000 gacha pulls.",
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -4902,7 +4903,7 @@ public static class Achievements
             375, new Achievement()
             {
             CompletionDate = DateTime.UnixEpoch,
-            Title = "In search of a new frontier",
+            Title = "In Search of a New Frontier",
             Description = string.Empty,
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/stamp.jpg",
@@ -5071,7 +5072,7 @@ public static class Achievements
             388, new Achievement()
             {
             CompletionDate = DateTime.UnixEpoch,
-            Title = "One star to rule them all",
+            Title = "One Star to Rule Them All",
             Description = string.Empty,
             Rank = AchievementRank.Gold,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/stamp.jpg",
@@ -5084,7 +5085,7 @@ public static class Achievements
             389, new Achievement()
             {
             CompletionDate = DateTime.UnixEpoch,
-            Title = "Two stars make a supernova",
+            Title = "Two Stars Make a Supernova",
             Description = string.Empty,
             Rank = AchievementRank.Gold,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/stamp.jpg",
@@ -5123,7 +5124,7 @@ public static class Achievements
             392, new Achievement()
             {
             CompletionDate = DateTime.UnixEpoch,
-            Title = "A 5-Star collection",
+            Title = "A 5-Star Collection",
             Description = string.Empty,
             Rank = AchievementRank.Gold,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/stamp.jpg",
@@ -5201,7 +5202,7 @@ public static class Achievements
             398, new Achievement()
             {
             CompletionDate = DateTime.UnixEpoch,
-            Title = "Gacha up to eleven",
+            Title = "Gacha Up To Eleven",
             Description = string.Empty,
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/stamp.jpg",
@@ -5308,7 +5309,7 @@ Just now, reduced to ashes",
             Description = string.Empty,
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/extreme_poison.png",
-            Objective = "Defeat Zenith★4 Gasurabazura solo without Poison Cure.",
+            Objective = "Defeat Zenith★4 Gasurabazura solo without Anti-Venom.",
             IsSecret = true,
             Hint = "No cures allowed! But your halk is allowed to help.",
             }
@@ -5324,6 +5325,485 @@ Just now, reduced to ashes",
             Objective = "Obtain a Special Gacha Card with all chance boosters active.",
             IsSecret = false,
             Hint = string.Empty,
+            }
+        },
+        {
+            407, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "UNKNOWN Was Her?",
+            Description = string.Empty,
+            Rank = AchievementRank.Platinum,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/unknown_blue.jpg",
+            Objective = "Defeat Upper Shiten Unknown solo without any items.",
+            IsSecret = false,
+            Hint = string.Empty,
+            }
+        },
+        {
+            408, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Challenge Accepted",
+            Description = string.Empty,
+            Rank = AchievementRank.Silver,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/stamp.jpg",
+            Objective = "Accept a rare gacha challenge.",
+            IsSecret = false,
+            Hint = string.Empty,
+            }
+        },
+        {
+            409, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "No Cheats Allowed!",
+            Description = string.Empty,
+            Rank = AchievementRank.Bronze,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/unknown_red.jpg",
+            Objective = "Enter the Konami Code on the start of a quest.",
+            IsSecret = true,
+            Hint = "Sorry, but that cheat code won't give you 30 more tries on this quest.",
+            }
+        },
+        {
+            410, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Blinky",
+            Description = string.Empty,
+            Rank = AchievementRank.Platinum,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/unknown_blue.jpg",
+            Objective = "Complete 1 Blinking Nargacuga True Slay quest with a certain Switch Axe F.",
+            IsSecret = true,
+            Hint = @"You found a book and a weapon.
+
+The book reads:
+""For those who are new to this environment, perfection is not something you achieve but something all must eventually fall into the ranks to.
+
+It is a forced compulsion to be better, and that is what's enjoyable about entering this community.
+
+In time, I will steal everything there is to need in order to trivialise content as people have done.
+
+Well, the alternative is to believe you're a failure who will never survive in this game which I am not pessimistic about.
+
+So yuh, it will be worthwhile because inevitably you will be forced to be stronger, even if you have to beat up your body just so that it cooperates.
+
+Well, no merits are earned yet to justify a personality. So in the meantime, being humble and full of self-doubt is correct. At least until you proved your place in this game as, not being a failure.
+
+The only question is how long it'll take to be competent, hmmm.""
+
+You turn the pages...
+
+""I feel like garbage right now, because I haven't done anything. But instead of looking up at those people and being awe-inspired about how they're better than me, I seek to take that for myself. Because that's how you survive in this community, it is a compulsory progression, otherwise you can screw off and die somewhere.
+
+I have the utmost gratitude for people who are strong, but it's also the source of dissatisfaction that I will settle for nothing less than to take that for myself.
+
+Otherwise, crash and burn if I'm not good enough.
+I'm sure everyone will do great in the end o wo
+
+As long as they don't quit.
+
+That's why we came here, right? We wouldn't find this place if we err, sucked at MH.""
+
+Having read the inspiring notes, you decide to equip the Black Savage Charaxt and embark on a quest.
+
+During the travel to your destination, the top of the Great Forest, you notice that the weapon seems to have been made before Zeniths were known.",
+            }
+        },
+        {
+            411, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "A Very Stylish Hunter",
+            Description = string.Empty,
+            Rank = AchievementRank.Bronze,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/hunter.jpg",
+            Objective = "Complete a quest with Stylish Assault Up and Stylish Up.",
+            IsSecret = false,
+            Hint = string.Empty,
+            }
+        },
+        {
+            412, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "The Rarest Guild Card",
+            Description = string.Empty,
+            Rank = AchievementRank.Bronze,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/unknown_red.jpg",
+            Objective = "Hunt 100 Ashen Lao-Shan Lung.",
+            IsSecret = false,
+            Hint = string.Empty,
+            }
+        },
+        {
+            413, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Apparently Immortal Monsters",
+            Description = string.Empty,
+            Rank = AchievementRank.Bronze,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/unknown_red.jpg",
+            Objective = "Hunt 1 Ashen Lao-Shan Lung, HR3 Yama Tsukami and HR3 Shen Gaoren.",
+            IsSecret = true,
+            Hint = "These monsters only die when they want to.",
+            }
+        },
+        {
+            414, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Obtaining All the Buffs",
+            Description = string.Empty,
+            Rank = AchievementRank.Platinum,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/unknown_blue.jpg",
+            Objective = "Complete 1 Arrogant Duremudira True Slay quest with Secret Technique.",
+            IsSecret = true,
+            Hint = "Who said it's only useful for the knife attack?",
+            }
+        },
+        {
+            415, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "The Bingo Gauntlet",
+            Description = string.Empty,
+            Rank = AchievementRank.Gold,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/gauntlet_max.png",
+            Objective = "Start a bingo run with all gauntlet boosts active.",
+            IsSecret = false,
+            Hint = string.Empty,
+            }
+        },
+        {
+            416, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Master of Bingo",
+            Description = string.Empty,
+            Rank = AchievementRank.Platinum,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/zenny.jpg",
+            Objective = "Buy all Bingo challenge upgrades.",
+            IsSecret = false,
+            Hint = string.Empty,
+            }
+        },
+        {
+            417, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "The Sky's the Limit",
+            Description = string.Empty,
+            Rank = AchievementRank.Platinum,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/zenny.jpg",
+            Objective = "Buy all Sky Corridor challenge upgrades.",
+            IsSecret = false,
+            Hint = string.Empty,
+            }
+        },
+        {
+            418, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "No more upgrades!",
+            Description = string.Empty,
+            Rank = AchievementRank.Platinum,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/zenny.jpg",
+            Objective = "Buy all Gacha challenge upgrades.",
+            IsSecret = false,
+            Hint = string.Empty,
+            }
+        },  
+        {
+            419, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Fumo #2", // Patchouli
+            Description = string.Empty,
+            Rank = AchievementRank.Bronze,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/unknown_red.jpg",
+            Objective = "Click a fumo in Bingo challenge.",
+            IsSecret = true,
+            Hint =
+@"[] [] [] [] [S]
+[] [] [] [O] []
+[] [] [M] [] []
+[] [U] [] [] []
+[F] [] [] [] []",
+            }
+        },
+        {
+            420, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Fumo #3", // Flande
+            Description = string.Empty,
+            Rank = AchievementRank.Bronze,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/unknown_red.jpg",
+            Objective = "Click a fumo in Gacha challenge. Or not, it's probably a scam.",
+            IsSecret = true,
+            Hint = "Fumo is very expensive.",
+            }
+        },
+        {
+            421, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Fumo #4", // Remilia
+            Description = string.Empty,
+            Rank = AchievementRank.Bronze,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/unknown_red.jpg",
+            Objective = "Click a fumo in Sky Corridor challenge. Looks like it underestimated your power.",
+            IsSecret = true,
+            Hint = "Fumo says it's over, it has the high ground.",
+            }
+        },
+        {
+            422, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Fumo #5", // Yuyuko
+            Description = string.Empty,
+            Rank = AchievementRank.Bronze,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/unknown_red.jpg",
+            Objective = "Click a fumo in Frontier Compendium website and follow the hints.",
+            IsSecret = true,
+            Hint = "Get a hint from a fumo, not here!",
+            }
+        },
+        {
+            423, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "New Game+",
+            Description = string.Empty,
+            Rank = AchievementRank.Platinum,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/unknown_blue.jpg",
+            Objective = "Fully transcend once in a Bingo challenge.",
+            IsSecret = true,
+            Hint = "There's more to bingo than meets the eye.",
+            }
+        },
+        {
+            424, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "The Infinity Gauntlet",
+            Description = string.Empty,
+            Rank = AchievementRank.Platinum,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/unknown_blue.jpg",
+            Objective = "Use the ancient gauntlet to get an infinite amount of points in Sky Corridor. Or at least, try to.",
+            IsSecret = true,
+            Hint = "There's not one, but multiple gauntlets.",
+            }
+        },
+        {
+            425, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "No More Heroes in Ruins",
+            Description = string.Empty,
+            Rank = AchievementRank.Platinum,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/unknown_blue.jpg",
+            Objective = "Complete Tome I of the Book of Secrets (Challenge).",
+            IsSecret = false,
+            Hint = string.Empty,
+            }
+        },
+        {
+            426, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Dubito, Ergo Cogito, Ergo Sum",
+            Description = string.Empty,
+            Rank = AchievementRank.Platinum,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/unknown_blue.jpg",
+            Objective = "Complete Tome II of the Book of Secrets (Challenge).",
+            IsSecret = false,
+            Hint = string.Empty,
+            }
+        },
+        {
+            427, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Friend or Foe",
+            Description = string.Empty,
+            Rank = AchievementRank.Platinum,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/unknown_blue.jpg",
+            Objective = "Complete Tome III of the Book of Secrets (Challenge).",
+            IsSecret = false,
+            Hint = string.Empty,
+            }
+        },
+        {
+            428, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Shattered Dimensions",
+            Description = string.Empty,
+            Rank = AchievementRank.Platinum,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/unknown_blue.jpg",
+            Objective = "Complete Tome IV of the Book of Secrets (Challenge).",
+            IsSecret = false,
+            Hint = string.Empty,
+            }
+        },
+        {
+            429, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Fumo #6", // Tenshi
+            Description = string.Empty,
+            Rank = AchievementRank.Bronze,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/unknown_red.jpg",
+            Objective = "Click a fumo in a chest.",
+            IsSecret = true,
+            Hint = "These chests can hold many hidden treasures.",
+            }
+        },
+        {
+            430, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Fumo #7", // Inaba
+            Description = string.Empty,
+            Rank = AchievementRank.Bronze,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/unknown_red.jpg",
+            Objective = "Click a fumo in a box.",
+            IsSecret = true,
+            Hint = "These boxes can have more than just ammo.",
+            }
+        },
+        {
+            431, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Fumo #8", // Suika
+            Description = string.Empty,
+            Rank = AchievementRank.Bronze,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/unknown_red.jpg",
+            Objective = "Click a fumo near a monster.",
+            IsSecret = true,
+            Hint = "This fumo reminds me of a certain fanged beast.",
+            }
+        },
+        {
+            432, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Fumo #9", // Youmu
+            Description = string.Empty,
+            Rank = AchievementRank.Bronze,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/unknown_red.jpg",
+            Objective = "Click a fumo inside a wooden chest.",
+            IsSecret = true,
+            Hint = "Why was it hiding inside a wooden chest?",
+            }
+        },
+        {
+            433, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Fumo #10", // Cirno
+            Description = string.Empty,
+            Rank = AchievementRank.Silver,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/unknown_white.jpg",
+            Objective = "Click a fumo in the starry sky.",
+            IsSecret = true,
+            Hint = "You saw a comet and asked for a wish.",
+            }
+        },
+        {
+            434, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Fumo #11", // Sakuya
+            Description = string.Empty,
+            Rank = AchievementRank.Silver,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/unknown_white.jpg",
+            Objective = "Click a fumo near a knife.",
+            IsSecret = true,
+            Hint = "I wonder why we use transcend burst with the carving knife.",
+            }
+        },
+        {
+            435, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Fumo #12", // Suwako
+            Description = string.Empty,
+            Rank = AchievementRank.Silver,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/unknown_white.jpg",
+            Objective = "Click a fumo near a frog.",
+            IsSecret = true,
+            Hint = "This frog was hiding a secret!",
+            }
+        },
+        {
+            436, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Fumo #13", // Koishi
+            Description = string.Empty,
+            Rank = AchievementRank.Gold,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/unknown_black.jpg",
+            Objective = "Click a fumo near a monster's eye.",
+            IsSecret = true,
+            Hint = "We might find something if we go where these eyes are pointing.",
+            }
+        },
+        {
+            437, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Fumo #14", // Reimu
+            Description = string.Empty,
+            Rank = AchievementRank.Gold,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/unknown_black.jpg",
+            Objective = "Click a fumo in Frontier Compendium website and follow the hints.",
+            IsSecret = true,
+            Hint = "Get a hint from a fumo, not here!",
+            }
+        },
+        {
+            438, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Fumo #15", // Marisa
+            Description = string.Empty,
+            Rank = AchievementRank.Platinum,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/unknown_blue.jpg",
+            Objective = "Click a fumo in Sky Corridor Headquarters Entrance.",
+            IsSecret = true,
+            Hint = "Get a hint from a fumo, not here!",
+            }
+        },
+        {
+            439, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Back to the Land of Illusions",
+            Description = string.Empty,
+            Rank = AchievementRank.Platinum,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/unknown_blue.jpg",
+            Objective = "Help Marisa go back to her universe.",
+            IsSecret = true,
+            Hint = "Hopefully we don't have any more dimensional shenanigans.",
+            }
+        },  
+        {
+            440, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Unlimited Power",
+            Description = string.Empty,
+            Rank = AchievementRank.Platinum,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/unknown_blue.jpg",
+            Objective = "Have the power to beat 100 Unlimited monsters.",
+            IsSecret = true,
+            Hint = "POWER!",
             }
         },
     });

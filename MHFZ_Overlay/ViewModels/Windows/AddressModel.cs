@@ -25,10 +25,13 @@ using MHFZ_Overlay;
 using MHFZ_Overlay.Models;
 using MHFZ_Overlay.Models.Collections;
 using MHFZ_Overlay.Models.Constant;
+using MHFZ_Overlay.Models.Structures;
 using MHFZ_Overlay.Services;
+using MHFZ_Overlay.Services.Converter;
 using RESTCountries.NET.Models;
 using RESTCountries.NET.Services;
 using SkiaSharp;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
 using Application = System.Windows.Application;
 
 /// <summary>
@@ -1255,6 +1258,24 @@ public abstract class AddressModel : INotifyPropertyChanged
 
     public abstract int PartnyaBagItem10Qty();
 
+    /// <summary>
+    /// Normal/HC/UL. Set at quest counter option selection.
+    /// </summary>
+    /// <returns></returns>
+    public abstract int QuestToggleMonsterMode();
+
+    /// <TODO>
+    /// [] Not Done
+    /// [X] Done
+    /// [O] WIP
+    /// [] Prayer gems, 
+    /// [] bento, 
+    /// [] sharpness table, 
+    /// [] pvp, 
+    /// [] zenith in road, guild pugi, gear rarity colors.
+    /// [] Database would store prayer gems, bento, sharpness table, pvp, guild pugi. Should i use separate table?
+    /// </TODO>
+
     public bool HasMonster2
     {
         get
@@ -1266,12 +1287,12 @@ public abstract class AddressModel : INotifyPropertyChanged
 
             if (this.CaravanOverride())
             {
-                return (this.CaravanMonster2ID() > 0 && this.Monster2HPInt() != 0 && this.GetNotRoad()) || this.Configuring;
+                return this.ShowHPBar(this.CaravanMonster2ID(), this.Monster2HPInt()) && this.GetNotRoad();
             }
             else
             {
                 // road check since the 2nd choice is used as the monster #1
-                return (this.LargeMonster2ID() > 0 && this.Monster2HPInt() != 0 && this.GetNotRoad()) || this.Configuring;
+                return this.ShowHPBar(this.LargeMonster2ID(), this.Monster2HPInt()) && this.GetNotRoad();
             }
         }
     }
@@ -1405,7 +1426,7 @@ public abstract class AddressModel : INotifyPropertyChanged
     /// <returns></returns>
     public static string GetQuestNameFromID(int id)
     {
-        if (id > 63421)
+        if (id > 63421 && DiscordService.ShowDiscordQuestNames())
         {
             return $"Custom Quest {id}";
         }
@@ -1490,12 +1511,76 @@ TreeScope.Children, condition);
         }
     }
 
+    public string GetOverlayModeForStorage()
+    {
+        return this.GetOverlayMode() switch
+        {
+            OverlayMode.Unknown => "Unknown",
+            OverlayMode.Standard => "Standard",
+            OverlayMode.Configuring => "Configuring",
+            OverlayMode.ClosedGame => "Closed Game",
+            OverlayMode.Launcher => "Launcher",
+            OverlayMode.NoGame => "No Game",
+            OverlayMode.MainMenu => "Main Menu",
+            OverlayMode.WorldSelect => "World Select",
+            OverlayMode.TimeAttack => "Time Attack",
+            OverlayMode.FreestyleSecretTech => "Freestyle w/ Secret Tech",
+            OverlayMode.Freestyle => "Freestyle No Secret Tech",
+            OverlayMode.Zen => "Zen",
+            _ => "Not Found",
+        };
+    }
+
+    public string GetFinalOverlayMode()
+    {
+        if ((OverlayModeDictionary.Count == 2 && OverlayModeDictionary.Last().Value == "Standard") ||
+                            (OverlayModeDictionary.Count == 1 && OverlayModeDictionary.First().Value == "Standard") ||
+                            OverlayModeDictionary.Count > 2 || OverlayModeDictionary.Count == 0)
+        {
+            return "Standard+";
+        }
+        else
+        {
+            // TODO: test
+            if (OverlayModeDictionary.Count == 2 && OverlayModeDictionary.First().Value == "Standard")
+            {
+                return OverlayModeDictionary.Last().Value + "+";
+            }
+            else
+            {
+                return OverlayModeDictionary.First().Value + "+";
+            }
+        }
+    }
+
     public string GetOverlayModeForRPC()
     {
         var s = (Settings)Application.Current.TryFindResource("Settings");
         if (s.ShowDiscordRPCOverlayMode)
         {
-            return this.GetOverlayMode();
+            if (s.DiscordOverlayMode == "Final" || (s.DiscordOverlayMode == "Automatic" && s.OverlayWatermarkMode == "Final"))
+            {
+                return $"{GetFinalOverlayMode()} | ";
+            }
+            else
+            {
+                return this.GetOverlayMode() switch
+                {
+                    OverlayMode.Standard => "Standard | ",
+                    OverlayMode.Configuring => "Configuring | ",
+                    OverlayMode.ClosedGame => "Closed Game | ",
+                    OverlayMode.Launcher => "Launcher | ",
+                    OverlayMode.NoGame => "Game not found | ",
+                    OverlayMode.MainMenu => "Main menu | ",
+                    OverlayMode.WorldSelect => "World Select | ",
+                    OverlayMode.TimeAttack => "Time Attack | ",
+                    OverlayMode.FreestyleSecretTech => "Freestyle Secret Tech | ",
+                    OverlayMode.Freestyle => "Freestyle | ", // TODO rename?
+                    OverlayMode.Zen => "Zen | ",
+                    _ => string.Empty,
+
+                };
+            }
         }
         else
         {
@@ -1507,14 +1592,14 @@ TreeScope.Children, condition);
     /// Gets the overlay mode.
     /// </summary>
     /// <returns></returns>
-    public string GetOverlayMode()
+    public OverlayMode GetOverlayMode()
     {
         var s = (Settings)Application.Current.TryFindResource("Settings");
         var playerAtk = 0;
         var success = int.TryParse(this.ATK, NumberStyles.Number, CultureInfo.InvariantCulture, out var playerTrueRaw);
         if (!success)
         {
-            LoggerInstance.Warn("Could not parse player true raw as integer: {0}", this.ATK);
+            LoggerInstance.Warn(CultureInfo.InvariantCulture, "Could not parse player true raw as integer: {0}", this.ATK);
         }
         else
         {
@@ -1523,27 +1608,27 @@ TreeScope.Children, condition);
 
         if (this.Configuring)
         {
-            return "(Configuring) ";
+            return OverlayMode.Configuring;
         }
         else if (this.ClosedGame)
         {
-            return "(Closed Game) ";
+            return OverlayMode.ClosedGame;
         }
         else if (this.IsInLauncherBool || this.IsInLauncher() == "Yes") // works?
         {
-            return "(Launcher) ";
+            return OverlayMode.Launcher;
         }
         else if (this.IsInLauncher() == "NULL")
         {
-            return "(No game detected) ";
+            return OverlayMode.NoGame;
         }
         else if (this.QuestID() == 0 && this.AreaID() == 0 && this.BlademasterWeaponID() == 0 && this.GunnerWeaponID() == 0)
         {
-            return "(Main Menu) ";
+            return OverlayMode.MainMenu;
         }
         else if (this.QuestID() == 0 && this.AreaID() == 200 && this.BlademasterWeaponID() == 0 && this.GunnerWeaponID() == 0)
         {
-            return "(World Select) ";
+            return OverlayMode.WorldSelect;
         } // TODO do i need to check for road and dure?
         else if (
             !(
@@ -1579,26 +1664,26 @@ TreeScope.Children, condition);
             || s.PersonalBestTimePercentShown
             || s.EnablePersonalBestPaceColor) // TODO monster 1 overview? and update README
         {
-            return string.Empty;
+            return OverlayMode.Standard;
         }
         else if (s.TimerInfoShown && s.EnableInputLogging && s.EnableQuestLogging && this.PartySize() == 1 && s.OverlayModeWatermarkShown)
         {
             if (this.DivaSkillUsesLeft() == 0 && this.StyleRank1() != 15 && this.StyleRank2() != 15)
             {
-                return "(Time Attack) ";
+                return OverlayMode.TimeAttack;
             }
             else if (this.StyleRank1() == 15 || this.StyleRank2() == 15)
             {
-                return "(Freestyle w/ Secret Tech) ";
+                return OverlayMode.FreestyleSecretTech;
             }
             else
             {
-                return "(Freestyle No Secret Tech) ";
+                return OverlayMode.Freestyle;
             }
         }
         else
         {
-            return "(Zen) ";
+            return OverlayMode.Zen;
         }
     }
 
@@ -2114,21 +2199,6 @@ TreeScope.Children, condition);
         }
     }
 
-    public string TimeLeftPercentNumber
-    {
-        get
-        {
-            if (this.TimeDefInt() < this.TimeInt())
-            {
-                return "0";
-            }
-            else
-            {
-                return string.Format(CultureInfo.InvariantCulture, " ({0:0}%)", (float)this.TimeInt() / this.TimeDefInt() * 100.0);
-            }
-        }
-    }
-
     public string SharpnessPercentNumber
     {
         get
@@ -2156,6 +2226,8 @@ TreeScope.Children, condition);
         }
     }
 
+    private StringBuilder sbForTimer = new StringBuilder();
+
     /// <summary>
     /// Gets quest time in the format of mm:ss.fff. This should only be used for display purposes.
     /// </summary>
@@ -2163,59 +2235,28 @@ TreeScope.Children, condition);
     {
         get
         {
-            int time;
+            // check for 1st and 2nd district dure
+            // TODO: find timedefint address for dures
+            var isDure = QuestID() == 21731 || QuestID() == 21746;
+            decimal timeDefInt = isDure ? Numbers.DuremudiraTimeLimitFrames : TimeDefInt();
 
-            if (GetTimerMode() == "Time Elapsed")
-            {
-                time = this.TimeDefInt() - this.TimeInt();
-            }
-            else if (GetTimerMode() == "Time Left")
-            {
-                time = this.TimeInt();
-            }
-            else // default to Time Left mode
-            {
-                time = this.TimeInt();
-            }
+            var timerMode = GetTimerMode() == "Time Elapsed" ? TimerMode.Elapsed : TimerMode.TimeLeft;
+            decimal time = TimeService.GetTimeValue(timerMode, timeDefInt, (decimal)TimeInt());
+            decimal framesPerSecond = Numbers.FramesPerSecond;
+            decimal totalSeconds = time / framesPerSecond;
+            decimal minutes = Math.Floor(totalSeconds / 60);
+            decimal seconds = Math.Floor(totalSeconds % 60);
+            decimal milliseconds = Math.Round((time % framesPerSecond) * (1000M / framesPerSecond));
 
-            if (time > 0)
-            {
-                if (ShowTimeLeftPercentage())
-                {
-                    this.timeLeftPercent = this.TimeLeftPercentNumber;
-                }
-                else
-                {
-                    this.timeLeftPercent = string.Empty;
-                }
+            this.timeLeftPercent = ShowTimeLeftPercentage() ? TimeService.GetTimeLeftPercent(timeDefInt, TimeInt(), isDure) : string.Empty;
 
-                if (time / Numbers.FramesPerSecond / 60 < 10)
-                {
-                    if ((time / Numbers.FramesPerSecond) % 60 < 10)
-                    {
-                        return string.Format(CultureInfo.InvariantCulture, "{0:00}:{1:00}.{2:000}", time / Numbers.FramesPerSecond / 60, (time / Numbers.FramesPerSecond) % 60, (int)Math.Round((float)((time % Numbers.FramesPerSecond) * 100) / 3)) + this.timeLeftPercent; // should work fine
-                    }
-                    else
-                    {
-                        return string.Format(CultureInfo.InvariantCulture, "{0:00}:{1}.{2:000}", time / Numbers.FramesPerSecond / 60, (time / Numbers.FramesPerSecond) % 60, (int)Math.Round((float)((time % Numbers.FramesPerSecond) * 100) / 3)) + this.timeLeftPercent;
-                    }
-                }
-                else
-                {
-                    if ((time / Numbers.FramesPerSecond) % 60 < 10)
-                    {
-                        return string.Format(CultureInfo.InvariantCulture, "{0}:{1:00}.{2:000}", time / Numbers.FramesPerSecond / 60, (time / Numbers.FramesPerSecond) % 60, (int)Math.Round((float)((time % Numbers.FramesPerSecond) * 100) / 3)) + this.timeLeftPercent;
-                    }
-                    else
-                    {
-                        return string.Format(CultureInfo.InvariantCulture, "{0}:{1}.{2:000}", time / Numbers.FramesPerSecond / 60, (time / Numbers.FramesPerSecond) % 60, (int)Math.Round((float)((time % Numbers.FramesPerSecond) * 100) / 3)) + this.timeLeftPercent;
-                    }
-                }
-            }
-            else
-            {
-                return string.Format(CultureInfo.InvariantCulture, "{0:00}:{1:00}.{2:000}", time / Numbers.FramesPerSecond / 60, (time / Numbers.FramesPerSecond) % 60, (int)Math.Round((float)((time % Numbers.FramesPerSecond) * 100) / 3)) + this.timeLeftPercent;
-            }
+            StringBuilder sb = new StringBuilder();
+            sb.AppendFormat(CultureInfo.InvariantCulture, "{0:00}:{1:00}.{2:000}", minutes, seconds, milliseconds);
+            sb.Append(this.timeLeftPercent);
+
+            // MessageBox.Show(TimeService.TestTimerMethods(216_000 * 10)); // 2 hours at 30 fps
+
+            return sb.ToString();
         }
     }
 
@@ -2390,7 +2431,7 @@ TreeScope.Children, condition);
             {
                 // Handle the case when Monster1MaxHP cannot be parsed to an int
                 // For example, you can return an error message, set a default value or throw an exception
-                LoggerInstance.Warn("Could not parse Monster1MaxHP to get pace: {0}", this.Monster1MaxHP);
+                LoggerInstance.Warn(CultureInfo.InvariantCulture, "Could not parse Monster1MaxHP to get pace: {0}", this.Monster1MaxHP);
                 return "#f5e0dc";
             }
 
@@ -2470,7 +2511,7 @@ TreeScope.Children, condition);
             {
                 // Handle the case when Monster1MaxHP cannot be parsed to an int
                 // For example, you can return an error message, set a default value or throw an exception
-                LoggerInstance.Warn("Could not parse Monster1MaxHP to get best pace: {0}", this.Monster1MaxHP);
+                LoggerInstance.Warn(CultureInfo.InvariantCulture, "Could not parse Monster1MaxHP to get best pace: {0}", this.Monster1MaxHP);
                 return "#f5e0dc";
             }
 
@@ -2490,7 +2531,7 @@ TreeScope.Children, condition);
             {
                 // Handle the case when PersonalBestTimePercent cannot be parsed to an int
                 // For example, you can return an error message, set a default value or throw an exception
-                LoggerInstance.Warn("Could not parse Monster1MaxHP to get best pace: {0}", this.Monster1MaxHP);
+                LoggerInstance.Warn(CultureInfo.InvariantCulture, "Could not parse Monster1MaxHP to get best pace: {0}", this.Monster1MaxHP);
                 return "#f5e0dc";
             }
 
@@ -2515,21 +2556,24 @@ TreeScope.Children, condition);
     {
         get
         {
-            if (this.PersonalBestLoaded != Messages.TimerNotLoaded && ShowPersonalBestPaceColor())
+            if (this.PersonalBestLoaded != Messages.TimerNotLoaded &&
+                ShowPersonalBestPaceColor() &&
+                !this.PersonalBestLoaded.Contains("-"))
             {
-                const int framesPerSecond = 30;
-                var personalBestInFrames = (int)(framesPerSecond * TimeSpan.ParseExact(this.PersonalBestLoaded, "mm':'ss'.'fff", CultureInfo.InvariantCulture).TotalSeconds);
+                // TODO does this work for times over 59m?
+                var personalBestInFrames = (int)((int)Numbers.FramesPerSecond * TimeSpan.ParseExact(this.PersonalBestLoaded, "mm':'ss'.'fff", CultureInfo.InvariantCulture).TotalSeconds);
                 var personalBestTimeFramesElapsed = 0;
+                var timeDefInt = this.QuestID() == Numbers.QuestIDFirstDistrictDuremudira || this.QuestID() == Numbers.QuestIDSecondDistrictDuremudira ? Numbers.DuremudiraTimeLimitFrames : this.TimeDefInt();
                 if (GetTimerMode() == "Time Left")
                 {
-                    personalBestTimeFramesElapsed = this.TimeDefInt() - personalBestInFrames;
+                    personalBestTimeFramesElapsed = (int)(timeDefInt - personalBestInFrames);
                 }
                 else
                 {
                     personalBestTimeFramesElapsed = personalBestInFrames;
                 }
 
-                var elapsedPersonalBestTimePercent = this.CalculatePersonalBestInFramesPercent(personalBestTimeFramesElapsed);
+                var elapsedPersonalBestTimePercent = this.CalculatePersonalBestInFramesPercent(personalBestTimeFramesElapsed, (int)timeDefInt);
 
                 return string.Format(CultureInfo.InvariantCulture, "{0:0}%", elapsedPersonalBestTimePercent);
             }
@@ -2559,7 +2603,7 @@ TreeScope.Children, condition);
 
     private double HighestAttackMult { get; set; }
 
-    public double CalculatePersonalBestInFramesPercent(double personalBestInFramesElapsed)
+    public double CalculatePersonalBestInFramesPercent(double personalBestInFramesElapsed, int timeDefInt)
     {
         if (personalBestInFramesElapsed <= 0)
         {
@@ -2567,7 +2611,7 @@ TreeScope.Children, condition);
         }
         else
         {
-            return 100 - ((this.TimeDefInt() - this.TimeInt()) / personalBestInFramesElapsed * 100.0);
+            return 100 - ((timeDefInt - this.TimeInt()) / personalBestInFramesElapsed * 100.0);
         }
     }
 
@@ -2647,7 +2691,7 @@ TreeScope.Children, condition);
             }
             else
             {
-                LoggerInstance.Warn("Could not parse monster attack multiplier to double: {0}", this.AtkMult);
+                LoggerInstance.Warn(CultureInfo.InvariantCulture, "Could not parse monster attack multiplier to double: {0}", this.AtkMult);
             }
 
             if (decimal.TryParse(this.DefMult, NumberStyles.Any, CultureInfo.InvariantCulture, out var defMultResult))
@@ -2659,7 +2703,7 @@ TreeScope.Children, condition);
             }
             else
             {
-                LoggerInstance.Warn("Could not parse monster defense multiplier to decimal: {0}", this.DefMult);
+                LoggerInstance.Warn(CultureInfo.InvariantCulture, "Could not parse monster defense multiplier to decimal: {0}", this.DefMult);
             }
 
             return weaponRaw.ToString(CultureInfo.InvariantCulture);
@@ -4357,6 +4401,17 @@ TreeScope.Children, condition);
         }
     }
 
+    public string DetermineQuestToggleMonsterModeSelected(int mode)
+    {
+        return mode switch
+        {
+            (int)QuestToggleMonsterModeOption.Normal => @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/unknown.png",
+            (int)QuestToggleMonsterModeOption.Hardcore => @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/flame_hc.png",
+            (int)QuestToggleMonsterModeOption.Unlimited => @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/flame_ul.png",
+            _ => @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/unknown.png",
+        };
+    }
+
     public string Monster2HPBarColor => this.DetermineMonsterHPBarColor(2);
 
     public string Monster3HPBarColor => this.DetermineMonsterHPBarColor(3);
@@ -4387,6 +4442,24 @@ TreeScope.Children, condition);
     public string Monster3HPModeText { get; set; } = "THP";
 
     public string Monster4HPModeText { get; set; } = "THP";
+
+    public string QuestToggleModeSelected => this.DetermineQuestToggleMonsterModeSelected(QuestToggleMonsterMode());
+
+    public string QuestToggleModeSelectedShown
+    {
+        get
+        {
+            var s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
+
+            if (s.QuestToggleMonsterModeShown && (this.QuestToggleMonsterMode() is (int)QuestToggleMonsterModeOption.Hardcore or (int)QuestToggleMonsterModeOption.Unlimited))
+            {
+                return "Visible";
+            }
+            else{
+                return "Collapsed";
+            }
+        }
+    }
 
     public string CurrentMap
     {
@@ -4697,7 +4770,7 @@ TreeScope.Children, condition);
         return s.GenderExport ?? "Male";
     }
 
-    public static string GetRealWeaponNameForRunID(string className, string weaponName, long styleID, long weaponID, string weaponSlot1, string weaponSlot2, string weaponSlot3)
+    public static string GetRealWeaponNameForRunID(string className, long styleID, long weaponID, string weaponSlot1, string weaponSlot2, string weaponSlot3)
     {
         var style = styleID switch
         {
@@ -5425,7 +5498,7 @@ TreeScope.Children, condition);
 
     public static string GetCaravanSkillsForRunID(int skill1, int skill2, int skill3)
     {
-        var SkillName = string.Empty;
+        var caravanSkillName = string.Empty;
         var skills = new int[] { skill1, skill2, skill3 };
         for (var i = 0; i < skills.Length; i++)
         {
@@ -5433,20 +5506,20 @@ TreeScope.Children, condition);
             if (SkillCaravan.IDName.TryGetValue(skillId, out var skillName)
                 && skillName != "None" && skillName != string.Empty)
             {
-                SkillName += skillName;
+                caravanSkillName += skillName;
                 if (i != skills.Length - 1)
                 {
-                    SkillName += ", ";
+                    caravanSkillName += ", ";
                 }
 
                 if (i % 5 == 4)
                 {
-                    SkillName += "\n";
+                    caravanSkillName += "\n";
                 }
             }
         }
 
-        return string.IsNullOrEmpty(SkillName) ? "None" : SkillName;
+        return string.IsNullOrEmpty(caravanSkillName) ? "None" : caravanSkillName;
     }
 
     /// <summary>
@@ -5617,7 +5690,7 @@ TreeScope.Children, condition);
 
     public static string GetZenithSkillsForRunID(int skill1, int skill2, int skill3, int skill4, int skill5, int skill6, int skill7)
     {
-        var SkillName = string.Empty;
+        var zenithSkillName = string.Empty;
         var skills = new int[] { skill1, skill2, skill3, skill4, skill5, skill6, skill7 };
         for (var i = 0; i < skills.Length; i++)
         {
@@ -5626,31 +5699,31 @@ TreeScope.Children, condition);
             {
                 if (skillName != "None" && skillName != string.Empty)
                 {
-                    SkillName += skillName;
+                    zenithSkillName += skillName;
                     if (i != skills.Length - 1)
                     {
-                        SkillName += ", ";
+                        zenithSkillName += ", ";
                     }
 
                     if (i % 5 == 4)
                     {
-                        SkillName += "\n";
+                        zenithSkillName += "\n";
                     }
                 }
             }
         }
 
-        if (string.IsNullOrEmpty(SkillName))
+        if (string.IsNullOrEmpty(zenithSkillName))
         {
             return "None";
         }
 
-        return SkillName;
+        return zenithSkillName;
     }
 
     public static string GetArmorSkillsForRunID(int skill1, int skill2, int skill3, int skill4, int skill5, int skill6, int skill7, int skill8, int skill9, int skill10, int skill11, int skill12, int skill13, int skill14, int skill15, int skill16, int skill17, int skill18, int skill19)
     {
-        var SkillName = string.Empty;
+        var armorSkillName = string.Empty;
         var skills = new int[] { skill1, skill2, skill3, skill4, skill5, skill6, skill7, skill8, skill9, skill10, skill11, skill12, skill13, skill14, skill15, skill16, skill17, skill18, skill19 };
         for (var i = 0; i < skills.Length; i++)
         {
@@ -5659,26 +5732,26 @@ TreeScope.Children, condition);
             {
                 if (skillName != "None" && skillName != string.Empty)
                 {
-                    SkillName += skillName;
+                    armorSkillName += skillName;
                     if (i != skills.Length - 1)
                     {
-                        SkillName += ", ";
+                        armorSkillName += ", ";
                     }
 
                     if (i % 5 == 4)
                     {
-                        SkillName += "\n";
+                        armorSkillName += "\n";
                     }
                 }
             }
         }
 
-        if (string.IsNullOrEmpty(SkillName))
+        if (string.IsNullOrEmpty(armorSkillName))
         {
             return "None";
         }
 
-        return SkillName;
+        return armorSkillName;
     }
 
     /// <summary>
@@ -5742,7 +5815,7 @@ TreeScope.Children, condition);
 
     public static string GetAutomaticSkillsForRunID(int skill1, int skill2, int skill3, int skill4, int skill5, int skill6)
     {
-        var SkillName = string.Empty;
+        var automaticSkillName = string.Empty;
         var skills = new int[] { skill1, skill2, skill3, skill4, skill5, skill6 };
         for (var i = 0; i < skills.Length; i++)
         {
@@ -5751,26 +5824,26 @@ TreeScope.Children, condition);
             {
                 if (skillName != "None" && skillName != string.Empty)
                 {
-                    SkillName += skillName;
+                    automaticSkillName += skillName;
                     if (i != skills.Length - 1)
                     {
-                        SkillName += ", ";
+                        automaticSkillName += ", ";
                     }
 
                     if (i % 5 == 4)
                     {
-                        SkillName += "\n";
+                        automaticSkillName += "\n";
                     }
                 }
             }
         }
 
-        if (string.IsNullOrEmpty(SkillName))
+        if (string.IsNullOrEmpty(automaticSkillName))
         {
             return "None";
         }
 
-        return SkillName;
+        return automaticSkillName;
     }
 
     /// <summary>
@@ -5892,7 +5965,7 @@ TreeScope.Children, condition);
 
     public static string GetGSRSkillsForRunID(int skill1, int skill2)
     {
-        var SkillName = string.Empty;
+        var styleRankSkillName = string.Empty;
         var skills = new int[] { skill1, skill2 };
         for (var i = 0; i < skills.Length; i++)
         {
@@ -5901,26 +5974,26 @@ TreeScope.Children, condition);
             {
                 if (skillName != "None" && skillName != string.Empty)
                 {
-                    SkillName += skillName;
+                    styleRankSkillName += skillName;
                     if (i != skills.Length - 1)
                     {
-                        SkillName += ", ";
+                        styleRankSkillName += ", ";
                     }
 
                     if (i % 5 == 4)
                     {
-                        SkillName += "\n";
+                        styleRankSkillName += "\n";
                     }
                 }
             }
         }
 
-        if (string.IsNullOrEmpty(SkillName))
+        if (string.IsNullOrEmpty(styleRankSkillName))
         {
             return "None";
         }
 
-        return SkillName;
+        return styleRankSkillName;
     }
 
     /// <summary>
@@ -7485,7 +7558,7 @@ TreeScope.Children, condition);
                         0
                         : playerGear.GunnerWeaponID
                     : playerGear.BlademasterWeaponID);
-            var realweaponName = GetRealWeaponNameForRunID(this.GetWeaponClass((int)playerGear.WeaponClassID), GetWeaponNameFromType((int)playerGear.WeaponTypeID), playerGear.StyleID, weaponID, playerGear.WeaponSlot1, playerGear.WeaponSlot2, playerGear.WeaponSlot3);
+            var realweaponName = GetRealWeaponNameForRunID(this.GetWeaponClass((int)playerGear.WeaponClassID), playerGear.StyleID, weaponID, playerGear.WeaponSlot1, playerGear.WeaponSlot2, playerGear.WeaponSlot3);
             var head = this.GetArmorHeadNameForRunID((int)playerGear.HeadID, (int)playerGear.HeadSlot1ID, (int)playerGear.HeadSlot2ID, (int)playerGear.HeadSlot3ID);
             var chest = this.GetArmorChestNameForRunID((int)playerGear.ChestID, (int)playerGear.ChestSlot1ID, (int)playerGear.ChestSlot2ID, (int)playerGear.ChestSlot3ID);
             var arms = this.GetArmorArmNameForRunID((int)playerGear.ArmsID, (int)playerGear.ArmsSlot1ID, (int)playerGear.ArmsSlot2ID, (int)playerGear.ArmsSlot3ID);
@@ -7768,7 +7841,7 @@ Party Size: {32}",
     /// Generates the compendium.
     /// </summary>
     /// <returns></returns>
-    public string GenerateCompendium(DataLoader dataLoader)
+    public string GenerateCompendium()
     {
         var createdBy = GetFullCurrentProgramVersion();
         var createdAt = DateTime.UtcNow;
@@ -8018,9 +8091,9 @@ Session Duration (Highest/Lowest/Average/Median): {111} / {112} / {113} / {114}
             mostAttemptedQuestID,
             totalQuestsCompleted,
             totalQuestsAttempted,
-            GetMinutesSecondsMillisecondsFromFrames((long)questCompletionTimeElapsedAverage),
-            GetMinutesSecondsMillisecondsFromFrames((long)questCompletionTimeElapsedMedian),
-            GetMinutesSecondsMillisecondsFromFrames(totalTimeElapsedDuringQuest),
+            TimeService.GetMinutesSecondsMillisecondsFromFrames((long)questCompletionTimeElapsedAverage),
+            TimeService.GetMinutesSecondsMillisecondsFromFrames((long)questCompletionTimeElapsedMedian),
+            TimeService.GetMinutesSecondsMillisecondsFromFrames(totalTimeElapsedDuringQuest),
             mostCompletedQuestWithCarts,
             mostCompletedQuestWithCartsQuestID,
             totalCartsInQuest,
@@ -9999,27 +10072,6 @@ After all that you’ve unlocked magnet spike! You should get a material to make
 
     public List<ISeries> WeaponUsageSeries { get; set; } = new ();
 
-    public static string StaticGetTimeElapsed(double seconds)
-    {
-        var elapsedTime = TimeSpan.FromSeconds(seconds);
-        var elapsedTimeString = elapsedTime.ToString("mm\\:ss", CultureInfo.InvariantCulture);
-        return elapsedTimeString;
-    }
-
-    public static string GetTimeElapsed(double frames)
-    {
-        var elapsedTime = TimeSpan.FromSeconds(frames / Numbers.FramesPerSecond);
-        var elapsedTimeString = elapsedTime.ToString("mm\\:ss", CultureInfo.InvariantCulture);
-        return elapsedTimeString;
-    }
-
-    public static string GetMinutesSecondsMillisecondsFromFrames(long frames)
-    {
-        var elapsedTime = TimeSpan.FromSeconds((double)frames / Numbers.FramesPerSecond);
-        var elapsedTimeString = elapsedTime.ToString(TimeFormats.MinutesSecondsMilliseconds, CultureInfo.InvariantCulture);
-        return elapsedTimeString;
-    }
-
     // since the x axis for all of my graphs is the time elapsed in seconds in a quest, i only need 1 definition
     public Axis[] XAxes { get; set; } =
     {
@@ -10029,7 +10081,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             // LiveCharts provides some common formatters
             // in this case we are using the currency formatter.
             TextSize = 12,
-            Labeler = (value) => StaticGetTimeElapsed(value),
+            Labeler = (value) => TimeService.GetMinutesSecondsFromSeconds(value),
             NamePaint = new SolidColorPaint(new SKColor(StaticHexColorToDecimal("#a6adc8"))),
             LabelsPaint = new SolidColorPaint(new SKColor(StaticHexColorToDecimal("#a6adc8"))),
 
@@ -10706,7 +10758,9 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 "Some required files are missing from the game folder. Please make sure that the game folder contains the following files: "
             + string.Join(", ", findFiles) + "\n" +
             "gameFolderFiles: " + string.Join(", ", gameFolderFiles),
-                Messages.WarningTitle, MessageBoxButton.OK, MessageBoxImage.Warning);
+                Messages.WarningTitle,
+                MessageBoxButton.OK,
+                MessageBoxImage.Warning);
             LoggerInstance.Warn(CultureInfo.InvariantCulture, "Missing game files");
             s.EnableQuestLogging = false;
             s.Save();
@@ -10787,7 +10841,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         double timeElapsedIn30FPS = this.TimeDefInt() - this.TimeInt();
 
         // Calculate and return the DPS
-        return damageDealt / (timeElapsedIn30FPS / Numbers.FramesPerSecond);
+        return damageDealt / (timeElapsedIn30FPS / (double)Numbers.FramesPerSecond);
     }
 
     // TODO: gamepad
@@ -10804,7 +10858,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         double timeElapsedIn30FPS = this.TimeDefInt() - this.TimeInt();
 
         // Calculate and return the DPS
-        return this.TotalHitsTakenBlocked / (timeElapsedIn30FPS / Numbers.FramesPerSecond);
+        return this.TotalHitsTakenBlocked / (timeElapsedIn30FPS / (double)Numbers.FramesPerSecond);
     }
 
     public double CalculateHitsPerSecond()
@@ -10813,8 +10867,8 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         {
             return 0;
         }
-
-        return this.HitCountInt() / ((double)(this.TimeDefInt() - this.TimeInt()) / Numbers.FramesPerSecond);
+        // TODO is this correct?
+        return this.HitCountInt() / ((double)(this.TimeDefInt() - this.TimeInt()) / (double)Numbers.FramesPerSecond);
     }
 
     public Dictionary<int, double>? DamagePerSecondDictionaryDeserealized { get; set; }
@@ -10990,7 +11044,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
 
     public double PreviousActionsPerMinute { get; set; }
 
-    public string PreviousOverlayMode { get; set; } = "N/A";
+    public OverlayMode PreviousOverlayMode { get; set; } = OverlayMode.Unknown;
 
     public double PreviousMonster1AttackMultiplier { get; set; }
 
@@ -11286,7 +11340,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             return 0;
         }
 
-        return (double)(this.TimeDefInt() - this.TimeInt()) / Numbers.FramesPerSecond;
+        return (double)(this.TimeDefInt() - this.TimeInt()) / (double)Numbers.FramesPerSecond;
     }
 
     /// <summary>
@@ -11879,7 +11933,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             try
             {
                 this.PreviousOverlayMode = this.GetOverlayMode();
-                this.OverlayModeDictionary.Add(this.TimeInt(), this.GetOverlayMode());
+                this.OverlayModeDictionary.Add(this.TimeInt(), GetOverlayModeForStorage());
             }
             catch (Exception ex)
             {
@@ -12222,7 +12276,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         this.PreviousPlayerStamina = 0;
         this.PreviousHitsPerSecond = 0;
         this.PreviousActionsPerMinute = 0;
-        this.PreviousOverlayMode = "N/A";
+        this.PreviousOverlayMode = OverlayMode.Unknown;
         this.PreviousRoadFloor = 0;
 
         this.PreviousMonster1AttackMultiplier = 0;
@@ -12317,22 +12371,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         }
     }
 
-    public string OverlayModeWatermarkText
-    {
-        get
-        {
-            var overlayMode = this.GetOverlayMode();
-            overlayMode = overlayMode.Replace("(", string.Empty);
-            overlayMode = overlayMode.Replace(")", string.Empty);
-            overlayMode = overlayMode.Trim();
-            if (overlayMode == null || overlayMode == string.Empty)
-            {
-                overlayMode = "Standard";
-            }
-
-            return overlayMode;
-        }
-    }
+    public string OverlayModeWatermarkText => ShowOverlayModeFinalMode() ? GetFinalOverlayMode() : GetOverlayModeForStorage();
 
     public string QuestIDBind => this.QuestID().ToString(CultureInfo.InvariantCulture);
 
@@ -12344,6 +12383,8 @@ After all that you’ve unlocked magnet spike! You should get a material to make
     public List<RecentRuns> CalendarRuns { get; set; } = new ();
 
     public List<Achievement> PlayerAchievements { get; set; } = new ();
+
+    public ReadOnlyDictionary<int, Challenge> PlayerChallenges { get; set; }
 
     public ObservableCollection<QuestLogsOption> QuestLogsSearchOption { get; set; } = new ObservableCollection<QuestLogsOption>()
     {
@@ -12453,6 +12494,12 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         return s.EnableCurrentHPPercentage;
     }
 
+    public static bool ShowOverlayModeFinalMode()
+    {
+        var s = (Settings)Application.Current.TryFindResource("Settings");
+        return s.OverlayWatermarkMode == "Final";
+    }
+
     public static string FindAreaIcon(int id)
     {
         var areaGroup = new List<int> { 0 };
@@ -12481,7 +12528,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         {
             // Handle the case when Monster1HP cannot be parsed to an int
             // For example, you can return an error message or set some default value
-            LoggerInstance.Warn("Could not parse monster 1 HP to get monster 1 EHP Percent: {0}", this.Monster1HP);
+            LoggerInstance.Warn(CultureInfo.InvariantCulture, "Could not parse monster 1 HP to get monster 1 EHP Percent: {0}", this.Monster1HP);
             return " (0%)";
         }
 

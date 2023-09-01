@@ -33,39 +33,12 @@ body:
     validations:
       required: true
   - type: textarea
-    id: operating-system
-    attributes:
-      label: What operating system are you using?
-      description: Operating system
-      placeholder: Tell us what operating system you using (Windows 11, Windows 10, etc.)
-      value: "Windows 10 21H2"
-    validations:
-      required: true
-  - type: textarea
     id: version
     attributes:
       label: What version of the program are you using?
       description: Program Version
-      placeholder: Tell us what version you using (x.y.z)
+      placeholder: Tell us what version you are using (x.y.z)
       value: "Latest version"
-    validations:
-      required: true
-  - type: dropdown
-    id: game-version
-    attributes:
-      label: What version of the game are you using?
-      multiple: true
-      options:
-        - High-Grade Edition
-        - Non High-Grade Edition
-    validations:
-      required: true
-  - type: input
-    id: quest-id
-    attributes:
-      label: Quest ID
-      description: What is the Quest ID where the issue occurs? Enter the quest ID that you see in the overlay, enabled by going into Config -> Quest Log -> Settings. If the issue occurs in multiple quests, enter an example quest ID and tell us in the issue description that it happens in multiple quests. If the issue occurs outside quests, enter 0. 
-      placeholder: '0'
     validations:
       required: true
   - type: markdown
