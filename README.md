@@ -96,7 +96,8 @@ If you record and/or stream with the overlay, the recommended RAM is 16 GB and t
 5. [Bonk monsters!](https://c.tenor.com/60Tr3Zeg6RkAAAAd/fumo-bonk.gif)
 6. [Be sure to leave some feedback here!](https://forms.gle/hrAVWMcYS5HEo1v7A)
 
-**It's recommended to start the overlay when you are done loading into Mezeporta.**
+> [!NOTE]<br>
+> It's recommended to start the overlay when you are done loading into Mezeporta.
 
 [View CHANGELOG.md](https://github.com/DorielRivalet/mhfz-overlay/blob/main/CHANGELOG.md).
 
