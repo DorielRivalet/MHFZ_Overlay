@@ -13,10 +13,13 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Printing;
+using System.Runtime.Intrinsics.Arm;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Transactions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -32,6 +35,8 @@ using MHFZ_Overlay.Models.Structures;
 using MHFZ_Overlay.Views.Windows;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using NLog;
+using Octokit;
 using Wpf.Ui.Common;
 using Wpf.Ui.Controls;
 using Formatting = Newtonsoft.Json.Formatting;
@@ -81,15 +86,15 @@ public sealed class DatabaseService
 
     public TimeSpan SnackbarTimeOut { get; set; } = TimeSpan.FromSeconds(5);
 
-    private string? connectionString;
+    private string? connectionString { get; set; }
 
-    private string? customDatabasePath;
+    private string? customDatabasePath { get; set; }
 
     private DatabaseService() => Logger.Info(CultureInfo.InvariantCulture, $"Service initialized");
 
-    private string? dataSource;
+    private string? dataSource { get; set; }
 
-    private bool isDatabaseSetup;
+    private bool isDatabaseSetup { get; set; }
 
     public static DatabaseService GetInstance()
     {
@@ -287,6 +292,9 @@ public sealed class DatabaseService
             using (var conn = new SQLiteConnection(this.dataSource))
             {
                 conn.Open();
+
+                this.RemoveCurrentDatabaseTriggers(conn);
+                this.CheckDatesFormat(conn);
 
                 // Toggle comment this for testing the error handling
                 // ThrowException(conn);
@@ -3558,11 +3566,11 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
                         if (playerID == 1 && (startTime == DateTime.UnixEpoch || startTime == DateTime.MinValue))
                         {
-                            creationDate = DateTime.UtcNow.Date.ToString(CultureInfo.InvariantCulture);
+                            creationDate = DateTime.UtcNow.ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss.fffffffZ");
                         }
                         else
                         {
-                            creationDate = startTime.Date.ToString(CultureInfo.InvariantCulture);
+                            creationDate = startTime.ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss.fffffffZ");
                         }
 
                         if (playerID == 1)
@@ -13956,6 +13964,146 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
                 }
 
                 transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                HandleError(transaction, ex);
+            }
+        }
+    }
+
+    private void RemoveCurrentDatabaseTriggers(SQLiteConnection conn)
+    {
+        using (var transaction = conn.BeginTransaction())
+        {
+            try
+            {
+                List<string> triggersToRemove = new();
+
+                // SQL statement to retrieve all triggers in the database
+                string getTriggersSql = "SELECT name FROM sqlite_master WHERE type = 'trigger';";
+
+                // SQL statement to drop a trigger
+                string dropTriggerSql = "DROP TRIGGER IF EXISTS {0};";
+                using (SQLiteCommand getTriggersCommand = new SQLiteCommand(getTriggersSql, conn))
+                using (SQLiteDataReader reader = getTriggersCommand.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        string triggerName = reader.GetString(0);
+
+                        using (SQLiteCommand dropTriggerCommand = new SQLiteCommand(string.Format(dropTriggerSql, triggerName), conn))
+                        {
+                            triggersToRemove.Add(triggerName);
+                            dropTriggerCommand.ExecuteNonQuery();
+                        }
+                    }
+                }
+
+                transaction.Commit();
+                Logger.Debug("Triggers to remove: {0}", triggersToRemove.Count);
+            }
+            catch (Exception ex)
+            {
+                HandleError(transaction, ex);
+            }
+        }
+    }
+
+    private void CheckDatesFormat(SQLiteConnection conn)
+    {
+        using (var transaction = conn.BeginTransaction())
+        {
+            try
+            {
+                SQLiteCommand command = new SQLiteCommand("SELECT name FROM sqlite_master WHERE type='table'", conn);
+                SQLiteDataReader reader = command.ExecuteReader();
+
+                List<string> tables = new List<string>();
+                while (reader.Read())
+                {
+                    var name = reader["name"].ToString();
+                    if (name is not null)
+                    {
+                        tables.Add(name);
+                    }
+                }
+
+                if (tables.Count <= 5)
+                {
+                    Logger.Warn("Only 5 or less tables were found for date conversion, canceling process.");
+                    return;
+                }
+
+                List<string> updatedFields = new List<string>();
+
+                foreach (var table in tables)
+                {
+                    SQLiteCommand command2 = new SQLiteCommand($"PRAGMA table_info({table})", conn);
+                    SQLiteDataReader reader2 = command2.ExecuteReader();
+                    while (reader2.Read())
+                    {
+                        var name2 = reader2["name"].ToString();
+                        if (name2 is null)
+                        {
+                            Logger.Warn("Column name is null.");
+                            break;
+                        }
+
+                        string columnName = name2;
+                        if (columnName == "CreatedAt" || columnName == "CreationDate" || columnName == "Date" || columnName == "StartTime" || columnName == "EndTime")
+                        {
+                            SQLiteCommand selectCommand = new SQLiteCommand($"SELECT {columnName} FROM {table}", conn);
+                            SQLiteDataReader selectReader = selectCommand.ExecuteReader();
+                            while (selectReader.Read())
+                            {
+                                var selectedColumn = selectReader.GetString(selectReader.GetOrdinal(columnName));
+                                if (selectedColumn is null)
+                                {
+                                    Logger.Warn("Selected column is null.");
+                                    break;
+                                }
+
+                                string value = selectedColumn;
+                                if (!value.EndsWith("Z"))
+                                {
+                                    DateTime date;
+                                    if (DateTime.TryParse(value, CultureInfo.InvariantCulture, DateTimeStyles.AssumeLocal, out date))
+                                    {
+                                        string utcDate = date.ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss.fffffffZ");
+
+                                        SQLiteCommand updateCommand = new SQLiteCommand($"UPDATE {table} SET {columnName} = '{utcDate}' WHERE {columnName} = '{value}'", conn);
+                                        updateCommand.ExecuteNonQuery();
+
+                                        updatedFields.Add($"{table}.{columnName}.{value}.{utcDate}");
+                                    }
+                                    else
+                                    {
+                                        string utcDate = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).ToString("yyyy-MM-dd HH:mm:ss.fffffffZ");
+
+                                        SQLiteCommand updateCommand = new SQLiteCommand($"UPDATE {table} SET {columnName} = '{utcDate}' WHERE {columnName} = '{value}'", conn);
+                                        updateCommand.ExecuteNonQuery();
+
+                                        updatedFields.Add($"{table}.{columnName}.{value}.{utcDate}");
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                transaction.Commit();
+
+                if (updatedFields.Count > 0)
+                {
+                    MessageBox.Show($"Found dates needed to convert to UTC. Updated date entries count: {updatedFields.Count}", Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
+                    Logger.Debug($"Updated date entries: {string.Join("\n", updatedFields)}");
+                    Logger.Debug($"Updated date entries count: {updatedFields.Count}");
+                }
+                else
+                {
+                    Logger.Info("No date conversions needed in database.");
+                }
             }
             catch (Exception ex)
             {
