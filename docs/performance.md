@@ -19,6 +19,7 @@
   - [Performance Scenarios](#performance-scenarios)
   - [Performance Results](#performance-results)
     - [v0.25.0](#v0250)
+  - [Benchmark Functions](#benchmark-functions)
   - [Performance Test Process](#performance-test-process)
 
 ## Overview
@@ -186,6 +187,10 @@ We describe a specific scenario or task for performance evaluation. These scenar
 |\|\| - System.Data.SQLite.SQLiteDataReader.NextResult\(\)|2 \(0.02%\)|2 \(0.02%\)|
 |\|\| - System.Data.SQLite.SQLiteCommand.Dispose\(bool\)|1 \(0.01%\)|1 \(0.01%\)|
 |\|\| - System.Data.SQLite.SQLiteCommand.ExecuteReader\(System.Data.CommandBehavior\)|1 \(0.01%\)|1 \(0.01%\)|
+
+## Benchmark Functions
+
+The functions used for benchmarking can be found in the `MHFZOverlayBenchmark` project.
 
 ## Performance Test Process
 

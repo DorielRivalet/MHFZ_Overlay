@@ -4,6 +4,7 @@
 
 namespace MHFZ_Overlay.Services.Converter;
 
+using MHFZ_Overlay.Models.Structures;
 using static MHFZ_Overlay.Services.OverlaySettingsService;
 
 public static class ConfigurationPresetConverter

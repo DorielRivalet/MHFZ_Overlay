@@ -96,7 +96,8 @@ If you record and/or stream with the overlay, the recommended RAM is 16 GB and t
 5. [Bonk monsters!](https://c.tenor.com/60Tr3Zeg6RkAAAAd/fumo-bonk.gif)
 6. [Be sure to leave some feedback here!](https://forms.gle/hrAVWMcYS5HEo1v7A)
 
-**It's recommended to start the overlay when you are done loading into Mezeporta.**
+> [!NOTE]<br>
+> It's recommended to start the overlay when you are done loading into Mezeporta.
 
 [View CHANGELOG.md](https://github.com/DorielRivalet/mhfz-overlay/blob/main/CHANGELOG.md).
 
@@ -124,35 +125,41 @@ We strongly recommend that you verify the authenticity and integrity of the soft
 - `Shift+F5` Restart Overlay.
 - `Shift+F6` Exit.
 
-As an alternative to hotkeys, you can check your system tray options by right-clicking the icon.
+As an alternative to hotkeys, you can use the system tray options by right-clicking the icon.
 
 ![System Tray options](./demo/systemtray.png)
 
 ### Quick Troubleshooting
 
-- If the overlay doesn't seem to load values properly, restart it. If that didn't fix the issue, [please send information here](https://github.com/DorielRivalet/mhfz-overlay/issues).
+- Use the Configuration Preset option for quickly setting up your configuration.
 
-- Additionally, if information from the overlay is wrong or inaccurate (*e.g.* monster parts labels), feel free to send an issue.
+![Preset](./demo/preset.png)
 
-- If the monster HP shown is less than what its actual values should be, restart both the game and the overlay. If the HP shows 0/1 then change area for it to load. If the issue still occurs, change the Effective HP Corrector's minimum and maximum thresholds or disable Effective HP, otherwise send a bug report if there isn't already one.
+- If the monster HP shown is less than what its actual values should be, restart both the game and the overlay. If the HP shows 0/1 then change area for it to load. If the issue still occurs, change the Effective HP Corrector's minimum and maximum thresholds or disable Effective HP.
+
+- If you are having issues with the damage numbers when hitting the monster, change Damage Numbers Mode from Automatic to True Damage.
 
 - If you want the overlay to use the least memory possible, you can decide to not open the configuration window. If you want to change settings, then open the configuration window, edit settings, click save and restart the overlay.
 
-- Fully reinstalling the game or .NET dependencies may fix some bugs.
+- Press `Alt+Enter` if your screen resolution got lowered.
 
-- Press `Alt+Enter` twice if your screen resolution got lowered.
-
-- If the HP shows 0/1 then change area for it to load.
-
-- If you have screen issues when starting the overlay, first press `Alt+Enter` in-game, load the overlay, then press `Alt+Enter` in-game again. Also make sure that the UAC prompts do not cause issues in your computer, and that you have the correct permissions.
+- If you have screen issues when starting the overlay, first press `Alt+Enter` in-game, load the overlay, then press `Alt+Enter` in-game again. Also make sure that the UAC prompts do not cause issues in your computer, and that you have the correct operating system permissions.
 
 - If you are having performance issues, lower the overlay resolution and refresh rate. Also try setting Rendering Mode to Software or Hardware.
+
+- If you are playing on multiplayer, keep in mind that is not fully supported.
+
+- Fully reinstalling the game or .NET dependencies may fix some bugs.
+
+- If the overlay doesn't seem to load values properly, restart it. If that didn't fix the issue, [please send information here](https://github.com/DorielRivalet/mhfz-overlay/issues).
+
+- Additionally, if information from the overlay is wrong or inaccurate (*e.g.* monster parts labels), feel free to send an issue.
 
 ## Features
 
 - [x] Monster Effective HP Bars (*e.g.* Burning Freezing Elzelion's 1,000,000 HP!).
 
-You can also see the monster icons or renders, and there is an option for automatic bar colors depending on the monster. You can adjust the font size, color, family and weight; in addition to that you can hide/show any sub-component.
+You can also see the monster icons or renders, and there is an option for automatic bar colors depending on the monster. You can adjust the font size, color, family and weight; in addition to that you can hide/show any sub-component. Includes Hardcore and Unlimited icons.
 
 ![Monster HP Bars 1](./demo/hp1.png)
 ![Monster HP Bars 2](./demo/hp2.png)
@@ -309,7 +316,6 @@ Some sections have context menus where you can save the section contents to a fi
 - Handle multiple objectives information.
 - Zenith information in Road.
 - Raviente Support Part Info.
-- Detect UL/HC.
 - Guild Pugi address.
 - Armor Set Website links.
 - Sky Corridor.
@@ -393,6 +399,22 @@ We recommend consulting the appropriate documentation file based on your needs. 
 ![GitHub repo size](https://img.shields.io/github/repo-size/DorielRivalet/mhfz-overlay?style=flat)
 [![wakatime](https://wakatime.com/badge/user/958e2c62-03f7-4c2a-82df-75c8df9ee232/project/db4298ba-fbc4-4fc2-aa24-67938f65ee8a.svg)](https://wakatime.com/badge/user/958e2c62-03f7-4c2a-82df-75c8df9ee232/project/db4298ba-fbc4-4fc2-aa24-67938f65ee8a)
 
+[![Automate Git Stats](https://github.com/DorielRivalet/mhfz-overlay/actions/workflows/automate-git-stats.yml/badge.svg?event=schedule)](https://github.com/DorielRivalet/mhfz-overlay/actions/workflows/automate-git-stats.yml)
+
+![Repository Commits Stats 1](./scripts/output/commit_types.png)
+
+![Repository Commits Stats 2](./scripts/output/commits_over_time.png)
+
+![Repository Commits Stats 3](./scripts/output/commits_per_day_of_week.png)
+
+![Repository Commits Stats 4](./scripts/output/commits_per_hour.png)
+
+[Generated thanks to the following scripts](./scripts)
+
+![Ruby](https://img.shields.io/badge/Ruby-1e1e2e?style=for-the-badge&labelColor=23f5e0dc&logoColor=CC342D&logo=ruby)
+![Python](https://img.shields.io/badge/Python-1e1e2e?style=for-the-badge&labelColor=23f5e0dc&logoColor=3776AB&logo=python)
+![Lua](https://img.shields.io/badge/Lua-1e1e2e?style=for-the-badge&labelColor=23f5e0dc&logoColor=2C2D72&logo=lua)
+
 ## Feedback
 
 [Google Forms](https://forms.gle/hrAVWMcYS5HEo1v7A).
@@ -408,6 +430,8 @@ We recommend consulting the appropriate documentation file based on your needs. 
 - The design and icons used in this project are part of [*Segoe Fluent Icons*](https://learn.microsoft.com/en-us/windows/apps/design/style/segoe-fluent-icons-font) and [WPF UI](https://github.com/lepoco/wpfui).
 - The fonts used is the in-game one, *MS Gothic*. For monospaced, the application uses Source Code Pro and MesloLGM NF. This project also uses Font Awesome's fonts. The Monster Hunter font made by XMitsarugiX comes from [here](https://www.deviantart.com/xmitsarugix/art/Monster-Hunter-Font-Type-1-and-2-380816151).
 - Thanks to Kairi for extensive beta testing and early support. [YouTube channel](https://www.youtube.com/@kairi_mhfz).
+- The combo element icons are made by [Narwhaler](https://fanonmonsterhunter.fandom.com/wiki/User:Narwhaler).
+- Additional icons can be found [here](https://fanonmonsterhunter.fandom.com/wiki/Category:Icon).
 
 <a href="https://github.com/suzaku01"><img style="border-radius: 50% !important;" alt="Avatar" src="https://avatars.githubusercontent.com/u/89909040?v=4" width="64px" height="auto" ></a>
 <a href="https://github.com/Imulion"><img style="border-radius: 50% !important;" alt="Avatar" src="https://avatars.githubusercontent.com/u/27354834?v=4" width="64px" height="auto" ></a>

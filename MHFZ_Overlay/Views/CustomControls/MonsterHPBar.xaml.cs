@@ -10,6 +10,7 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using MHFZ_Overlay.Models.Constant;
 
 /// <summary>
 /// Interaction logic for UserControl1.xaml.
@@ -103,6 +104,18 @@ public partial class MonsterHPBar : UserControl, INotifyPropertyChanged
         set => this.SetValue(HPModeProperty, value);
     }
 
+    public string QuestToggleMode
+    {
+        get => (string)this.GetValue(QuestToggleModeProperty);
+        set => this.SetValue(QuestToggleModeProperty, value);
+    }
+
+    public string QuestToggleModeShown
+    {
+        get => (string)this.GetValue(QuestToggleModeShownProperty);
+        set => this.SetValue(QuestToggleModeShownProperty, value);
+    }
+
     public static readonly DependencyProperty NumCurrProperty =
         DependencyProperty.Register("NumCurr", typeof(int), typeof(MonsterHPBar), new PropertyMetadata(0));
 
@@ -110,22 +123,28 @@ public partial class MonsterHPBar : UserControl, INotifyPropertyChanged
         DependencyProperty.Register("NumMax", typeof(int), typeof(MonsterHPBar), new PropertyMetadata(0));
 
     public static readonly DependencyProperty BarColorProperty =
-        DependencyProperty.Register("BarColor", typeof(Brush), typeof(MonsterHPBar), new PropertyMetadata(null));
+        DependencyProperty.Register("BarColor", typeof(Brush), typeof(MonsterHPBar), new PropertyMetadata(Brushes.Black));
 
     public static readonly DependencyProperty BorderColorProperty =
-    DependencyProperty.Register("BorderColor", typeof(Brush), typeof(MonsterHPBar), new PropertyMetadata(null));
+    DependencyProperty.Register("BorderColor", typeof(Brush), typeof(MonsterHPBar), new PropertyMetadata(Brushes.Black));
 
     public static readonly DependencyProperty IconSourceProperty =
-        DependencyProperty.Register("IconSource", typeof(string), typeof(MonsterHPBar), new PropertyMetadata(string.Empty));
+        DependencyProperty.Register("IconSource", typeof(string), typeof(MonsterHPBar), new PropertyMetadata(Messages.MonsterImageNotLoaded));
 
     public static readonly DependencyProperty StrokeColorProperty =
-        DependencyProperty.Register("StrokeColor", typeof(Brush), typeof(MonsterHPBar), new PropertyMetadata(null));
+        DependencyProperty.Register("StrokeColor", typeof(Brush), typeof(MonsterHPBar), new PropertyMetadata(Brushes.Black));
 
     public static readonly DependencyProperty BarTypeProperty =
        DependencyProperty.Register("BarType", typeof(string), typeof(MonsterHPBar), new PropertyMetadata(string.Empty));
 
     public static readonly DependencyProperty HPModeProperty =
         DependencyProperty.Register("HPMode", typeof(string), typeof(MonsterHPBar), new PropertyMetadata(string.Empty));
+
+    public static readonly DependencyProperty QuestToggleModeProperty =
+    DependencyProperty.Register("QuestToggleMode", typeof(string), typeof(MonsterHPBar), new PropertyMetadata(Messages.MonsterImageNotLoaded));
+
+    public static readonly DependencyProperty QuestToggleModeShownProperty =
+DependencyProperty.Register("QuestToggleModeShown", typeof(string), typeof(MonsterHPBar), new PropertyMetadata("Collapsed"));
 
     /// <summary>
     /// The current hp percent.
@@ -284,6 +303,18 @@ public partial class MonsterHPBar : UserControl, INotifyPropertyChanged
     {
         get => this.HPMode;
         set => this.HPMode = value;
+    }
+
+    /// <summary>
+    /// Gets or sets the quest toggle monster mode.
+    /// </summary>
+    /// <value>
+    /// The mode.
+    /// </value>
+    public string QuestToggleModeText
+    {
+        get => this.QuestToggleMode;
+        set => this.QuestToggleMode = value;
     }
 
     public static string IconShown

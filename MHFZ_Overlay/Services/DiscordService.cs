@@ -7,11 +7,13 @@ namespace MHFZ_Overlay.Services;
 using System;
 using System.Diagnostics;
 using System.Globalization;
+using System.Windows;
 using DiscordRPC;
 using EZlion.Mapper;
 using MHFZ_Overlay;
 using MHFZ_Overlay.Models.Collections;
 using MHFZ_Overlay.Models.Constant;
+using MHFZ_Overlay.Models.Structures;
 
 /// <summary>
 /// Handles the Discord Rich Presence. Should not operate if the user is not enabling it.
@@ -35,8 +37,8 @@ public sealed class DiscordService
     // sky corridor prologue: 21729
     // raviente 62105
     // raviente carve 62108
-    //violent raviente 62101
-    //violent carve 62104
+    // violent raviente 62101
+    // violent carve 62104
     // berserk slay practice 55796
     // berserk support practice 1 55802
     // berserk support practice 2 55803
@@ -216,13 +218,13 @@ public sealed class DiscordService
         }
 
         // TODO also need to handle the other fields lengths
-        if (string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}{3}{4}{5}", this.GetPartySize(dataLoader), GetQuestState(dataLoader), GetCaravanScore(dataLoader), dataLoader.Model.GetOverlayModeForRPC(), dataLoader.Model.GetAreaName(dataLoader.Model.AreaID()), GetGameMode(dataLoader.IsHighGradeEdition)).Length >= 95)
+        if (string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}{3}{4}{5}", dataLoader.Model.GetOverlayModeForRPC(), this.GetPartySize(dataLoader), GetQuestState(dataLoader), GetCaravanScore(dataLoader), dataLoader.Model.GetAreaName(dataLoader.Model.AreaID()), GetGameMode(dataLoader.IsHighGradeEdition)).Length >= 95)
         {
-            PresenceTemplate.Details = string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}", GetQuestState(dataLoader), dataLoader.Model.GetOverlayModeForRPC(), dataLoader.Model.GetAreaName(dataLoader.Model.AreaID()));
+            PresenceTemplate.Details = string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}", dataLoader.Model.GetOverlayModeForRPC(), GetQuestState(dataLoader), dataLoader.Model.GetAreaName(dataLoader.Model.AreaID()));
         }
         else
         {
-            PresenceTemplate.Details = string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}{3}{4}{5}", this.GetPartySize(dataLoader), GetQuestState(dataLoader), GetCaravanScore(dataLoader), dataLoader.Model.GetOverlayModeForRPC(), dataLoader.Model.GetAreaName(dataLoader.Model.AreaID()), GetGameMode(dataLoader.IsHighGradeEdition));
+            PresenceTemplate.Details = string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}{3}{4}{5}", dataLoader.Model.GetOverlayModeForRPC(), this.GetPartySize(dataLoader), GetQuestState(dataLoader), GetCaravanScore(dataLoader), dataLoader.Model.GetAreaName(dataLoader.Model.AreaID()), GetGameMode(dataLoader.IsHighGradeEdition));
         }
 
         var stateString = string.Empty;
@@ -289,7 +291,7 @@ public sealed class DiscordService
                     }
                     else
                     {
-                        stateString = string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}{3}{4}{5}{6} | True Raw: {7} (Max {8}) | Hits: {9}", ViewModels.Windows.AddressModel.GetQuestNameFromID(dataLoader.Model.QuestID()), ViewModels.Windows.AddressModel.GetObjectiveNameFromID(dataLoader.Model.ObjectiveType()), string.Empty, dataLoader.Model.GetObjective1Quantity(), dataLoader.Model.GetRankNameFromID(dataLoader.Model.RankBand()), dataLoader.Model.GetStarGrade(), dataLoader.Model.GetRealMonsterName(), dataLoader.Model.ATK, dataLoader.Model.HighestAtk, dataLoader.Model.HitCountInt());
+                        stateString = string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}{3}{4}{5}{6} | True Raw: {7} (Max {8}) | Hits: {9}", ViewModels.Windows.AddressModel.GetQuestNameFromID(dataLoader.Model.QuestID()), ViewModels.Windows.AddressModel.GetObjectiveNameFromID(dataLoader.Model.ObjectiveType()), dataLoader.Model.GetObjective1Quantity(), dataLoader.Model.GetRankNameFromID(dataLoader.Model.RankBand()), GetQuestToggleMode(dataLoader.Model.QuestToggleMonsterMode()).TrimStart(), dataLoader.Model.GetStarGrade(), dataLoader.Model.GetRealMonsterName(), dataLoader.Model.ATK, dataLoader.Model.HighestAtk, dataLoader.Model.HitCountInt());
                         PresenceTemplate.State = stateString.Length <= MaxDiscordRPCStringLength ? stateString : string.Concat(stateString.AsSpan(0, MaxDiscordRPCStringLength - 3), "...");
                     }
 
@@ -1232,7 +1234,7 @@ public sealed class DiscordService
                     }
                     else
                     {
-                        return string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}{3}{4}{5} | ", ViewModels.Windows.AddressModel.GetObjectiveNameFromID(dataLoader.Model.ObjectiveType(), true), string.Empty, dataLoader.Model.GetObjective1Quantity(true), dataLoader.Model.GetRankNameFromID(dataLoader.Model.RankBand(), true), dataLoader.Model.GetStarGrade(true), dataLoader.Model.GetRealMonsterName(true));
+                        return string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}{3}{4}{5}{6} | ", ViewModels.Windows.AddressModel.GetObjectiveNameFromID(dataLoader.Model.ObjectiveType(), true), string.Empty, dataLoader.Model.GetObjective1Quantity(true), dataLoader.Model.GetRankNameFromID(dataLoader.Model.RankBand(), true), GetQuestToggleMode(dataLoader.Model.QuestToggleMonsterMode()), dataLoader.Model.GetStarGrade(true), dataLoader.Model.GetRealMonsterName(true));
                     }
             }
         }
@@ -1256,6 +1258,17 @@ public sealed class DiscordService
         {
             return string.Format(CultureInfo.InvariantCulture, "Party: {0}/{1} | ", dataLoader.Model.PartySize(), GetPartySizeMax(dataLoader));
         }
+    }
+
+    private static string GetQuestToggleMode(int option)
+    {
+        return option switch
+        {
+            (int)QuestToggleMonsterModeOption.Normal => string.Empty,
+            (int)QuestToggleMonsterModeOption.Hardcore => " HC ",
+            (int)QuestToggleMonsterModeOption.Unlimited => " UL ",
+            _ => string.Empty,
+        };
     }
 
     private static int GetPartySizeMax(DataLoader dataLoader)

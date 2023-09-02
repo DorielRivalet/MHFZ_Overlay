@@ -1664,4 +1664,6 @@ public sealed class AddressModelNotHGE : AddressModel
 
     /// <inheritdoc/>
     public override int PartnyaBagItem10Qty() => this.M.Read2Byte("mhfo.dll+57457AE");
+
+    public override int QuestToggleMonsterMode() => this.M.ReadByte("mhfo.dll+5B05B8E");
 }

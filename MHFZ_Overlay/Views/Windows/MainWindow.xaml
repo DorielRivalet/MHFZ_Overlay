@@ -13,6 +13,7 @@
         xmlns:customcontrols="clr-namespace:MHFZ_Overlay.Views.CustomControls"
         xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
         xmlns:viewmodels="clr-namespace:MHFZ_Overlay.ViewModels.Windows"
+        xmlns:tray="http://schemas.lepo.co/wpfui/2022/xaml/tray"
         d:DataContext="{d:DesignInstance Type=viewmodels:AddressModel}"
         mc:Ignorable="d"
         x:Name="Window"
@@ -32,95 +33,92 @@
         <RoutedUICommand x:Key="ESC" Text="Escape"/>
     </Window.Resources>
     <Grid>
-    <Grid>
-        <ui:TitleBar Visibility="Hidden" BorderThickness="0" BorderBrush="{StaticResource Red}" x:Name="TitleBarBorder">
-            <ui:TitleBar.Tray>
-                <ui:NotifyIcon Visibility="Visible"
+        <Grid>
+            <tray:NotifyIcon Visibility="Visible"
                 MenuOnRightClick="True"
                 TooltipText="Monster Hunter Frontier Z Overlay"
                 x:Name="MainWindowNotifyIcon">
-                    <ui:NotifyIcon.Menu>
-                        <ContextMenu>
-                            <ui:MenuItem ToolTip="Open the configuration window" Foreground="{StaticResource Green}" Header="Settings" Tag="settings" Click="OptionSettings_Click">
-                                <ui:MenuItem.Icon>
-                                    <ui:SymbolIcon Symbol="Settings24" Foreground="{StaticResource Green}"/>
-                                </ui:MenuItem.Icon>
-                            </ui:MenuItem>
-                            <ui:NavigationViewItemSeparator/>
-                            <ui:MenuItem Foreground="{StaticResource Blue}" ToolTip="Go to Frequently Asked Questions page" Header="Help" Tag="help" Click="OptionHelp_Click">
-                                <ui:MenuItem.Icon>
-                                    <ui:SymbolIcon Symbol="Open24" Foreground="{StaticResource Blue}"/>
-                                </ui:MenuItem.Icon>
-                            </ui:MenuItem>
-                            <ui:MenuItem Foreground="{StaticResource Blue}" ToolTip="Go to documentation page" Header="Documentation" Tag="documentation" Click="OptionDocumentation_Click">
-                                <ui:MenuItem.Icon>
-                                        <ui:SymbolIcon Symbol="Open24" Foreground="{StaticResource Blue}"/>
-                                </ui:MenuItem.Icon>
-                            </ui:MenuItem>
-                            <ui:MenuItem Foreground="{StaticResource Blue}" ToolTip="Go to report bug page" Header="Report Bug" Tag="reportbug" Click="OptionReportBug_Click">
-                                <ui:MenuItem.Icon>
-                                        <ui:SymbolIcon Symbol="Open24" Foreground="{StaticResource Blue}"/>
-                                </ui:MenuItem.Icon>
-                            </ui:MenuItem>
-                            <ui:MenuItem Foreground="{StaticResource Blue}" ToolTip="Go to request feature page" Header="Request Feature"  Tag="requestfeature" Click="OptionRequestFeature_Click">
-                                <ui:MenuItem.Icon>
-                                        <ui:SymbolIcon Symbol="Open24" Foreground="{StaticResource Blue}"/>
-                                </ui:MenuItem.Icon>
-                            </ui:MenuItem>
-                            <ui:MenuItem Foreground="{StaticResource Blue}" ToolTip="Go to feedback page" Header="Send Feedback" Tag="sendfeedback" Click="OptionSendFeedback_Click">
-                                <ui:MenuItem.Icon>
-                                        <ui:SymbolIcon Symbol="Open24" Foreground="{StaticResource Blue}"/>
-                                </ui:MenuItem.Icon>
-                            </ui:MenuItem>
-                            <ui:MenuItem Foreground="{StaticResource Blue}" ToolTip="Go to changelog page" Header="Changelog" Tag="changelog" Click="OptionChangelog_Click">
-                                <ui:MenuItem.Icon>
-                                        <ui:SymbolIcon Symbol="Open24" Foreground="{StaticResource Blue}"/>
-                                </ui:MenuItem.Icon>
-                            </ui:MenuItem>
-                            <ui:NavigationViewItemSeparator/>
-                            <ui:MenuItem Foreground="{StaticResource Rosewater}" ToolTip="Open settings folder" Header="Settings Folder" Tag="settingsfolder" Click="OptionSettingsFolder_Click">
-                                <ui:MenuItem.Icon>
-                                    <ui:SymbolIcon Symbol="OpenFolder24" Foreground="{StaticResource Rosewater}"/>
-                                </ui:MenuItem.Icon>
-                            </ui:MenuItem>
-                            <ui:MenuItem Foreground="{StaticResource Rosewater}" ToolTip="Open logs folder" Header="Logs Folder" Tag="logsfolder" Click="OptionLogsFolder_Click">
-                                <ui:MenuItem.Icon>
-                                        <ui:SymbolIcon Symbol="OpenFolder24" Foreground="{StaticResource Rosewater}"/>
-                                </ui:MenuItem.Icon>
-                            </ui:MenuItem>
-                            <ui:MenuItem Foreground="{StaticResource Rosewater}" ToolTip="Open database folder" Header="Database Folder" Tag="databasefolder" Click="OptionDatabaseFolder_Click">
-                                <ui:MenuItem.Icon>
-                                        <ui:SymbolIcon Symbol="OpenFolder24" Foreground="{StaticResource Rosewater}"/>
-                                </ui:MenuItem.Icon>
-                            </ui:MenuItem>
-                            <ui:MenuItem Foreground="{StaticResource Rosewater}" ToolTip="Open overlay folder" Header="Overlay Folder" Tag="overlayfolder" Click="OptionOverlayFolder_Click">
-                                <ui:MenuItem.Icon>
-                                    <ui:SymbolIcon Symbol="OpenFolder24" Foreground="{StaticResource Rosewater}"/>
-                                </ui:MenuItem.Icon>
-                            </ui:MenuItem>
-                            <ui:NavigationViewItemSeparator/>
-                            <ui:MenuItem ToolTip="Restart overlay" Foreground="{StaticResource Yellow}" Header="Restart" Tag="restart" Click="OptionRestart_Click">
-                                <ui:MenuItem.Icon>
-                                    <ui:SymbolIcon Symbol="ArrowClockwise24" Foreground="{StaticResource Yellow}"/>
-                                </ui:MenuItem.Icon>
-                            </ui:MenuItem>
-                            <ui:MenuItem ToolTip="Exit overlay" Foreground="{StaticResource Red}" Header="Exit" Tag="exit" Click="OptionExit_Click">
-                                <ui:MenuItem.Icon>
-                                    <ui:SymbolIcon Symbol="ArrowExit20" Foreground="{StaticResource Red}"/>
-                                </ui:MenuItem.Icon>
-                            </ui:MenuItem>
-                            <ui:NavigationViewItemSeparator/>
-                            <ui:MenuItem ToolTip="Go to GitHub repository" Foreground="{StaticResource Blue}" Header="About" Tag="about" Click="OptionAbout_Click">
-                                <ui:MenuItem.Icon>
-                                    <ui:SymbolIcon Symbol="Info24" Foreground="{StaticResource Blue}"/>
-                                </ui:MenuItem.Icon>
-                            </ui:MenuItem>
-                        </ContextMenu>
-                    </ui:NotifyIcon.Menu>
-                </ui:NotifyIcon>
-            </ui:TitleBar.Tray>
-        </ui:TitleBar>
-        <Canvas x:Name="MainGrid" Width="{Binding Source={StaticResource Settings},Path=MaxResolutionWidth}" Height="{Binding Source={StaticResource Settings},Path=MaxResolutionHeight}" Background="Transparent" AllowDrop="True" Drop="MainGrid_Drop" DragOver="MainGrid_DragOver"  MouseMove="MainGrid_MouseMove">
+                <tray:NotifyIcon.Menu>
+                    <ContextMenu>
+                        <ui:MenuItem ToolTip="Open the configuration window" Foreground="{StaticResource Green}" Header="Settings" Tag="settings" Click="OptionSettings_Click">
+                            <ui:MenuItem.Icon>
+                                <ui:SymbolIcon Symbol="Settings24" Foreground="{StaticResource Green}"/>
+                            </ui:MenuItem.Icon>
+                        </ui:MenuItem>
+                        <ui:NavigationViewItemSeparator/>
+                        <ui:MenuItem Foreground="{StaticResource Blue}" ToolTip="Go to Frequently Asked Questions page" Header="Help" Tag="help" Click="OptionHelp_Click">
+                            <ui:MenuItem.Icon>
+                                <ui:SymbolIcon Symbol="Open24" Foreground="{StaticResource Blue}"/>
+                            </ui:MenuItem.Icon>
+                        </ui:MenuItem>
+                        <ui:MenuItem Foreground="{StaticResource Blue}" ToolTip="Go to documentation page" Header="Documentation" Tag="documentation" Click="OptionDocumentation_Click">
+                            <ui:MenuItem.Icon>
+                                <ui:SymbolIcon Symbol="Open24" Foreground="{StaticResource Blue}"/>
+                            </ui:MenuItem.Icon>
+                        </ui:MenuItem>
+                        <ui:MenuItem Foreground="{StaticResource Blue}" ToolTip="Go to report bug page" Header="Report Bug" Tag="reportbug" Click="OptionReportBug_Click">
+                            <ui:MenuItem.Icon>
+                                <ui:SymbolIcon Symbol="Open24" Foreground="{StaticResource Blue}"/>
+                            </ui:MenuItem.Icon>
+                        </ui:MenuItem>
+                        <ui:MenuItem Foreground="{StaticResource Blue}" ToolTip="Go to request feature page" Header="Request Feature"  Tag="requestfeature" Click="OptionRequestFeature_Click">
+                            <ui:MenuItem.Icon>
+                                <ui:SymbolIcon Symbol="Open24" Foreground="{StaticResource Blue}"/>
+                            </ui:MenuItem.Icon>
+                        </ui:MenuItem>
+                        <ui:MenuItem Foreground="{StaticResource Blue}" ToolTip="Go to feedback page" Header="Send Feedback" Tag="sendfeedback" Click="OptionSendFeedback_Click">
+                            <ui:MenuItem.Icon>
+                                <ui:SymbolIcon Symbol="Open24" Foreground="{StaticResource Blue}"/>
+                            </ui:MenuItem.Icon>
+                        </ui:MenuItem>
+                        <ui:MenuItem Foreground="{StaticResource Blue}" ToolTip="Go to changelog page" Header="Changelog" Tag="changelog" Click="OptionChangelog_Click">
+                            <ui:MenuItem.Icon>
+                                <ui:SymbolIcon Symbol="Open24" Foreground="{StaticResource Blue}"/>
+                            </ui:MenuItem.Icon>
+                        </ui:MenuItem>
+                        <ui:NavigationViewItemSeparator/>
+                        <ui:MenuItem Foreground="{StaticResource Rosewater}" ToolTip="Open settings folder" Header="Settings Folder" Tag="settingsfolder" Click="OptionSettingsFolder_Click">
+                            <ui:MenuItem.Icon>
+                                <ui:SymbolIcon Symbol="OpenFolder24" Foreground="{StaticResource Rosewater}"/>
+                            </ui:MenuItem.Icon>
+                        </ui:MenuItem>
+                        <ui:MenuItem Foreground="{StaticResource Rosewater}" ToolTip="Open logs folder" Header="Logs Folder" Tag="logsfolder" Click="OptionLogsFolder_Click">
+                            <ui:MenuItem.Icon>
+                                <ui:SymbolIcon Symbol="OpenFolder24" Foreground="{StaticResource Rosewater}"/>
+                            </ui:MenuItem.Icon>
+                        </ui:MenuItem>
+                        <ui:MenuItem Foreground="{StaticResource Rosewater}" ToolTip="Open database folder" Header="Database Folder" Tag="databasefolder" Click="OptionDatabaseFolder_Click">
+                            <ui:MenuItem.Icon>
+                                <ui:SymbolIcon Symbol="OpenFolder24" Foreground="{StaticResource Rosewater}"/>
+                            </ui:MenuItem.Icon>
+                        </ui:MenuItem>
+                        <ui:MenuItem Foreground="{StaticResource Rosewater}" ToolTip="Open overlay folder" Header="Overlay Folder" Tag="overlayfolder" Click="OptionOverlayFolder_Click">
+                            <ui:MenuItem.Icon>
+                                <ui:SymbolIcon Symbol="OpenFolder24" Foreground="{StaticResource Rosewater}"/>
+                            </ui:MenuItem.Icon>
+                        </ui:MenuItem>
+                        <ui:NavigationViewItemSeparator/>
+                        <ui:MenuItem ToolTip="Restart overlay" Foreground="{StaticResource Yellow}" Header="Restart" Tag="restart" Click="OptionRestart_Click">
+                            <ui:MenuItem.Icon>
+                                <ui:SymbolIcon Symbol="ArrowClockwise24" Foreground="{StaticResource Yellow}"/>
+                            </ui:MenuItem.Icon>
+                        </ui:MenuItem>
+                        <ui:MenuItem ToolTip="Exit overlay" Foreground="{StaticResource Red}" Header="Exit" Tag="exit" Click="OptionExit_Click">
+                            <ui:MenuItem.Icon>
+                                <ui:SymbolIcon Symbol="ArrowExit20" Foreground="{StaticResource Red}"/>
+                            </ui:MenuItem.Icon>
+                        </ui:MenuItem>
+                        <ui:NavigationViewItemSeparator/>
+                        <ui:MenuItem ToolTip="Go to GitHub repository" Foreground="{StaticResource Blue}" Header="About" Tag="about" Click="OptionAbout_Click">
+                            <ui:MenuItem.Icon>
+                                <ui:SymbolIcon Symbol="Info24" Foreground="{StaticResource Blue}"/>
+                            </ui:MenuItem.Icon>
+                        </ui:MenuItem>
+                    </ContextMenu>
+                </tray:NotifyIcon.Menu>
+            </tray:NotifyIcon>
+            <ui:TitleBar Visibility="Hidden" BorderThickness="0" BorderBrush="{StaticResource Red}" x:Name="TitleBarBorder"/>
+            <Canvas x:Name="MainGrid" Width="{Binding Source={StaticResource Settings},Path=MaxResolutionWidth}" Height="{Binding Source={StaticResource Settings},Path=MaxResolutionHeight}" Background="Transparent" AllowDrop="True" Drop="MainGrid_Drop" DragOver="MainGrid_DragOver"  MouseMove="MainGrid_MouseMove">
             <Grid x:Name="SharpnessInfo" Canvas.Left="{Binding Source={StaticResource Settings},Path=SharpnessInfoX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=SharpnessInfoY}" Width="200" Height="50" MouseLeftButtonDown="ElementMouseLeftButtonDown" Background="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}"  Visibility="{Binding ElementName=Window, Path=DataLoader.Model.ShowSharpness, Converter={StaticResource BoolToVis}}">
                 <Grid.ColumnDefinitions >
                     <ColumnDefinition  Width="1*" />
@@ -152,8 +150,8 @@
             <customcontrols:OutlinedTextBlock   HorizontalAlignment="Left" Grid.Column="1" Grid.Row="0"  FontSize="{Binding Path=SecondaryFontSize, Source={StaticResource Settings}}" FontFamily="{Binding Path=SecondaryFontFamily, Source={StaticResource Settings}}" FontWeight="{Binding Path=SecondaryFontWeight, Source={StaticResource Settings}}" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding Source={StaticResource Settings},Path=TextColor}" x:Name="sessionTimeTextBlock" Text="{Binding CurrentSessionTime, StringFormat=hh\\:mm\\:ss}" Margin="4,0,0,0"/>
         </Grid>
         <Grid x:Name="OverlayModeWatermark" Canvas.Left="{Binding Source={StaticResource Settings},Path=OverlayModeWatermarkX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=OverlayModeWatermarkY}" Width="360" Height="30" MouseLeftButtonDown="ElementMouseLeftButtonDown" Background="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}" Visibility="{Binding ElementName=Window, Path=DataLoader.Model.ShowOverlayModeWatermark, Converter={StaticResource BoolToVis}}">
-            <Grid.ColumnDefinitions >
-                <ColumnDefinition  Width="1*" />
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
@@ -389,7 +387,9 @@
                                BarColor="{Binding  ElementName=Window, Path=DataLoader.Model.Monster1HPBarColor}" 
                                StrokeColor="{Binding  ElementName=Window, Path=DataLoader.Model.Monster1StrokeColor}"
                                HPMode="{Binding ElementName=Window, Path=DataLoader.Model.Monster1HPModeText}"
-                               BorderColor="{Binding ElementName=Window, Path=DataLoader.Model.Monster1BarBorderColor}"/>
+                               BorderColor="{Binding ElementName=Window, Path=DataLoader.Model.Monster1BarBorderColor}"
+                               QuestToggleMode="{Binding ElementName=Window, Path=DataLoader.Model.QuestToggleModeSelected}"
+                               QuestToggleModeShown="{Binding ElementName=Window, Path=DataLoader.Model.QuestToggleModeSelectedShown}"/>
         </Grid>
         <Grid Background="{Binding Source={StaticResource Settings},Path=HPBackGroundColor}" x:Name="Monster2HpBar" Canvas.Left="{Binding Source={StaticResource Settings},Path=Monster2HealthBarX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=Monster2HealthBarY}" MouseLeftButtonDown="ElementMouseLeftButtonDown"
               Visibility="{Binding ElementName=Window, Path=DataLoader.Model.ShowMonster2HPBar, Converter={StaticResource BoolToVis}}">
@@ -406,8 +406,11 @@
                                NumMax="{Binding  ElementName=Window, Path=DataLoader.Model.Monster2MaxHP}"
                                BarColor="{Binding  ElementName=Window, Path=DataLoader.Model.Monster2HPBarColor}" 
                                StrokeColor="{Binding  ElementName=Window, Path=DataLoader.Model.Monster2StrokeColor}"
-                                HPMode="{Binding ElementName=Window, Path=DataLoader.Model.Monster2HPModeText}" BorderColor="{Binding ElementName=Window, Path=DataLoader.Model.Monster2BarBorderColor}"
-/>
+                                HPMode="{Binding ElementName=Window, Path=DataLoader.Model.Monster2HPModeText}"
+                                BorderColor="{Binding ElementName=Window, Path=DataLoader.Model.Monster2BarBorderColor}"
+                                QuestToggleMode="{Binding ElementName=Window, Path=DataLoader.Model.QuestToggleModeSelected}"
+                               QuestToggleModeShown="{Binding ElementName=Window, Path=DataLoader.Model.QuestToggleModeSelectedShown}"
+                                                 />
         </Grid>
         <Grid Background="{Binding Source={StaticResource Settings},Path=HPBackGroundColor}" x:Name="Monster3HpBar" Canvas.Left="{Binding Source={StaticResource Settings},Path=Monster3HealthBarX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=Monster3HealthBarY}" MouseLeftButtonDown="ElementMouseLeftButtonDown"
               Visibility="{Binding ElementName=Window, Path=DataLoader.Model.ShowMonster3HPBar, Converter={StaticResource BoolToVis}}">
@@ -426,6 +429,8 @@
                                StrokeColor="{Binding  ElementName=Window, Path=DataLoader.Model.Monster3StrokeColor}"
                                 HPMode="{Binding ElementName=Window, Path=DataLoader.Model.Monster3HPModeText}"
                                 BorderColor="{Binding ElementName=Window, Path=DataLoader.Model.Monster3BarBorderColor}"
+                                QuestToggleMode="{Binding ElementName=Window, Path=DataLoader.Model.QuestToggleModeSelected}"
+                               QuestToggleModeShown="{Binding ElementName=Window, Path=DataLoader.Model.QuestToggleModeSelectedShown}"
                             />
         </Grid>
         <Grid Background="{Binding Source={StaticResource Settings},Path=HPBackGroundColor}" x:Name="Monster4HpBar" Canvas.Left="{Binding Source={StaticResource Settings},Path=Monster4HealthBarX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=Monster4HealthBarY}" MouseLeftButtonDown="ElementMouseLeftButtonDown"
@@ -444,7 +449,9 @@
                                BarColor="{Binding  ElementName=Window, Path=DataLoader.Model.Monster4HPBarColor}" 
                                StrokeColor="{Binding  ElementName=Window, Path=DataLoader.Model.Monster4StrokeColor}"
                                 HPMode="{Binding ElementName=Window, Path=DataLoader.Model.Monster4HPModeText}"
-                                BorderColor="{Binding ElementName=Window, Path=DataLoader.Model.Monster4BarBorderColor}"/>
+                                BorderColor="{Binding ElementName=Window, Path=DataLoader.Model.Monster4BarBorderColor}"
+                                QuestToggleMode="{Binding ElementName=Window, Path=DataLoader.Model.QuestToggleModeSelected}"
+                               QuestToggleModeShown="{Binding ElementName=Window, Path=DataLoader.Model.QuestToggleModeSelectedShown}"/>
         </Grid>
         <Grid Background="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}" x:Name="MonsterAtkMultInfo"  Canvas.Left="{Binding Source={StaticResource Settings},Path=MonsterAtkMultX}"  Canvas.Top="{Binding Source={StaticResource Settings},Path=MonsterAtkMultY}" Width="Auto" Height="Auto" MouseLeftButtonDown="ElementMouseLeftButtonDown"
                Visibility="{Binding ElementName=Window, Path=DataLoader.Model.ShowMonsterAtkMult, Converter={StaticResource BoolToVis}}">

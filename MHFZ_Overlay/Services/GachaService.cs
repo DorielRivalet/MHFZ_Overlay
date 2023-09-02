@@ -3,6 +3,6 @@
 // found in the LICENSE file.
 
 namespace MHFZ_Overlay.Services;
-internal class GachaService
+internal sealed class GachaService
 {
 }

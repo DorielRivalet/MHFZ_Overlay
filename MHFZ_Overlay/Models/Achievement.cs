@@ -6,10 +6,12 @@ namespace MHFZ_Overlay.Models;
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Windows;
 using System.Windows.Media;
 using MHFZ_Overlay.Models.Collections;
 using MHFZ_Overlay.Models.Structures;
+using MHFZ_Overlay.Services;
 using MHFZ_Overlay.Views.Windows;
 using Wpf.Ui.Common;
 using Wpf.Ui.Controls;
@@ -52,7 +54,9 @@ public sealed class Achievement
             Foreground = brushColor,
         };
         snackbar.Appearance = ControlAppearance.Secondary;
-        MainWindow.MainWindowSoundPlayer?.Play();
+        var s = (Settings)Application.Current.TryFindResource("Settings");
+        var fileName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Assets\Sounds\victory.wav");
+        AudioService.GetInstance().Play(fileName, MainWindow.MainWindowMediaPlayer, s.VolumeMain, s.VolumeAchievementUnlock);
         snackbar.Timeout = this.SnackbarTimeOut;
         snackbar.Show();
     }

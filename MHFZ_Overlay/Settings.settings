@@ -63,7 +63,7 @@
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="EnableEHPNumbers" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
+      <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="EnableRichPresence" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
@@ -468,7 +468,7 @@
       <Value Profile="(Default)">640</Value>
     </Setting>
     <Setting Name="KBMLayoutShown" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
+      <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="KBMLayoutX" Type="System.Double" Scope="User">
       <Value Profile="(Default)">820</Value>
@@ -495,7 +495,7 @@
       <Value Profile="(Default)">768</Value>
     </Setting>
     <Setting Name="ActionsPerMinuteShown" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
+      <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="ActionsPerMinuteX" Type="System.Double" Scope="User">
       <Value Profile="(Default)">5</Value>
@@ -684,7 +684,7 @@
       <Value Profile="(Default)">180</Value>
     </Setting>
     <Setting Name="ShowDiscordRPCOverlayMode" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
+      <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="QuestAttemptsShown" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
@@ -946,6 +946,42 @@
     </Setting>
     <Setting Name="BingoProgressShown" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="VolumeMain" Type="System.Single" Scope="User">
+      <Value Profile="(Default)">0.5</Value>
+    </Setting>
+    <Setting Name="VolumeAchievementUnlock" Type="System.Single" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="VolumeChallengeUnlock" Type="System.Single" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="VolumeChallengeStart" Type="System.Single" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="VolumeHover" Type="System.Single" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="VolumeGachaUnlock" Type="System.Single" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="VolumeGachaTrial" Type="System.Single" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="VolumeSelect" Type="System.Single" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="VolumeGachaRare" Type="System.Single" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="OverlayWatermarkMode" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Final</Value>
+    </Setting>
+    <Setting Name="DiscordOverlayMode" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Automatic</Value>
+    </Setting>
+    <Setting Name="QuestToggleMonsterModeShown" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
     </Setting>
   </Settings>
 </SettingsFile>

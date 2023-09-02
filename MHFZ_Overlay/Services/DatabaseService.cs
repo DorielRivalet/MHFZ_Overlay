@@ -13,22 +13,30 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Printing;
+using System.Runtime.Intrinsics.Arm;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Transactions;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Media.Imaging;
+using CommunityToolkit.Mvvm.Messaging;
 using EZlion.Mapper;
 using MHFZ_Overlay;
 using MHFZ_Overlay.Models;
 using MHFZ_Overlay.Models.Collections;
 using MHFZ_Overlay.Models.Constant;
+using MHFZ_Overlay.Models.Messengers;
 using MHFZ_Overlay.Models.Structures;
 using MHFZ_Overlay.Views.Windows;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using NLog;
+using Octokit;
 using Wpf.Ui.Common;
 using Wpf.Ui.Controls;
 using Formatting = Newtonsoft.Json.Formatting;
@@ -66,6 +74,8 @@ public sealed class DatabaseService
 
     public HashSet<ActiveSkills> AllActiveSkills { get; set; }
 
+    public HashSet<ZenithSkills> AllZenithSkills { get; set; }
+
     public HashSet<StyleRankSkills> AllStyleRankSkills { get; set; }
 
     public HashSet<QuestAttempts> AllQuestAttempts { get; set; }
@@ -74,17 +84,19 @@ public sealed class DatabaseService
 
     public HashSet<PlayerInventory> AllPlayerInventories { get; set; }
 
+    public HashSet<QuestsToggleMode> AllQuestsToggleMode { get; set; }
+
     public TimeSpan SnackbarTimeOut { get; set; } = TimeSpan.FromSeconds(5);
 
-    private string? connectionString;
+    private string? connectionString { get; set; }
 
-    private string? customDatabasePath;
+    private string? customDatabasePath { get; set; }
 
     private DatabaseService() => Logger.Info(CultureInfo.InvariantCulture, $"Service initialized");
 
-    private string? dataSource;
+    private string? dataSource { get; set; }
 
-    private bool isDatabaseSetup;
+    private bool isDatabaseSetup { get; set; }
 
     public static DatabaseService GetInstance()
     {
@@ -167,7 +179,7 @@ public sealed class DatabaseService
                         var result = cmd.ExecuteScalar();
                         if (result != DBNull.Value)
                         {
-                            totalTimeSpent = TimeSpan.FromSeconds(Convert.ToInt32(result));
+                            totalTimeSpent = TimeSpan.FromSeconds(Convert.ToInt32(result, CultureInfo.InvariantCulture));
                         }
                     }
 
@@ -282,6 +294,9 @@ public sealed class DatabaseService
             using (var conn = new SQLiteConnection(this.dataSource))
             {
                 conn.Open();
+
+                this.RemoveCurrentDatabaseTriggers(conn);
+                this.CheckDatesFormat(conn);
 
                 // Toggle comment this for testing the error handling
                 // ThrowException(conn);
@@ -429,26 +444,36 @@ public sealed class DatabaseService
     /// </summary>
     /// <param name="dataLoader"></param>
     /// <param name="attempts"></param>
-    /// <returns></returns>
-    public int InsertQuestData(DataLoader dataLoader, int attempts)
+    /// <returns>the run ID and the quest ID</returns>
+    public (int, int) InsertQuestData(DataLoader dataLoader, int attempts)
     {
         Logger.Info(CultureInfo.InvariantCulture, "Inserting quest data");
 
         var runID = 0;
+        var questID = dataLoader.Model.QuestID();
         var actualOverlayMode = string.Empty;
         dataLoader.Model.ShowSaveIcon = true;
+        var timeLeft = dataLoader.Model.TimeInt();
+
+        // TODO dure timedefint address
+        var timeDefIint = questID != Numbers.QuestIDFirstDistrictDuremudira && questID != Numbers.QuestIDSecondDistrictDuremudira ? dataLoader.Model.TimeDefInt() : Numbers.DuremudiraTimeLimitFrames;
+
+        var finalTimeValue = timeDefIint - timeLeft;
+
+        // Calculate the elapsed time of the quest
+        var finalTimeDisplay = TimeService.GetMinutesSecondsMillisecondsFromFrames((long)finalTimeValue);
 
         var s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
 
         if (!ViewModels.Windows.AddressModel.ValidateGameFolder() || !s.EnableQuestLogging || !dataLoader.Model.QuestCleared)
         {
-            return runID;
+            return (runID, questID);
         }
 
         if (string.IsNullOrEmpty(this.dataSource))
         {
             Logger.Warn(CultureInfo.InvariantCulture, "Cannot insert quest data. dataSource: {0}", this.dataSource);
-            return runID;
+            return (runID, questID);
         }
 
         using (var conn = new SQLiteConnection(this.dataSource))
@@ -470,7 +495,7 @@ public sealed class DatabaseService
                         var result = cmd.ExecuteScalar();
                         if (result != null && result.ToString() != string.Empty)
                         {
-                            runID = Convert.ToInt32(result);
+                            runID = Convert.ToInt32(result, CultureInfo.InvariantCulture);
                         }
                         else
                         {
@@ -583,20 +608,18 @@ public sealed class DatabaseService
 
                     using (var cmd = new SQLiteCommand(sql, conn))
                     {
-                        var questID = model.QuestID();
-                        var timeLeft = model.TimeInt(); // Example value of the TimeLeft variable
-                        var finalTimeValue = model.TimeDefInt() - model.TimeInt();
-
-                        // Calculate the elapsed time of the quest
-                        var finalTimeDisplay = dataLoader.GetQuestTimeCompletion();
-
                         // Convert the elapsed time to a DateTime object
                         string objectiveImage;
 
                         // Gathering/etc
-                        if ((dataLoader.Model.ObjectiveType() == 0x0 || dataLoader.Model.ObjectiveType() == 0x02 || dataLoader.Model.ObjectiveType() == 0x1002) && dataLoader.Model.QuestID() != 23527 && dataLoader.Model.QuestID() != 23628 && dataLoader.Model.QuestID() != 21731 && dataLoader.Model.QuestID() != 21749 && dataLoader.Model.QuestID() != 21746 && dataLoader.Model.QuestID() != 21750)
+                        if ((dataLoader.Model.ObjectiveType() == 0x0 || dataLoader.Model.ObjectiveType() == 0x02 || dataLoader.Model.ObjectiveType() == 0x1002) && dataLoader.Model.QuestID() != 23527 && dataLoader.Model.QuestID() != 23628 && dataLoader.Model.QuestID() != 21749 && dataLoader.Model.QuestID() != 21750 && dataLoader.Model.QuestID() != Numbers.QuestIDFirstDistrictDuremudira && dataLoader.Model.QuestID() != Numbers.QuestIDSecondDistrictDuremudira)
                         {
                             objectiveImage = ViewModels.Windows.AddressModel.GetAreaIconFromID(dataLoader.Model.AreaID());
+                        }
+
+                        else if (dataLoader.Model.QuestID() == Numbers.QuestIDSecondDistrictDuremudira || dataLoader.Model.QuestID() == Numbers.QuestIDFirstDistrictDuremudira)
+                        {
+                            objectiveImage = dataLoader.Model.GetMonsterIcon(132);
                         }
 
                         // Tenrou Sky Corridor areas
@@ -683,30 +706,7 @@ public sealed class DatabaseService
                         var actionsPerMinuteDictionary = dataLoader.Model.ActionsPerMinuteDictionary;
                         var overlayModeDictionary = dataLoader.Model.OverlayModeDictionary;
 
-                        // check if its grabbing a TimeDefInt from a previous quest
-                        // TODO is this enough?
-                        if ((overlayModeDictionary.Count == 2 && overlayModeDictionary.Last().Value == string.Empty) ||
-                            (overlayModeDictionary.Count == 1 && overlayModeDictionary.First().Value == string.Empty) ||
-                            overlayModeDictionary.Count > 2)
-                        {
-                            actualOverlayMode = "Standard";
-                        }
-                        else
-                        {
-                            // TODO: test
-                            if (overlayModeDictionary.Count == 2 && overlayModeDictionary.First().Value == string.Empty)
-                            {
-                                actualOverlayMode = overlayModeDictionary.Last().Value;
-                            }
-                            else
-                            {
-                                actualOverlayMode = overlayModeDictionary.First().Value;
-                            }
-
-                            actualOverlayMode = actualOverlayMode.Replace(")", string.Empty);
-                            actualOverlayMode = actualOverlayMode.Replace("(", string.Empty);
-                            actualOverlayMode = actualOverlayMode.Trim();
-                        }
+                        actualOverlayMode = GetActualOverlayMode(dataLoader);
 
                         var partySize = dataLoader.Model.PartySize();
 
@@ -729,7 +729,7 @@ public sealed class DatabaseService
                         var isHighGradeEdition = dataLoader.IsHighGradeEdition ? 1 : 0;
                         var refreshRate = s.RefreshRate;
 
-                        var questData = string.Format(
+                        var questData = string.Format(CultureInfo.InvariantCulture,
                             "{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}{11}{12}{13}{14}{15}{16}{17}{18}{19}{20}{21}{22}{23}{24}{25}{26}{27}{28}{29}{30}{31}{32}{33}{34}{35}{36}{37}{38}{39}{40}{41}{42}{43}{44}{45}{46}{47}",
                             runID, createdAt, createdBy, questID, timeLeft,
                             finalTimeValue, finalTimeDisplay, objectiveImage, objectiveTypeID, objectiveQuantity,
@@ -803,13 +803,12 @@ public sealed class DatabaseService
                     sql = "SELECT LAST_INSERT_ROWID()";
                     using (var cmd = new SQLiteCommand(sql, conn))
                     {
-                        runID = Convert.ToInt32(cmd.ExecuteScalar());
+                        runID = Convert.ToInt32(cmd.ExecuteScalar(), CultureInfo.InvariantCulture);
                     }
 
                     if (dataLoader.Model.PartySize() == 1)
                     {
                         long personalBest = 0;
-                        var questID = dataLoader.Model.QuestID();
                         var weaponType = dataLoader.Model.WeaponType();
                         var improvedPersonalBest = false;
 
@@ -854,7 +853,6 @@ public sealed class DatabaseService
                             @Attempts)";
                         using (var cmd = new SQLiteCommand(sql, conn))
                         {
-                            var finalTimeValue = model.TimeDefInt() - model.TimeInt();
                             if (finalTimeValue < personalBest || personalBest == 0)
                             {
                                 improvedPersonalBest = true;
@@ -925,7 +923,7 @@ public sealed class DatabaseService
                         var mhfohddllHash = CalculateFileHash(gameFolderPath, @"\mhfo-hd.dll");
                         var mhfexeHash = CalculateFileHash(gameFolderPath, @"\mhf.exe");
 
-                        var gameFolderData = string.Format(
+                        var gameFolderData = string.Format(CultureInfo.InvariantCulture,
                             "{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}",
                             createdAt, createdBy, runID,
                             gameFolderPath, mhfdatHash, mhfemdHash,
@@ -1005,7 +1003,7 @@ public sealed class DatabaseService
                     int zenithSkillsID;
                     using (var cmd = new SQLiteCommand(sql, conn))
                     {
-                        zenithSkillsID = Convert.ToInt32(cmd.ExecuteScalar());
+                        zenithSkillsID = Convert.ToInt32(cmd.ExecuteScalar(), CultureInfo.InvariantCulture);
                     }
 
                     sql = @"INSERT INTO AutomaticSkills (
@@ -1055,7 +1053,7 @@ public sealed class DatabaseService
                     int automaticSkillsID;
                     using (var cmd = new SQLiteCommand(sql, conn))
                     {
-                        automaticSkillsID = Convert.ToInt32(cmd.ExecuteScalar());
+                        automaticSkillsID = Convert.ToInt32(cmd.ExecuteScalar(), CultureInfo.InvariantCulture);
                     }
 
                     sql = @"INSERT INTO ActiveSkills (
@@ -1157,7 +1155,7 @@ public sealed class DatabaseService
                     int activeSkillsID;
                     using (var cmd = new SQLiteCommand(sql, conn))
                     {
-                        activeSkillsID = Convert.ToInt32(cmd.ExecuteScalar());
+                        activeSkillsID = Convert.ToInt32(cmd.ExecuteScalar(), CultureInfo.InvariantCulture);
                     }
 
                     sql = @"INSERT INTO CaravanSkills (
@@ -1195,7 +1193,7 @@ public sealed class DatabaseService
                     int caravanSkillsID;
                     using (var cmd = new SQLiteCommand(sql, conn))
                     {
-                        caravanSkillsID = Convert.ToInt32(cmd.ExecuteScalar());
+                        caravanSkillsID = Convert.ToInt32(cmd.ExecuteScalar(), CultureInfo.InvariantCulture);
                     }
 
                     sql = @"INSERT INTO StyleRankSkills (
@@ -1229,7 +1227,7 @@ public sealed class DatabaseService
                     int styleRankSkillsID;
                     using (var cmd = new SQLiteCommand(sql, conn))
                     {
-                        styleRankSkillsID = Convert.ToInt32(cmd.ExecuteScalar());
+                        styleRankSkillsID = Convert.ToInt32(cmd.ExecuteScalar(), CultureInfo.InvariantCulture);
                     }
 
                     sql = @"INSERT INTO PlayerInventory (
@@ -1417,7 +1415,7 @@ public sealed class DatabaseService
                     int playerInventoryID;
                     using (var cmd = new SQLiteCommand(sql, conn))
                     {
-                        playerInventoryID = Convert.ToInt32(cmd.ExecuteScalar());
+                        playerInventoryID = Convert.ToInt32(cmd.ExecuteScalar(), CultureInfo.InvariantCulture);
                     }
 
                     sql = @"INSERT INTO AmmoPouch (
@@ -1525,7 +1523,7 @@ public sealed class DatabaseService
                     int ammoPouchID;
                     using (var cmd = new SQLiteCommand(sql, conn))
                     {
-                        ammoPouchID = Convert.ToInt32(cmd.ExecuteScalar());
+                        ammoPouchID = Convert.ToInt32(cmd.ExecuteScalar(), CultureInfo.InvariantCulture);
                     }
 
                     sql = @"INSERT INTO PartnyaBag (
@@ -1633,7 +1631,7 @@ public sealed class DatabaseService
                     int partnyaBagID;
                     using (var cmd = new SQLiteCommand(sql, conn))
                     {
-                        partnyaBagID = Convert.ToInt32(cmd.ExecuteScalar());
+                        partnyaBagID = Convert.ToInt32(cmd.ExecuteScalar(), CultureInfo.InvariantCulture);
                     }
 
                     sql = @"INSERT INTO RoadDureSkills (
@@ -1791,8 +1789,27 @@ public sealed class DatabaseService
                     int roadDureSkillsID;
                     using (var cmd = new SQLiteCommand(sql, conn))
                     {
-                        roadDureSkillsID = Convert.ToInt32(cmd.ExecuteScalar());
+                        roadDureSkillsID = Convert.ToInt32(cmd.ExecuteScalar(), CultureInfo.InvariantCulture);
                     }
+
+                    sql = @"INSERT INTO QuestsToggleMode (
+                        QuestToggleMode,
+                        RunID
+                        ) VALUES (
+                        @QuestToggleMode,
+                        @RunID
+                        )";
+
+                    using (var cmd = new SQLiteCommand(sql, conn))
+                    {
+                        var questToggleMode = model.QuestToggleMonsterMode();         
+
+                        cmd.Parameters.AddWithValue("@QuestToggleMode", questToggleMode);
+                        cmd.Parameters.AddWithValue("@RunID", runID);
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    Logger.Debug("Inserted into QuestsToggleMode table");
 
                     var gearName = s.GearDescriptionExport;
                     if (string.IsNullOrEmpty(gearName))
@@ -1975,7 +1992,7 @@ public sealed class DatabaseService
                         @PartnyaBagDictionary-- TEXT NOT NULL,
                         )";
 
-                    var playerGearData = string.Format(
+                    var playerGearData = string.Format(CultureInfo.InvariantCulture,
                         "{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}{11}{12}{13}{14}{15}{16}{17}{18}{19}{20}{21}{22}{23}{24}{25}{26}{27}{28}{29}{30}{31}{32}{33}{34}{35}{36}{37}{38}{39}{40}{41}{42}{43}{44}{45}{46}{47}{48}{49}{50}",
                         createdAt, createdBy, runID, playerID, gearName,
                         styleID, weaponIconID, weaponClassID, weaponTypeID, blademasterWeaponID,
@@ -2078,7 +2095,7 @@ public sealed class DatabaseService
                     // Handle a SQL exception
                     Logger.Error(ex, "An error occurred while accessing the database");
                     MessageBox.Show(
-                        string.Format(
+                        string.Format(CultureInfo.InvariantCulture,
 @"An error occurred while accessing the database.
 
 Sql State: {0}
@@ -2123,9 +2140,45 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
             this.UpdateHashSets(conn);
         }
 
-        Logger.Debug("Inserted quest data, returning runID {0}", runID);
+        Logger.Debug(CultureInfo.InvariantCulture, "Inserted quest data, returning runID {0} and questID {1}", runID, questID);
+        WeakReferenceMessenger.Default.Send(new RunIDMessage(runID));
+        WeakReferenceMessenger.Default.Send(new QuestIDMessage(questID));
         dataLoader.Model.ShowSaveIcon = false;
-        return runID;
+        return (runID, questID);
+    }
+
+    public string GetActualOverlayMode(DataLoader dataLoader)
+    {
+        var actualOverlayMode = "Standard";
+        var overlayModeDictionary = dataLoader.Model.OverlayModeDictionary;
+
+        // check if its grabbing a TimeDefInt from a previous quest
+        // TODO is this enough?
+        if ((overlayModeDictionary.Count == 2 && overlayModeDictionary.Last().Value == "Standard") ||
+            (overlayModeDictionary.Count == 1 && overlayModeDictionary.First().Value == "Standard") ||
+            overlayModeDictionary.Count > 2)
+        {
+            actualOverlayMode = "Standard";
+        }
+        else
+        {
+            // TODO: test
+            if (overlayModeDictionary.Count == 2 && overlayModeDictionary.First().Value == "Standard")
+            {
+                actualOverlayMode = overlayModeDictionary.Last().Value;
+            }
+            else
+            {
+                actualOverlayMode = overlayModeDictionary.First().Value;
+            }
+
+            // TODO probably not needed anymore
+            actualOverlayMode = actualOverlayMode.Replace(")", string.Empty);
+            actualOverlayMode = actualOverlayMode.Replace("(", string.Empty);
+            actualOverlayMode = actualOverlayMode.Trim();
+        }
+
+        return actualOverlayMode;
     }
 
     public static void MakeDeserealizedQuestInfoDictionariesFromRunID(SQLiteConnection conn, DataLoader dataLoader, int runID)
@@ -2192,10 +2245,12 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
         var lastPersonalBestAttempt = this.GetLastPersonalBestAttempt(conn);
         var lastPlayerGear = this.GetLastPlayerGear(conn);
         var lastActiveSkills = this.GetLastActiveSkills(conn);
+        var lastZenithSkills = this.GetLastZenithSkills(conn);
         var lastStyleRankSkills = this.GetLastStyleRankSkills(conn);
         var lastQuestAttempts = this.GetLastQuestAttempt(conn);
         var lastGachaCard = this.GetLastGachaCard(conn);
         var lastPlayerInventory = this.GetLastPlayerInventory(conn);
+        var lastQuestsToggleMode = this.GetLastQuestsToggleMode(conn);
 
         if (lastQuest.RunID != 0)
         {
@@ -2278,6 +2333,15 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
             }
         }
 
+        if (lastZenithSkills.ZenithSkillsID != 0)
+        {
+            var zenithSkillsAdded = this.AllZenithSkills.Add(lastZenithSkills);
+            if (!zenithSkillsAdded)
+            {
+                Logger.Warn(CultureInfo.InvariantCulture, "Last zenith skills already found in hash set");
+            }
+        }
+
         if (lastStyleRankSkills.StyleRankSkillsID != 0)
         {
             var stylerankSkillsAdded = this.AllStyleRankSkills.Add(lastStyleRankSkills);
@@ -2311,6 +2375,15 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
             if (!playerInventoryAdded)
             {
                 Logger.Warn(CultureInfo.InvariantCulture, "Last player inventory already found in hash set");
+            }
+        }
+
+        if (lastQuestsToggleMode.QuestsToggleModeID != 0)
+        {
+            var questsToggleModeAdded = this.AllQuestsToggleMode.Add(lastQuestsToggleMode);
+            if (!questsToggleModeAdded)
+            {
+                Logger.Warn(CultureInfo.InvariantCulture, "Last quests toggle mode already found in hash set");
             }
         }
     }
@@ -3030,7 +3103,7 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
                 // Handle a SQL exception
                 Logger.Error(ex, "An error occurred while accessing the database");
                 MessageBox.Show(
-                    string.Format(
+                    string.Format(CultureInfo.InvariantCulture,
                 @"An error occurred while accessing the database.
 
 SQL State: {0}
@@ -3175,6 +3248,59 @@ Message: {7}",
         }
 
         return achievementIDList;
+    }
+
+    /// <summary>
+    /// Unlocks the challenge and stores the unlock date of the challenge.
+    /// </summary>
+    /// <param name="challenge"></param>
+    /// <returns>false if the challenge unlock date could not be stored</returns>
+    public bool UnlockChallenge(Challenge challenge, int challengeID)
+    {
+        if (challenge.UnlockDate != DateTime.UnixEpoch)
+        {
+            Logger.Error(CultureInfo.InvariantCulture, "Challenge {0} is already unlocked ({1})", challenge.Name, challenge.UnlockDate);
+            return false;
+        }
+
+        if (string.IsNullOrEmpty(this.dataSource))
+        {
+            Logger.Warn(CultureInfo.InvariantCulture, "Cannot unlock challenge. dataSource: {0}", this.dataSource);
+            return false;
+        }
+
+        using (var conn = new SQLiteConnection(this.dataSource))
+        {
+            conn.Open();
+            using (var transaction = conn.BeginTransaction())
+            {
+                try
+                {
+                    var sql = @"INSERT INTO PlayerChallenges (
+                            UnlockDate,
+                            ChallengeID
+                            ) VALUES (
+                            @UnlockDate,
+                            @ChallengeID)";
+
+                    using (var cmd = new SQLiteCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@UnlockDate", DateTime.UtcNow);
+                        cmd.Parameters.AddWithValue("@ChallengeID", challengeID);
+
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    transaction.Commit();
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    HandleError(transaction, ex);
+                    return false;
+                }
+            }
+        }
     }
 
     private static bool IsDatabaseLocked(SQLiteConnection connection)
@@ -3429,7 +3555,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                     var result = cmd.ExecuteScalar();
                     if (result != null && result.ToString() != string.Empty)
                     {
-                        startTime = Convert.ToDateTime(result);
+                        startTime = Convert.ToDateTime(result, CultureInfo.InvariantCulture);
                     }
                     else
                     {
@@ -3481,11 +3607,11 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
                         if (playerID == 1 && (startTime == DateTime.UnixEpoch || startTime == DateTime.MinValue))
                         {
-                            creationDate = DateTime.UtcNow.Date.ToString(CultureInfo.InvariantCulture);
+                            creationDate = DateTime.UtcNow.ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss.fffffffZ");
                         }
                         else
                         {
-                            creationDate = startTime.Date.ToString(CultureInfo.InvariantCulture);
+                            creationDate = startTime.ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss.fffffffZ");
                         }
 
                         if (playerID == 1)
@@ -3781,7 +3907,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
     public void StoreAchievement(int achievementID)
     {
-        Logger.Debug("Storing achievement ID {0}", achievementID);
+        Logger.Debug(CultureInfo.InvariantCulture, "Storing achievement ID {0}", achievementID);
 
         if (string.IsNullOrEmpty(this.dataSource))
         {
@@ -3830,15 +3956,6 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                 }
             }
         }
-    }
-
-    // TODO put somewhere else and test
-    public static string FormatTime(int framesElapsed)
-    {
-        var minutes = framesElapsed / (Numbers.FramesPerSecond * 60);
-        var seconds = (framesElapsed % (Numbers.FramesPerSecond * 60)) / Numbers.FramesPerSecond;
-        var milliseconds = ((framesElapsed % (Numbers.FramesPerSecond * 60)) % Numbers.FramesPerSecond) / double.Parse(Numbers.FramesPerSecond.ToString(), CultureInfo.InvariantCulture);
-        return $"{minutes:D2}:{seconds:D2}.{(int)(milliseconds * 1000):D3}";
     }
 
     private void CreateDatabaseTables(SQLiteConnection conn, DataLoader dataLoader)
@@ -4832,6 +4949,15 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                     cmd.ExecuteNonQuery();
                 }
 
+                sql = @"CREATE TABLE IF NOT EXISTS PlayerBingoPoints(
+                    PlayerBingoPointsID INTEGER PRIMARY KEY,
+                    Points INTEGER NOT NULL DEFAULT 0
+                    )";
+                using (var cmd = new SQLiteCommand(sql, conn))
+                {
+                    cmd.ExecuteNonQuery();
+                }
+
                 sql = @"CREATE TABLE IF NOT EXISTS MezFesMinigames(
                     MezFesMinigameID INTEGER PRIMARY KEY AUTOINCREMENT,
                     MezFesMinigameName TEXT NOT NULL
@@ -5022,6 +5148,29 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                         RunID INTEGER NOT NULL,
                         FOREIGN KEY(RunID) REFERENCES Quests(RunID)
                     )";
+                using (var cmd = new SQLiteCommand(sql, conn))
+                {
+                    cmd.ExecuteNonQuery();
+                }
+
+                // Instead of using foreign keys, just combine the Dictionary with the UnlockDate here.
+                sql = @"CREATE TABLE IF NOT EXISTS PlayerChallenges(
+                PlayerChallengesID INTEGER PRIMARY KEY AUTOINCREMENT,
+                UnlockDate TEXT NOT NULL,
+                ChallengeID INTEGER NOT NULL,
+                UNIQUE(ChallengeID) ON CONFLICT IGNORE
+                )";
+                using (var cmd = new SQLiteCommand(sql, conn))
+                {
+                    cmd.ExecuteNonQuery();
+                }
+
+                sql = @"CREATE TABLE IF NOT EXISTS QuestsToggleMode(
+                QuestsToggleModeID INTEGER PRIMARY KEY AUTOINCREMENT,
+                QuestToggleMode INTEGER NOT NULL DEFAULT 0,
+                RunID INTEGER NOT NULL,
+                FOREIGN KEY(RunID) REFERENCES Quests(RunID)
+                )";
                 using (var cmd = new SQLiteCommand(sql, conn))
                 {
                     cmd.ExecuteNonQuery();
@@ -5691,7 +5840,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                                 time = reader.GetInt64(reader.GetOrdinal("TimeLeft"));
                             }
 
-                            personalBest = ViewModels.Windows.AddressModel.GetMinutesSecondsMillisecondsFromFrames(time);
+                            personalBest = TimeService.GetMinutesSecondsMillisecondsFromFrames(time);
                         }
                         else
                         {
@@ -5725,10 +5874,14 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
             await conn.OpenAsync();
             using (var transaction = conn.BeginTransaction())
             {
-                try
+                var numRetries = 0;
+                var success = false;
+                while (!success && numRetries < 3)
                 {
-                    using (var cmd = new SQLiteCommand(
-                        @"SELECT 
+                    try
+                    {
+                        using (var cmd = new SQLiteCommand(
+                            @"SELECT 
                             TimeLeft, 
                             FinalTimeValue,
                             FinalTimeDisplay,
@@ -5746,37 +5899,51 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                         ORDER BY 
                             FinalTimeValue ASC
                         LIMIT 1", conn))
-                    {
-                        cmd.Parameters.AddWithValue("@questID", questID);
-                        cmd.Parameters.AddWithValue("@weaponTypeID", weaponTypeID);
-                        cmd.Parameters.AddWithValue("@category", category);
-
-                        var reader = await cmd.ExecuteReaderAsync();
-                        if (await reader.ReadAsync())
                         {
-                            long time = 0;
-                            if (timerMode == "Elapsed")
+                            cmd.Parameters.AddWithValue("@questID", questID);
+                            cmd.Parameters.AddWithValue("@weaponTypeID", weaponTypeID);
+                            cmd.Parameters.AddWithValue("@category", category);
+
+                            var reader = await cmd.ExecuteReaderAsync();
+                            if (await reader.ReadAsync())
                             {
-                                time = reader.GetInt64(reader.GetOrdinal("FinalTimeValue"));
+                                long time = 0;
+                                if (timerMode == "Elapsed")
+                                {
+                                    time = reader.GetInt64(reader.GetOrdinal("FinalTimeValue"));
+                                }
+                                else
+                                {
+                                    time = reader.GetInt64(reader.GetOrdinal("TimeLeft"));
+                                }
+
+                                personalBest = TimeService.GetMinutesSecondsMillisecondsFromFrames(time);
                             }
                             else
                             {
-                                time = reader.GetInt64(reader.GetOrdinal("TimeLeft"));
+                                personalBest = Messages.TimerNotLoaded;
                             }
+                        }
 
-                            personalBest = ViewModels.Windows.AddressModel.GetMinutesSecondsMillisecondsFromFrames(time);
+                        transaction.Commit();
+                        success = true;
+                    }
+                    catch (SQLiteException ex)
+                    {
+                        if (ex.ResultCode is SQLiteErrorCode.Locked or SQLiteErrorCode.Busy)
+                        {
+                            // Database is locked, retry after a short delay
+                            numRetries++;
+                            Logger.Warn(CultureInfo.InvariantCulture, ex);
+                            Thread.Sleep(1_000);
                         }
                         else
                         {
-                            personalBest = Messages.TimerNotLoaded;
+                            // Some other error occurred, abort the transaction
+                            HandleError(transaction, ex);
+                            break;
                         }
                     }
-
-                    transaction.Commit();
-                }
-                catch (Exception ex)
-                {
-                    HandleError(transaction, ex);
                 }
             }
         }
@@ -6011,7 +6178,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                             command.Parameters.AddWithValue("@WeaponTypeID", weaponTypeID);
                             command.Parameters.AddWithValue("@ActualOverlayMode", category);
 
-                            attempts = Convert.ToInt32(command.ExecuteScalar());
+                            attempts = Convert.ToInt32(command.ExecuteScalar(), CultureInfo.InvariantCulture);
                         }
 
                         transaction.Commit();
@@ -6023,6 +6190,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                         {
                             // Database is locked, retry after a short delay
                             numRetries++;
+                            Logger.Warn(CultureInfo.InvariantCulture, ex);
                             Thread.Sleep(1_000);
                         }
                         else
@@ -6078,7 +6246,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                             command.Parameters.AddWithValue("@WeaponTypeID", weaponTypeID);
                             command.Parameters.AddWithValue("@ActualOverlayMode", category);
 
-                            attempts = Convert.ToInt32(command.ExecuteScalar());
+                            attempts = Convert.ToInt32(command.ExecuteScalar(), CultureInfo.InvariantCulture);
                         }
 
                         transaction.Commit();
@@ -6090,6 +6258,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                         {
                             // Database is locked, retry after a short delay
                             numRetries++;
+                            Logger.Warn(CultureInfo.InvariantCulture, ex);
                             Thread.Sleep(1_000);
                         }
                         else
@@ -6145,7 +6314,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                             command.Parameters.AddWithValue("@WeaponTypeID", weaponTypeID);
                             command.Parameters.AddWithValue("@ActualOverlayMode", category);
 
-                            attempts = Convert.ToInt32(await command.ExecuteScalarAsync());
+                            attempts = Convert.ToInt32(await command.ExecuteScalarAsync(), CultureInfo.InvariantCulture);
                         }
 
                         transaction.Commit();
@@ -6157,6 +6326,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                         {
                             // Database is locked, retry after a short delay
                             numRetries++;
+                            Logger.Warn(CultureInfo.InvariantCulture, ex);
                             await Task.Delay(1_000);
                         }
                         else
@@ -6212,7 +6382,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                             command.Parameters.AddWithValue("@WeaponTypeID", weaponTypeID);
                             command.Parameters.AddWithValue("@ActualOverlayMode", category);
 
-                            attempts = Convert.ToInt32(await command.ExecuteScalarAsync());
+                            attempts = Convert.ToInt32(await command.ExecuteScalarAsync(), CultureInfo.InvariantCulture);
                         }
 
                         transaction.Commit();
@@ -6224,6 +6394,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                         {
                             // Database is locked, retry after a short delay
                             numRetries++;
+                            Logger.Warn(CultureInfo.InvariantCulture, ex);
                             await Task.Delay(1_000);
                         }
                         else
@@ -6275,7 +6446,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                         var result = cmd.ExecuteScalar();
                         if (result != null)
                         {
-                            attempts = Convert.ToInt64(result);
+                            attempts = Convert.ToInt64(result, CultureInfo.InvariantCulture);
                         }
                     }
 
@@ -6653,7 +6824,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                                 Score = long.Parse(reader["Score"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
                                 MonsterList = JsonConvert.DeserializeObject<List<int>>(reader["MonsterList"]?.ToString() ?? "{}") ?? new List<int> { },
                                 WeaponType = reader["WeaponType"]?.ToString() ?? string.Empty,
-                                Category = reader["Category"]?.ToString() ?? string.Empty,
+                                Category = ChallengeService.ConvertToBingoGauntletCategory(reader.GetInt64(reader.GetOrdinal("Category"))),
                                 TotalFramesElapsed = long.Parse(reader["TotalFramesElapsed"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
                                 TotalTimeElapsed = reader["TotalTimeElapsed"]?.ToString() ?? string.Empty,
                             };
@@ -6670,6 +6841,96 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         return last;
+    }
+
+    public long GetPlayerBingoPoints()
+    {
+        long points = 0;
+
+        if (string.IsNullOrEmpty(this.dataSource))
+        {
+            Logger.Warn(CultureInfo.InvariantCulture, "Cannot get player bingo points. dataSource: {0}", this.dataSource);
+            return points;
+        }
+
+        using (var conn = new SQLiteConnection(this.dataSource))
+        {
+            conn.Open();
+
+            using (var transaction = conn.BeginTransaction())
+            {
+                try
+                {
+                    using (var cmd = new SQLiteCommand("SELECT Points FROM PlayerBingoPoints WHERE PlayerBingoPointsID = 1", conn))
+                    {
+                        using (var reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                points = long.Parse(reader["Points"]?.ToString() ?? "0", CultureInfo.InvariantCulture);
+                            }
+                        }
+                    }
+
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    HandleError(transaction, ex);
+                }
+            }
+        }
+
+        return points;
+    }
+
+    public void SetPlayerBingoPoints(long points)
+    {
+        if (string.IsNullOrEmpty(this.dataSource))
+        {
+            Logger.Warn(CultureInfo.InvariantCulture, "Cannot set player bingo points. dataSource: {0}", this.dataSource);
+            return;
+        }
+
+        using (var conn = new SQLiteConnection(this.dataSource))
+        {
+            conn.Open();
+            using (var transaction = conn.BeginTransaction())
+            {
+                try
+                {
+                    // Create a command that will be used to insert multiple rows in a batch
+                    using (var cmd = new SQLiteCommand(conn))
+                    {
+                        // Set the command text to insert a single row
+                        cmd.CommandText = @"INSERT OR REPLACE INTO PlayerBingoPoints (
+                        PlayerBingoPointsID, 
+                        Points
+                        ) VALUES (
+                        @PlayerBingoPointsID, 
+                        @Points)";
+
+                        // Add the parameter placeholders
+                        cmd.Parameters.Add("@PlayerBingoPointsID", DbType.Int64);
+                        cmd.Parameters.Add("@Points", DbType.Int64);
+
+                        // Set the parameter values
+                        cmd.Parameters["@PlayerBingoPointsID"].Value = 1;
+                        cmd.Parameters["@Points"].Value = points;
+
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    HandleError(transaction, ex);
+                }
+            }
+        }
+
+        Logger.Debug("Inserted into PlayerBingoPoints table value {0}", points);
     }
 
     private ZenithGauntlet GetLastZenithGauntlet(SQLiteConnection conn)
@@ -7029,6 +7290,48 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
         return last;
     }
 
+    private ZenithSkills GetLastZenithSkills(SQLiteConnection conn)
+    {
+        ZenithSkills last = new();
+        using (var transaction = conn.BeginTransaction())
+        {
+            try
+            {
+                using (var cmd = new SQLiteCommand("SELECT * FROM ZenithSkills ORDER BY ZenithSkillsID DESC LIMIT 1", conn))
+                {
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            last = new ZenithSkills
+                            {
+                                CreatedAt = DateTime.Parse(reader["CreatedAt"]?.ToString() ?? DateTime.UnixEpoch.ToString(CultureInfo.InvariantCulture), CultureInfo.InvariantCulture),
+                                CreatedBy = reader["CreatedBy"]?.ToString() ?? string.Empty,
+                                ZenithSkillsID = long.Parse(reader["ZenithSkillsID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                RunID = long.Parse(reader["RunID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                ZenithSkill1ID = long.Parse(reader["ZenithSkill1ID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                ZenithSkill2ID = long.Parse(reader["ZenithSkill2ID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                ZenithSkill3ID = long.Parse(reader["ZenithSkill3ID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                ZenithSkill4ID = long.Parse(reader["ZenithSkill4ID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                ZenithSkill5ID = long.Parse(reader["ZenithSkill5ID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                ZenithSkill6ID = long.Parse(reader["ZenithSkill6ID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                ZenithSkill7ID = long.Parse(reader["ZenithSkill7ID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                            };
+                        }
+                    }
+                }
+
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                HandleError(transaction, ex);
+            }
+        }
+
+        return last;
+    }
+
     private StyleRankSkills GetLastStyleRankSkills(SQLiteConnection conn)
     {
         StyleRankSkills last = new ();
@@ -7174,6 +7477,40 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
         return last;
     }
 
+    private QuestsToggleMode GetLastQuestsToggleMode(SQLiteConnection conn)
+    {
+        QuestsToggleMode last = new();
+        using (var transaction = conn.BeginTransaction())
+        {
+            try
+            {
+                using (var cmd = new SQLiteCommand("SELECT * FROM QuestsToggleMode ORDER BY QuestsToggleModeID DESC LIMIT 1", conn))
+                {
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            last = new QuestsToggleMode
+                            {
+                                QuestsToggleModeID = long.Parse(reader["QuestsToggleModeID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                QuestToggleMode = long.Parse(reader["QuestToggleMode"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                RunID = long.Parse(reader["RunID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                            };
+                        }
+                    }
+                }
+
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                HandleError(transaction, ex);
+            }
+        }
+
+        return last;
+    }
+
     /// <summary>
     /// Loads the database data into hash sets. This is used to avoid querying the database when checking for achievement unlocks.
     /// When inserting into these hashsets, the database must also be updated, and viceversa.
@@ -7203,10 +7540,12 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                 this.AllPersonalBestAttempts = this.GetAllPersonalBestAttempts(conn);
                 this.AllPlayerGear = this.GetAllPlayerGear(conn);
                 this.AllActiveSkills = this.GetAllActiveSkills(conn);
+                this.AllZenithSkills = this.GetAllZenithSkills(conn);
                 this.AllStyleRankSkills = this.GetAllStyleRankSkills(conn);
                 this.AllQuestAttempts = this.GetAllQuestAttempts(conn);
                 this.AllGachaCards = this.GetAllGachaCards(conn);
                 this.AllPlayerInventories = this.GetAllPlayerInventories(conn);
+                this.AllQuestsToggleMode = this.GetAllQuestsToggleMode(conn);
             }
         }
         catch (Exception ex)
@@ -7327,6 +7666,42 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                                 Item19Quantity = long.Parse(reader["Item19Quantity"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
                                 Item20ID = long.Parse(reader["Item20ID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
                                 Item20Quantity = long.Parse(reader["Item20Quantity"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                            };
+
+                            hashSet.Add(data);
+                        }
+                    }
+                }
+
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                HandleError(transaction, ex);
+            }
+        }
+
+        return hashSet;
+    }
+
+    private HashSet<QuestsToggleMode> GetAllQuestsToggleMode(SQLiteConnection conn)
+    {
+        HashSet<QuestsToggleMode> hashSet = new();
+        using (var transaction = conn.BeginTransaction())
+        {
+            try
+            {
+                using (var cmd = new SQLiteCommand(@"SELECT * FROM QuestsToggleMode", conn))
+                {
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            QuestsToggleMode data = new()
+                            {
+                                QuestsToggleModeID = long.Parse(reader["QuestsToggleModeID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                QuestToggleMode = long.Parse(reader["QuestToggleMode"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                RunID = long.Parse(reader["RunID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
                             };
 
                             hashSet.Add(data);
@@ -7548,6 +7923,50 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                                 ActiveSkill17ID = long.Parse(reader["ActiveSkill17ID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
                                 ActiveSkill18ID = long.Parse(reader["ActiveSkill18ID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
                                 ActiveSkill19ID = long.Parse(reader["ActiveSkill19ID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                            };
+
+                            hashSet.Add(data);
+                        }
+                    }
+                }
+
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                HandleError(transaction, ex);
+            }
+        }
+
+        return hashSet;
+    }
+
+    private HashSet<ZenithSkills> GetAllZenithSkills(SQLiteConnection conn)
+    {
+        HashSet<ZenithSkills> hashSet = new();
+        using (var transaction = conn.BeginTransaction())
+        {
+            try
+            {
+                using (var cmd = new SQLiteCommand(@"SELECT * FROM ZenithSkills", conn))
+                {
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            ZenithSkills data = new()
+                            {
+                                ZenithSkillsID = long.Parse(reader["ZenithSkillsID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                CreatedAt = DateTime.Parse(reader["CreatedAt"]?.ToString() ?? DateTime.UnixEpoch.ToString(CultureInfo.InvariantCulture), CultureInfo.InvariantCulture),
+                                CreatedBy = reader["CreatedBy"]?.ToString() ?? string.Empty,
+                                RunID = long.Parse(reader["RunID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                ZenithSkill1ID = long.Parse(reader["ZenithSkill1ID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                ZenithSkill2ID = long.Parse(reader["ZenithSkill2ID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                ZenithSkill3ID = long.Parse(reader["ZenithSkill3ID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                ZenithSkill4ID = long.Parse(reader["ZenithSkill4ID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                ZenithSkill5ID = long.Parse(reader["ZenithSkill5ID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                ZenithSkill6ID = long.Parse(reader["ZenithSkill6ID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                ZenithSkill7ID = long.Parse(reader["ZenithSkill7ID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
                             };
 
                             hashSet.Add(data);
@@ -7817,7 +8236,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                                 Difficulty = (Difficulty)long.Parse(reader["Difficulty"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
                                 MonsterList = JsonConvert.DeserializeObject<List<int>>(reader["MonsterList"]?.ToString() ?? "{}") ?? new List<int> { },
                                 WeaponType = reader["WeaponType"]?.ToString() ?? "0",
-                                Category = reader["Category"]?.ToString() ?? "0",
+                                Category = ChallengeService.ConvertToBingoGauntletCategory(reader.GetInt64(reader.GetOrdinal("Category"))),
                                 TotalFramesElapsed = long.Parse(reader["TotalFramesElapsed"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
                                 TotalTimeElapsed = reader["TotalTimeElapsed"]?.ToString() ?? "0",
                                 Score = long.Parse(reader["Score"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
@@ -9903,6 +10322,63 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
         return achievements;
     }
 
+    /// <summary>
+    /// Get a list of all challenges where the unlock date is set or not by the player.
+    /// </summary>
+    /// <returns></returns>
+    public ReadOnlyDictionary<int, Challenge> GetPlayerChallenges()
+    {
+        var data = Challenges.IDChallenge;
+        if (string.IsNullOrEmpty(this.dataSource))
+        {
+            Logger.Warn(CultureInfo.InvariantCulture, "Cannot get player challenges collection. dataSource: {0}", this.dataSource);
+            return data;
+        }
+
+        using (var conn = new SQLiteConnection(this.dataSource))
+        {
+            conn.Open();
+            using (var transaction = conn.BeginTransaction())
+            {
+                try
+                {
+                    var sql = @"SELECT * FROM PlayerChallenges ORDER BY ChallengeID ASC";
+
+                    using (var cmd = new SQLiteCommand(sql, conn))
+                    {
+                        using (var reader = cmd.ExecuteReader())
+                        {
+                            if (reader == null || !reader.HasRows)
+                            {
+                                return data;
+                            }
+
+                            if (reader.HasRows)
+                            {
+                                while (reader.Read())
+                                {
+                                    var challengeID = reader.GetInt32(reader.GetOrdinal("ChallengeID"));
+                                    data[challengeID].UnlockDate = reader.IsDBNull(reader.GetOrdinal("UnlockDate"))
+? DateTime.UnixEpoch
+: DateTime.Parse(reader.GetString(reader.GetOrdinal("UnlockDate")), CultureInfo.InvariantCulture);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    HandleError(transaction, ex);
+                }
+            }
+        }
+
+        return data;
+    }
+
     public ObservableCollection<RecentRuns> GetRecentRuns()
     {
         var recentRuns = new ObservableCollection<RecentRuns>();
@@ -10140,8 +10616,8 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                                         // LiveChart graph
                                         // use a switch statement or a lookup table to convert the
                                         // weaponTypeID and styleID to their corresponding string names
-                                        weaponType = WeaponType.IDName[int.Parse(weaponTypeID.ToString(), CultureInfo.InvariantCulture)];
-                                        style = WeaponStyle.IDName[int.Parse(styleID.ToString(), CultureInfo.InvariantCulture)];
+                                        weaponType = WeaponType.IDName[int.Parse(weaponTypeID.ToString(CultureInfo.InvariantCulture), CultureInfo.InvariantCulture)];
+                                        style = WeaponStyle.IDName[int.Parse(styleID.ToString(CultureInfo.InvariantCulture), CultureInfo.InvariantCulture)];
                                         weaponUsageData.Add(new WeaponUsage(weaponType, style, (int)runCount));
                                     }
                                 }
@@ -10229,7 +10705,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                                 reader.Read();
                                 configWindow.SelectedQuestObjectiveImage.Source = new BitmapImage(new Uri(reader["ObjectiveImage"]?.ToString() ?? "0"));
                                 var questName = reader["QuestNameName"].ToString();
-                                configWindow.SelectedQuestNameTextBlock.Text = questName == string.Empty ? string.Format("{0} {1}", Messages.CustomQuestName, questID) : questName;
+                                configWindow.SelectedQuestNameTextBlock.Text = questName == string.Empty ? string.Format(CultureInfo.InvariantCulture, "{0} {1}", Messages.CustomQuestName, questID) : questName;
                                 configWindow.SelectedQuestObjectiveTextBlock.Text = string.Format(CultureInfo.InvariantCulture, "{0} {1} {2}", ObjectiveType.IDName[int.Parse(reader["ObjectiveTypeID"]?.ToString() ?? "0", CultureInfo.InvariantCulture)], reader["ObjectiveQuantity"], reader["ObjectiveName"]);
                                 configWindow.CurrentTimeTextBlock.Text = DateTime.UtcNow.ToString(CultureInfo.InvariantCulture);
                             }
@@ -10276,7 +10752,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
                             while (reader.Read())
                             {
-                                WeaponType.IDName.TryGetValue(Convert.ToInt32(reader["WeaponTypeID"]), out var weaponType);
+                                WeaponType.IDName.TryGetValue(Convert.ToInt32(reader["WeaponTypeID"], CultureInfo.InvariantCulture), out var weaponType);
 
                                 int bestTime;
                                 if (reader["BestTime"] == DBNull.Value)
@@ -10301,59 +10777,59 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                                 switch (weaponType)
                                 {
                                     case "Sword and Shield":
-                                        configWindow.SwordAndShieldBestTimeTextBlock.Text = FormatTime(bestTime);
+                                        configWindow.SwordAndShieldBestTimeTextBlock.Text = TimeService.GetMinutesSecondsMillisecondsFromFrames(bestTime);
                                         configWindow.SwordAndShieldRunIDTextBlock.Text = string.Format(CultureInfo.InvariantCulture, "Run ID: {0}", runID);
                                         break;
                                     case "Great Sword":
-                                        configWindow.GreatSwordBestTimeTextBlock.Text = FormatTime(bestTime);
+                                        configWindow.GreatSwordBestTimeTextBlock.Text = TimeService.GetMinutesSecondsMillisecondsFromFrames(bestTime);
                                         configWindow.GreatSwordRunIDTextBlock.Text = string.Format(CultureInfo.InvariantCulture, "Run ID: {0}", runID);
                                         break;
                                     case "Dual Swords":
-                                        configWindow.DualSwordsBestTimeTextBlock.Text = FormatTime(bestTime);
+                                        configWindow.DualSwordsBestTimeTextBlock.Text = TimeService.GetMinutesSecondsMillisecondsFromFrames(bestTime);
                                         configWindow.DualSwordsRunIDTextBlock.Text = string.Format(CultureInfo.InvariantCulture, "Run ID: {0}", runID);
                                         break;
                                     case "Long Sword":
-                                        configWindow.LongSwordBestTimeTextBlock.Text = FormatTime(bestTime);
+                                        configWindow.LongSwordBestTimeTextBlock.Text = TimeService.GetMinutesSecondsMillisecondsFromFrames(bestTime);
                                         configWindow.LongSwordRunIDTextBlock.Text = string.Format(CultureInfo.InvariantCulture, "Run ID: {0}", runID);
                                         break;
                                     case "Lance":
-                                        configWindow.LanceBestTimeTextBlock.Text = FormatTime(bestTime);
+                                        configWindow.LanceBestTimeTextBlock.Text = TimeService.GetMinutesSecondsMillisecondsFromFrames(bestTime);
                                         configWindow.LanceRunIDTextBlock.Text = string.Format(CultureInfo.InvariantCulture, "Run ID: {0}", runID);
                                         break;
                                     case "Gunlance":
-                                        configWindow.GunlanceBestTimeTextBlock.Text = FormatTime(bestTime);
+                                        configWindow.GunlanceBestTimeTextBlock.Text = TimeService.GetMinutesSecondsMillisecondsFromFrames(bestTime);
                                         configWindow.GunlanceRunIDTextBlock.Text = string.Format(CultureInfo.InvariantCulture, "Run ID: {0}", runID);
                                         break;
                                     case "Hammer":
-                                        configWindow.HammerBestTimeTextBlock.Text = FormatTime(bestTime);
+                                        configWindow.HammerBestTimeTextBlock.Text = TimeService.GetMinutesSecondsMillisecondsFromFrames(bestTime);
                                         configWindow.HammerRunIDTextBlock.Text = string.Format(CultureInfo.InvariantCulture, "Run ID: {0}", runID);
                                         break;
                                     case "Hunting Horn":
-                                        configWindow.HuntingHornBestTimeTextBlock.Text = FormatTime(bestTime);
+                                        configWindow.HuntingHornBestTimeTextBlock.Text = TimeService.GetMinutesSecondsMillisecondsFromFrames(bestTime);
                                         configWindow.HuntingHornRunIDTextBlock.Text = string.Format(CultureInfo.InvariantCulture, "Run ID: {0}", runID);
                                         break;
                                     case "Tonfa":
-                                        configWindow.TonfaBestTimeTextBlock.Text = FormatTime(bestTime);
+                                        configWindow.TonfaBestTimeTextBlock.Text = TimeService.GetMinutesSecondsMillisecondsFromFrames(bestTime);
                                         configWindow.TonfaRunIDTextBlock.Text = string.Format(CultureInfo.InvariantCulture, "Run ID: {0}", runID);
                                         break;
                                     case "Switch Axe F":
-                                        configWindow.SwitchAxeFBestTimeTextBlock.Text = FormatTime(bestTime);
+                                        configWindow.SwitchAxeFBestTimeTextBlock.Text = TimeService.GetMinutesSecondsMillisecondsFromFrames(bestTime);
                                         configWindow.SwitchAxeFRunIDTextBlock.Text = string.Format(CultureInfo.InvariantCulture, "Run ID: {0}", runID);
                                         break;
                                     case "Magnet Spike":
-                                        configWindow.MagnetSpikeBestTimeTextBlock.Text = FormatTime(bestTime);
+                                        configWindow.MagnetSpikeBestTimeTextBlock.Text = TimeService.GetMinutesSecondsMillisecondsFromFrames(bestTime);
                                         configWindow.MagnetSpikeRunIDTextBlock.Text = string.Format(CultureInfo.InvariantCulture, "Run ID: {0}", runID);
                                         break;
                                     case "Light Bowgun":
-                                        configWindow.LightBowgunBestTimeTextBlock.Text = FormatTime(bestTime);
+                                        configWindow.LightBowgunBestTimeTextBlock.Text = TimeService.GetMinutesSecondsMillisecondsFromFrames(bestTime);
                                         configWindow.LightBowgunRunIDTextBlock.Text = string.Format(CultureInfo.InvariantCulture, "Run ID: {0}", runID);
                                         break;
                                     case "Heavy Bowgun":
-                                        configWindow.HeavyBowgunBestTimeTextBlock.Text = FormatTime(bestTime);
+                                        configWindow.HeavyBowgunBestTimeTextBlock.Text = TimeService.GetMinutesSecondsMillisecondsFromFrames(bestTime);
                                         configWindow.HeavyBowgunRunIDTextBlock.Text = string.Format(CultureInfo.InvariantCulture, "Run ID: {0}", runID);
                                         break;
                                     case "Bow":
-                                        configWindow.BowBestTimeTextBlock.Text = FormatTime(bestTime);
+                                        configWindow.BowBestTimeTextBlock.Text = TimeService.GetMinutesSecondsMillisecondsFromFrames(bestTime);
                                         configWindow.BowRunIDTextBlock.Text = string.Format(CultureInfo.InvariantCulture, "Run ID: {0}", runID);
                                         break;
                                     default:
@@ -11587,7 +12063,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                         {
                             if (reader.Read())
                             {
-                                totalTimeElapsed = Convert.ToInt64(reader["TotalTimeElapsed"]);
+                                totalTimeElapsed = Convert.ToInt64(reader["TotalTimeElapsed"], CultureInfo.InvariantCulture);
                             }
                         }
                     }
@@ -11640,7 +12116,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                         {
                             if (reader.Read())
                             {
-                                var value = Convert.ToInt64(reader["TotalTimeElapsed"]);
+                                var value = Convert.ToInt64(reader["TotalTimeElapsed"], CultureInfo.InvariantCulture);
 
                                 questCompendium.TotalTimeElapsedQuests = value;
                             }
@@ -11705,7 +12181,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                         {
                             while (reader.Read())
                             {
-                                var questId = Convert.ToInt32(reader["QuestId"]);
+                                var questId = Convert.ToInt32(reader["QuestId"], CultureInfo.InvariantCulture);
                                 var cartsDictionaryJson = reader.GetString(1);
 
                                 // Deserialize carts dictionary JSON string
@@ -11877,7 +12353,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
         using (var cmd = new SQLiteCommand(query, conn))
         {
             cmd.Parameters.AddWithValue("@value", value);
-            count = Convert.ToInt64(cmd.ExecuteScalar());
+            count = Convert.ToInt64(cmd.ExecuteScalar(), CultureInfo.InvariantCulture);
         }
 
         return count;
@@ -12151,7 +12627,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
         using (var cmd = new SQLiteCommand(totalQuestRunsQuery, conn))
         {
-            totalQuestRuns = Convert.ToInt32(cmd.ExecuteScalar());
+            totalQuestRuns = Convert.ToInt32(cmd.ExecuteScalar(), CultureInfo.InvariantCulture);
         }
 
         using (var cmd = new SQLiteCommand(hitsTakenBlockedCountQuery, conn))
@@ -12319,7 +12795,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
         var sql = $"SELECT COUNT({fieldName}) FROM {tableName}";
         using (var command = new SQLiteCommand(sql, conn))
         {
-            return Convert.ToInt64(command.ExecuteScalar());
+            return Convert.ToInt64(command.ExecuteScalar(), CultureInfo.InvariantCulture);
         }
     }
 
@@ -12338,7 +12814,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
         using (var cmd = new SQLiteCommand(query, conn))
         {
             cmd.Parameters.AddWithValue("@value", value);
-            count = Convert.ToInt64(cmd.ExecuteScalar());
+            count = Convert.ToInt64(cmd.ExecuteScalar(), CultureInfo.InvariantCulture);
         }
 
         return count;
@@ -12764,7 +13240,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
         var query = $"SELECT TOTAL({field}) FROM {table} WHERE {field} IS NOT NULL";
         using (var cmd = new SQLiteCommand(query, conn))
         {
-            var sum = Convert.ToInt64(cmd.ExecuteScalar());
+            var sum = Convert.ToInt64(cmd.ExecuteScalar(), CultureInfo.InvariantCulture);
             return sum;
         }
     }
@@ -12918,7 +13394,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
             {
                 if (reader.Read())
                 {
-                    attempts = Convert.ToInt64(reader["TotalAttempts"]);
+                    attempts = Convert.ToInt64(reader["TotalAttempts"], CultureInfo.InvariantCulture);
                 }
             }
         }
@@ -12954,7 +13430,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                 if (reader.Read())
                 {
                     questID = (long)reader["QuestID"];
-                    attempts = Convert.ToInt64(reader["Attempts"]);
+                    attempts = Convert.ToInt64(reader["Attempts"], CultureInfo.InvariantCulture);
                 }
             }
         }
@@ -13356,7 +13832,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                     var result = cmd.ExecuteScalar();
                     if (result != DBNull.Value)
                     {
-                        version = Convert.ToInt32(result);
+                        version = Convert.ToInt32(result, CultureInfo.InvariantCulture);
                         Logger.Info(CultureInfo.InvariantCulture, "Current user_version is {0}", version);
                     }
                 }
@@ -13488,7 +13964,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                     default:
                         Logger.Info(CultureInfo.InvariantCulture, "No new schema updates found. Schema version: {0}", fromVersion);
                         MessageBox.Show(
-                            string.Format(
+                            string.Format(CultureInfo.InvariantCulture,
 @"No new schema updates found! Schema version: {0}", fromVersion),
                             string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} to {1})",
                             previousVersion,
@@ -13611,6 +14087,146 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
                 }
 
                 transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                HandleError(transaction, ex);
+            }
+        }
+    }
+
+    private void RemoveCurrentDatabaseTriggers(SQLiteConnection conn)
+    {
+        using (var transaction = conn.BeginTransaction())
+        {
+            try
+            {
+                List<string> triggersToRemove = new();
+
+                // SQL statement to retrieve all triggers in the database
+                string getTriggersSql = "SELECT name FROM sqlite_master WHERE type = 'trigger';";
+
+                // SQL statement to drop a trigger
+                string dropTriggerSql = "DROP TRIGGER IF EXISTS {0};";
+                using (SQLiteCommand getTriggersCommand = new SQLiteCommand(getTriggersSql, conn))
+                using (SQLiteDataReader reader = getTriggersCommand.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        string triggerName = reader.GetString(0);
+
+                        using (SQLiteCommand dropTriggerCommand = new SQLiteCommand(string.Format(dropTriggerSql, triggerName), conn))
+                        {
+                            triggersToRemove.Add(triggerName);
+                            dropTriggerCommand.ExecuteNonQuery();
+                        }
+                    }
+                }
+
+                transaction.Commit();
+                Logger.Debug("Triggers to remove: {0}", triggersToRemove.Count);
+            }
+            catch (Exception ex)
+            {
+                HandleError(transaction, ex);
+            }
+        }
+    }
+
+    private void CheckDatesFormat(SQLiteConnection conn)
+    {
+        using (var transaction = conn.BeginTransaction())
+        {
+            try
+            {
+                SQLiteCommand command = new SQLiteCommand("SELECT name FROM sqlite_master WHERE type='table'", conn);
+                SQLiteDataReader reader = command.ExecuteReader();
+
+                List<string> tables = new List<string>();
+                while (reader.Read())
+                {
+                    var name = reader["name"].ToString();
+                    if (name is not null)
+                    {
+                        tables.Add(name);
+                    }
+                }
+
+                if (tables.Count <= 5)
+                {
+                    Logger.Warn("Only 5 or less tables were found for date conversion, canceling process.");
+                    return;
+                }
+
+                List<string> updatedFields = new List<string>();
+
+                foreach (var table in tables)
+                {
+                    SQLiteCommand command2 = new SQLiteCommand($"PRAGMA table_info({table})", conn);
+                    SQLiteDataReader reader2 = command2.ExecuteReader();
+                    while (reader2.Read())
+                    {
+                        var name2 = reader2["name"].ToString();
+                        if (name2 is null)
+                        {
+                            Logger.Warn("Column name is null.");
+                            break;
+                        }
+
+                        string columnName = name2;
+                        if (columnName == "CreatedAt" || columnName == "CreationDate" || columnName == "Date" || columnName == "StartTime" || columnName == "EndTime")
+                        {
+                            SQLiteCommand selectCommand = new SQLiteCommand($"SELECT {columnName} FROM {table}", conn);
+                            SQLiteDataReader selectReader = selectCommand.ExecuteReader();
+                            while (selectReader.Read())
+                            {
+                                var selectedColumn = selectReader.GetString(selectReader.GetOrdinal(columnName));
+                                if (selectedColumn is null)
+                                {
+                                    Logger.Warn("Selected column is null.");
+                                    break;
+                                }
+
+                                string value = selectedColumn;
+                                if (!value.EndsWith("Z"))
+                                {
+                                    DateTime date;
+                                    if (DateTime.TryParse(value, CultureInfo.InvariantCulture, DateTimeStyles.AssumeLocal, out date))
+                                    {
+                                        string utcDate = date.ToUniversalTime().ToString("yyyy-MM-dd HH:mm:ss.fffffffZ");
+
+                                        SQLiteCommand updateCommand = new SQLiteCommand($"UPDATE {table} SET {columnName} = '{utcDate}' WHERE {columnName} = '{value}'", conn);
+                                        updateCommand.ExecuteNonQuery();
+
+                                        updatedFields.Add($"{table}.{columnName}.{value}.{utcDate}");
+                                    }
+                                    else
+                                    {
+                                        string utcDate = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc).ToString("yyyy-MM-dd HH:mm:ss.fffffffZ");
+
+                                        SQLiteCommand updateCommand = new SQLiteCommand($"UPDATE {table} SET {columnName} = '{utcDate}' WHERE {columnName} = '{value}'", conn);
+                                        updateCommand.ExecuteNonQuery();
+
+                                        updatedFields.Add($"{table}.{columnName}.{value}.{utcDate}");
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                transaction.Commit();
+
+                if (updatedFields.Count > 0)
+                {
+                    MessageBox.Show($"Found dates needed to convert to UTC. Updated date entries count: {updatedFields.Count}", Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
+                    Logger.Debug($"Updated date entries: {string.Join("\n", updatedFields)}");
+                    Logger.Debug($"Updated date entries count: {updatedFields.Count}");
+                }
+                else
+                {
+                    Logger.Info("No date conversions needed in database.");
+                }
             }
             catch (Exception ex)
             {
@@ -13918,7 +14534,7 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
                 createTable.ExecuteNonQuery();
             }
 
-            Logger.Debug("Created table if not exists new_{0}", tableName);
+            Logger.Debug(CultureInfo.InvariantCulture, "Created table if not exists new_{0}", tableName);
 
             // 5. Transfer content from X into new_X using a statement like: INSERT INTO new_X SELECT ... FROM X.
             // Transfer content from X into new_X using a statement like: INSERT INTO new_X SELECT ... FROM X
@@ -13927,9 +14543,9 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
             var countQuery = "SELECT COUNT(*) FROM Quests";
             using (var command = new SQLiteCommand(countQuery, connection))
             {
-                var rowCount = Convert.ToInt32(command.ExecuteScalar());
+                var rowCount = Convert.ToInt32(command.ExecuteScalar(), CultureInfo.InvariantCulture);
 
-                Logger.Debug("Inserting default values into new_Quests");
+                Logger.Debug(CultureInfo.InvariantCulture, "Inserting default values into new_Quests");
 
                 // Insert rows with default values into new_Quests
                 var insertQuery = $"INSERT INTO new_Quests DEFAULT VALUES";
@@ -13979,7 +14595,7 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
                 dropTable.ExecuteNonQuery();
             }
 
-            Logger.Debug("Deleted table {0}", tableName);
+            Logger.Debug(CultureInfo.InvariantCulture, "Deleted table {0}", tableName);
 
             // 7. Change the name of new_X to X using: ALTER TABLE new_X RENAME TO X.
             // Change the name of new_X to X using: ALTER TABLE new_X RENAME TO X
@@ -13988,7 +14604,7 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
                 renameTable.ExecuteNonQuery();
             }
 
-            Logger.Debug("Renamed new_{0} to {1}", tableName, tableName);
+            Logger.Debug(CultureInfo.InvariantCulture, "Renamed new_{0} to {1}", tableName, tableName);
 
             // 8. Use CREATE INDEX, CREATE TRIGGER, and CREATE VIEW to reconstruct indexes, triggers, and views associated with table X. Perhaps use the old format of the triggers, indexes, and views saved from step 3 above as a guide, making changes as appropriate for the alteration.
             // Use CREATE INDEX, CREATE TRIGGER, and CREATE VIEW to reconstruct indexes, triggers, and views associated with table X
@@ -14055,7 +14671,7 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
                 }
             }
 
-            Logger.Debug("Views affected: {0}", viewSqlsModified.Count);
+            Logger.Debug(CultureInfo.InvariantCulture, "Views affected: {0}", viewSqlsModified.Count);
 
             Logger.Info(CultureInfo.InvariantCulture, "Altered table {0} successfully", tableName);
         }
@@ -14081,7 +14697,7 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
                 createTable.ExecuteNonQuery();
             }
 
-            Logger.Debug("Created table if not exists new_{0}", tableName);
+            Logger.Debug(CultureInfo.InvariantCulture, "Created table if not exists new_{0}", tableName);
 
             // 5. Transfer content from X into new_X using a statement like: INSERT INTO new_X SELECT ... FROM X.
             // Transfer content from X into new_X using a statement like: INSERT INTO new_X SELECT ... FROM X
@@ -14094,7 +14710,7 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
                 transferDataCmd.ExecuteNonQuery();
             }
 
-            Logger.Debug("Transferred data from {0} to new_{1}", tableName, tableName);
+            Logger.Debug(CultureInfo.InvariantCulture, "Transferred data from {0} to new_{1}", tableName, tableName);
 
             // 6. Drop the old table X: DROP TABLE X.
             // Drop the old table X
@@ -14103,7 +14719,7 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
                 dropTable.ExecuteNonQuery();
             }
 
-            Logger.Debug("Deleted table {0}", tableName);
+            Logger.Debug(CultureInfo.InvariantCulture, "Deleted table {0}", tableName);
 
             // 7. Change the name of new_X to X using: ALTER TABLE new_X RENAME TO X.
             // Change the name of new_X to X using: ALTER TABLE new_X RENAME TO X
@@ -14112,7 +14728,7 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
                 renameTable.ExecuteNonQuery();
             }
 
-            Logger.Debug("Renamed new_{0} to {1}", tableName, tableName);
+            Logger.Debug(CultureInfo.InvariantCulture, "Renamed new_{0} to {1}", tableName, tableName);
 
             // 8. Use CREATE INDEX, CREATE TRIGGER, and CREATE VIEW to reconstruct indexes, triggers, and views associated with table X. Perhaps use the old format of the triggers, indexes, and views saved from step 3 above as a guide, making changes as appropriate for the alteration.
             // Recreate indexes, triggers, and views associated with the original table "QuestAttempts".
@@ -14133,7 +14749,7 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
         {
             // Roll back the transaction if any errors occur
             Logger.Error(ex, "Could not alter table {0}", tableName);
-            LoggingService.WriteCrashLog(ex, string.Format("Could not alter table {0}", tableName));
+            LoggingService.WriteCrashLog(ex, string.Format(CultureInfo.InvariantCulture, "Could not alter table {0}", tableName));
         }
     }
 
@@ -14152,7 +14768,7 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
                 createTable.ExecuteNonQuery();
             }
 
-            Logger.Debug("Created table if not exists new_{0}", tableName);
+            Logger.Debug(CultureInfo.InvariantCulture, "Created table if not exists new_{0}", tableName);
 
             // 5. Transfer content from X into new_X using a statement like: INSERT INTO new_X SELECT ... FROM X.
             // Transfer content from X into new_X using a statement like: INSERT INTO new_X SELECT ... FROM X
@@ -14174,7 +14790,7 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
                 dropTable.ExecuteNonQuery();
             }
 
-            Logger.Debug("Deleted table {0}", tableName);
+            Logger.Debug(CultureInfo.InvariantCulture, "Deleted table {0}", tableName);
 
             // 7. Change the name of new_X to X using: ALTER TABLE new_X RENAME TO X.
             // Change the name of new_X to X using: ALTER TABLE new_X RENAME TO X
@@ -14204,7 +14820,7 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
         {
             // Roll back the transaction if any errors occur
             Logger.Error(ex, "Could not alter table {0}", tableName);
-            LoggingService.WriteCrashLog(ex, string.Format("Could not alter table {0}", tableName));
+            LoggingService.WriteCrashLog(ex, string.Format(CultureInfo.InvariantCulture, "Could not alter table {0}", tableName));
         }
     }
 
@@ -14251,14 +14867,14 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
                 createTable.ExecuteNonQuery();
             }
 
-            Logger.Debug("Created table if not exists new_{0}", tableName);
+            Logger.Debug(CultureInfo.InvariantCulture, "Created table if not exists new_{0}", tableName);
 
             // 5. Transfer content from X into new_X using a statement like: INSERT INTO new_X SELECT ... FROM X.
             // Transfer content from X into new_X using a statement like: INSERT INTO new_X SELECT ... FROM X
             var countQuery = "SELECT COUNT(*) FROM GameFolder";
             using (var command = new SQLiteCommand(countQuery, connection))
             {
-                var rowCount = Convert.ToInt32(command.ExecuteScalar());
+                var rowCount = Convert.ToInt32(command.ExecuteScalar(), CultureInfo.InvariantCulture);
 
                 Logger.Debug("Inserting default values into new_GameFolder");
 
@@ -14306,7 +14922,7 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
                 dropTable.ExecuteNonQuery();
             }
 
-            Logger.Debug("Deleted table {0}", tableName);
+            Logger.Debug(CultureInfo.InvariantCulture, "Deleted table {0}", tableName);
 
             // 7. Change the name of new_X to X using: ALTER TABLE new_X RENAME TO X.
             // Change the name of new_X to X using: ALTER TABLE new_X RENAME TO X
@@ -14382,7 +14998,7 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
                 }
             }
 
-            Logger.Debug("Views affected: {0}", viewSqlsModified.Count);
+            Logger.Debug(CultureInfo.InvariantCulture, "Views affected: {0}", viewSqlsModified.Count);
 
             Logger.Info(CultureInfo.InvariantCulture, "Altered table {0} successfully", tableName);
         }
@@ -14390,7 +15006,7 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
         {
             // Roll back the transaction if any errors occur
             Logger.Error(ex, "Could not alter table {0}", tableName);
-            LoggingService.WriteCrashLog(ex, string.Format("Could not alter table {0}", tableName));
+            LoggingService.WriteCrashLog(ex, string.Format(CultureInfo.InvariantCulture, "Could not alter table {0}", tableName));
         }
     }
 
@@ -14441,7 +15057,7 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
                 createTable.ExecuteNonQuery();
             }
 
-            Logger.Debug("Created table new_{0}", tableName);
+            Logger.Debug(CultureInfo.InvariantCulture, "Created table new_{0}", tableName);
 
             // 5. Transfer content from X into new_X using a statement like: INSERT INTO new_X SELECT ... FROM X.
             // Transfer content from X into new_X using a statement like: INSERT INTO new_X SELECT ... FROM X
@@ -14460,7 +15076,7 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
                 dropTable.ExecuteNonQuery();
             }
 
-            Logger.Debug("Deleted table {0}", tableName);
+            Logger.Debug(CultureInfo.InvariantCulture, "Deleted table {0}", tableName);
 
             // 7. Change the name of new_X to X using: ALTER TABLE new_X RENAME TO X.
             // Change the name of new_X to X using: ALTER TABLE new_X RENAME TO X
@@ -14536,7 +15152,7 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
                 }
             }
 
-            Logger.Debug("Views affected: {0}", viewSqlsModified.Count);
+            Logger.Debug(CultureInfo.InvariantCulture, "Views affected: {0}", viewSqlsModified.Count);
 
             Logger.Info(CultureInfo.InvariantCulture, "Altered table {0} successfully", tableName);
         }
@@ -14544,7 +15160,7 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
         {
             // Roll back the transaction if any errors occur
             Logger.Error(ex, "Could not alter table {0}", tableName);
-            LoggingService.WriteCrashLog(ex, string.Format("Could not alter table {0}", tableName));
+            LoggingService.WriteCrashLog(ex, string.Format(CultureInfo.InvariantCulture, "Could not alter table {0}", tableName));
         }
     }
 
