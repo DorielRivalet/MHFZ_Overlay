@@ -170,7 +170,7 @@ You can also see the monster icons or renders, and there is an option for automa
 ![Sharpness Numbers 2](./demo/sharpness2.png)
 ![Sharpness Numbers 3](./demo/sharpness3.png)
 
-- [x] Quest Timer (Two modes: elapsed time and time left. Down to the centiseconds in accuracy!).
+- [x] Quest Timer (Two modes: elapsed time and time left. Down to the milliseconds in accuracy!).
 - [x] Hit Count (counts *Reflect*, *Stylish Up*, Heatblade, *Fencing+2* and more!).
 
 ![Player Stats](./demo/playerstat1.png)
