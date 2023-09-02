@@ -577,7 +577,7 @@ public static class BingoMonsters
                 new BingoMonster {
                         Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/yian_kut-ku.png",
                         Name = "UL Yian Kut-Ku",
-                        BaseScore = 8,
+                        BaseScore = 16,
                         IsUnlimited = true,
                         UnlimitedMonsterID = 6,
                         Type = FrontierMonsterType.BirdWyvern,
@@ -585,7 +585,7 @@ public static class BingoMonsters
                 new BingoMonster {
                         Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/lavasioth.png",
                         Name = "UL Lavasioth",
-                        BaseScore = 9,
+                        BaseScore = 18,
                         IsUnlimited = true,
                         UnlimitedMonsterID = 75,
                         Type = FrontierMonsterType.PiscineWyvern,
@@ -593,7 +593,7 @@ public static class BingoMonsters
                 new BingoMonster {
                         Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/gypceros.png",
                         Name = "UL Gypceros",
-                        BaseScore = 9,
+                        BaseScore = 18,
                         IsUnlimited = true,
                         UnlimitedMonsterID = 20,
                         Type = FrontierMonsterType.BirdWyvern,
@@ -601,7 +601,7 @@ public static class BingoMonsters
                 new BingoMonster {
                         Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/gougarf.png",
                         Name = "UL Gougarf",
-                        BaseScore = 10,
+                        BaseScore = 20,
                         IsUnlimited = true,
                         UnlimitedMonsterID = 123,
                         Type = FrontierMonsterType.FangedBeast,
@@ -609,7 +609,7 @@ public static class BingoMonsters
                 new BingoMonster {
                         Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/gogomoa.png",
                         Name = "UL Gogomoa",
-                        BaseScore = 9,
+                        BaseScore = 18,
                         IsUnlimited = true,
                         UnlimitedMonsterID = 101,
                         Type = FrontierMonsterType.FangedBeast,
@@ -617,7 +617,7 @@ public static class BingoMonsters
                 new BingoMonster {
                         Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/shogun_ceanataur.png",
                         Name = "UL Shogun Ceanataur",
-                        BaseScore = 9,
+                        BaseScore = 18,
                         IsUnlimited = true,
                         UnlimitedMonsterID = 67,
                         Type = FrontierMonsterType.Carapaceon,
@@ -625,7 +625,7 @@ public static class BingoMonsters
                 new BingoMonster {
                         Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/dyuragaua.png",
                         Name = "UL Dyuragaua",
-                        BaseScore = 7,
+                        BaseScore = 14,
                         IsUnlimited = true,
                         UnlimitedMonsterID = 94,
                         Type = FrontierMonsterType.FlyingWyvern,
@@ -633,7 +633,7 @@ public static class BingoMonsters
                 new BingoMonster {
                         Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/cephadrome.png",
                         Name = "UL Cephadrome",
-                        BaseScore = 7,
+                        BaseScore = 14,
                         IsUnlimited = true,
                         UnlimitedMonsterID = 8,
                         Type = FrontierMonsterType.PiscineWyvern,
@@ -641,7 +641,7 @@ public static class BingoMonsters
                 new BingoMonster {
                         Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/bulldrome.png",
                         Name = "UL Bulldrome",
-                        BaseScore = 6,
+                        BaseScore = 12,
                         IsUnlimited = true,
                         UnlimitedMonsterID = 68,
                         Type = FrontierMonsterType.FangedBeast,
@@ -649,7 +649,7 @@ public static class BingoMonsters
                 new BingoMonster {
                         Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/basarios.png",
                         Name = "UL Basarios",
-                        BaseScore = 9,
+                        BaseScore = 18,
                         IsUnlimited = true,
                         UnlimitedMonsterID = 22,
                         Type = FrontierMonsterType.FlyingWyvern,
@@ -657,7 +657,7 @@ public static class BingoMonsters
                 new BingoMonster {
                         Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/congalala.png",
                         Name = "UL Congalala",
-                        BaseScore = 8,
+                        BaseScore = 16,
                         IsUnlimited = true,
                         UnlimitedMonsterID = 52,
                         Type = FrontierMonsterType.FangedBeast,
@@ -665,7 +665,7 @@ public static class BingoMonsters
                 new BingoMonster {
                         Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/pokaradon.png",
                         Name = "UL Pokaradon",
-                        BaseScore = 8,
+                        BaseScore = 16,
                         IsUnlimited = true,
                         UnlimitedMonsterID = 115,
                         Type = FrontierMonsterType.Leviathan,
@@ -895,7 +895,7 @@ public static class BingoMonsters
                 new BingoMonster {
                         Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/azure_rathalos.png",
                         Name = "UL Azure Rathalos",
-                        BaseScore = 15,
+                        BaseScore = 30,
                         IsUnlimited = true,
                         UnlimitedMonsterID = 49,
                         Type = FrontierMonsterType.FlyingWyvern,
@@ -903,7 +903,7 @@ public static class BingoMonsters
                 new BingoMonster {
                         Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/pink_rathian.png",
                         Name = "UL Pink Rathian",
-                        BaseScore = 14,
+                        BaseScore = 28,
                         IsUnlimited = true,
                         UnlimitedMonsterID = 37,
                         Type = FrontierMonsterType.FlyingWyvern,
@@ -911,7 +911,7 @@ public static class BingoMonsters
                 new BingoMonster {
                         Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/bright_hypnoc.png",
                         Name = "UL Bright Hypnoc",
-                        BaseScore = 13,
+                        BaseScore = 26,
                         IsUnlimited = true,
                         UnlimitedMonsterID = 78,
                         Type = FrontierMonsterType.BirdWyvern,
@@ -919,7 +919,7 @@ public static class BingoMonsters
                 new BingoMonster {
                         Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/purple_gypceros.png",
                         Name = "UL Purple Gypceros",
-                        BaseScore = 13,
+                        BaseScore = 26,
                         IsUnlimited = true,
                         UnlimitedMonsterID = 39,
                         Type = FrontierMonsterType.BirdWyvern,
@@ -927,7 +927,7 @@ public static class BingoMonsters
                 new BingoMonster {
                         Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/green_plesioth.png",
                         Name = "UL Green Plesioth",
-                        BaseScore = 15,
+                        BaseScore = 30,
                         IsUnlimited = true,
                         UnlimitedMonsterID = 46,
                         Type = FrontierMonsterType.PiscineWyvern,
@@ -935,7 +935,7 @@ public static class BingoMonsters
                 new BingoMonster {
                         Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/blue_yian_kut-ku.png",
                         Name = "UL Blue Yian Kut-Ku",
-                        BaseScore = 12,
+                        BaseScore = 24,
                         IsUnlimited = true,
                         UnlimitedMonsterID = 38,
                         Type = FrontierMonsterType.BirdWyvern,
@@ -943,7 +943,7 @@ public static class BingoMonsters
                 new BingoMonster {
                         Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/akura_jebia.png",
                         Name = "UL Akura Jebia",
-                        BaseScore = 15,
+                        BaseScore = 30,
                         IsUnlimited = true,
                         UnlimitedMonsterID = 84,
                         Type = FrontierMonsterType.Carapaceon,
@@ -951,7 +951,7 @@ public static class BingoMonsters
                 new BingoMonster {
                         Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/orange_espinas.png",
                         Name = "UL Orange Espinas",
-                        BaseScore = 20,
+                        BaseScore = 40,
                         IsUnlimited = true,
                         UnlimitedMonsterID = 81,
                         Type = FrontierMonsterType.FlyingWyvern,
@@ -1189,7 +1189,7 @@ public static class BingoMonsters
                 new BingoMonster {
                         Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/rebidiora.png",
                         Name = "UL Rebidiora",
-                        BaseScore = 30,
+                        BaseScore = 60,
                         IsUnlimited = true,
                         UnlimitedMonsterID = 108,
                         Type = FrontierMonsterType.ElderDragon,
@@ -1197,7 +1197,7 @@ public static class BingoMonsters
                 new BingoMonster {
                         Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/akantor.png",
                         Name = "UL Akantor",
-                        BaseScore = 40,
+                        BaseScore = 80,
                         IsUnlimited = true,
                         UnlimitedMonsterID = 77,
                         Type = FrontierMonsterType.FlyingWyvern,
@@ -1205,7 +1205,7 @@ public static class BingoMonsters
                 new BingoMonster {
                         Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/silver_rathalos.png",
                         Name = "UL Silver Rathalos",
-                        BaseScore = 35,
+                        BaseScore = 70,
                         IsUnlimited = true,
                         UnlimitedMonsterID = 41,
                         Type = FrontierMonsterType.FlyingWyvern,
@@ -1213,7 +1213,7 @@ public static class BingoMonsters
                 new BingoMonster {
                         Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/gold_rathian.png",
                         Name = "UL Gold Rathian",
-                        BaseScore = 34,
+                        BaseScore = 68,
                         IsUnlimited = true,
                         UnlimitedMonsterID = 42,
                         Type = FrontierMonsterType.FlyingWyvern,
@@ -1221,7 +1221,7 @@ public static class BingoMonsters
                 new BingoMonster {
                         Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/poborubarumu.png",
                         Name = "UL Poborubarumu",
-                        BaseScore = 40,
+                        BaseScore = 80,
                         IsUnlimited = true,
                         UnlimitedMonsterID = 131,
                         Type = FrontierMonsterType.FlyingWyvern,
@@ -1229,7 +1229,7 @@ public static class BingoMonsters
                 new BingoMonster {
                         Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/berukyurosu.png",
                         Name = "UL Berukyurosu",
-                        BaseScore = 35,
+                        BaseScore = 70,
                         IsUnlimited = true,
                         UnlimitedMonsterID = 85,
                         Type = FrontierMonsterType.FlyingWyvern,
@@ -1237,7 +1237,7 @@ public static class BingoMonsters
                 new BingoMonster {
                         Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/red_khezu.png",
                         Name = "UL Red Khezu",
-                        BaseScore = 30,
+                        BaseScore = 60,
                         IsUnlimited = true,
                         UnlimitedMonsterID = 45,
                         Type = FrontierMonsterType.FlyingWyvern,
@@ -1245,7 +1245,7 @@ public static class BingoMonsters
                 new BingoMonster {
                         Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/forokururu.png",
                         Name = "UL Forokururu",
-                        BaseScore = 40,
+                        BaseScore = 80,
                         IsUnlimited = true,
                         UnlimitedMonsterID = 125,
                         Type = FrontierMonsterType.BirdWyvern,
@@ -1253,7 +1253,7 @@ public static class BingoMonsters
                 new BingoMonster {
                         Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/farunokku.png",
                         Name = "UL Farunokku",
-                        BaseScore = 35,
+                        BaseScore = 70,
                         IsUnlimited = true,
                         UnlimitedMonsterID = 114,
                         Type = FrontierMonsterType.FlyingWyvern,
@@ -1261,7 +1261,7 @@ public static class BingoMonsters
                 new BingoMonster {
                         Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/silver_hypnoc.png",
                         Name = "UL Silver Hypnoc",
-                        BaseScore = 40,
+                        BaseScore = 80,
                         IsUnlimited = true,
                         UnlimitedMonsterID = 82,
                         Type = FrontierMonsterType.BirdWyvern,
@@ -1269,7 +1269,7 @@ public static class BingoMonsters
                 new BingoMonster {
                         Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/black_diablos.png",
                         Name = "UL Black Diablos",
-                        BaseScore = 45,
+                        BaseScore = 90,
                         IsUnlimited = true,
                         UnlimitedMonsterID = 43,
                         Type = FrontierMonsterType.FlyingWyvern,
@@ -1277,7 +1277,7 @@ public static class BingoMonsters
                 new BingoMonster {
                         Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/zenaserisu.png",
                         Name = "UL Zenaserisu",
-                        BaseScore = 50,
+                        BaseScore = 100,
                         IsUnlimited = true,
                         UnlimitedMonsterID = 161,
                         Type = FrontierMonsterType.FlyingWyvern,
@@ -1285,7 +1285,7 @@ public static class BingoMonsters
                 new BingoMonster {
                         Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/gurenzeburu.png",
                         Name = "UL Gurenzeburu",
-                        BaseScore = 45,
+                        BaseScore = 90,
                         IsUnlimited = true,
                         UnlimitedMonsterID = 96,
                         Type = FrontierMonsterType.FlyingWyvern,
@@ -1293,7 +1293,7 @@ public static class BingoMonsters
                 new BingoMonster {
                         Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/black_gravios.png",
                         Name = "UL Black Gravios",
-                        BaseScore = 45,
+                        BaseScore = 90,
                         IsUnlimited = true,
                         UnlimitedMonsterID = 47,
                         Type = FrontierMonsterType.FlyingWyvern,
@@ -1301,7 +1301,7 @@ public static class BingoMonsters
                 new BingoMonster {
                         Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/kuarusepusu.png",
                         Name = "UL Kuarusepusu",
-                        BaseScore = 50,
+                        BaseScore = 100,
                         IsUnlimited = true,
                         UnlimitedMonsterID = 105,
                         Type = FrontierMonsterType.Leviathan,
@@ -1309,7 +1309,7 @@ public static class BingoMonsters
                 new BingoMonster {
                         Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/white_espinas.png",
                         Name = "UL White Espinas",
-                        BaseScore = 50,
+                        BaseScore = 100,
                         IsUnlimited = true,
                         UnlimitedMonsterID = 90,
                         Type = FrontierMonsterType.FlyingWyvern,
@@ -1317,7 +1317,7 @@ public static class BingoMonsters
                 new BingoMonster {
                         Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/red_lavasioth.png",
                         Name = "UL Red Lavasioth",
-                        BaseScore = 50,
+                        BaseScore = 100,
                         IsUnlimited = true,
                         UnlimitedMonsterID = 79,
                         Type = FrontierMonsterType.PiscineWyvern,
@@ -1325,7 +1325,7 @@ public static class BingoMonsters
                 new BingoMonster {
                         Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/yian_garuga.png",
                         Name = "UL Yian Garuga",
-                        BaseScore = 50,
+                        BaseScore = 100,
                         IsUnlimited = true,
                         UnlimitedMonsterID = 40,
                         Type = FrontierMonsterType.BirdWyvern,
@@ -1333,7 +1333,7 @@ public static class BingoMonsters
                 new BingoMonster {
                         Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/abiorugu.png",
                         Name = "UL Abiorugu",
-                        BaseScore = 45,
+                        BaseScore = 90,
                         IsUnlimited = true,
                         UnlimitedMonsterID = 104,
                         Type = FrontierMonsterType.BruteWyvern,

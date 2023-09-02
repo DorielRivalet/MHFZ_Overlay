@@ -1531,7 +1531,11 @@ TreeScope.Children, condition);
         };
     }
 
-    public string GetFinalOverlayMode()
+    /// <summary>
+    /// This is only used for display
+    /// </summary>
+    /// <returns></returns>
+    public string GetFinalOverlayModeForDisplay()
     {
         if ((OverlayModeDictionary.Count == 2 && OverlayModeDictionary.Last().Value == "Standard") ||
                             (OverlayModeDictionary.Count == 1 && OverlayModeDictionary.First().Value == "Standard") ||
@@ -1560,7 +1564,7 @@ TreeScope.Children, condition);
         {
             if (s.DiscordOverlayMode == "Final" || (s.DiscordOverlayMode == "Automatic" && s.OverlayWatermarkMode == "Final"))
             {
-                return $"{GetFinalOverlayMode()} | ";
+                return $"{GetFinalOverlayModeForDisplay()} | ";
             }
             else
             {
@@ -12371,7 +12375,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         }
     }
 
-    public string OverlayModeWatermarkText => ShowOverlayModeFinalMode() ? GetFinalOverlayMode() : GetOverlayModeForStorage();
+    public string OverlayModeWatermarkText => ShowOverlayModeFinalMode() ? GetFinalOverlayModeForDisplay() : GetOverlayModeForStorage();
 
     public string QuestIDBind => this.QuestID().ToString(CultureInfo.InvariantCulture);
 

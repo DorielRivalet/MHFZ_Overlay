@@ -1,5 +1,23 @@
 
 
+## [0.31.0](https://github.com/DorielRivalet/MHFZ_Overlay/compare/v0.30.0...v0.31.0) (2023-09-02)
+
+
+### Features
+
+* **bingo:** update monsters base score ([8a9b7b0](https://github.com/DorielRivalet/MHFZ_Overlay/commit/8a9b7b0aaa640ed73ab6a992799a244c055d90a7))
+
+
+### Bug Fixes
+
+* attempts and personal best attempts counters ([06c8938](https://github.com/DorielRivalet/MHFZ_Overlay/commit/06c893812af1597f2c2db0633301bc82464d52f0)), closes [DorielRivalet/mhfz-overlay#181](https://github.com/DorielRivalet/mhfz-overlay/issues/181)
+
+
+### For Developers
+
+* bump version ([5f62f1a](https://github.com/DorielRivalet/MHFZ_Overlay/commit/5f62f1a054ee97413d2738130e69e45a11c0af59))
+* bump version ([64a7743](https://github.com/DorielRivalet/MHFZ_Overlay/commit/64a7743c53bfcfa02393069f0e3dfefa3992401c))
+
 ## [0.30.0](https://github.com/DorielRivalet/MHFZ_Overlay/compare/v0.29.1...v0.30.0) (2023-09-01)
 
 

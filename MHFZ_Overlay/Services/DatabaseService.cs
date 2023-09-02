@@ -706,31 +706,7 @@ public sealed class DatabaseService
                         var actionsPerMinuteDictionary = dataLoader.Model.ActionsPerMinuteDictionary;
                         var overlayModeDictionary = dataLoader.Model.OverlayModeDictionary;
 
-                        // check if its grabbing a TimeDefInt from a previous quest
-                        // TODO is this enough?
-                        if ((overlayModeDictionary.Count == 2 && overlayModeDictionary.Last().Value == "Standard") ||
-                            (overlayModeDictionary.Count == 1 && overlayModeDictionary.First().Value == "Standard") ||
-                            overlayModeDictionary.Count > 2)
-                        {
-                            actualOverlayMode = "Standard";
-                        }
-                        else
-                        {
-                            // TODO: test
-                            if (overlayModeDictionary.Count == 2 && overlayModeDictionary.First().Value == "Standard")
-                            {
-                                actualOverlayMode = overlayModeDictionary.Last().Value;
-                            }
-                            else
-                            {
-                                actualOverlayMode = overlayModeDictionary.First().Value;
-                            }
-
-                            // TODO probably not needed anymore
-                            actualOverlayMode = actualOverlayMode.Replace(")", string.Empty);
-                            actualOverlayMode = actualOverlayMode.Replace("(", string.Empty);
-                            actualOverlayMode = actualOverlayMode.Trim();
-                        }
+                        actualOverlayMode = GetActualOverlayMode(dataLoader);
 
                         var partySize = dataLoader.Model.PartySize();
 
@@ -2169,6 +2145,40 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
         WeakReferenceMessenger.Default.Send(new QuestIDMessage(questID));
         dataLoader.Model.ShowSaveIcon = false;
         return (runID, questID);
+    }
+
+    public string GetActualOverlayMode(DataLoader dataLoader)
+    {
+        var actualOverlayMode = "Standard";
+        var overlayModeDictionary = dataLoader.Model.OverlayModeDictionary;
+
+        // check if its grabbing a TimeDefInt from a previous quest
+        // TODO is this enough?
+        if ((overlayModeDictionary.Count == 2 && overlayModeDictionary.Last().Value == "Standard") ||
+            (overlayModeDictionary.Count == 1 && overlayModeDictionary.First().Value == "Standard") ||
+            overlayModeDictionary.Count > 2)
+        {
+            actualOverlayMode = "Standard";
+        }
+        else
+        {
+            // TODO: test
+            if (overlayModeDictionary.Count == 2 && overlayModeDictionary.First().Value == "Standard")
+            {
+                actualOverlayMode = overlayModeDictionary.Last().Value;
+            }
+            else
+            {
+                actualOverlayMode = overlayModeDictionary.First().Value;
+            }
+
+            // TODO probably not needed anymore
+            actualOverlayMode = actualOverlayMode.Replace(")", string.Empty);
+            actualOverlayMode = actualOverlayMode.Replace("(", string.Empty);
+            actualOverlayMode = actualOverlayMode.Trim();
+        }
+
+        return actualOverlayMode;
     }
 
     public static void MakeDeserealizedQuestInfoDictionariesFromRunID(SQLiteConnection conn, DataLoader dataLoader, int runID)

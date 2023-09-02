@@ -1778,7 +1778,7 @@ The process may take some time, as the program attempts to download from GitHub 
 
     private async Task UpdateQuestAttempts()
     {
-        var category = this.OverlayModeWatermarkTextBlock.Text;
+        var category = this.DataLoader.Model.GetOverlayModeForStorage();
         var weaponType = this.DataLoader.Model.WeaponType();
         long questID = this.DataLoader.Model.QuestID();
 
@@ -1798,7 +1798,7 @@ The process may take some time, as the program attempts to download from GitHub 
 
     private async Task UpdatePersonalBestDisplay()
     {
-        var category = this.OverlayModeWatermarkTextBlock.Text;
+        var category = this.DataLoader.Model.GetOverlayModeForStorage();
         var weaponType = this.DataLoader.Model.WeaponType();
         long questID = this.DataLoader.Model.QuestID();
 
@@ -1811,7 +1811,7 @@ The process may take some time, as the program attempts to download from GitHub 
 
     private async Task UpdatePersonalBestAttempts()
     {
-        var category = this.OverlayModeWatermarkTextBlock.Text;
+        var category = this.DataLoader.Model.GetOverlayModeForStorage();
         var weaponType = this.DataLoader.Model.WeaponType();
         long questID = this.DataLoader.Model.QuestID();
 
