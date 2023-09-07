@@ -65,9 +65,12 @@ public partial class App : Application
             // optionally restart the app automatically, or ask the user if/when they want to restart
             if (newVersion != null)
             {
-                Logger.Info(CultureInfo.InvariantCulture, "Overlay has been updated, restarting application");
+                Logger.Info(CultureInfo.InvariantCulture, "Overlay has been updated, restarting application.");
                 splashScreen.Close(TimeSpan.FromSeconds(0.1));
-                MessageBox.Show("【MHF-Z】Overlay has been updated, restarting application.", "MHF-Z Overlay Update", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show(
+@"【MHF-Z】Overlay has been updated, restarting application.
+
+If after overlay startup your settings did not transfer over, try restarting the overlay again without saving or changing any settings. Alternatively, find the old settings file by going into the parent folder when clicking the settings folder option.", "MHF-Z Overlay Update", MessageBoxButton.OK, MessageBoxImage.Information);
                 UpdateManager.RestartApp();
             }
             else
