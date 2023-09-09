@@ -1,5 +1,32 @@
 
 
+## [0.32.0](https://github.com/DorielRivalet/MHFZ_Overlay/compare/v0.31.0...v0.32.0) (2023-09-09)
+
+
+### Features
+
+* **autoupdater:** add restart overlay message ([3d0a8e4](https://github.com/DorielRivalet/MHFZ_Overlay/commit/3d0a8e4a3a7a5f848a27010f6d87dc9832f6e957))
+
+
+### Bug Fixes
+
+* **address:** monster size ([7f4bd77](https://github.com/DorielRivalet/MHFZ_Overlay/commit/7f4bd770b58c963250225dff6eeb9cc8f0c6bbad))
+* allow steam overlay ([2d1a5d5](https://github.com/DorielRivalet/MHFZ_Overlay/commit/2d1a5d50273bbcce74fdf12d9fc62243dda2182b))
+* **discord:** quest toggle mode ([77affa8](https://github.com/DorielRivalet/MHFZ_Overlay/commit/77affa8f429b251c71fbf317ebe33d5f472fcc28))
+
+
+### For Developers
+
+* bump version ([ea10fb7](https://github.com/DorielRivalet/MHFZ_Overlay/commit/ea10fb7ceff527eecc92efbf5f15320cbb420e08))
+* **database:** store overlay hash ([ce9f6a9](https://github.com/DorielRivalet/MHFZ_Overlay/commit/ce9f6a9acbbbf116054ba333a1d06a399c7de563))
+* **deps:** bump @release-it/conventional-changelog from 7.0.0 to 7.0.1 ([d0b534a](https://github.com/DorielRivalet/MHFZ_Overlay/commit/d0b534afa1cbe950d31c4396bbb8ea6a02d6403a))
+* **deps:** bump actions/checkout from 3 to 4 ([c22865d](https://github.com/DorielRivalet/MHFZ_Overlay/commit/c22865d8b7d24120890351c1228cbc189cc93323))
+* **deps:** bump NLog from 5.2.3 to 5.2.4 in /MHFZ_Overlay ([48f14cf](https://github.com/DorielRivalet/MHFZ_Overlay/commit/48f14cff82d19d58faf6e6fa9bbf01f3159af046))
+* **FAQ:** update FAQ.md ([8e30553](https://github.com/DorielRivalet/MHFZ_Overlay/commit/8e30553416e7cba4072c3e4728b6a3c5bc4360e1))
+* **README:** update README.md ([c290dd8](https://github.com/DorielRivalet/MHFZ_Overlay/commit/c290dd8ac17887b3e6d293c4955d970ba3692ded))
+* **README:** update README.md ([01a868f](https://github.com/DorielRivalet/MHFZ_Overlay/commit/01a868ff27cc81c0aca0b267f38c9a70c3941e7d))
+* remove logging ([8c63577](https://github.com/DorielRivalet/MHFZ_Overlay/commit/8c63577651cdebc2a07ac0d9d13c8142c9173756))
+
 ## [0.31.0](https://github.com/DorielRivalet/MHFZ_Overlay/compare/v0.30.0...v0.31.0) (2023-09-02)
 
 
