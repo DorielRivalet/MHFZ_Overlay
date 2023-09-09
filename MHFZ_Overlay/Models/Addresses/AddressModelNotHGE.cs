@@ -213,7 +213,7 @@ public sealed class AddressModelNotHGE : AddressModel
     public override int Monster1StunNeed() => this.M.Read2Byte("mhfo.dll+60A3E58,A74");
 
     /// <inheritdoc/>
-    public override string Monster1Size() => this.M.Read2Byte("mhfo.dll+2AFA784").ToString(CultureInfo.InvariantCulture) + "%";
+    public override string Monster1Size() => this.M.Read2Byte("mhfo.dll+28C2BD4").ToString(CultureInfo.InvariantCulture) + "%";
 
     /// <inheritdoc/>
     public override string Monster2AtkMult() => this.M.ReadFloat("mhfo.dll+60A3E58,1788").ToString(CultureInfo.InvariantCulture);
