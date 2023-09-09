@@ -285,7 +285,6 @@ public sealed class DataLoader
         {
             if (this.allowedProcesses.Any(s => process.ProcessName.Contains(s)) && process.ProcessName != "MHFZ_Overlay")
             {
-                LoggerInstance.Info("Found allowed process {0}", process.ProcessName);
                 continue;
             }
 
