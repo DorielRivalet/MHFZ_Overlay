@@ -429,7 +429,9 @@ The performance of features such as the database and websites were measured with
 
 See in more detail the performance of the overlay in [the documentation](./docs/performance.md).
 
-For the system requirements, see [here](./README.md#system-requirements)
+For the system requirements, see [here](./README.md#system-requirements).
+
+Remember to close programs (such as Steam Overlay) for optimal performance.
 
 ## Is the overlay malware?
 
