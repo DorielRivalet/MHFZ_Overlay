@@ -158,6 +158,8 @@ This way, there are no lost settings when updating, and you don't have to make t
 
 The location of any previous settings are in the subfolders of `%LocalAppData%/Doriel_Rivalet`. Recommended to sort by date modified.
 
+If after updating at overlay startup your settings did not transfer over, try restarting the overlay again without saving or changing any settings. Alternatively, find the old settings file by going into the parent folder when clicking the settings folder option.
+
 ## How to check the downloaded file hashes?
 
 ### Graphical User Interface
