@@ -252,14 +252,13 @@ public sealed class DataLoader
     private readonly List<string> allowedProcesses = new ()
     {
         "LogiOverlay", // Logitech Bluetooth for mouse
+        "GameOverlayUI", // Steam
     };
 
     // needed for getting data
     private readonly Mem m = new ();
 
-    private bool steamOverlayWarningShown;
-
-    private int index;
+    private int index { get; set; }
 
     public bool DatabaseChanged { get; set; }
 
@@ -284,18 +283,6 @@ public sealed class DataLoader
         // then we check for disallowed duplicates
         foreach (var process in processList)
         {
-            if (process.ProcessName == "GameOverlayUI" && !this.steamOverlayWarningShown)
-            {
-                LoggerInstance.Warn(CultureInfo.InvariantCulture, "Found Steam overlay: {0}", process.ProcessName);
-                var result = MessageBox.Show($"Having Steam Overlay open while MHF-Z Overlay is running may decrease performance. ({process.ProcessName} found)", Messages.WarningTitle, MessageBoxButton.OK, MessageBoxImage.Warning);
-                if (result == MessageBoxResult.OK)
-                {
-                    this.steamOverlayWarningShown = true;
-                }
-
-                continue;
-            }
-
             if (this.allowedProcesses.Any(s => process.ProcessName.Contains(s)) && process.ProcessName != "MHFZ_Overlay")
             {
                 continue;

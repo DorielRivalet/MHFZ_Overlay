@@ -20,7 +20,7 @@
 	<Title>mhfz-overlay</Title>
 	<Copyright>Doriel Rivalet</Copyright>
 	<Authors>Doriel Rivalet</Authors>
-	<Version>0.31.0</Version>
+	<Version>0.32.0</Version>
 	<PackageProjectUrl>https://github.com/DorielRivalet/mhfz-overlay</PackageProjectUrl>
 	<RepositoryUrl>https://github.com/DorielRivalet/mhfz-overlay.git</RepositoryUrl>
 	<RepositoryType>git</RepositoryType>
@@ -1840,7 +1840,7 @@
     <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.1938.49" />
     <PackageReference Include="MouseKeyHook" Version="5.7.1" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="NLog" Version="5.2.3" />
+    <PackageReference Include="NLog" Version="5.2.4" />
     <PackageReference Include="NuGet.CommandLine" Version="6.7.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

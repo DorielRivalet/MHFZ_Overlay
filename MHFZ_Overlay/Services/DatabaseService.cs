@@ -2985,8 +2985,7 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
             using (var stream = File.OpenRead(exePath))
             {
                 var hash = sha256.ComputeHash(stream);
-                var hashString = BitConverter.ToString(hash).Replace("-", string.Empty);
-                overlayHash = hashString;
+                overlayHash = BitConverter.ToString(hash).Replace("-", string.Empty);
 
                 // Store the hash in the "Overlay" table of the SQLite database
                 using (var conn = new SQLiteConnection(this.dataSource))
@@ -2999,7 +2998,7 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
                             var sql = "INSERT INTO Overlay (Hash) VALUES (@hash)";
                             using (var cmd = new SQLiteCommand(sql, conn))
                             {
-                                cmd.Parameters.AddWithValue("@hash", hashString);
+                                cmd.Parameters.AddWithValue("@hash", overlayHash);
                                 cmd.ExecuteNonQuery();
                             }
 
