@@ -258,6 +258,9 @@ public sealed class DataLoader
     // needed for getting data
     private readonly Mem m = new ();
 
+    /// <summary>
+    /// Index for the dll.
+    /// </summary>
     private int index { get; set; }
 
     public bool DatabaseChanged { get; set; }
