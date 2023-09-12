@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Update Git stats images with the latest commits
     permissions:
-      contents: write
+      pull-requests: write
     steps:
       # https://stackoverflow.com/questions/62334460/git-history-in-a-github-action
       - name: Check out repository
@@ -22,6 +22,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+          git switch release
         
       - name: Check if commit was made by github-actions[bot]
         id: check_last_commit_author
@@ -128,8 +129,10 @@ jobs:
           path: ./scripts/output
           retention-days: 1
 
-      - name: Commit and push changes
-        run: |
-          git add ./scripts/output/commit_types.png ./scripts/output/commits_over_time.png ./scripts/output/commits_per_day_of_week.png ./scripts/output/commits_per_hour.png
-          git commit -m "chore(scripts): update git statistics images"
-          git push
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          commit-message: 'chore(bot): update git statistics images'
+          title: 'Update git statistics images'
+          reviewers: DorielRivalet
+          branch: create-pull-request/automate-git-stats
