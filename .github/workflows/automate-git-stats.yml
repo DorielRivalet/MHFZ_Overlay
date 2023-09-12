@@ -129,15 +129,6 @@ jobs:
           path: ./scripts/output
           retention-days: 1
 
-      # https://stackoverflow.com/questions/1146973/how-do-i-revert-all-local-changes-in-git-managed-project-to-previous-state
-      - name: Commit changes
-        run: |
-          git add ./scripts/output/commit_types.png ./scripts/output/commits_over_time.png ./scripts/output/commits_per_day_of_week.png ./scripts/output/commits_per_hour.png
-          git commit -m "chore(bot): update git statistics images"
-          git rm -rf luarocks-3.8.0/
-          git restore .
-          git clean -fd
-
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v5
         with:
@@ -145,3 +136,5 @@ jobs:
           title: 'Update git statistics images'
           reviewers: DorielRivalet
           branch: create-pull-request/automate-git-stats
+          add-paths: |
+            ./scripts/output/*.png
