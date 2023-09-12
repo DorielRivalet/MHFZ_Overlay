@@ -11,6 +11,7 @@ jobs:
     name: Update Git stats images with the latest commits
     permissions:
       pull-requests: write
+      contents: read
     steps:
       # https://stackoverflow.com/questions/62334460/git-history-in-a-github-action
       - name: Check out repository
