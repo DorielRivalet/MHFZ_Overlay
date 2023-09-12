@@ -9,6 +9,9 @@ jobs:
   run_scripts:
     runs-on: ubuntu-latest
     name: Update Git stats images with the latest commits
+    permissions:
+      pull-requests: write
+      contents: write
     steps:
       # https://stackoverflow.com/questions/62334460/git-history-in-a-github-action
       - name: Check out repository
@@ -134,6 +137,7 @@ jobs:
           commit-message: 'chore(bot): update git statistics images'
           title: 'Update git statistics images'
           reviewers: DorielRivalet
+          token: ${{ secrets.GITHUB_TOKEN }}
           branch: create-pull-request/automate-git-stats
           add-paths: |
             ./scripts/output/*.png
