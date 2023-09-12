@@ -9,14 +9,12 @@ jobs:
   run_scripts:
     runs-on: ubuntu-latest
     name: Update Git stats images with the latest commits
-    permissions:
-      pull-requests: write
-      contents: read
     steps:
       # https://stackoverflow.com/questions/62334460/git-history-in-a-github-action
       - name: Check out repository
         uses: actions/checkout@v4
         with:
+          ref: release
           fetch-depth: 0 # get full stats instead of last commit
 
       - name: Set up Git
