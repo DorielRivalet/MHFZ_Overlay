@@ -134,9 +134,9 @@ jobs:
         run: |
           git add ./scripts/output/commit_types.png ./scripts/output/commits_over_time.png ./scripts/output/commits_per_day_of_week.png ./scripts/output/commits_per_hour.png
           git commit -m "chore(bot): update git statistics images"
+          git rm -rf luarocks-3.8.0/
           git restore .
           git clean -fd
-          git rm -rf luarocks-3.8.0/
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v5
