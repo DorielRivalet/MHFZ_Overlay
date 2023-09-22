@@ -1827,7 +1827,7 @@
   <ItemGroup>
     <PackageReference Include="Clowd.Squirrel" Version="2.9.42" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1" />
-    <PackageReference Include="CompiledBindings.WPF" Version="1.0.16" />
+    <PackageReference Include="CompiledBindings.WPF" Version="1.0.17.6" />
     <PackageReference Include="CsvHelper" Version="30.0.1" />
     <PackageReference Include="DiscordRichPresence" Version="1.2.1.24" />
     <PackageReference Include="DotNetProjects.Extended.Wpf.Toolkit" Version="5.0.103" />
