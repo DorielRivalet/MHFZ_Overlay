@@ -315,7 +315,7 @@ As an added bonus:
 |Monster Ailments|✔️|✔️|
 |Timer Options|✔️|❌|
 |Sharpness Number|✔️|✔️|
-|Damage Numbers|✔️|❌ Not in World, Built-in in Rise|
+|Damage Numbers|✔️|Built-in by Rise/World|
 |Damage Numbers Options|✔️|❌|
 |DPS Graph|✔️|✔️ Multiplayer|
 |Actions per Minute Graph|✔️|❌|
