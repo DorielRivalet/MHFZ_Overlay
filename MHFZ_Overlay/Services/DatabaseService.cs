@@ -11009,6 +11009,139 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
         return questCompletions;
     }
 
+    public async Task<string> GetQuestAttemptsAsync(long questID, string actualOverlayMode, int weaponTypeID)
+    {
+        var questAttempts = "0";
+        if (string.IsNullOrEmpty(this.dataSource))
+        {
+            Logger.Warn(CultureInfo.InvariantCulture, "Cannot get quest attempts. dataSource: {0}", this.dataSource);
+            return questAttempts;
+        }
+
+        using (var conn = new SQLiteConnection(this.dataSource))
+        {
+            await conn.OpenAsync();
+            using (var transaction = conn.BeginTransaction())
+            {
+                try
+                {
+                    var sql =
+                        @"SELECT 
+                        Attempts
+                    FROM 
+                        QuestAttempts qa
+                    WHERE 
+                        qa.QuestID = @QuestID
+                    AND qa.ActualOverlayMode = @ActualOverlayMode
+                    AND qa.WeaponTypeID = @WeaponTypeID";
+                    using (var cmd = new SQLiteCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@QuestID", questID);
+                        cmd.Parameters.AddWithValue("@ActualOverlayMode", actualOverlayMode);
+                        cmd.Parameters.AddWithValue("@WeaponTypeID", weaponTypeID);
+
+                        using (var reader = await cmd.ExecuteReaderAsync())
+                        {
+                            if (reader is SQLiteDataReader sqliteReader && await sqliteReader.ReadAsync())
+                            {
+                                questAttempts = Convert.ToInt64(sqliteReader["Attempts"], CultureInfo.InvariantCulture).ToString(CultureInfo.InvariantCulture);
+                            }
+                        }
+                    }
+
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    HandleError(transaction, ex);
+                }
+            }
+        }
+
+        return questAttempts;
+    }
+
+    public async Task<double> GetQuestAttemptsPerPersonalBestAsync(long questID, int weaponTypeID, string actualOverlayMode)
+    {
+        var attemptsPerPersonalBest = 0.0;
+        if (string.IsNullOrEmpty(this.dataSource))
+        {
+            Logger.Warn(CultureInfo.InvariantCulture, "Cannot get quest attempts per personal best. dataSource: {0}", this.dataSource);
+            return attemptsPerPersonalBest;
+        }
+
+        var questAttempts = await GetQuestAttemptsAsync(questID, actualOverlayMode, weaponTypeID);
+        var personalBestCount = await GetPersonalBestsCountAsync(questID, weaponTypeID, actualOverlayMode);
+        if (personalBestCount > 0)
+        {
+            attemptsPerPersonalBest = double.Parse(questAttempts, CultureInfo.InvariantCulture) / personalBestCount;
+        }
+
+        return attemptsPerPersonalBest;
+    }
+
+    public async Task<int> GetPersonalBestsCountAsync(long questID, int weaponTypeID, string category)
+    {
+        int personalBestCount = 0;
+        long? previousBestTime = null;
+        if (string.IsNullOrEmpty(this.dataSource))
+        {
+            Logger.Warn(CultureInfo.InvariantCulture, "Cannot get personal bests count. dataSource: {0}", this.dataSource);
+            return personalBestCount;
+        }
+
+        using (var conn = new SQLiteConnection(this.dataSource))
+        {
+            await conn.OpenAsync().ConfigureAwait(false);
+            using (var transaction = conn.BeginTransaction())
+            {
+                try
+                {
+                    using (var cmd = new SQLiteCommand(
+                        @"SELECT
+                            q.RunID, q.FinalTimeValue
+                        FROM
+                            Quests q
+                        JOIN
+                            PlayerGear pg ON q.RunID = pg.RunID
+                        WHERE
+                            q.QuestID = @questID AND
+                            q.ActualOverlayMode = @category AND
+                            pg.WeaponTypeID = @weaponTypeID
+                        ORDER BY q.RunID ASC", conn))
+                    {
+                        cmd.Parameters.AddWithValue("@questID", questID);
+                        cmd.Parameters.AddWithValue("@weaponTypeID", weaponTypeID);
+                        cmd.Parameters.AddWithValue("@category", category);
+
+                        using (var reader = await cmd.ExecuteReaderAsync().ConfigureAwait(false))
+                        {
+                            while (await reader.ReadAsync().ConfigureAwait(false))
+                            {
+                                var finalTimeValue = reader.GetInt64(reader.GetOrdinal("FinalTimeValue"));
+
+                                // If this is the first run or the time is less than the previous best, it's a new personal best.
+                                if (!previousBestTime.HasValue || finalTimeValue < previousBestTime.Value)
+                                {
+                                    personalBestCount++;
+                                    previousBestTime = finalTimeValue;
+                                }
+                            }
+                        }
+                    }
+
+                    await transaction.CommitAsync().ConfigureAwait(false);
+                }
+                catch (Exception ex)
+                {
+                    HandleError(transaction, ex);
+                }
+            }
+        }
+
+        return personalBestCount;
+    }
+
     public Dictionary<string, int> GetMostCommonObjectiveTypes()
     {
         Dictionary<string, int> objectiveCounts = new ();

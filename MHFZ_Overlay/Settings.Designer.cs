@@ -3946,5 +3946,17 @@ namespace MHFZ_Overlay {
                 this["QuestToggleMonsterModeShown"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool EnableAttemptsPerPersonalBest {
+            get {
+                return ((bool)(this["EnableAttemptsPerPersonalBest"]));
+            }
+            set {
+                this["EnableAttemptsPerPersonalBest"] = value;
+            }
+        }
     }
 }
