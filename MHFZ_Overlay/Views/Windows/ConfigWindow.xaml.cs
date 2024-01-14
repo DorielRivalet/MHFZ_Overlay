@@ -269,13 +269,13 @@ public partial class ConfigWindow : FluentWindow
 
     private readonly IReadOnlyList<MonsterInfo> monsterInfos = MonsterInfos.MonsterInfoIDs;
 
-    private readonly GitHubClient client = new (new ProductHeaderValue("MHFZ_Overlay"));
+    private readonly GitHubClient client = new(new ProductHeaderValue("MHFZ_Overlay"));
 
-    private List<WeaponUsage> weaponUsageData = new ();
+    private List<WeaponUsage> weaponUsageData = new();
 
-    public static Uri MonsterInfoLink => new (RandomMonsterImage, UriKind.RelativeOrAbsolute);
+    public static Uri MonsterInfoLink => new(RandomMonsterImage, UriKind.RelativeOrAbsolute);
 
-    public static Uri MonsterImage => new (RandomMonsterImage, UriKind.RelativeOrAbsolute);
+    public static Uri MonsterImage => new(RandomMonsterImage, UriKind.RelativeOrAbsolute);
 
     public static string GetFeriasLink()
     {
@@ -1016,9 +1016,9 @@ public partial class ConfigWindow : FluentWindow
             return;
         }
 
-        Dictionary<string, string> monsterFeriasOptionDictionary = new ();
-        Dictionary<string, string> monsterWikiOptionDictionary = new ();
-        Dictionary<string, string> monsterVideoLinkOptionDictionary = new ();
+        Dictionary<string, string> monsterFeriasOptionDictionary = new();
+        Dictionary<string, string> monsterWikiOptionDictionary = new();
+        Dictionary<string, string> monsterVideoLinkOptionDictionary = new();
 
         for (var i = 0; i < this.monsterInfos.Count; i++)
         {
@@ -1482,6 +1482,8 @@ public partial class ConfigWindow : FluentWindow
     private ListView? achievementsListView;
     private Grid? achievementsSelectedInfoGrid;
     private ListBox? challengesListBox;
+    private TextBox? extraRunIDTextBox;
+    private TextBlock? runIDComparisonTextBlock;
 
     private string top20RunsSelectedWeapon = string.Empty;
 
@@ -2128,9 +2130,9 @@ public partial class ConfigWindow : FluentWindow
             return;
         }
 
-        List<ISeries> series = new ();
-        ObservableCollection<ObservablePoint> healthCollection = new ();
-        ObservableCollection<ObservablePoint> staminaCollection = new ();
+        List<ISeries> series = new();
+        ObservableCollection<ObservablePoint> healthCollection = new();
+        ObservableCollection<ObservablePoint> staminaCollection = new();
 
         var newHP = GetElapsedTime(hp);
         var newStamina = GetElapsedTime(stamina);
@@ -2284,7 +2286,7 @@ public partial class ConfigWindow : FluentWindow
 
     private static Dictionary<int, int> GetElapsedTime(Dictionary<int, int> timeAttackDict)
     {
-        Dictionary<int, int> elapsedTimeDict = new ();
+        Dictionary<int, int> elapsedTimeDict = new();
         if (timeAttackDict == null || !timeAttackDict.Any())
         {
             return elapsedTimeDict;
@@ -2301,7 +2303,7 @@ public partial class ConfigWindow : FluentWindow
 
     private static Dictionary<int, double> GetElapsedTimeForDictionaryIntDouble(Dictionary<int, double> timeAttackDict)
     {
-        Dictionary<int, double> elapsedTimeDict = new ();
+        Dictionary<int, double> elapsedTimeDict = new();
         if (timeAttackDict == null || !timeAttackDict.Any())
         {
             return elapsedTimeDict;
@@ -2316,15 +2318,15 @@ public partial class ConfigWindow : FluentWindow
         return elapsedTimeDict;
     }
 
-    private void SetLineSeriesForDictionaryIntInt(Dictionary<int, int> data)
+    private void SetLineSeriesForDictionaryIntInt(Dictionary<int, int> data, Dictionary<int, int>? extraData)
     {
         if (this.graphChart == null)
         {
             return;
         }
 
-        List<ISeries> series = new ();
-        ObservableCollection<ObservablePoint> collection = new ();
+        List<ISeries> series = new();
+        ObservableCollection<ObservablePoint> collection = new();
 
         var newData = GetElapsedTime(data);
 
@@ -2341,6 +2343,34 @@ public partial class ConfigWindow : FluentWindow
             Stroke = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#fff38ba8"))) { StrokeThickness = 2 },
             Fill = new LinearGradientPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#fff38ba8", "7f")), new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#fff38ba8", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
         });
+
+        if (extraData != null)
+        {
+            ObservableCollection<ObservablePoint> collection2 = new();
+
+            var newData2 = GetElapsedTime(extraData);
+
+            foreach (var entry in newData2)
+            {
+                collection2.Add(new ObservablePoint(entry.Key, entry.Value));
+            }
+
+            series.Add(new LineSeries<ObservablePoint>
+            {
+                Values = collection2,
+                LineSmoothness = .5,
+                GeometrySize = 0,
+                Stroke = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#ff89b4fa"))) { StrokeThickness = 2 },
+                Fill = new LinearGradientPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#ff89b4fa", "7f")), new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#ff89b4fa", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
+            });
+
+            if (this.runIDComparisonTextBlock != null && this.extraRunIDTextBox != null)
+            {
+                var runComparisonPercentage = CalculateBetterLinePercentage(newData, newData2);
+                var betterRun = runComparisonPercentage >= 0.0 ? RunIDTextBox.Text : extraRunIDTextBox.Text;
+                this.runIDComparisonTextBlock.Text = string.Format(CultureInfo.InvariantCulture, "Run {0} is higher by around {1:0.##}%", betterRun, Math.Abs(runComparisonPercentage));
+            }
+        }
 
         this.XAxes = new Axis[]
         {
@@ -2370,15 +2400,68 @@ public partial class ConfigWindow : FluentWindow
         this.graphChart.YAxes = this.YAxes;
     }
 
-    private void SetLineSeriesForDictionaryIntDouble(Dictionary<int, double> data)
+    private double CalculateBetterLinePercentage(Dictionary<int, int> line1, Dictionary<int, int> line2)
+    {
+        if (line1.Count == 0 || line2.Count == 0)
+            return 0.0;
+        // Find the cutoff time where the first series ends.
+        int cutoffTime = Math.Min(line1.Keys.Max(), line2.Keys.Max());
+
+        // Calculate the area under each line series up to the cutoff time.
+        double area1 = CalculateAreaUnderLine(line1, cutoffTime);
+        double area2 = CalculateAreaUnderLine(line2, cutoffTime);
+
+        // Determine which series has the larger area and calculate the percentage difference.
+        if (area1 == area2)
+        {
+            return 0; // Both series are equal.
+        }
+        else
+        {
+            double largerArea = Math.Max(area1, area2);
+            double smallerArea = Math.Min(area1, area2);
+            double percentageDifference = ((largerArea - smallerArea) / smallerArea) * 100;
+            return area1 > area2 ? percentageDifference : -percentageDifference;
+        }
+    }
+
+    private double CalculateAreaUnderLine(Dictionary<int, int> line, int cutoffTime)
+    {
+        // Assuming the line is sorted by time.
+        double area = 0;
+        int previousTime = 0;
+        int previousScore = 0;
+
+        foreach (var point in line.OrderBy(p => p.Key))
+        {
+            if (point.Key > cutoffTime)
+                break;
+
+            if (previousTime != 0)
+            {
+                // Calculate the area of the trapezoid.
+                double base1 = point.Value;
+                double base2 = previousScore;
+                double height = point.Key - previousTime;
+                area += (base1 + base2) * height / 2;
+            }
+
+            previousTime = point.Key;
+            previousScore = point.Value;
+        }
+
+        return area;
+    }
+
+    private void SetLineSeriesForDictionaryIntDouble(Dictionary<int, double> data, Dictionary<int, double>? extraData)
     {
         if (this.graphChart == null)
         {
             return;
         }
 
-        List<ISeries> series = new ();
-        ObservableCollection<ObservablePoint> collection = new ();
+        List<ISeries> series = new();
+        ObservableCollection<ObservablePoint> collection = new();
 
         var newData = GetElapsedTimeForDictionaryIntDouble(data);
 
@@ -2395,6 +2478,27 @@ public partial class ConfigWindow : FluentWindow
             Stroke = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#fff38ba8"))) { StrokeThickness = 2 },
             Fill = new LinearGradientPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#fff38ba8", "7f")), new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#fff38ba8", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
         });
+
+        if (extraData != null)
+        {
+            ObservableCollection<ObservablePoint> collection2 = new();
+
+            var newData2 = GetElapsedTimeForDictionaryIntDouble(extraData);
+
+            foreach (var entry in newData2)
+            {
+                collection2.Add(new ObservablePoint(entry.Key, entry.Value));
+            }
+
+            series.Add(new LineSeries<ObservablePoint>
+            {
+                Values = collection2,
+                LineSmoothness = .5,
+                GeometrySize = 0,
+                Stroke = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#ff89b4fa"))) { StrokeThickness = 2 },
+                Fill = new LinearGradientPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#ff89b4fa", "7f")), new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#ff89b4fa", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
+            });
+        }
 
         this.XAxes = new Axis[]
         {
@@ -2431,8 +2535,8 @@ public partial class ConfigWindow : FluentWindow
             return;
         }
 
-        List<ISeries> series = new ();
-        ObservableCollection<ObservablePoint> collection = new ();
+        List<ISeries> series = new();
+        ObservableCollection<ObservablePoint> collection = new();
 
         foreach (var entry in data)
         {
@@ -2486,9 +2590,9 @@ public partial class ConfigWindow : FluentWindow
             return;
         }
 
-        List<ISeries> series = new ();
+        List<ISeries> series = new();
 
-        ObservableCollection<DateTimePoint> collection = new ();
+        ObservableCollection<DateTimePoint> collection = new();
 
         DateTime? prevDate = null;
         long? prevTime = null;
@@ -2564,15 +2668,15 @@ public partial class ConfigWindow : FluentWindow
         this.personalBestChart.YAxes = this.PersonalBestYAxes;
     }
 
-    private void SetHitsTakenBlocked(Dictionary<int, Dictionary<int, int>> data)
+    private void SetHitsTakenBlocked(Dictionary<int, Dictionary<int, int>> data, Dictionary<int, Dictionary<int, int>>? extraData)
     {
         if (this.graphChart == null)
         {
             return;
         }
 
-        List<ISeries> series = new ();
-        ObservableCollection<ObservablePoint> collection = new ();
+        List<ISeries> series = new();
+        ObservableCollection<ObservablePoint> collection = new();
 
         var hitsTakenBlocked = CalculateHitsTakenBlocked(data);
 
@@ -2591,6 +2695,29 @@ public partial class ConfigWindow : FluentWindow
             Stroke = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#fff38ba8"))) { StrokeThickness = 2 },
             Fill = new LinearGradientPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#fff38ba8", "7f")), new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#fff38ba8", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
         });
+
+        if (extraData != null)
+        {
+            ObservableCollection<ObservablePoint> collection2 = new();
+
+            var hitsTakenBlocked2 = CalculateHitsTakenBlocked(extraData);
+
+            var newData2 = GetElapsedTime(hitsTakenBlocked2);
+
+            foreach (var entry in newData2)
+            {
+                collection2.Add(new ObservablePoint(entry.Key, entry.Value));
+            }
+
+            series.Add(new LineSeries<ObservablePoint>
+            {
+                Values = collection2,
+                LineSmoothness = .5,
+                GeometrySize = 0,
+                Stroke = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#ff89b4fa"))) { StrokeThickness = 2 },
+                Fill = new LinearGradientPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#ff89b4fa", "7f")), new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#ff89b4fa", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
+            });
+        }
 
         this.XAxes = new Axis[]
         {
@@ -2627,8 +2754,8 @@ public partial class ConfigWindow : FluentWindow
             return;
         }
 
-        List<ISeries> series = new ();
-        ObservableCollection<ObservablePoint> attackCollection = new ();
+        List<ISeries> series = new();
+        ObservableCollection<ObservablePoint> attackCollection = new();
 
         var newAttack = GetElapsedTimeForDictionaryIntDouble(attack);
 
@@ -2680,8 +2807,8 @@ public partial class ConfigWindow : FluentWindow
             return;
         }
 
-        List<ISeries> series = new ();
-        ObservableCollection<ObservablePoint> defenseCollection = new ();
+        List<ISeries> series = new();
+        ObservableCollection<ObservablePoint> defenseCollection = new();
 
         var newDefense = GetElapsedTimeForDictionaryIntDouble(defense);
 
@@ -2733,12 +2860,12 @@ public partial class ConfigWindow : FluentWindow
             return;
         }
 
-        List<ISeries> series = new ();
-        ObservableCollection<ObservablePoint> poisonCollection = new ();
-        ObservableCollection<ObservablePoint> sleepCollection = new ();
-        ObservableCollection<ObservablePoint> paraCollection = new ();
-        ObservableCollection<ObservablePoint> blastCollection = new ();
-        ObservableCollection<ObservablePoint> stunCollection = new ();
+        List<ISeries> series = new();
+        ObservableCollection<ObservablePoint> poisonCollection = new();
+        ObservableCollection<ObservablePoint> sleepCollection = new();
+        ObservableCollection<ObservablePoint> paraCollection = new();
+        ObservableCollection<ObservablePoint> blastCollection = new();
+        ObservableCollection<ObservablePoint> stunCollection = new();
 
         var newPoison = GetElapsedTime(poison);
         var newSleep = GetElapsedTime(sleep);
@@ -2901,7 +3028,7 @@ public partial class ConfigWindow : FluentWindow
 
     private static Dictionary<int, int> CalculateHitsTakenBlocked(Dictionary<int, Dictionary<int, int>> hitsTakenBlocked)
     {
-        Dictionary<int, int> dictionary = new ();
+        Dictionary<int, int> dictionary = new();
 
         var i = 1;
         foreach (var entry in hitsTakenBlocked)
@@ -2917,7 +3044,7 @@ public partial class ConfigWindow : FluentWindow
 
     private static Dictionary<int, int> CalculateMonsterHP(Dictionary<int, Dictionary<int, int>> monsterHP)
     {
-        Dictionary<int, int> dictionary = new ();
+        Dictionary<int, int> dictionary = new();
 
         var i = 1;
         foreach (var entry in monsterHP)
@@ -2935,7 +3062,7 @@ public partial class ConfigWindow : FluentWindow
 
     private static Dictionary<int, double> CalculateMonsterMultiplier(Dictionary<int, Dictionary<int, double>> monsterDictionary)
     {
-        Dictionary<int, double> dictionary = new ();
+        Dictionary<int, double> dictionary = new();
 
         var i = 1;
         foreach (var entry in monsterDictionary)
@@ -2953,7 +3080,7 @@ public partial class ConfigWindow : FluentWindow
 
     private static Dictionary<int, int> CalculateMonsterStatusAilmentThresholds(Dictionary<int, Dictionary<int, int>> monsterDictionary)
     {
-        Dictionary<int, int> dictionary = new ();
+        Dictionary<int, int> dictionary = new();
 
         var i = 1;
         foreach (var entry in monsterDictionary)
@@ -2976,11 +3103,11 @@ public partial class ConfigWindow : FluentWindow
             return;
         }
 
-        List<ISeries> series = new ();
-        ObservableCollection<ObservablePoint> monster1Collection = new ();
-        ObservableCollection<ObservablePoint> monster2Collection = new ();
-        ObservableCollection<ObservablePoint> monster3Collection = new ();
-        ObservableCollection<ObservablePoint> monster4Collection = new ();
+        List<ISeries> series = new();
+        ObservableCollection<ObservablePoint> monster1Collection = new();
+        ObservableCollection<ObservablePoint> monster2Collection = new();
+        ObservableCollection<ObservablePoint> monster3Collection = new();
+        ObservableCollection<ObservablePoint> monster4Collection = new();
 
         var newMonster1 = GetElapsedTime(monster1);
         var newMonster2 = GetElapsedTime(monster2);
@@ -3089,9 +3216,9 @@ public partial class ConfigWindow : FluentWindow
             return;
         }
 
-        List<ISeries> series = new ();
+        List<ISeries> series = new();
 
-        ObservableCollection<double> performanceCollection = new ()
+        ObservableCollection<double> performanceCollection = new()
         {
             performanceCompendium.HighestTrueRaw != 0 ? performanceCompendium.TrueRawMedian / performanceCompendium.HighestTrueRaw : 0,
             performanceCompendium.HighestSingleHitDamage != 0 ? performanceCompendium.SingleHitDamageMedian / performanceCompendium.HighestSingleHitDamage : 0,
@@ -3142,6 +3269,8 @@ public partial class ConfigWindow : FluentWindow
         this.hunterPerformanceChart.Series = series;
     }
 
+    private string? statsGraphsComboBoxOption = string.Empty;
+
     private void GraphsComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         var comboBox = (ComboBox)sender;
@@ -3154,163 +3283,14 @@ public partial class ConfigWindow : FluentWindow
         }
 
         var selectedOption = selectedItem.Content.ToString();
+        statsGraphsComboBoxOption = selectedOption;
 
         if (this.graphChart == null || selectedOption == null || string.IsNullOrEmpty(selectedOption))
         {
             return;
         }
 
-        this.Series = null;
-        this.XAxes = new Axis[]
-        {
-            new Axis
-            {
-                NamePaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
-                LabelsPaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
-            },
-        };
-        this.YAxes = new Axis[]
-        {
-            new Axis
-            {
-                NamePaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
-                LabelsPaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
-            },
-        };
-
-        var runID = long.Parse(this.RunIDTextBox.Text.Trim(), CultureInfo.InvariantCulture);
-
-        switch (selectedOption)
-        {
-            case "(General) Most Quest Completions":
-                this.SetColumnSeriesForDictionaryIntInt(DatabaseManager.GetMostQuestCompletions());
-                break;
-            case "(General) Quest Durations":
-                this.CreateQuestDurationStackedChart(DatabaseManager.GetTotalTimeSpentInQuests());
-                break;
-            case "(General) Most Common Objective Types":
-                this.SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetMostCommonObjectiveTypes());
-                break;
-            case "(General) Most Common Star Grades":
-                this.SetColumnSeriesForDictionaryIntInt(DatabaseManager.GetMostCommonStarGrades());
-                break;
-            case "(General) Most Common Rank Bands":
-                this.SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetMostCommonRankBands());
-                break;
-            case "(General) Most Common Objective":
-                this.SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetMostCommonObjectives());
-                break;
-            case "(General) Quests Completed by Date":
-                this.SetColumnSeriesForDictionaryDateInt(DatabaseManager.GetQuestsCompletedByDate());
-                break;
-            case "(General) Most Common Party Size":
-                this.SetColumnSeriesForDictionaryIntInt(DatabaseManager.GetMostCommonPartySize());
-                break;
-            case "(General) Most Common Set Name":
-                this.SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetMostCommonSetNames());
-                break;
-            case "(General) Most Common Weapon Name":
-                this.SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetMostCommonWeaponNames());
-                break;
-            case "(General) Most Common Head Piece":
-                this.SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetMostCommonHeadPieces());
-                break;
-            case "(General) Most Common Chest Piece":
-                this.SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetMostCommonChestPieces());
-                break;
-            case "(General) Most Common Arms Piece":
-                this.SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetMostCommonArmsPieces());
-                break;
-            case "(General) Most Common Waist Piece":
-                this.SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetMostCommonWaistPieces());
-                break;
-            case "(General) Most Common Legs Piece":
-                this.SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetMostCommonLegsPieces());
-                break;
-            case "(General) Most Common Diva Skill":
-                this.SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetMostCommonDivaSkill());
-                break;
-            case "(General) Most Common Guild Food":
-                this.SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetMostCommonGuildFood());
-                break;
-            case "(General) Most Common Style Rank Skills":
-                this.SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetMostCommonStyleRankSkills());
-                break;
-            case "(General) Most Common Caravan Skills":
-                this.SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetMostCommonCaravanSkills());
-                break;
-            case "(General) Most Common Category":
-                this.SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetMostCommonCategory());
-                break;
-            case "(Run ID) Attack Buff":
-                this.SetLineSeriesForDictionaryIntInt(DatabaseManager.GetAttackBuffDictionary(runID));
-                return;
-            case "(Run ID) Hit Count":
-                this.SetLineSeriesForDictionaryIntInt(DatabaseManager.GetHitCountDictionary(runID));
-                return;
-            case "(Run ID) Hits per Second":
-                this.SetLineSeriesForDictionaryIntDouble(DatabaseManager.GetHitsPerSecondDictionary(runID));
-                return;
-            case "(Run ID) Damage Dealt":
-                this.SetLineSeriesForDictionaryIntInt(DatabaseManager.GetDamageDealtDictionary(runID));
-                return;
-            case "(Run ID) Damage per Second":
-                this.SetLineSeriesForDictionaryIntDouble(DatabaseManager.GetDamagePerSecondDictionary(runID));
-                return;
-            case "(Run ID) Carts":
-                this.SetLineSeriesForDictionaryIntInt(DatabaseManager.GetCartsDictionary(runID));
-                return;
-            case "(Run ID) Hits Taken/Blocked":
-                this.SetHitsTakenBlocked(DatabaseManager.GetHitsTakenBlockedDictionary(runID));
-                return;
-            case "(Run ID) Hits Taken/Blocked per Second":
-                this.SetLineSeriesForDictionaryIntDouble(DatabaseManager.GetHitsTakenBlockedPerSecondDictionary(runID));
-                return;
-            case "(Run ID) Player Health and Stamina":
-                this.SetPlayerHealthStamina(DatabaseManager.GetPlayerHPDictionary(runID), DatabaseManager.GetPlayerStaminaDictionary(runID));
-                return;
-            case "(Run ID) Most Common Player Input":
-                this.SetColumnSeriesForDictionaryStringInt(GetMostCommonInputs(runID));
-                break;
-            case "(Run ID) Actions per Minute":
-                this.SetLineSeriesForDictionaryIntDouble(DatabaseManager.GetActionsPerMinuteDictionary(runID));
-                return;
-            case "(Run ID) Monster HP":
-                this.SetMonsterHP(CalculateMonsterHP(DatabaseManager.GetMonster1HPDictionary(runID)), CalculateMonsterHP(DatabaseManager.GetMonster2HPDictionary(runID)), CalculateMonsterHP(DatabaseManager.GetMonster3HPDictionary(runID)), CalculateMonsterHP(DatabaseManager.GetMonster4HPDictionary(runID)));
-                return;
-            case "(Run ID) Monster Attack Multiplier":
-                this.SetMonsterAttackMultiplier(CalculateMonsterMultiplier(DatabaseManager.GetMonster1AttackMultiplierDictionary(runID)));
-                return;
-            case "(Run ID) Monster Defense Rate":
-                this.SetMonsterDefenseRate(CalculateMonsterMultiplier(DatabaseManager.GetMonster1DefenseRateDictionary(runID)));
-                return;
-            case "(Run ID) Monster Status Ailments Thresholds":
-                this.SetMonsterStatusAilmentsThresholds(
-                    CalculateMonsterStatusAilmentThresholds(
-                        DatabaseManager.GetMonster1PoisonThresholdDictionary(runID)),
-                    CalculateMonsterStatusAilmentThresholds(
-                        DatabaseManager.GetMonster1SleepThresholdDictionary(runID)),
-                    CalculateMonsterStatusAilmentThresholds(
-                        DatabaseManager.GetMonster1ParalysisThresholdDictionary(runID)),
-                    CalculateMonsterStatusAilmentThresholds(
-                        DatabaseManager.GetMonster1BlastThresholdDictionary(runID)),
-                    CalculateMonsterStatusAilmentThresholds(
-                        DatabaseManager.GetMonster1StunThresholdDictionary(runID)));
-                return;
-            default:
-                break;
-        }
-
-        this.statsGraphsSelectedOption = selectedOption.Trim().Replace(" ", "_");
-
-        if (this.Series == null)
-        {
-            return;
-        }
-
-        this.graphChart.Series = this.Series;
-        this.graphChart.XAxes = this.XAxes;
-        this.graphChart.YAxes = this.YAxes;
+        UpdateStatsGraphs(selectedOption);
     }
 
     private void GraphsChart_Loaded(object sender, RoutedEventArgs e) => this.graphChart = (CartesianChart)sender;
@@ -3319,7 +3299,7 @@ public partial class ConfigWindow : FluentWindow
 
     private static Dictionary<int, List<Dictionary<int, int>>> GetElapsedTimeForInventories(Dictionary<int, List<Dictionary<int, int>>> dictionary)
     {
-        Dictionary<int, List<Dictionary<int, int>>> elapsedTimeDict = new ();
+        Dictionary<int, List<Dictionary<int, int>>> elapsedTimeDict = new();
         if (dictionary == null || !dictionary.Any())
         {
             return elapsedTimeDict;
@@ -3336,7 +3316,7 @@ public partial class ConfigWindow : FluentWindow
 
     private static Dictionary<int, int> GetElapsedTimeForDictionaryIntInt(Dictionary<int, int> dictionary)
     {
-        Dictionary<int, int> elapsedTimeDict = new ();
+        Dictionary<int, int> elapsedTimeDict = new();
 
         if (dictionary == null || !dictionary.Any())
         {
@@ -3551,6 +3531,189 @@ public partial class ConfigWindow : FluentWindow
         }
 
         this.personalBestSelectedWeapon = selectedWeapon.Replace("System.Windows.Controls.ComboBoxItem: ", string.Empty);
+    }
+
+    private void StatsGraphsRefreshButton_Click(object sender, RoutedEventArgs e)
+    {
+        if (this.graphChart == null || statsGraphsComboBoxOption == null || string.IsNullOrEmpty(statsGraphsComboBoxOption))
+        {
+            return;
+        }
+
+        UpdateStatsGraphs(statsGraphsComboBoxOption);
+    }
+
+    private void UpdateStatsGraphs(string selectedOption)
+    {
+        this.Series = null;
+        this.XAxes = new Axis[]
+        {
+            new Axis
+            {
+                NamePaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
+                LabelsPaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
+            },
+        };
+        this.YAxes = new Axis[]
+        {
+            new Axis
+            {
+                NamePaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
+                LabelsPaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
+            },
+        };
+
+        long runID = 0;
+        if (this.RunIDTextBox != null && this.RunIDTextBox.Text != string.Empty)
+        {
+            runID = long.Parse(this.RunIDTextBox.Text.Trim(), CultureInfo.InvariantCulture);
+        }
+
+        long extraRunID = 0;
+        if (this.extraRunIDTextBox != null && this.extraRunIDTextBox.Text != string.Empty)
+        {
+            extraRunID = long.Parse(this.extraRunIDTextBox.Text.Trim(), CultureInfo.InvariantCulture);
+        }
+
+        if (runIDComparisonTextBlock != null)
+        {
+            runIDComparisonTextBlock.Text = string.Empty;
+        }
+
+        switch (selectedOption)
+        {
+            case "(General) Most Quest Completions":
+                this.SetColumnSeriesForDictionaryIntInt(DatabaseManager.GetMostQuestCompletions());
+                break;
+            case "(General) Quest Durations":
+                this.CreateQuestDurationStackedChart(DatabaseManager.GetTotalTimeSpentInQuests());
+                break;
+            case "(General) Most Common Objective Types":
+                this.SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetMostCommonObjectiveTypes());
+                break;
+            case "(General) Most Common Star Grades":
+                this.SetColumnSeriesForDictionaryIntInt(DatabaseManager.GetMostCommonStarGrades());
+                break;
+            case "(General) Most Common Rank Bands":
+                this.SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetMostCommonRankBands());
+                break;
+            case "(General) Most Common Objective":
+                this.SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetMostCommonObjectives());
+                break;
+            case "(General) Quests Completed by Date":
+                this.SetColumnSeriesForDictionaryDateInt(DatabaseManager.GetQuestsCompletedByDate());
+                break;
+            case "(General) Most Common Party Size":
+                this.SetColumnSeriesForDictionaryIntInt(DatabaseManager.GetMostCommonPartySize());
+                break;
+            case "(General) Most Common Set Name":
+                this.SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetMostCommonSetNames());
+                break;
+            case "(General) Most Common Weapon Name":
+                this.SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetMostCommonWeaponNames());
+                break;
+            case "(General) Most Common Head Piece":
+                this.SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetMostCommonHeadPieces());
+                break;
+            case "(General) Most Common Chest Piece":
+                this.SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetMostCommonChestPieces());
+                break;
+            case "(General) Most Common Arms Piece":
+                this.SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetMostCommonArmsPieces());
+                break;
+            case "(General) Most Common Waist Piece":
+                this.SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetMostCommonWaistPieces());
+                break;
+            case "(General) Most Common Legs Piece":
+                this.SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetMostCommonLegsPieces());
+                break;
+            case "(General) Most Common Diva Skill":
+                this.SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetMostCommonDivaSkill());
+                break;
+            case "(General) Most Common Guild Food":
+                this.SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetMostCommonGuildFood());
+                break;
+            case "(General) Most Common Style Rank Skills":
+                this.SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetMostCommonStyleRankSkills());
+                break;
+            case "(General) Most Common Caravan Skills":
+                this.SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetMostCommonCaravanSkills());
+                break;
+            case "(General) Most Common Category":
+                this.SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetMostCommonCategory());
+                break;
+            case "(Run ID) Attack Buff":
+                this.SetLineSeriesForDictionaryIntInt(DatabaseManager.GetAttackBuffDictionary(runID), DatabaseManager.GetAttackBuffDictionary(extraRunID));
+                return;
+            case "(Run ID) Hit Count":
+                this.SetLineSeriesForDictionaryIntInt(DatabaseManager.GetHitCountDictionary(runID), DatabaseManager.GetHitCountDictionary(extraRunID));
+                return;
+            case "(Run ID) Hits per Second":
+                this.SetLineSeriesForDictionaryIntDouble(DatabaseManager.GetHitsPerSecondDictionary(runID), DatabaseManager.GetHitsPerSecondDictionary(extraRunID));
+                return;
+            case "(Run ID) Damage Dealt":
+                this.SetLineSeriesForDictionaryIntInt(DatabaseManager.GetDamageDealtDictionary(runID), DatabaseManager.GetDamageDealtDictionary(extraRunID));
+                return;
+            case "(Run ID) Damage per Second":
+                this.SetLineSeriesForDictionaryIntDouble(DatabaseManager.GetDamagePerSecondDictionary(runID), DatabaseManager.GetDamagePerSecondDictionary(extraRunID));
+                return;
+            case "(Run ID) Carts":
+                this.SetLineSeriesForDictionaryIntInt(DatabaseManager.GetCartsDictionary(runID), null);
+                return;
+            case "(Run ID) Hits Taken/Blocked":
+                this.SetHitsTakenBlocked(DatabaseManager.GetHitsTakenBlockedDictionary(runID), DatabaseManager.GetHitsTakenBlockedDictionary(extraRunID));
+                return;
+            case "(Run ID) Hits Taken/Blocked per Second":
+                this.SetLineSeriesForDictionaryIntDouble(DatabaseManager.GetHitsTakenBlockedPerSecondDictionary(runID), DatabaseManager.GetHitsTakenBlockedPerSecondDictionary(extraRunID));
+                return;
+            case "(Run ID) Player Health and Stamina":
+                this.SetPlayerHealthStamina(DatabaseManager.GetPlayerHPDictionary(runID), DatabaseManager.GetPlayerStaminaDictionary(runID));
+                return;
+            case "(Run ID) Most Common Player Input":
+                this.SetColumnSeriesForDictionaryStringInt(GetMostCommonInputs(runID));
+                break;
+            case "(Run ID) Actions per Minute":
+                this.SetLineSeriesForDictionaryIntDouble(DatabaseManager.GetActionsPerMinuteDictionary(runID), DatabaseManager.GetActionsPerMinuteDictionary(extraRunID));
+                return;
+            case "(Run ID) Monster HP":
+                this.SetMonsterHP(CalculateMonsterHP(DatabaseManager.GetMonster1HPDictionary(runID)), CalculateMonsterHP(DatabaseManager.GetMonster2HPDictionary(runID)), CalculateMonsterHP(DatabaseManager.GetMonster3HPDictionary(runID)), CalculateMonsterHP(DatabaseManager.GetMonster4HPDictionary(runID)));
+                return;
+            case "(Run ID) Monster Attack Multiplier":
+                this.SetMonsterAttackMultiplier(CalculateMonsterMultiplier(DatabaseManager.GetMonster1AttackMultiplierDictionary(runID)));
+                return;
+            case "(Run ID) Monster Defense Rate":
+                this.SetMonsterDefenseRate(CalculateMonsterMultiplier(DatabaseManager.GetMonster1DefenseRateDictionary(runID)));
+                return;
+            case "(Run ID) Monster Status Ailments Thresholds":
+                this.SetMonsterStatusAilmentsThresholds(
+                    CalculateMonsterStatusAilmentThresholds(
+                        DatabaseManager.GetMonster1PoisonThresholdDictionary(runID)),
+                    CalculateMonsterStatusAilmentThresholds(
+                        DatabaseManager.GetMonster1SleepThresholdDictionary(runID)),
+                    CalculateMonsterStatusAilmentThresholds(
+                        DatabaseManager.GetMonster1ParalysisThresholdDictionary(runID)),
+                    CalculateMonsterStatusAilmentThresholds(
+                        DatabaseManager.GetMonster1BlastThresholdDictionary(runID)),
+                    CalculateMonsterStatusAilmentThresholds(
+                        DatabaseManager.GetMonster1StunThresholdDictionary(runID)));
+                return;
+            default:
+                this.graphChart.Series = this.Series ?? Array.Empty<ISeries>(); // TODO test
+                this.graphChart.XAxes = this.XAxes;
+                this.graphChart.YAxes = this.YAxes;
+                break;
+        }
+
+        this.statsGraphsSelectedOption = selectedOption.Trim().Replace(" ", "_");
+
+        if (this.Series == null)
+        {
+            return;
+        }
+
+        this.graphChart.Series = this.Series;
+        this.graphChart.XAxes = this.XAxes;
+        this.graphChart.YAxes = this.YAxes;
     }
 
     private void PersonalBestRefreshButton_Click(object sender, RoutedEventArgs e)
@@ -4337,6 +4500,16 @@ public partial class ConfigWindow : FluentWindow
         }
 
         this.challengesListBox.Items.Refresh();
+    }
+
+    private void ExtraRunIDTextBox_Loaded(object sender, RoutedEventArgs e)
+    {
+        this.extraRunIDTextBox = (TextBox)sender;
+    }
+
+    private void RunIDComparisonTextBlock_Loaded(object sender, RoutedEventArgs e)
+    {
+        this.runIDComparisonTextBlock = (TextBlock)sender;
     }
 }
 

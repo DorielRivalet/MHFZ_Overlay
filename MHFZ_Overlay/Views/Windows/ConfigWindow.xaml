@@ -743,6 +743,11 @@
                                     <ui:SymbolIcon Symbol="Copy24" Foreground="{StaticResource Sapphire}" FontSize="24"/>
                                 </Button.Content>
                             </ui:Button>
+                            <ui:Button Background="Transparent" BorderThickness="0" ToolTip="Refresh" Click="StatsGraphsRefreshButton_Click">
+                                <Button.Content>
+                                    <ui:SymbolIcon Symbol="ArrowCounterclockwise24" FontSize="24" Foreground="{StaticResource Yellow}"/>
+                                </Button.Content>
+                            </ui:Button>
                             <ComboBox Loaded="StatsGraphsComboBox_Loaded" ToolTip="Multiplayer runs may not display the correct data" SelectedIndex="0" HorizontalAlignment="Left" FontSize="16" SelectionChanged="GraphsComboBox_SelectionChanged">
                                 <ComboBoxItem>(General) Most Quest Completions</ComboBoxItem>
                                 <ComboBoxItem>(General) Quest Durations</ComboBoxItem>
@@ -780,6 +785,11 @@
                                 <ComboBoxItem>(Run ID) Monster Defense Rate</ComboBoxItem>
                                 <ComboBoxItem>(Run ID) Monster Status Ailments Thresholds</ComboBoxItem>
                             </ComboBox>
+
+                            <TextBlock Padding="10,0,10,0" Text="Compare with Run ID" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <ui:TextBox Loaded="ExtraRunIDTextBox_Loaded" IsUndoEnabled="False" Text="0" PreviewTextInput="ValidateNumber" Width="200" MaxLength="8"/>
+                            <TextBlock Loaded="RunIDComparisonTextBlock_Loaded" Padding="10,0,10,0" Text="" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
                         </StackPanel>
                         <Grid x:Name="GraphsChartGrid" Loaded="GraphsChartGrid_Loaded" Grid.Column="1" Grid.Row="1" Margin="5">
                             <lvc:CartesianChart Loaded="GraphsChart_Loaded" Width="800" Height="500" HorizontalAlignment="Left" VerticalAlignment="Top"/>
