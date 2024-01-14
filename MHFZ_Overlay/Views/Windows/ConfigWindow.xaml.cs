@@ -2425,12 +2425,65 @@ public partial class ConfigWindow : FluentWindow
         }
     }
 
+    private double CalculateBetterLinePercentage(Dictionary<int, double> line1, Dictionary<int, double> line2)
+    {
+        if (line1.Count == 0 || line2.Count == 0)
+            return 0.0;
+        // Find the cutoff time where the first series ends.
+        int cutoffTime = Math.Min(line1.Keys.Max(), line2.Keys.Max());
+
+        // Calculate the area under each line series up to the cutoff time.
+        double area1 = CalculateAreaUnderLine(line1, cutoffTime);
+        double area2 = CalculateAreaUnderLine(line2, cutoffTime);
+
+        // Determine which series has the larger area and calculate the percentage difference.
+        if (area1 == area2)
+        {
+            return 0; // Both series are equal.
+        }
+        else
+        {
+            double largerArea = Math.Max(area1, area2);
+            double smallerArea = Math.Min(area1, area2);
+            double percentageDifference = ((largerArea - smallerArea) / smallerArea) * 100;
+            return area1 > area2 ? percentageDifference : -percentageDifference;
+        }
+    }
+
     private double CalculateAreaUnderLine(Dictionary<int, int> line, int cutoffTime)
     {
         // Assuming the line is sorted by time.
         double area = 0;
         int previousTime = 0;
         int previousScore = 0;
+
+        foreach (var point in line.OrderBy(p => p.Key))
+        {
+            if (point.Key > cutoffTime)
+                break;
+
+            if (previousTime != 0)
+            {
+                // Calculate the area of the trapezoid.
+                double base1 = point.Value;
+                double base2 = previousScore;
+                double height = point.Key - previousTime;
+                area += (base1 + base2) * height / 2;
+            }
+
+            previousTime = point.Key;
+            previousScore = point.Value;
+        }
+
+        return area;
+    }
+
+    private double CalculateAreaUnderLine(Dictionary<int, double> line, int cutoffTime)
+    {
+        // Assuming the line is sorted by time.
+        double area = 0;
+        int previousTime = 0;
+        double previousScore = 0.0;
 
         foreach (var point in line.OrderBy(p => p.Key))
         {
@@ -2498,6 +2551,13 @@ public partial class ConfigWindow : FluentWindow
                 Stroke = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#ff89b4fa"))) { StrokeThickness = 2 },
                 Fill = new LinearGradientPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#ff89b4fa", "7f")), new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#ff89b4fa", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
             });
+
+            if (this.runIDComparisonTextBlock != null && this.extraRunIDTextBox != null)
+            {
+                var runComparisonPercentage = CalculateBetterLinePercentage(newData, newData2);
+                var betterRun = runComparisonPercentage >= 0.0 ? RunIDTextBox.Text : extraRunIDTextBox.Text;
+                this.runIDComparisonTextBlock.Text = string.Format(CultureInfo.InvariantCulture, "Run {0} is higher by around {1:0.##}%", betterRun, Math.Abs(runComparisonPercentage));
+            }
         }
 
         this.XAxes = new Axis[]
@@ -2717,6 +2777,13 @@ public partial class ConfigWindow : FluentWindow
                 Stroke = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#ff89b4fa"))) { StrokeThickness = 2 },
                 Fill = new LinearGradientPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#ff89b4fa", "7f")), new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#ff89b4fa", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
             });
+
+            if (this.runIDComparisonTextBlock != null && this.extraRunIDTextBox != null)
+            {
+                var runComparisonPercentage = CalculateBetterLinePercentage(newData, newData2);
+                var betterRun = runComparisonPercentage >= 0.0 ? RunIDTextBox.Text : extraRunIDTextBox.Text;
+                this.runIDComparisonTextBlock.Text = string.Format(CultureInfo.InvariantCulture, "Run {0} is higher by around {1:0.##}%", betterRun, Math.Abs(runComparisonPercentage));
+            }
         }
 
         this.XAxes = new Axis[]
