@@ -1311,7 +1311,7 @@ public abstract class AddressModel : INotifyPropertyChanged
 
             if (ShowHitsPerSecond())
             {
-                hitsPerSecond = string.Format(CultureInfo.InvariantCulture, " ({0:0.00}/s)", this.HitsPerSecond);
+                hitsPerSecond = string.Format(CultureInfo.InvariantCulture, " ({0:0.##}/s)", this.HitsPerSecond);
             }
 
             return string.Format(CultureInfo.InvariantCulture, "{0}{1}", this.HitCountInt(), hitsPerSecond);
@@ -10823,7 +10823,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
 
             if (ShowTotalHitsTakenBlockedPerSecond())
             {
-                totalHitsTakenBlockedPerSecond = string.Format(CultureInfo.InvariantCulture, " ({0:0.00}/s)", this.TotalHitsTakenBlockedPerSecond);
+                totalHitsTakenBlockedPerSecond = string.Format(CultureInfo.InvariantCulture, " ({0:0.##}/s)", this.TotalHitsTakenBlockedPerSecond);
             }
 
             return string.Format(CultureInfo.InvariantCulture, "{0}{1}", this.TotalHitsTakenBlocked, totalHitsTakenBlockedPerSecond);
