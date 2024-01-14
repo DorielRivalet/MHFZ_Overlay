@@ -1670,7 +1670,7 @@ TreeScope.Children, condition);
         {
             return OverlayMode.Standard;
         }
-        else if (s.TimerInfoShown && s.EnableInputLogging && s.EnableQuestLogging && this.PartySize() == 1 && s.OverlayModeWatermarkShown)
+        else if (s.TimerInfoShown && s.EnableInputLogging && s.EnableQuestLogging && s.OverlayModeWatermarkShown)
         {
             if (this.DivaSkillUsesLeft() == 0 && this.StyleRank1() != 15 && this.StyleRank2() != 15)
             {
