@@ -52,7 +52,7 @@
 
 Use the preset option found in the General tab. Keep reading if you want to know how to do it manually.
 
-- Speedrun Mode Categories: SOLO ONLY. Enable the required settings in the Quest Logs section, disable **everything** else, including Quest Pace Color (Monster Icon, Quest Timer + Percentage, KBM Layout, Personal Best and Discord Rich Presence optional)
+- Speedrun Mode Categories: Enable the required settings in the Quest Logs section, disable **everything** else, including Quest Pace Color (Monster Icon, Quest Timer + Percentage, KBM Layout, Personal Best and Discord Rich Presence optional)
 
 - Time Attack: Do not use diva skills.
 - Freestyle: Use diva skills with/without Secret Technique Style Rank Skill.
