@@ -11328,6 +11328,8 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                                 var field = reader.GetInt32(0);
                                 var count = reader.GetInt32(1);
                                 var pieceName = ArmorChest.IDName[field];
+                                if (fieldCounts.ContainsKey(pieceName))
+                                    continue;
                                 fieldCounts.Add(pieceName, count);
                             }
                         }
