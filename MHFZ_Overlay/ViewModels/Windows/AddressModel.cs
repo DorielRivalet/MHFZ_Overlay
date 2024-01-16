@@ -12402,6 +12402,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         new QuestLogsOption { Name = "YouTube", IsSelected = false },
         new QuestLogsOption { Name = "Stats (Graphs)", IsSelected = false },
         new QuestLogsOption { Name = "Stats (Text)", IsSelected = false },
+        new QuestLogsOption { Name = "Quest Pace", IsSelected = false },
     };
 
     public QuestLogsOption SelectedOption { get; set; } = new QuestLogsOption { Name = "Default", IsSelected = true };

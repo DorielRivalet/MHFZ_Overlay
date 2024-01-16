@@ -11142,6 +11142,105 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
         return personalBestCount;
     }
 
+    public List<Quest> GetQuests(long questID, string weaponName, string actualOverlayMode)
+    {
+        List<Quest> quests = new();
+        if (string.IsNullOrEmpty(this.dataSource))
+        {
+            Logger.Warn(CultureInfo.InvariantCulture, "Cannot get quests. dataSource: {0}", this.dataSource);
+            return quests;
+        }
+
+        var weaponTypeID = EZlion.Mapper.WeaponType.IDName.FirstOrDefault(x => x.Value == weaponName).Key;
+
+        using (var conn = new SQLiteConnection(this.dataSource))
+        {
+            conn.Open();
+            using (var transaction = conn.BeginTransaction())
+            {
+                try
+                {
+                    var sql =
+                        @"SELECT 
+                            *
+                        FROM 
+                            Quests q
+                        JOIN 
+                            PlayerGear pg ON q.RunID = pg.RunID
+                        WHERE 
+                            q.QuestID = @QuestID
+                        AND q.ActualOverlayMode = @ActualOverlayMode
+                        AND pg.WeaponTypeID = @WeaponTypeID
+                        ORDER BY RunID ASC";
+                    using (var cmd = new SQLiteCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@QuestID", questID);
+                        cmd.Parameters.AddWithValue("@ActualOverlayMode", actualOverlayMode);
+                        cmd.Parameters.AddWithValue("@WeaponTypeID", weaponTypeID);
+
+                        using (var reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                var quest = new Quest
+                                {
+                                    QuestHash = reader["QuestHash"].ToString(),
+                                    CreatedAt = DateTime.Parse(reader["CreatedAt"]?.ToString() ?? DateTime.UnixEpoch.ToString(CultureInfo.InvariantCulture), CultureInfo.InvariantCulture),
+                                    CreatedBy = reader["CreatedBy"].ToString(),
+                                    RunID = long.Parse(reader["RunID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    QuestID = long.Parse(reader["QuestID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    TimeLeft = long.Parse(reader["TimeLeft"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    FinalTimeValue = long.Parse(reader["FinalTimeValue"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    FinalTimeDisplay = reader["FinalTimeDisplay"].ToString(),
+                                    ObjectiveImage = reader["ObjectiveImage"].ToString(),
+                                    ObjectiveTypeID = long.Parse(reader["ObjectiveTypeID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    ObjectiveQuantity = long.Parse(reader["ObjectiveQuantity"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    StarGrade = long.Parse(reader["StarGrade"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    RankName = reader["RankName"].ToString(),
+                                    ObjectiveName = reader["ObjectiveName"].ToString(),
+                                    Date = DateTime.Parse(reader["Date"]?.ToString() ?? DateTime.UnixEpoch.ToString(CultureInfo.InvariantCulture), CultureInfo.InvariantCulture),
+                                    YouTubeID = reader["YouTubeID"].ToString(),
+                                    AttackBuffDictionary = reader["AttackBuffDictionary"].ToString(),
+                                    HitCountDictionary = reader["HitCountDictionary"].ToString(),
+                                    HitsPerSecondDictionary = reader["HitsPerSecondDictionary"].ToString(),
+                                    DamageDealtDictionary = reader["DamageDealtDictionary"].ToString(),
+                                    DamagePerSecondDictionary = reader["DamagePerSecondDictionary"].ToString(),
+                                    AreaChangesDictionary = reader["AreaChangesDictionary"].ToString(),
+                                    CartsDictionary = reader["CartsDictionary"].ToString(),
+                                    Monster1HPDictionary = reader["Monster1HPDictionary"].ToString(),
+                                    Monster2HPDictionary = reader["Monster2HPDictionary"].ToString(),
+                                    Monster3HPDictionary = reader["Monster3HPDictionary"].ToString(),
+                                    Monster4HPDictionary = reader["Monster4HPDictionary"].ToString(),
+                                    HitsTakenBlockedDictionary = reader["HitsTakenBlockedDictionary"].ToString(),
+                                    HitsTakenBlockedPerSecondDictionary = reader["HitsTakenBlockedPerSecondDictionary"].ToString(),
+                                    PlayerHPDictionary = reader["PlayerHPDictionary"].ToString(),
+                                    PlayerStaminaDictionary = reader["PlayerStaminaDictionary"].ToString(),
+                                    KeyStrokesDictionary = reader["KeyStrokesDictionary"].ToString(),
+                                    MouseInputDictionary = reader["MouseInputDictionary"].ToString(),
+                                    GamepadInputDictionary = reader["GamepadInputDictionary"].ToString(),
+                                    ActionsPerMinuteDictionary = reader["ActionsPerMinuteDictionary"].ToString(),
+                                    OverlayModeDictionary = reader["OverlayModeDictionary"].ToString(),
+                                    ActualOverlayMode = reader["ActualOverlayMode"].ToString(),
+                                    PartySize = long.Parse(reader["PartySize"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                };
+
+                                quests.Add(quest);
+                            }
+                        }
+                    }
+
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    HandleError(transaction, ex);
+                }
+            }
+        }
+
+        return quests;
+    }
+
     public Dictionary<string, int> GetMostCommonObjectiveTypes()
     {
         Dictionary<string, int> objectiveCounts = new ();

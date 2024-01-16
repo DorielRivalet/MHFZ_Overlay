@@ -835,6 +835,66 @@
                     </StackPanel>
                 </Grid>
             </DataTemplate>
+            <DataTemplate x:Key="QuestPaceTemplate">
+                <Grid Loaded="QuestPaceMainGridLoaded">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.RowSpan="11" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Background="#7f1e1e2e"/>
+
+                    <Border CornerRadius="5,0,0,5" Grid.Row="0" Grid.Column="0" Grid.RowSpan="25" Width="5" Margin="0,0,5,0" Background="#fab387" />
+
+                    <StackPanel  Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Orientation="Vertical" Margin="5">
+                        <StackPanel Orientation="Horizontal">
+                            <ui:Button Background="Transparent" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTip="Save summary of stats to text file" Click="QuestPaceButtonSaveFile_Click">
+                                <Button.Content>
+                                    <ui:SymbolIcon Symbol="ArrowDownload24" FontSize="24" Foreground="{StaticResource Green}"/>
+                                </Button.Content>
+                            </ui:Button>
+                            <ui:Button Background="Transparent" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTip="Copy stats to clipboard as image (recommended to maximize configuration window)" Click="QuestPaceButtonCopyFile_Click">
+                                <Button.Content>
+                                    <ui:SymbolIcon Symbol="Copy24" Foreground="{StaticResource Sapphire}" FontSize="24"/>
+                                </Button.Content>
+                            </ui:Button>
+                            <ComboBox x:Name="questPaceWeaponsComboBox" ToolTip="Quest pace by category" SelectedIndex="0" HorizontalAlignment="Left" FontSize="16" SelectionChanged="QuestPaceWeaponComboBox_SelectionChanged">
+                                <ComboBoxItem>Sword and Shield</ComboBoxItem>
+                                <ComboBoxItem>Dual Swords</ComboBoxItem>
+                                <ComboBoxItem>Great Sword</ComboBoxItem>
+                                <ComboBoxItem>Long Sword</ComboBoxItem>
+                                <ComboBoxItem>Hammer</ComboBoxItem>
+                                <ComboBoxItem>Hunting Horn</ComboBoxItem>
+                                <ComboBoxItem>Lance</ComboBoxItem>
+                                <ComboBoxItem>Gunlance</ComboBoxItem>
+                                <ComboBoxItem>Tonfa</ComboBoxItem>
+                                <ComboBoxItem>Switch Axe F</ComboBoxItem>
+                                <ComboBoxItem>Magnet Spike</ComboBoxItem>
+                                <ComboBoxItem>Light Bowgun</ComboBoxItem>
+                                <ComboBoxItem>Heavy Bowgun</ComboBoxItem>
+                                <ComboBoxItem>Bow</ComboBoxItem>
+                            </ComboBox>
+                            <ComboBox ToolTip="Select the type of split to do" SelectedIndex="0" HorizontalAlignment="Left" FontSize="16" SelectionChanged="QuestPaceSplitOptionComboBox_SelectionChanged">
+                                <ComboBoxItem>Every 10% Monster HP Dealt</ComboBoxItem>
+                                <ComboBoxItem>60%/80%/100% Monster HP Dealt</ComboBoxItem>
+                            </ComboBox>
+                        </StackPanel>
+
+                        <Grid x:Name="QuestPaceGraphGrid" Loaded="QuestPaceGraphGrid_Loaded" Grid.Column="1" Grid.Row="1" Margin="5">
+                            <lvc:CartesianChart Loaded="QuestPaceGraph_Loaded" Width="800" Height="500" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        </Grid>
+
+                        <TextBlock Grid.Column="1" Grid.Row="2" ToolTip="Personal Best: fastest completion time | Sum of Best: sum of best split times, a split defined as every 10% HP | Sum of Median: sum of median split times | Median: median completion time" Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Text="Quest pace by category" Loaded="QuestPaceDescriptionTextBlock_Loaded"/>
+
+                    </StackPanel>
+                </Grid>
+            </DataTemplate>
             <Style x:Key="ScrollThumbs" TargetType="{x:Type Thumb}">
             <Setter Property="Template">
                 <Setter.Value>

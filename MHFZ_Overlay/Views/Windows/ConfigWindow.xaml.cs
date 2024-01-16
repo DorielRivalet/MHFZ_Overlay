@@ -39,7 +39,9 @@ using MHFZ_Overlay.Services;
 using MHFZ_Overlay.Services.Converter;
 using MHFZ_Overlay.Views.CustomControls;
 using Microsoft.Win32;
+using Newtonsoft.Json;
 using Octokit;
+using SharpCompress.Common;
 using SkiaSharp;
 using Wpf.Ui.Common;
 using Wpf.Ui.Contracts;
@@ -1438,6 +1440,480 @@ public partial class ConfigWindow : FluentWindow
         }
     }
 
+    /// <summary>
+    /// Does not count multi-monster quests.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void QuestPaceWeaponComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (this.questPaceGraph == null)
+        {
+            return;
+        }
+
+        if (sender is not ComboBox comboBox)
+        {
+            return;
+        }
+
+        var selectedItem = comboBox.SelectedItem;
+        if (selectedItem == null)
+        {
+            return;
+        }
+
+        // You can now use the selectedItem variable to get the data or value of the selected option
+        var selectedWeapon = selectedItem.ToString()?.Replace("System.Windows.Controls.ComboBoxItem: ", string.Empty);
+        if (string.IsNullOrEmpty(selectedWeapon))
+        {
+            return;
+        }
+
+        this.questPaceWeaponSelected = selectedWeapon;
+        var a = selectedQuestPaceSplitOption;
+
+        var quests = DatabaseManager.GetQuests(long.Parse(this.QuestIDTextBox.Text.Trim()), this.questPaceWeaponSelected, this.OverlayModeComboBox.Text.Trim());
+        
+        List<Dictionary<int, Dictionary<int, int>>> monster1HPList = GetMonster1HPListForQuestPace(quests);
+
+        // Filter the quest runs where the monster ID stayed the same
+        var consistentMonsterIdRuns = monster1HPList.Where(questRun =>
+            questRun.Values
+                .Select(m => m.Keys.FirstOrDefault())
+                .Distinct()
+                .Count() == 1)
+            .ToList();
+
+        List<Dictionary<int, int>> flattenedList = GetFlattenedListForQuestPace(consistentMonsterIdRuns);
+
+        // TODO this is not removing all outliers
+        List<Dictionary<int, int>> removedOutliersList = GetRemovedOutliersListForQuestPace(flattenedList);
+
+        List<Dictionary<int, int>> elapsedTimeList = new ();
+        foreach (var run in removedOutliersList)
+        {
+            var elapsedTimeRun = GetElapsedTimeForDictionaryIntInt(run);
+            elapsedTimeList.Add(elapsedTimeRun);
+        }
+
+        List<Dictionary<int, int>> hpPercentagesList = GetHPPercentagesListForQuestPace(elapsedTimeList);
+
+        List<QuestSplit> questsSplits = GetQuestsSplitsListForQuestPace(hpPercentagesList);
+
+        QuestSplit medianSplitTimes = GetMedianSplitTimes(questsSplits);
+
+        // TODO test
+        QuestSplit fastestSplitTimes = GetFastestSplitTimes(questsSplits);
+
+        // Now, fastestSplitTimes contains the fastest split times for each property
+
+        var sumOfMedian = medianSplitTimes.Sum() ?? 0;
+        List<long?> finalTimeValues = quests
+            .Select(quest => quest.FinalTimeValue)
+            .ToList();
+
+        var personalBest = finalTimeValues.Min() ?? 0;
+
+        finalTimeValues.Sort();
+        long medianFinalTimeValue = CalculateMedian(finalTimeValues);
+
+        long? sumOfBest = (long?)fastestSplitTimes.Sum() ?? 0;
+
+        if (this.questPaceDescriptionTextBlock != null)
+        {
+            this.questPaceDescriptionTextBlock.Text = $"Quest ID {this.QuestIDTextBox.Text} pace by category {this.OverlayModeComboBox.Text} | Personal Best: {TimeService.GetMinutesSecondsMillisecondsFromFrames((double)personalBest)} | Sum of Best: {TimeService.GetMinutesSecondsMillisecondsFromFrames((long)sumOfBest)} | Sum Of Median: {TimeService.GetMinutesSecondsMillisecondsFromFrames((long)sumOfMedian)} | Median: {TimeService.GetMinutesSecondsMillisecondsFromFrames(medianFinalTimeValue)}";
+        }
+
+        // TODO graph
+    }
+
+    string? selectedQuestPaceSplitOption = "Every 10% Monster HP Dealt";
+
+    private void QuestPaceSplitOptionComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (this.questPaceGraph == null)
+        {
+            return;
+        }
+
+        if (sender is not ComboBox comboBox)
+        {
+            return;
+        }
+
+        ComboBoxItem selectedItem = (ComboBoxItem)comboBox.SelectedItem;
+        if (selectedItem == null)
+        {
+            return;
+        }
+
+        selectedQuestPaceSplitOption = selectedItem.Content.ToString();
+    }
+
+    private List<Dictionary<int, Dictionary<int, int>>> GetMonster1HPListForQuestPace(List<Models.Quest> quests)
+    {
+        List<Dictionary<int, Dictionary<int, int>>> monster1HPList = new();
+        foreach (var quest in quests)
+        {
+            if (quest.Monster1HPDictionary != null)
+            {
+                var monster1HPDictionary = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int, int>>>(quest.Monster1HPDictionary);
+                if (monster1HPDictionary != null)
+                {
+                    monster1HPList.Add(monster1HPDictionary);
+                }
+            }
+        }
+        return monster1HPList;
+    }
+
+    private List<Dictionary<int, int>> GetFlattenedListForQuestPace(List<Dictionary<int, Dictionary<int,int>>> consistentMonsterIdRuns)
+    {
+        List<Dictionary<int, int>> flattenedList = new();
+
+        foreach (var questRun in consistentMonsterIdRuns)
+        {
+            // Create a new dictionary for each quest run
+            Dictionary<int, int> run = new Dictionary<int, int>();
+
+            foreach (var kvp in questRun)
+            {
+                // kvp.Key is the time in frames
+                // kvp.Value is the Dictionary<int, int> where the Key is the monster ID and Value is the HP
+                // Since the monster ID is constant throughout the quest run, we can take any of the inner dictionary's Value
+                run.Add(kvp.Key, kvp.Value.Values.First());
+            }
+
+            // Add the flattened run to the list
+            flattenedList.Add(run);
+        }
+
+        return flattenedList;
+    }
+
+    private List<Dictionary<int, int>> GetRemovedOutliersListForQuestPace(List<Dictionary<int, int>> flattenedList)
+    {
+        List<Dictionary<int, int>> removedOutliersList = new();
+
+        foreach (var questRun in flattenedList)
+        {
+            if (questRun.Count == 0)
+            {
+                continue;
+            }
+
+            var filteredRun = new Dictionary<int, int>();
+            int? previousHp = null;
+            int? lastValidHp = null;
+            bool isOutlier = false;
+
+            foreach (var frame in questRun.OrderByDescending(kvp => kvp.Key))
+            {
+                int currentHp = frame.Value;
+                int currentTime = frame.Key;
+
+                if (previousHp.HasValue)
+                {
+                    if (previousHp - currentHp > questRun.Values.First() * 0.25)
+                    {
+                        // This is a potential outlier, skip adding and mark the flag
+                        isOutlier = true;
+                    }
+                    else
+                    {
+                        if (isOutlier && currentHp > previousHp.Value)
+                        {
+                            // The previous point was an outlier, don't add it
+                            isOutlier = false;
+                        }
+                        else
+                        {
+                            // This is not an outlier, add the last valid HP if it was skipped
+                            if (lastValidHp.HasValue)
+                            {
+                                filteredRun[currentTime - 1] = lastValidHp.Value;
+                                lastValidHp = null;
+                            }
+                            filteredRun.Add(currentTime, currentHp);
+                        }
+                    }
+                }
+                else if (currentHp == 0)
+                {
+                    // If the first HP value is 0, discard the whole run
+                    filteredRun.Clear();
+                    break;
+                }
+                else
+                {
+                    // This is the first value, set it as the max HP
+                    filteredRun.Add(currentTime, currentHp);
+                }
+
+                // If not marked as an outlier, update last valid HP
+                if (!isOutlier)
+                {
+                    previousHp = currentHp;
+                }
+                else
+                {
+                    // Keep the last valid HP in case the next one is not an outlier
+                    lastValidHp = previousHp;
+                    previousHp = null;
+                }
+            }
+
+            if (filteredRun.Any())
+            {
+                removedOutliersList.Add(filteredRun);
+            }
+        }
+
+        return removedOutliersList;
+    }
+
+    private List<Dictionary<int, int>> GetHPPercentagesListForQuestPace(List<Dictionary<int, int>> elapsedTimeList)
+    {
+        List<Dictionary<int, int>> hpPercentagesList = new ();
+
+        foreach (var run in elapsedTimeList)
+        {
+            Dictionary<int, (int, int)> hpPercentValues = new()
+            {
+                {0, (0,0) },
+                {1, (0,0) },
+                {2, (0,0) },
+                {3, (0,0) },
+                {4, (0,0) },
+                {5, (0,0) },
+                {6, (0,0) },
+                {7, (0,0) },
+                {8, (0,0) },
+                {9, (0,0) },
+            };
+
+            var maxHP = run.Values.First();
+            int previousHP = maxHP;
+
+            foreach (var entry in run)
+            {
+                if (previousHP < entry.Value)
+                {
+                    // previousHP = entry.Value;
+                    continue;
+                }
+
+                if (previousHP - entry.Value <= 0)
+                {
+                    continue;
+                }
+
+                for (int i = 9; i >= 0; i--)
+                {
+                    if (entry.Value >= maxHP * (i / 10.0))
+                    {
+                        hpPercentValues[9 - i] = (entry.Key, entry.Value);
+                        break;
+                    }
+                }
+            }
+
+            // add as dictionary<int,int>
+            Dictionary<int, int> hpPercentValuesFlattened = new();
+            foreach (var entry in hpPercentValues)
+            {
+                hpPercentValuesFlattened.Add(entry.Value.Item1, entry.Value.Item2);
+            }
+
+            hpPercentagesList.Add(hpPercentValuesFlattened);
+        }
+
+        return hpPercentagesList;
+    }
+
+    private List<QuestSplit> GetQuestsSplitsListForQuestPace(List<Dictionary<int,int>> hpPercentagesList)
+    {
+        List<QuestSplit> questsSplits = new();
+
+        // hpPercentagesList is a List<Dictionary<int, int>> containing the frames elapsed in total in first int and hp in second int
+        foreach (var run in hpPercentagesList)
+        {
+            // get the frames elapsed in each split. a split is each entry in the dictionary<int,int>
+            // with first int as frames elapsed and second int the hp remaining.
+            QuestSplit splitTimesFrames = new();
+            int index = 0;
+            int previousKeyFramesElapsed = 0;
+            int framesElapsed = 0;
+
+            foreach (var entry in run)
+            {
+                //int hpPercent = entry.Value;    // Assuming the value represents the HP percentage
+
+                // Assuming the key represents the frames elapsed
+                // TODO test
+                framesElapsed = entry.Key - previousKeyFramesElapsed;
+                previousKeyFramesElapsed = entry.Key;
+
+                // Populate splitTimesFrames fields based on the HP percentage
+                PopulateQuestSplitField(splitTimesFrames, index, framesElapsed);
+
+                index++;
+            }
+
+            questsSplits.Add(splitTimesFrames);
+        }
+
+        return questsSplits;
+    }
+
+    private QuestSplit GetMedianSplitTimes(List<QuestSplit> questsSplits)
+    {
+        QuestSplit medianSplitTimes = new();
+        // get the median of each questsplit field from questsSplits.
+        // Calculate median for each property
+        foreach (var property in typeof(QuestSplit).GetProperties())
+        {
+            if (property.PropertyType == typeof(int?))
+            {
+                // Get all non-null values for the property from questsSplits
+                List<int> propertyValues = questsSplits
+                    .Where(split => property.GetValue(split) != null)
+                    .Select(split => (int)property.GetValue(split))
+                    .ToList();
+
+                // Sort the values to calculate the median
+                propertyValues.Sort();
+
+                // Calculate the median
+                int medianValue = CalculateMedian(propertyValues);
+
+                // Set the median value to the property in medianSplitTimes
+                property.SetValue(medianSplitTimes, medianValue);
+            }
+        }
+
+        return medianSplitTimes;
+    }
+
+    private QuestSplit GetFastestSplitTimes(List<QuestSplit> questsSplits)
+    {
+        QuestSplit fastestSplitTimes = new();
+
+        // Get the fastest value for each property from questsSplits
+        foreach (var property in typeof(QuestSplit).GetProperties())
+        {
+            if (property.PropertyType == typeof(int?))
+            {
+                // Get all non-null values for the property from questsSplits
+                List<int> propertyValues = questsSplits
+                    .Where(split => property.GetValue(split) != null)
+                    .Select(split => (int)property.GetValue(split))
+                    .ToList();
+
+                if (propertyValues.Any())
+                {
+                    // Find the fastest (lowest) value
+                    int fastestValue = propertyValues.Min();
+
+                    // Set the fastest value to the property in fastestSplitTimes
+                    property.SetValue(fastestSplitTimes, fastestValue);
+                }
+            }
+        }
+
+        return fastestSplitTimes;
+    }
+
+    private static int CalculateMedian(List<int> values)
+    {
+        int count = values.Count;
+        if (count <= 0)
+        {
+            return 0;
+        }
+        else if (count == 1)
+        {
+            return values.FirstOrDefault();
+        }
+
+        int middle = count / 2;
+
+        if (count % 2 == 0)
+        {
+            // For an even number of values, take the average of the two middle values
+            return (values[middle - 1] + values[middle]) / 2;
+        }
+        else
+        {
+            // For an odd number of values, return the middle value
+            return values[middle];
+        }
+    }
+
+    private static long CalculateMedian(List<long?> values)
+    {
+        var count = values.Count;
+        if (count <= 0)
+        {
+            return 0;
+        }
+        else if (count == 1)
+        {
+            return (long)values.FirstOrDefault();
+        }
+        var middle = count / 2;
+
+        if (count % 2 == 0)
+        {
+            // For an even number of values, take the average of the two middle values
+            return (long)((values[middle - 1] + values[middle]) / 2);
+        }
+        else
+        {
+            // For an odd number of values, return the middle value
+            return (long)values[middle];
+        }
+    }
+
+    private static void PopulateQuestSplitField(QuestSplit questSplit, int index, int framesElapsed)
+    {
+        switch (index)
+        {
+            case 0:
+                questSplit.NinetyPercentRemainingHPFrames = framesElapsed;
+                break;
+            case 1:
+                questSplit.EightyPercentRemainingHPFrames = framesElapsed;
+                break;
+            case 2:
+                questSplit.SeventyPercentRemainingHPFrames = framesElapsed;
+                break;
+            case 3:
+                questSplit.SixtyPercentRemainingHPFrames = framesElapsed;
+                break;
+            case 4:
+                questSplit.FiftyPercentRemainingHPFrames = framesElapsed;
+                break;
+            case 5:
+                questSplit.FortyPercentRemainingHPFrames = framesElapsed;
+                break;
+            case 6:
+                questSplit.ThirtyPercentRemainingHPFrames = framesElapsed;
+                break;
+            case 7:
+                questSplit.TwentyPercentRemainingHPFrames = framesElapsed;
+                break;
+            case 8:
+                questSplit.TenPercentRemainingHPFrames = framesElapsed;
+                break;
+            case 9:
+                questSplit.ZeroPercentRemainingHPFrames = framesElapsed;
+                break;
+                // Handle additional cases if needed
+        }
+    }
+
     private void WeaponUsageChart_Loaded(object sender, RoutedEventArgs e)
     {
         this.weaponUsageChart = (CartesianChart)sender;
@@ -1464,6 +1940,7 @@ public partial class ConfigWindow : FluentWindow
     private CartesianChart? graphChart;
     private TextBlock? statsTextTextBlock;
     private CartesianChart? personalBestChart;
+    private CartesianChart? questPaceGraph;
     private PolarChart? hunterPerformanceChart;
     private StackPanel? compendiumInformationStackPanel;
     private string personalBestSelectedWeapon = string.Empty;
@@ -1473,9 +1950,12 @@ public partial class ConfigWindow : FluentWindow
     private Grid? weaponUsageChartGrid;
     private Grid? statsGraphsGrid;
     private TextBlock? personalBestDescriptionTextBlock;
-    private TextBlock? top20RunsDescriptionTextblock;
+    private TextBlock? top20RunsDescriptionTextBlock;
+    private TextBlock? questPaceDescriptionTextBlock;
     private Grid? personalBestMainGrid;
     private Grid? top20MainGrid;
+    private Grid? questPaceMainGrid;
+    private Grid? questPaceGraphGrid;
     private Grid? weaponStatsMainGrid;
     private Grid? statsGraphsMainGrid;
     private Grid? statsTextMainGrid;
@@ -1486,6 +1966,7 @@ public partial class ConfigWindow : FluentWindow
     private TextBlock? runIDComparisonTextBlock;
 
     private string top20RunsSelectedWeapon = string.Empty;
+    private string questPaceWeaponSelected = string.Empty;
 
     private void UpdateYoutubeLink_ButtonClick(object sender, RoutedEventArgs e)
     {
@@ -1615,9 +2096,9 @@ public partial class ConfigWindow : FluentWindow
         this.top20RunsDataGrid.ItemsSource = this.MainWindow.DataLoader.Model.FastestRuns;
         this.top20RunsDataGrid.Items.Refresh();
 
-        if (this.top20RunsDescriptionTextblock != null)
+        if (this.top20RunsDescriptionTextBlock != null)
         {
-            this.top20RunsDescriptionTextblock.Text = $"Top 20 fastest solo runs of quest ID {this.QuestIDTextBox.Text} by category {this.OverlayModeComboBox.Text}";
+            this.top20RunsDescriptionTextBlock.Text = $"Top 20 fastest solo runs of quest ID {this.QuestIDTextBox.Text} by category {this.OverlayModeComboBox.Text}";
         }
     }
 
@@ -1962,6 +2443,49 @@ public partial class ConfigWindow : FluentWindow
         };
         FileService.CopyUIElementToClipboard(this.weaponStatsMainGrid, snackbar);
         this.weaponStatsMainGrid.Background = previousBackground;
+    }
+
+    private void QuestPaceButtonSaveFile_Click(object sender, RoutedEventArgs e)
+    {
+        if (this.questPaceMainGrid == null)
+        {
+            return;
+        }
+
+        if (this.questPaceGraphGrid == null)
+        {
+            return;
+        }
+
+        var fileName = $"QuestPace-{this.QuestIDTextBox.Text.Trim()}-{this.questPaceWeaponSelected}-{this.OverlayModeComboBox.Text.Trim()}";
+
+        var snackbar = new Snackbar(this.ConfigWindowSnackBarPresenter)
+        {
+            Style = (Style)this.FindResource("CatppuccinMochaSnackBar"),
+        };
+        FileService.SaveElementAsImageFile(this.questPaceMainGrid, fileName, snackbar, false);
+    }
+
+    private void QuestPaceButtonCopyFile_Click(object sender, RoutedEventArgs e)
+    {
+        if (this.questPaceMainGrid == null)
+        {
+            return;
+        }
+
+        if (this.questPaceGraphGrid == null)
+        {
+            return;
+        }
+
+        var previousBackground = this.questPaceMainGrid.Background;
+        this.questPaceMainGrid.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
+        var snackbar = new Snackbar(this.ConfigWindowSnackBarPresenter)
+        {
+            Style = (Style)this.FindResource("CatppuccinMochaSnackBar"),
+        };
+        FileService.CopyUIElementToClipboard(this.questPaceMainGrid, snackbar);
+        this.questPaceMainGrid.Background = previousBackground;
     }
 
     private void MostRecentButtonSaveFile_Click(object sender, RoutedEventArgs e)
@@ -4009,6 +4533,24 @@ public partial class ConfigWindow : FluentWindow
         }
     }
 
+    private void QuestPaceGraphGrid_Loaded(object sender, RoutedEventArgs e)
+    {
+        var obj = (Grid)sender;
+        if (obj != null)
+        {
+            this.questPaceGraphGrid = obj;
+        }
+    }
+
+    private void QuestPaceGraph_Loaded(object sender, RoutedEventArgs e)
+    {
+        var obj = (CartesianChart)sender;
+        if (obj != null)
+        {
+            this.questPaceGraph = obj;
+        }
+    }
+
     private void PersonalBestDescriptionTextBlock_Loaded(object sender, RoutedEventArgs e)
     {
         var obj = (TextBlock)sender;
@@ -4018,12 +4560,21 @@ public partial class ConfigWindow : FluentWindow
         }
     }
 
+    private void QuestPaceDescriptionTextBlock_Loaded(object sender, RoutedEventArgs e)
+    {
+        var obj = (TextBlock)sender;
+        if (obj != null)
+        {
+            this.questPaceDescriptionTextBlock = obj;
+        }
+    }
+
     private void Top20RunsDescriptionTextBlock_Loaded(object sender, RoutedEventArgs e)
     {
         var obj = (TextBlock)sender;
         if (obj != null)
         {
-            this.top20RunsDescriptionTextblock = obj;
+            this.top20RunsDescriptionTextBlock = obj;
         }
     }
 
@@ -4042,6 +4593,15 @@ public partial class ConfigWindow : FluentWindow
         if (obj != null)
         {
             this.top20MainGrid = obj;
+        }
+    }
+
+    private void QuestPaceMainGridLoaded(object sender, RoutedEventArgs e)
+    {
+        var obj = (Grid)sender;
+        if (obj != null)
+        {
+            this.questPaceMainGrid = obj;
         }
     }
 
