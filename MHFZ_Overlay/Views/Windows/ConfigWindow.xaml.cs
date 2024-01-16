@@ -18,6 +18,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
@@ -27,8 +28,11 @@ using System.Windows.Media.Media3D;
 using EZlion.Mapper;
 using LiveChartsCore;
 using LiveChartsCore.Defaults;
+using LiveChartsCore.Drawing;
+using LiveChartsCore.Kernel;
 using LiveChartsCore.Measure;
 using LiveChartsCore.SkiaSharpView;
+using LiveChartsCore.SkiaSharpView.Drawing.Geometries;
 using LiveChartsCore.SkiaSharpView.Painting;
 using LiveChartsCore.SkiaSharpView.WPF;
 using MHFZ_Overlay.Models;
@@ -39,7 +43,9 @@ using MHFZ_Overlay.Services;
 using MHFZ_Overlay.Services.Converter;
 using MHFZ_Overlay.Views.CustomControls;
 using Microsoft.Win32;
+using Newtonsoft.Json;
 using Octokit;
+using SharpCompress.Common;
 using SkiaSharp;
 using Wpf.Ui.Common;
 using Wpf.Ui.Contracts;
@@ -269,13 +275,13 @@ public partial class ConfigWindow : FluentWindow
 
     private readonly IReadOnlyList<MonsterInfo> monsterInfos = MonsterInfos.MonsterInfoIDs;
 
-    private readonly GitHubClient client = new (new ProductHeaderValue("MHFZ_Overlay"));
+    private readonly GitHubClient client = new(new ProductHeaderValue("MHFZ_Overlay"));
 
-    private List<WeaponUsage> weaponUsageData = new ();
+    private List<WeaponUsage> weaponUsageData = new();
 
-    public static Uri MonsterInfoLink => new (RandomMonsterImage, UriKind.RelativeOrAbsolute);
+    public static Uri MonsterInfoLink => new(RandomMonsterImage, UriKind.RelativeOrAbsolute);
 
-    public static Uri MonsterImage => new (RandomMonsterImage, UriKind.RelativeOrAbsolute);
+    public static Uri MonsterImage => new(RandomMonsterImage, UriKind.RelativeOrAbsolute);
 
     public static string GetFeriasLink()
     {
@@ -1016,9 +1022,9 @@ public partial class ConfigWindow : FluentWindow
             return;
         }
 
-        Dictionary<string, string> monsterFeriasOptionDictionary = new ();
-        Dictionary<string, string> monsterWikiOptionDictionary = new ();
-        Dictionary<string, string> monsterVideoLinkOptionDictionary = new ();
+        Dictionary<string, string> monsterFeriasOptionDictionary = new();
+        Dictionary<string, string> monsterWikiOptionDictionary = new();
+        Dictionary<string, string> monsterVideoLinkOptionDictionary = new();
 
         for (var i = 0; i < this.monsterInfos.Count; i++)
         {
@@ -1438,6 +1444,1073 @@ public partial class ConfigWindow : FluentWindow
         }
     }
 
+    /// <summary>
+    /// Does not count multi-monster quests.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void QuestPaceWeaponComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (this.questPaceGraph == null)
+        {
+            return;
+        }
+
+        if (sender is not ComboBox comboBox)
+        {
+            return;
+        }
+
+        var selectedItem = comboBox.SelectedItem;
+        if (selectedItem == null)
+        {
+            return;
+        }
+
+        // You can now use the selectedItem variable to get the data or value of the selected option
+        var selectedWeapon = selectedItem.ToString()?.Replace("System.Windows.Controls.ComboBoxItem: ", string.Empty);
+        if (string.IsNullOrEmpty(selectedWeapon))
+        {
+            return;
+        }
+
+        this.questPaceWeaponSelected = selectedWeapon;
+
+        var quests = DatabaseManager.GetQuests(long.Parse(this.QuestIDTextBox.Text.Trim()), this.questPaceWeaponSelected, this.OverlayModeComboBox.Text.Trim());
+
+        if (quests.Count == 0)
+        {
+            return;
+        }
+        
+        List<QuestPace> monster1HPList = GetMonster1HPListForQuestPace(quests);
+
+        // Filter the quest runs where the monster ID stayed the same
+        var consistentMonsterIdRuns = monster1HPList.Where(questRun =>
+            questRun.MonsterHPField.Values
+                .Select(m => m.Keys.FirstOrDefault())
+                .Distinct()
+                .Count() == 1)
+            .ToList();
+
+        List<QuestPace> flattenedList = GetFlattenedListForQuestPace(consistentMonsterIdRuns);
+
+        // TODO this is not removing all outliers
+        List<QuestPace> removedOutliersList = GetRemovedOutliersListForQuestPace(flattenedList);
+
+        List<QuestPace> elapsedTimeList = new ();
+        foreach (var run in removedOutliersList)
+        {
+            QuestPace pace = run;
+            if (pace.MonsterHPFieldFlattened == null)
+            {
+                continue;
+            }
+            var elapsedTimeRun = GetElapsedTimeForDictionaryIntInt(pace.MonsterHPFieldFlattened);
+            pace.MonsterHPFieldFlattened = elapsedTimeRun;
+            elapsedTimeList.Add(pace);
+        }
+
+        List<QuestPace> hpPercentagesList = GetHPPercentagesListForQuestPace(elapsedTimeList);
+
+        if (selectedQuestPaceSplitOption == "Every 10% Monster HP Dealt")
+        {
+            List<QuestPace> questsSplits = GetQuestsSplitsListForQuestPace(hpPercentagesList);
+
+            QuestSplit medianSplitTimes = GetMedianSplitTimes(questsSplits);
+
+            // TODO test
+            QuestSplit fastestSplitTimes = GetFastestSplitTimes(questsSplits);
+
+            // Now, fastestSplitTimes contains the fastest split times for each property
+
+            var sumOfMedian = medianSplitTimes.Sum() ?? 0;
+            List<long?> finalTimeValues = quests
+                .Select(quest => quest.FinalTimeValue)
+                .ToList();
+
+            var personalBest = finalTimeValues.Min() ?? 0;
+
+            finalTimeValues.Sort();
+            long medianFinalTimeValue = CalculateMedian(finalTimeValues);
+
+            long? sumOfBest = (long?)fastestSplitTimes.Sum() ?? 0;
+
+            MakeQuestPaceGraph(questsSplits, medianSplitTimes);
+
+            if (this.questPaceDescriptionTextBlock != null)
+            {
+                this.questPaceDescriptionTextBlock.Text = @$"Quest ID {this.QuestIDTextBox.Text} pace by category {this.OverlayModeComboBox.Text} | Personal Best: {TimeService.GetMinutesSecondsMillisecondsFromFrames((double)personalBest)} | Sum of Best: {TimeService.GetMinutesSecondsMillisecondsFromFrames((long)sumOfBest)} | Sum Of Median: {TimeService.GetMinutesSecondsMillisecondsFromFrames((long)sumOfMedian)} | Median: {TimeService.GetMinutesSecondsMillisecondsFromFrames(medianFinalTimeValue)}
+
+Run IDs with best paces for each HP% Dealt:
+10%: {GetFastestRunIDPaceForHPPercent(10, questsSplits)}
+20%: {GetFastestRunIDPaceForHPPercent(20, questsSplits)}
+30%: {GetFastestRunIDPaceForHPPercent(30, questsSplits)}
+40%: {GetFastestRunIDPaceForHPPercent(40, questsSplits)}
+50%: {GetFastestRunIDPaceForHPPercent(50, questsSplits)}
+60%: {GetFastestRunIDPaceForHPPercent(60, questsSplits)}
+70%: {GetFastestRunIDPaceForHPPercent(70, questsSplits)}
+80%: {GetFastestRunIDPaceForHPPercent(80, questsSplits)}
+90%: {GetFastestRunIDPaceForHPPercent(90, questsSplits)}
+100%: {GetFastestRunIDPaceForHPPercent(100, questsSplits)}
+";
+            }
+
+        } else if (selectedQuestPaceSplitOption == "60%/80%/100% Monster HP Dealt")
+        {
+            List<QuestPace> hpPercentagesQuestObjectiveList = GetHPPercentagesQuestObjectiveListForQuestPace(hpPercentagesList);
+
+            List<QuestPace> questsSplits = GetQuestObjectivesSplitsListForQuestPace(hpPercentagesQuestObjectiveList);
+
+            QuestObjectiveSplit medianSplitTimes = GetMedianSplitObjectiveTimes(questsSplits);
+
+            // TODO test
+            QuestObjectiveSplit fastestSplitTimes = GetFastestSplitObjectiveTimes(questsSplits);
+
+            // Now, fastestSplitTimes contains the fastest split times for each property
+
+            var sumOfMedian = medianSplitTimes.Sum() ?? 0;
+            List<long?> finalTimeValues = quests
+                .Select(quest => quest.FinalTimeValue)
+                .ToList();
+
+            var personalBest = finalTimeValues.Min() ?? 0;
+
+            finalTimeValues.Sort();
+            long medianFinalTimeValue = CalculateMedian(finalTimeValues);
+
+            long? sumOfBest = (long?)fastestSplitTimes.Sum() ?? 0;
+
+            MakeQuestPaceGraph(questsSplits, medianSplitTimes);
+
+            if (this.questPaceDescriptionTextBlock != null)
+            {
+                this.questPaceDescriptionTextBlock.Text = @$"Quest ID {this.QuestIDTextBox.Text} pace by category {this.OverlayModeComboBox.Text} | Personal Best: {TimeService.GetMinutesSecondsMillisecondsFromFrames((double)personalBest)} | Sum of Best: {TimeService.GetMinutesSecondsMillisecondsFromFrames((long)sumOfBest)} | Sum Of Median: {TimeService.GetMinutesSecondsMillisecondsFromFrames((long)sumOfMedian)} | Median: {TimeService.GetMinutesSecondsMillisecondsFromFrames(medianFinalTimeValue)}
+
+Run IDs with best paces for each HP% Dealt:
+60%: {GetFastestRunIDPaceForHPPercent(60, questsSplits, true)}
+80%: {GetFastestRunIDPaceForHPPercent(80, questsSplits, true)}
+100%: {GetFastestRunIDPaceForHPPercent(100, questsSplits, true)}
+";
+            }
+        }
+        else
+        {
+            return;
+        }
+    }
+
+    /// <summary>
+    /// Finds the minimum elapsed frames for a certain HP threshold. The fastest pace for that tier.
+    /// </summary>
+    /// <param name="percent"></param>
+    /// <param name="questsSplits"></param>
+    /// <returns></returns>
+    private long GetFastestRunIDPaceForHPPercent(int percent, List<QuestPace> questsSplits, bool byObjective = false)
+    {
+        long runID = 0;
+        int? fastestPace = null;
+
+        foreach (var questSplit in questsSplits)
+        {
+            // Assuming `questSplit.Splits` is a QuestSplit object containing HP percent frame data
+            int? currentPace = null;
+            if (byObjective)
+            {
+                switch (percent)
+                {
+                    case 60:
+                        currentPace = questSplit.ObjectiveSplits?.FortyPercentRemainingHPFrames;
+                        break;
+                    case 80:
+                        currentPace = questSplit.ObjectiveSplits?.TwentyPercentRemainingHPFrames;
+                        break;
+                    case 100:
+                        currentPace = questSplit.ObjectiveSplits?.ZeroPercentRemainingHPFrames;
+                        break;
+                    default:
+                        return runID;
+                }
+            }
+            else
+            {
+                switch (percent)
+                {
+                    case 10:
+                        currentPace = questSplit.Splits?.NinetyPercentRemainingHPFrames;
+                        break;
+                    case 20:
+                        currentPace = questSplit.Splits?.EightyPercentRemainingHPFrames;
+                        break;
+                    case 30:
+                        currentPace = questSplit.Splits?.SeventyPercentRemainingHPFrames;
+                        break;
+                    case 40:
+                        currentPace = questSplit.Splits?.SixtyPercentRemainingHPFrames;
+                        break;
+                    case 50:
+                        currentPace = questSplit.Splits?.FiftyPercentRemainingHPFrames;
+                        break;
+                    case 60:
+                        currentPace = questSplit.Splits?.FortyPercentRemainingHPFrames;
+                        break;
+                    case 70:
+                        currentPace = questSplit.Splits?.ThirtyPercentRemainingHPFrames;
+                        break;
+                    case 80:
+                        currentPace = questSplit.Splits?.TwentyPercentRemainingHPFrames;
+                        break;
+                    case 90:
+                        currentPace = questSplit.Splits?.TenPercentRemainingHPFrames;
+                        break;
+                    case 100:
+                        currentPace = questSplit.Splits?.ZeroPercentRemainingHPFrames;
+                        break;
+                    default:
+                        return runID;
+                }
+            }
+            
+
+            if (currentPace.HasValue && (!fastestPace.HasValue || currentPace < fastestPace))
+            {
+                fastestPace = currentPace;
+                runID = questSplit.RunID;
+            }
+        }
+
+        return runID;
+    }
+
+    private void MakeQuestPaceGraph(List<QuestPace> questsSplits, QuestSplit medianSplitTimes)
+    {
+        List<QuestPace> runPaces = GetQuestRunPaces(questsSplits, medianSplitTimes);
+
+        if (this.questPaceGraph == null)
+        {
+            return;
+        }
+
+        List<ISeries> series = new();
+
+        //var newHP = GetElapsedTime(hp);
+
+        // get the minimum value of ZeroPercentRemainingHPFrames in runPaces.
+        var personalBestTime = runPaces.Min(rp => rp.Splits.ZeroPercentRemainingHPFrames);
+
+        foreach (var run in runPaces)
+        {
+            ObservableCollection<ObservablePoint> paceCollection = new();
+            if (run.Splits == null)
+            {
+                continue;
+            }
+            paceCollection.Add(new ObservablePoint(10, run.Splits.NinetyPercentRemainingHPFrames));
+            paceCollection.Add(new ObservablePoint(20, run.Splits.EightyPercentRemainingHPFrames));
+            paceCollection.Add(new ObservablePoint(30, run.Splits.SeventyPercentRemainingHPFrames));
+            paceCollection.Add(new ObservablePoint(40, run.Splits.SixtyPercentRemainingHPFrames));
+            paceCollection.Add(new ObservablePoint(50, run.Splits.FiftyPercentRemainingHPFrames));
+            paceCollection.Add(new ObservablePoint(60, run.Splits.FortyPercentRemainingHPFrames));
+            paceCollection.Add(new ObservablePoint(70, run.Splits.ThirtyPercentRemainingHPFrames));
+            paceCollection.Add(new ObservablePoint(80, run.Splits.TwentyPercentRemainingHPFrames));
+            paceCollection.Add(new ObservablePoint(90, run.Splits.TenPercentRemainingHPFrames));
+            paceCollection.Add(new ObservablePoint(100, run.Splits.ZeroPercentRemainingHPFrames));
+
+            var stroke = new SolidColorPaint();
+
+            if (personalBestTime == run.Splits.ZeroPercentRemainingHPFrames)
+            {
+                stroke = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#fff38ba8"))) { StrokeThickness = 2 };
+            }
+            else
+            {
+                stroke = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#ff89b4fa"))) { StrokeThickness = 2 };
+            }
+
+            series.Add(new LineSeries<ObservablePoint>
+            {
+                Values = paceCollection,
+                LineSmoothness = 0,
+                GeometrySize = 0,
+                
+                // TODO tooltip?
+                //TooltipLabelFormatter = (chartPoint) =>
+                //$"Health: {(long)chartPoint.PrimaryValue}",
+                Stroke = stroke,
+                Fill = null,
+            });
+        }
+
+        this.XAxes = new Axis[]
+        {
+            new Axis
+            {
+                TextSize = 12,
+                NameTextSize = 12,
+                Name = "HP% Dealt",
+                Labeler = (value) => string.Format("{0}%", value),
+                NamePaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
+                LabelsPaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
+            },
+        };
+
+        this.YAxes = new Axis[]
+        {
+            new Axis
+            {
+                Name = "Pace at x% HP",
+                NameTextSize = 12,
+                TextSize = 12,
+                Labeler = (value) => TimeService.GetMinutesSecondsFromFrames(value),
+                NamePadding = new LiveChartsCore.Drawing.Padding(0),
+                NamePaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
+                LabelsPaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
+            },
+        };
+
+        this.questPaceGraph.Series = series;
+        this.questPaceGraph.XAxes = this.XAxes;
+        this.questPaceGraph.YAxes = this.YAxes;
+        this.questPaceGraph.TooltipPosition = TooltipPosition.Hidden;
+    }
+
+    private void MakeQuestPaceGraph(List<QuestPace> questsSplits, QuestObjectiveSplit medianSplitTimes)
+    {
+        if (this.questPaceGraph == null)
+        {
+            return;
+        }
+
+        List<QuestPace> runPaces = GetQuestRunPaces(questsSplits, medianSplitTimes);
+
+        if (runPaces.Count == 0)
+        {
+            return;
+        }
+
+        List<ISeries> series = new();
+
+        //var newHP = GetElapsedTime(hp);
+        // get the minimum value of ZeroPercentRemainingHPFrames in runPaces.
+        var personalBestTime = runPaces.Min(rp => rp.ObjectiveSplits.ZeroPercentRemainingHPFrames);
+
+        foreach (var run in runPaces)
+        {
+            ObservableCollection<ObservablePoint> paceCollection = new();
+            if (run.ObjectiveSplits == null)
+            {
+                continue;
+            }
+            paceCollection.Add(new ObservablePoint(60, run.ObjectiveSplits.FortyPercentRemainingHPFrames));
+            paceCollection.Add(new ObservablePoint(80, run.ObjectiveSplits.TwentyPercentRemainingHPFrames));
+            paceCollection.Add(new ObservablePoint(100, run.ObjectiveSplits.ZeroPercentRemainingHPFrames));
+
+            var stroke = new SolidColorPaint();
+
+            if (personalBestTime == run.ObjectiveSplits.ZeroPercentRemainingHPFrames)
+            {
+                stroke = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#fff38ba8"))) { StrokeThickness = 2 };
+            }
+            else
+            {
+                stroke = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#ff89b4fa"))) { StrokeThickness = 2 };
+            }
+
+            series.Add(new LineSeries<ObservablePoint>
+            {
+                Values = paceCollection,
+                LineSmoothness = 0,
+                GeometrySize = 0,
+                // TODO tooltip?
+                //TooltipLabelFormatter = (chartPoint) =>
+                //$"Health: {(long)chartPoint.PrimaryValue}",
+                Stroke = stroke,
+                Fill = null,
+            });
+        }
+
+        this.XAxes = new Axis[]
+        {
+            new Axis
+            {
+                TextSize = 12,
+                NameTextSize = 12,
+                Name = "HP% Dealt",
+                Labeler = (value) => string.Format("{0}%", value),
+                NamePaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
+                LabelsPaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
+            },
+        };
+
+        this.YAxes = new Axis[]
+        {
+            new Axis
+            {
+                Name = "Pace at x% HP",
+                NameTextSize = 12,
+                TextSize = 12,
+                Labeler = (value) => TimeService.GetMinutesSecondsFromFrames(value),
+                NamePadding = new LiveChartsCore.Drawing.Padding(0),
+                NamePaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
+                LabelsPaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
+            },
+        };
+
+        this.questPaceGraph.Series = series;
+        this.questPaceGraph.XAxes = this.XAxes;
+        this.questPaceGraph.YAxes = this.YAxes;
+        this.questPaceGraph.TooltipPosition = TooltipPosition.Hidden;
+    }
+
+    private List<QuestPace> GetQuestRunPaces(List<QuestPace> questsSplits, QuestSplit medianSplitTimes)
+    {
+        List<QuestPace> runPaces = new();
+
+        foreach(var run in questsSplits)
+        {
+            // this is for calculating pace
+            QuestPace questPace = run;
+            QuestSplit paceSplits = new();
+            var runPace = run.Splits;
+
+            if (runPace == null)
+            {
+                continue;
+            }
+
+            // the pace at x% hp is its value in the current run + all of the rest median values for the other %.
+            paceSplits.NinetyPercentRemainingHPFrames = runPace.NinetyPercentRemainingHPFrames + medianSplitTimes.EightyPercentRemainingHPFrames + medianSplitTimes.SeventyPercentRemainingHPFrames + medianSplitTimes.SixtyPercentRemainingHPFrames + medianSplitTimes.FiftyPercentRemainingHPFrames + medianSplitTimes.FortyPercentRemainingHPFrames + medianSplitTimes.ThirtyPercentRemainingHPFrames + medianSplitTimes.TwentyPercentRemainingHPFrames + medianSplitTimes.TenPercentRemainingHPFrames + medianSplitTimes.ZeroPercentRemainingHPFrames;
+
+            // the next pace is the same, but we include the value of the previous % tier.
+            paceSplits.EightyPercentRemainingHPFrames = runPace.NinetyPercentRemainingHPFrames + runPace.EightyPercentRemainingHPFrames + medianSplitTimes.SeventyPercentRemainingHPFrames + medianSplitTimes.SixtyPercentRemainingHPFrames + medianSplitTimes.FiftyPercentRemainingHPFrames + medianSplitTimes.FortyPercentRemainingHPFrames + medianSplitTimes.ThirtyPercentRemainingHPFrames + medianSplitTimes.TwentyPercentRemainingHPFrames + medianSplitTimes.TenPercentRemainingHPFrames + medianSplitTimes.ZeroPercentRemainingHPFrames;
+
+            // include the rest
+            paceSplits.SeventyPercentRemainingHPFrames = runPace.NinetyPercentRemainingHPFrames + runPace.EightyPercentRemainingHPFrames + runPace.SeventyPercentRemainingHPFrames + medianSplitTimes.SixtyPercentRemainingHPFrames + medianSplitTimes.FiftyPercentRemainingHPFrames + medianSplitTimes.FortyPercentRemainingHPFrames + medianSplitTimes.ThirtyPercentRemainingHPFrames + medianSplitTimes.TwentyPercentRemainingHPFrames + medianSplitTimes.TenPercentRemainingHPFrames + medianSplitTimes.ZeroPercentRemainingHPFrames;
+
+            paceSplits.SixtyPercentRemainingHPFrames = runPace.NinetyPercentRemainingHPFrames + runPace.EightyPercentRemainingHPFrames + runPace.SeventyPercentRemainingHPFrames + runPace.SixtyPercentRemainingHPFrames + medianSplitTimes.FiftyPercentRemainingHPFrames + medianSplitTimes.FortyPercentRemainingHPFrames + medianSplitTimes.ThirtyPercentRemainingHPFrames + medianSplitTimes.TwentyPercentRemainingHPFrames + medianSplitTimes.TenPercentRemainingHPFrames + medianSplitTimes.ZeroPercentRemainingHPFrames;
+
+            paceSplits.FiftyPercentRemainingHPFrames = runPace.NinetyPercentRemainingHPFrames + runPace.EightyPercentRemainingHPFrames + runPace.SeventyPercentRemainingHPFrames + runPace.SixtyPercentRemainingHPFrames + runPace.FiftyPercentRemainingHPFrames + medianSplitTimes.FortyPercentRemainingHPFrames + medianSplitTimes.ThirtyPercentRemainingHPFrames + medianSplitTimes.TwentyPercentRemainingHPFrames + medianSplitTimes.TenPercentRemainingHPFrames + medianSplitTimes.ZeroPercentRemainingHPFrames;
+
+            paceSplits.FortyPercentRemainingHPFrames = runPace.NinetyPercentRemainingHPFrames + runPace.EightyPercentRemainingHPFrames + runPace.SeventyPercentRemainingHPFrames + runPace.SixtyPercentRemainingHPFrames + runPace.FiftyPercentRemainingHPFrames + runPace.FortyPercentRemainingHPFrames + medianSplitTimes.ThirtyPercentRemainingHPFrames + medianSplitTimes.TwentyPercentRemainingHPFrames + medianSplitTimes.TenPercentRemainingHPFrames + medianSplitTimes.ZeroPercentRemainingHPFrames;
+
+            paceSplits.ThirtyPercentRemainingHPFrames = runPace.NinetyPercentRemainingHPFrames + runPace.EightyPercentRemainingHPFrames + runPace.SeventyPercentRemainingHPFrames + runPace.SixtyPercentRemainingHPFrames + runPace.FiftyPercentRemainingHPFrames + runPace.FortyPercentRemainingHPFrames + medianSplitTimes.ThirtyPercentRemainingHPFrames + medianSplitTimes.TwentyPercentRemainingHPFrames + medianSplitTimes.TenPercentRemainingHPFrames + medianSplitTimes.ZeroPercentRemainingHPFrames;
+
+            paceSplits.TwentyPercentRemainingHPFrames = runPace.NinetyPercentRemainingHPFrames + runPace.EightyPercentRemainingHPFrames + runPace.SeventyPercentRemainingHPFrames + runPace.SixtyPercentRemainingHPFrames + runPace.FiftyPercentRemainingHPFrames + runPace.FortyPercentRemainingHPFrames + runPace.ThirtyPercentRemainingHPFrames + runPace.TwentyPercentRemainingHPFrames + medianSplitTimes.TenPercentRemainingHPFrames + medianSplitTimes.ZeroPercentRemainingHPFrames;
+
+            paceSplits.TenPercentRemainingHPFrames = runPace.NinetyPercentRemainingHPFrames + runPace.EightyPercentRemainingHPFrames + runPace.SeventyPercentRemainingHPFrames + runPace.SixtyPercentRemainingHPFrames + runPace.FiftyPercentRemainingHPFrames + runPace.FortyPercentRemainingHPFrames + runPace.ThirtyPercentRemainingHPFrames + runPace.TwentyPercentRemainingHPFrames + runPace.TenPercentRemainingHPFrames + medianSplitTimes.ZeroPercentRemainingHPFrames;
+
+            paceSplits.ZeroPercentRemainingHPFrames = runPace.NinetyPercentRemainingHPFrames + runPace.EightyPercentRemainingHPFrames + runPace.SeventyPercentRemainingHPFrames + runPace.SixtyPercentRemainingHPFrames + runPace.FiftyPercentRemainingHPFrames + runPace.FortyPercentRemainingHPFrames + runPace.ThirtyPercentRemainingHPFrames + runPace.TwentyPercentRemainingHPFrames + runPace.TenPercentRemainingHPFrames + runPace.ZeroPercentRemainingHPFrames;
+
+            // TODO this looks confusing
+            questPace.Splits = paceSplits;
+            runPaces.Add(questPace);
+        }
+
+        return runPaces;
+    }
+
+    private List<QuestPace> GetQuestRunPaces(List<QuestPace> questsSplits, QuestObjectiveSplit medianSplitTimes)
+    {
+        List<QuestPace> runPaces = new();
+
+        foreach (var run in questsSplits)
+        {
+            QuestPace questPace = run;
+            QuestObjectiveSplit paceSplits = new();
+            var runPace = run.ObjectiveSplits;
+
+            if (runPace == null)
+            {
+                continue;
+            }
+
+            // the pace at x% hp is its value in the current run + all of the rest median values for the other %.
+            paceSplits.FortyPercentRemainingHPFrames = runPace.FortyPercentRemainingHPFrames +  medianSplitTimes.TwentyPercentRemainingHPFrames + medianSplitTimes.ZeroPercentRemainingHPFrames;
+
+            paceSplits.TwentyPercentRemainingHPFrames = runPace.FortyPercentRemainingHPFrames + runPace.TwentyPercentRemainingHPFrames + + medianSplitTimes.ZeroPercentRemainingHPFrames;
+
+            paceSplits.ZeroPercentRemainingHPFrames = runPace.FortyPercentRemainingHPFrames + runPace.TwentyPercentRemainingHPFrames + runPace.ZeroPercentRemainingHPFrames;
+
+            questPace.ObjectiveSplits = paceSplits;
+            runPaces.Add(questPace);
+        }
+
+        return runPaces;
+    }
+
+    string? selectedQuestPaceSplitOption = "Every 10% Monster HP Dealt";
+
+    private void QuestPaceSplitOptionComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (this.questPaceGraph == null)
+        {
+            return;
+        }
+
+        if (sender is not ComboBox comboBox)
+        {
+            return;
+        }
+
+        ComboBoxItem selectedItem = (ComboBoxItem)comboBox.SelectedItem;
+        if (selectedItem == null)
+        {
+            return;
+        }
+
+        selectedQuestPaceSplitOption = selectedItem.Content.ToString();
+    }
+
+    private List<QuestPace> GetMonster1HPListForQuestPace(List<Models.Quest> quests)
+    {
+        List<QuestPace> monster1HPList = new();
+        foreach (var quest in quests)
+        {
+            QuestPace pace = new();
+
+            if (quest.Monster1HPDictionary != null)
+            {
+
+                var monster1HPDictionary = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int, int>>>(quest.Monster1HPDictionary);
+                if (monster1HPDictionary != null)
+                {
+                    pace.MonsterHPField = monster1HPDictionary;
+                }
+
+                if (quest.RunID == null)
+                {
+                    continue;
+                }
+
+                pace.RunID = (long)quest.RunID;
+                monster1HPList.Add(pace);
+            }
+        }
+        return monster1HPList;
+    }
+
+    private List<QuestPace> GetFlattenedListForQuestPace(List<QuestPace> consistentMonsterIdRuns)
+    {
+        List<QuestPace> flattenedList = new();
+
+        foreach (var questRun in consistentMonsterIdRuns)
+        {
+            QuestPace pace = questRun;
+
+            // Create a new dictionary for each quest run
+            Dictionary<int, int> run = new Dictionary<int, int>();
+
+            if (questRun.MonsterHPField == null)
+            {
+                continue;
+            }
+
+            foreach (var kvp in questRun.MonsterHPField)
+            {
+                // kvp.Key is the time in frames
+                // kvp.Value is the Dictionary<int, int> where the Key is the monster ID and Value is the HP
+                // Since the monster ID is constant throughout the quest run, we can take any of the inner dictionary's Value
+                run.Add(kvp.Key, kvp.Value.Values.First());
+            }
+
+            // Add the flattened run to the list
+            pace.MonsterHPFieldFlattened = run;
+            flattenedList.Add(pace);
+        }
+
+        return flattenedList;
+    }
+
+    private List<QuestPace> GetRemovedOutliersListForQuestPace(List<QuestPace> flattenedList)
+    {
+        List<QuestPace> removedOutliersList = new();
+
+        foreach (var questRun in flattenedList)
+        {
+            QuestPace pace = questRun;
+
+            if (questRun.MonsterHPFieldFlattened == null)
+            {
+                continue;
+            }
+
+            if (questRun.MonsterHPFieldFlattened.Count == 0)
+            {
+                continue;
+            }
+
+            var filteredRun = new Dictionary<int, int>();
+            int? previousHp = null;
+            int? lastValidHp = null;
+            bool isOutlier = false;
+
+            foreach (var frame in questRun.MonsterHPFieldFlattened.OrderByDescending(kvp => kvp.Key))
+            {
+                int currentHp = frame.Value;
+                int currentTime = frame.Key;
+
+                if (previousHp.HasValue)
+                {
+                    if (previousHp - currentHp > questRun.MonsterHPFieldFlattened.Values.First() * 0.25)
+                    {
+                        // This is a potential outlier, skip adding and mark the flag
+                        isOutlier = true;
+                    }
+                    else
+                    {
+                        if (isOutlier && currentHp > previousHp.Value)
+                        {
+                            // The previous point was an outlier, don't add it
+                            isOutlier = false;
+                        }
+                        else
+                        {
+                            // This is not an outlier, add the last valid HP if it was skipped
+                            if (lastValidHp.HasValue)
+                            {
+                                filteredRun[currentTime - 1] = lastValidHp.Value;
+                                lastValidHp = null;
+                            }
+                            filteredRun.Add(currentTime, currentHp);
+                        }
+                    }
+                }
+                else if (currentHp == 0)
+                {
+                    // If the first HP value is 0, discard the whole run
+                    filteredRun.Clear();
+                    break;
+                }
+                else
+                {
+                    // This is the first value, set it as the max HP
+                    filteredRun.Add(currentTime, currentHp);
+                }
+
+                // If not marked as an outlier, update last valid HP
+                if (!isOutlier)
+                {
+                    previousHp = currentHp;
+                }
+                else
+                {
+                    // Keep the last valid HP in case the next one is not an outlier
+                    lastValidHp = previousHp;
+                    previousHp = null;
+                }
+            }
+
+            if (filteredRun.Any())
+            {
+                pace.MonsterHPFieldFlattened = filteredRun;
+                removedOutliersList.Add(pace);
+            }
+        }
+
+        return removedOutliersList;
+    }
+
+    private List<QuestPace> GetHPPercentagesListForQuestPace(List<QuestPace> elapsedTimeList)
+    {
+        List<QuestPace> hpPercentagesList = new ();
+
+        foreach (var run in elapsedTimeList)
+        {
+            QuestPace pace = run;
+
+            Dictionary<int, (int, int)> hpPercentValues = new()
+            {
+                {0, (0,0) },
+                {1, (0,0) },
+                {2, (0,0) },
+                {3, (0,0) },
+                {4, (0,0) },
+                {5, (0,0) },
+                {6, (0,0) },
+                {7, (0,0) },
+                {8, (0,0) },
+                {9, (0,0) },
+            };
+
+            if (run.MonsterHPFieldFlattened == null)
+            {
+                continue;
+            }
+
+            var maxHP = run.MonsterHPFieldFlattened.Values.First();
+            int previousHP = maxHP;
+
+            foreach (var entry in run.MonsterHPFieldFlattened)
+            {
+                if (previousHP < entry.Value)
+                {
+                    // previousHP = entry.Value;
+                    continue;
+                }
+
+                if (previousHP - entry.Value <= 0)
+                {
+                    continue;
+                }
+
+                for (int i = 9; i >= 0; i--)
+                {
+                    if (entry.Value >= maxHP * (i / 10.0))
+                    {
+                        hpPercentValues[9 - i] = (entry.Key, entry.Value);
+                        break;
+                    }
+                }
+            }
+
+            // add as dictionary<int,int>
+            Dictionary<int, int> hpPercentValuesFlattened = new();
+            foreach (var entry in hpPercentValues)
+            {
+                hpPercentValuesFlattened.Add(entry.Value.Item1, entry.Value.Item2);
+            }
+
+            pace.MonsterHPFieldFlattened = hpPercentValuesFlattened;
+            hpPercentagesList.Add(pace);
+        }
+
+        return hpPercentagesList;
+    }
+
+    private List<QuestPace> GetQuestsSplitsListForQuestPace(List<QuestPace> hpPercentagesList)
+    {
+        List<QuestPace> questsSplits = new();
+
+        // hpPercentagesList is a List<Dictionary<int, int>> containing the frames elapsed in total in first int and hp in second int
+        foreach (var run in hpPercentagesList)
+        {
+            QuestPace pace = run;
+            // get the frames elapsed in each split. a split is each entry in the dictionary<int,int>
+            // with first int as frames elapsed and second int the hp remaining.
+            QuestSplit splitTimesFrames = new();
+            int index = 0;
+            int previousKeyFramesElapsed = 0;
+            int framesElapsed = 0;
+
+            if (run.MonsterHPFieldFlattened == null)
+            {
+                continue;
+            }
+
+            foreach (var entry in run.MonsterHPFieldFlattened)
+            {
+                //int hpPercent = entry.Value;    // Assuming the value represents the HP percentage
+
+                // Assuming the key represents the frames elapsed
+                // TODO test
+                framesElapsed = entry.Key - previousKeyFramesElapsed;
+                previousKeyFramesElapsed = entry.Key;
+
+                // Populate splitTimesFrames fields based on the HP percentage
+                PopulateQuestSplitField(splitTimesFrames, index, framesElapsed);
+
+                index++;
+            }
+
+            pace.Splits = splitTimesFrames;
+            questsSplits.Add(pace);
+        }
+
+        return questsSplits;
+    }
+
+    private List<QuestPace> GetHPPercentagesQuestObjectiveListForQuestPace(List<QuestPace> hpPercentagesList)
+    {
+        List<QuestPace> hpPercentagesQuestObjectiveList = new();
+
+        // each dictionary entry has 10 entries.
+        // we want to remove all except the 6th, 8th, and 10th entry.
+        // into a new list.
+        foreach(var run in hpPercentagesList)
+        {
+            QuestPace pace = run;
+            var filteredRun = run.MonsterHPFieldFlattened
+                .Where((entry, index) => index == 5 || index == 7 || index == 9) // index is zero-based, so 5, 7, and 9 correspond to the 6th, 8th, and 10th entries
+                .ToDictionary(entry => entry.Key, entry => entry.Value);
+
+            pace.MonsterHPFieldFlattened = filteredRun;
+            hpPercentagesQuestObjectiveList.Add(pace);
+        }
+
+        return hpPercentagesQuestObjectiveList;
+    }
+
+    private List<QuestPace> GetQuestObjectivesSplitsListForQuestPace(List<QuestPace> hpPercentagesList)
+    {
+        List<QuestPace> questsSplits = new();
+
+        // hpPercentagesList is a List<Dictionary<int, int>> containing the frames elapsed in total in first int and hp in second int
+        foreach (var run in hpPercentagesList)
+        {
+            QuestPace pace = run;
+            // get the frames elapsed in each split. a split is each entry in the dictionary<int,int>
+            // with first int as frames elapsed and second int the hp remaining.
+            QuestObjectiveSplit splitTimesFrames = new();
+            int index = 0;
+            int previousKeyFramesElapsed = 0;
+            int framesElapsed = 0;
+
+            if (run.MonsterHPFieldFlattened == null)
+            {
+                continue;
+            }
+
+            foreach (var entry in run.MonsterHPFieldFlattened)
+            {
+                //int hpPercent = entry.Value;    // Assuming the value represents the HP percentage
+
+                // Assuming the key represents the frames elapsed
+                // TODO test
+                framesElapsed = entry.Key - previousKeyFramesElapsed;
+                previousKeyFramesElapsed = entry.Key;
+
+                // Populate splitTimesFrames fields based on the HP percentage
+                PopulateQuestSplitField(splitTimesFrames, index, framesElapsed);
+
+                index++;
+            }
+
+            pace.ObjectiveSplits = splitTimesFrames;
+            questsSplits.Add(pace);
+        }
+
+        return questsSplits;
+    }
+
+    // Update the PopulateQuestSplitField method to handle new cases if necessary.
+
+
+    private QuestSplit GetMedianSplitTimes(List<QuestPace> questsSplits)
+    {
+        QuestSplit medianSplitTimes = new();
+        // get the median of each questsplit field from questsSplits.
+        // Calculate median for each property
+        foreach (var property in typeof(QuestSplit).GetProperties())
+        {
+            if (property.PropertyType == typeof(int?))
+            {
+                // Get all non-null values for the property from questsSplits
+                List<int> propertyValues = questsSplits
+                    .Select(split => split.Splits) // Access the Splits property
+                    .Where(split => property.GetValue(split) != null)
+                    .Select(split => (int)property.GetValue(split))
+                    .ToList();
+
+                // Sort the values to calculate the median
+                propertyValues.Sort();
+
+                // Calculate the median
+                int medianValue = CalculateMedian(propertyValues);
+
+                // Set the median value to the property in medianSplitTimes
+                property.SetValue(medianSplitTimes, medianValue);
+            }
+        }
+
+        return medianSplitTimes;
+    }
+
+    private QuestObjectiveSplit GetMedianSplitObjectiveTimes(List<QuestPace> questsSplits)
+    {
+        QuestObjectiveSplit medianSplitTimes = new();
+        // get the median of each questsplit field from questsSplits.
+        // Calculate median for each property
+        foreach (var property in typeof(QuestObjectiveSplit).GetProperties())
+        {
+            if (property.PropertyType == typeof(int?))
+            {
+                // Get all non-null values for the property from questsSplits
+                List<int> propertyValues = questsSplits
+                    .Select(split => split.ObjectiveSplits)
+                    .Where(split => property.GetValue(split) != null)
+                    .Select(split => (int)property.GetValue(split))
+                    .ToList();
+
+                // Sort the values to calculate the median
+                propertyValues.Sort();
+
+                // Calculate the median
+                int medianValue = CalculateMedian(propertyValues);
+
+                // Set the median value to the property in medianSplitTimes
+                property.SetValue(medianSplitTimes, medianValue);
+            }
+        }
+
+        return medianSplitTimes;
+    }
+
+    private QuestSplit GetFastestSplitTimes(List<QuestPace> questsSplits)
+    {
+        QuestSplit fastestSplitTimes = new();
+
+        // Get the fastest value for each property from questsSplits
+        foreach (var property in typeof(QuestSplit).GetProperties())
+        {
+            if (property.PropertyType == typeof(int?))
+            {
+                // Get all non-null values for the property from questsSplits
+                List<int> propertyValues = questsSplits
+                    .Select(split => split.Splits)
+                    .Where(split => property.GetValue(split) != null)
+                    .Select(split => (int)property.GetValue(split))
+                    .ToList();
+
+                if (propertyValues.Any())
+                {
+                    // Find the fastest (lowest) value
+                    int fastestValue = propertyValues.Min();
+
+                    // Set the fastest value to the property in fastestSplitTimes
+                    property.SetValue(fastestSplitTimes, fastestValue);
+                }
+            }
+        }
+
+        return fastestSplitTimes;
+    }
+
+    private QuestObjectiveSplit GetFastestSplitObjectiveTimes(List<QuestPace> questsSplits)
+    {
+        QuestObjectiveSplit fastestSplitTimes = new();
+
+        // Get the fastest value for each property from questsSplits
+        foreach (var property in typeof(QuestObjectiveSplit).GetProperties())
+        {
+            if (property.PropertyType == typeof(int?))
+            {
+                // Get all non-null values for the property from questsSplits
+                List<int> propertyValues = questsSplits
+                    .Select(split => split.ObjectiveSplits)
+                    .Where(split => property.GetValue(split) != null)
+                    .Select(split => (int)property.GetValue(split))
+                    .ToList();
+
+                if (propertyValues.Any())
+                {
+                    // Find the fastest (lowest) value
+                    int fastestValue = propertyValues.Min();
+
+                    // Set the fastest value to the property in fastestSplitTimes
+                    property.SetValue(fastestSplitTimes, fastestValue);
+                }
+            }
+        }
+
+        return fastestSplitTimes;
+    }
+
+    private static int CalculateMedian(List<int> values)
+    {
+        int count = values.Count;
+        if (count <= 0)
+        {
+            return 0;
+        }
+        else if (count == 1)
+        {
+            return values.FirstOrDefault();
+        }
+
+        int middle = count / 2;
+
+        if (count % 2 == 0)
+        {
+            // For an even number of values, take the average of the two middle values
+            return (values[middle - 1] + values[middle]) / 2;
+        }
+        else
+        {
+            // For an odd number of values, return the middle value
+            return values[middle];
+        }
+    }
+
+    private static long CalculateMedian(List<long?> values)
+    {
+        var count = values.Count;
+        if (count <= 0)
+        {
+            return 0;
+        }
+        else if (count == 1)
+        {
+            return (long)values.FirstOrDefault();
+        }
+        var middle = count / 2;
+
+        if (count % 2 == 0)
+        {
+            // For an even number of values, take the average of the two middle values
+            return (long)((values[middle - 1] + values[middle]) / 2);
+        }
+        else
+        {
+            // For an odd number of values, return the middle value
+            return (long)values[middle];
+        }
+    }
+
+    private static void PopulateQuestSplitField(QuestSplit questSplit, int index, int framesElapsed)
+    {
+        switch (index)
+        {
+            case 0:
+                questSplit.NinetyPercentRemainingHPFrames = framesElapsed;
+                break;
+            case 1:
+                questSplit.EightyPercentRemainingHPFrames = framesElapsed;
+                break;
+            case 2:
+                questSplit.SeventyPercentRemainingHPFrames = framesElapsed;
+                break;
+            case 3:
+                questSplit.SixtyPercentRemainingHPFrames = framesElapsed;
+                break;
+            case 4:
+                questSplit.FiftyPercentRemainingHPFrames = framesElapsed;
+                break;
+            case 5:
+                questSplit.FortyPercentRemainingHPFrames = framesElapsed;
+                break;
+            case 6:
+                questSplit.ThirtyPercentRemainingHPFrames = framesElapsed;
+                break;
+            case 7:
+                questSplit.TwentyPercentRemainingHPFrames = framesElapsed;
+                break;
+            case 8:
+                questSplit.TenPercentRemainingHPFrames = framesElapsed;
+                break;
+            case 9:
+                questSplit.ZeroPercentRemainingHPFrames = framesElapsed;
+                break;
+                // Handle additional cases if needed
+        }
+    }
+
+    private static void PopulateQuestSplitField(QuestObjectiveSplit questSplit, int index, int framesElapsed)
+    {
+        switch (index)
+        {
+            case 0:
+                questSplit.FortyPercentRemainingHPFrames = framesElapsed;
+                break;
+            case 1:
+                questSplit.TwentyPercentRemainingHPFrames = framesElapsed;
+                break;
+            case 2:
+                questSplit.ZeroPercentRemainingHPFrames = framesElapsed;
+                break;
+                // Handle additional cases if needed
+        }
+    }
+
     private void WeaponUsageChart_Loaded(object sender, RoutedEventArgs e)
     {
         this.weaponUsageChart = (CartesianChart)sender;
@@ -1464,6 +2537,7 @@ public partial class ConfigWindow : FluentWindow
     private CartesianChart? graphChart;
     private TextBlock? statsTextTextBlock;
     private CartesianChart? personalBestChart;
+    private CartesianChart? questPaceGraph;
     private PolarChart? hunterPerformanceChart;
     private StackPanel? compendiumInformationStackPanel;
     private string personalBestSelectedWeapon = string.Empty;
@@ -1473,17 +2547,23 @@ public partial class ConfigWindow : FluentWindow
     private Grid? weaponUsageChartGrid;
     private Grid? statsGraphsGrid;
     private TextBlock? personalBestDescriptionTextBlock;
-    private TextBlock? top20RunsDescriptionTextblock;
+    private TextBlock? top20RunsDescriptionTextBlock;
+    private TextBlock? questPaceDescriptionTextBlock;
     private Grid? personalBestMainGrid;
     private Grid? top20MainGrid;
+    private Grid? questPaceMainGrid;
+    private Grid? questPaceGraphGrid;
     private Grid? weaponStatsMainGrid;
     private Grid? statsGraphsMainGrid;
     private Grid? statsTextMainGrid;
     private ListView? achievementsListView;
     private Grid? achievementsSelectedInfoGrid;
     private ListBox? challengesListBox;
+    private TextBox? extraRunIDTextBox;
+    private TextBlock? runIDComparisonTextBlock;
 
     private string top20RunsSelectedWeapon = string.Empty;
+    private string questPaceWeaponSelected = string.Empty;
 
     private void UpdateYoutubeLink_ButtonClick(object sender, RoutedEventArgs e)
     {
@@ -1613,9 +2693,9 @@ public partial class ConfigWindow : FluentWindow
         this.top20RunsDataGrid.ItemsSource = this.MainWindow.DataLoader.Model.FastestRuns;
         this.top20RunsDataGrid.Items.Refresh();
 
-        if (this.top20RunsDescriptionTextblock != null)
+        if (this.top20RunsDescriptionTextBlock != null)
         {
-            this.top20RunsDescriptionTextblock.Text = $"Top 20 fastest solo runs of quest ID {this.QuestIDTextBox.Text} by category {this.OverlayModeComboBox.Text}";
+            this.top20RunsDescriptionTextBlock.Text = $"Top 20 fastest solo runs of quest ID {this.QuestIDTextBox.Text} by category {this.OverlayModeComboBox.Text}";
         }
     }
 
@@ -1962,6 +3042,49 @@ public partial class ConfigWindow : FluentWindow
         this.weaponStatsMainGrid.Background = previousBackground;
     }
 
+    private void QuestPaceButtonSaveFile_Click(object sender, RoutedEventArgs e)
+    {
+        if (this.questPaceMainGrid == null)
+        {
+            return;
+        }
+
+        if (this.questPaceGraphGrid == null)
+        {
+            return;
+        }
+
+        var fileName = $"QuestPace-{this.QuestIDTextBox.Text.Trim()}-{this.questPaceWeaponSelected}-{this.OverlayModeComboBox.Text.Trim()}";
+
+        var snackbar = new Snackbar(this.ConfigWindowSnackBarPresenter)
+        {
+            Style = (Style)this.FindResource("CatppuccinMochaSnackBar"),
+        };
+        FileService.SaveElementAsImageFile(this.questPaceMainGrid, fileName, snackbar, false);
+    }
+
+    private void QuestPaceButtonCopyFile_Click(object sender, RoutedEventArgs e)
+    {
+        if (this.questPaceMainGrid == null)
+        {
+            return;
+        }
+
+        if (this.questPaceGraphGrid == null)
+        {
+            return;
+        }
+
+        var previousBackground = this.questPaceMainGrid.Background;
+        this.questPaceMainGrid.Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1E, 0x1E, 0x2E));
+        var snackbar = new Snackbar(this.ConfigWindowSnackBarPresenter)
+        {
+            Style = (Style)this.FindResource("CatppuccinMochaSnackBar"),
+        };
+        FileService.CopyUIElementToClipboard(this.questPaceMainGrid, snackbar);
+        this.questPaceMainGrid.Background = previousBackground;
+    }
+
     private void MostRecentButtonSaveFile_Click(object sender, RoutedEventArgs e)
     {
         try
@@ -2128,9 +3251,9 @@ public partial class ConfigWindow : FluentWindow
             return;
         }
 
-        List<ISeries> series = new ();
-        ObservableCollection<ObservablePoint> healthCollection = new ();
-        ObservableCollection<ObservablePoint> staminaCollection = new ();
+        List<ISeries> series = new();
+        ObservableCollection<ObservablePoint> healthCollection = new();
+        ObservableCollection<ObservablePoint> staminaCollection = new();
 
         var newHP = GetElapsedTime(hp);
         var newStamina = GetElapsedTime(stamina);
@@ -2284,7 +3407,7 @@ public partial class ConfigWindow : FluentWindow
 
     private static Dictionary<int, int> GetElapsedTime(Dictionary<int, int> timeAttackDict)
     {
-        Dictionary<int, int> elapsedTimeDict = new ();
+        Dictionary<int, int> elapsedTimeDict = new();
         if (timeAttackDict == null || !timeAttackDict.Any())
         {
             return elapsedTimeDict;
@@ -2301,7 +3424,7 @@ public partial class ConfigWindow : FluentWindow
 
     private static Dictionary<int, double> GetElapsedTimeForDictionaryIntDouble(Dictionary<int, double> timeAttackDict)
     {
-        Dictionary<int, double> elapsedTimeDict = new ();
+        Dictionary<int, double> elapsedTimeDict = new();
         if (timeAttackDict == null || !timeAttackDict.Any())
         {
             return elapsedTimeDict;
@@ -2316,15 +3439,15 @@ public partial class ConfigWindow : FluentWindow
         return elapsedTimeDict;
     }
 
-    private void SetLineSeriesForDictionaryIntInt(Dictionary<int, int> data)
+    private void SetLineSeriesForDictionaryIntInt(Dictionary<int, int> data, Dictionary<int, int>? extraData)
     {
         if (this.graphChart == null)
         {
             return;
         }
 
-        List<ISeries> series = new ();
-        ObservableCollection<ObservablePoint> collection = new ();
+        List<ISeries> series = new();
+        ObservableCollection<ObservablePoint> collection = new();
 
         var newData = GetElapsedTime(data);
 
@@ -2341,6 +3464,34 @@ public partial class ConfigWindow : FluentWindow
             Stroke = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#fff38ba8"))) { StrokeThickness = 2 },
             Fill = new LinearGradientPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#fff38ba8", "7f")), new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#fff38ba8", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
         });
+
+        if (extraData != null)
+        {
+            ObservableCollection<ObservablePoint> collection2 = new();
+
+            var newData2 = GetElapsedTime(extraData);
+
+            foreach (var entry in newData2)
+            {
+                collection2.Add(new ObservablePoint(entry.Key, entry.Value));
+            }
+
+            series.Add(new LineSeries<ObservablePoint>
+            {
+                Values = collection2,
+                LineSmoothness = .5,
+                GeometrySize = 0,
+                Stroke = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#ff89b4fa"))) { StrokeThickness = 2 },
+                Fill = new LinearGradientPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#ff89b4fa", "7f")), new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#ff89b4fa", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
+            });
+
+            if (this.runIDComparisonTextBlock != null && this.extraRunIDTextBox != null)
+            {
+                var runComparisonPercentage = CalculateBetterLinePercentage(newData, newData2);
+                var betterRun = runComparisonPercentage >= 0.0 ? RunIDTextBox.Text : extraRunIDTextBox.Text;
+                this.runIDComparisonTextBlock.Text = string.Format(CultureInfo.InvariantCulture, "Run {0} is higher by around {1:0.##}%", betterRun, Math.Abs(runComparisonPercentage));
+            }
+        }
 
         this.XAxes = new Axis[]
         {
@@ -2370,15 +3521,121 @@ public partial class ConfigWindow : FluentWindow
         this.graphChart.YAxes = this.YAxes;
     }
 
-    private void SetLineSeriesForDictionaryIntDouble(Dictionary<int, double> data)
+    private double CalculateBetterLinePercentage(Dictionary<int, int> line1, Dictionary<int, int> line2)
+    {
+        if (line1.Count == 0 || line2.Count == 0)
+            return 0.0;
+        // Find the cutoff time where the first series ends.
+        int cutoffTime = Math.Min(line1.Keys.Max(), line2.Keys.Max());
+
+        // Calculate the area under each line series up to the cutoff time.
+        double area1 = CalculateAreaUnderLine(line1, cutoffTime);
+        double area2 = CalculateAreaUnderLine(line2, cutoffTime);
+
+        // Determine which series has the larger area and calculate the percentage difference.
+        if (area1 == area2)
+        {
+            return 0; // Both series are equal.
+        }
+        else
+        {
+            double largerArea = Math.Max(area1, area2);
+            double smallerArea = Math.Min(area1, area2);
+            double percentageDifference = ((largerArea - smallerArea) / smallerArea) * 100;
+            return area1 > area2 ? percentageDifference : -percentageDifference;
+        }
+    }
+
+    private double CalculateBetterLinePercentage(Dictionary<int, double> line1, Dictionary<int, double> line2)
+    {
+        if (line1.Count == 0 || line2.Count == 0)
+            return 0.0;
+        // Find the cutoff time where the first series ends.
+        int cutoffTime = Math.Min(line1.Keys.Max(), line2.Keys.Max());
+
+        // Calculate the area under each line series up to the cutoff time.
+        double area1 = CalculateAreaUnderLine(line1, cutoffTime);
+        double area2 = CalculateAreaUnderLine(line2, cutoffTime);
+
+        // Determine which series has the larger area and calculate the percentage difference.
+        if (area1 == area2)
+        {
+            return 0; // Both series are equal.
+        }
+        else
+        {
+            double largerArea = Math.Max(area1, area2);
+            double smallerArea = Math.Min(area1, area2);
+            double percentageDifference = ((largerArea - smallerArea) / smallerArea) * 100;
+            return area1 > area2 ? percentageDifference : -percentageDifference;
+        }
+    }
+
+    private double CalculateAreaUnderLine(Dictionary<int, int> line, int cutoffTime)
+    {
+        // Assuming the line is sorted by time.
+        double area = 0;
+        int previousTime = 0;
+        int previousScore = 0;
+
+        foreach (var point in line.OrderBy(p => p.Key))
+        {
+            if (point.Key > cutoffTime)
+                break;
+
+            if (previousTime != 0)
+            {
+                // Calculate the area of the trapezoid.
+                double base1 = point.Value;
+                double base2 = previousScore;
+                double height = point.Key - previousTime;
+                area += (base1 + base2) * height / 2;
+            }
+
+            previousTime = point.Key;
+            previousScore = point.Value;
+        }
+
+        return area;
+    }
+
+    private double CalculateAreaUnderLine(Dictionary<int, double> line, int cutoffTime)
+    {
+        // Assuming the line is sorted by time.
+        double area = 0;
+        int previousTime = 0;
+        double previousScore = 0.0;
+
+        foreach (var point in line.OrderBy(p => p.Key))
+        {
+            if (point.Key > cutoffTime)
+                break;
+
+            if (previousTime != 0)
+            {
+                // Calculate the area of the trapezoid.
+                double base1 = point.Value;
+                double base2 = previousScore;
+                double height = point.Key - previousTime;
+                area += (base1 + base2) * height / 2;
+            }
+
+            previousTime = point.Key;
+            previousScore = point.Value;
+        }
+
+        return area;
+    }
+
+    private void SetLineSeriesForDictionaryIntDouble(Dictionary<int, double> data, Dictionary<int, double>? extraData)
     {
         if (this.graphChart == null)
         {
             return;
         }
 
-        List<ISeries> series = new ();
-        ObservableCollection<ObservablePoint> collection = new ();
+        List<ISeries> series = new();
+        ObservableCollection<ObservablePoint> collection = new();
 
         var newData = GetElapsedTimeForDictionaryIntDouble(data);
 
@@ -2395,6 +3652,34 @@ public partial class ConfigWindow : FluentWindow
             Stroke = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#fff38ba8"))) { StrokeThickness = 2 },
             Fill = new LinearGradientPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#fff38ba8", "7f")), new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#fff38ba8", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
         });
+
+        if (extraData != null)
+        {
+            ObservableCollection<ObservablePoint> collection2 = new();
+
+            var newData2 = GetElapsedTimeForDictionaryIntDouble(extraData);
+
+            foreach (var entry in newData2)
+            {
+                collection2.Add(new ObservablePoint(entry.Key, entry.Value));
+            }
+
+            series.Add(new LineSeries<ObservablePoint>
+            {
+                Values = collection2,
+                LineSmoothness = .5,
+                GeometrySize = 0,
+                Stroke = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#ff89b4fa"))) { StrokeThickness = 2 },
+                Fill = new LinearGradientPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#ff89b4fa", "7f")), new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#ff89b4fa", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
+            });
+
+            if (this.runIDComparisonTextBlock != null && this.extraRunIDTextBox != null)
+            {
+                var runComparisonPercentage = CalculateBetterLinePercentage(newData, newData2);
+                var betterRun = runComparisonPercentage >= 0.0 ? RunIDTextBox.Text : extraRunIDTextBox.Text;
+                this.runIDComparisonTextBlock.Text = string.Format(CultureInfo.InvariantCulture, "Run {0} is higher by around {1:0.##}%", betterRun, Math.Abs(runComparisonPercentage));
+            }
+        }
 
         this.XAxes = new Axis[]
         {
@@ -2431,8 +3716,8 @@ public partial class ConfigWindow : FluentWindow
             return;
         }
 
-        List<ISeries> series = new ();
-        ObservableCollection<ObservablePoint> collection = new ();
+        List<ISeries> series = new();
+        ObservableCollection<ObservablePoint> collection = new();
 
         foreach (var entry in data)
         {
@@ -2486,9 +3771,9 @@ public partial class ConfigWindow : FluentWindow
             return;
         }
 
-        List<ISeries> series = new ();
+        List<ISeries> series = new();
 
-        ObservableCollection<DateTimePoint> collection = new ();
+        ObservableCollection<DateTimePoint> collection = new();
 
         DateTime? prevDate = null;
         long? prevTime = null;
@@ -2564,15 +3849,15 @@ public partial class ConfigWindow : FluentWindow
         this.personalBestChart.YAxes = this.PersonalBestYAxes;
     }
 
-    private void SetHitsTakenBlocked(Dictionary<int, Dictionary<int, int>> data)
+    private void SetHitsTakenBlocked(Dictionary<int, Dictionary<int, int>> data, Dictionary<int, Dictionary<int, int>>? extraData)
     {
         if (this.graphChart == null)
         {
             return;
         }
 
-        List<ISeries> series = new ();
-        ObservableCollection<ObservablePoint> collection = new ();
+        List<ISeries> series = new();
+        ObservableCollection<ObservablePoint> collection = new();
 
         var hitsTakenBlocked = CalculateHitsTakenBlocked(data);
 
@@ -2591,6 +3876,36 @@ public partial class ConfigWindow : FluentWindow
             Stroke = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#fff38ba8"))) { StrokeThickness = 2 },
             Fill = new LinearGradientPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#fff38ba8", "7f")), new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#fff38ba8", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
         });
+
+        if (extraData != null)
+        {
+            ObservableCollection<ObservablePoint> collection2 = new();
+
+            var hitsTakenBlocked2 = CalculateHitsTakenBlocked(extraData);
+
+            var newData2 = GetElapsedTime(hitsTakenBlocked2);
+
+            foreach (var entry in newData2)
+            {
+                collection2.Add(new ObservablePoint(entry.Key, entry.Value));
+            }
+
+            series.Add(new LineSeries<ObservablePoint>
+            {
+                Values = collection2,
+                LineSmoothness = .5,
+                GeometrySize = 0,
+                Stroke = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#ff89b4fa"))) { StrokeThickness = 2 },
+                Fill = new LinearGradientPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#ff89b4fa", "7f")), new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#ff89b4fa", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
+            });
+
+            if (this.runIDComparisonTextBlock != null && this.extraRunIDTextBox != null)
+            {
+                var runComparisonPercentage = CalculateBetterLinePercentage(newData, newData2);
+                var betterRun = runComparisonPercentage >= 0.0 ? RunIDTextBox.Text : extraRunIDTextBox.Text;
+                this.runIDComparisonTextBlock.Text = string.Format(CultureInfo.InvariantCulture, "Run {0} is higher by around {1:0.##}%", betterRun, Math.Abs(runComparisonPercentage));
+            }
+        }
 
         this.XAxes = new Axis[]
         {
@@ -2627,8 +3942,8 @@ public partial class ConfigWindow : FluentWindow
             return;
         }
 
-        List<ISeries> series = new ();
-        ObservableCollection<ObservablePoint> attackCollection = new ();
+        List<ISeries> series = new();
+        ObservableCollection<ObservablePoint> attackCollection = new();
 
         var newAttack = GetElapsedTimeForDictionaryIntDouble(attack);
 
@@ -2680,8 +3995,8 @@ public partial class ConfigWindow : FluentWindow
             return;
         }
 
-        List<ISeries> series = new ();
-        ObservableCollection<ObservablePoint> defenseCollection = new ();
+        List<ISeries> series = new();
+        ObservableCollection<ObservablePoint> defenseCollection = new();
 
         var newDefense = GetElapsedTimeForDictionaryIntDouble(defense);
 
@@ -2733,12 +4048,12 @@ public partial class ConfigWindow : FluentWindow
             return;
         }
 
-        List<ISeries> series = new ();
-        ObservableCollection<ObservablePoint> poisonCollection = new ();
-        ObservableCollection<ObservablePoint> sleepCollection = new ();
-        ObservableCollection<ObservablePoint> paraCollection = new ();
-        ObservableCollection<ObservablePoint> blastCollection = new ();
-        ObservableCollection<ObservablePoint> stunCollection = new ();
+        List<ISeries> series = new();
+        ObservableCollection<ObservablePoint> poisonCollection = new();
+        ObservableCollection<ObservablePoint> sleepCollection = new();
+        ObservableCollection<ObservablePoint> paraCollection = new();
+        ObservableCollection<ObservablePoint> blastCollection = new();
+        ObservableCollection<ObservablePoint> stunCollection = new();
 
         var newPoison = GetElapsedTime(poison);
         var newSleep = GetElapsedTime(sleep);
@@ -2901,7 +4216,7 @@ public partial class ConfigWindow : FluentWindow
 
     private static Dictionary<int, int> CalculateHitsTakenBlocked(Dictionary<int, Dictionary<int, int>> hitsTakenBlocked)
     {
-        Dictionary<int, int> dictionary = new ();
+        Dictionary<int, int> dictionary = new();
 
         var i = 1;
         foreach (var entry in hitsTakenBlocked)
@@ -2917,7 +4232,7 @@ public partial class ConfigWindow : FluentWindow
 
     private static Dictionary<int, int> CalculateMonsterHP(Dictionary<int, Dictionary<int, int>> monsterHP)
     {
-        Dictionary<int, int> dictionary = new ();
+        Dictionary<int, int> dictionary = new();
 
         var i = 1;
         foreach (var entry in monsterHP)
@@ -2935,7 +4250,7 @@ public partial class ConfigWindow : FluentWindow
 
     private static Dictionary<int, double> CalculateMonsterMultiplier(Dictionary<int, Dictionary<int, double>> monsterDictionary)
     {
-        Dictionary<int, double> dictionary = new ();
+        Dictionary<int, double> dictionary = new();
 
         var i = 1;
         foreach (var entry in monsterDictionary)
@@ -2953,7 +4268,7 @@ public partial class ConfigWindow : FluentWindow
 
     private static Dictionary<int, int> CalculateMonsterStatusAilmentThresholds(Dictionary<int, Dictionary<int, int>> monsterDictionary)
     {
-        Dictionary<int, int> dictionary = new ();
+        Dictionary<int, int> dictionary = new();
 
         var i = 1;
         foreach (var entry in monsterDictionary)
@@ -2976,11 +4291,11 @@ public partial class ConfigWindow : FluentWindow
             return;
         }
 
-        List<ISeries> series = new ();
-        ObservableCollection<ObservablePoint> monster1Collection = new ();
-        ObservableCollection<ObservablePoint> monster2Collection = new ();
-        ObservableCollection<ObservablePoint> monster3Collection = new ();
-        ObservableCollection<ObservablePoint> monster4Collection = new ();
+        List<ISeries> series = new();
+        ObservableCollection<ObservablePoint> monster1Collection = new();
+        ObservableCollection<ObservablePoint> monster2Collection = new();
+        ObservableCollection<ObservablePoint> monster3Collection = new();
+        ObservableCollection<ObservablePoint> monster4Collection = new();
 
         var newMonster1 = GetElapsedTime(monster1);
         var newMonster2 = GetElapsedTime(monster2);
@@ -3089,9 +4404,9 @@ public partial class ConfigWindow : FluentWindow
             return;
         }
 
-        List<ISeries> series = new ();
+        List<ISeries> series = new();
 
-        ObservableCollection<double> performanceCollection = new ()
+        ObservableCollection<double> performanceCollection = new()
         {
             performanceCompendium.HighestTrueRaw != 0 ? performanceCompendium.TrueRawMedian / performanceCompendium.HighestTrueRaw : 0,
             performanceCompendium.HighestSingleHitDamage != 0 ? performanceCompendium.SingleHitDamageMedian / performanceCompendium.HighestSingleHitDamage : 0,
@@ -3142,6 +4457,8 @@ public partial class ConfigWindow : FluentWindow
         this.hunterPerformanceChart.Series = series;
     }
 
+    private string? statsGraphsComboBoxOption = string.Empty;
+
     private void GraphsComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         var comboBox = (ComboBox)sender;
@@ -3154,163 +4471,14 @@ public partial class ConfigWindow : FluentWindow
         }
 
         var selectedOption = selectedItem.Content.ToString();
+        statsGraphsComboBoxOption = selectedOption;
 
         if (this.graphChart == null || selectedOption == null || string.IsNullOrEmpty(selectedOption))
         {
             return;
         }
 
-        this.Series = null;
-        this.XAxes = new Axis[]
-        {
-            new Axis
-            {
-                NamePaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
-                LabelsPaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
-            },
-        };
-        this.YAxes = new Axis[]
-        {
-            new Axis
-            {
-                NamePaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
-                LabelsPaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
-            },
-        };
-
-        var runID = long.Parse(this.RunIDTextBox.Text.Trim(), CultureInfo.InvariantCulture);
-
-        switch (selectedOption)
-        {
-            case "(General) Most Quest Completions":
-                this.SetColumnSeriesForDictionaryIntInt(DatabaseManager.GetMostQuestCompletions());
-                break;
-            case "(General) Quest Durations":
-                this.CreateQuestDurationStackedChart(DatabaseManager.GetTotalTimeSpentInQuests());
-                break;
-            case "(General) Most Common Objective Types":
-                this.SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetMostCommonObjectiveTypes());
-                break;
-            case "(General) Most Common Star Grades":
-                this.SetColumnSeriesForDictionaryIntInt(DatabaseManager.GetMostCommonStarGrades());
-                break;
-            case "(General) Most Common Rank Bands":
-                this.SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetMostCommonRankBands());
-                break;
-            case "(General) Most Common Objective":
-                this.SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetMostCommonObjectives());
-                break;
-            case "(General) Quests Completed by Date":
-                this.SetColumnSeriesForDictionaryDateInt(DatabaseManager.GetQuestsCompletedByDate());
-                break;
-            case "(General) Most Common Party Size":
-                this.SetColumnSeriesForDictionaryIntInt(DatabaseManager.GetMostCommonPartySize());
-                break;
-            case "(General) Most Common Set Name":
-                this.SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetMostCommonSetNames());
-                break;
-            case "(General) Most Common Weapon Name":
-                this.SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetMostCommonWeaponNames());
-                break;
-            case "(General) Most Common Head Piece":
-                this.SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetMostCommonHeadPieces());
-                break;
-            case "(General) Most Common Chest Piece":
-                this.SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetMostCommonChestPieces());
-                break;
-            case "(General) Most Common Arms Piece":
-                this.SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetMostCommonArmsPieces());
-                break;
-            case "(General) Most Common Waist Piece":
-                this.SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetMostCommonWaistPieces());
-                break;
-            case "(General) Most Common Legs Piece":
-                this.SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetMostCommonLegsPieces());
-                break;
-            case "(General) Most Common Diva Skill":
-                this.SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetMostCommonDivaSkill());
-                break;
-            case "(General) Most Common Guild Food":
-                this.SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetMostCommonGuildFood());
-                break;
-            case "(General) Most Common Style Rank Skills":
-                this.SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetMostCommonStyleRankSkills());
-                break;
-            case "(General) Most Common Caravan Skills":
-                this.SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetMostCommonCaravanSkills());
-                break;
-            case "(General) Most Common Category":
-                this.SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetMostCommonCategory());
-                break;
-            case "(Run ID) Attack Buff":
-                this.SetLineSeriesForDictionaryIntInt(DatabaseManager.GetAttackBuffDictionary(runID));
-                return;
-            case "(Run ID) Hit Count":
-                this.SetLineSeriesForDictionaryIntInt(DatabaseManager.GetHitCountDictionary(runID));
-                return;
-            case "(Run ID) Hits per Second":
-                this.SetLineSeriesForDictionaryIntDouble(DatabaseManager.GetHitsPerSecondDictionary(runID));
-                return;
-            case "(Run ID) Damage Dealt":
-                this.SetLineSeriesForDictionaryIntInt(DatabaseManager.GetDamageDealtDictionary(runID));
-                return;
-            case "(Run ID) Damage per Second":
-                this.SetLineSeriesForDictionaryIntDouble(DatabaseManager.GetDamagePerSecondDictionary(runID));
-                return;
-            case "(Run ID) Carts":
-                this.SetLineSeriesForDictionaryIntInt(DatabaseManager.GetCartsDictionary(runID));
-                return;
-            case "(Run ID) Hits Taken/Blocked":
-                this.SetHitsTakenBlocked(DatabaseManager.GetHitsTakenBlockedDictionary(runID));
-                return;
-            case "(Run ID) Hits Taken/Blocked per Second":
-                this.SetLineSeriesForDictionaryIntDouble(DatabaseManager.GetHitsTakenBlockedPerSecondDictionary(runID));
-                return;
-            case "(Run ID) Player Health and Stamina":
-                this.SetPlayerHealthStamina(DatabaseManager.GetPlayerHPDictionary(runID), DatabaseManager.GetPlayerStaminaDictionary(runID));
-                return;
-            case "(Run ID) Most Common Player Input":
-                this.SetColumnSeriesForDictionaryStringInt(GetMostCommonInputs(runID));
-                break;
-            case "(Run ID) Actions per Minute":
-                this.SetLineSeriesForDictionaryIntDouble(DatabaseManager.GetActionsPerMinuteDictionary(runID));
-                return;
-            case "(Run ID) Monster HP":
-                this.SetMonsterHP(CalculateMonsterHP(DatabaseManager.GetMonster1HPDictionary(runID)), CalculateMonsterHP(DatabaseManager.GetMonster2HPDictionary(runID)), CalculateMonsterHP(DatabaseManager.GetMonster3HPDictionary(runID)), CalculateMonsterHP(DatabaseManager.GetMonster4HPDictionary(runID)));
-                return;
-            case "(Run ID) Monster Attack Multiplier":
-                this.SetMonsterAttackMultiplier(CalculateMonsterMultiplier(DatabaseManager.GetMonster1AttackMultiplierDictionary(runID)));
-                return;
-            case "(Run ID) Monster Defense Rate":
-                this.SetMonsterDefenseRate(CalculateMonsterMultiplier(DatabaseManager.GetMonster1DefenseRateDictionary(runID)));
-                return;
-            case "(Run ID) Monster Status Ailments Thresholds":
-                this.SetMonsterStatusAilmentsThresholds(
-                    CalculateMonsterStatusAilmentThresholds(
-                        DatabaseManager.GetMonster1PoisonThresholdDictionary(runID)),
-                    CalculateMonsterStatusAilmentThresholds(
-                        DatabaseManager.GetMonster1SleepThresholdDictionary(runID)),
-                    CalculateMonsterStatusAilmentThresholds(
-                        DatabaseManager.GetMonster1ParalysisThresholdDictionary(runID)),
-                    CalculateMonsterStatusAilmentThresholds(
-                        DatabaseManager.GetMonster1BlastThresholdDictionary(runID)),
-                    CalculateMonsterStatusAilmentThresholds(
-                        DatabaseManager.GetMonster1StunThresholdDictionary(runID)));
-                return;
-            default:
-                break;
-        }
-
-        this.statsGraphsSelectedOption = selectedOption.Trim().Replace(" ", "_");
-
-        if (this.Series == null)
-        {
-            return;
-        }
-
-        this.graphChart.Series = this.Series;
-        this.graphChart.XAxes = this.XAxes;
-        this.graphChart.YAxes = this.YAxes;
+        UpdateStatsGraphs(selectedOption);
     }
 
     private void GraphsChart_Loaded(object sender, RoutedEventArgs e) => this.graphChart = (CartesianChart)sender;
@@ -3319,7 +4487,7 @@ public partial class ConfigWindow : FluentWindow
 
     private static Dictionary<int, List<Dictionary<int, int>>> GetElapsedTimeForInventories(Dictionary<int, List<Dictionary<int, int>>> dictionary)
     {
-        Dictionary<int, List<Dictionary<int, int>>> elapsedTimeDict = new ();
+        Dictionary<int, List<Dictionary<int, int>>> elapsedTimeDict = new();
         if (dictionary == null || !dictionary.Any())
         {
             return elapsedTimeDict;
@@ -3336,7 +4504,7 @@ public partial class ConfigWindow : FluentWindow
 
     private static Dictionary<int, int> GetElapsedTimeForDictionaryIntInt(Dictionary<int, int> dictionary)
     {
-        Dictionary<int, int> elapsedTimeDict = new ();
+        Dictionary<int, int> elapsedTimeDict = new();
 
         if (dictionary == null || !dictionary.Any())
         {
@@ -3551,6 +4719,189 @@ public partial class ConfigWindow : FluentWindow
         }
 
         this.personalBestSelectedWeapon = selectedWeapon.Replace("System.Windows.Controls.ComboBoxItem: ", string.Empty);
+    }
+
+    private void StatsGraphsRefreshButton_Click(object sender, RoutedEventArgs e)
+    {
+        if (this.graphChart == null || statsGraphsComboBoxOption == null || string.IsNullOrEmpty(statsGraphsComboBoxOption))
+        {
+            return;
+        }
+
+        UpdateStatsGraphs(statsGraphsComboBoxOption);
+    }
+
+    private void UpdateStatsGraphs(string selectedOption)
+    {
+        this.Series = null;
+        this.XAxes = new Axis[]
+        {
+            new Axis
+            {
+                NamePaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
+                LabelsPaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
+            },
+        };
+        this.YAxes = new Axis[]
+        {
+            new Axis
+            {
+                NamePaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
+                LabelsPaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
+            },
+        };
+
+        long runID = 0;
+        if (this.RunIDTextBox != null && this.RunIDTextBox.Text != string.Empty)
+        {
+            runID = long.Parse(this.RunIDTextBox.Text.Trim(), CultureInfo.InvariantCulture);
+        }
+
+        long extraRunID = 0;
+        if (this.extraRunIDTextBox != null && this.extraRunIDTextBox.Text != string.Empty)
+        {
+            extraRunID = long.Parse(this.extraRunIDTextBox.Text.Trim(), CultureInfo.InvariantCulture);
+        }
+
+        if (runIDComparisonTextBlock != null)
+        {
+            runIDComparisonTextBlock.Text = string.Empty;
+        }
+
+        switch (selectedOption)
+        {
+            case "(General) Most Quest Completions":
+                this.SetColumnSeriesForDictionaryIntInt(DatabaseManager.GetMostQuestCompletions());
+                break;
+            case "(General) Quest Durations":
+                this.CreateQuestDurationStackedChart(DatabaseManager.GetTotalTimeSpentInQuests());
+                break;
+            case "(General) Most Common Objective Types":
+                this.SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetMostCommonObjectiveTypes());
+                break;
+            case "(General) Most Common Star Grades":
+                this.SetColumnSeriesForDictionaryIntInt(DatabaseManager.GetMostCommonStarGrades());
+                break;
+            case "(General) Most Common Rank Bands":
+                this.SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetMostCommonRankBands());
+                break;
+            case "(General) Most Common Objective":
+                this.SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetMostCommonObjectives());
+                break;
+            case "(General) Quests Completed by Date":
+                this.SetColumnSeriesForDictionaryDateInt(DatabaseManager.GetQuestsCompletedByDate());
+                break;
+            case "(General) Most Common Party Size":
+                this.SetColumnSeriesForDictionaryIntInt(DatabaseManager.GetMostCommonPartySize());
+                break;
+            case "(General) Most Common Set Name":
+                this.SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetMostCommonSetNames());
+                break;
+            case "(General) Most Common Weapon Name":
+                this.SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetMostCommonWeaponNames());
+                break;
+            case "(General) Most Common Head Piece":
+                this.SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetMostCommonHeadPieces());
+                break;
+            case "(General) Most Common Chest Piece":
+                this.SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetMostCommonChestPieces());
+                break;
+            case "(General) Most Common Arms Piece":
+                this.SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetMostCommonArmsPieces());
+                break;
+            case "(General) Most Common Waist Piece":
+                this.SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetMostCommonWaistPieces());
+                break;
+            case "(General) Most Common Legs Piece":
+                this.SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetMostCommonLegsPieces());
+                break;
+            case "(General) Most Common Diva Skill":
+                this.SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetMostCommonDivaSkill());
+                break;
+            case "(General) Most Common Guild Food":
+                this.SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetMostCommonGuildFood());
+                break;
+            case "(General) Most Common Style Rank Skills":
+                this.SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetMostCommonStyleRankSkills());
+                break;
+            case "(General) Most Common Caravan Skills":
+                this.SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetMostCommonCaravanSkills());
+                break;
+            case "(General) Most Common Category":
+                this.SetColumnSeriesForDictionaryStringInt(DatabaseManager.GetMostCommonCategory());
+                break;
+            case "(Run ID) Attack Buff":
+                this.SetLineSeriesForDictionaryIntInt(DatabaseManager.GetAttackBuffDictionary(runID), DatabaseManager.GetAttackBuffDictionary(extraRunID));
+                return;
+            case "(Run ID) Hit Count":
+                this.SetLineSeriesForDictionaryIntInt(DatabaseManager.GetHitCountDictionary(runID), DatabaseManager.GetHitCountDictionary(extraRunID));
+                return;
+            case "(Run ID) Hits per Second":
+                this.SetLineSeriesForDictionaryIntDouble(DatabaseManager.GetHitsPerSecondDictionary(runID), DatabaseManager.GetHitsPerSecondDictionary(extraRunID));
+                return;
+            case "(Run ID) Damage Dealt":
+                this.SetLineSeriesForDictionaryIntInt(DatabaseManager.GetDamageDealtDictionary(runID), DatabaseManager.GetDamageDealtDictionary(extraRunID));
+                return;
+            case "(Run ID) Damage per Second":
+                this.SetLineSeriesForDictionaryIntDouble(DatabaseManager.GetDamagePerSecondDictionary(runID), DatabaseManager.GetDamagePerSecondDictionary(extraRunID));
+                return;
+            case "(Run ID) Carts":
+                this.SetLineSeriesForDictionaryIntInt(DatabaseManager.GetCartsDictionary(runID), null);
+                return;
+            case "(Run ID) Hits Taken/Blocked":
+                this.SetHitsTakenBlocked(DatabaseManager.GetHitsTakenBlockedDictionary(runID), DatabaseManager.GetHitsTakenBlockedDictionary(extraRunID));
+                return;
+            case "(Run ID) Hits Taken/Blocked per Second":
+                this.SetLineSeriesForDictionaryIntDouble(DatabaseManager.GetHitsTakenBlockedPerSecondDictionary(runID), DatabaseManager.GetHitsTakenBlockedPerSecondDictionary(extraRunID));
+                return;
+            case "(Run ID) Player Health and Stamina":
+                this.SetPlayerHealthStamina(DatabaseManager.GetPlayerHPDictionary(runID), DatabaseManager.GetPlayerStaminaDictionary(runID));
+                return;
+            case "(Run ID) Most Common Player Input":
+                this.SetColumnSeriesForDictionaryStringInt(GetMostCommonInputs(runID));
+                break;
+            case "(Run ID) Actions per Minute":
+                this.SetLineSeriesForDictionaryIntDouble(DatabaseManager.GetActionsPerMinuteDictionary(runID), DatabaseManager.GetActionsPerMinuteDictionary(extraRunID));
+                return;
+            case "(Run ID) Monster HP":
+                this.SetMonsterHP(CalculateMonsterHP(DatabaseManager.GetMonster1HPDictionary(runID)), CalculateMonsterHP(DatabaseManager.GetMonster2HPDictionary(runID)), CalculateMonsterHP(DatabaseManager.GetMonster3HPDictionary(runID)), CalculateMonsterHP(DatabaseManager.GetMonster4HPDictionary(runID)));
+                return;
+            case "(Run ID) Monster Attack Multiplier":
+                this.SetMonsterAttackMultiplier(CalculateMonsterMultiplier(DatabaseManager.GetMonster1AttackMultiplierDictionary(runID)));
+                return;
+            case "(Run ID) Monster Defense Rate":
+                this.SetMonsterDefenseRate(CalculateMonsterMultiplier(DatabaseManager.GetMonster1DefenseRateDictionary(runID)));
+                return;
+            case "(Run ID) Monster Status Ailments Thresholds":
+                this.SetMonsterStatusAilmentsThresholds(
+                    CalculateMonsterStatusAilmentThresholds(
+                        DatabaseManager.GetMonster1PoisonThresholdDictionary(runID)),
+                    CalculateMonsterStatusAilmentThresholds(
+                        DatabaseManager.GetMonster1SleepThresholdDictionary(runID)),
+                    CalculateMonsterStatusAilmentThresholds(
+                        DatabaseManager.GetMonster1ParalysisThresholdDictionary(runID)),
+                    CalculateMonsterStatusAilmentThresholds(
+                        DatabaseManager.GetMonster1BlastThresholdDictionary(runID)),
+                    CalculateMonsterStatusAilmentThresholds(
+                        DatabaseManager.GetMonster1StunThresholdDictionary(runID)));
+                return;
+            default:
+                this.graphChart.Series = this.Series ?? Array.Empty<ISeries>(); // TODO test
+                this.graphChart.XAxes = this.XAxes;
+                this.graphChart.YAxes = this.YAxes;
+                break;
+        }
+
+        this.statsGraphsSelectedOption = selectedOption.Trim().Replace(" ", "_");
+
+        if (this.Series == null)
+        {
+            return;
+        }
+
+        this.graphChart.Series = this.Series;
+        this.graphChart.XAxes = this.XAxes;
+        this.graphChart.YAxes = this.YAxes;
     }
 
     private void PersonalBestRefreshButton_Click(object sender, RoutedEventArgs e)
@@ -3779,6 +5130,24 @@ public partial class ConfigWindow : FluentWindow
         }
     }
 
+    private void QuestPaceGraphGrid_Loaded(object sender, RoutedEventArgs e)
+    {
+        var obj = (Grid)sender;
+        if (obj != null)
+        {
+            this.questPaceGraphGrid = obj;
+        }
+    }
+
+    private void QuestPaceGraph_Loaded(object sender, RoutedEventArgs e)
+    {
+        var obj = (CartesianChart)sender;
+        if (obj != null)
+        {
+            this.questPaceGraph = obj;
+        }
+    }
+
     private void PersonalBestDescriptionTextBlock_Loaded(object sender, RoutedEventArgs e)
     {
         var obj = (TextBlock)sender;
@@ -3788,12 +5157,21 @@ public partial class ConfigWindow : FluentWindow
         }
     }
 
+    private void QuestPaceDescriptionTextBlock_Loaded(object sender, RoutedEventArgs e)
+    {
+        var obj = (TextBlock)sender;
+        if (obj != null)
+        {
+            this.questPaceDescriptionTextBlock = obj;
+        }
+    }
+
     private void Top20RunsDescriptionTextBlock_Loaded(object sender, RoutedEventArgs e)
     {
         var obj = (TextBlock)sender;
         if (obj != null)
         {
-            this.top20RunsDescriptionTextblock = obj;
+            this.top20RunsDescriptionTextBlock = obj;
         }
     }
 
@@ -3812,6 +5190,15 @@ public partial class ConfigWindow : FluentWindow
         if (obj != null)
         {
             this.top20MainGrid = obj;
+        }
+    }
+
+    private void QuestPaceMainGridLoaded(object sender, RoutedEventArgs e)
+    {
+        var obj = (Grid)sender;
+        if (obj != null)
+        {
+            this.questPaceMainGrid = obj;
         }
     }
 
@@ -4337,6 +5724,16 @@ public partial class ConfigWindow : FluentWindow
         }
 
         this.challengesListBox.Items.Refresh();
+    }
+
+    private void ExtraRunIDTextBox_Loaded(object sender, RoutedEventArgs e)
+    {
+        this.extraRunIDTextBox = (TextBox)sender;
+    }
+
+    private void RunIDComparisonTextBlock_Loaded(object sender, RoutedEventArgs e)
+    {
+        this.runIDComparisonTextBlock = (TextBlock)sender;
     }
 }
 

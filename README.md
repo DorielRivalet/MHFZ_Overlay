@@ -135,6 +135,8 @@ As an alternative to hotkeys, you can use the system tray options by right-click
 
 ![Preset](./demo/preset.png)
 
+- If you have slow performance, lower the refresh rate from 30 to 1.
+
 - If the monster HP shown is less than what its actual values should be, restart both the game and the overlay. If the HP shows 0/1 then change area for it to load. If the issue still occurs, change the Effective HP Corrector's minimum and maximum thresholds or disable Effective HP.
 
 - If you are having issues with the damage numbers when hitting the monster, change Damage Numbers Mode from Automatic to True Damage.
@@ -244,6 +246,8 @@ Includes icons!
 ![Most Recent](./demo/databasemostrecent.png)
 
 ![YouTube](./demo/databaseyoutube.png)
+
+![Quest Pace](./demo/questpace.png)
 
 ![Inventories](./demo/databaseinventories.png)
 

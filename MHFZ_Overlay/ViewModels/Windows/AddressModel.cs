@@ -1311,7 +1311,7 @@ public abstract class AddressModel : INotifyPropertyChanged
 
             if (ShowHitsPerSecond())
             {
-                hitsPerSecond = string.Format(CultureInfo.InvariantCulture, " ({0:0.00}/s)", this.HitsPerSecond);
+                hitsPerSecond = string.Format(CultureInfo.InvariantCulture, " ({0:0.##}/s)", this.HitsPerSecond);
             }
 
             return string.Format(CultureInfo.InvariantCulture, "{0}{1}", this.HitCountInt(), hitsPerSecond);
@@ -1670,7 +1670,7 @@ TreeScope.Children, condition);
         {
             return OverlayMode.Standard;
         }
-        else if (s.TimerInfoShown && s.EnableInputLogging && s.EnableQuestLogging && this.PartySize() == 1 && s.OverlayModeWatermarkShown)
+        else if (s.TimerInfoShown && s.EnableInputLogging && s.EnableQuestLogging && s.OverlayModeWatermarkShown)
         {
             if (this.DivaSkillUsesLeft() == 0 && this.StyleRank1() != 15 && this.StyleRank2() != 15)
             {
@@ -10823,7 +10823,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
 
             if (ShowTotalHitsTakenBlockedPerSecond())
             {
-                totalHitsTakenBlockedPerSecond = string.Format(CultureInfo.InvariantCulture, " ({0:0.00}/s)", this.TotalHitsTakenBlockedPerSecond);
+                totalHitsTakenBlockedPerSecond = string.Format(CultureInfo.InvariantCulture, " ({0:0.##}/s)", this.TotalHitsTakenBlockedPerSecond);
             }
 
             return string.Format(CultureInfo.InvariantCulture, "{0}{1}", this.TotalHitsTakenBlocked, totalHitsTakenBlockedPerSecond);
@@ -12402,6 +12402,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         new QuestLogsOption { Name = "YouTube", IsSelected = false },
         new QuestLogsOption { Name = "Stats (Graphs)", IsSelected = false },
         new QuestLogsOption { Name = "Stats (Text)", IsSelected = false },
+        new QuestLogsOption { Name = "Quest Pace", IsSelected = false },
     };
 
     public QuestLogsOption SelectedOption { get; set; } = new QuestLogsOption { Name = "Default", IsSelected = true };

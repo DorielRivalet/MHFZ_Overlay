@@ -1816,10 +1816,24 @@ The process may take some time, as the program attempts to download from GitHub 
         long questID = this.DataLoader.Model.QuestID();
 
         var attempts = await Task.Run(() => DatabaseManagerInstance.UpsertPersonalBestAttemptsAsync(questID, weaponType, category));
-        var _ = Dispatcher.BeginInvoke((Action)(() =>
+        var attemptsPerPersonalBest = 0.0;
+        var s = (Settings)Application.Current.TryFindResource("Settings");
+
+        if (s.EnableAttemptsPerPersonalBest)
         {
-            this.personalBestAttemptsTextBlock.Text = attempts.ToString(CultureInfo.InvariantCulture);
-        }));
+            attemptsPerPersonalBest = await Task.Run(() => DatabaseManagerInstance.GetQuestAttemptsPerPersonalBestAsync(questID, weaponType, category));
+            var _ = Dispatcher.BeginInvoke((Action)(() =>
+            {
+                this.personalBestAttemptsTextBlock.Text = string.Format(CultureInfo.InvariantCulture, "{0} ({1}/PB)", attempts, Math.Truncate(attemptsPerPersonalBest));
+            }));
+        }
+        else
+        {
+            var _ = Dispatcher.BeginInvoke((Action)(() =>
+            {
+                this.personalBestAttemptsTextBlock.Text = string.Format(CultureInfo.InvariantCulture, "{0}", attempts);
+            }));
+        }
     }
 
     /// <summary>

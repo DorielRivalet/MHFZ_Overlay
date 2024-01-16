@@ -11009,6 +11009,238 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
         return questCompletions;
     }
 
+    public async Task<string> GetQuestAttemptsAsync(long questID, string actualOverlayMode, int weaponTypeID)
+    {
+        var questAttempts = "0";
+        if (string.IsNullOrEmpty(this.dataSource))
+        {
+            Logger.Warn(CultureInfo.InvariantCulture, "Cannot get quest attempts. dataSource: {0}", this.dataSource);
+            return questAttempts;
+        }
+
+        using (var conn = new SQLiteConnection(this.dataSource))
+        {
+            await conn.OpenAsync();
+            using (var transaction = conn.BeginTransaction())
+            {
+                try
+                {
+                    var sql =
+                        @"SELECT 
+                        Attempts
+                    FROM 
+                        QuestAttempts qa
+                    WHERE 
+                        qa.QuestID = @QuestID
+                    AND qa.ActualOverlayMode = @ActualOverlayMode
+                    AND qa.WeaponTypeID = @WeaponTypeID";
+                    using (var cmd = new SQLiteCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@QuestID", questID);
+                        cmd.Parameters.AddWithValue("@ActualOverlayMode", actualOverlayMode);
+                        cmd.Parameters.AddWithValue("@WeaponTypeID", weaponTypeID);
+
+                        using (var reader = await cmd.ExecuteReaderAsync())
+                        {
+                            if (reader is SQLiteDataReader sqliteReader && await sqliteReader.ReadAsync())
+                            {
+                                questAttempts = Convert.ToInt64(sqliteReader["Attempts"], CultureInfo.InvariantCulture).ToString(CultureInfo.InvariantCulture);
+                            }
+                        }
+                    }
+
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    HandleError(transaction, ex);
+                }
+            }
+        }
+
+        return questAttempts;
+    }
+
+    public async Task<double> GetQuestAttemptsPerPersonalBestAsync(long questID, int weaponTypeID, string actualOverlayMode)
+    {
+        var attemptsPerPersonalBest = 0.0;
+        if (string.IsNullOrEmpty(this.dataSource))
+        {
+            Logger.Warn(CultureInfo.InvariantCulture, "Cannot get quest attempts per personal best. dataSource: {0}", this.dataSource);
+            return attemptsPerPersonalBest;
+        }
+
+        var questAttempts = await GetQuestAttemptsAsync(questID, actualOverlayMode, weaponTypeID);
+        var personalBestCount = await GetPersonalBestsCountAsync(questID, weaponTypeID, actualOverlayMode);
+        if (personalBestCount > 0)
+        {
+            attemptsPerPersonalBest = double.Parse(questAttempts, CultureInfo.InvariantCulture) / personalBestCount;
+        }
+
+        return attemptsPerPersonalBest;
+    }
+
+    public async Task<int> GetPersonalBestsCountAsync(long questID, int weaponTypeID, string category)
+    {
+        int personalBestCount = 0;
+        long? previousBestTime = null;
+        if (string.IsNullOrEmpty(this.dataSource))
+        {
+            Logger.Warn(CultureInfo.InvariantCulture, "Cannot get personal bests count. dataSource: {0}", this.dataSource);
+            return personalBestCount;
+        }
+
+        using (var conn = new SQLiteConnection(this.dataSource))
+        {
+            await conn.OpenAsync().ConfigureAwait(false);
+            using (var transaction = conn.BeginTransaction())
+            {
+                try
+                {
+                    using (var cmd = new SQLiteCommand(
+                        @"SELECT
+                            q.RunID, q.FinalTimeValue
+                        FROM
+                            Quests q
+                        JOIN
+                            PlayerGear pg ON q.RunID = pg.RunID
+                        WHERE
+                            q.QuestID = @questID AND
+                            q.ActualOverlayMode = @category AND
+                            pg.WeaponTypeID = @weaponTypeID
+                        ORDER BY q.RunID ASC", conn))
+                    {
+                        cmd.Parameters.AddWithValue("@questID", questID);
+                        cmd.Parameters.AddWithValue("@weaponTypeID", weaponTypeID);
+                        cmd.Parameters.AddWithValue("@category", category);
+
+                        using (var reader = await cmd.ExecuteReaderAsync().ConfigureAwait(false))
+                        {
+                            while (await reader.ReadAsync().ConfigureAwait(false))
+                            {
+                                var finalTimeValue = reader.GetInt64(reader.GetOrdinal("FinalTimeValue"));
+
+                                // If this is the first run or the time is less than the previous best, it's a new personal best.
+                                if (!previousBestTime.HasValue || finalTimeValue < previousBestTime.Value)
+                                {
+                                    personalBestCount++;
+                                    previousBestTime = finalTimeValue;
+                                }
+                            }
+                        }
+                    }
+
+                    await transaction.CommitAsync().ConfigureAwait(false);
+                }
+                catch (Exception ex)
+                {
+                    HandleError(transaction, ex);
+                }
+            }
+        }
+
+        return personalBestCount;
+    }
+
+    public List<Quest> GetQuests(long questID, string weaponName, string actualOverlayMode)
+    {
+        List<Quest> quests = new();
+        if (string.IsNullOrEmpty(this.dataSource))
+        {
+            Logger.Warn(CultureInfo.InvariantCulture, "Cannot get quests. dataSource: {0}", this.dataSource);
+            return quests;
+        }
+
+        var weaponTypeID = EZlion.Mapper.WeaponType.IDName.FirstOrDefault(x => x.Value == weaponName).Key;
+
+        using (var conn = new SQLiteConnection(this.dataSource))
+        {
+            conn.Open();
+            using (var transaction = conn.BeginTransaction())
+            {
+                try
+                {
+                    var sql =
+                        @"SELECT 
+                            *
+                        FROM 
+                            Quests q
+                        JOIN 
+                            PlayerGear pg ON q.RunID = pg.RunID
+                        WHERE 
+                            q.QuestID = @QuestID
+                        AND q.ActualOverlayMode = @ActualOverlayMode
+                        AND pg.WeaponTypeID = @WeaponTypeID
+                        ORDER BY RunID ASC";
+                    using (var cmd = new SQLiteCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@QuestID", questID);
+                        cmd.Parameters.AddWithValue("@ActualOverlayMode", actualOverlayMode);
+                        cmd.Parameters.AddWithValue("@WeaponTypeID", weaponTypeID);
+
+                        using (var reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                var quest = new Quest
+                                {
+                                    QuestHash = reader["QuestHash"].ToString(),
+                                    CreatedAt = DateTime.Parse(reader["CreatedAt"]?.ToString() ?? DateTime.UnixEpoch.ToString(CultureInfo.InvariantCulture), CultureInfo.InvariantCulture),
+                                    CreatedBy = reader["CreatedBy"].ToString(),
+                                    RunID = long.Parse(reader["RunID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    QuestID = long.Parse(reader["QuestID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    TimeLeft = long.Parse(reader["TimeLeft"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    FinalTimeValue = long.Parse(reader["FinalTimeValue"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    FinalTimeDisplay = reader["FinalTimeDisplay"].ToString(),
+                                    ObjectiveImage = reader["ObjectiveImage"].ToString(),
+                                    ObjectiveTypeID = long.Parse(reader["ObjectiveTypeID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    ObjectiveQuantity = long.Parse(reader["ObjectiveQuantity"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    StarGrade = long.Parse(reader["StarGrade"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    RankName = reader["RankName"].ToString(),
+                                    ObjectiveName = reader["ObjectiveName"].ToString(),
+                                    Date = DateTime.Parse(reader["Date"]?.ToString() ?? DateTime.UnixEpoch.ToString(CultureInfo.InvariantCulture), CultureInfo.InvariantCulture),
+                                    YouTubeID = reader["YouTubeID"].ToString(),
+                                    AttackBuffDictionary = reader["AttackBuffDictionary"].ToString(),
+                                    HitCountDictionary = reader["HitCountDictionary"].ToString(),
+                                    HitsPerSecondDictionary = reader["HitsPerSecondDictionary"].ToString(),
+                                    DamageDealtDictionary = reader["DamageDealtDictionary"].ToString(),
+                                    DamagePerSecondDictionary = reader["DamagePerSecondDictionary"].ToString(),
+                                    AreaChangesDictionary = reader["AreaChangesDictionary"].ToString(),
+                                    CartsDictionary = reader["CartsDictionary"].ToString(),
+                                    Monster1HPDictionary = reader["Monster1HPDictionary"].ToString(),
+                                    Monster2HPDictionary = reader["Monster2HPDictionary"].ToString(),
+                                    Monster3HPDictionary = reader["Monster3HPDictionary"].ToString(),
+                                    Monster4HPDictionary = reader["Monster4HPDictionary"].ToString(),
+                                    HitsTakenBlockedDictionary = reader["HitsTakenBlockedDictionary"].ToString(),
+                                    HitsTakenBlockedPerSecondDictionary = reader["HitsTakenBlockedPerSecondDictionary"].ToString(),
+                                    PlayerHPDictionary = reader["PlayerHPDictionary"].ToString(),
+                                    PlayerStaminaDictionary = reader["PlayerStaminaDictionary"].ToString(),
+                                    KeyStrokesDictionary = reader["KeyStrokesDictionary"].ToString(),
+                                    MouseInputDictionary = reader["MouseInputDictionary"].ToString(),
+                                    GamepadInputDictionary = reader["GamepadInputDictionary"].ToString(),
+                                    ActionsPerMinuteDictionary = reader["ActionsPerMinuteDictionary"].ToString(),
+                                    OverlayModeDictionary = reader["OverlayModeDictionary"].ToString(),
+                                    ActualOverlayMode = reader["ActualOverlayMode"].ToString(),
+                                    PartySize = long.Parse(reader["PartySize"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                };
+
+                                quests.Add(quest);
+                            }
+                        }
+                    }
+
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    HandleError(transaction, ex);
+                }
+            }
+        }
+
+        return quests;
+    }
+
     public Dictionary<string, int> GetMostCommonObjectiveTypes()
     {
         Dictionary<string, int> objectiveCounts = new ();
@@ -11195,6 +11427,8 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                                 var field = reader.GetInt32(0);
                                 var count = reader.GetInt32(1);
                                 var pieceName = ArmorChest.IDName[field];
+                                if (fieldCounts.ContainsKey(pieceName))
+                                    continue;
                                 fieldCounts.Add(pieceName, count);
                             }
                         }

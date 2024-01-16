@@ -73,6 +73,10 @@ public sealed class OptionToTemplateConverter : DataTemplateSelector
         {
             return (DataTemplate)((FrameworkElement)container).FindResource("CalendarTemplate");
         }
+        else if (option.Name == "Quest Pace")
+        {
+            return (DataTemplate)((FrameworkElement)container).FindResource("QuestPaceTemplate");
+        }
         else
         {
             return (DataTemplate)((FrameworkElement)container).FindResource("DefaultTemplate");
