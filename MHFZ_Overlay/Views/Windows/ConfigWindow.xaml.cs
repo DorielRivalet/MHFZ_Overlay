@@ -1477,34 +1477,45 @@ public partial class ConfigWindow : FluentWindow
         this.questPaceWeaponSelected = selectedWeapon;
 
         var quests = DatabaseManager.GetQuests(long.Parse(this.QuestIDTextBox.Text.Trim()), this.questPaceWeaponSelected, this.OverlayModeComboBox.Text.Trim());
+
+        if (quests.Count == 0)
+        {
+            return;
+        }
         
-        List<Dictionary<int, Dictionary<int, int>>> monster1HPList = GetMonster1HPListForQuestPace(quests);
+        List<QuestPace> monster1HPList = GetMonster1HPListForQuestPace(quests);
 
         // Filter the quest runs where the monster ID stayed the same
         var consistentMonsterIdRuns = monster1HPList.Where(questRun =>
-            questRun.Values
+            questRun.MonsterHPField.Values
                 .Select(m => m.Keys.FirstOrDefault())
                 .Distinct()
                 .Count() == 1)
             .ToList();
 
-        List<Dictionary<int, int>> flattenedList = GetFlattenedListForQuestPace(consistentMonsterIdRuns);
+        List<QuestPace> flattenedList = GetFlattenedListForQuestPace(consistentMonsterIdRuns);
 
         // TODO this is not removing all outliers
-        List<Dictionary<int, int>> removedOutliersList = GetRemovedOutliersListForQuestPace(flattenedList);
+        List<QuestPace> removedOutliersList = GetRemovedOutliersListForQuestPace(flattenedList);
 
-        List<Dictionary<int, int>> elapsedTimeList = new ();
+        List<QuestPace> elapsedTimeList = new ();
         foreach (var run in removedOutliersList)
         {
-            var elapsedTimeRun = GetElapsedTimeForDictionaryIntInt(run);
-            elapsedTimeList.Add(elapsedTimeRun);
+            QuestPace pace = run;
+            if (pace.MonsterHPFieldFlattened == null)
+            {
+                continue;
+            }
+            var elapsedTimeRun = GetElapsedTimeForDictionaryIntInt(pace.MonsterHPFieldFlattened);
+            pace.MonsterHPFieldFlattened = elapsedTimeRun;
+            elapsedTimeList.Add(pace);
         }
 
-        List<Dictionary<int, int>> hpPercentagesList = GetHPPercentagesListForQuestPace(elapsedTimeList);
+        List<QuestPace> hpPercentagesList = GetHPPercentagesListForQuestPace(elapsedTimeList);
 
         if (selectedQuestPaceSplitOption == "Every 10% Monster HP Dealt")
         {
-            List<QuestSplit> questsSplits = GetQuestsSplitsListForQuestPace(hpPercentagesList);
+            List<QuestPace> questsSplits = GetQuestsSplitsListForQuestPace(hpPercentagesList);
 
             QuestSplit medianSplitTimes = GetMedianSplitTimes(questsSplits);
 
@@ -1529,19 +1540,32 @@ public partial class ConfigWindow : FluentWindow
 
             if (this.questPaceDescriptionTextBlock != null)
             {
-                this.questPaceDescriptionTextBlock.Text = $"Quest ID {this.QuestIDTextBox.Text} pace by category {this.OverlayModeComboBox.Text} | Personal Best: {TimeService.GetMinutesSecondsMillisecondsFromFrames((double)personalBest)} | Sum of Best: {TimeService.GetMinutesSecondsMillisecondsFromFrames((long)sumOfBest)} | Sum Of Median: {TimeService.GetMinutesSecondsMillisecondsFromFrames((long)sumOfMedian)} | Median: {TimeService.GetMinutesSecondsMillisecondsFromFrames(medianFinalTimeValue)}";
+                this.questPaceDescriptionTextBlock.Text = @$"Quest ID {this.QuestIDTextBox.Text} pace by category {this.OverlayModeComboBox.Text} | Personal Best: {TimeService.GetMinutesSecondsMillisecondsFromFrames((double)personalBest)} | Sum of Best: {TimeService.GetMinutesSecondsMillisecondsFromFrames((long)sumOfBest)} | Sum Of Median: {TimeService.GetMinutesSecondsMillisecondsFromFrames((long)sumOfMedian)} | Median: {TimeService.GetMinutesSecondsMillisecondsFromFrames(medianFinalTimeValue)}
+
+Run IDs with best paces for each HP% Dealt:
+10%: {GetFastestRunIDPaceForHPPercent(10, questsSplits)}
+20%: {GetFastestRunIDPaceForHPPercent(20, questsSplits)}
+30%: {GetFastestRunIDPaceForHPPercent(30, questsSplits)}
+40%: {GetFastestRunIDPaceForHPPercent(40, questsSplits)}
+50%: {GetFastestRunIDPaceForHPPercent(50, questsSplits)}
+60%: {GetFastestRunIDPaceForHPPercent(60, questsSplits)}
+70%: {GetFastestRunIDPaceForHPPercent(70, questsSplits)}
+80%: {GetFastestRunIDPaceForHPPercent(80, questsSplits)}
+90%: {GetFastestRunIDPaceForHPPercent(90, questsSplits)}
+100%: {GetFastestRunIDPaceForHPPercent(100, questsSplits)}
+";
             }
 
         } else if (selectedQuestPaceSplitOption == "60%/80%/100% Monster HP Dealt")
         {
-            List<Dictionary<int, int>> hpPercentagesQuestObjectiveList = GetHPPercentagesQuestObjectiveListForQuestPace(hpPercentagesList);
+            List<QuestPace> hpPercentagesQuestObjectiveList = GetHPPercentagesQuestObjectiveListForQuestPace(hpPercentagesList);
 
-            List<QuestObjectiveSplit> questsSplits = GetQuestObjectivesSplitsListForQuestPace(hpPercentagesQuestObjectiveList);
+            List<QuestPace> questsSplits = GetQuestObjectivesSplitsListForQuestPace(hpPercentagesQuestObjectiveList);
 
-            QuestObjectiveSplit medianSplitTimes = GetMedianSplitTimes(questsSplits);
+            QuestObjectiveSplit medianSplitTimes = GetMedianSplitObjectiveTimes(questsSplits);
 
             // TODO test
-            QuestObjectiveSplit fastestSplitTimes = GetFastestSplitTimes(questsSplits);
+            QuestObjectiveSplit fastestSplitTimes = GetFastestSplitObjectiveTimes(questsSplits);
 
             // Now, fastestSplitTimes contains the fastest split times for each property
 
@@ -1561,7 +1585,13 @@ public partial class ConfigWindow : FluentWindow
 
             if (this.questPaceDescriptionTextBlock != null)
             {
-                this.questPaceDescriptionTextBlock.Text = $"Quest ID {this.QuestIDTextBox.Text} pace by category {this.OverlayModeComboBox.Text} | Personal Best: {TimeService.GetMinutesSecondsMillisecondsFromFrames((double)personalBest)} | Sum of Best: {TimeService.GetMinutesSecondsMillisecondsFromFrames((long)sumOfBest)} | Sum Of Median: {TimeService.GetMinutesSecondsMillisecondsFromFrames((long)sumOfMedian)} | Median: {TimeService.GetMinutesSecondsMillisecondsFromFrames(medianFinalTimeValue)}";
+                this.questPaceDescriptionTextBlock.Text = @$"Quest ID {this.QuestIDTextBox.Text} pace by category {this.OverlayModeComboBox.Text} | Personal Best: {TimeService.GetMinutesSecondsMillisecondsFromFrames((double)personalBest)} | Sum of Best: {TimeService.GetMinutesSecondsMillisecondsFromFrames((long)sumOfBest)} | Sum Of Median: {TimeService.GetMinutesSecondsMillisecondsFromFrames((long)sumOfMedian)} | Median: {TimeService.GetMinutesSecondsMillisecondsFromFrames(medianFinalTimeValue)}
+
+Run IDs with best paces for each HP% Dealt:
+60%: {GetFastestRunIDPaceForHPPercent(60, questsSplits, true)}
+80%: {GetFastestRunIDPaceForHPPercent(80, questsSplits, true)}
+100%: {GetFastestRunIDPaceForHPPercent(100, questsSplits, true)}
+";
             }
         }
         else
@@ -1570,9 +1600,91 @@ public partial class ConfigWindow : FluentWindow
         }
     }
 
-    private void MakeQuestPaceGraph(List<QuestSplit> questsSplits, QuestSplit medianSplitTimes)
+    /// <summary>
+    /// Finds the minimum elapsed frames for a certain HP threshold. The fastest pace for that tier.
+    /// </summary>
+    /// <param name="percent"></param>
+    /// <param name="questsSplits"></param>
+    /// <returns></returns>
+    private long GetFastestRunIDPaceForHPPercent(int percent, List<QuestPace> questsSplits, bool byObjective = false)
     {
-        List<QuestSplit> runPaces = GetQuestRunPaces(questsSplits, medianSplitTimes);
+        long runID = 0;
+        int? fastestPace = null;
+
+        foreach (var questSplit in questsSplits)
+        {
+            // Assuming `questSplit.Splits` is a QuestSplit object containing HP percent frame data
+            int? currentPace = null;
+            if (byObjective)
+            {
+                switch (percent)
+                {
+                    case 60:
+                        currentPace = questSplit.ObjectiveSplits?.FortyPercentRemainingHPFrames;
+                        break;
+                    case 80:
+                        currentPace = questSplit.ObjectiveSplits?.TwentyPercentRemainingHPFrames;
+                        break;
+                    case 100:
+                        currentPace = questSplit.ObjectiveSplits?.ZeroPercentRemainingHPFrames;
+                        break;
+                    default:
+                        return runID;
+                }
+            }
+            else
+            {
+                switch (percent)
+                {
+                    case 10:
+                        currentPace = questSplit.Splits?.NinetyPercentRemainingHPFrames;
+                        break;
+                    case 20:
+                        currentPace = questSplit.Splits?.EightyPercentRemainingHPFrames;
+                        break;
+                    case 30:
+                        currentPace = questSplit.Splits?.SeventyPercentRemainingHPFrames;
+                        break;
+                    case 40:
+                        currentPace = questSplit.Splits?.SixtyPercentRemainingHPFrames;
+                        break;
+                    case 50:
+                        currentPace = questSplit.Splits?.FiftyPercentRemainingHPFrames;
+                        break;
+                    case 60:
+                        currentPace = questSplit.Splits?.FortyPercentRemainingHPFrames;
+                        break;
+                    case 70:
+                        currentPace = questSplit.Splits?.ThirtyPercentRemainingHPFrames;
+                        break;
+                    case 80:
+                        currentPace = questSplit.Splits?.TwentyPercentRemainingHPFrames;
+                        break;
+                    case 90:
+                        currentPace = questSplit.Splits?.TenPercentRemainingHPFrames;
+                        break;
+                    case 100:
+                        currentPace = questSplit.Splits?.ZeroPercentRemainingHPFrames;
+                        break;
+                    default:
+                        return runID;
+                }
+            }
+            
+
+            if (currentPace.HasValue && (!fastestPace.HasValue || currentPace < fastestPace))
+            {
+                fastestPace = currentPace;
+                runID = questSplit.RunID;
+            }
+        }
+
+        return runID;
+    }
+
+    private void MakeQuestPaceGraph(List<QuestPace> questsSplits, QuestSplit medianSplitTimes)
+    {
+        List<QuestPace> runPaces = GetQuestRunPaces(questsSplits, medianSplitTimes);
 
         if (this.questPaceGraph == null)
         {
@@ -1584,26 +1696,118 @@ public partial class ConfigWindow : FluentWindow
         //var newHP = GetElapsedTime(hp);
 
         // get the minimum value of ZeroPercentRemainingHPFrames in runPaces.
-        var personalBestTime = runPaces.Min(rp => rp.ZeroPercentRemainingHPFrames);
+        var personalBestTime = runPaces.Min(rp => rp.Splits.ZeroPercentRemainingHPFrames);
 
         foreach (var run in runPaces)
         {
             ObservableCollection<ObservablePoint> paceCollection = new();
-
-            paceCollection.Add(new ObservablePoint(10, run.NinetyPercentRemainingHPFrames));
-            paceCollection.Add(new ObservablePoint(20, run.EightyPercentRemainingHPFrames));
-            paceCollection.Add(new ObservablePoint(30, run.SeventyPercentRemainingHPFrames));
-            paceCollection.Add(new ObservablePoint(40, run.SixtyPercentRemainingHPFrames));
-            paceCollection.Add(new ObservablePoint(50, run.FiftyPercentRemainingHPFrames));
-            paceCollection.Add(new ObservablePoint(60, run.FortyPercentRemainingHPFrames));
-            paceCollection.Add(new ObservablePoint(70, run.ThirtyPercentRemainingHPFrames));
-            paceCollection.Add(new ObservablePoint(80, run.TwentyPercentRemainingHPFrames));
-            paceCollection.Add(new ObservablePoint(90, run.TenPercentRemainingHPFrames));
-            paceCollection.Add(new ObservablePoint(100, run.ZeroPercentRemainingHPFrames));
+            if (run.Splits == null)
+            {
+                continue;
+            }
+            paceCollection.Add(new ObservablePoint(10, run.Splits.NinetyPercentRemainingHPFrames));
+            paceCollection.Add(new ObservablePoint(20, run.Splits.EightyPercentRemainingHPFrames));
+            paceCollection.Add(new ObservablePoint(30, run.Splits.SeventyPercentRemainingHPFrames));
+            paceCollection.Add(new ObservablePoint(40, run.Splits.SixtyPercentRemainingHPFrames));
+            paceCollection.Add(new ObservablePoint(50, run.Splits.FiftyPercentRemainingHPFrames));
+            paceCollection.Add(new ObservablePoint(60, run.Splits.FortyPercentRemainingHPFrames));
+            paceCollection.Add(new ObservablePoint(70, run.Splits.ThirtyPercentRemainingHPFrames));
+            paceCollection.Add(new ObservablePoint(80, run.Splits.TwentyPercentRemainingHPFrames));
+            paceCollection.Add(new ObservablePoint(90, run.Splits.TenPercentRemainingHPFrames));
+            paceCollection.Add(new ObservablePoint(100, run.Splits.ZeroPercentRemainingHPFrames));
 
             var stroke = new SolidColorPaint();
 
-            if (personalBestTime == run.ZeroPercentRemainingHPFrames)
+            if (personalBestTime == run.Splits.ZeroPercentRemainingHPFrames)
+            {
+                stroke = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#fff38ba8"))) { StrokeThickness = 2 };
+            }
+            else
+            {
+                stroke = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#ff89b4fa"))) { StrokeThickness = 2 };
+            }
+
+            series.Add(new LineSeries<ObservablePoint>
+            {
+                Values = paceCollection,
+                LineSmoothness = 0,
+                GeometrySize = 0,
+                
+                // TODO tooltip?
+                //TooltipLabelFormatter = (chartPoint) =>
+                //$"Health: {(long)chartPoint.PrimaryValue}",
+                Stroke = stroke,
+                Fill = null,
+            });
+        }
+
+        this.XAxes = new Axis[]
+        {
+            new Axis
+            {
+                TextSize = 12,
+                NameTextSize = 12,
+                Name = "HP% Dealt",
+                Labeler = (value) => string.Format("{0}%", value),
+                NamePaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
+                LabelsPaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
+            },
+        };
+
+        this.YAxes = new Axis[]
+        {
+            new Axis
+            {
+                Name = "Pace at x% HP",
+                NameTextSize = 12,
+                TextSize = 12,
+                Labeler = (value) => TimeService.GetMinutesSecondsFromFrames(value),
+                NamePadding = new LiveChartsCore.Drawing.Padding(0),
+                NamePaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
+                LabelsPaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
+            },
+        };
+
+        this.questPaceGraph.Series = series;
+        this.questPaceGraph.XAxes = this.XAxes;
+        this.questPaceGraph.YAxes = this.YAxes;
+        this.questPaceGraph.TooltipPosition = TooltipPosition.Hidden;
+    }
+
+    private void MakeQuestPaceGraph(List<QuestPace> questsSplits, QuestObjectiveSplit medianSplitTimes)
+    {
+        if (this.questPaceGraph == null)
+        {
+            return;
+        }
+
+        List<QuestPace> runPaces = GetQuestRunPaces(questsSplits, medianSplitTimes);
+
+        if (runPaces.Count == 0)
+        {
+            return;
+        }
+
+        List<ISeries> series = new();
+
+        //var newHP = GetElapsedTime(hp);
+        // get the minimum value of ZeroPercentRemainingHPFrames in runPaces.
+        var personalBestTime = runPaces.Min(rp => rp.ObjectiveSplits.ZeroPercentRemainingHPFrames);
+
+        foreach (var run in runPaces)
+        {
+            ObservableCollection<ObservablePoint> paceCollection = new();
+            if (run.ObjectiveSplits == null)
+            {
+                continue;
+            }
+            paceCollection.Add(new ObservablePoint(60, run.ObjectiveSplits.FortyPercentRemainingHPFrames));
+            paceCollection.Add(new ObservablePoint(80, run.ObjectiveSplits.TwentyPercentRemainingHPFrames));
+            paceCollection.Add(new ObservablePoint(100, run.ObjectiveSplits.ZeroPercentRemainingHPFrames));
+
+            var stroke = new SolidColorPaint();
+
+            if (personalBestTime == run.ObjectiveSplits.ZeroPercentRemainingHPFrames)
             {
                 stroke = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#fff38ba8"))) { StrokeThickness = 2 };
             }
@@ -1655,146 +1859,81 @@ public partial class ConfigWindow : FluentWindow
         this.questPaceGraph.Series = series;
         this.questPaceGraph.XAxes = this.XAxes;
         this.questPaceGraph.YAxes = this.YAxes;
+        this.questPaceGraph.TooltipPosition = TooltipPosition.Hidden;
     }
 
-    private void MakeQuestPaceGraph(List<QuestObjectiveSplit> questsSplits, QuestObjectiveSplit medianSplitTimes)
+    private List<QuestPace> GetQuestRunPaces(List<QuestPace> questsSplits, QuestSplit medianSplitTimes)
     {
-        List<QuestObjectiveSplit> runPaces = GetQuestRunPaces(questsSplits, medianSplitTimes);
-
-        if (this.questPaceGraph == null)
-        {
-            return;
-        }
-
-        List<ISeries> series = new();
-
-        //var newHP = GetElapsedTime(hp);
-
-        // get the minimum value of ZeroPercentRemainingHPFrames in runPaces.
-        var personalBestTime = runPaces.Min(rp => rp.ZeroPercentRemainingHPFrames);
-
-        foreach (var run in runPaces)
-        {
-            ObservableCollection<ObservablePoint> paceCollection = new();
-
-            paceCollection.Add(new ObservablePoint(60, run.FortyPercentRemainingHPFrames));
-            paceCollection.Add(new ObservablePoint(80, run.TwentyPercentRemainingHPFrames));
-            paceCollection.Add(new ObservablePoint(100, run.ZeroPercentRemainingHPFrames));
-
-            var stroke = new SolidColorPaint();
-
-            if (personalBestTime == run.ZeroPercentRemainingHPFrames)
-            {
-                stroke = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#fff38ba8"))) { StrokeThickness = 2 };
-            }
-            else
-            {
-                stroke = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#ff89b4fa"))) { StrokeThickness = 2 };
-            }
-
-            series.Add(new LineSeries<ObservablePoint>
-            {
-                Values = paceCollection,
-                LineSmoothness = 0,
-                GeometrySize = 0,
-                // TODO tooltip?
-                //TooltipLabelFormatter = (chartPoint) =>
-                //$"Health: {(long)chartPoint.PrimaryValue}",
-                Stroke = stroke,
-                Fill = null,
-            });
-        }
-
-        this.XAxes = new Axis[]
-        {
-            new Axis
-            {
-                TextSize = 12,
-                NameTextSize = 12,
-                Name = "HP% Dealt",
-                Labeler = (value) => string.Format("{0}%", value),
-                NamePaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
-                LabelsPaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
-            },
-        };
-
-        this.YAxes = new Axis[]
-        {
-            new Axis
-            {
-                Name = "Pace at x% HP",
-                NameTextSize = 12,
-                TextSize = 12,
-                Labeler = (value) => TimeService.GetMinutesSecondsFromFrames(value),
-                NamePadding = new LiveChartsCore.Drawing.Padding(0),
-                NamePaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
-                LabelsPaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
-            },
-        };
-
-        this.questPaceGraph.Series = series;
-        this.questPaceGraph.XAxes = this.XAxes;
-        this.questPaceGraph.YAxes = this.YAxes;
-    }
-
-    private List<QuestSplit> GetQuestRunPaces(List<QuestSplit> questsSplits, QuestSplit medianSplitTimes)
-    {
-        List<QuestSplit> runPaces = new();
+        List<QuestPace> runPaces = new();
 
         foreach(var run in questsSplits)
         {
             // this is for calculating pace
-            QuestSplit runPace = new();
+            QuestPace questPace = run;
+            QuestSplit paceSplits = new();
+            var runPace = run.Splits;
+
+            if (runPace == null)
+            {
+                continue;
+            }
 
             // the pace at x% hp is its value in the current run + all of the rest median values for the other %.
-            runPace.NinetyPercentRemainingHPFrames = run.NinetyPercentRemainingHPFrames + medianSplitTimes.EightyPercentRemainingHPFrames + medianSplitTimes.SeventyPercentRemainingHPFrames + medianSplitTimes.SixtyPercentRemainingHPFrames + medianSplitTimes.FiftyPercentRemainingHPFrames + medianSplitTimes.FortyPercentRemainingHPFrames + medianSplitTimes.ThirtyPercentRemainingHPFrames + medianSplitTimes.TwentyPercentRemainingHPFrames + medianSplitTimes.TenPercentRemainingHPFrames + medianSplitTimes.ZeroPercentRemainingHPFrames;
+            paceSplits.NinetyPercentRemainingHPFrames = runPace.NinetyPercentRemainingHPFrames + medianSplitTimes.EightyPercentRemainingHPFrames + medianSplitTimes.SeventyPercentRemainingHPFrames + medianSplitTimes.SixtyPercentRemainingHPFrames + medianSplitTimes.FiftyPercentRemainingHPFrames + medianSplitTimes.FortyPercentRemainingHPFrames + medianSplitTimes.ThirtyPercentRemainingHPFrames + medianSplitTimes.TwentyPercentRemainingHPFrames + medianSplitTimes.TenPercentRemainingHPFrames + medianSplitTimes.ZeroPercentRemainingHPFrames;
 
             // the next pace is the same, but we include the value of the previous % tier.
-            runPace.EightyPercentRemainingHPFrames = run.NinetyPercentRemainingHPFrames + run.EightyPercentRemainingHPFrames + medianSplitTimes.SeventyPercentRemainingHPFrames + medianSplitTimes.SixtyPercentRemainingHPFrames + medianSplitTimes.FiftyPercentRemainingHPFrames + medianSplitTimes.FortyPercentRemainingHPFrames + medianSplitTimes.ThirtyPercentRemainingHPFrames + medianSplitTimes.TwentyPercentRemainingHPFrames + medianSplitTimes.TenPercentRemainingHPFrames + medianSplitTimes.ZeroPercentRemainingHPFrames;
+            paceSplits.EightyPercentRemainingHPFrames = runPace.NinetyPercentRemainingHPFrames + runPace.EightyPercentRemainingHPFrames + medianSplitTimes.SeventyPercentRemainingHPFrames + medianSplitTimes.SixtyPercentRemainingHPFrames + medianSplitTimes.FiftyPercentRemainingHPFrames + medianSplitTimes.FortyPercentRemainingHPFrames + medianSplitTimes.ThirtyPercentRemainingHPFrames + medianSplitTimes.TwentyPercentRemainingHPFrames + medianSplitTimes.TenPercentRemainingHPFrames + medianSplitTimes.ZeroPercentRemainingHPFrames;
 
             // include the rest
-            runPace.SeventyPercentRemainingHPFrames = run.NinetyPercentRemainingHPFrames + run.EightyPercentRemainingHPFrames + run.SeventyPercentRemainingHPFrames + medianSplitTimes.SixtyPercentRemainingHPFrames + medianSplitTimes.FiftyPercentRemainingHPFrames + medianSplitTimes.FortyPercentRemainingHPFrames + medianSplitTimes.ThirtyPercentRemainingHPFrames + medianSplitTimes.TwentyPercentRemainingHPFrames + medianSplitTimes.TenPercentRemainingHPFrames + medianSplitTimes.ZeroPercentRemainingHPFrames;
+            paceSplits.SeventyPercentRemainingHPFrames = runPace.NinetyPercentRemainingHPFrames + runPace.EightyPercentRemainingHPFrames + runPace.SeventyPercentRemainingHPFrames + medianSplitTimes.SixtyPercentRemainingHPFrames + medianSplitTimes.FiftyPercentRemainingHPFrames + medianSplitTimes.FortyPercentRemainingHPFrames + medianSplitTimes.ThirtyPercentRemainingHPFrames + medianSplitTimes.TwentyPercentRemainingHPFrames + medianSplitTimes.TenPercentRemainingHPFrames + medianSplitTimes.ZeroPercentRemainingHPFrames;
 
-            runPace.SixtyPercentRemainingHPFrames = run.NinetyPercentRemainingHPFrames + run.EightyPercentRemainingHPFrames + run.SeventyPercentRemainingHPFrames + run.SixtyPercentRemainingHPFrames + medianSplitTimes.FiftyPercentRemainingHPFrames + medianSplitTimes.FortyPercentRemainingHPFrames + medianSplitTimes.ThirtyPercentRemainingHPFrames + medianSplitTimes.TwentyPercentRemainingHPFrames + medianSplitTimes.TenPercentRemainingHPFrames + medianSplitTimes.ZeroPercentRemainingHPFrames;
+            paceSplits.SixtyPercentRemainingHPFrames = runPace.NinetyPercentRemainingHPFrames + runPace.EightyPercentRemainingHPFrames + runPace.SeventyPercentRemainingHPFrames + runPace.SixtyPercentRemainingHPFrames + medianSplitTimes.FiftyPercentRemainingHPFrames + medianSplitTimes.FortyPercentRemainingHPFrames + medianSplitTimes.ThirtyPercentRemainingHPFrames + medianSplitTimes.TwentyPercentRemainingHPFrames + medianSplitTimes.TenPercentRemainingHPFrames + medianSplitTimes.ZeroPercentRemainingHPFrames;
 
-            runPace.FiftyPercentRemainingHPFrames = run.NinetyPercentRemainingHPFrames + run.EightyPercentRemainingHPFrames + run.SeventyPercentRemainingHPFrames + run.SixtyPercentRemainingHPFrames + run.FiftyPercentRemainingHPFrames + medianSplitTimes.FortyPercentRemainingHPFrames + medianSplitTimes.ThirtyPercentRemainingHPFrames + medianSplitTimes.TwentyPercentRemainingHPFrames + medianSplitTimes.TenPercentRemainingHPFrames + medianSplitTimes.ZeroPercentRemainingHPFrames;
+            paceSplits.FiftyPercentRemainingHPFrames = runPace.NinetyPercentRemainingHPFrames + runPace.EightyPercentRemainingHPFrames + runPace.SeventyPercentRemainingHPFrames + runPace.SixtyPercentRemainingHPFrames + runPace.FiftyPercentRemainingHPFrames + medianSplitTimes.FortyPercentRemainingHPFrames + medianSplitTimes.ThirtyPercentRemainingHPFrames + medianSplitTimes.TwentyPercentRemainingHPFrames + medianSplitTimes.TenPercentRemainingHPFrames + medianSplitTimes.ZeroPercentRemainingHPFrames;
 
-            runPace.FortyPercentRemainingHPFrames = run.NinetyPercentRemainingHPFrames + run.EightyPercentRemainingHPFrames + run.SeventyPercentRemainingHPFrames + run.SixtyPercentRemainingHPFrames + run.FiftyPercentRemainingHPFrames + run.FortyPercentRemainingHPFrames + medianSplitTimes.ThirtyPercentRemainingHPFrames + medianSplitTimes.TwentyPercentRemainingHPFrames + medianSplitTimes.TenPercentRemainingHPFrames + medianSplitTimes.ZeroPercentRemainingHPFrames;
+            paceSplits.FortyPercentRemainingHPFrames = runPace.NinetyPercentRemainingHPFrames + runPace.EightyPercentRemainingHPFrames + runPace.SeventyPercentRemainingHPFrames + runPace.SixtyPercentRemainingHPFrames + runPace.FiftyPercentRemainingHPFrames + runPace.FortyPercentRemainingHPFrames + medianSplitTimes.ThirtyPercentRemainingHPFrames + medianSplitTimes.TwentyPercentRemainingHPFrames + medianSplitTimes.TenPercentRemainingHPFrames + medianSplitTimes.ZeroPercentRemainingHPFrames;
 
-            runPace.ThirtyPercentRemainingHPFrames = run.NinetyPercentRemainingHPFrames + run.EightyPercentRemainingHPFrames + run.SeventyPercentRemainingHPFrames + run.SixtyPercentRemainingHPFrames + run.FiftyPercentRemainingHPFrames + run.FortyPercentRemainingHPFrames + medianSplitTimes.ThirtyPercentRemainingHPFrames + medianSplitTimes.TwentyPercentRemainingHPFrames + medianSplitTimes.TenPercentRemainingHPFrames + medianSplitTimes.ZeroPercentRemainingHPFrames;
+            paceSplits.ThirtyPercentRemainingHPFrames = runPace.NinetyPercentRemainingHPFrames + runPace.EightyPercentRemainingHPFrames + runPace.SeventyPercentRemainingHPFrames + runPace.SixtyPercentRemainingHPFrames + runPace.FiftyPercentRemainingHPFrames + runPace.FortyPercentRemainingHPFrames + medianSplitTimes.ThirtyPercentRemainingHPFrames + medianSplitTimes.TwentyPercentRemainingHPFrames + medianSplitTimes.TenPercentRemainingHPFrames + medianSplitTimes.ZeroPercentRemainingHPFrames;
 
-            runPace.TwentyPercentRemainingHPFrames = run.NinetyPercentRemainingHPFrames + run.EightyPercentRemainingHPFrames + run.SeventyPercentRemainingHPFrames + run.SixtyPercentRemainingHPFrames + run.FiftyPercentRemainingHPFrames + run.FortyPercentRemainingHPFrames + run.ThirtyPercentRemainingHPFrames + run.TwentyPercentRemainingHPFrames + medianSplitTimes.TenPercentRemainingHPFrames + medianSplitTimes.ZeroPercentRemainingHPFrames;
+            paceSplits.TwentyPercentRemainingHPFrames = runPace.NinetyPercentRemainingHPFrames + runPace.EightyPercentRemainingHPFrames + runPace.SeventyPercentRemainingHPFrames + runPace.SixtyPercentRemainingHPFrames + runPace.FiftyPercentRemainingHPFrames + runPace.FortyPercentRemainingHPFrames + runPace.ThirtyPercentRemainingHPFrames + runPace.TwentyPercentRemainingHPFrames + medianSplitTimes.TenPercentRemainingHPFrames + medianSplitTimes.ZeroPercentRemainingHPFrames;
 
-            runPace.TenPercentRemainingHPFrames = run.NinetyPercentRemainingHPFrames + run.EightyPercentRemainingHPFrames + run.SeventyPercentRemainingHPFrames + run.SixtyPercentRemainingHPFrames + run.FiftyPercentRemainingHPFrames + run.FortyPercentRemainingHPFrames + run.ThirtyPercentRemainingHPFrames + run.TwentyPercentRemainingHPFrames + run.TenPercentRemainingHPFrames + medianSplitTimes.ZeroPercentRemainingHPFrames;
+            paceSplits.TenPercentRemainingHPFrames = runPace.NinetyPercentRemainingHPFrames + runPace.EightyPercentRemainingHPFrames + runPace.SeventyPercentRemainingHPFrames + runPace.SixtyPercentRemainingHPFrames + runPace.FiftyPercentRemainingHPFrames + runPace.FortyPercentRemainingHPFrames + runPace.ThirtyPercentRemainingHPFrames + runPace.TwentyPercentRemainingHPFrames + runPace.TenPercentRemainingHPFrames + medianSplitTimes.ZeroPercentRemainingHPFrames;
 
-            runPace.ZeroPercentRemainingHPFrames = run.NinetyPercentRemainingHPFrames + run.EightyPercentRemainingHPFrames + run.SeventyPercentRemainingHPFrames + run.SixtyPercentRemainingHPFrames + run.FiftyPercentRemainingHPFrames + run.FortyPercentRemainingHPFrames + run.ThirtyPercentRemainingHPFrames + run.TwentyPercentRemainingHPFrames + run.TenPercentRemainingHPFrames + run.ZeroPercentRemainingHPFrames;
+            paceSplits.ZeroPercentRemainingHPFrames = runPace.NinetyPercentRemainingHPFrames + runPace.EightyPercentRemainingHPFrames + runPace.SeventyPercentRemainingHPFrames + runPace.SixtyPercentRemainingHPFrames + runPace.FiftyPercentRemainingHPFrames + runPace.FortyPercentRemainingHPFrames + runPace.ThirtyPercentRemainingHPFrames + runPace.TwentyPercentRemainingHPFrames + runPace.TenPercentRemainingHPFrames + runPace.ZeroPercentRemainingHPFrames;
 
-            runPaces.Add(runPace);
+            // TODO this looks confusing
+            questPace.Splits = paceSplits;
+            runPaces.Add(questPace);
         }
-
 
         return runPaces;
     }
 
-    private List<QuestObjectiveSplit> GetQuestRunPaces(List<QuestObjectiveSplit> questsSplits, QuestObjectiveSplit medianSplitTimes)
+    private List<QuestPace> GetQuestRunPaces(List<QuestPace> questsSplits, QuestObjectiveSplit medianSplitTimes)
     {
-        List<QuestObjectiveSplit> runPaces = new();
+        List<QuestPace> runPaces = new();
 
         foreach (var run in questsSplits)
         {
-            // this is for calculating pace
-            QuestObjectiveSplit runPace = new();
+            QuestPace questPace = run;
+            QuestObjectiveSplit paceSplits = new();
+            var runPace = run.ObjectiveSplits;
+
+            if (runPace == null)
+            {
+                continue;
+            }
 
             // the pace at x% hp is its value in the current run + all of the rest median values for the other %.
-            runPace.FortyPercentRemainingHPFrames = run.FortyPercentRemainingHPFrames +  medianSplitTimes.TwentyPercentRemainingHPFrames + medianSplitTimes.ZeroPercentRemainingHPFrames;
+            paceSplits.FortyPercentRemainingHPFrames = runPace.FortyPercentRemainingHPFrames +  medianSplitTimes.TwentyPercentRemainingHPFrames + medianSplitTimes.ZeroPercentRemainingHPFrames;
 
-            runPace.TwentyPercentRemainingHPFrames = run.FortyPercentRemainingHPFrames + run.TwentyPercentRemainingHPFrames + + medianSplitTimes.ZeroPercentRemainingHPFrames;
+            paceSplits.TwentyPercentRemainingHPFrames = runPace.FortyPercentRemainingHPFrames + runPace.TwentyPercentRemainingHPFrames + + medianSplitTimes.ZeroPercentRemainingHPFrames;
 
-            runPace.ZeroPercentRemainingHPFrames = run.FortyPercentRemainingHPFrames + run.TwentyPercentRemainingHPFrames + run.ZeroPercentRemainingHPFrames;
+            paceSplits.ZeroPercentRemainingHPFrames = runPace.FortyPercentRemainingHPFrames + runPace.TwentyPercentRemainingHPFrames + runPace.ZeroPercentRemainingHPFrames;
 
-            runPaces.Add(runPace);
+            questPace.ObjectiveSplits = paceSplits;
+            runPaces.Add(questPace);
         }
-
 
         return runPaces;
     }
@@ -1822,33 +1961,51 @@ public partial class ConfigWindow : FluentWindow
         selectedQuestPaceSplitOption = selectedItem.Content.ToString();
     }
 
-    private List<Dictionary<int, Dictionary<int, int>>> GetMonster1HPListForQuestPace(List<Models.Quest> quests)
+    private List<QuestPace> GetMonster1HPListForQuestPace(List<Models.Quest> quests)
     {
-        List<Dictionary<int, Dictionary<int, int>>> monster1HPList = new();
+        List<QuestPace> monster1HPList = new();
         foreach (var quest in quests)
         {
+            QuestPace pace = new();
+
             if (quest.Monster1HPDictionary != null)
             {
+
                 var monster1HPDictionary = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int, int>>>(quest.Monster1HPDictionary);
                 if (monster1HPDictionary != null)
                 {
-                    monster1HPList.Add(monster1HPDictionary);
+                    pace.MonsterHPField = monster1HPDictionary;
                 }
+
+                if (quest.RunID == null)
+                {
+                    continue;
+                }
+
+                pace.RunID = (long)quest.RunID;
+                monster1HPList.Add(pace);
             }
         }
         return monster1HPList;
     }
 
-    private List<Dictionary<int, int>> GetFlattenedListForQuestPace(List<Dictionary<int, Dictionary<int,int>>> consistentMonsterIdRuns)
+    private List<QuestPace> GetFlattenedListForQuestPace(List<QuestPace> consistentMonsterIdRuns)
     {
-        List<Dictionary<int, int>> flattenedList = new();
+        List<QuestPace> flattenedList = new();
 
         foreach (var questRun in consistentMonsterIdRuns)
         {
+            QuestPace pace = questRun;
+
             // Create a new dictionary for each quest run
             Dictionary<int, int> run = new Dictionary<int, int>();
 
-            foreach (var kvp in questRun)
+            if (questRun.MonsterHPField == null)
+            {
+                continue;
+            }
+
+            foreach (var kvp in questRun.MonsterHPField)
             {
                 // kvp.Key is the time in frames
                 // kvp.Value is the Dictionary<int, int> where the Key is the monster ID and Value is the HP
@@ -1857,19 +2014,27 @@ public partial class ConfigWindow : FluentWindow
             }
 
             // Add the flattened run to the list
-            flattenedList.Add(run);
+            pace.MonsterHPFieldFlattened = run;
+            flattenedList.Add(pace);
         }
 
         return flattenedList;
     }
 
-    private List<Dictionary<int, int>> GetRemovedOutliersListForQuestPace(List<Dictionary<int, int>> flattenedList)
+    private List<QuestPace> GetRemovedOutliersListForQuestPace(List<QuestPace> flattenedList)
     {
-        List<Dictionary<int, int>> removedOutliersList = new();
+        List<QuestPace> removedOutliersList = new();
 
         foreach (var questRun in flattenedList)
         {
-            if (questRun.Count == 0)
+            QuestPace pace = questRun;
+
+            if (questRun.MonsterHPFieldFlattened == null)
+            {
+                continue;
+            }
+
+            if (questRun.MonsterHPFieldFlattened.Count == 0)
             {
                 continue;
             }
@@ -1879,14 +2044,14 @@ public partial class ConfigWindow : FluentWindow
             int? lastValidHp = null;
             bool isOutlier = false;
 
-            foreach (var frame in questRun.OrderByDescending(kvp => kvp.Key))
+            foreach (var frame in questRun.MonsterHPFieldFlattened.OrderByDescending(kvp => kvp.Key))
             {
                 int currentHp = frame.Value;
                 int currentTime = frame.Key;
 
                 if (previousHp.HasValue)
                 {
-                    if (previousHp - currentHp > questRun.Values.First() * 0.25)
+                    if (previousHp - currentHp > questRun.MonsterHPFieldFlattened.Values.First() * 0.25)
                     {
                         // This is a potential outlier, skip adding and mark the flag
                         isOutlier = true;
@@ -1937,19 +2102,22 @@ public partial class ConfigWindow : FluentWindow
 
             if (filteredRun.Any())
             {
-                removedOutliersList.Add(filteredRun);
+                pace.MonsterHPFieldFlattened = filteredRun;
+                removedOutliersList.Add(pace);
             }
         }
 
         return removedOutliersList;
     }
 
-    private List<Dictionary<int, int>> GetHPPercentagesListForQuestPace(List<Dictionary<int, int>> elapsedTimeList)
+    private List<QuestPace> GetHPPercentagesListForQuestPace(List<QuestPace> elapsedTimeList)
     {
-        List<Dictionary<int, int>> hpPercentagesList = new ();
+        List<QuestPace> hpPercentagesList = new ();
 
         foreach (var run in elapsedTimeList)
         {
+            QuestPace pace = run;
+
             Dictionary<int, (int, int)> hpPercentValues = new()
             {
                 {0, (0,0) },
@@ -1964,10 +2132,15 @@ public partial class ConfigWindow : FluentWindow
                 {9, (0,0) },
             };
 
-            var maxHP = run.Values.First();
+            if (run.MonsterHPFieldFlattened == null)
+            {
+                continue;
+            }
+
+            var maxHP = run.MonsterHPFieldFlattened.Values.First();
             int previousHP = maxHP;
 
-            foreach (var entry in run)
+            foreach (var entry in run.MonsterHPFieldFlattened)
             {
                 if (previousHP < entry.Value)
                 {
@@ -1997,19 +2170,21 @@ public partial class ConfigWindow : FluentWindow
                 hpPercentValuesFlattened.Add(entry.Value.Item1, entry.Value.Item2);
             }
 
-            hpPercentagesList.Add(hpPercentValuesFlattened);
+            pace.MonsterHPFieldFlattened = hpPercentValuesFlattened;
+            hpPercentagesList.Add(pace);
         }
 
         return hpPercentagesList;
     }
 
-    private List<QuestSplit> GetQuestsSplitsListForQuestPace(List<Dictionary<int,int>> hpPercentagesList)
+    private List<QuestPace> GetQuestsSplitsListForQuestPace(List<QuestPace> hpPercentagesList)
     {
-        List<QuestSplit> questsSplits = new();
+        List<QuestPace> questsSplits = new();
 
         // hpPercentagesList is a List<Dictionary<int, int>> containing the frames elapsed in total in first int and hp in second int
         foreach (var run in hpPercentagesList)
         {
+            QuestPace pace = run;
             // get the frames elapsed in each split. a split is each entry in the dictionary<int,int>
             // with first int as frames elapsed and second int the hp remaining.
             QuestSplit splitTimesFrames = new();
@@ -2017,7 +2192,12 @@ public partial class ConfigWindow : FluentWindow
             int previousKeyFramesElapsed = 0;
             int framesElapsed = 0;
 
-            foreach (var entry in run)
+            if (run.MonsterHPFieldFlattened == null)
+            {
+                continue;
+            }
+
+            foreach (var entry in run.MonsterHPFieldFlattened)
             {
                 //int hpPercent = entry.Value;    // Assuming the value represents the HP percentage
 
@@ -2032,38 +2212,42 @@ public partial class ConfigWindow : FluentWindow
                 index++;
             }
 
-            questsSplits.Add(splitTimesFrames);
+            pace.Splits = splitTimesFrames;
+            questsSplits.Add(pace);
         }
 
         return questsSplits;
     }
 
-    private List<Dictionary<int, int>> GetHPPercentagesQuestObjectiveListForQuestPace(List<Dictionary<int,int>> hpPercentagesList)
+    private List<QuestPace> GetHPPercentagesQuestObjectiveListForQuestPace(List<QuestPace> hpPercentagesList)
     {
-        List<Dictionary<int, int>> hpPercentagesQuestObjectiveList = new();
+        List<QuestPace> hpPercentagesQuestObjectiveList = new();
 
         // each dictionary entry has 10 entries.
         // we want to remove all except the 6th, 8th, and 10th entry.
         // into a new list.
         foreach(var run in hpPercentagesList)
         {
-            var filteredRun = run
+            QuestPace pace = run;
+            var filteredRun = run.MonsterHPFieldFlattened
                 .Where((entry, index) => index == 5 || index == 7 || index == 9) // index is zero-based, so 5, 7, and 9 correspond to the 6th, 8th, and 10th entries
                 .ToDictionary(entry => entry.Key, entry => entry.Value);
 
-            hpPercentagesQuestObjectiveList.Add(filteredRun);
+            pace.MonsterHPFieldFlattened = filteredRun;
+            hpPercentagesQuestObjectiveList.Add(pace);
         }
 
         return hpPercentagesQuestObjectiveList;
     }
 
-    private List<QuestObjectiveSplit> GetQuestObjectivesSplitsListForQuestPace(List<Dictionary<int, int>> hpPercentagesList)
+    private List<QuestPace> GetQuestObjectivesSplitsListForQuestPace(List<QuestPace> hpPercentagesList)
     {
-        List<QuestObjectiveSplit> questsSplits = new();
+        List<QuestPace> questsSplits = new();
 
         // hpPercentagesList is a List<Dictionary<int, int>> containing the frames elapsed in total in first int and hp in second int
         foreach (var run in hpPercentagesList)
         {
+            QuestPace pace = run;
             // get the frames elapsed in each split. a split is each entry in the dictionary<int,int>
             // with first int as frames elapsed and second int the hp remaining.
             QuestObjectiveSplit splitTimesFrames = new();
@@ -2071,7 +2255,12 @@ public partial class ConfigWindow : FluentWindow
             int previousKeyFramesElapsed = 0;
             int framesElapsed = 0;
 
-            foreach (var entry in run)
+            if (run.MonsterHPFieldFlattened == null)
+            {
+                continue;
+            }
+
+            foreach (var entry in run.MonsterHPFieldFlattened)
             {
                 //int hpPercent = entry.Value;    // Assuming the value represents the HP percentage
 
@@ -2086,7 +2275,8 @@ public partial class ConfigWindow : FluentWindow
                 index++;
             }
 
-            questsSplits.Add(splitTimesFrames);
+            pace.ObjectiveSplits = splitTimesFrames;
+            questsSplits.Add(pace);
         }
 
         return questsSplits;
@@ -2095,7 +2285,7 @@ public partial class ConfigWindow : FluentWindow
     // Update the PopulateQuestSplitField method to handle new cases if necessary.
 
 
-    private QuestSplit GetMedianSplitTimes(List<QuestSplit> questsSplits)
+    private QuestSplit GetMedianSplitTimes(List<QuestPace> questsSplits)
     {
         QuestSplit medianSplitTimes = new();
         // get the median of each questsplit field from questsSplits.
@@ -2106,6 +2296,7 @@ public partial class ConfigWindow : FluentWindow
             {
                 // Get all non-null values for the property from questsSplits
                 List<int> propertyValues = questsSplits
+                    .Select(split => split.Splits) // Access the Splits property
                     .Where(split => property.GetValue(split) != null)
                     .Select(split => (int)property.GetValue(split))
                     .ToList();
@@ -2124,7 +2315,7 @@ public partial class ConfigWindow : FluentWindow
         return medianSplitTimes;
     }
 
-    private QuestObjectiveSplit GetMedianSplitTimes(List<QuestObjectiveSplit> questsSplits)
+    private QuestObjectiveSplit GetMedianSplitObjectiveTimes(List<QuestPace> questsSplits)
     {
         QuestObjectiveSplit medianSplitTimes = new();
         // get the median of each questsplit field from questsSplits.
@@ -2135,6 +2326,7 @@ public partial class ConfigWindow : FluentWindow
             {
                 // Get all non-null values for the property from questsSplits
                 List<int> propertyValues = questsSplits
+                    .Select(split => split.ObjectiveSplits)
                     .Where(split => property.GetValue(split) != null)
                     .Select(split => (int)property.GetValue(split))
                     .ToList();
@@ -2153,7 +2345,7 @@ public partial class ConfigWindow : FluentWindow
         return medianSplitTimes;
     }
 
-    private QuestSplit GetFastestSplitTimes(List<QuestSplit> questsSplits)
+    private QuestSplit GetFastestSplitTimes(List<QuestPace> questsSplits)
     {
         QuestSplit fastestSplitTimes = new();
 
@@ -2164,6 +2356,7 @@ public partial class ConfigWindow : FluentWindow
             {
                 // Get all non-null values for the property from questsSplits
                 List<int> propertyValues = questsSplits
+                    .Select(split => split.Splits)
                     .Where(split => property.GetValue(split) != null)
                     .Select(split => (int)property.GetValue(split))
                     .ToList();
@@ -2182,7 +2375,7 @@ public partial class ConfigWindow : FluentWindow
         return fastestSplitTimes;
     }
 
-    private QuestObjectiveSplit GetFastestSplitTimes(List<QuestObjectiveSplit> questsSplits)
+    private QuestObjectiveSplit GetFastestSplitObjectiveTimes(List<QuestPace> questsSplits)
     {
         QuestObjectiveSplit fastestSplitTimes = new();
 
@@ -2193,6 +2386,7 @@ public partial class ConfigWindow : FluentWindow
             {
                 // Get all non-null values for the property from questsSplits
                 List<int> propertyValues = questsSplits
+                    .Select(split => split.ObjectiveSplits)
                     .Where(split => property.GetValue(split) != null)
                     .Select(split => (int)property.GetValue(split))
                     .ToList();

@@ -854,7 +854,7 @@
 
                     <StackPanel  Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Orientation="Vertical" Margin="5">
                         <StackPanel Orientation="Horizontal">
-                            <ui:Button Background="Transparent" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTip="Save summary of stats to text file" Click="QuestPaceButtonSaveFile_Click">
+                            <ui:Button Background="Transparent" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTip="Save summary of stats as image file" Click="QuestPaceButtonSaveFile_Click">
                                 <Button.Content>
                                     <ui:SymbolIcon Symbol="ArrowDownload24" FontSize="24" Foreground="{StaticResource Green}"/>
                                 </Button.Content>
