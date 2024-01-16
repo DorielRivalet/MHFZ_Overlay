@@ -247,6 +247,8 @@ Includes icons!
 
 ![YouTube](./demo/databaseyoutube.png)
 
+![Quest Pace](./demo/questpace.png)
+
 ![Inventories](./demo/databaseinventories.png)
 
 - [x] Also includes personal best times by date and by attempts! The total frames elapsed are shown in the graph.
