@@ -27,8 +27,11 @@ using System.Windows.Media.Media3D;
 using EZlion.Mapper;
 using LiveChartsCore;
 using LiveChartsCore.Defaults;
+using LiveChartsCore.Drawing;
+using LiveChartsCore.Kernel;
 using LiveChartsCore.Measure;
 using LiveChartsCore.SkiaSharpView;
+using LiveChartsCore.SkiaSharpView.Drawing.Geometries;
 using LiveChartsCore.SkiaSharpView.Painting;
 using LiveChartsCore.SkiaSharpView.WPF;
 using MHFZ_Overlay.Models;
@@ -1471,7 +1474,6 @@ public partial class ConfigWindow : FluentWindow
         }
 
         this.questPaceWeaponSelected = selectedWeapon;
-        var a = selectedQuestPaceSplitOption;
 
         var quests = DatabaseManager.GetQuests(long.Parse(this.QuestIDTextBox.Text.Trim()), this.questPaceWeaponSelected, this.OverlayModeComboBox.Text.Trim());
         
@@ -1525,7 +1527,134 @@ public partial class ConfigWindow : FluentWindow
             this.questPaceDescriptionTextBlock.Text = $"Quest ID {this.QuestIDTextBox.Text} pace by category {this.OverlayModeComboBox.Text} | Personal Best: {TimeService.GetMinutesSecondsMillisecondsFromFrames((double)personalBest)} | Sum of Best: {TimeService.GetMinutesSecondsMillisecondsFromFrames((long)sumOfBest)} | Sum Of Median: {TimeService.GetMinutesSecondsMillisecondsFromFrames((long)sumOfMedian)} | Median: {TimeService.GetMinutesSecondsMillisecondsFromFrames(medianFinalTimeValue)}";
         }
 
-        // TODO graph
+        MakeQuestPaceGraph(questsSplits, medianSplitTimes);
+    }
+
+    private void MakeQuestPaceGraph(List<QuestSplit> questsSplits, QuestSplit medianSplitTimes)
+    {
+        List<QuestSplit> runPaces = GetQuestRunPaces(questsSplits, medianSplitTimes);
+
+        if (this.questPaceGraph == null)
+        {
+            return;
+        }
+
+        List<ISeries> series = new();
+
+        //var newHP = GetElapsedTime(hp);
+
+        // get the minimum value of ZeroPercentRemainingHPFrames in runPaces.
+        var personalBestTime = runPaces.Min(rp => rp.ZeroPercentRemainingHPFrames);
+
+        foreach (var run in runPaces)
+        {
+            ObservableCollection<ObservablePoint> paceCollection = new();
+
+            paceCollection.Add(new ObservablePoint(10, run.NinetyPercentRemainingHPFrames));
+            paceCollection.Add(new ObservablePoint(20, run.EightyPercentRemainingHPFrames));
+            paceCollection.Add(new ObservablePoint(30, run.SeventyPercentRemainingHPFrames));
+            paceCollection.Add(new ObservablePoint(40, run.SixtyPercentRemainingHPFrames));
+            paceCollection.Add(new ObservablePoint(50, run.FiftyPercentRemainingHPFrames));
+            paceCollection.Add(new ObservablePoint(60, run.FortyPercentRemainingHPFrames));
+            paceCollection.Add(new ObservablePoint(70, run.ThirtyPercentRemainingHPFrames));
+            paceCollection.Add(new ObservablePoint(80, run.TwentyPercentRemainingHPFrames));
+            paceCollection.Add(new ObservablePoint(90, run.TenPercentRemainingHPFrames));
+            paceCollection.Add(new ObservablePoint(100, run.ZeroPercentRemainingHPFrames));
+
+            var stroke = new SolidColorPaint();
+
+            if (personalBestTime == run.ZeroPercentRemainingHPFrames)
+            {
+                stroke = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#fff38ba8"))) { StrokeThickness = 2 };
+            }
+            else
+            {
+                stroke = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#ff89b4fa"))) { StrokeThickness = 2 };
+            }
+
+            series.Add(new LineSeries<ObservablePoint>
+            {
+                Values = paceCollection,
+                LineSmoothness = 0,
+                GeometrySize = 0,
+                // TODO tooltip?
+                //TooltipLabelFormatter = (chartPoint) =>
+                //$"Health: {(long)chartPoint.PrimaryValue}",
+                Stroke = stroke,
+                Fill = null,
+            });
+        }
+
+        this.XAxes = new Axis[]
+        {
+            new Axis
+            {
+                TextSize = 12,
+                NameTextSize = 12,
+                Name = "HP% Dealt",
+                Labeler = (value) => string.Format("{0}%", value),
+                NamePaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
+                LabelsPaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
+            },
+        };
+
+        this.YAxes = new Axis[]
+        {
+            new Axis
+            {
+                Name = "Pace at x% HP",
+                NameTextSize = 12,
+                TextSize = 12,
+                Labeler = (value) => TimeService.GetMinutesSecondsFromFrames(value),
+                NamePadding = new LiveChartsCore.Drawing.Padding(0),
+                NamePaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
+                LabelsPaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
+            },
+        };
+
+        this.questPaceGraph.Series = series;
+        this.questPaceGraph.XAxes = this.XAxes;
+        this.questPaceGraph.YAxes = this.YAxes;
+        this.questPaceGraph.Tooltip = null;
+    }
+
+    private List<QuestSplit> GetQuestRunPaces(List<QuestSplit> questsSplits, QuestSplit medianSplitTimes)
+    {
+        List<QuestSplit> runPaces = new();
+
+        foreach(var run in questsSplits)
+        {
+            // this is for calculating pace
+            QuestSplit runPace = new();
+
+            // the pace at x% hp is its value in the current run + all of the rest median values for the other %.
+            runPace.NinetyPercentRemainingHPFrames = run.NinetyPercentRemainingHPFrames + medianSplitTimes.EightyPercentRemainingHPFrames + medianSplitTimes.SeventyPercentRemainingHPFrames + medianSplitTimes.SixtyPercentRemainingHPFrames + medianSplitTimes.FiftyPercentRemainingHPFrames + medianSplitTimes.FortyPercentRemainingHPFrames + medianSplitTimes.ThirtyPercentRemainingHPFrames + medianSplitTimes.TwentyPercentRemainingHPFrames + medianSplitTimes.TenPercentRemainingHPFrames + medianSplitTimes.ZeroPercentRemainingHPFrames;
+
+            // the next pace is the same, but we include the value of the previous % tier.
+            runPace.EightyPercentRemainingHPFrames = run.NinetyPercentRemainingHPFrames + run.EightyPercentRemainingHPFrames + medianSplitTimes.SeventyPercentRemainingHPFrames + medianSplitTimes.SixtyPercentRemainingHPFrames + medianSplitTimes.FiftyPercentRemainingHPFrames + medianSplitTimes.FortyPercentRemainingHPFrames + medianSplitTimes.ThirtyPercentRemainingHPFrames + medianSplitTimes.TwentyPercentRemainingHPFrames + medianSplitTimes.TenPercentRemainingHPFrames + medianSplitTimes.ZeroPercentRemainingHPFrames;
+
+            // include the rest
+            runPace.SeventyPercentRemainingHPFrames = run.NinetyPercentRemainingHPFrames + run.EightyPercentRemainingHPFrames + run.SeventyPercentRemainingHPFrames + medianSplitTimes.SixtyPercentRemainingHPFrames + medianSplitTimes.FiftyPercentRemainingHPFrames + medianSplitTimes.FortyPercentRemainingHPFrames + medianSplitTimes.ThirtyPercentRemainingHPFrames + medianSplitTimes.TwentyPercentRemainingHPFrames + medianSplitTimes.TenPercentRemainingHPFrames + medianSplitTimes.ZeroPercentRemainingHPFrames;
+
+            runPace.SixtyPercentRemainingHPFrames = run.NinetyPercentRemainingHPFrames + run.EightyPercentRemainingHPFrames + run.SeventyPercentRemainingHPFrames + run.SixtyPercentRemainingHPFrames + medianSplitTimes.FiftyPercentRemainingHPFrames + medianSplitTimes.FortyPercentRemainingHPFrames + medianSplitTimes.ThirtyPercentRemainingHPFrames + medianSplitTimes.TwentyPercentRemainingHPFrames + medianSplitTimes.TenPercentRemainingHPFrames + medianSplitTimes.ZeroPercentRemainingHPFrames;
+
+            runPace.FiftyPercentRemainingHPFrames = run.NinetyPercentRemainingHPFrames + run.EightyPercentRemainingHPFrames + run.SeventyPercentRemainingHPFrames + run.SixtyPercentRemainingHPFrames + run.FiftyPercentRemainingHPFrames + medianSplitTimes.FortyPercentRemainingHPFrames + medianSplitTimes.ThirtyPercentRemainingHPFrames + medianSplitTimes.TwentyPercentRemainingHPFrames + medianSplitTimes.TenPercentRemainingHPFrames + medianSplitTimes.ZeroPercentRemainingHPFrames;
+
+            runPace.FortyPercentRemainingHPFrames = run.NinetyPercentRemainingHPFrames + run.EightyPercentRemainingHPFrames + run.SeventyPercentRemainingHPFrames + run.SixtyPercentRemainingHPFrames + run.FiftyPercentRemainingHPFrames + run.FortyPercentRemainingHPFrames + medianSplitTimes.ThirtyPercentRemainingHPFrames + medianSplitTimes.TwentyPercentRemainingHPFrames + medianSplitTimes.TenPercentRemainingHPFrames + medianSplitTimes.ZeroPercentRemainingHPFrames;
+
+            runPace.ThirtyPercentRemainingHPFrames = run.NinetyPercentRemainingHPFrames + run.EightyPercentRemainingHPFrames + run.SeventyPercentRemainingHPFrames + run.SixtyPercentRemainingHPFrames + run.FiftyPercentRemainingHPFrames + run.FortyPercentRemainingHPFrames + medianSplitTimes.ThirtyPercentRemainingHPFrames + medianSplitTimes.TwentyPercentRemainingHPFrames + medianSplitTimes.TenPercentRemainingHPFrames + medianSplitTimes.ZeroPercentRemainingHPFrames;
+
+            runPace.TwentyPercentRemainingHPFrames = run.NinetyPercentRemainingHPFrames + run.EightyPercentRemainingHPFrames + run.SeventyPercentRemainingHPFrames + run.SixtyPercentRemainingHPFrames + run.FiftyPercentRemainingHPFrames + run.FortyPercentRemainingHPFrames + run.ThirtyPercentRemainingHPFrames + run.TwentyPercentRemainingHPFrames + medianSplitTimes.TenPercentRemainingHPFrames + medianSplitTimes.ZeroPercentRemainingHPFrames;
+
+            runPace.TenPercentRemainingHPFrames = run.NinetyPercentRemainingHPFrames + run.EightyPercentRemainingHPFrames + run.SeventyPercentRemainingHPFrames + run.SixtyPercentRemainingHPFrames + run.FiftyPercentRemainingHPFrames + run.FortyPercentRemainingHPFrames + run.ThirtyPercentRemainingHPFrames + run.TwentyPercentRemainingHPFrames + run.TenPercentRemainingHPFrames + medianSplitTimes.ZeroPercentRemainingHPFrames;
+
+            runPace.ZeroPercentRemainingHPFrames = run.NinetyPercentRemainingHPFrames + run.EightyPercentRemainingHPFrames + run.SeventyPercentRemainingHPFrames + run.SixtyPercentRemainingHPFrames + run.FiftyPercentRemainingHPFrames + run.FortyPercentRemainingHPFrames + run.ThirtyPercentRemainingHPFrames + run.TwentyPercentRemainingHPFrames + run.TenPercentRemainingHPFrames + run.ZeroPercentRemainingHPFrames;
+
+            runPaces.Add(runPace);
+        }
+
+
+        return runPaces;
     }
 
     string? selectedQuestPaceSplitOption = "Every 10% Monster HP Dealt";
