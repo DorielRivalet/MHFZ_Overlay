@@ -1811,6 +1811,25 @@ public sealed class DatabaseService
 
                     Logger.Debug("Inserted into QuestsToggleMode table");
 
+                    sql = @"INSERT INTO QuestsCourse (
+                        Rights,
+                        RunID
+                        ) VALUES (
+                        @Rights,
+                        @RunID
+                        )";
+
+                    using (var cmd = new SQLiteCommand(sql, conn))
+                    {
+                        var rights = model.Rights();
+
+                        cmd.Parameters.AddWithValue("@Rights", rights);
+                        cmd.Parameters.AddWithValue("@RunID", runID);
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    Logger.Debug("Inserted into QuestsCourse table");
+
                     var gearName = s.GearDescriptionExport;
                     if (string.IsNullOrEmpty(gearName))
                     {
@@ -5167,6 +5186,17 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                 sql = @"CREATE TABLE IF NOT EXISTS QuestsToggleMode(
                 QuestsToggleModeID INTEGER PRIMARY KEY AUTOINCREMENT,
                 QuestToggleMode INTEGER NOT NULL DEFAULT 0,
+                RunID INTEGER NOT NULL,
+                FOREIGN KEY(RunID) REFERENCES Quests(RunID)
+                )";
+                using (var cmd = new SQLiteCommand(sql, conn))
+                {
+                    cmd.ExecuteNonQuery();
+                }
+
+                sql = @"CREATE TABLE IF NOT EXISTS QuestsCourse(
+                QuestsCourseID INTEGER PRIMARY KEY AUTOINCREMENT,
+                Rights INTEGER NOT NULL DEFAULT 0,
                 RunID INTEGER NOT NULL,
                 FOREIGN KEY(RunID) REFERENCES Quests(RunID)
                 )";

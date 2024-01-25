@@ -1264,6 +1264,12 @@ public abstract class AddressModel : INotifyPropertyChanged
     /// <returns></returns>
     public abstract int QuestToggleMonsterMode();
 
+    /// <summary>
+    /// Course rights. 14 is hl+ex
+    /// </summary>
+    /// <returns></returns>
+    public abstract int Rights();
+
     /// <TODO>
     /// [] Not Done
     /// [X] Done
@@ -1672,7 +1678,8 @@ TreeScope.Children, condition);
         }
         else if (s.TimerInfoShown && s.EnableInputLogging && s.EnableQuestLogging && s.OverlayModeWatermarkShown)
         {
-            if (this.DivaSkillUsesLeft() == 0 && this.StyleRank1() != 15 && this.StyleRank2() != 15)
+            // TODO diva prayer gem
+            if (this.Rights() == 14 && this.DivaSkillUsesLeft() == 0 && this.StyleRank1() != 15 && this.StyleRank2() != 15)
             {
                 return OverlayMode.TimeAttack;
             }

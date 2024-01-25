@@ -1748,4 +1748,7 @@ public sealed class AddressModelHGE : AddressModel
 
     /// <inheritdoc/>
     public override int QuestToggleMonsterMode() => this.M.ReadByte("mhfo-hd.dll+E73D7B6");
+
+    /// <inheritdoc/>
+    public override int Rights() => this.M.Read2Byte("mhfo-hd.dll+EABD3C4");
 }
