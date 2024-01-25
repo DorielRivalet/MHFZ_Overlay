@@ -1927,7 +1927,7 @@ Run IDs with best paces for each HP% Dealt:
             // the pace at x% hp is its value in the current run + all of the rest median values for the other %.
             paceSplits.FortyPercentRemainingHPFrames = runPace.FortyPercentRemainingHPFrames +  medianSplitTimes.TwentyPercentRemainingHPFrames + medianSplitTimes.ZeroPercentRemainingHPFrames;
 
-            paceSplits.TwentyPercentRemainingHPFrames = runPace.FortyPercentRemainingHPFrames + runPace.TwentyPercentRemainingHPFrames + + medianSplitTimes.ZeroPercentRemainingHPFrames;
+            paceSplits.TwentyPercentRemainingHPFrames = runPace.FortyPercentRemainingHPFrames + runPace.TwentyPercentRemainingHPFrames + medianSplitTimes.ZeroPercentRemainingHPFrames;
 
             paceSplits.ZeroPercentRemainingHPFrames = runPace.FortyPercentRemainingHPFrames + runPace.TwentyPercentRemainingHPFrames + runPace.ZeroPercentRemainingHPFrames;
 
