@@ -2532,6 +2532,7 @@ Run IDs with best paces for each HP% Dealt:
     private TextBox? youtubeLinkTextBox;
     private DataGrid? mostRecentRunsDataGrid;
     private DataGrid? top20RunsDataGrid;
+    private DataGrid? uneditedYouTubeLinkRunsDataGrid;
     private TextBlock? questLogGearStatsTextBlock;
     private TextBlock? compendiumTextBlock;
     private CartesianChart? graphChart;
@@ -2631,6 +2632,22 @@ Run IDs with best paces for each HP% Dealt:
         this.top20RunsDataGrid.Items.Refresh();
     }
 
+    private void UneditedYouTubeLinkRuns_DataGridLoaded(object sender, RoutedEventArgs e)
+    {
+        this.uneditedYouTubeLinkRunsDataGrid = (DataGrid)sender;
+    }
+
+    private void YouTubeFindRuns_Click(object sender, RoutedEventArgs e)
+    {
+        if (this.uneditedYouTubeLinkRunsDataGrid == null)
+        {
+            return;
+        }
+
+        this.uneditedYouTubeLinkRunsDataGrid.ItemsSource = DatabaseManager.GetUneditedYouTubeLinkRuns();
+        this.uneditedYouTubeLinkRunsDataGrid.Items.Refresh();
+    }
+
     private string statsGraphsSelectedOption = string.Empty;
 
     private string statsTextSelectedOption = string.Empty;
@@ -2652,7 +2669,7 @@ Run IDs with best paces for each HP% Dealt:
         {
             var objectiveImage = run.ObjectiveImage.Replace(",", string.Empty);
             var questName = run.QuestName.Replace(",", string.Empty);
-            var youtubeID = run.YoutubeID.Replace(",", string.Empty);
+            var youtubeID = run.YouTubeID.Replace(",", string.Empty);
             var finalTimeDisplay = run.FinalTimeDisplay.Replace(",", string.Empty);
             var actualOverlayMode = run.ActualOverlayMode.Replace(",", string.Empty);
 
@@ -2854,7 +2871,7 @@ Run IDs with best paces for each HP% Dealt:
         {
             var objectiveImage = run.ObjectiveImage.Replace(",", string.Empty);
             var questName = run.QuestName.Replace(",", string.Empty);
-            var youtubeID = run.YoutubeID.Replace(",", string.Empty);
+            var youtubeID = run.YouTubeID.Replace(",", string.Empty);
             var finalTimeDisplay = run.FinalTimeDisplay.Replace(",", string.Empty);
             var actualOverlayMode = run.ActualOverlayMode.Replace(",", string.Empty);
 
@@ -2874,7 +2891,7 @@ Run IDs with best paces for each HP% Dealt:
         {
             var objectiveImage = run.ObjectiveImage.Replace(",", string.Empty);
             var questName = run.QuestName.Replace(",", string.Empty);
-            var youtubeID = run.YoutubeID.Replace(",", string.Empty);
+            var youtubeID = run.YouTubeID.Replace(",", string.Empty);
             var finalTimeDisplay = run.FinalTimeDisplay.Replace(",", string.Empty);
 
             var line = $"{objectiveImage},{questName},{run.RunID},{run.QuestID},{youtubeID},{finalTimeDisplay},{run.Date}";

@@ -2860,7 +2860,7 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
                     cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_quest_updates
                         AFTER UPDATE ON Quests
                         FOR EACH ROW
-                        WHEN NEW.YoutubeID = OLD.YoutubeID
+                        WHEN NEW.YouTubeID = OLD.YouTubeID
                         BEGIN
                             SELECT RAISE(ABORT, 'Cannot update quest fields');
                         END;";
@@ -5672,7 +5672,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
             {
                 try
                 {
-                    using (var cmd = new SQLiteCommand("SELECT YoutubeID FROM Quests WHERE RunID = @runID", conn))
+                    using (var cmd = new SQLiteCommand("SELECT YouTubeID FROM Quests WHERE RunID = @runID", conn))
                     {
                         cmd.Parameters.AddWithValue("@runID", runID);
 
@@ -5680,7 +5680,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                         {
                             if (reader.Read())
                             {
-                                youtubeLink = (string)reader["YoutubeID"];
+                                youtubeLink = (string)reader["YouTubeID"];
                             }
                             else
                             {
@@ -5726,7 +5726,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                         var count = (long)cmd.ExecuteScalar();
                         if (count > 0)
                         {
-                            using (var cmd2 = new SQLiteCommand("UPDATE Quests SET YoutubeID = @youtubeLink WHERE RunID = @runID", conn))
+                            using (var cmd2 = new SQLiteCommand("UPDATE Quests SET YouTubeID = @youtubeLink WHERE RunID = @runID", conn))
                             {
                                 cmd2.Parameters.AddWithValue("@youtubeLink", youtubeLink);
                                 cmd2.Parameters.AddWithValue("@runID", runID);
@@ -10167,7 +10167,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                                             qn.QuestNameName, 
                                             q.RunID, 
                                             QuestID, 
-                                            YoutubeID, 
+                                            YouTubeID, 
                                             FinalTimeDisplay, 
                                             Date, 
                                             ActualOverlayMode, 
@@ -10191,7 +10191,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                                             qn.QuestNameName, 
                                             q.RunID, 
                                             QuestID, 
-                                            YoutubeID, 
+                                            YouTubeID, 
                                             FinalTimeDisplay, 
                                             Date, 
                                             ActualOverlayMode, 
@@ -10249,7 +10249,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                                             QuestName = (string)reader["QuestNameName"],
                                             RunID = (long)reader["RunID"],
                                             QuestID = (long)reader["QuestID"],
-                                            YoutubeID = (string)reader["YoutubeID"],
+                                            YouTubeID = (string)reader["YouTubeID"],
                                             FinalTimeDisplay = (string)reader["FinalTimeDisplay"],
                                             Date = DateTime.Parse((string)reader["Date"], CultureInfo.InvariantCulture),
                                         });
@@ -10269,6 +10269,89 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         return fastestRuns;
+    }
+
+    /// <summary>
+    /// TODO: Filter by run buffs and overlay mode speedrun. Speedruns only.
+    /// </summary>
+    /// <param name="configWindow"></param>
+    /// <param name="weaponName"></param>
+    /// <returns></returns>
+    public List<FastestRun> GetUneditedYouTubeLinkRuns()
+    {
+        var runs = new List<FastestRun>();
+        if (string.IsNullOrEmpty(this.dataSource))
+        {
+            Logger.Warn(CultureInfo.InvariantCulture, "Cannot get unedited youtube link runs. dataSource: {0}", this.dataSource);
+            return runs;
+        }
+
+        using (var conn = new SQLiteConnection(this.dataSource))
+        {
+            conn.Open();
+            using (var transaction = conn.BeginTransaction())
+            {
+                try
+                {
+                    var sql = @"SELECT 
+                                    ObjectiveImage, 
+                                    qn.QuestNameName, 
+                                    q.RunID, 
+                                    QuestID, 
+                                    YouTubeID, 
+                                    FinalTimeDisplay, 
+                                    Date, 
+                                    ActualOverlayMode, 
+                                    PartySize
+                                FROM 
+                                    Quests q
+                                JOIN 
+                                    QuestName qn ON q.QuestID = qn.QuestNameID
+                                WHERE
+                                    q.PartySize = 1
+                                    AND q.YouTubeID = 'dQw4w9WgXcQ'
+                                    AND q.ActualOverlayMode != 'Standard'
+                                ORDER BY 
+                                    q.RunID DESC";
+                    
+                    using (var cmd = new SQLiteCommand(sql, conn))
+                    {
+                        using (var reader = cmd.ExecuteReader())
+                        {
+                            if (reader == null || !reader.HasRows)
+                            {
+                                return runs;
+                            }
+
+                            if (reader.HasRows)
+                            {
+                                while (reader.Read())
+                                {
+                                    runs.Add(new FastestRun
+                                    {
+                                        ObjectiveImage = (string)reader["ObjectiveImage"],
+                                        QuestName = (string)reader["QuestNameName"],
+                                        RunID = (long)reader["RunID"],
+                                        QuestID = (long)reader["QuestID"],
+                                        YouTubeID = (string)reader["YouTubeID"],
+                                        FinalTimeDisplay = (string)reader["FinalTimeDisplay"],
+                                        Date = DateTime.Parse((string)reader["Date"], CultureInfo.InvariantCulture),
+                                    });
+                                }
+                            }
+                        }
+                    }
+
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    HandleError(transaction, ex);
+                }
+            }
+        }
+
+        return runs;
     }
 
     /// <summary>
@@ -10430,7 +10513,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                             qn.QuestNameName, 
                             RunID, 
                             QuestID, 
-                            YoutubeID, 
+                            YouTubeID, 
                             FinalTimeDisplay, 
                             Date, 
                             ActualOverlayMode, 
@@ -10460,7 +10543,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                                         QuestName = (string)reader["QuestNameName"],
                                         RunID = (long)reader["RunID"],
                                         QuestID = (long)reader["QuestID"],
-                                        YoutubeID = (string)reader["YoutubeID"],
+                                        YouTubeID = (string)reader["YouTubeID"],
                                         FinalTimeDisplay = (string)reader["FinalTimeDisplay"],
                                         Date = DateTime.Parse((string)reader["Date"], CultureInfo.InvariantCulture),
                                         ActualOverlayMode = (string)reader["ActualOverlayMode"],
@@ -10511,7 +10594,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                         qn.QuestNameName, 
                         RunID, 
                         QuestID, 
-                        YoutubeID, 
+                        YouTubeID, 
                         FinalTimeDisplay, 
                         Date, 
                         ActualOverlayMode, 
@@ -10543,7 +10626,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                                         QuestName = (string)reader["QuestNameName"],
                                         RunID = (long)reader["RunID"],
                                         QuestID = (long)reader["QuestID"],
-                                        YoutubeID = (string)reader["YoutubeID"],
+                                        YouTubeID = (string)reader["YouTubeID"],
                                         FinalTimeDisplay = (string)reader["FinalTimeDisplay"],
                                         Date = DateTime.Parse((string)reader["Date"], CultureInfo.InvariantCulture),
                                         ActualOverlayMode = (string)reader["ActualOverlayMode"],

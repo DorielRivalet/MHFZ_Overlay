@@ -258,7 +258,7 @@
                                         </Style>
                                     </DataGridTextColumn.ElementStyle>
                                 </DataGridTextColumn>
-                                <DataGridTextColumn Header="Youtube ID" Binding="{Binding YoutubeID}" Width="128">
+                                <DataGridTextColumn Header="Youtube ID" Binding="{Binding YouTubeID}" Width="128">
                                     <DataGridTextColumn.ElementStyle>
                                         <Style TargetType="TextBlock">
                                             <Setter Property="TextWrapping" Value="Wrap" />
@@ -492,7 +492,7 @@
                                         </Style>
                                     </DataGridTextColumn.ElementStyle>
                                 </DataGridTextColumn>
-                                <DataGridTextColumn Header="Youtube ID" Binding="{Binding YoutubeID}" Width="128">
+                                <DataGridTextColumn Header="Youtube ID" Binding="{Binding YouTubeID}" Width="128">
                                     <DataGridTextColumn.ElementStyle>
                                         <Style TargetType="TextBlock">
                                             <Setter Property="TextWrapping" Value="Wrap" />
@@ -642,7 +642,7 @@
                                         </Style>
                                     </DataGridTextColumn.ElementStyle>
                                 </DataGridTextColumn>
-                                <DataGridTextColumn Header="Youtube ID" Binding="{Binding YoutubeID}" Width="128">
+                                <DataGridTextColumn Header="Youtube ID" Binding="{Binding YouTubeID}" Width="128">
                                     <DataGridTextColumn.ElementStyle>
                                         <Style TargetType="TextBlock">
                                             <Setter Property="TextWrapping" Value="Wrap" />
@@ -702,17 +702,84 @@
 
                     <Border CornerRadius="5,0,0,5" Grid.Row="0" Grid.Column="0" Grid.RowSpan="25" Width="5" Margin="0,0,5,0" Background="#f38ba8" />
 
-                    <StackPanel  Grid.Row="0" Grid.Column="1" Orientation="Horizontal" Margin="5">
-                        <TextBlock VerticalAlignment="Center" Text="YouTube ID for the Run ID" Margin="5"/>
-                        <ui:TextBox VerticalContentAlignment="Center" Margin="5" ToolTip="Enter the YouTube video ID for the Run ID entered at the top" PlaceholderText="YouTube video ID" MinWidth="20" IsUndoEnabled="False" TextAlignment="Center"  MaxLength="12" Loaded="YoutubeLinkTextBox_Loaded"/>
-                        <StackPanel Orientation="Horizontal">
+                    <StackPanel  Grid.Row="0" Grid.Column="1" Orientation="Vertical" Margin="5">
+                        <StackPanel Orientation="Horizontal" Margin="5">
+                            <TextBlock VerticalAlignment="Center"  Foreground="{StaticResource Text}" Text="Find runs to update"/>
+                            <ui:Button Background="Transparent" Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTip="Find speedruns to update" Click="YouTubeFindRuns_Click">
+                                <Button.Content>
+                                    <ui:SymbolIcon Symbol="Search24" FontSize="24" Foreground="{StaticResource Green}"/>
+                                </Button.Content>
+                            </ui:Button>
+                            <TextBlock VerticalAlignment="Center" Text="YouTube ID for the Run ID" Margin="5"/>
+                            <ui:TextBox VerticalContentAlignment="Center" Margin="5" ToolTip="Enter the YouTube video ID for the Run ID entered at the top" PlaceholderText="YouTube video ID" MinWidth="20" IsUndoEnabled="False" TextAlignment="Center"  MaxLength="12" Loaded="YoutubeLinkTextBox_Loaded"/>
                             <TextBlock VerticalAlignment="Center" Foreground="{StaticResource Text}" Text="Add ID"/>
                             <ui:Button BorderThickness="0" Foreground="#f38ba8" Background="Transparent" Margin="5" Content="&#xf03d;" FontFamily="/FontAwesome.Sharp;component/fonts/#Font Awesome 6 Free Solid" Click="UpdateYoutubeLink_ButtonClick"/>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Margin="5,0,0,0">
                             <TextBlock VerticalAlignment="Center" Foreground="{StaticResource Text}" Text="Open Link in Browser"/>
                             <ui:Button BorderThickness="0" Foreground="Red" Background="Transparent" Margin="5" Content="&#xf167;" FontFamily="/FontAwesome.Sharp;component/fonts/#Font Awesome 6 Brands Regular" Click="YoutubeIconButton_Click"/>
                         </StackPanel>
+                        <ui:DataGrid x:Name="UneditedYouTubeLinkRunsDataGrid" AutoGenerateColumns="False" Loaded="UneditedYouTubeLinkRuns_DataGridLoaded" IsReadOnly="True">
+                            <DataGrid.ColumnHeaderStyle>
+                                <StaticResource ResourceKey="DefaultDataGridColumnHeaderStyle"/>
+                            </DataGrid.ColumnHeaderStyle>
+                            <DataGrid.Columns>
+                                <DataGridTemplateColumn Header="Objective" Width="128">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Image Source="{Binding ObjectiveImage}" Width="64" Height="64" HorizontalAlignment="Center" />
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTextColumn Header="Quest Name" Binding="{Binding QuestName}" Width="250">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="TextWrapping" Value="Wrap" />
+                                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Header="Run ID" Binding="{Binding RunID}" Width="128">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="TextWrapping" Value="Wrap" />
+                                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Header="Quest ID" Binding="{Binding QuestID}" Width="128">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="TextWrapping" Value="Wrap" />
+                                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Header="Youtube ID" Binding="{Binding YouTubeID}" Width="128">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="TextWrapping" Value="Wrap" />
+                                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Header="Time Elapsed" Binding="{Binding FinalTimeDisplay}" Width="128">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="TextWrapping" Value="Wrap" />
+                                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Header="Date" Binding="{Binding Date}" Width="128">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="TextWrapping" Value="Wrap" />
+                                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                                <!-- Add more columns with custom headers as needed -->
+                            </DataGrid.Columns>
+                        </ui:DataGrid>
                     </StackPanel>
                 </Grid>
             </DataTemplate>
