@@ -245,7 +245,7 @@ public enum QuestWeaponTypesDisabled : uint
     Bow = 1024,
     Tonfa = 2048,
     SwitchAxeF = 4096,
-    // MS Flag 64
+    // TODO MS Flag 64
 }
 
 /// <summary>
@@ -390,4 +390,57 @@ public enum GauntletBoost : uint
     Zenith = 1,
     Solstice = 2,
     Musou = 4,
+}
+
+
+/// <summary>
+/// Course Rights first byte.
+/// </summary>
+[Flags]
+[JsonConverter(typeof(JsonStringEnumConverter))]
+public enum CourseRightsFirstByte : uint
+{
+    /// <summary>
+    /// or netcafe?
+    /// </summary>
+    [DefaultValue(None)]
+    None = 0,
+    Assist = 1,
+    N = 2,
+    Hiden = 4,
+    /// <summary>
+    /// or aid
+    /// </summary>
+    Support = 8,
+    NBoost = 16,
+    All = Assist | N | Hiden | Support | NBoost,
+}
+
+/// <summary>
+/// TODO Run filters by buff.
+/// </summary>
+[Flags]
+[JsonConverter(typeof(JsonStringEnumConverter))]
+public enum RunBuff : uint
+{
+    [DefaultValue(None)]
+    None = 0,
+    Halk = 1,
+    PugiItem = 2,
+    DivaSong = 4,
+    HalkPot = 8,
+    LoginBoost = 16,
+    Bento = 32,
+    GuildPugi = 64,
+    ActiveFeature = 128,
+    GuildFood = 256,
+    DivaSkill = 512,
+    SecretTechnique = 1024,
+    DivaPrayerGem = 2048,
+    HunterSupportCourse = 4096,
+
+    // old categories
+    TimeAttack = PugiItem | DivaSong | Bento,
+    FreestyleNoSecretTech = Halk | PugiItem | DivaSong | Bento | GuildPugi | ActiveFeature | GuildFood | DivaSkill | DivaPrayerGem,
+    FreestyleWithSecretTech = FreestyleNoSecretTech | SecretTechnique,
 }

@@ -1695,7 +1695,7 @@ TreeScope.Children, condition);
         else if (s.TimerInfoShown && s.EnableInputLogging && s.EnableQuestLogging && s.OverlayModeWatermarkShown)
         {
             // TODO diva prayer gem
-            if (this.Rights() == 14 && this.DivaSkillUsesLeft() == 0 && this.StyleRank1() != 15 && this.StyleRank2() != 15)
+            if (!HasRightsFlag((uint)this.Rights(), CourseRightsFirstByte.Support) && this.DivaSkillUsesLeft() == 0 && this.StyleRank1() != 15 && this.StyleRank2() != 15)
             {
                 return OverlayMode.TimeAttack;
             }
@@ -1712,6 +1712,24 @@ TreeScope.Children, condition);
         {
             return OverlayMode.Zen;
         }
+    }
+
+    public bool HasRightsFlag(uint value, CourseRightsFirstByte flag)
+    {
+        // Validate the value
+        if ((value & (uint)CourseRightsFirstByte.All) != value)
+        {
+            return false;
+        }
+
+        // Extract the first byte
+        byte firstByte = (byte)(value & 0xFF);
+
+        // Convert the first byte to CourseRightsFirstByte
+        CourseRightsFirstByte rights = (CourseRightsFirstByte)firstByte;
+
+        // Check if the flag is set
+        return rights.HasFlag(flag);
     }
 
     public bool CaravanOverride()
