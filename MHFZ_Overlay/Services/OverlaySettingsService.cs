@@ -72,12 +72,12 @@ public sealed class OverlaySettingsService
                 s.EnableMap = false;
                 s.PersonalBestTimePercentShown = false;
                 s.EnablePersonalBestPaceColor = false;
+                s.PlayerPositionShown = false;
 
                 s.TimerInfoShown = true;
                 s.EnableInputLogging = true;
                 s.EnableQuestLogging = true;
                 s.OverlayModeWatermarkShown = true;
-
                 break;
 
             case ConfigurationPreset.Zen:
@@ -108,6 +108,7 @@ public sealed class OverlaySettingsService
                 s.TimerInfoShown = false;
                 s.EnableInputLogging = false;
                 s.EnableMap = false;
+                s.PlayerPositionShown = false;
 
                 s.OverlayModeWatermarkShown = false;
 
@@ -138,6 +139,7 @@ public sealed class OverlaySettingsService
                 s.EnableMap = false;
                 s.ActionsPerMinuteShown = false;
                 s.PersonalBestShown = false;
+                s.PlayerPositionShown = false;
 
                 s.OverlayModeWatermarkShown = false;
 

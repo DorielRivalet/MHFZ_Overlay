@@ -125,6 +125,8 @@ public abstract class AddressModel : INotifyPropertyChanged
 
     public bool ShowSessionTimeInfo { get; set; }
 
+    public bool ShowPlayerPositionInfo { get; set; }
+
     public bool ShowMonsterPartHP { get; set; }
 
     public bool ShowKBMLayout { get; set; }
@@ -1270,6 +1272,19 @@ public abstract class AddressModel : INotifyPropertyChanged
     /// <returns></returns>
     public abstract int Rights();
 
+    public abstract decimal PlayerPositionX();
+
+    public abstract decimal PlayerPositionY();
+
+    public abstract decimal PlayerPositionZ();
+
+    public abstract decimal PlayerPositionInQuestX();
+
+    public abstract decimal PlayerPositionInQuestY();
+
+    public abstract decimal PlayerPositionInQuestZ();
+
+
     /// <TODO>
     /// [] Not Done
     /// [X] Done
@@ -1672,7 +1687,8 @@ TreeScope.Children, condition);
             || s.Monster4HealthBarShown
             || s.EnableMap
             || s.PersonalBestTimePercentShown
-            || s.EnablePersonalBestPaceColor) // TODO monster 1 overview? and update README
+            || s.EnablePersonalBestPaceColor
+            || s.PlayerPositionShown) // TODO monster 1 overview? and update README
         {
             return OverlayMode.Standard;
         }
@@ -12493,6 +12509,37 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             return duration;
         }
     }
+
+    public string CurrentPlayerPosition
+    {
+        get
+        {
+            var s = (Settings)Application.Current.TryFindResource("Settings");
+
+            if (s.PlayerPositionMode == "Automatic")
+            {
+                if (this.QuestID() != 0)
+                {
+                    return $"{decimal.Truncate(PlayerPositionInQuestX())}, {decimal.Truncate(PlayerPositionInQuestY())}, {decimal.Truncate(PlayerPositionInQuestZ())}";
+                }
+                else
+                {
+                    return $"{decimal.Truncate(PlayerPositionX())}, {decimal.Truncate(PlayerPositionY())}, {decimal.Truncate(PlayerPositionZ())}";
+                }
+
+            } else if (s.PlayerPositionMode == "Lobby")
+            {
+                return $"{decimal.Truncate(PlayerPositionX())}, {decimal.Truncate(PlayerPositionY())}, {decimal.Truncate(PlayerPositionZ())}";
+
+            } else if (s.PlayerPositionMode == "Quest")
+            {
+                return $"{decimal.Truncate(PlayerPositionInQuestX())}, {decimal.Truncate(PlayerPositionInQuestY())}, {decimal.Truncate(PlayerPositionInQuestZ())}";
+
+            }
+
+            return "?, ?, ?";
+        }
+    } 
 
     public int CurrentMonster1MaxHP { get; set; }
 

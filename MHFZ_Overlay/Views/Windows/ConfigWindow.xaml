@@ -2342,6 +2342,9 @@
                                 <RowDefinition Height="40"/>
                                 <RowDefinition Height="40"/>
                                 <RowDefinition Height="40"/>
+                                <RowDefinition Height="40"/>
+                                <RowDefinition Height="40"/>
+                                <RowDefinition Height="40"/>
                             </Grid.RowDefinitions>
 
                             <StackPanel Margin="5" Orientation="Horizontal" Grid.Row="0" Grid.Column="0" ToolTip="Show Timer">
@@ -2659,6 +2662,28 @@
                                 <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="X" Text="{Binding Source={StaticResource Settings},Path=SessionTimeX}"  PreviewTextInput="ValidateNumber"/>
                                 <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="Y" Margin="5,0,0,0" Text="{Binding Source={StaticResource Settings},Path=SessionTimeY}"  PreviewTextInput="ValidateNumber"/>
                             </StackPanel>
+                            <StackPanel Margin="5" Orientation="Horizontal" Grid.Row="66" Grid.Column="0" ToolTip="Show Player Coordinates (truncated)">
+                                <Button Margin="0,0,5,0" Background="Transparent" BorderThickness="0" BorderBrush="Transparent" VerticalAlignment="Center">
+                                    <Button.Content>
+                                        <ui:SymbolIcon Symbol="CompassNorthwest24" Foreground="{StaticResource Rosewater}" FontSize="24"/>
+                                    </Button.Content>
+                                </Button>
+                                <TextBlock Style="{StaticResource ConfigTextBox}" Text="Player Coordinates"/>
+                            </StackPanel>
+                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="66" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=PlayerPositionShown}"/>
+
+                            <TextBlock Margin="5" Style="{StaticResource ConfigTextBox}" Grid.Row="67" Grid.Column="0"  Text="Player Coordinates Position"/>
+                            <StackPanel Orientation="Horizontal" Grid.Row="67" Grid.Column="1" HorizontalAlignment="Center">
+                                <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="X" Text="{Binding Source={StaticResource Settings},Path=PlayerPositionX}"  PreviewTextInput="ValidateNumber"/>
+                                <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="Y" Margin="5,0,0,0" Text="{Binding Source={StaticResource Settings},Path=PlayerPositionY}"  PreviewTextInput="ValidateNumber"/>
+                            </StackPanel>
+
+                            <TextBlock Margin="5" ToolTip="Select Player Coordinates Mode" Style="{StaticResource ConfigTextBox}" Grid.Row="68" Grid.Column="0"  Text="Player Coordinates Mode"/>
+                            <ComboBox Grid.Column="1" Grid.Row="68" SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=PlayerPositionMode}">
+                                <ComboBoxItem>Automatic</ComboBoxItem>
+                                <ComboBoxItem>Lobby</ComboBoxItem>
+                                <ComboBoxItem>Quest</ComboBoxItem>
+                            </ComboBox>
                         </Grid>
                     </ScrollViewer>
                     <customcontrols:MainConfigurationActions Grid.Row="1" Grid.ColumnSpan="1" Loaded="MainConfigurationActions_Loaded" Unloaded="MainConfigurationActions_Unloaded"/>

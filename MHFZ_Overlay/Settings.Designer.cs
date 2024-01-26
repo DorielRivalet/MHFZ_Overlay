@@ -3958,5 +3958,53 @@ namespace MHFZ_Overlay {
                 this["EnableAttemptsPerPersonalBest"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool PlayerPositionShown {
+            get {
+                return ((bool)(this["PlayerPositionShown"]));
+            }
+            set {
+                this["PlayerPositionShown"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("5")]
+        public double PlayerPositionX {
+            get {
+                return ((double)(this["PlayerPositionX"]));
+            }
+            set {
+                this["PlayerPositionX"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("140")]
+        public double PlayerPositionY {
+            get {
+                return ((double)(this["PlayerPositionY"]));
+            }
+            set {
+                this["PlayerPositionY"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Automatic")]
+        public string PlayerPositionMode {
+            get {
+                return ((string)(this["PlayerPositionMode"]));
+            }
+            set {
+                this["PlayerPositionMode"] = value;
+            }
+        }
     }
 }

@@ -986,5 +986,17 @@
     <Setting Name="EnableAttemptsPerPersonalBest" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="PlayerPositionShown" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="PlayerPositionX" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">5</Value>
+    </Setting>
+    <Setting Name="PlayerPositionY" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">140</Value>
+    </Setting>
+    <Setting Name="PlayerPositionMode" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Automatic</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

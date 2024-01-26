@@ -1306,6 +1306,7 @@ The process may take some time, as the program attempts to download from GitHub 
         this.DataLoader.Model.ShowPlayerHitsTakenBlockedInfo = v && s.TotalHitsTakenBlockedShown;
         this.DataLoader.Model.ShowSharpness = v && s.EnableSharpness;
         this.DataLoader.Model.ShowSessionTimeInfo = v && s.SessionTimeShown;
+        this.DataLoader.Model.ShowPlayerPositionInfo = v && s.PlayerPositionShown;
 
         this.DataLoader.Model.ShowMap = v && s.EnableMap;
         this.DataLoader.Model.ShowFrameCounter = v && s.FrameCounterShown;
@@ -1471,6 +1472,10 @@ The process may take some time, as the program attempts to download from GitHub 
             case "SessionTimeInfo":
                 s.SessionTimeX = (double)(pos.X - this.xOffset);
                 s.SessionTimeY = (double)(pos.Y - this.yOffset);
+                break;
+            case "PlayerPositionInfo":
+                s.PlayerPositionX = (double)(pos.X - this.xOffset);
+                s.PlayerPositionY = (double)(pos.Y - this.yOffset);
                 break;
             case "LocationTextInfo":
                 s.LocationTextX = (double)(pos.X - this.xOffset);
@@ -1681,6 +1686,7 @@ The process may take some time, as the program attempts to download from GitHub 
         this.PersonalBestAttemptsInfoBorder.BorderThickness = thickness;
         this.QuestNameInfoBorder.BorderThickness = thickness;
         this.SessionTimeInfoBorder.BorderThickness = thickness;
+        this.PlayerPositionInfoBorder.BorderThickness = thickness;
         this.SharpnessInfoBorder.BorderThickness = thickness;
         this.TimerInfoBorder.BorderThickness = thickness;
         this.GamepadGridBorder.BorderThickness = thickness;

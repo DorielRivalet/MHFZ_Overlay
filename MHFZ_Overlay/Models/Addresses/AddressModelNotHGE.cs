@@ -1670,4 +1670,23 @@ public sealed class AddressModelNotHGE : AddressModel
 
     /// <inheritdoc/>
     public override int Rights() => this.M.Read2Byte("mhfo.dll+5D98294");
+
+    /// <inheritdoc/>
+    public override decimal PlayerPositionX() => (decimal)this.M.ReadFloat("mhfo.dll+5CACB50", string.Empty, false);
+
+    /// <inheritdoc/>
+    public override decimal PlayerPositionY() => (decimal)this.M.ReadFloat("mhfo.dll+5CACB54", string.Empty, false);
+
+    /// <inheritdoc/>
+    public override decimal PlayerPositionZ() => (decimal)this.M.ReadFloat("mhfo.dll+5CACB58", string.Empty, false);
+
+    /// <inheritdoc/>
+    public override decimal PlayerPositionInQuestX() => (decimal)this.M.ReadFloat("mhfo.dll+20BB540", string.Empty, false);
+
+    /// <inheritdoc/>
+    public override decimal PlayerPositionInQuestY() => (decimal)this.M.ReadFloat("mhfo.dll+20BB544", string.Empty, false);
+
+    /// <inheritdoc/>
+    public override decimal PlayerPositionInQuestZ() => (decimal)this.M.ReadFloat("mhfo.dll+20BB548", string.Empty, false);
+
 }

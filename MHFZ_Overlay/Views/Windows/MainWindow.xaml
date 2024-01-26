@@ -149,7 +149,18 @@
             <!--TODO: x:Bind-->
             <customcontrols:OutlinedTextBlock   HorizontalAlignment="Left" Grid.Column="1" Grid.Row="0"  FontSize="{Binding Path=SecondaryFontSize, Source={StaticResource Settings}}" FontFamily="{Binding Path=SecondaryFontFamily, Source={StaticResource Settings}}" FontWeight="{Binding Path=SecondaryFontWeight, Source={StaticResource Settings}}" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding Source={StaticResource Settings},Path=TextColor}" x:Name="sessionTimeTextBlock" Text="{Binding CurrentSessionTime, StringFormat=hh\\:mm\\:ss}" Margin="4,0,0,0"/>
         </Grid>
-        <Grid x:Name="OverlayModeWatermark" Canvas.Left="{Binding Source={StaticResource Settings},Path=OverlayModeWatermarkX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=OverlayModeWatermarkY}" Width="360" Height="30" MouseLeftButtonDown="ElementMouseLeftButtonDown" Background="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}" Visibility="{Binding ElementName=Window, Path=DataLoader.Model.ShowOverlayModeWatermark, Converter={StaticResource BoolToVis}}">
+        <Grid x:Name="PlayerPositionInfo" Canvas.Left="{Binding Source={StaticResource Settings},Path=PlayerPositionX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=PlayerPositionY}" Width="Auto" Height="Auto" MouseLeftButtonDown="ElementMouseLeftButtonDown" Background="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}" Visibility="{Binding ElementName=Window, Path=DataLoader.Model.ShowPlayerPositionInfo, Converter={StaticResource BoolToVis}}">
+            <Grid.ColumnDefinitions >
+                <ColumnDefinition  Width="2*" />
+                <ColumnDefinition  Width="4*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <Border x:Name="PlayerPositionInfoBorder" BorderBrush="{StaticResource Red}" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" BorderThickness="0"/>
+            <customcontrols:OutlinedTextBlock   HorizontalAlignment="Left" Grid.Column="1" Grid.Row="0"  FontSize="{Binding Path=SecondaryFontSize, Source={StaticResource Settings}}" FontFamily="{Binding Path=SecondaryFontFamily, Source={StaticResource Settings}}" FontWeight="{Binding Path=SecondaryFontWeight, Source={StaticResource Settings}}" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding Source={StaticResource Settings},Path=TextColor}" x:Name="playerPositionTextBlock" Text="{Binding CurrentPlayerPosition}" d:Text="1230, -2304, 6000" Margin="4,0,0,0"/>
+        </Grid>
+                <Grid x:Name="OverlayModeWatermark" Canvas.Left="{Binding Source={StaticResource Settings},Path=OverlayModeWatermarkX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=OverlayModeWatermarkY}" Width="360" Height="30" MouseLeftButtonDown="ElementMouseLeftButtonDown" Background="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}" Visibility="{Binding ElementName=Window, Path=DataLoader.Model.ShowOverlayModeWatermark, Converter={StaticResource BoolToVis}}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*" />
             </Grid.ColumnDefinitions>

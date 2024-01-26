@@ -1751,4 +1751,22 @@ public sealed class AddressModelHGE : AddressModel
 
     /// <inheritdoc/>
     public override int Rights() => this.M.Read2Byte("mhfo-hd.dll+EABD3C4");
+
+    /// <inheritdoc/>
+    public override decimal PlayerPositionX() => (decimal)this.M.ReadFloat("mhfo-hd.dll+E8E6640", string.Empty, false);
+
+    /// <inheritdoc/>
+    public override decimal PlayerPositionY() => (decimal)this.M.ReadFloat("mhfo-hd.dll+E8E6644", string.Empty, false);
+
+    /// <inheritdoc/>
+    public override decimal PlayerPositionZ() => (decimal)this.M.ReadFloat("mhfo-hd.dll+E8E6648", string.Empty, false);
+
+    /// <inheritdoc/>
+    public override decimal PlayerPositionInQuestX() => (decimal)this.M.ReadFloat("mhfo-hd.dll+21B3530", string.Empty, false);
+
+    /// <inheritdoc/>
+    public override decimal PlayerPositionInQuestY() => (decimal)this.M.ReadFloat("mhfo-hd.dll+21B3534", string.Empty, false);
+
+    /// <inheritdoc/>
+    public override decimal PlayerPositionInQuestZ() => (decimal)this.M.ReadFloat("mhfo-hd.dll+21B3538", string.Empty, false);
 }
