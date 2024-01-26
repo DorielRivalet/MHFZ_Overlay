@@ -1716,14 +1716,19 @@ TreeScope.Children, condition);
 
     public bool HasRightsFlag(uint value, CourseRightsFirstByte flag)
     {
-        // Validate the value
-        if ((value & (uint)CourseRightsFirstByte.All) != value)
+        if (value < 0x0100)
         {
             return false;
         }
 
         // Extract the first byte
         byte firstByte = (byte)(value & 0xFF);
+
+        // Validate
+        if ((firstByte & (uint)CourseRightsFirstByte.All) != firstByte)
+        {
+            return false;
+        }
 
         // Convert the first byte to CourseRightsFirstByte
         CourseRightsFirstByte rights = (CourseRightsFirstByte)firstByte;
