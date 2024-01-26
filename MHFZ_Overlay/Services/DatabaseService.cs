@@ -11193,6 +11193,24 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
         return attemptsPerPersonalBest;
     }
 
+    public double GetQuestAttemptsPerPersonalBest(long questID, int weaponTypeID, string actualOverlayMode, string questAttempts)
+    {
+        var attemptsPerPersonalBest = 0.0;
+        if (string.IsNullOrEmpty(this.dataSource))
+        {
+            Logger.Warn(CultureInfo.InvariantCulture, "Cannot get quest attempts per personal best. dataSource: {0}", this.dataSource);
+            return attemptsPerPersonalBest;
+        }
+
+        var personalBestCount = GetPersonalBestsCount(questID, weaponTypeID, actualOverlayMode);
+        if (personalBestCount > 0)
+        {
+            attemptsPerPersonalBest = double.Parse(questAttempts, CultureInfo.InvariantCulture) / personalBestCount;
+        }
+
+        return attemptsPerPersonalBest;
+    }
+
     public async Task<int> GetPersonalBestsCountAsync(long questID, int weaponTypeID, string category)
     {
         int personalBestCount = 0;
@@ -11244,6 +11262,68 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                     }
 
                     await transaction.CommitAsync().ConfigureAwait(false);
+                }
+                catch (Exception ex)
+                {
+                    HandleError(transaction, ex);
+                }
+            }
+        }
+
+        return personalBestCount;
+    }
+
+    public int GetPersonalBestsCount(long questID, int weaponTypeID, string category)
+    {
+        int personalBestCount = 0;
+        long? previousBestTime = null;
+        if (string.IsNullOrEmpty(this.dataSource))
+        {
+            Logger.Warn(CultureInfo.InvariantCulture, "Cannot get personal bests count. dataSource: {0}", this.dataSource);
+            return personalBestCount;
+        }
+
+        using (var conn = new SQLiteConnection(this.dataSource))
+        {
+            conn.Open();
+            using (var transaction = conn.BeginTransaction())
+            {
+                try
+                {
+                    using (var cmd = new SQLiteCommand(
+                        @"SELECT
+                            q.RunID, q.FinalTimeValue
+                        FROM
+                            Quests q
+                        JOIN
+                            PlayerGear pg ON q.RunID = pg.RunID
+                        WHERE
+                            q.QuestID = @questID AND
+                            q.ActualOverlayMode = @category AND
+                            pg.WeaponTypeID = @weaponTypeID
+                        ORDER BY q.RunID ASC", conn))
+                    {
+                        cmd.Parameters.AddWithValue("@questID", questID);
+                        cmd.Parameters.AddWithValue("@weaponTypeID", weaponTypeID);
+                        cmd.Parameters.AddWithValue("@category", category);
+
+                        using (var reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                var finalTimeValue = reader.GetInt64(reader.GetOrdinal("FinalTimeValue"));
+
+                                // If this is the first run or the time is less than the previous best, it's a new personal best.
+                                if (!previousBestTime.HasValue || finalTimeValue < previousBestTime.Value)
+                                {
+                                    personalBestCount++;
+                                    previousBestTime = finalTimeValue;
+                                }
+                            }
+                        }
+                    }
+
+                    transaction.Commit();
                 }
                 catch (Exception ex)
                 {
