@@ -1830,6 +1830,30 @@ public sealed class DatabaseService
 
                     Logger.Debug("Inserted into QuestsCourse table");
 
+                    sql = @"INSERT INTO QuestsOverlayHash (
+                        OverlayHash,
+                        RunID
+                        ) VALUES (
+                        @OverlayHash,
+                        @RunID
+                        )";
+
+                    using (var cmd = new SQLiteCommand(sql, conn))
+                    {
+                        var hash = GetOverlayHash();
+
+                        cmd.Parameters.AddWithValue("@OverlayHash", hash);
+                        cmd.Parameters.AddWithValue("@RunID", runID);
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    Logger.Debug("Inserted into QuestsOverlayHash table");
+
+
+                    // TODO more tables
+
+
+
                     var gearName = s.GearDescriptionExport;
                     if (string.IsNullOrEmpty(gearName))
                     {
@@ -2956,6 +2980,49 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
 
         // Handle the exception and show an error message to the user
         LoggingService.WriteCrashLog(ex, $"SQLite error (version: {serverVersion})");
+    }
+
+    public string GetOverlayHash()
+    {
+        var overlayHash = string.Empty;
+
+        // Find the path of the first found process with the name "MHFZ_Overlay.exe"
+        var exeName = "MHFZ_Overlay.exe";
+        var processes = Process.GetProcessesByName(Path.GetFileNameWithoutExtension(exeName));
+        var exePath = string.Empty;
+        if (processes.Length > 0)
+        {
+            var module = processes[0].MainModule;
+            if (module == null)
+            {
+                return string.Empty;
+            }
+            else
+            {
+                exePath = module.FileName;
+            }
+        }
+        else
+        {
+            exePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, exeName);
+        }
+
+        if (exePath == null)
+        {
+            return string.Empty;
+        }
+
+        // Calculate the SHA256 hash of the executable
+        using (var sha256 = SHA256.Create())
+        {
+            using (var stream = File.OpenRead(exePath))
+            {
+                var hash = sha256.ComputeHash(stream);
+                overlayHash = BitConverter.ToString(hash).Replace("-", string.Empty);
+            }
+        }
+
+        return overlayHash;
     }
 
     /// <summary>
@@ -5197,6 +5264,17 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                 sql = @"CREATE TABLE IF NOT EXISTS QuestsCourse(
                 QuestsCourseID INTEGER PRIMARY KEY AUTOINCREMENT,
                 Rights INTEGER NOT NULL DEFAULT 0,
+                RunID INTEGER NOT NULL,
+                FOREIGN KEY(RunID) REFERENCES Quests(RunID)
+                )";
+                using (var cmd = new SQLiteCommand(sql, conn))
+                {
+                    cmd.ExecuteNonQuery();
+                }
+
+                sql = @"CREATE TABLE IF NOT EXISTS QuestsOverlayHash(
+                QuestsOverlayHashID INTEGER PRIMARY KEY AUTOINCREMENT,
+                OverlayHash TEXT NOT NULL DEFAULT '',
                 RunID INTEGER NOT NULL,
                 FOREIGN KEY(RunID) REFERENCES Quests(RunID)
                 )";
