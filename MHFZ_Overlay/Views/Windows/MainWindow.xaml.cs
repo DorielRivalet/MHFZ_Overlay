@@ -1971,7 +1971,7 @@ The process may take some time, as the program attempts to download from GitHub 
             this.DataLoader.Model.LoadedItemsAtQuestStart = false;
             if (s.EnableQuestLogging)
             {
-                DatabaseManagerInstance.InsertQuestData(this.DataLoader, (int)DatabaseManagerInstance.GetQuestAttempts(this.DataLoader.Model.QuestID(), this.DataLoader.Model.WeaponType(), this.OverlayModeWatermarkTextBlock.Text));
+                DatabaseManagerInstance.InsertQuestData(this.DataLoader, (int)DatabaseManagerInstance.GetQuestAttempts(this.DataLoader.Model.QuestID(), this.DataLoader.Model.WeaponType(), this.DataLoader.Model.GetOverlayModeForStorage()));
             }
         }
 
