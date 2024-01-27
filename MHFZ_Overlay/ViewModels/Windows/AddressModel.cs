@@ -46,9 +46,9 @@ public abstract class AddressModel : INotifyPropertyChanged
 
     private static readonly DatabaseService DatabaseManagerInstance = DatabaseService.GetInstance();
 
-    public ObservableCollection<ObservablePoint> AttackBuffCollection { get; set; } = new ();
+    public ObservableCollection<ObservablePoint> AttackBuffCollection { get; set; } = new();
 
-    private readonly Mem m = new ();
+    private readonly Mem m = new();
 
     private int savedMonster1MaxHP;
 
@@ -4505,7 +4505,7 @@ TreeScope.Children, condition);
             {
                 return "Visible";
             }
-            else{
+            else {
                 return "Collapsed";
             }
         }
@@ -4552,13 +4552,13 @@ TreeScope.Children, condition);
                 WeaponBlademaster.IDName.TryGetValue(this.BlademasterWeaponID(), out var wepname);
                 var address = this.BlademasterWeaponID().ToString("X4", CultureInfo.InvariantCulture).ToUpperInvariant();  // gives you hex 4 digit "007B"
 
-                return string.Format(CultureInfo.InvariantCulture, "{0}{1} ({2}) | {3}\n{4} | {5} | {6}", wepname, lv, address, style, this.GetDecoName(this.WeaponDeco1ID(), 1), this.GetDecoName(this.WeaponDeco2ID(), 2), this.GetDecoName(this.WeaponDeco3ID(), 3));
+                return string.Format(CultureInfo.InvariantCulture, "{0}{1} ({2}) | {3}\n{4} | {5} | {6}", wepname, lv, address, style, this.GetDecoName(this.WeaponDeco1ID(), EquipmentSlot.One), this.GetDecoName(this.WeaponDeco2ID(), EquipmentSlot.Two), this.GetDecoName(this.WeaponDeco3ID(), EquipmentSlot.Three));
             }
             else if (className == "Gunner")
             {
                 WeaponGunner.IDName.TryGetValue(this.GunnerWeaponID(), out var wepname);
                 var address = this.GunnerWeaponID().ToString("X4", CultureInfo.InvariantCulture).ToUpperInvariant();  // gives you hex 4 digit "007B"
-                return string.Format(CultureInfo.InvariantCulture, "{0}{1} ({2}) | {3}\n{4} | {5} | {6}", wepname, lv, address, style, this.GetDecoName(this.WeaponDeco1ID(), 1), this.GetDecoName(this.WeaponDeco2ID(), 2), this.GetDecoName(this.WeaponDeco3ID(), 3));
+                return string.Format(CultureInfo.InvariantCulture, "{0}{1} ({2}) | {3}\n{4} | {5} | {6}", wepname, lv, address, style, this.GetDecoName(this.WeaponDeco1ID(), EquipmentSlot.One), this.GetDecoName(this.WeaponDeco2ID(), EquipmentSlot.Two), this.GetDecoName(this.WeaponDeco3ID(), EquipmentSlot.Three));
             }
             else
             {
@@ -5161,7 +5161,7 @@ TreeScope.Children, condition);
     /// The decos.
     /// </value>
     /// <returns></returns>
-    public string GetDecoName(int id, int slot = 0, bool isForImage = false)
+    public string GetDecoName(int id, EquipmentSlot slot = EquipmentSlot.None, bool isForImage = false)
     {
         var decoName = string.Empty;
 
@@ -5181,7 +5181,7 @@ TreeScope.Children, condition);
             decoName += string.Empty;
         }
 
-        if (decoName == "Empty" && slot != 0)
+        if (decoName == "Empty" && slot != EquipmentSlot.None)
         {
             return this.GetSigilName(slot);
         }
@@ -5206,8 +5206,25 @@ TreeScope.Children, condition);
     /// The sigils.
     /// </value>
     /// <returns></returns>
-    public string GetSigilName(int slot)
+    public string GetSigilName(EquipmentSlot slot)
     {
+        if (slot == EquipmentSlot.None)
+        {
+            return "Empty";
+        }
+
+        var decoSlot1Occupied = WeaponDeco1ID() > 0;
+        var decoSlot2Occupied = WeaponDeco2ID() > 0;
+        var decoSlot3Occupied = WeaponDeco3ID() > 0;
+
+        if ((decoSlot1Occupied && decoSlot2Occupied && decoSlot3Occupied)
+            || (decoSlot1Occupied && slot == EquipmentSlot.One)
+            || (decoSlot2Occupied && slot == EquipmentSlot.Two)
+            || (decoSlot3Occupied && slot == EquipmentSlot.Three))
+        {
+            return "Empty";
+        }
+
         var sigilSkillList = SkillSigil.IDName;
         var sigilNames = new int[] { this.Sigil1Name1(), this.Sigil1Name2(), this.Sigil1Name3(), this.Sigil2Name1(), this.Sigil2Name2(), this.Sigil2Name3(), this.Sigil3Name1(), this.Sigil3Name2(), this.Sigil3Name3() };
         var sigilValues = new int[] { this.Sigil1Value1(), this.Sigil1Value2(), this.Sigil1Value3(), this.Sigil2Value1(), this.Sigil2Value2(), this.Sigil2Value3(), this.Sigil3Value1(), this.Sigil3Value2(), this.Sigil3Value3() };
@@ -5218,7 +5235,32 @@ TreeScope.Children, condition);
             sigilTypes[i] = type ?? string.Empty;
         }
 
-        var index = (slot - 1) * 3;
+        var index = 0;
+        var slotNumber = 1;
+
+        switch (slot)
+        {
+            case EquipmentSlot.Two:
+                slotNumber = 2;
+                break;
+            case EquipmentSlot.Three:
+                slotNumber = 3;
+                break;
+        }
+
+        if ((decoSlot1Occupied && decoSlot2Occupied)
+            || (decoSlot1Occupied && !decoSlot2Occupied && !decoSlot3Occupied && slot == EquipmentSlot.Two))
+        {
+            index = 0;
+        }
+        else if (decoSlot1Occupied && !decoSlot2Occupied && !decoSlot3Occupied && slot == EquipmentSlot.Three){
+            index = 3;
+        }
+        else if (!decoSlot1Occupied && !decoSlot2Occupied && !decoSlot3Occupied)
+        {
+            index = (slotNumber - 1) * 3;
+        }
+
         if (sigilValues[index] == 0 || sigilNames[index] == 0)
         {
             return "Empty";
@@ -9465,7 +9507,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         }
     }
 
-    public string GetWeaponDecos => string.Format(CultureInfo.InvariantCulture, "{0}, {1}, {2}", this.GetDecoName(this.WeaponDeco1ID(), 1, true), this.GetDecoName(this.WeaponDeco2ID(), 2, true), this.GetDecoName(this.WeaponDeco3ID(), 3, true));
+    public string GetWeaponDecos => string.Format(CultureInfo.InvariantCulture, "{0}, {1}, {2}", this.GetDecoName(this.WeaponDeco1ID(), EquipmentSlot.One, true), this.GetDecoName(this.WeaponDeco2ID(), EquipmentSlot.Two, true), this.GetDecoName(this.WeaponDeco3ID(), EquipmentSlot.Three, true));
 
     public string GetArmorHeadNameForGuildCard
     {
@@ -9559,7 +9601,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
 
             if (className is "Blademaster" or "Gunner")
             {
-                return string.Format(CultureInfo.InvariantCulture, "{0} | {1} | {2}", this.GetDecoName(this.WeaponDeco1ID(), 1), this.GetDecoName(this.WeaponDeco2ID(), 2), this.GetDecoName(this.WeaponDeco3ID(), 3));
+                return string.Format(CultureInfo.InvariantCulture, "{0} | {1} | {2}", this.GetDecoName(this.WeaponDeco1ID(), EquipmentSlot.One), this.GetDecoName(this.WeaponDeco2ID(), EquipmentSlot.Two), this.GetDecoName(this.WeaponDeco3ID(), EquipmentSlot.Three));
             }
             else
             {

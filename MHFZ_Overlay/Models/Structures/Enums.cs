@@ -515,3 +515,14 @@ public enum FrontierMonsterType
     Leviathan,
     FangedWyvern,
 }
+
+/// <summary>
+/// Weapon and armor.
+/// </summary>
+public enum EquipmentSlot
+{
+    None,
+    One,
+    Two,
+    Three
+}

@@ -1862,9 +1862,9 @@ public sealed class DatabaseService
 
                     var weaponTypeID = model.WeaponType();
                     var weaponClassID = weaponTypeID;
-                    var weaponSlot1 = model.GetDecoName(model.WeaponDeco1ID(), 1); // no sigils in database ig
-                    var weaponSlot2 = model.GetDecoName(model.WeaponDeco2ID(), 2);
-                    var weaponSlot3 = model.GetDecoName(model.WeaponDeco3ID(), 3);
+                    var weaponSlot1 = model.GetDecoName(model.WeaponDeco1ID(), EquipmentSlot.One); // no sigils in database ig
+                    var weaponSlot2 = model.GetDecoName(model.WeaponDeco2ID(), EquipmentSlot.Two);
+                    var weaponSlot3 = model.GetDecoName(model.WeaponDeco3ID(), EquipmentSlot.Three);
                     var headID = model.ArmorHeadID();
                     var headSlot1 = model.ArmorHeadDeco1ID();
                     var headSlot2 = model.ArmorHeadDeco2ID();
