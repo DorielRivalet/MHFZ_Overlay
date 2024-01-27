@@ -1476,14 +1476,21 @@ public partial class ConfigWindow : FluentWindow
 
         this.questPaceWeaponSelected = selectedWeapon;
 
-        var quests = DatabaseManager.GetQuests(long.Parse(this.QuestIDTextBox.Text.Trim()), this.questPaceWeaponSelected, this.OverlayModeComboBox.Text.Trim());
+        var allQuestsRuns = DatabaseManager.GetQuests(long.Parse(this.QuestIDTextBox.Text.Trim()), this.questPaceWeaponSelected, this.OverlayModeComboBox.Text.Trim());
 
-        if (quests.Count == 0)
+        if (allQuestsRuns.Count == 0)
         {
             return;
         }
-        
-        List<QuestPace> monster1HPList = GetMonster1HPListForQuestPace(quests);
+
+        List<Models.Quest> soloQuests = allQuestsRuns.Where(q => q.PartySize == 1).ToList();
+
+        if (soloQuests.Count == 0)
+        {
+            return;
+        }
+
+        List<QuestPace> monster1HPList = GetMonster1HPListForQuestPace(soloQuests);
 
         // Filter the quest runs where the monster ID stayed the same
         var consistentMonsterIdRuns = monster1HPList.Where(questRun =>
@@ -1525,7 +1532,7 @@ public partial class ConfigWindow : FluentWindow
             // Now, fastestSplitTimes contains the fastest split times for each property
 
             var sumOfMedian = medianSplitTimes.Sum() ?? 0;
-            List<long?> finalTimeValues = quests
+            List<long?> finalTimeValues = soloQuests
                 .Select(quest => quest.FinalTimeValue)
                 .ToList();
 
@@ -1570,7 +1577,7 @@ Run IDs with best paces for each HP% Dealt:
             // Now, fastestSplitTimes contains the fastest split times for each property
 
             var sumOfMedian = medianSplitTimes.Sum() ?? 0;
-            List<long?> finalTimeValues = quests
+            List<long?> finalTimeValues = soloQuests
                 .Select(quest => quest.FinalTimeValue)
                 .ToList();
 

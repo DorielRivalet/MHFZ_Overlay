@@ -2752,6 +2752,8 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
                     cmd.ExecuteNonQuery();
                 }
 
+                // TODO run buffs
+
                 using (var cmd = new SQLiteCommand(conn))
                 {
                     cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_bingo_updates
