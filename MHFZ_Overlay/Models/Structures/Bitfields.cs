@@ -392,7 +392,6 @@ public enum GauntletBoost : uint
     Musou = 4,
 }
 
-
 /// <summary>
 /// Course Rights first byte.
 /// </summary>
@@ -444,3 +443,20 @@ public enum RunBuff : uint
     FreestyleNoSecretTech = Halk | PugiItem | DivaSong | Bento | GuildPugi | ActiveFeature | GuildFood | DivaSkill | DivaPrayerGem,
     FreestyleWithSecretTech = FreestyleNoSecretTech | SecretTechnique,
 }
+
+/// <summary>
+/// Equipment type. <see href="https://github.com/var-username/Monster-Hunter-Frontier-Patterns/"/>
+/// </summary>
+[Flags]
+[JsonConverter(typeof(JsonStringEnumConverter))]
+public enum EquipmentType : uint
+{
+    [DefaultValue(General)]
+    General = 0,
+    SP = 1,
+    Gou = 2,
+    Evolution = 4,
+    HC = 8,
+    UNK1 = 16,
+    Ravi = HC | UNK1,
+} 
