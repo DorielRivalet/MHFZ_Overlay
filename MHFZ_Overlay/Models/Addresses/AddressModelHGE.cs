@@ -1769,4 +1769,13 @@ public sealed class AddressModelHGE : AddressModel
 
     /// <inheritdoc/>
     public override decimal PlayerPositionInQuestZ() => (decimal)this.M.ReadFloat("mhfo-hd.dll+21B3538", string.Empty, false);
+
+    /// <inheritdoc/>
+    public override int ActiveFeature1() => this.M.Read2Byte("mhfo-hd.dll+1C2AB0C");
+
+    /// <inheritdoc/>
+    public override int ActiveFeature2() => this.M.Read2Byte("mhfo-hd.dll+1C2AB14");
+
+    /// <inheritdoc/>
+    public override int ActiveFeature3() => this.M.Read2Byte("mhfo-hd.dll+E41A2A8");
 }

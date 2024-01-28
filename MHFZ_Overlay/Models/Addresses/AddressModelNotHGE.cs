@@ -1689,4 +1689,13 @@ public sealed class AddressModelNotHGE : AddressModel
     /// <inheritdoc/>
     public override decimal PlayerPositionInQuestZ() => (decimal)this.M.ReadFloat("mhfo.dll+20BB548", string.Empty, false);
 
+    /// <inheritdoc/>
+    public override int ActiveFeature1() => this.M.Read2Byte("mhfo.dll+1BD2F50");
+
+    /// <inheritdoc/>
+    public override int ActiveFeature2() => this.M.Read2Byte("mhfo.dll+1BD2F58");
+
+    /// <inheritdoc/>
+    public override int ActiveFeature3() => this.M.Read2Byte("mhfo.dll+57E26E8");
+
 }

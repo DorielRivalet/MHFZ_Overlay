@@ -1284,6 +1284,12 @@ public abstract class AddressModel : INotifyPropertyChanged
 
     public abstract decimal PlayerPositionInQuestZ();
 
+    public abstract int ActiveFeature1();
+
+    public abstract int ActiveFeature2();
+
+    public abstract int ActiveFeature3();
+
 
     /// <TODO>
     /// [] Not Done
@@ -1695,7 +1701,7 @@ TreeScope.Children, condition);
         else if (s.TimerInfoShown && s.EnableInputLogging && s.EnableQuestLogging && s.OverlayModeWatermarkShown)
         {
             // TODO diva prayer gem
-            if (!HasRightsFlag((uint)this.Rights(), CourseRightsFirstByte.Support) && this.DivaSkillUsesLeft() == 0 && this.StyleRank1() != 15 && this.StyleRank2() != 15)
+            if (!HasBitfieldFlag((uint)this.Rights(), CourseRightsFirstByte.Support) && this.DivaSkillUsesLeft() == 0 && this.StyleRank1() != 15 && this.StyleRank2() != 15)
             {
                 return OverlayMode.TimeAttack;
             }
@@ -1714,7 +1720,7 @@ TreeScope.Children, condition);
         }
     }
 
-    public bool HasRightsFlag(uint value, CourseRightsFirstByte flag)
+    public bool HasBitfieldFlag(uint value, CourseRightsFirstByte flag)
     {
         if (value < 0x0100)
         {
@@ -1735,6 +1741,26 @@ TreeScope.Children, condition);
 
         // Check if the flag is set
         return rights.HasFlag(flag);
+    }
+
+    public bool HasBitfieldFlag<T>(uint value, T flag, uint all) where T : Enum
+    {
+        // Validate
+        if (!IsValidBitfield(value, all))
+        {
+            return false;
+        }
+
+        // Convert
+        Enum convertedValue = (Enum)(object)value;
+
+        // Check if the flag is set
+        return convertedValue.HasFlag(flag);
+    }
+
+    public bool IsValidBitfield(uint value, uint all)
+    {
+        return (value & all) == value;
     }
 
     public bool CaravanOverride()

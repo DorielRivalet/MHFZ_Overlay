@@ -32,11 +32,13 @@ using MHFZ_Overlay.Models.Collections;
 using MHFZ_Overlay.Models.Constant;
 using MHFZ_Overlay.Models.Messengers;
 using MHFZ_Overlay.Models.Structures;
+using MHFZ_Overlay.ViewModels.Windows;
 using MHFZ_Overlay.Views.Windows;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NLog;
 using Octokit;
+using SharpCompress.Common;
 using Wpf.Ui.Common;
 using Wpf.Ui.Controls;
 using Formatting = Newtonsoft.Json.Formatting;
@@ -1849,7 +1851,24 @@ public sealed class DatabaseService
 
                     Logger.Debug("Inserted into QuestsOverlayHash table");
 
+                    sql = @"INSERT INTO QuestsActiveFeature (
+                        ActiveFeature,
+                        RunID
+                        ) VALUES (
+                        @ActiveFeature,
+                        @RunID
+                        )";
 
+                    using (var cmd = new SQLiteCommand(sql, conn))
+                    {
+                        var activeFeature = GetActiveFeature(model);
+
+                        cmd.Parameters.AddWithValue("@ActiveFeature", activeFeature);
+                        cmd.Parameters.AddWithValue("@RunID", runID);
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    Logger.Debug("Inserted into QuestsActiveFeature table");
                     // TODO more tables
 
 
@@ -3085,6 +3104,27 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
         }
 
         return overlayHash;
+    }
+
+    /// <summary>
+    /// TODO needs real testing
+    /// </summary>
+    /// <param name="model"></param>
+    /// <returns></returns>
+    public int GetActiveFeature(AddressModel model)
+    {
+        var activeFeatures = new[] { model.ActiveFeature1(), model.ActiveFeature2(), model.ActiveFeature3() };
+
+        foreach (var activeFeature in activeFeatures)
+        {
+            if (model.IsValidBitfield((uint)activeFeature, (uint)ActiveFeature.All))
+            {
+                return activeFeature;
+            }
+        }
+
+        Logger.Warn("Active feature not found: {0} {1} {2}", activeFeatures[0], activeFeatures[1], activeFeatures[2]);
+        return 0;
     }
 
     /// <summary>
@@ -5344,6 +5384,19 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                 {
                     cmd.ExecuteNonQuery();
                 }
+
+                sql = @"CREATE TABLE IF NOT EXISTS QuestsActiveFeature(
+                QuestsActiveFeatureID INTEGER PRIMARY KEY AUTOINCREMENT,
+                ActiveFeature INTEGER NOT NULL DEFAULT 0,
+                RunID INTEGER NOT NULL,
+                FOREIGN KEY(RunID) REFERENCES Quests(RunID)
+                )";
+                using (var cmd = new SQLiteCommand(sql, conn))
+                {
+                    cmd.ExecuteNonQuery();
+                }
+
+                // TODO extra tables
 
                 // a mh game but like a MUD. hunt in-game to get many kinds of points for this game. hunt and tame monsters. challenge other CPU players/monsters.
                 sql = @"CREATE TABLE IF NOT EXISTS GachaMaterial(

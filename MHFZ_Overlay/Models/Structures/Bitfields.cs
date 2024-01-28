@@ -459,4 +459,30 @@ public enum EquipmentType : uint
     HC = 8,
     UNK1 = 16,
     Ravi = HC | UNK1,
-} 
+}
+
+/// <summary>
+/// Active features enabled.
+/// </summary>
+[Flags]
+[JsonConverter(typeof(JsonStringEnumConverter))]
+public enum ActiveFeature : uint
+{
+    [DefaultValue(None)]
+    None = 0,
+    GreatSword = 1,
+    HeavyBowgun = 2,
+    Hammer = 4,
+    Lance = 8,
+    SwordAndShield = 16,
+    LightBowgun = 32,
+    DualSwords = 64,
+    LongSword = 128,
+    HuntingHorn = 256,
+    Gunlance = 512,
+    Bow = 1024,
+    Tonfa = 2048,
+    SwitchAxeF = 4096,
+    MagnetSpike = 8192,
+    All = GreatSword | HeavyBowgun | Hammer | Lance | SwordAndShield | LightBowgun | DualSwords | LongSword | HuntingHorn | Gunlance | Bow | Tonfa | SwitchAxeF | MagnetSpike,
+}
