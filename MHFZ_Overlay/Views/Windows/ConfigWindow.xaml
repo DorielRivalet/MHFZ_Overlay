@@ -2412,6 +2412,10 @@
                                 <RowDefinition Height="40"/>
                                 <RowDefinition Height="40"/>
                                 <RowDefinition Height="40"/>
+                                <RowDefinition Height="40"/>
+                                <RowDefinition Height="40"/>
+                                <RowDefinition Height="40"/>
+                                <RowDefinition Height="40"/>
                             </Grid.RowDefinitions>
 
                             <StackPanel Margin="5" Orientation="Horizontal" Grid.Row="0" Grid.Column="0" ToolTip="Show Timer">
@@ -2751,6 +2755,30 @@
                                 <ComboBoxItem>Lobby</ComboBoxItem>
                                 <ComboBoxItem>Quest</ComboBoxItem>
                             </ComboBox>
+
+                            <StackPanel Margin="5" Orientation="Horizontal" Grid.Row="69" Grid.Column="0" ToolTip="Show Diva Song Timer">
+                                <Image Source="../../Assets/Icons/png/diva_fountain.png" Margin="0,0,5,0"/>
+                                    <TextBlock Style="{StaticResource ConfigTextBox}" Text="Diva Song Timer"/>
+                                </StackPanel>
+                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="69" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=DivaSongTimerShown}"/>
+
+                            <TextBlock Margin="5" Style="{StaticResource ConfigTextBox}" Grid.Row="70" Grid.Column="0"  Text="Diva Song Timer Position"/>
+                            <StackPanel Orientation="Horizontal" Grid.Row="70" Grid.Column="1" HorizontalAlignment="Center">
+                                <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="X" Text="{Binding Source={StaticResource Settings},Path=DivaSongTimerX}"  PreviewTextInput="ValidateNumber"/>
+                                <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="Y" Margin="5,0,0,0" Text="{Binding Source={StaticResource Settings},Path=DivaSongTimerY}"  PreviewTextInput="ValidateNumber"/>
+                            </StackPanel>
+
+                                <StackPanel Margin="5" Orientation="Horizontal" Grid.Row="71" Grid.Column="0" ToolTip="Show Guild Food Timer">
+                                <Image Source="../../Assets/Icons/png/guild_hall.png" Margin="0,0,5,0"/>
+                                <TextBlock Style="{StaticResource ConfigTextBox}" Text="Guild Food Timer" />
+                            </StackPanel>
+                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="71" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=GuildFoodTimerShown}"/>
+
+                            <TextBlock Margin="5" Style="{StaticResource ConfigTextBox}" Grid.Row="72" Grid.Column="0"  Text="Guild Food Timer Position"/>
+                            <StackPanel Orientation="Horizontal" Grid.Row="72" Grid.Column="1" HorizontalAlignment="Center">
+                                <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="X" Text="{Binding Source={StaticResource Settings},Path=GuildFoodTimerX}"  PreviewTextInput="ValidateNumber"/>
+                                <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="Y" Margin="5,0,0,0" Text="{Binding Source={StaticResource Settings},Path=GuildFoodTimerY}"  PreviewTextInput="ValidateNumber"/>
+                            </StackPanel>
                         </Grid>
                     </ScrollViewer>
                     <customcontrols:MainConfigurationActions Grid.Row="1" Grid.ColumnSpan="1" Loaded="MainConfigurationActions_Loaded" Unloaded="MainConfigurationActions_Unloaded"/>

@@ -4006,5 +4006,77 @@ namespace MHFZ_Overlay {
                 this["PlayerPositionMode"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool DivaSongTimerShown {
+            get {
+                return ((bool)(this["DivaSongTimerShown"]));
+            }
+            set {
+                this["DivaSongTimerShown"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("5")]
+        public double DivaSongTimerX {
+            get {
+                return ((double)(this["DivaSongTimerX"]));
+            }
+            set {
+                this["DivaSongTimerX"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("100")]
+        public double DivaSongTimerY {
+            get {
+                return ((double)(this["DivaSongTimerY"]));
+            }
+            set {
+                this["DivaSongTimerY"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool GuildFoodTimerShown {
+            get {
+                return ((bool)(this["GuildFoodTimerShown"]));
+            }
+            set {
+                this["GuildFoodTimerShown"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("5")]
+        public double GuildFoodTimerX {
+            get {
+                return ((double)(this["GuildFoodTimerX"]));
+            }
+            set {
+                this["GuildFoodTimerX"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("60")]
+        public double GuildFoodTimerY {
+            get {
+                return ((double)(this["GuildFoodTimerY"]));
+            }
+            set {
+                this["GuildFoodTimerY"] = value;
+            }
+        }
     }
 }

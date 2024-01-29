@@ -1307,6 +1307,8 @@ The process may take some time, as the program attempts to download from GitHub 
         this.DataLoader.Model.ShowSharpness = v && s.EnableSharpness;
         this.DataLoader.Model.ShowSessionTimeInfo = v && s.SessionTimeShown;
         this.DataLoader.Model.ShowPlayerPositionInfo = v && s.PlayerPositionShown;
+        this.DataLoader.Model.ShowDivaSongTimer = v && s.DivaSongTimerShown && !this.DataLoader.Model.DivaSongEnded;
+        this.DataLoader.Model.ShowGuildFoodTimer = v && s.GuildFoodTimerShown && !this.DataLoader.Model.GuildFoodEnded;
 
         this.DataLoader.Model.ShowMap = v && s.EnableMap;
         this.DataLoader.Model.ShowFrameCounter = v && s.FrameCounterShown;
@@ -1474,6 +1476,14 @@ The process may take some time, as the program attempts to download from GitHub 
             case "PlayerPositionInfo":
                 s.PlayerPositionX = (double)(pos.X - this.xOffset);
                 s.PlayerPositionY = (double)(pos.Y - this.yOffset);
+                break;
+            case "DivaSongTimer":
+                s.DivaSongTimerX = (double)(pos.X - this.xOffset);
+                s.DivaSongTimerY = (double)(pos.Y - this.yOffset);
+                break;
+            case "GuildFoodTimer":
+                s.GuildFoodTimerX = (double)(pos.X - this.xOffset);
+                s.GuildFoodTimerY = (double)(pos.Y - this.yOffset);
                 break;
             case "LocationTextInfo":
                 s.LocationTextX = (double)(pos.X - this.xOffset);
@@ -1685,6 +1695,8 @@ The process may take some time, as the program attempts to download from GitHub 
         this.QuestNameInfoBorder.BorderThickness = thickness;
         this.SessionTimeInfoBorder.BorderThickness = thickness;
         this.PlayerPositionInfoBorder.BorderThickness = thickness;
+        this.DivaSongTimerBorder.BorderThickness = thickness;
+        this.GuildFoodTimerBorder.BorderThickness = thickness;
         this.SharpnessInfoBorder.BorderThickness = thickness;
         this.TimerInfoBorder.BorderThickness = thickness;
         this.GamepadGridBorder.BorderThickness = thickness;

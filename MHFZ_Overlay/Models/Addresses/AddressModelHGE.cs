@@ -1778,4 +1778,16 @@ public sealed class AddressModelHGE : AddressModel
 
     /// <inheritdoc/>
     public override int ActiveFeature3() => this.M.Read2Byte("mhfo-hd.dll+E41A2A8");
+
+    /// <inheritdoc/>
+    public override int ServerHeartbeat() => this.M.ReadInt("mhfo-hd.dll+EABD4F0");
+
+    /// <inheritdoc/>
+    public override int GuildFoodStart() => this.M.ReadInt("mhfo-hd.dll+E7FED08");
+
+    /// <inheritdoc/>
+    public override int DivaSongStart() => this.M.ReadInt("mhfo-hd.dll+ED3DB50");
+
+    /// <inheritdoc/>
+    //public override int DivaPrayerGemStart() => this.M.ReadInt("mhfo-hd.dll+E820DF8");
 }

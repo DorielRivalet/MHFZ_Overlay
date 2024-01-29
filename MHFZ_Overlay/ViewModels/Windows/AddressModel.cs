@@ -127,6 +127,10 @@ public abstract class AddressModel : INotifyPropertyChanged
 
     public bool ShowPlayerPositionInfo { get; set; }
 
+    public bool ShowDivaSongTimer { get; set; }
+
+    public bool ShowGuildFoodTimer { get; set; }
+
     public bool ShowMonsterPartHP { get; set; }
 
     public bool ShowKBMLayout { get; set; }
@@ -1289,6 +1293,17 @@ public abstract class AddressModel : INotifyPropertyChanged
     public abstract int ActiveFeature2();
 
     public abstract int ActiveFeature3();
+
+    /// <summary>
+    /// Updates every 11 seconds
+    /// </summary>
+    /// <returns></returns>
+    public abstract int ServerHeartbeat();
+
+    public abstract int GuildFoodStart();
+
+    public abstract int DivaSongStart();
+
 
 
     /// <TODO>
@@ -2499,6 +2514,78 @@ TreeScope.Children, condition);
         }
     }
 
+    public bool DivaSongEnding
+    {
+        get
+        {
+            if (DivaSongStart() <= 0)
+            {
+                return true;
+            }
+
+            var expiry = DivaSongStart() + (60 * 90);
+            double secondsLeft = expiry - ServerHeartbeat();
+
+            return secondsLeft <= 60*10;
+        }
+    }
+
+    public bool DivaSongEnded
+    {
+        get
+        {
+            if (DivaSongStart() <= 0)
+            {
+                return true;
+            }
+
+            var expiry = DivaSongStart() + (60 * 90);
+            double secondsLeft = expiry - ServerHeartbeat();
+
+            return secondsLeft <= 0;
+        }
+    }
+
+    public bool GuildFoodEnding
+    {
+        get
+        {
+            if (GuildFoodStart() <= 0)
+            {
+                return true;
+            }
+
+            var expiry = GuildFoodStart() + (60 * 90);
+            double secondsLeft = expiry - ServerHeartbeat();
+
+            return secondsLeft <= 60 * 10;
+        }
+    }
+
+    public bool GuildFoodEnded
+    {
+        get
+        {
+            if (GuildFoodStart() <= 0)
+            {
+                return true;
+            }
+
+            var expiry = GuildFoodStart() + (60 * 90);
+            double secondsLeft = expiry - ServerHeartbeat();
+
+            return secondsLeft <= 0;
+        }
+    }
+
+    public string DivaSongFill => DivaSongEnding ? CatppuccinMochaColors.NameHex["Red"] : CatppuccinMochaColors.NameHex["Rosewater"];
+
+    public string GuildFoodFill => GuildFoodEnding ? CatppuccinMochaColors.NameHex["Red"] : CatppuccinMochaColors.NameHex["Rosewater"];
+
+    public double DivaSongOpacity => DivaSongEnding ? 1 : .5;
+
+    public double GuildFoodOpacity => GuildFoodEnding ? 1 : .5;
+
     public string IsOnPace
     {
         get
@@ -2727,6 +2814,10 @@ TreeScope.Children, condition);
     public string APMIcon { get; set; } = "../../Assets/Icons/png/flame_ul.png";
 
     public string PersonalBestIcon { get; set; } = "../../Assets/Icons/png/quest_clock.png";
+
+    public string DivaSongIcon { get; set; } = "../../Assets/Icons/png/diva_fountain.png";
+
+    public string GuildFoodIcon { get; set; } = "../../Assets/Icons/png/guild_hall.png";
 
     /// <summary>
     /// <para>Gets player true raw.</para>
@@ -12598,6 +12689,48 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             var programEnd = DateTime.UtcNow;
             var duration = programEnd - this.programStart;
             return duration;
+        }
+    }
+
+    public string GuildFoodTimeLeft
+    {
+        get
+        {
+            if (GuildFoodStart() <= 0)
+            {
+                return "0m";
+            }
+
+            var expiry  = GuildFoodStart() + (60 * 90);
+            double secondsLeft = expiry - ServerHeartbeat();
+
+            if (secondsLeft <= 0)
+            {
+                return "0m";
+            }
+
+            return $"{Math.Truncate(secondsLeft/60.0)}m";
+        }
+    }
+
+    public string DivaSongTimeLeft
+    {
+        get
+        {
+            if (DivaSongStart() <= 0)
+            {
+                return "0m";
+            }
+
+            var expiry = DivaSongStart() + (60 * 90);
+            double secondsLeft = expiry - ServerHeartbeat();
+
+            if (secondsLeft <= 0)
+            {
+                return "0m";
+            }
+
+            return $"{Math.Truncate(secondsLeft / 60.0)}m";
         }
     }
 
