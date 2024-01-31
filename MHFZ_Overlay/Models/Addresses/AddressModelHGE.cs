@@ -456,7 +456,10 @@ public sealed class AddressModelHGE : AddressModel
     public override int GZenny() => this.M.ReadInt("mhfo-hd.dll+ED3ACB4");
 
     /// <inheritdoc/>
-    public override int GuildFoodSkill() => this.M.Read2Byte("mhfo-hd.dll+E7FED00");
+    /// public override int GuildFoodSkill() => this.M.Read2Byte("mhfo-hd.dll+E7FED00");
+    /// 
+    /// <inheritdoc/>
+    public override int GuildFoodSkill() => this.M.Read2Byte("mhfo-hd.dll+E6CCD9E");
 
     /// <inheritdoc/>
     public override int GalleryEvaluationScore() => this.M.ReadInt("mhfo-hd.dll+ED3D9F0");

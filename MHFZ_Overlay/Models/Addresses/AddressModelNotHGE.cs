@@ -370,8 +370,11 @@ public sealed class AddressModelNotHGE : AddressModel
     /// <inheritdoc/>
     public override int GZenny() => this.M.ReadInt("mhfo.dll+6100514");
 
+    ///// <inheritdoc/>
+    //public override int GuildFoodSkill() => this.M.Read2Byte("mhfo.dll+5BC70D8");
+
     /// <inheritdoc/>
-    public override int GuildFoodSkill() => this.M.Read2Byte("mhfo.dll+5BC70D8");
+    public override int GuildFoodSkill() => this.M.Read2Byte("mhfo.dll+5A951DE");
 
     /// <inheritdoc/>
     public override int GalleryEvaluationScore() => this.M.ReadInt("mhfo.dll+6103250");
