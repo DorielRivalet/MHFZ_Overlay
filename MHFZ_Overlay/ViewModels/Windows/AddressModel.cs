@@ -332,6 +332,42 @@ public abstract class AddressModel : INotifyPropertyChanged
 
     public abstract int HalkFullness();
 
+    public abstract int HalkLevel();
+
+    public abstract int HalkIntimacy();
+
+    public abstract int HalkHealth();
+
+    public abstract int HalkAttack();
+
+    public abstract int HalkDefense();
+
+    public abstract int HalkIntelligence();
+
+    public abstract int HalkSkill1();
+
+    public abstract int HalkSkill2();
+    
+    public abstract int HalkSkill3();
+    
+    public abstract int HalkElementNone();
+    
+    public abstract int HalkFire();
+    
+    public abstract int HalkThunder();
+    
+    public abstract int HalkWater();
+    
+    public abstract int HalkIce();
+    
+    public abstract int HalkDragon();
+    
+    public abstract int HalkSleep();
+    
+    public abstract int HalkParalysis();
+    
+    public abstract int HalkPoison();
+
     public abstract int RankBand();
 
     public abstract int PartnyaRankPoints();
@@ -1290,8 +1326,16 @@ public abstract class AddressModel : INotifyPropertyChanged
 
     public abstract int ActiveFeature1();
 
+    /// <summary>
+    /// Alternative.
+    /// </summary>
+    /// <returns></returns>
     public abstract int ActiveFeature2();
 
+    /// <summary>
+    /// Alternative.
+    /// </summary>
+    /// <returns></returns>
     public abstract int ActiveFeature3();
 
     /// <summary>
@@ -1303,19 +1347,43 @@ public abstract class AddressModel : INotifyPropertyChanged
     public abstract int GuildFoodStart();
 
     public abstract int DivaSongStart();
-
+    
+    public abstract int GuildPoogie1Skill();
+    
+    public abstract int GuildPoogie2Skill();
+    
+    public abstract int GuildPoogie3Skill();
+    
+    public abstract int DivaPrayerGemRedSkill();
+    
+    public abstract int DivaPrayerGemRedLevel();
+    
+    public abstract int DivaPrayerGemYellowSkill();
+    
+    public abstract int DivaPrayerGemYellowLevel();
+    
+    public abstract int DivaPrayerGemGreenSkill();
+    
+    public abstract int DivaPrayerGemGreenLevel();
+    
+    public abstract int DivaPrayerGemBlueSkill();
+    
+    public abstract int DivaPrayerGemBlueLevel();
+    
+    public abstract bool HalkOn();
+    
+    public abstract bool HalkPotEffectOn();
 
 
     /// <TODO>
     /// [] Not Done
     /// [X] Done
     /// [O] WIP
-    /// [] Prayer gems, 
     /// [] bento, 
     /// [] sharpness table, 
     /// [] pvp, 
-    /// [] zenith in road, guild pugi, gear rarity colors.
-    /// [] Database would store prayer gems, bento, sharpness table, pvp, guild pugi. Should i use separate table?
+    /// [] zenith in road, gear rarity colors.
+    /// [] Database would store bento, sharpness table, pvp. Should i use separate table?
     /// </TODO>
 
     public bool HasMonster2
@@ -2542,7 +2610,7 @@ TreeScope.Children, condition);
             var expiry = DivaSongStart() + (60 * 90);
             double secondsLeft = expiry - ServerHeartbeat();
 
-            return secondsLeft <= 0;
+            return (QuestID() <= 0 && secondsLeft <= 0);
         }
     }
 
@@ -2574,7 +2642,7 @@ TreeScope.Children, condition);
             var expiry = GuildFoodStart() + (60 * 90);
             double secondsLeft = expiry - ServerHeartbeat();
 
-            return secondsLeft <= 0;
+            return (QuestID() <= 0 && secondsLeft <= 0);
         }
     }
 

@@ -392,7 +392,7 @@ public sealed class DiscordService
                     stateString = string.Format(CultureInfo.InvariantCulture, "GR: {0} | GCP: {1} | Guild Food: {2} | Poogie Item: {3}", dataLoader.Model.GRankNumber(), dataLoader.Model.GCP(), ViewModels.Windows.AddressModel.GetArmorSkill(dataLoader.Model.GuildFoodSkill()), ViewModels.Windows.AddressModel.GetItemName(dataLoader.Model.PoogieItemUseID()));
                     PresenceTemplate.State = stateString.Length <= MaxDiscordRPCStringLength ? stateString : string.Concat(stateString.AsSpan(0, MaxDiscordRPCStringLength - 3), "...");
                     break;
-                case 205: // Pugi Farm
+                case 205: // Poogie Farm
                     stateString = string.Format(CultureInfo.InvariantCulture, "GR: {0} | Poogie Points: {1} | Poogie Clothes: {2} | Poogie Item: {3}", dataLoader.Model.GRankNumber(), dataLoader.Model.PoogiePoints(), ViewModels.Windows.AddressModel.GetPoogieClothes(dataLoader.Model.PoogieCostume()), ViewModels.Windows.AddressModel.GetItemName(dataLoader.Model.PoogieItemUseID()));
                     PresenceTemplate.State = stateString.Length <= MaxDiscordRPCStringLength ? stateString : string.Concat(stateString.AsSpan(0, MaxDiscordRPCStringLength - 3), "...");
                     break;

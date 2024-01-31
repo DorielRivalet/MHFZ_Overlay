@@ -425,22 +425,24 @@ public enum RunBuff : uint
     [DefaultValue(None)]
     None = 0,
     Halk = 1,
-    PugiItem = 2,
+    PoogieItem = 2,
     DivaSong = 4,
-    HalkPot = 8,
-    LoginBoost = 16,
-    Bento = 32,
-    GuildPugi = 64,
-    ActiveFeature = 128,
-    GuildFood = 256,
-    DivaSkill = 512,
-    SecretTechnique = 1024,
-    DivaPrayerGem = 2048,
-    HunterSupportCourse = 4096,
+    HalkPotEffect = 8,
+    Bento = 16,
+    GuildPoogie = 32,
+    ActiveFeature = 64,
+    GuildFood = 128,
+    DivaSkill = 256,
+    SecretTechnique = 512,
+    DivaPrayerGem = 1024,
+    /// <summary>
+    /// Can come from hunter aid/support course.
+    /// </summary>
+    CourseAttackBoost = 2048,
 
     // old categories
-    TimeAttack = PugiItem | DivaSong | Bento,
-    FreestyleNoSecretTech = Halk | PugiItem | DivaSong | Bento | GuildPugi | ActiveFeature | GuildFood | DivaSkill | DivaPrayerGem,
+    TimeAttack = PoogieItem | DivaSong | Bento,
+    FreestyleNoSecretTech = Halk | PoogieItem | DivaSong | Bento | GuildPoogie | ActiveFeature | GuildFood | DivaSkill | DivaPrayerGem,
     FreestyleWithSecretTech = FreestyleNoSecretTech | SecretTechnique,
 }
 

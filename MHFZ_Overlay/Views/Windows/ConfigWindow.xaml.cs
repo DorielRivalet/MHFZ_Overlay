@@ -126,7 +126,7 @@ public partial class ConfigWindow : FluentWindow
       new MonsterLog(29, "Rocks", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/random.png", 0),
       new MonsterLog(30, "Ioprey", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/ioprey.png", 0),
       new MonsterLog(31, "Iodrome", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/iodrome.png", 0, true),
-      new MonsterLog(32, "Pugis", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/random.png", 0),
+      new MonsterLog(32, "Poogies", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/random.png", 0),
       new MonsterLog(33, "Kirin", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/kirin.png", 0, true),
       new MonsterLog(34, "Cephalos", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/cephalos.png", 0),
       new MonsterLog(35, "Giaprey / Giadrome", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/giaprey.png", 0),

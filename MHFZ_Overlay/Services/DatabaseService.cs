@@ -1869,6 +1869,156 @@ public sealed class DatabaseService
                     }
 
                     Logger.Debug("Inserted into QuestsActiveFeature table");
+
+                    sql = @"INSERT INTO QuestsGuildPoogie (
+                        GuildPoogie1Skill,
+                        GuildPoogie2Skill,
+                        GuildPoogie3Skill,
+                        RunID
+                        ) VALUES (
+                        @GuildPoogie1Skill,
+                        @GuildPoogie2Skill,
+                        @GuildPoogie3Skill,
+                        @RunID
+                        )";
+
+                    using (var cmd = new SQLiteCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@GuildPoogie1Skill", model.GuildPoogie1Skill());
+                        cmd.Parameters.AddWithValue("@GuildPoogie2Skill", model.GuildPoogie2Skill());
+                        cmd.Parameters.AddWithValue("@GuildPoogie3Skill", model.GuildPoogie3Skill());
+                        cmd.Parameters.AddWithValue("@RunID", runID);
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    Logger.Debug("Inserted into QuestsGuildPoogie table");
+
+                    sql = @"INSERT INTO QuestsHalk (
+                        HalkOn,
+                        HalkPotEffectOn,
+                        HalkFullness,
+                        HalkLevel,
+                        HalkIntimacy,
+                        HalkHealth,
+                        HalkAttack,
+                        HalkDefense,
+                        HalkIntelligence,
+                        HalkSkill1,
+                        HalkSkill2,
+                        HalkSkill3,
+                        HalkElementNone,
+                        HalkFire,
+                        HalkThunder,
+                        HalkWater,
+                        HalkIce,
+                        HalkDragon,
+                        HalkSleep,
+                        HalkParalysis,
+                        HalkPoison,
+                        RunID
+                        ) VALUES (
+                        @HalkOn,
+                        @HalkPotEffectOn,
+                        @HalkFullness,
+                        @HalkLevel,
+                        @HalkIntimacy,
+                        @HalkHealth,
+                        @HalkAttack,
+                        @HalkDefense,
+                        @HalkIntelligence,
+                        @HalkSkill1,
+                        @HalkSkill2,
+                        @HalkSkill3,
+                        @HalkElementNone,
+                        @HalkFire,
+                        @HalkThunder,
+                        @HalkWater,
+                        @HalkIce,
+                        @HalkDragon,
+                        @HalkSleep,
+                        @HalkParalysis,
+                        @HalkPoison,
+                        @RunID
+                        )";
+
+                    using (var cmd = new SQLiteCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@HalkOn", model.HalkOn());
+                        cmd.Parameters.AddWithValue("@HalkPotEffectOn", model.HalkPotEffectOn());
+                        cmd.Parameters.AddWithValue("@HalkFullness", model.HalkFullness());
+                        cmd.Parameters.AddWithValue("@HalkLevel", model.HalkLevel());
+                        cmd.Parameters.AddWithValue("@HalkIntimacy", model.HalkIntimacy());
+                        cmd.Parameters.AddWithValue("@HalkHealth", model.HalkHealth());
+                        cmd.Parameters.AddWithValue("@HalkAttack", model.HalkAttack());
+                        cmd.Parameters.AddWithValue("@HalkDefense", model.HalkDefense());
+                        cmd.Parameters.AddWithValue("@HalkIntelligence", model.HalkIntelligence());
+                        cmd.Parameters.AddWithValue("@HalkSkill1", model.HalkSkill1());
+                        cmd.Parameters.AddWithValue("@HalkSkill2", model.HalkSkill2());
+                        cmd.Parameters.AddWithValue("@HalkSkill3", model.HalkSkill3());
+                        cmd.Parameters.AddWithValue("@HalkElementNone", model.HalkElementNone());
+                        cmd.Parameters.AddWithValue("@HalkFire", model.HalkFire());
+                        cmd.Parameters.AddWithValue("@HalkThunder", model.HalkThunder());
+                        cmd.Parameters.AddWithValue("@HalkWater", model.HalkWater());
+                        cmd.Parameters.AddWithValue("@HalkIce", model.HalkIce());
+                        cmd.Parameters.AddWithValue("@HalkDragon", model.HalkDragon());
+                        cmd.Parameters.AddWithValue("@HalkSleep", model.HalkSleep());
+                        cmd.Parameters.AddWithValue("@HalkParalysis", model.HalkParalysis());
+                        cmd.Parameters.AddWithValue("@HalkPoison", model.HalkPoison());
+                        cmd.Parameters.AddWithValue("@RunID", runID);
+
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    Logger.Debug("Inserted into QuestsHalk table");
+
+                    sql = @"INSERT INTO QuestsDiva (
+                        DivaSongBuffOn,
+                        DivaPrayerGemRedSkill,
+                        DivaPrayerGemRedLevel,
+                        DivaPrayerGemYellowSkill,
+                        DivaPrayerGemYellowLevel,
+                        DivaPrayerGemGreenSkill,
+                        DivaPrayerGemGreenLevel,
+                        DivaPrayerGemBlueSkill,
+                        DivaPrayerGemBlueLevel,
+                        RunID
+                        ) VALUES (
+                        @DivaSongBuffOn,
+                        @DivaPrayerGemRedSkill,
+                        @DivaPrayerGemRedLevel,
+                        @DivaPrayerGemYellowSkill,
+                        @DivaPrayerGemYellowLevel,
+                        @DivaPrayerGemGreenSkill,
+                        @DivaPrayerGemGreenLevel,
+                        @DivaPrayerGemBlueSkill,
+                        @DivaPrayerGemBlueLevel,
+                        @RunID
+                        )";
+
+                    using (var cmd = new SQLiteCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@DivaSongBuffOn", !model.DivaSongEnded);
+                        cmd.Parameters.AddWithValue("@DivaPrayerGemRedSkill", model.DivaPrayerGemRedSkill());
+                        cmd.Parameters.AddWithValue("@DivaPrayerGemRedLevel", model.DivaPrayerGemRedLevel());
+                        cmd.Parameters.AddWithValue("@DivaPrayerGemYellowSkill", model.DivaPrayerGemYellowSkill());
+                        cmd.Parameters.AddWithValue("@DivaPrayerGemYellowLevel", model.DivaPrayerGemYellowLevel());
+                        cmd.Parameters.AddWithValue("@DivaPrayerGemGreenSkill", model.DivaPrayerGemGreenSkill());
+                        cmd.Parameters.AddWithValue("@DivaPrayerGemGreenLevel", model.DivaPrayerGemGreenLevel());
+                        cmd.Parameters.AddWithValue("@DivaPrayerGemBlueSkill", model.DivaPrayerGemBlueSkill());
+                        cmd.Parameters.AddWithValue("@DivaPrayerGemBlueLevel", model.DivaPrayerGemBlueLevel());
+                        cmd.Parameters.AddWithValue("@RunID", runID);
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    Logger.Debug("Inserted into QuestsDiva table");
+
+
+
+
+
+
+
+
                     // TODO more tables
 
 
@@ -2765,6 +2915,86 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
                 {
                     cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_quests_overlay_hash_deletion
                         AFTER DELETE ON QuestsOverlayHash
+                        BEGIN
+                          SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
+                        END;";
+                    cmd.ExecuteNonQuery();
+                }
+
+                using (var cmd = new SQLiteCommand(conn))
+                {
+                    cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_quests_diva_updates
+                        AFTER UPDATE ON QuestsDiva
+                        BEGIN
+                          SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
+                        END;";
+                    cmd.ExecuteNonQuery();
+                }
+
+                using (var cmd = new SQLiteCommand(conn))
+                {
+                    cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_quests_diva_deletion
+                        AFTER DELETE ON QuestsDiva
+                        BEGIN
+                          SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
+                        END;";
+                    cmd.ExecuteNonQuery();
+                }
+
+                using (var cmd = new SQLiteCommand(conn))
+                {
+                    cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_quests_halk_updates
+                        AFTER UPDATE ON QuestsHalk
+                        BEGIN
+                          SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
+                        END;";
+                    cmd.ExecuteNonQuery();
+                }
+
+                using (var cmd = new SQLiteCommand(conn))
+                {
+                    cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_quests_halk_deletion
+                        AFTER DELETE ON QuestsHalk
+                        BEGIN
+                          SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
+                        END;";
+                    cmd.ExecuteNonQuery();
+                }
+
+                using (var cmd = new SQLiteCommand(conn))
+                {
+                    cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_quests_active_feature_updates
+                        AFTER UPDATE ON QuestsActiveFeature
+                        BEGIN
+                          SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
+                        END;";
+                    cmd.ExecuteNonQuery();
+                }
+
+                using (var cmd = new SQLiteCommand(conn))
+                {
+                    cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_quests_active_feature_deletion
+                        AFTER DELETE ON QuestsActiveFeature
+                        BEGIN
+                          SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
+                        END;";
+                    cmd.ExecuteNonQuery();
+                }
+
+                using (var cmd = new SQLiteCommand(conn))
+                {
+                    cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_quests_guild_poogie_updates
+                        AFTER UPDATE ON QuestsGuildPoogie
+                        BEGIN
+                          SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
+                        END;";
+                    cmd.ExecuteNonQuery();
+                }
+
+                using (var cmd = new SQLiteCommand(conn))
+                {
+                    cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_quests_guild_poogie_deletion
+                        AFTER DELETE ON QuestsGuildPoogie
                         BEGIN
                           SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
                         END;";
@@ -5388,6 +5618,69 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                 sql = @"CREATE TABLE IF NOT EXISTS QuestsActiveFeature(
                 QuestsActiveFeatureID INTEGER PRIMARY KEY AUTOINCREMENT,
                 ActiveFeature INTEGER NOT NULL DEFAULT 0,
+                RunID INTEGER NOT NULL,
+                FOREIGN KEY(RunID) REFERENCES Quests(RunID)
+                )";
+                using (var cmd = new SQLiteCommand(sql, conn))
+                {
+                    cmd.ExecuteNonQuery();
+                }
+
+                sql = @"CREATE TABLE IF NOT EXISTS QuestsGuildPoogie(
+                QuestsGuildPoogieID INTEGER PRIMARY KEY AUTOINCREMENT,
+                GuildPoogie1Skill INTEGER NOT NULL DEFAULT 0,
+                GuildPoogie2Skill INTEGER NOT NULL DEFAULT 0,
+                GuildPoogie3Skill INTEGER NOT NULL DEFAULT 0,
+                RunID INTEGER NOT NULL,
+                FOREIGN KEY(RunID) REFERENCES Quests(RunID)
+                )";
+                using (var cmd = new SQLiteCommand(sql, conn))
+                {
+                    cmd.ExecuteNonQuery();
+                }
+
+                sql = @"CREATE TABLE IF NOT EXISTS QuestsHalk(
+                QuestsHalkID INTEGER PRIMARY KEY AUTOINCREMENT,
+                HalkOn INTEGER NOT NULL DEFAULT 0,
+                HalkPotEffectOn INTEGER NOT NULL DEFAULT 0,
+                HalkFullness INTEGER NOT NULL DEFAULT 0,
+                HalkLevel INTEGER NOT NULL DEFAULT 0,
+                HalkIntimacy INTEGER NOT NULL DEFAULT 0,
+                HalkHealth INTEGER NOT NULL DEFAULT 0,
+                HalkAttack INTEGER NOT NULL DEFAULT 0,
+                HalkDefense INTEGER NOT NULL DEFAULT 0,
+                HalkIntelligence INTEGER NOT NULL DEFAULT 0,
+                HalkSkill1 INTEGER NOT NULL DEFAULT 0,
+                HalkSkill2 INTEGER NOT NULL DEFAULT 0,
+                HalkSkill3 INTEGER NOT NULL DEFAULT 0,
+                HalkElementNone INTEGER NOT NULL DEFAULT 0,
+                HalkFire INTEGER NOT NULL DEFAULT 0,
+                HalkThunder INTEGER NOT NULL DEFAULT 0,
+                HalkWater INTEGER NOT NULL DEFAULT 0,
+                HalkIce INTEGER NOT NULL DEFAULT 0,
+                HalkDragon INTEGER NOT NULL DEFAULT 0,
+                HalkSleep INTEGER NOT NULL DEFAULT 0,
+                HalkParalysis INTEGER NOT NULL DEFAULT 0,
+                HalkPoison INTEGER NOT NULL DEFAULT 0,
+                RunID INTEGER NOT NULL,
+                FOREIGN KEY(RunID) REFERENCES Quests(RunID)
+                )";
+                using (var cmd = new SQLiteCommand(sql, conn))
+                {
+                    cmd.ExecuteNonQuery();
+                }
+
+                sql = @"CREATE TABLE IF NOT EXISTS QuestsDiva(
+                QuestsDivaID INTEGER PRIMARY KEY AUTOINCREMENT,
+                DivaSongBuffOn INTEGER NOT NULL DEFAULT 0,
+                DivaPrayerGemRedSkill INTEGER NOT NULL DEFAULT 0,
+                DivaPrayerGemRedLevel INTEGER NOT NULL DEFAULT 0,
+                DivaPrayerGemYellowSkill INTEGER NOT NULL DEFAULT 0,
+                DivaPrayerGemYellowLevel INTEGER NOT NULL DEFAULT 0,
+                DivaPrayerGemGreenSkill INTEGER NOT NULL DEFAULT 0,
+                DivaPrayerGemGreenLevel INTEGER NOT NULL DEFAULT 0,
+                DivaPrayerGemBlueSkill INTEGER NOT NULL DEFAULT 0,
+                DivaPrayerGemBlueLevel INTEGER NOT NULL DEFAULT 0,
                 RunID INTEGER NOT NULL,
                 FOREIGN KEY(RunID) REFERENCES Quests(RunID)
                 )";

@@ -528,6 +528,60 @@ public sealed class AddressModelHGE : AddressModel
     public override int HalkFullness() => this.M.ReadByte("mhfo-hd.dll+ED3C123");
 
     /// <inheritdoc/>
+    public override int HalkLevel() => this.M.ReadByte("mhfo-hd.dll+ED3C124");
+
+    /// <inheritdoc/>
+    public override int HalkIntimacy() => this.M.ReadByte("mhfo-hd.dll+ED3C125");
+
+    /// <inheritdoc/>
+    public override int HalkHealth() => this.M.ReadByte("mhfo-hd.dll+ED3C126");
+
+    /// <inheritdoc/>
+    public override int HalkAttack() => this.M.ReadByte("mhfo-hd.dll+ED3C127");
+
+    /// <inheritdoc/>
+    public override int HalkDefense() => this.M.ReadByte("mhfo-hd.dll+ED3C128");
+
+    /// <inheritdoc/>
+    public override int HalkIntelligence() => this.M.ReadByte("mhfo-hd.dll+ED3C129");
+
+    /// <inheritdoc/>
+    public override int HalkSkill1() => this.M.ReadByte("mhfo-hd.dll+ED3C12A");
+
+    /// <inheritdoc/>
+    public override int HalkSkill2() => this.M.ReadByte("mhfo-hd.dll+ED3C12B");
+
+    /// <inheritdoc/>
+    public override int HalkSkill3() => this.M.ReadByte("mhfo-hd.dll+ED3C12C");
+
+    /// <inheritdoc/>
+    public override int HalkElementNone() => this.M.ReadByte("mhfo-hd.dll+ED3C12E");
+
+    /// <inheritdoc/>
+    public override int HalkFire() => this.M.ReadByte("mhfo-hd.dll+ED3C12F");
+
+    /// <inheritdoc/>
+    public override int HalkThunder() => this.M.ReadByte("mhfo-hd.dll+ED3C130");
+
+    /// <inheritdoc/>
+    public override int HalkWater() => this.M.ReadByte("mhfo-hd.dll+ED3C131");
+
+    /// <inheritdoc/>
+    public override int HalkIce() => this.M.ReadByte("mhfo-hd.dll+ED3C132");
+
+    /// <inheritdoc/>
+    public override int HalkDragon() => this.M.ReadByte("mhfo-hd.dll+ED3C133");
+
+    /// <inheritdoc/>
+    public override int HalkSleep() => this.M.ReadByte("mhfo-hd.dll+ED3C134");
+
+    /// <inheritdoc/>
+    public override int HalkParalysis() => this.M.ReadByte("mhfo-hd.dll+ED3C135");
+
+    /// <inheritdoc/>
+    public override int HalkPoison() => this.M.ReadByte("mhfo-hd.dll+ED3C136");
+
+    /// <inheritdoc/>
     public override int RankBand() => this.M.ReadByte("mhfo-hd.dll+2AFA788");
 
     /// <inheritdoc/>
@@ -1790,4 +1844,44 @@ public sealed class AddressModelHGE : AddressModel
 
     /// <inheritdoc/>
     //public override int DivaPrayerGemStart() => this.M.ReadInt("mhfo-hd.dll+E820DF8");
+
+    /// <inheritdoc/>
+    public override int GuildPoogie1Skill() => this.M.ReadByte("mhfo-hd.dll+E76BBDB");
+
+    /// <inheritdoc/>
+    public override int GuildPoogie2Skill() => this.M.ReadByte("mhfo-hd.dll+E76BBEB");
+
+    /// <inheritdoc/>
+    public override int GuildPoogie3Skill() => this.M.ReadByte("mhfo-hd.dll+E76BBFB");
+
+    /// <inheritdoc/>
+    public override int DivaPrayerGemRedSkill() => this.M.Read2Byte("mhfo-hd.dll+E6CCF14");
+
+    /// <inheritdoc/>
+    public override int DivaPrayerGemRedLevel() => this.M.Read2Byte("mhfo-hd.dll+E6CCF16");
+
+    /// <inheritdoc/>
+    public override int DivaPrayerGemYellowSkill() => this.M.Read2Byte("mhfo-hd.dll+E6CCF18");
+
+    /// <inheritdoc/>
+    public override int DivaPrayerGemYellowLevel() => this.M.Read2Byte("mhfo-hd.dll+E6CCF1A");
+
+    /// <inheritdoc/>
+    public override int DivaPrayerGemGreenSkill() => this.M.Read2Byte("mhfo-hd.dll+E6CCF1C");
+
+    /// <inheritdoc/>
+    public override int DivaPrayerGemGreenLevel() => this.M.Read2Byte("mhfo-hd.dll+E6CCF1E");
+
+    /// <inheritdoc/>
+    public override int DivaPrayerGemBlueSkill() => this.M.Read2Byte("mhfo-hd.dll+E6CCF20");
+
+    /// <inheritdoc/>
+    public override int DivaPrayerGemBlueLevel() => this.M.Read2Byte("mhfo-hd.dll+E6CCF22");
+
+    /// <inheritdoc/>
+    public override bool HalkOn() => this.M.ReadByte("mhfo-hd.dll+E7FE233") > 0 ? true : false;
+
+    /// <inheritdoc/>
+    public override bool HalkPotEffectOn() => this.M.ReadByte("mhfo-hd.dll+DC6C524") > 0 ? true : false;
+
 }
