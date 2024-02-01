@@ -486,6 +486,7 @@ public sealed class DatabaseService
             var createdAt = DateTime.UtcNow;
             var createdBy = ViewModels.Windows.AddressModel.GetFullCurrentProgramVersion();
             var playerID = 1;
+            var partySize = dataLoader.Model.PartySize();
 
             using (var transaction = conn.BeginTransaction())
             {
@@ -710,8 +711,6 @@ public sealed class DatabaseService
 
                         actualOverlayMode = GetActualOverlayMode(dataLoader);
 
-                        var partySize = dataLoader.Model.PartySize();
-
                         var monster1HPDictionary = dataLoader.Model.Monster1HPDictionary;
                         var monster2HPDictionary = dataLoader.Model.Monster2HPDictionary;
                         var monster3HPDictionary = dataLoader.Model.Monster3HPDictionary;
@@ -808,82 +807,85 @@ public sealed class DatabaseService
                         runID = Convert.ToInt32(cmd.ExecuteScalar(), CultureInfo.InvariantCulture);
                     }
 
-                    if (dataLoader.Model.PartySize() == 1)
+                    long personalBest = 0;
+                    var weaponType = dataLoader.Model.WeaponType();
+                    var improvedPersonalBest = false;
+
+                    using (var cmd = new SQLiteCommand(
+                    @"SELECT 
+                            TimeLeft, 
+                            FinalTimeValue,
+                            FinalTimeDisplay,
+                            ActualOverlayMode,
+                            PartySize,
+                            pg.WeaponTypeID
+                        FROM 
+                            Quests q
+                        JOIN
+                            PlayerGear pg ON q.RunID = pg.RunID
+                        WHERE 
+                            q.QuestID = @questID
+                            AND pg.WeaponTypeID = @weaponTypeID
+                            AND q.ActualOverlayMode = @category
+                            AND q.PartySize = @partySize
+                        ORDER BY 
+                            FinalTimeValue ASC
+                        LIMIT 1", conn))
                     {
-                        long personalBest = 0;
-                        var weaponType = dataLoader.Model.WeaponType();
-                        var improvedPersonalBest = false;
+                        cmd.Parameters.AddWithValue("@questID", questID);
+                        cmd.Parameters.AddWithValue("@weaponTypeID", weaponType);
+                        cmd.Parameters.AddWithValue("@category", actualOverlayMode);
+                        cmd.Parameters.AddWithValue("@partySize", partySize);
 
-                        using (var cmd = new SQLiteCommand(
-                        @"SELECT 
-                                TimeLeft, 
-                                FinalTimeValue,
-                                FinalTimeDisplay,
-                                ActualOverlayMode,
-                                pg.WeaponTypeID
-                            FROM 
-                                Quests q
-                            JOIN
-                                PlayerGear pg ON q.RunID = pg.RunID
-                            WHERE 
-                                QuestID = @questID
-                                AND pg.WeaponTypeID = @weaponTypeID
-                                AND ActualOverlayMode = @category
-                                AND PartySize = 1
-                            ORDER BY 
-                                FinalTimeValue ASC
-                            LIMIT 1", conn))
+                        var reader = cmd.ExecuteReader();
+                        if (reader.Read())
                         {
-                            cmd.Parameters.AddWithValue("@questID", questID);
-                            cmd.Parameters.AddWithValue("@weaponTypeID", weaponType);
-                            cmd.Parameters.AddWithValue("@category", actualOverlayMode);
-
-                            var reader = cmd.ExecuteReader();
-                            if (reader.Read())
-                            {
-                                long time = 0;
-                                time = reader.GetInt64(reader.GetOrdinal("FinalTimeValue"));
-                                personalBest = time;
-                            }
+                            long time = 0;
+                            time = reader.GetInt64(reader.GetOrdinal("FinalTimeValue"));
+                            personalBest = time;
                         }
+                    }
 
-                        sql = @"INSERT INTO PersonalBests(
-                            RunID,
-                            Attempts
-                            ) VALUES (
-                            @RunID,
-                            @Attempts)";
+                    sql = @"INSERT INTO PersonalBests(
+                        RunID,
+                        Attempts,
+                        PartySize
+                        ) VALUES (
+                        @RunID,
+                        @Attempts,
+                        @PartySize)";
+                    using (var cmd = new SQLiteCommand(sql, conn))
+                    {
+                        if (finalTimeValue < personalBest || personalBest == 0)
+                        {
+                            improvedPersonalBest = true;
+                            cmd.Parameters.AddWithValue("@RunID", runID);
+                            cmd.Parameters.AddWithValue("@Attempts", attempts);
+                            cmd.Parameters.AddWithValue("@PartySize", partySize);
+
+                            // Execute the stored procedure
+                            cmd.ExecuteNonQuery();
+                            Logger.Debug("Inserted into PersonalBests table");
+                        }
+                    }
+
+                    if (improvedPersonalBest)
+                    {
+                        sql = @"UPDATE PersonalBestAttempts 
+                                SET 
+                                    Attempts = 0 
+                                WHERE 
+                                    (QuestID, WeaponTypeID, ActualOverlayMode, PartySize) = (@QuestID, @WeaponTypeID, @ActualOverlayMode, @PartySize)";
                         using (var cmd = new SQLiteCommand(sql, conn))
                         {
-                            if (finalTimeValue < personalBest || personalBest == 0)
-                            {
-                                improvedPersonalBest = true;
-                                cmd.Parameters.AddWithValue("@RunID", runID);
-                                cmd.Parameters.AddWithValue("@Attempts", attempts);
+                            cmd.Parameters.AddWithValue("@QuestID", questID);
+                            cmd.Parameters.AddWithValue("@WeaponTypeID", weaponType);
+                            cmd.Parameters.AddWithValue("@ActualOverlayMode", actualOverlayMode);
+                            cmd.Parameters.AddWithValue("@PartySize", partySize);
 
-                                // Execute the stored procedure
-                                cmd.ExecuteNonQuery();
-                                Logger.Debug("Inserted into PersonalBests table");
-                            }
-                        }
-
-                        if (improvedPersonalBest)
-                        {
-                            sql = @"UPDATE PersonalBestAttempts 
-                                    SET 
-                                        Attempts = 0 
-                                    WHERE 
-                                        (QuestID, WeaponTypeID, ActualOverlayMode) = (@QuestID, @WeaponTypeID, @ActualOverlayMode)";
-                            using (var cmd = new SQLiteCommand(sql, conn))
-                            {
-                                cmd.Parameters.AddWithValue("@QuestID", questID);
-                                cmd.Parameters.AddWithValue("@WeaponTypeID", weaponType);
-                                cmd.Parameters.AddWithValue("@ActualOverlayMode", actualOverlayMode);
-
-                                // Execute the stored procedure
-                                cmd.ExecuteNonQuery();
-                                Logger.Debug("Updated PersonalBestAttempts table");
-                            }
+                            // Execute the stored procedure
+                            cmd.ExecuteNonQuery();
+                            Logger.Debug("Updated PersonalBestAttempts table");
                         }
                     }
 
@@ -5318,12 +5320,13 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
                 sql = @"CREATE TABLE IF NOT EXISTS QuestAttempts(
                     QuestAttemptsID INTEGER PRIMARY KEY AUTOINCREMENT,
-                    QuestID INTEGER NOT NULL,
-                    WeaponTypeID INTEGER NOT NULL,
-                    ActualOverlayMode TEXT NOT NULL,
-                    Attempts INTEGER NOT NULL,
+                    QuestID INTEGER NOT NULL CHECK (QuestID >= 0) DEFAULT 0, 
+                    WeaponTypeID INTEGER NOT NULL DEFAULT 0,
+                    ActualOverlayMode TEXT NOT NULL DEFAULT 'Standard',
+                    Attempts INTEGER NOT NULL DEFAULT 1,
+                    PartySize INTEGER NOT NULL DEFAULT 1,
                     FOREIGN KEY(WeaponTypeID) REFERENCES WeaponType(WeaponTypeID),
-                    UNIQUE (QuestID, WeaponTypeID, ActualOverlayMode)
+                    UNIQUE (QuestID, WeaponTypeID, ActualOverlayMode, PartySize)
                     )
                     ";
                 using (var cmd = new SQLiteCommand(sql, conn))
@@ -5333,9 +5336,12 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
                 sql = @"CREATE TABLE IF NOT EXISTS PersonalBests(
                     PersonalBestsID INTEGER PRIMARY KEY AUTOINCREMENT,
-                    RunID INTEGER NOT NULL,
-                    Attempts INTEGER NOT NULL,
-                    FOREIGN KEY(RunID) REFERENCES Quests(RunID))";
+                    RunID INTEGER NOT NULL DEFAULT 0,
+                    Attempts INTEGER NOT NULL DEFAULT 1,
+                    PartySize INTEGER NOT NULL DEFAULT 1,
+                    FOREIGN KEY(RunID) REFERENCES Quests(RunID)
+                    )
+                    ";
                 using (var cmd = new SQLiteCommand(sql, conn))
                 {
                     cmd.ExecuteNonQuery();
@@ -5401,14 +5407,14 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
                 sql = @"CREATE TABLE IF NOT EXISTS PersonalBestAttempts(
                     PersonalBestAttemptsID INTEGER PRIMARY KEY AUTOINCREMENT,
-                    QuestID INTEGER NOT NULL,
-                    WeaponTypeID INTEGER NOT NULL,
-                    ActualOverlayMode TEXT NOT NULL,
-                    Attempts INTEGER NOT NULL,
+                    QuestID INTEGER NOT NULL CHECK (QuestID >= 0) DEFAULT 0, 
+                    WeaponTypeID INTEGER NOT NULL DEFAULT 0,
+                    ActualOverlayMode TEXT NOT NULL DEFAULT 'Standard',
+                    Attempts INTEGER NOT NULL DEFAULT 0,
+                    PartySize INTEGER NOT NULL DEFAULT 1,
                     FOREIGN KEY(WeaponTypeID) REFERENCES WeaponType(WeaponTypeID),
-                    UNIQUE (QuestID, WeaponTypeID, ActualOverlayMode)
-                    )
-                    ";
+                    UNIQUE (QuestID, WeaponTypeID, ActualOverlayMode, PartySize)
+                    )";
                 using (var cmd = new SQLiteCommand(sql, conn))
                 {
                     cmd.ExecuteNonQuery();
@@ -6302,7 +6308,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
         return personalBest;
     }
 
-    public string GetPersonalBest(long questID, int weaponTypeID, string category, string timerMode, DataLoader dataLoader)
+    public string GetPersonalBest(long questID, int weaponTypeID, string category, string timerMode, DataLoader dataLoader, long partySize)
     {
         var personalBest = Messages.TimerNotLoaded;
         if (string.IsNullOrEmpty(this.dataSource))
@@ -6332,8 +6338,8 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                             WHERE 
                                 QuestID = @questID
                                 AND pg.WeaponTypeID = @weaponTypeID
-                                AND ActualOverlayMode = @category
-                                AND PartySize = 1
+                                AND q.ActualOverlayMode = @category
+                                AND q.PartySize = @partySize
                             ORDER BY 
                                 FinalTimeValue ASC
                             LIMIT 1", conn))
@@ -6341,6 +6347,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                         cmd.Parameters.AddWithValue("@questID", questID);
                         cmd.Parameters.AddWithValue("@weaponTypeID", weaponTypeID);
                         cmd.Parameters.AddWithValue("@category", category);
+                        cmd.Parameters.AddWithValue("@partySize", partySize);
 
                         var reader = cmd.ExecuteReader();
                         if (reader.Read())
@@ -6654,7 +6661,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
         return personalBests;
     }
 
-    public int UpsertQuestAttempts(long questID, int weaponTypeID, string category)
+    public int UpsertQuestAttempts(long questID, int weaponTypeID, string category, long partySize)
     {
         var attempts = 0;
         if (string.IsNullOrEmpty(this.dataSource))
@@ -6678,11 +6685,11 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                         {
                             command.CommandText =
                                 @"INSERT INTO 
-                            QuestAttempts (QuestID, WeaponTypeID, ActualOverlayMode, Attempts)
+                            QuestAttempts (QuestID, WeaponTypeID, ActualOverlayMode, Attempts, PartySize)
                         VALUES 
-                            (@QuestID, @WeaponTypeID, @ActualOverlayMode, 1)
+                            (@QuestID, @WeaponTypeID, @ActualOverlayMode, 1, @PartySize)
                         ON CONFLICT 
-                            (QuestID, WeaponTypeID, ActualOverlayMode) 
+                            (QuestID, WeaponTypeID, ActualOverlayMode, PartySize) 
                         DO UPDATE
                         SET 
                             Attempts = Attempts + 1
@@ -6692,6 +6699,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                             command.Parameters.AddWithValue("@QuestID", questID);
                             command.Parameters.AddWithValue("@WeaponTypeID", weaponTypeID);
                             command.Parameters.AddWithValue("@ActualOverlayMode", category);
+                            command.Parameters.AddWithValue("@PartySize", partySize);
 
                             attempts = Convert.ToInt32(command.ExecuteScalar(), CultureInfo.InvariantCulture);
                         }
@@ -6722,7 +6730,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
         return attempts;
     }
 
-    public int UpsertPersonalBestAttempts(long questID, int weaponTypeID, string category)
+    public int UpsertPersonalBestAttempts(long questID, int weaponTypeID, string category, long partySize)
     {
         var attempts = 0;
         if (string.IsNullOrEmpty(this.dataSource))
@@ -6746,11 +6754,11 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                         {
                             command.CommandText =
                                 @"INSERT INTO 
-                            PersonalBestAttempts (QuestID, WeaponTypeID, ActualOverlayMode, Attempts)
+                            PersonalBestAttempts (QuestID, WeaponTypeID, ActualOverlayMode, Attempts, PartySize)
                         VALUES 
-                            (@QuestID, @WeaponTypeID, @ActualOverlayMode, 1)
+                            (@QuestID, @WeaponTypeID, @ActualOverlayMode, 1, @PartySize)
                         ON CONFLICT 
-                            (QuestID, WeaponTypeID, ActualOverlayMode) 
+                            (QuestID, WeaponTypeID, ActualOverlayMode, PartySize) 
                         DO UPDATE
                         SET 
                             Attempts = Attempts + 1
@@ -6760,6 +6768,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                             command.Parameters.AddWithValue("@QuestID", questID);
                             command.Parameters.AddWithValue("@WeaponTypeID", weaponTypeID);
                             command.Parameters.AddWithValue("@ActualOverlayMode", category);
+                            command.Parameters.AddWithValue("@PartySize", partySize);
 
                             attempts = Convert.ToInt32(command.ExecuteScalar(), CultureInfo.InvariantCulture);
                         }
@@ -11500,7 +11509,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
         return questCompletions;
     }
 
-    public string GetQuestCompletions(long questID, string actualOverlayMode, int weaponTypeID)
+    public string GetQuestCompletions(long questID, string actualOverlayMode, int weaponTypeID, long partySize)
     {
         var questCompletions = "0";
         if (string.IsNullOrEmpty(this.dataSource))
@@ -11526,12 +11535,14 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                         WHERE 
                             q.QuestID = @QuestID
                         AND q.ActualOverlayMode = @ActualOverlayMode
-                        AND pg.WeaponTypeID = @WeaponTypeID";
+                        AND pg.WeaponTypeID = @WeaponTypeID
+                        AND q.PartySize = @PartySize";
                     using (var cmd = new SQLiteCommand(sql, conn))
                     {
                         cmd.Parameters.AddWithValue("@QuestID", questID);
                         cmd.Parameters.AddWithValue("@ActualOverlayMode", actualOverlayMode);
                         cmd.Parameters.AddWithValue("@WeaponTypeID", weaponTypeID);
+                        cmd.Parameters.AddWithValue("@PartySize", partySize);
 
                         using (var reader = cmd.ExecuteReader())
                         {
@@ -11679,7 +11690,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
         return attemptsPerPersonalBest;
     }
 
-    public double GetQuestAttemptsPerPersonalBest(long questID, int weaponTypeID, string actualOverlayMode, string questAttempts)
+    public double GetQuestAttemptsPerPersonalBest(long questID, int weaponTypeID, string actualOverlayMode, string questAttempts, long partySize)
     {
         var attemptsPerPersonalBest = 0.0;
         if (string.IsNullOrEmpty(this.dataSource))
@@ -11688,7 +11699,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
             return attemptsPerPersonalBest;
         }
 
-        var personalBestCount = GetPersonalBestsCount(questID, weaponTypeID, actualOverlayMode);
+        var personalBestCount = GetPersonalBestsCount(questID, weaponTypeID, actualOverlayMode, partySize);
         if (personalBestCount > 0)
         {
             attemptsPerPersonalBest = double.Parse(questAttempts, CultureInfo.InvariantCulture) / personalBestCount;
@@ -11759,7 +11770,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
         return personalBestCount;
     }
 
-    public int GetPersonalBestsCount(long questID, int weaponTypeID, string category)
+    public int GetPersonalBestsCount(long questID, int weaponTypeID, string category, long partySize)
     {
         int personalBestCount = 0;
         long? previousBestTime = null;
@@ -11786,12 +11797,14 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                         WHERE
                             q.QuestID = @questID AND
                             q.ActualOverlayMode = @category AND
-                            pg.WeaponTypeID = @weaponTypeID
+                            pg.WeaponTypeID = @weaponTypeID AND
+                            q.PartySize = @partySize
                         ORDER BY q.RunID ASC", conn))
                     {
                         cmd.Parameters.AddWithValue("@questID", questID);
                         cmd.Parameters.AddWithValue("@weaponTypeID", weaponTypeID);
                         cmd.Parameters.AddWithValue("@category", category);
+                        cmd.Parameters.AddWithValue("@partySize", partySize);
 
                         using (var reader = cmd.ExecuteReader())
                         {
@@ -14905,24 +14918,28 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                         this.EnforceForeignKeys(conn);
                         newVersion++;
                         Logger.Info(CultureInfo.InvariantCulture, "Updated schema to version v0.25.0. newVersion {0}", newVersion);
-                        break;
+                        goto case 2;
                     }
+                    case 2: // 0.34.0
+                        // fix attempts and pb attempts, set partysize default to 1 for the extra attempts from 2p/3p/4p.
+                        this.PerformUpdateToVersion_0_34_0(conn);
+                        this.EnforceForeignKeys(conn);
+                        newVersion++;
+                        Logger.Info(CultureInfo.InvariantCulture, "Updated schema to version v0.34.0. newVersion {0}", newVersion);
+                        break;
+                        // case 2://v0.24.0
+                        // sqlite3_exec(db, "ALTER TABLE categories ADD COLUMN image TEXT;", NULL, NULL, NULL);
+                        // sqlite3_exec(db, "ALTER TABLE categories ADD COLUMN entry_count INTEGER;", NULL, NULL, NULL);
+                        // sqlite3_exec(db, "CREATE INDEX IF NOT EXISTS categories_id_idx ON categories(id);", NULL, NULL, NULL);
+                        // sqlite3_exec(db, "CREATE INDEX IF NOT EXISTS categories_name_id ON categories(name);", NULL, NULL, NULL);
+                        // sqlite3_exec(db, "CREATE INDEX IF NOT EXISTS entries_id_idx ON entries(id);", NULL, NULL, NULL);
 
-                    // goto case 2;
-                    // }
-                    // case 2://v0.24.0
-                    // sqlite3_exec(db, "ALTER TABLE categories ADD COLUMN image TEXT;", NULL, NULL, NULL);
-                    // sqlite3_exec(db, "ALTER TABLE categories ADD COLUMN entry_count INTEGER;", NULL, NULL, NULL);
-                    // sqlite3_exec(db, "CREATE INDEX IF NOT EXISTS categories_id_idx ON categories(id);", NULL, NULL, NULL);
-                    // sqlite3_exec(db, "CREATE INDEX IF NOT EXISTS categories_name_id ON categories(name);", NULL, NULL, NULL);
-                    // sqlite3_exec(db, "CREATE INDEX IF NOT EXISTS entries_id_idx ON entries(id);", NULL, NULL, NULL);
-
-                    // etc...
-                    // {
-                    // PerformUpdateToVersion_0_25_0(conn);
-                    // newVersion++;
-                    // break;
-                    // }
+                        // etc...
+                        // {
+                        // PerformUpdateToVersion_0_25_0(conn);
+                        // newVersion++;
+                        // break;
+                        // }
                 }
 
                 // [self setSchemaVersion];
@@ -15193,131 +15210,7 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
         // Perform database updates for version 0.23.0
         // Since we already ran the previous functions as described in the docblock,
         // we can skip most table creation and only focus on tables/views/indexes that need a modified schema.
-        var sql = string.Empty;
-
-        // sql = @"ALTER TABLE Quests
-        //                    MODIFY COLUMN Monster1HPDictionary TEXT NOT NULL AFTER PartySize,
-        //                    MODIFY COLUMN Monster2HPDictionary TEXT NOT NULL AFTER Monster1HPDictionary,
-        //                    MODIFY COLUMN Monster3HPDictionary TEXT NOT NULL AFTER Monster2HPDictionary,
-        //                    MODIFY COLUMN Monster4HPDictionary TEXT NOT NULL AFTER Monster3HPDictionary,
-        //                    MODIFY COLUMN Monster1AttackMultiplierDictionary TEXT NOT NULL AFTER Monster4HPDictionary,
-        //                    MODIFY COLUMN Monster1DefenseRateDictionary TEXT NOT NULL AFTER Monster1AttackMultiplierDictionary,
-        //                    MODIFY COLUMN Monster1SizeMultiplierDictionary TEXT NOT NULL AFTER Monster1DefenseRateDictionary,
-        //                    MODIFY COLUMN Monster1PoisonThresholdDictionary TEXT NOT NULL AFTER Monster1SizeMultiplierDictionary,
-        //                    MODIFY COLUMN Monster1SleepThresholdDictionary TEXT NOT NULL AFTER Monster1PoisonThresholdDictionary,
-        //                    MODIFY COLUMN Monster1ParalysisThresholdDictionary TEXT NOT NULL AFTER Monster1SleepThresholdDictionary,
-        //                    MODIFY COLUMN Monster1BlastThresholdDictionary TEXT NOT NULL AFTER Monster1ParalysisThresholdDictionary,
-        //                    MODIFY COLUMN Monster1StunThresholdDictionary TEXT NOT NULL AFTER Monster1BlastThresholdDictionary;
-        //                    MODIFY COLUMN IsHighGradeEdition INTEGER NOT NULL CHECK (IsHighGradeEdition IN (0, 1)) AFTER Monster1StunThresholdDictionary;
-        //                    MODIFY COLUMN RefreshRate INTEGER NOT NULL CHECK (RefreshRate IN (1, 30)) AFTER IsHighGradeEdition;
-        // ";
-        //            using (SQLiteCommand cmd = new SQLiteCommand(sql, connection))
-        //            {
-        //                cmd.ExecuteNonQuery();
-        //            }
-        sql = @"CREATE TABLE IF NOT EXISTS new_Quests
-                    (
-                    QuestHash TEXT NOT NULL DEFAULT '',
-                    CreatedAt TEXT NOT NULL DEFAULT '',
-                    CreatedBy TEXT NOT NULL DEFAULT '',
-                    RunID INTEGER PRIMARY KEY AUTOINCREMENT, 
-                    QuestID INTEGER NOT NULL CHECK (QuestID >= 0) DEFAULT 0, 
-                    TimeLeft INTEGER NOT NULL DEFAULT 0,
-                    FinalTimeValue INTEGER NOT NULL DEFAULT 0,
-                    FinalTimeDisplay TEXT NOT NULL DEFAULT '', 
-                    ObjectiveImage TEXT NOT NULL DEFAULT '',
-                    ObjectiveTypeID INTEGER NOT NULL CHECK (ObjectiveTypeID >= 0) DEFAULT 0, 
-                    ObjectiveQuantity INTEGER NOT NULL DEFAULT 0, 
-                    StarGrade INTEGER NOT NULL DEFAULT 0, 
-                    RankName TEXT NOT NULL DEFAULT '', 
-                    ObjectiveName TEXT NOT NULL DEFAULT '', 
-                    Date TEXT NOT NULL DEFAULT '',
-                    YouTubeID TEXT DEFAULT 'dQw4w9WgXcQ', -- default value for YouTubeID is a Rick Roll video
-                    -- DpsData TEXT NOT NULL DEFAULT '',
-                    AttackBuffDictionary TEXT NOT NULL DEFAULT '{}',
-                    HitCountDictionary TEXT NOT NULL DEFAULT '{}',
-                    HitsPerSecondDictionary TEXT NOT NULL DEFAULT '{}',
-                    DamageDealtDictionary TEXT NOT NULL DEFAULT '{}',
-                    DamagePerSecondDictionary TEXT NOT NULL DEFAULT '{}',
-                    AreaChangesDictionary TEXT NOT NULL DEFAULT '{}',
-                    CartsDictionary TEXT NOT NULL DEFAULT '{}',
-                    HitsTakenBlockedDictionary TEXT NOT NULL DEFAULT '{}',
-                    HitsTakenBlockedPerSecondDictionary TEXT NOT NULL DEFAULT '{}',
-                    PlayerHPDictionary TEXT NOT NULL DEFAULT '{}',
-                    PlayerStaminaDictionary TEXT NOT NULL DEFAULT '{}',
-                    KeystrokesDictionary TEXT NOT NULL DEFAULT '{}',
-                    MouseInputDictionary TEXT NOT NULL DEFAULT '{}',
-                    GamepadInputDictionary TEXT NOT NULL DEFAULT '{}',
-                    ActionsPerMinuteDictionary TEXT NOT NULL DEFAULT '{}',
-                    OverlayModeDictionary TEXT NOT NULL DEFAULT '{}',
-                    ActualOverlayMode TEXT NOT NULL DEFAULT 'Standard',
-                    PartySize INTEGER NOT NULL DEFAULT 0,
-                    Monster1HPDictionary TEXT NOT NULL DEFAULT '{}',
-                    Monster2HPDictionary TEXT NOT NULL DEFAULT '{}',
-                    Monster3HPDictionary TEXT NOT NULL DEFAULT '{}',
-                    Monster4HPDictionary TEXT NOT NULL DEFAULT '{}',
-                    Monster1AttackMultiplierDictionary TEXT NOT NULL DEFAULT '{}',
-                    Monster1DefenseRateDictionary TEXT NOT NULL DEFAULT '{}',
-                    Monster1SizeMultiplierDictionary TEXT NOT NULL DEFAULT '{}',
-                    Monster1PoisonThresholdDictionary TEXT NOT NULL DEFAULT '{}',
-                    Monster1SleepThresholdDictionary TEXT NOT NULL DEFAULT '{}',
-                    Monster1ParalysisThresholdDictionary TEXT NOT NULL DEFAULT '{}',
-                    Monster1BlastThresholdDictionary TEXT NOT NULL DEFAULT '{}',
-                    Monster1StunThresholdDictionary TEXT NOT NULL DEFAULT '{}',
-                    Monster1PartThresholdDictionary TEXT NOT NULL DEFAULT '{}',
-                    Monster2PartThresholdDictionary TEXT NOT NULL DEFAULT '{}',
-                    IsHighGradeEdition INTEGER NOT NULL CHECK (IsHighGradeEdition IN (0, 1)) DEFAULT 0,
-                    RefreshRate INTEGER NOT NULL CHECK (RefreshRate >= 1 AND RefreshRate <= 30) DEFAULT 30,
-                    FOREIGN KEY(ObjectiveTypeID) REFERENCES ObjectiveType(ObjectiveTypeID)
-                    -- FOREIGN KEY(RankNameID) REFERENCES RankName(RankNameID)
-                    )";
-
-        var updateQuery = @"
-        UPDATE new_Quests
-        SET QuestHash = (SELECT QuestHash FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            CreatedAt = (SELECT CreatedAt FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            CreatedBy = (SELECT CreatedBy FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            QuestID = (SELECT QuestID FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            TimeLeft = (SELECT TimeLeft FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            FinalTimeValue = (SELECT FinalTimeValue FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            FinalTimeDisplay = (SELECT FinalTimeDisplay FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            ObjectiveImage = (SELECT ObjectiveImage FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            ObjectiveTypeID = (SELECT ObjectiveTypeID FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            ObjectiveQuantity = (SELECT ObjectiveQuantity FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            StarGrade = (SELECT StarGrade FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            RankName = (SELECT RankName FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            ObjectiveName = (SELECT ObjectiveName FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            Date = (SELECT Date FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            YouTubeID = (SELECT YouTubeID FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            AttackBuffDictionary = (SELECT AttackBuffDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            HitCountDictionary = (SELECT HitCountDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            HitsPerSecondDictionary = (SELECT HitsPerSecondDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            DamageDealtDictionary = (SELECT DamageDealtDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            DamagePerSecondDictionary = (SELECT DamagePerSecondDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            AreaChangesDictionary = (SELECT AreaChangesDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            CartsDictionary = (SELECT CartsDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            HitsTakenBlockedDictionary = (SELECT HitsTakenBlockedDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            HitsTakenBlockedPerSecondDictionary = (SELECT HitsTakenBlockedPerSecondDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            PlayerHPDictionary = (SELECT PlayerHPDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            PlayerStaminaDictionary = (SELECT PlayerStaminaDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            KeystrokesDictionary = (SELECT KeystrokesDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            MouseInputDictionary = (SELECT MouseInputDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            GamepadInputDictionary = (SELECT GamepadInputDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            ActionsPerMinuteDictionary = (SELECT ActionsPerMinuteDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            OverlayModeDictionary = (SELECT OverlayModeDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            ActualOverlayMode = (SELECT ActualOverlayMode FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            PartySize = (SELECT PartySize FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            Monster1HPDictionary = (SELECT Monster1HPDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            Monster2HPDictionary = (SELECT Monster2HPDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            Monster3HPDictionary = (SELECT Monster3HPDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            Monster4HPDictionary = (SELECT Monster4HPDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID)
-            WHERE EXISTS (SELECT 1 FROM Quests WHERE Quests.RunID = new_Quests.RunID)"
-        ;
-
-        // Transfer content from X into new_X using a statement like: INSERT INTO new_X SELECT ... FROM X.
-        AlterTableQuests(connection, sql, updateQuery);
-
-        sql = @"
+        var sql = @"
                     CREATE TABLE IF NOT EXISTS new_GameFolder (
                     GameFolderHash TEXT NOT NULL DEFAULT '',
                     CreatedAt TEXT NOT NULL DEFAULT '',
@@ -15343,71 +15236,233 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
         // without having to recreate the table and manually transfer all the data.
     }
 
-    // Define a function that takes a connection string, the name of the table to alter (X), and the new schema for the table (as a SQL string)
-    private static void AlterTableQuests(SQLiteConnection connection, string newSchema, string updateQuery)
+    private static void AlterTablePersonalBestAttempts(SQLiteConnection connection, string newSchema)
     {
-        /*
-         *sql = @"CREATE TABLE IF NOT EXISTS new_Quests
-                (
-                QuestHash TEXT NOT NULL DEFAULT '',
-                CreatedAt TEXT NOT NULL DEFAULT '',
-                CreatedBy TEXT NOT NULL DEFAULT '',
-                RunID INTEGER PRIMARY KEY AUTOINCREMENT,
-                QuestID INTEGER NOT NULL CHECK (QuestID >= 0) DEFAULT 0,
-                TimeLeft INTEGER NOT NULL DEFAULT 0,
-                FinalTimeValue INTEGER NOT NULL DEFAULT 0,
-                FinalTimeDisplay TEXT NOT NULL DEFAULT '',
-                ObjectiveImage TEXT NOT NULL DEFAULT '',
-                ObjectiveTypeID INTEGER NOT NULL CHECK (ObjectiveTypeID >= 0) DEFAULT 0,
-                ObjectiveQuantity INTEGER NOT NULL DEFAULT 0,
-                StarGrade INTEGER NOT NULL DEFAULT 0,
-                RankName TEXT NOT NULL DEFAULT '',
-                ObjectiveName TEXT NOT NULL DEFAULT '',
-                Date TEXT NOT NULL DEFAULT '',
-                YouTubeID TEXT DEFAULT 'dQw4w9WgXcQ', -- default value for YouTubeID is a Rick Roll video
-                -- DpsData TEXT NOT NULL DEFAULT '',
-                AttackBuffDictionary TEXT NOT NULL DEFAULT '{}',
-                HitCountDictionary TEXT NOT NULL DEFAULT '{}',
-                HitsPerSecondDictionary TEXT NOT NULL DEFAULT '{}',
-                DamageDealtDictionary TEXT NOT NULL DEFAULT '{}',
-                DamagePerSecondDictionary TEXT NOT NULL DEFAULT '{}',
-                AreaChangesDictionary TEXT NOT NULL DEFAULT '{}',
-                CartsDictionary TEXT NOT NULL DEFAULT '{}',
-                HitsTakenBlockedDictionary TEXT NOT NULL DEFAULT '{}',
-                HitsTakenBlockedPerSecondDictionary TEXT NOT NULL DEFAULT '{}',
-                PlayerHPDictionary TEXT NOT NULL DEFAULT '{}',
-                PlayerStaminaDictionary TEXT NOT NULL DEFAULT '{}',
-                KeystrokesDictionary TEXT NOT NULL DEFAULT '{}',
-                MouseInputDictionary TEXT NOT NULL DEFAULT '{}',
-                GamepadInputDictionary TEXT NOT NULL DEFAULT '{}',
-                ActionsPerMinuteDictionary TEXT NOT NULL DEFAULT '{}',
-                OverlayModeDictionary TEXT NOT NULL DEFAULT '{}',
-                ActualOverlayMode TEXT NOT NULL DEFAULT 'Standard',
-                PartySize INTEGER NOT NULL DEFAULT 0,
-                Monster1HPDictionary TEXT NOT NULL DEFAULT '{}',
-                Monster2HPDictionary TEXT NOT NULL DEFAULT '{}',
-                Monster3HPDictionary TEXT NOT NULL DEFAULT '{}',
-                Monster4HPDictionary TEXT NOT NULL DEFAULT '{}',
-                Monster1AttackMultiplierDictionary TEXT NOT NULL DEFAULT '{}',
-                Monster1DefenseRateDictionary TEXT NOT NULL DEFAULT '{}',
-                Monster1SizeMultiplierDictionary TEXT NOT NULL DEFAULT '{}',
-                Monster1PoisonThresholdDictionary TEXT NOT NULL DEFAULT '{}',
-                Monster1SleepThresholdDictionary TEXT NOT NULL DEFAULT '{}',
-                Monster1ParalysisThresholdDictionary TEXT NOT NULL DEFAULT '{}',
-                Monster1BlastThresholdDictionary TEXT NOT NULL DEFAULT '{}',
-                Monster1StunThresholdDictionary TEXT NOT NULL DEFAULT '{}',
-                Monster1PartThresholdDictionary TEXT NOT NULL DEFAULT '{}',
-                Monster2PartThresholdDictionary TEXT NOT NULL DEFAULT '{}',
-                IsHighGradeEdition INTEGER NOT NULL CHECK (IsHighGradeEdition IN (0, 1)) DEFAULT 0,
-                RefreshRate INTEGER NOT NULL CHECK (RefreshRate >= 1 AND RefreshRate <= 30) DEFAULT 30,
+        Logger.Info(CultureInfo.InvariantCulture, "Altering PersonalBestAttempts table");
 
-                FOREIGN KEY(ObjectiveTypeID) REFERENCES ObjectiveType(ObjectiveTypeID)
-                -- FOREIGN KEY(RankNameID) REFERENCES RankName(RankNameID)
-                )";
-         */
-        Logger.Info(CultureInfo.InvariantCulture, "Altering Quests table");
+        var tableName = "PersonalBestAttempts";
 
-        var tableName = "Quests";
+        try
+        {
+            // 4. Use CREATE TABLE to construct a new table "new_X" that is in the desired revised format of table X. Make sure that the name "new_X" does not collide with any existing table name, of course.
+            // Use CREATE TABLE to construct a new table "new_X" that is in the desired revised format of table X
+            using (var createTable = new SQLiteCommand(newSchema, connection))
+            {
+                createTable.ExecuteNonQuery();
+            }
+
+            Logger.Debug(CultureInfo.InvariantCulture, "Created table if not exists new_{0}", tableName);
+
+            // 5. Transfer content from X into new_X using a statement like: INSERT INTO new_X SELECT ... FROM X.
+            // Transfer content from X into new_X using a statement like: INSERT INTO new_X SELECT ... FROM X
+
+            // Transfer data from the old table "PersonalBestAttempts" to the new table "new_PersonalBestAttempts".
+            var transferDataSql = @"INSERT INTO new_PersonalBestAttempts (QuestID, WeaponTypeID, ActualOverlayMode, Attempts, PartySize)
+                                SELECT QuestID, WeaponTypeID, ActualOverlayMode, Attempts, 1 FROM PersonalBestAttempts;";
+            using (var transferDataCmd = new SQLiteCommand(transferDataSql, connection))
+            {
+                transferDataCmd.ExecuteNonQuery();
+            }
+
+            Logger.Debug(CultureInfo.InvariantCulture, "Transferred data from {0} to new_{1}", tableName, tableName);
+
+            // 6. Drop the old table X: DROP TABLE X.
+            // Drop the old table X
+            using (var dropTable = new SQLiteCommand("DROP TABLE " + tableName + ";", connection))
+            {
+                dropTable.ExecuteNonQuery();
+            }
+
+            Logger.Debug(CultureInfo.InvariantCulture, "Deleted table {0}", tableName);
+
+            // 7. Change the name of new_X to X using: ALTER TABLE new_X RENAME TO X.
+            // Change the name of new_X to X using: ALTER TABLE new_X RENAME TO X
+            using (var renameTable = new SQLiteCommand("ALTER TABLE new_" + tableName + " RENAME TO " + tableName + ";", connection))
+            {
+                renameTable.ExecuteNonQuery();
+            }
+
+            Logger.Debug(CultureInfo.InvariantCulture, "Renamed new_{0} to {1}", tableName, tableName);
+
+            // 8. Use CREATE INDEX, CREATE TRIGGER, and CREATE VIEW to reconstruct indexes, triggers, and views associated with table X. Perhaps use the old format of the triggers, indexes, and views saved from step 3 above as a guide, making changes as appropriate for the alteration.
+            // Recreate indexes, triggers, and views associated with the original table "QuestAttempts".
+            // (Assuming you have stored the CREATE statements for indexes, triggers, and views separately)
+
+            // TODO: since im not using any views this still needs testing in case i make views someday.
+            // 9. If any views refer to table X in a way that is affected by the schema change, then drop those views using DROP VIEW and recreate them with whatever changes are necessary to accommodate the schema change using CREATE VIEW.
+            // using (SQLite
+            // Check if any views refer to table X in a way that is affected by the schema change
+
+            // Drop those views using DROP VIEW
+
+            // TODO: test
+            // Recreate views with whatever changes are necessary to accommodate the schema change using CREATE VIEW
+            Logger.Info(CultureInfo.InvariantCulture, "Altered table {0} successfully", tableName);
+        }
+        catch (Exception ex)
+        {
+            // Roll back the transaction if any errors occur
+            Logger.Error(ex, "Could not alter table {0}", tableName);
+            LoggingService.WriteCrashLog(ex, string.Format(CultureInfo.InvariantCulture, "Could not alter table {0}", tableName));
+        }
+    }
+
+    private static void AlterTableQuestAttempts(SQLiteConnection connection, string newSchema)
+    {
+        Logger.Info(CultureInfo.InvariantCulture, "Altering QuestAttempts table");
+
+        var tableName = "QuestAttempts";
+
+        try
+        {
+            // 4. Use CREATE TABLE to construct a new table "new_X" that is in the desired revised format of table X. Make sure that the name "new_X" does not collide with any existing table name, of course.
+            // Use CREATE TABLE to construct a new table "new_X" that is in the desired revised format of table X
+            using (var createTable = new SQLiteCommand(newSchema, connection))
+            {
+                createTable.ExecuteNonQuery();
+            }
+
+            Logger.Debug(CultureInfo.InvariantCulture, "Created table if not exists new_{0}", tableName);
+
+            // 5. Transfer content from X into new_X using a statement like: INSERT INTO new_X SELECT ... FROM X.
+            // Transfer content from X into new_X using a statement like: INSERT INTO new_X SELECT ... FROM X
+
+            // Transfer data from the old table "QuestAttempts" to the new table "new_QuestAttempts".
+            var transferDataSql = @"INSERT INTO new_QuestAttempts (QuestID, WeaponTypeID, ActualOverlayMode, Attempts, PartySize)
+                                SELECT QuestID, WeaponTypeID, ActualOverlayMode, Attempts, 1 FROM QuestAttempts;";
+            using (var transferDataCmd = new SQLiteCommand(transferDataSql, connection))
+            {
+                transferDataCmd.ExecuteNonQuery();
+            }
+
+            Logger.Debug("Transferred data from {0} to new_{1}", tableName, tableName);
+
+            // 6. Drop the old table X: DROP TABLE X.
+            // Drop the old table X
+            using (var dropTable = new SQLiteCommand("DROP TABLE " + tableName + ";", connection))
+            {
+                dropTable.ExecuteNonQuery();
+            }
+
+            Logger.Debug(CultureInfo.InvariantCulture, "Deleted table {0}", tableName);
+
+            // 7. Change the name of new_X to X using: ALTER TABLE new_X RENAME TO X.
+            // Change the name of new_X to X using: ALTER TABLE new_X RENAME TO X
+            using (var renameTable = new SQLiteCommand("ALTER TABLE new_" + tableName + " RENAME TO " + tableName + ";", connection))
+            {
+                renameTable.ExecuteNonQuery();
+            }
+
+            Logger.Debug("Renamed new_{0} to {1}", tableName, tableName);
+
+            // 8. Use CREATE INDEX, CREATE TRIGGER, and CREATE VIEW to reconstruct indexes, triggers, and views associated with table X. Perhaps use the old format of the triggers, indexes, and views saved from step 3 above as a guide, making changes as appropriate for the alteration.
+            // Recreate indexes, triggers, and views associated with the original table "QuestAttempts".
+            // (Assuming you have stored the CREATE statements for indexes, triggers, and views separately)
+
+            // TODO: since im not using any views this still needs testing in case i make views someday.
+            // 9. If any views refer to table X in a way that is affected by the schema change, then drop those views using DROP VIEW and recreate them with whatever changes are necessary to accommodate the schema change using CREATE VIEW.
+            // using (SQLite
+            // Check if any views refer to table X in a way that is affected by the schema change
+
+            // Drop those views using DROP VIEW
+
+            // TODO: test
+            // Recreate views with whatever changes are necessary to accommodate the schema change using CREATE VIEW
+            Logger.Info(CultureInfo.InvariantCulture, "Altered table {0} successfully", tableName);
+        }
+        catch (Exception ex)
+        {
+            // Roll back the transaction if any errors occur
+            Logger.Error(ex, "Could not alter table {0}", tableName);
+            LoggingService.WriteCrashLog(ex, string.Format(CultureInfo.InvariantCulture, "Could not alter table {0}", tableName));
+        }
+    }
+
+    private static void AlterTablePersonalBests(SQLiteConnection connection, string newSchema)
+    {
+        Logger.Info(CultureInfo.InvariantCulture, "Altering PersonalBests table");
+
+        var tableName = "PersonalBests";
+
+        try
+        {
+            // 4. Use CREATE TABLE to construct a new table "new_X" that is in the desired revised format of table X. Make sure that the name "new_X" does not collide with any existing table name, of course.
+            // Use CREATE TABLE to construct a new table "new_X" that is in the desired revised format of table X
+            using (var createTable = new SQLiteCommand(newSchema, connection))
+            {
+                createTable.ExecuteNonQuery();
+            }
+
+            Logger.Debug(CultureInfo.InvariantCulture, "Created table if not exists new_{0}", tableName);
+
+            // 5. Transfer content from X into new_X using a statement like: INSERT INTO new_X SELECT ... FROM X.
+            // Transfer content from X into new_X using a statement like: INSERT INTO new_X SELECT ... FROM X
+
+            // Transfer data from the old table "QuestAttempts" to the new table "new_QuestAttempts".
+            var transferDataSql = @"INSERT INTO new_PersonalBests (RunID, Attempts, PartySize)
+               SELECT PersonalBests.RunID, PersonalBests.Attempts, Quests.PartySize
+               FROM PersonalBests
+               INNER JOIN Quests ON PersonalBests.RunID = Quests.RunID";
+            using (var transferDataCmd = new SQLiteCommand(transferDataSql, connection))
+            {
+                transferDataCmd.ExecuteNonQuery();
+            }
+
+            Logger.Debug("Transferred data from {0} to new_{1}", tableName, tableName);
+
+            // 6. Drop the old table X: DROP TABLE X.
+            // Drop the old table X
+            using (var dropTable = new SQLiteCommand("DROP TABLE " + tableName + ";", connection))
+            {
+                dropTable.ExecuteNonQuery();
+            }
+
+            Logger.Debug(CultureInfo.InvariantCulture, "Deleted table {0}", tableName);
+
+            // 7. Change the name of new_X to X using: ALTER TABLE new_X RENAME TO X.
+            // Change the name of new_X to X using: ALTER TABLE new_X RENAME TO X
+            using (var renameTable = new SQLiteCommand("ALTER TABLE new_" + tableName + " RENAME TO " + tableName + ";", connection))
+            {
+                renameTable.ExecuteNonQuery();
+            }
+
+            Logger.Debug("Renamed new_{0} to {1}", tableName, tableName);
+
+            // 8. Use CREATE INDEX, CREATE TRIGGER, and CREATE VIEW to reconstruct indexes, triggers, and views associated with table X. Perhaps use the old format of the triggers, indexes, and views saved from step 3 above as a guide, making changes as appropriate for the alteration.
+            // Recreate indexes, triggers, and views associated with the original table "QuestAttempts".
+            // (Assuming you have stored the CREATE statements for indexes, triggers, and views separately)
+
+            // TODO: since im not using any views this still needs testing in case i make views someday.
+            // 9. If any views refer to table X in a way that is affected by the schema change, then drop those views using DROP VIEW and recreate them with whatever changes are necessary to accommodate the schema change using CREATE VIEW.
+            // using (SQLite
+            // Check if any views refer to table X in a way that is affected by the schema change
+
+            // Drop those views using DROP VIEW
+
+            // TODO: test
+            // Recreate views with whatever changes are necessary to accommodate the schema change using CREATE VIEW
+            Logger.Info(CultureInfo.InvariantCulture, "Altered table {0} successfully", tableName);
+        }
+        catch (Exception ex)
+        {
+            // Roll back the transaction if any errors occur
+            Logger.Error(ex, "Could not alter table {0}", tableName);
+            LoggingService.WriteCrashLog(ex, string.Format(CultureInfo.InvariantCulture, "Could not alter table {0}", tableName));
+        }
+    }
+
+    // Define a function that takes a connection string, the name of the table to alter (X), and the new schema for the table (as a SQL string)
+    /// <summary>
+    ///  TODO: Test. Alters table schema and fills it with default values. Does not support tables that have UNIQUE constraint, etc.
+    /// </summary>
+    /// <param name="connection"></param>
+    /// <param name="newSchema"></param>
+    /// <param name="updateQuery"></param>
+    /// <param name="tableName"></param>
+    /// <returns>true if succeeded</returns>
+    private static bool AlterTableData(SQLiteConnection connection, string newSchema, string updateQuery, string tableName)
+    {
+        Logger.Info(CultureInfo.InvariantCulture, $"Altering {tableName} table");
 
         try
         {
@@ -15422,7 +15477,21 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
             while (reader.Read())
             {
                 var type = reader.GetString(0);
-                var sql = reader.GetString(1);
+                var sql = string.Empty;
+                try
+                {
+                    sql = reader.GetString(1);
+                }
+                catch
+                {
+                    Logger.Info($"Table {tableName} does not contain type {type}");
+                }
+
+                if (sql == string.Empty)
+                {
+                    continue;
+                }
+
                 if (type == "index")
                 {
                     indexSqls.Add(sql);
@@ -15452,15 +15521,15 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
             // Transfer content from X into new_X using a statement like: INSERT INTO new_X SELECT ... FROM X
 
             // Get the number of rows in the Quests table
-            var countQuery = "SELECT COUNT(*) FROM Quests";
+            var countQuery = $"SELECT COUNT(*) FROM {tableName}";
             using (var command = new SQLiteCommand(countQuery, connection))
             {
                 var rowCount = Convert.ToInt32(command.ExecuteScalar(), CultureInfo.InvariantCulture);
 
-                Logger.Debug(CultureInfo.InvariantCulture, "Inserting default values into new_Quests");
+                Logger.Debug(CultureInfo.InvariantCulture, $"Inserting default values into new_{tableName}");
 
                 // Insert rows with default values into new_Quests
-                var insertQuery = $"INSERT INTO new_Quests DEFAULT VALUES";
+                var insertQuery = $"INSERT INTO new_{tableName} DEFAULT VALUES";
                 for (var i = 0; i < rowCount; i++)
                 {
                     using (var insertCommand = new SQLiteCommand(insertQuery, connection))
@@ -15469,7 +15538,7 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
                     }
                 }
 
-                Logger.Debug("Inserted default values into new_Quests");
+                Logger.Debug($"Inserted default values into new_{tableName}");
 
                 // Update values from Quests to new_Quests
                 /*
@@ -15591,149 +15660,10 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
         {
             // Roll back the transaction if any errors occur
             Logger.Error(ex, "Could not alter table {0}", tableName);
+            return false;
         }
-    }
 
-    private static void AlterTablePersonalBestAttempts(SQLiteConnection connection, string newSchema)
-    {
-        Logger.Info(CultureInfo.InvariantCulture, "Altering PersonalBestAttempts table");
-
-        var tableName = "PersonalBestAttempts";
-
-        try
-        {
-            // 4. Use CREATE TABLE to construct a new table "new_X" that is in the desired revised format of table X. Make sure that the name "new_X" does not collide with any existing table name, of course.
-            // Use CREATE TABLE to construct a new table "new_X" that is in the desired revised format of table X
-            using (var createTable = new SQLiteCommand(newSchema, connection))
-            {
-                createTable.ExecuteNonQuery();
-            }
-
-            Logger.Debug(CultureInfo.InvariantCulture, "Created table if not exists new_{0}", tableName);
-
-            // 5. Transfer content from X into new_X using a statement like: INSERT INTO new_X SELECT ... FROM X.
-            // Transfer content from X into new_X using a statement like: INSERT INTO new_X SELECT ... FROM X
-
-            // Transfer data from the old table "PersonalBestAttempts" to the new table "new_PersonalBestAttempts".
-            var transferDataSql = @"INSERT INTO new_PersonalBestAttempts (QuestID, WeaponTypeID, ActualOverlayMode, Attempts)
-                                SELECT QuestID, WeaponTypeID, ActualOverlayMode, Attempts FROM PersonalBestAttempts;";
-            using (var transferDataCmd = new SQLiteCommand(transferDataSql, connection))
-            {
-                transferDataCmd.ExecuteNonQuery();
-            }
-
-            Logger.Debug(CultureInfo.InvariantCulture, "Transferred data from {0} to new_{1}", tableName, tableName);
-
-            // 6. Drop the old table X: DROP TABLE X.
-            // Drop the old table X
-            using (var dropTable = new SQLiteCommand("DROP TABLE " + tableName + ";", connection))
-            {
-                dropTable.ExecuteNonQuery();
-            }
-
-            Logger.Debug(CultureInfo.InvariantCulture, "Deleted table {0}", tableName);
-
-            // 7. Change the name of new_X to X using: ALTER TABLE new_X RENAME TO X.
-            // Change the name of new_X to X using: ALTER TABLE new_X RENAME TO X
-            using (var renameTable = new SQLiteCommand("ALTER TABLE new_" + tableName + " RENAME TO " + tableName + ";", connection))
-            {
-                renameTable.ExecuteNonQuery();
-            }
-
-            Logger.Debug(CultureInfo.InvariantCulture, "Renamed new_{0} to {1}", tableName, tableName);
-
-            // 8. Use CREATE INDEX, CREATE TRIGGER, and CREATE VIEW to reconstruct indexes, triggers, and views associated with table X. Perhaps use the old format of the triggers, indexes, and views saved from step 3 above as a guide, making changes as appropriate for the alteration.
-            // Recreate indexes, triggers, and views associated with the original table "QuestAttempts".
-            // (Assuming you have stored the CREATE statements for indexes, triggers, and views separately)
-
-            // TODO: since im not using any views this still needs testing in case i make views someday.
-            // 9. If any views refer to table X in a way that is affected by the schema change, then drop those views using DROP VIEW and recreate them with whatever changes are necessary to accommodate the schema change using CREATE VIEW.
-            // using (SQLite
-            // Check if any views refer to table X in a way that is affected by the schema change
-
-            // Drop those views using DROP VIEW
-
-            // TODO: test
-            // Recreate views with whatever changes are necessary to accommodate the schema change using CREATE VIEW
-            Logger.Info(CultureInfo.InvariantCulture, "Altered table {0} successfully", tableName);
-        }
-        catch (Exception ex)
-        {
-            // Roll back the transaction if any errors occur
-            Logger.Error(ex, "Could not alter table {0}", tableName);
-            LoggingService.WriteCrashLog(ex, string.Format(CultureInfo.InvariantCulture, "Could not alter table {0}", tableName));
-        }
-    }
-
-    private static void AlterTableQuestAttempts(SQLiteConnection connection, string newSchema)
-    {
-        Logger.Info(CultureInfo.InvariantCulture, "Altering QuestAttempts table");
-
-        var tableName = "QuestAttempts";
-
-        try
-        {
-            // 4. Use CREATE TABLE to construct a new table "new_X" that is in the desired revised format of table X. Make sure that the name "new_X" does not collide with any existing table name, of course.
-            // Use CREATE TABLE to construct a new table "new_X" that is in the desired revised format of table X
-            using (var createTable = new SQLiteCommand(newSchema, connection))
-            {
-                createTable.ExecuteNonQuery();
-            }
-
-            Logger.Debug(CultureInfo.InvariantCulture, "Created table if not exists new_{0}", tableName);
-
-            // 5. Transfer content from X into new_X using a statement like: INSERT INTO new_X SELECT ... FROM X.
-            // Transfer content from X into new_X using a statement like: INSERT INTO new_X SELECT ... FROM X
-
-            // Transfer data from the old table "QuestAttempts" to the new table "new_QuestAttempts".
-            var transferDataSql = @"INSERT INTO new_QuestAttempts (QuestID, WeaponTypeID, ActualOverlayMode, Attempts)
-                                SELECT QuestID, WeaponTypeID, ActualOverlayMode, Attempts FROM QuestAttempts;";
-            using (var transferDataCmd = new SQLiteCommand(transferDataSql, connection))
-            {
-                transferDataCmd.ExecuteNonQuery();
-            }
-
-            Logger.Debug("Transferred data from {0} to new_{1}", tableName, tableName);
-
-            // 6. Drop the old table X: DROP TABLE X.
-            // Drop the old table X
-            using (var dropTable = new SQLiteCommand("DROP TABLE " + tableName + ";", connection))
-            {
-                dropTable.ExecuteNonQuery();
-            }
-
-            Logger.Debug(CultureInfo.InvariantCulture, "Deleted table {0}", tableName);
-
-            // 7. Change the name of new_X to X using: ALTER TABLE new_X RENAME TO X.
-            // Change the name of new_X to X using: ALTER TABLE new_X RENAME TO X
-            using (var renameTable = new SQLiteCommand("ALTER TABLE new_" + tableName + " RENAME TO " + tableName + ";", connection))
-            {
-                renameTable.ExecuteNonQuery();
-            }
-
-            Logger.Debug("Renamed new_{0} to {1}", tableName, tableName);
-
-            // 8. Use CREATE INDEX, CREATE TRIGGER, and CREATE VIEW to reconstruct indexes, triggers, and views associated with table X. Perhaps use the old format of the triggers, indexes, and views saved from step 3 above as a guide, making changes as appropriate for the alteration.
-            // Recreate indexes, triggers, and views associated with the original table "QuestAttempts".
-            // (Assuming you have stored the CREATE statements for indexes, triggers, and views separately)
-
-            // TODO: since im not using any views this still needs testing in case i make views someday.
-            // 9. If any views refer to table X in a way that is affected by the schema change, then drop those views using DROP VIEW and recreate them with whatever changes are necessary to accommodate the schema change using CREATE VIEW.
-            // using (SQLite
-            // Check if any views refer to table X in a way that is affected by the schema change
-
-            // Drop those views using DROP VIEW
-
-            // TODO: test
-            // Recreate views with whatever changes are necessary to accommodate the schema change using CREATE VIEW
-            Logger.Info(CultureInfo.InvariantCulture, "Altered table {0} successfully", tableName);
-        }
-        catch (Exception ex)
-        {
-            // Roll back the transaction if any errors occur
-            Logger.Error(ex, "Could not alter table {0}", tableName);
-            LoggingService.WriteCrashLog(ex, string.Format(CultureInfo.InvariantCulture, "Could not alter table {0}", tableName));
-        }
+        return true;
     }
 
     private static void AlterTableGameFolder(SQLiteConnection connection, string newSchema)
@@ -16243,41 +16173,7 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
             WHERE EXISTS (SELECT 1 FROM Quests WHERE Quests.RunID = new_Quests.RunID)"
                ;
 
-        AlterTableQuests(connection, sql, updateQuery);
-
-        sql = @"CREATE TABLE IF NOT EXISTS new_QuestAttempts(
-                    QuestAttemptsID INTEGER PRIMARY KEY AUTOINCREMENT,
-                    QuestID INTEGER NOT NULL,
-                    WeaponTypeID INTEGER NOT NULL,
-                    ActualOverlayMode TEXT NOT NULL,
-                    Attempts INTEGER NOT NULL,
-                    FOREIGN KEY(WeaponTypeID) REFERENCES WeaponType(WeaponTypeID),
-                    UNIQUE (QuestID, WeaponTypeID, ActualOverlayMode)
-                    )
-                    ";
-        using (var cmd = new SQLiteCommand(sql, connection))
-        {
-            cmd.ExecuteNonQuery();
-        }
-
-        AlterTableQuestAttempts(connection, sql);
-
-        sql = @"CREATE TABLE IF NOT EXISTS new_PersonalBestAttempts(
-                    PersonalBestAttemptsID INTEGER PRIMARY KEY AUTOINCREMENT,
-                    QuestID INTEGER NOT NULL,
-                    WeaponTypeID INTEGER NOT NULL,
-                    ActualOverlayMode TEXT NOT NULL,
-                    Attempts INTEGER NOT NULL,
-                    FOREIGN KEY(WeaponTypeID) REFERENCES WeaponType(WeaponTypeID),
-                    UNIQUE (QuestID, WeaponTypeID, ActualOverlayMode)
-                    )
-                    ";
-        using (var cmd = new SQLiteCommand(sql, connection))
-        {
-            cmd.ExecuteNonQuery();
-        }
-
-        AlterTablePersonalBestAttempts(connection, sql);
+        AlterTableData(connection, sql, updateQuery, "Quests");
 
         sql = @"DROP TABLE GachaCard";
         using (var cmd = new SQLiteCommand(sql, connection))
@@ -16327,6 +16223,64 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
         }
 
         Logger.Debug("Recreated Bingo table");
+    }
+
+    /// <summary>
+    /// Performs the update to version 0 25 0.
+    /// </summary>
+    /// <param name="connection">The connection.</param>
+    private void PerformUpdateToVersion_0_34_0(SQLiteConnection connection)
+    {
+        var sql = @"CREATE TABLE IF NOT EXISTS new_PersonalBestAttempts
+                    (
+                    PersonalBestAttemptsID INTEGER PRIMARY KEY AUTOINCREMENT,
+                    QuestID INTEGER NOT NULL CHECK (QuestID >= 0) DEFAULT 0, 
+                    WeaponTypeID INTEGER NOT NULL DEFAULT 0,
+                    ActualOverlayMode TEXT NOT NULL DEFAULT 'Standard',
+                    Attempts INTEGER NOT NULL DEFAULT 0,
+                    PartySize INTEGER NOT NULL DEFAULT 1,
+                    FOREIGN KEY(WeaponTypeID) REFERENCES WeaponType(WeaponTypeID),
+                    UNIQUE (QuestID, WeaponTypeID, ActualOverlayMode, PartySize)
+                    )";
+        using (var cmd = new SQLiteCommand(sql, connection))
+        {
+            cmd.ExecuteNonQuery();
+        }
+
+        AlterTablePersonalBestAttempts(connection, sql);
+
+        sql = @"CREATE TABLE IF NOT EXISTS new_QuestAttempts(
+                    QuestAttemptsID INTEGER PRIMARY KEY AUTOINCREMENT,
+                    QuestID INTEGER NOT NULL CHECK (QuestID >= 0) DEFAULT 0, 
+                    WeaponTypeID INTEGER NOT NULL DEFAULT 0,
+                    ActualOverlayMode TEXT NOT NULL DEFAULT 'Standard',
+                    Attempts INTEGER NOT NULL DEFAULT 1,
+                    PartySize INTEGER NOT NULL DEFAULT 1,
+                    FOREIGN KEY(WeaponTypeID) REFERENCES WeaponType(WeaponTypeID),
+                    UNIQUE (QuestID, WeaponTypeID, ActualOverlayMode, PartySize)
+                    )
+                    ";
+        using (var cmd = new SQLiteCommand(sql, connection))
+        {
+            cmd.ExecuteNonQuery();
+        }
+
+        AlterTableQuestAttempts(connection, sql);
+
+        sql = @"CREATE TABLE IF NOT EXISTS new_PersonalBests(
+                    PersonalBestsID INTEGER PRIMARY KEY AUTOINCREMENT,
+                    RunID INTEGER NOT NULL DEFAULT 0,
+                    Attempts INTEGER NOT NULL DEFAULT 1,
+                    PartySize INTEGER NOT NULL DEFAULT 1,
+                    FOREIGN KEY(RunID) REFERENCES Quests(RunID)
+                    )
+                    ";
+        using (var cmd = new SQLiteCommand(sql, connection))
+        {
+            cmd.ExecuteNonQuery();
+        }
+
+        AlterTablePersonalBests(connection, sql);
     }
 
     // TODO: should i put this in FileManager?

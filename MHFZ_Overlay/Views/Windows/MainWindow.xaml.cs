@@ -1795,26 +1795,27 @@ The process may take some time, as the program attempts to download from GitHub 
         var category = this.DataLoader.Model.GetOverlayModeForStorage();
         var weaponType = this.DataLoader.Model.WeaponType();
         long questID = this.DataLoader.Model.QuestID();
+        long partySize = this.DataLoader.Model.PartySize();
 
         var s = (Settings)Application.Current.TryFindResource("Settings");
         var completions = string.Empty;
         var attemptsPerPersonalBest = 0.0;
 
-        var pbAttempts = DatabaseManagerInstance.UpsertPersonalBestAttempts(questID, weaponType, category);
-        var questAttempts = DatabaseManagerInstance.UpsertQuestAttempts(questID, weaponType, category);
+        var pbAttempts = DatabaseManagerInstance.UpsertPersonalBestAttempts(questID, weaponType, category, partySize);
+        var questAttempts = DatabaseManagerInstance.UpsertQuestAttempts(questID, weaponType, category, partySize);
 
         if (s.EnableQuestCompletionsCounter)
         {
-            completions = DatabaseManagerInstance.GetQuestCompletions(questID, category, weaponType) + "/";
+            completions = DatabaseManagerInstance.GetQuestCompletions(questID, category, weaponType, partySize) + "/";
         }
 
         if (s.EnableAttemptsPerPersonalBest)
         {
-            attemptsPerPersonalBest = DatabaseManagerInstance.GetQuestAttemptsPerPersonalBest(questID, weaponType, category, questAttempts.ToString(CultureInfo.InvariantCulture));
+            attemptsPerPersonalBest = DatabaseManagerInstance.GetQuestAttemptsPerPersonalBest(questID, weaponType, category, questAttempts.ToString(CultureInfo.InvariantCulture), partySize);
         }
 
         // TODO putting this first before the others triggers "database is locked" error
-        this.DataLoader.Model.PersonalBestLoaded = DatabaseManagerInstance.GetPersonalBest(questID, weaponType, category, ViewModels.Windows.AddressModel.QuestTimeMode, this.DataLoader);
+        this.DataLoader.Model.PersonalBestLoaded = DatabaseManagerInstance.GetPersonalBest(questID, weaponType, category, ViewModels.Windows.AddressModel.QuestTimeMode, this.DataLoader, partySize);
 
         var _ = Dispatcher.BeginInvoke((Action)(() =>
         {
