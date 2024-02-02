@@ -126,7 +126,7 @@ public partial class ConfigWindow : FluentWindow
       new MonsterLog(29, "Rocks", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/random.png", 0),
       new MonsterLog(30, "Ioprey", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/ioprey.png", 0),
       new MonsterLog(31, "Iodrome", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/iodrome.png", 0, true),
-      new MonsterLog(32, "Pugis", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/random.png", 0),
+      new MonsterLog(32, "Poogies", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/random.png", 0),
       new MonsterLog(33, "Kirin", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/kirin.png", 0, true),
       new MonsterLog(34, "Cephalos", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/cephalos.png", 0),
       new MonsterLog(35, "Giaprey / Giadrome", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/giaprey.png", 0),
@@ -1476,14 +1476,21 @@ public partial class ConfigWindow : FluentWindow
 
         this.questPaceWeaponSelected = selectedWeapon;
 
-        var quests = DatabaseManager.GetQuests(long.Parse(this.QuestIDTextBox.Text.Trim()), this.questPaceWeaponSelected, this.OverlayModeComboBox.Text.Trim());
+        var allQuestsRuns = DatabaseManager.GetQuests(long.Parse(this.QuestIDTextBox.Text.Trim()), this.questPaceWeaponSelected, this.OverlayModeComboBox.Text.Trim());
 
-        if (quests.Count == 0)
+        if (allQuestsRuns.Count == 0)
         {
             return;
         }
-        
-        List<QuestPace> monster1HPList = GetMonster1HPListForQuestPace(quests);
+
+        List<Models.Quest> soloQuests = allQuestsRuns.Where(q => q.PartySize == 1).ToList();
+
+        if (soloQuests.Count == 0)
+        {
+            return;
+        }
+
+        List<QuestPace> monster1HPList = GetMonster1HPListForQuestPace(soloQuests);
 
         // Filter the quest runs where the monster ID stayed the same
         var consistentMonsterIdRuns = monster1HPList.Where(questRun =>
@@ -1525,7 +1532,7 @@ public partial class ConfigWindow : FluentWindow
             // Now, fastestSplitTimes contains the fastest split times for each property
 
             var sumOfMedian = medianSplitTimes.Sum() ?? 0;
-            List<long?> finalTimeValues = quests
+            List<long?> finalTimeValues = soloQuests
                 .Select(quest => quest.FinalTimeValue)
                 .ToList();
 
@@ -1570,7 +1577,7 @@ Run IDs with best paces for each HP% Dealt:
             // Now, fastestSplitTimes contains the fastest split times for each property
 
             var sumOfMedian = medianSplitTimes.Sum() ?? 0;
-            List<long?> finalTimeValues = quests
+            List<long?> finalTimeValues = soloQuests
                 .Select(quest => quest.FinalTimeValue)
                 .ToList();
 
@@ -1927,7 +1934,7 @@ Run IDs with best paces for each HP% Dealt:
             // the pace at x% hp is its value in the current run + all of the rest median values for the other %.
             paceSplits.FortyPercentRemainingHPFrames = runPace.FortyPercentRemainingHPFrames +  medianSplitTimes.TwentyPercentRemainingHPFrames + medianSplitTimes.ZeroPercentRemainingHPFrames;
 
-            paceSplits.TwentyPercentRemainingHPFrames = runPace.FortyPercentRemainingHPFrames + runPace.TwentyPercentRemainingHPFrames + + medianSplitTimes.ZeroPercentRemainingHPFrames;
+            paceSplits.TwentyPercentRemainingHPFrames = runPace.FortyPercentRemainingHPFrames + runPace.TwentyPercentRemainingHPFrames + medianSplitTimes.ZeroPercentRemainingHPFrames;
 
             paceSplits.ZeroPercentRemainingHPFrames = runPace.FortyPercentRemainingHPFrames + runPace.TwentyPercentRemainingHPFrames + runPace.ZeroPercentRemainingHPFrames;
 
@@ -2532,6 +2539,7 @@ Run IDs with best paces for each HP% Dealt:
     private TextBox? youtubeLinkTextBox;
     private DataGrid? mostRecentRunsDataGrid;
     private DataGrid? top20RunsDataGrid;
+    private DataGrid? uneditedYouTubeLinkRunsDataGrid;
     private TextBlock? questLogGearStatsTextBlock;
     private TextBlock? compendiumTextBlock;
     private CartesianChart? graphChart;
@@ -2631,6 +2639,22 @@ Run IDs with best paces for each HP% Dealt:
         this.top20RunsDataGrid.Items.Refresh();
     }
 
+    private void UneditedYouTubeLinkRuns_DataGridLoaded(object sender, RoutedEventArgs e)
+    {
+        this.uneditedYouTubeLinkRunsDataGrid = (DataGrid)sender;
+    }
+
+    private void YouTubeFindRuns_Click(object sender, RoutedEventArgs e)
+    {
+        if (this.uneditedYouTubeLinkRunsDataGrid == null)
+        {
+            return;
+        }
+
+        this.uneditedYouTubeLinkRunsDataGrid.ItemsSource = DatabaseManager.GetUneditedYouTubeLinkRuns();
+        this.uneditedYouTubeLinkRunsDataGrid.Items.Refresh();
+    }
+
     private string statsGraphsSelectedOption = string.Empty;
 
     private string statsTextSelectedOption = string.Empty;
@@ -2652,7 +2676,7 @@ Run IDs with best paces for each HP% Dealt:
         {
             var objectiveImage = run.ObjectiveImage.Replace(",", string.Empty);
             var questName = run.QuestName.Replace(",", string.Empty);
-            var youtubeID = run.YoutubeID.Replace(",", string.Empty);
+            var youtubeID = run.YouTubeID.Replace(",", string.Empty);
             var finalTimeDisplay = run.FinalTimeDisplay.Replace(",", string.Empty);
             var actualOverlayMode = run.ActualOverlayMode.Replace(",", string.Empty);
 
@@ -2854,7 +2878,7 @@ Run IDs with best paces for each HP% Dealt:
         {
             var objectiveImage = run.ObjectiveImage.Replace(",", string.Empty);
             var questName = run.QuestName.Replace(",", string.Empty);
-            var youtubeID = run.YoutubeID.Replace(",", string.Empty);
+            var youtubeID = run.YouTubeID.Replace(",", string.Empty);
             var finalTimeDisplay = run.FinalTimeDisplay.Replace(",", string.Empty);
             var actualOverlayMode = run.ActualOverlayMode.Replace(",", string.Empty);
 
@@ -2874,7 +2898,7 @@ Run IDs with best paces for each HP% Dealt:
         {
             var objectiveImage = run.ObjectiveImage.Replace(",", string.Empty);
             var questName = run.QuestName.Replace(",", string.Empty);
-            var youtubeID = run.YoutubeID.Replace(",", string.Empty);
+            var youtubeID = run.YouTubeID.Replace(",", string.Empty);
             var finalTimeDisplay = run.FinalTimeDisplay.Replace(",", string.Empty);
 
             var line = $"{objectiveImage},{questName},{run.RunID},{run.QuestID},{youtubeID},{finalTimeDisplay},{run.Date}";

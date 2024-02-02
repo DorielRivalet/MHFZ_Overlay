@@ -216,6 +216,10 @@ Includes icons!
 
 - [x] [Discord Rich Presence](./FAQ.md/#how-to-enable-discord-rich-presence) (custom monster icons, colored weapons, quest tier, current area, [speedrun mode, zen mode](./FAQ.md/#how-to-enable-speedrun-categories--zen-mode), and more!).
 
+![Buffs with Timers](./demo/buffs.png)
+
+- [x] Diva Song and Guild Food timers. Keep track of your buffs!
+
 ![Discord Rich Presence](./demo/discord5.png)
 ![Discord Rich Presence](./demo/discord10.png)
 
@@ -320,7 +324,6 @@ Some sections have context menus where you can save the section contents to a fi
 - Handle multiple objectives information.
 - Zenith information in Road.
 - Raviente Support Part Info.
-- Guild Pugi address.
 - Armor Set Website links.
 - Sky Corridor.
 - Drag and Drop multiple selection.

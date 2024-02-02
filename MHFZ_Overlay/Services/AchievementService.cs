@@ -12,12 +12,14 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Media;
+using EZlion.Mapper;
 using MHFZ_Overlay;
 using MHFZ_Overlay.Models;
 using MHFZ_Overlay.Models.Collections;
 using MHFZ_Overlay.Models.Constant;
 using MHFZ_Overlay.Models.Structures;
 using MHFZ_Overlay.Services.Contracts;
+using MHFZ_Overlay.ViewModels.Windows;
 using MHFZ_Overlay.Views.Windows;
 using Newtonsoft.Json;
 using NLog;
@@ -2247,7 +2249,7 @@ public sealed class AchievementService : IAchievementService
                 }
 
             case 342:
-                if (dataLoader.Model.GetOverlayMode() is OverlayMode.Freestyle or OverlayMode.FreestyleSecretTech )
+                if (dataLoader.Model.GetOverlayMode() is OverlayMode.Freestyle or OverlayMode.FreestyleSecretTech or OverlayMode.TimeAttack)
                 {
                     return true;
                 }
@@ -2639,6 +2641,88 @@ public sealed class AchievementService : IAchievementService
                 return false;
             case 440:
                 if (databaseManagerInstance.AllQuestsToggleMode.Count(questsToggleMode => questsToggleMode.QuestToggleMode == 3) >= 100)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            case 441:
+                if (databaseManagerInstance.AllQuestsDiva.Count(questsDiva => questsDiva.DivaSongBuffOn > 0) >= 100)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            case 442:
+                if (databaseManagerInstance.AllQuestsDiva.Count(questsDiva => (questsDiva.DivaPrayerGemRedLevel > 0 && questsDiva.DivaPrayerGemRedSkill > 0) || (questsDiva.DivaPrayerGemYellowLevel > 0 && questsDiva.DivaPrayerGemYellowSkill > 0) || (questsDiva.DivaPrayerGemGreenLevel > 0 && questsDiva.DivaPrayerGemGreenSkill > 0) || (questsDiva.DivaPrayerGemBlueLevel > 0 && questsDiva.DivaPrayerGemBlueSkill > 0)) >= 777)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            case 443:
+                if (databaseManagerInstance.AllQuestsGuildPoogie.Count(questsGuildPoogie => questsGuildPoogie.GuildPoogie1Skill > 0 || questsGuildPoogie.GuildPoogie2Skill > 0 || questsGuildPoogie.GuildPoogie3Skill > 0) >= 100)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            case 444:
+                return databaseManagerInstance.AllQuestsHalk.Any(quest => quest.HalkLevel == 3);
+            case 445:
+                // Initialize the array with zeros
+                int[] weaponUsageArray = new int[14];
+
+                foreach (var playerGear in databaseManagerInstance.AllPlayerGear)
+                {
+                    // Find the corresponding active feature for the run
+                    var activeFeature = databaseManagerInstance.AllQuestsActiveFeature.FirstOrDefault(af => af.RunID == playerGear.RunID);
+
+                    // If an active feature is found, update the array based on the weapon type
+                    if (activeFeature != null)
+                    {
+                        var weaponType = (FrontierWeaponType)playerGear.WeaponTypeID;
+
+                        if (activeFeature.ActiveFeature == null)
+                        {
+                            activeFeature.ActiveFeature = 0;
+                        }
+
+                        //if (dataLoader.Model.HasBitfieldFlag((uint)activeFeature.ActiveFeature, (ActiveFeature)weaponType, (uint)ActiveFeature.All))
+                        if (dataLoader.Model.IsActiveFeatureOn((long)activeFeature.ActiveFeature, playerGear.WeaponTypeID))
+                        {
+                            weaponUsageArray[(int)weaponType] = 1;
+                        }
+                    }
+                }
+
+                return weaponUsageArray.All(n => n == 1);
+            case 446: // TODO test
+                var maxTrueRaw = 8_000;
+
+                var foundQuestData = from quest in databaseManagerInstance.AllQuests
+                                where (quest.AttackBuffDictionary != null &&
+                                JsonConvert.DeserializeObject<Dictionary<int, int>>(quest.AttackBuffDictionary) != null)
+                                select quest;
+
+                if (foundQuestData == null)
+                {
+                    return false;
+                }
+
+                var foundMaxTrueRaw = from quest in databaseManagerInstance.AllQuests
+                                where (quest.AttackBuffDictionary != null && JsonConvert.DeserializeObject<Dictionary<int, int>>(quest.AttackBuffDictionary)?.Values.Max() >= maxTrueRaw)
+                                select quest;
+
+                if (foundMaxTrueRaw != null && foundMaxTrueRaw.Any())
                 {
                     return true;
                 }

@@ -20,7 +20,7 @@
 	<Title>mhfz-overlay</Title>
 	<Copyright>Doriel Rivalet</Copyright>
 	<Authors>Doriel Rivalet</Authors>
-	<Version>0.33.0</Version>
+	<Version>0.34.0</Version>
 	<PackageProjectUrl>https://github.com/DorielRivalet/mhfz-overlay</PackageProjectUrl>
 	<RepositoryUrl>https://github.com/DorielRivalet/mhfz-overlay.git</RepositoryUrl>
 	<RepositoryType>git</RepositoryType>
@@ -168,6 +168,7 @@
     <None Remove="Assets\Icons\png\attack_icon.png" />
     <None Remove="Assets\Icons\png\attack_up.png" />
     <None Remove="Assets\Icons\png\attack_up_red.png" />
+    <None Remove="Assets\Icons\png\blacksmith.png" />
     <None Remove="Assets\Icons\png\blast.png" />
     <None Remove="Assets\Icons\png\blue_soul.png" />
     <None Remove="Assets\Icons\png\board.png" />
@@ -185,6 +186,7 @@
     <None Remove="Assets\Icons\png\defense_icon.png" />
     <None Remove="Assets\Icons\png\defense_up.png" />
     <None Remove="Assets\Icons\png\description_FILL0_wght400_GRAD0_opsz48.png" />
+    <None Remove="Assets\Icons\png\diva_fountain.png" />
     <None Remove="Assets\Icons\png\diva_prayer_gems.png" />
     <None Remove="Assets\Icons\png\dure2.png" />
     <None Remove="Assets\Icons\png\dure_attack.png" />
@@ -257,6 +259,7 @@
     <None Remove="Assets\Icons\png\gauntlet_red.png" />
     <None Remove="Assets\Icons\png\gauntlet_white.png" />
     <None Remove="Assets\Icons\png\guild_food.png" />
+    <None Remove="Assets\Icons\png\guild_hall.png" />
     <None Remove="Assets\Icons\png\helm.png" />
     <None Remove="Assets\Icons\png\here.png" />
     <None Remove="Assets\Icons\png\key_1.png" />
@@ -691,7 +694,14 @@
     <None Remove="Assets\Icons\png\monster\zerureusu.png" />
     <None Remove="Assets\Icons\png\monster\zinogre.png" />
     <None Remove="Assets\Icons\png\monster_info.png" />
+    <None Remove="Assets\Icons\png\my_gallery.png" />
+    <None Remove="Assets\Icons\png\my_garden.png" />
+    <None Remove="Assets\Icons\png\my_house.png" />
+    <None Remove="Assets\Icons\png\my_missions.png" />
+    <None Remove="Assets\Icons\png\my_support.png" />
+    <None Remove="Assets\Icons\png\my_tore.png" />
     <None Remove="Assets\Icons\png\note_pink.png" />
+    <None Remove="Assets\Icons\png\pallone_caravan.png" />
     <None Remove="Assets\Icons\png\paralysis.png" />
     <None Remove="Assets\Icons\png\photo.png" />
     <None Remove="Assets\Icons\png\point_down.png" />
@@ -699,11 +709,13 @@
     <None Remove="Assets\Icons\png\point_right.png" />
     <None Remove="Assets\Icons\png\point_up.png" />
     <None Remove="Assets\Icons\png\poison.png" />
+    <None Remove="Assets\Icons\png\pvp.png" />
     <None Remove="Assets\Icons\png\quest_1.png" />
     <None Remove="Assets\Icons\png\quest_clock.png" />
     <None Remove="Assets\Icons\png\quest_clock_red.png" />
     <None Remove="Assets\Icons\png\quest_host.png" />
     <None Remove="Assets\Icons\png\quest_info.png" />
+    <None Remove="Assets\Icons\png\rasta_bar.png" />
     <None Remove="Assets\Icons\png\red_soul.png" />
     <None Remove="Assets\Icons\png\right_click.png" />
     <None Remove="Assets\Icons\png\sand_clock.png" />
@@ -727,6 +739,8 @@
     <None Remove="Assets\Icons\png\small_tonfa.png" />
     <None Remove="Assets\Icons\png\study.png" />
     <None Remove="Assets\Icons\png\stun.png" />
+    <None Remove="Assets\Icons\png\tenrou.png" />
+    <None Remove="Assets\Icons\png\tent.png" />
     <None Remove="Assets\Icons\png\ticket.png" />
     <None Remove="Assets\Icons\png\transcend.png" />
     <None Remove="Assets\Icons\png\transcend_active.png" />
@@ -1178,6 +1192,7 @@
     <Resource Include="Assets\Icons\png\attack_icon.png" />
     <Resource Include="Assets\Icons\png\attack_up.png" />
     <Resource Include="Assets\Icons\png\attack_up_red.png" />
+    <Resource Include="Assets\Icons\png\blacksmith.png" />
     <Resource Include="Assets\Icons\png\blast.png" />
     <Resource Include="Assets\Icons\png\blue_soul.png" />
     <Resource Include="Assets\Icons\png\board.png" />
@@ -1195,6 +1210,7 @@
     <Resource Include="Assets\Icons\png\defense_icon.png" />
     <Resource Include="Assets\Icons\png\defense_up.png" />
     <Resource Include="Assets\Icons\png\description_FILL0_wght400_GRAD0_opsz48.png" />
+    <Resource Include="Assets\Icons\png\diva_fountain.png" />
     <Resource Include="Assets\Icons\png\diva_prayer_gems.png" />
     <Resource Include="Assets\Icons\png\dure2.png" />
     <Resource Include="Assets\Icons\png\dure_attack.png" />
@@ -1267,6 +1283,7 @@
     <Resource Include="Assets\Icons\png\gauntlet_red.png" />
     <Resource Include="Assets\Icons\png\gauntlet_white.png" />
     <Resource Include="Assets\Icons\png\guild_food.png" />
+    <Resource Include="Assets\Icons\png\guild_hall.png" />
     <Resource Include="Assets\Icons\png\helm.png" />
     <Resource Include="Assets\Icons\png\here.png" />
     <Resource Include="Assets\Icons\png\key_1.png" />
@@ -1701,7 +1718,14 @@
     <Resource Include="Assets\Icons\png\monster\zerureusu.png" />
     <Resource Include="Assets\Icons\png\monster\zinogre.png" />
     <Resource Include="Assets\Icons\png\monster_info.png" />
+    <Resource Include="Assets\Icons\png\my_gallery.png" />
+    <Resource Include="Assets\Icons\png\my_garden.png" />
+    <Resource Include="Assets\Icons\png\my_house.png" />
+    <Resource Include="Assets\Icons\png\my_missions.png" />
+    <Resource Include="Assets\Icons\png\my_support.png" />
+    <Resource Include="Assets\Icons\png\my_tore.png" />
     <Resource Include="Assets\Icons\png\note_pink.png" />
+    <Resource Include="Assets\Icons\png\pallone_caravan.png" />
     <Resource Include="Assets\Icons\png\paralysis.png" />
     <Resource Include="Assets\Icons\png\photo.png" />
     <Resource Include="Assets\Icons\png\point_down.png" />
@@ -1709,11 +1733,13 @@
     <Resource Include="Assets\Icons\png\point_right.png" />
     <Resource Include="Assets\Icons\png\point_up.png" />
     <Resource Include="Assets\Icons\png\poison.png" />
+    <Resource Include="Assets\Icons\png\pvp.png" />
     <Resource Include="Assets\Icons\png\quest_1.png" />
     <Resource Include="Assets\Icons\png\quest_clock.png" />
     <Resource Include="Assets\Icons\png\quest_clock_red.png" />
     <Resource Include="Assets\Icons\png\quest_host.png" />
     <Resource Include="Assets\Icons\png\quest_info.png" />
+    <Resource Include="Assets\Icons\png\rasta_bar.png" />
     <Resource Include="Assets\Icons\png\red_soul.png" />
     <Resource Include="Assets\Icons\png\right_click.png" />
     <Resource Include="Assets\Icons\png\sand_clock.png" />
@@ -1737,6 +1763,8 @@
     <Resource Include="Assets\Icons\png\small_tonfa.png" />
     <Resource Include="Assets\Icons\png\study.png" />
     <Resource Include="Assets\Icons\png\stun.png" />
+    <Resource Include="Assets\Icons\png\tenrou.png" />
+    <Resource Include="Assets\Icons\png\tent.png" />
     <Resource Include="Assets\Icons\png\ticket.png" />
     <Resource Include="Assets\Icons\png\transcend.png" />
     <Resource Include="Assets\Icons\png\transcend_active.png" />
@@ -1831,7 +1859,7 @@
     <PackageReference Include="CsvHelper" Version="30.0.1" />
     <PackageReference Include="DiscordRichPresence" Version="1.2.1.24" />
     <PackageReference Include="DotNetProjects.Extended.Wpf.Toolkit" Version="5.0.103" />
-    <PackageReference Include="EZlion" Version="6.1.0-beta" />
+    <PackageReference Include="EZlion" Version="7.0.0-beta" />
     <PackageReference Include="FontAwesome.Sharp" Version="6.3.0" />
     <PackageReference Include="LiveChartsCore.SkiaSharpView.WPF" Version="2.0.0-beta.920" />
     <PackageReference Include="Memory.dll.x86" Version="1.2.24" />

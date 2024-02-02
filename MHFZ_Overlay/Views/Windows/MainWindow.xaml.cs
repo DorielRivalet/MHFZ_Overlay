@@ -1306,6 +1306,9 @@ The process may take some time, as the program attempts to download from GitHub 
         this.DataLoader.Model.ShowPlayerHitsTakenBlockedInfo = v && s.TotalHitsTakenBlockedShown;
         this.DataLoader.Model.ShowSharpness = v && s.EnableSharpness;
         this.DataLoader.Model.ShowSessionTimeInfo = v && s.SessionTimeShown;
+        this.DataLoader.Model.ShowPlayerPositionInfo = v && s.PlayerPositionShown;
+        this.DataLoader.Model.ShowDivaSongTimer = v && s.DivaSongTimerShown && this.DataLoader.Model.DivaSongActive;
+        this.DataLoader.Model.ShowGuildFoodTimer = v && s.GuildFoodTimerShown && this.DataLoader.Model.GuildFoodActive;
 
         this.DataLoader.Model.ShowMap = v && s.EnableMap;
         this.DataLoader.Model.ShowFrameCounter = v && s.FrameCounterShown;
@@ -1333,8 +1336,6 @@ The process may take some time, as the program attempts to download from GitHub 
     private FrameworkElement? movingObject { get; set; }
 
     private bool clickThrough { get; set; } = true;
-
-    private bool calculatedPersonalBest { get; set; }
 
     private ConfigWindow? ConfigWindow { get; set; }
 
@@ -1471,6 +1472,18 @@ The process may take some time, as the program attempts to download from GitHub 
             case "SessionTimeInfo":
                 s.SessionTimeX = (double)(pos.X - this.xOffset);
                 s.SessionTimeY = (double)(pos.Y - this.yOffset);
+                break;
+            case "PlayerPositionInfo":
+                s.PlayerPositionX = (double)(pos.X - this.xOffset);
+                s.PlayerPositionY = (double)(pos.Y - this.yOffset);
+                break;
+            case "DivaSongTimer":
+                s.DivaSongTimerX = (double)(pos.X - this.xOffset);
+                s.DivaSongTimerY = (double)(pos.Y - this.yOffset);
+                break;
+            case "GuildFoodTimer":
+                s.GuildFoodTimerX = (double)(pos.X - this.xOffset);
+                s.GuildFoodTimerY = (double)(pos.Y - this.yOffset);
                 break;
             case "LocationTextInfo":
                 s.LocationTextX = (double)(pos.X - this.xOffset);
@@ -1681,6 +1694,9 @@ The process may take some time, as the program attempts to download from GitHub 
         this.PersonalBestAttemptsInfoBorder.BorderThickness = thickness;
         this.QuestNameInfoBorder.BorderThickness = thickness;
         this.SessionTimeInfoBorder.BorderThickness = thickness;
+        this.PlayerPositionInfoBorder.BorderThickness = thickness;
+        this.DivaSongTimerBorder.BorderThickness = thickness;
+        this.GuildFoodTimerBorder.BorderThickness = thickness;
         this.SharpnessInfoBorder.BorderThickness = thickness;
         this.TimerInfoBorder.BorderThickness = thickness;
         this.GamepadGridBorder.BorderThickness = thickness;
@@ -1733,8 +1749,6 @@ The process may take some time, as the program attempts to download from GitHub 
 
     private void CommandBinding_Executed(object sender, ExecutedRoutedEventArgs e) => this.DisableDragAndDrop();
 
-    private bool calculatedQuestAttempts { get; set; }
-
     // TODO fix alt tab issues?
     private IKeyboardMouseEvents GlobalHook { get; set; }
 
@@ -1776,64 +1790,39 @@ The process may take some time, as the program attempts to download from GitHub 
         this.GlobalHook.Dispose();
     }
 
-    private async Task UpdateQuestAttempts()
+    private void UpdateQuestDataForDisplay()
     {
         var category = this.DataLoader.Model.GetOverlayModeForStorage();
         var weaponType = this.DataLoader.Model.WeaponType();
         long questID = this.DataLoader.Model.QuestID();
+        long partySize = this.DataLoader.Model.PartySize();
 
-        var attempts = await Task.Run(() => DatabaseManagerInstance.UpsertQuestAttemptsAsync(questID, weaponType, category));
         var s = (Settings)Application.Current.TryFindResource("Settings");
         var completions = string.Empty;
+        var attemptsPerPersonalBest = 0.0;
+
+        var pbAttempts = DatabaseManagerInstance.UpsertPersonalBestAttempts(questID, weaponType, category, partySize);
+        var questAttempts = DatabaseManagerInstance.UpsertQuestAttempts(questID, weaponType, category, partySize);
+
         if (s.EnableQuestCompletionsCounter)
         {
-            completions = await Task.Run(() => DatabaseManagerInstance.GetQuestCompletionsAsync(questID, category, weaponType)) + "/";
+            completions = DatabaseManagerInstance.GetQuestCompletions(questID, category, weaponType, partySize) + "/";
         }
-
-        var _ = Dispatcher.BeginInvoke((Action)(() =>
-        {
-            this.questAttemptsTextBlock.Text = $"{completions}{attempts}";
-        }));
-    }
-
-    private async Task UpdatePersonalBestDisplay()
-    {
-        var category = this.DataLoader.Model.GetOverlayModeForStorage();
-        var weaponType = this.DataLoader.Model.WeaponType();
-        long questID = this.DataLoader.Model.QuestID();
-
-        this.DataLoader.Model.PersonalBestLoaded = await Task.Run(() => DatabaseManagerInstance.GetPersonalBestAsync(questID, weaponType, category, ViewModels.Windows.AddressModel.QuestTimeMode, this.DataLoader));
-        var _ = Dispatcher.BeginInvoke((Action)(() =>
-        {
-            this.personalBestTextBlock.Text = this.DataLoader.Model.PersonalBestLoaded;
-        }));
-    }
-
-    private async Task UpdatePersonalBestAttempts()
-    {
-        var category = this.DataLoader.Model.GetOverlayModeForStorage();
-        var weaponType = this.DataLoader.Model.WeaponType();
-        long questID = this.DataLoader.Model.QuestID();
-
-        var attempts = await Task.Run(() => DatabaseManagerInstance.UpsertPersonalBestAttemptsAsync(questID, weaponType, category));
-        var attemptsPerPersonalBest = 0.0;
-        var s = (Settings)Application.Current.TryFindResource("Settings");
 
         if (s.EnableAttemptsPerPersonalBest)
         {
-            attemptsPerPersonalBest = await Task.Run(() => DatabaseManagerInstance.GetQuestAttemptsPerPersonalBestAsync(questID, weaponType, category));
-            var _ = Dispatcher.BeginInvoke((Action)(() =>
-            {
-                this.personalBestAttemptsTextBlock.Text = string.Format(CultureInfo.InvariantCulture, "{0} ({1}/PB)", attempts, Math.Truncate(attemptsPerPersonalBest));
-            }));
+            attemptsPerPersonalBest = DatabaseManagerInstance.GetQuestAttemptsPerPersonalBest(questID, weaponType, category, questAttempts.ToString(CultureInfo.InvariantCulture), partySize);
         }
-        else
+
+        // TODO putting this first before the others triggers "database is locked" error
+        this.DataLoader.Model.PersonalBestLoaded = DatabaseManagerInstance.GetPersonalBest(questID, weaponType, category, ViewModels.Windows.AddressModel.QuestTimeMode, this.DataLoader, partySize);
+
+        var _ = Dispatcher.BeginInvoke((Action)(() =>
         {
-            var _ = Dispatcher.BeginInvoke((Action)(() =>
-            {
-                this.personalBestAttemptsTextBlock.Text = string.Format(CultureInfo.InvariantCulture, "{0}", attempts);
-            }));
-        }
+            this.questAttemptsTextBlock.Text = $"{completions}{questAttempts}";
+            this.personalBestTextBlock.Text = this.DataLoader.Model.PersonalBestLoaded;
+            this.personalBestAttemptsTextBlock.Text = s.EnableAttemptsPerPersonalBest ? string.Format(CultureInfo.InvariantCulture, "{0} ({1}/PB)", pbAttempts, Math.Truncate(attemptsPerPersonalBest)) : string.Format(CultureInfo.InvariantCulture, "{0}", pbAttempts);
+        }));
     }
 
     /// <summary>
@@ -1916,6 +1905,13 @@ The process may take some time, as the program attempts to download from GitHub 
         }
     }
 
+    private bool CalculatedQuestDataForDisplay { get; set; }
+
+    private bool DivaSongActive { get; set; }
+
+    private bool GuildFoodActive { get; set; }
+
+
     // TODO: optimization
     private Task CheckQuestStateForDatabaseLogging()
     {
@@ -1942,23 +1938,15 @@ The process may take some time, as the program attempts to download from GitHub 
             this.DataLoader.Model.InsertQuestInfoIntoDictionaries();
 
             // TODO: test on dure/etc
-            if (!this.calculatedPersonalBest
+            if (!this.CalculatedQuestDataForDisplay
                 && this.DataLoader.Model.TimeDefInt() > this.DataLoader.Model.TimeInt()
                 && playerAtk > 0
                 && this.DataLoader.Model.TimeDefInt() - this.DataLoader.Model.TimeInt() >= 30)
             {
-                this.calculatedPersonalBest = true;
-                var updatePersonalBestDisplayTask = this.UpdatePersonalBestDisplay(); // Start the task without awaiting
-            }
-
-            if (!this.calculatedQuestAttempts
-                && this.DataLoader.Model.TimeDefInt() > this.DataLoader.Model.TimeInt()
-                && playerAtk > 0
-                && this.DataLoader.Model.TimeDefInt() - this.DataLoader.Model.TimeInt() >= 30)
-            {
-                this.calculatedQuestAttempts = true;
-                var updateQuestAttemptsTask = this.UpdateQuestAttempts(); // Start the task without awaiting
-                var updatePersonalBestAttemptsTask = this.UpdatePersonalBestAttempts(); // Start the task without awaiting
+                this.CalculatedQuestDataForDisplay = true;
+                this.UpdateQuestDataForDisplay();
+                this.DataLoader.Model.DivaSongActive = this.DataLoader.Model.DivaSongEnded ? false : true;
+                this.DataLoader.Model.GuildFoodActive = this.DataLoader.Model.GuildFoodEnded ? false : true;
             }
         }
 
@@ -1971,8 +1959,10 @@ The process may take some time, as the program attempts to download from GitHub 
             this.DataLoader.Model.ResetQuestInfoVariables();
             this.DataLoader.Model.PreviousRoadFloor = 0;
             this.personalBestTextBlock.Text = Messages.TimerNotLoaded;
-            this.calculatedPersonalBest = false;
-            this.calculatedQuestAttempts = false;
+            this.CalculatedQuestDataForDisplay = false;
+            // TODO test
+            this.DataLoader.Model.DivaSongActive = this.DataLoader.Model.DivaSongEnded ? false : true;
+            this.DataLoader.Model.GuildFoodActive = this.DataLoader.Model.GuildFoodEnded ? false : true;
             return Task.CompletedTask;
         }
         else if (!this.DataLoader.Model.LoadedItemsAtQuestStart && this.DataLoader.Model.QuestState() == 0 && this.DataLoader.Model.QuestID() != 0)
@@ -2004,7 +1994,7 @@ The process may take some time, as the program attempts to download from GitHub 
             this.DataLoader.Model.LoadedItemsAtQuestStart = false;
             if (s.EnableQuestLogging)
             {
-                DatabaseManagerInstance.InsertQuestData(this.DataLoader, (int)DatabaseManagerInstance.GetQuestAttempts(this.DataLoader.Model.QuestID(), this.DataLoader.Model.WeaponType(), this.OverlayModeWatermarkTextBlock.Text));
+                DatabaseManagerInstance.InsertQuestData(this.DataLoader, (int)DatabaseManagerInstance.GetQuestAttempts(this.DataLoader.Model.QuestID(), this.DataLoader.Model.WeaponType(), this.DataLoader.Model.GetOverlayModeForStorage()));
             }
         }
 

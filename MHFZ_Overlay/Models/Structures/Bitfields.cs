@@ -245,7 +245,7 @@ public enum QuestWeaponTypesDisabled : uint
     Bow = 1024,
     Tonfa = 2048,
     SwitchAxeF = 4096,
-    // MS Flag 64
+    // TODO MS Flag 64
 }
 
 /// <summary>
@@ -390,4 +390,120 @@ public enum GauntletBoost : uint
     Zenith = 1,
     Solstice = 2,
     Musou = 4,
+}
+
+/// <summary>
+/// Course Rights first byte. Byte position 1.
+/// </summary>
+[Flags]
+[JsonConverter(typeof(JsonStringEnumConverter))]
+public enum CourseRightsFirstByte : uint
+{
+    /// <summary>
+    /// or netcafe?
+    /// </summary>
+    [DefaultValue(None)]
+    None = 0,
+    Assist = 1,
+    N = 2,
+    Hiden = 4,
+    /// <summary>
+    /// or aid
+    /// </summary>
+    Support = 8,
+    NBoost = 16,
+    All = Assist | N | Hiden | Support | NBoost,
+}
+
+/// <summary>
+/// Course Rights second byte.  Byte position 0.
+/// </summary>
+[Flags]
+[JsonConverter(typeof(JsonStringEnumConverter))]
+public enum CourseRightsSecondByte : uint
+{
+    [DefaultValue(None)]
+    None = 0,
+    UNK1 = 1,
+    Trial = 2,
+    HunterLife = 4,
+    Extra = 8,
+    UNK2 = 16,
+    UNK3 = 32,
+    Premium = 64,
+    All = UNK1 | Trial | HunterLife | Extra | UNK2 | UNK3 | Premium,
+}
+
+/// <summary>
+/// TODO Run filters by buff.
+/// </summary>
+[Flags]
+[JsonConverter(typeof(JsonStringEnumConverter))]
+public enum RunBuff : uint
+{
+    [DefaultValue(None)]
+    None = 0,
+    Halk = 1,
+    PoogieItem = 2,
+    DivaSong = 4,
+    HalkPotEffect = 8,
+    Bento = 16,
+    GuildPoogie = 32,
+    ActiveFeature = 64,
+    GuildFood = 128,
+    DivaSkill = 256,
+    SecretTechnique = 512,
+    DivaPrayerGem = 1024,
+    /// <summary>
+    /// Can come from hunter aid/support course.
+    /// </summary>
+    CourseAttackBoost = 2048,
+
+    // old categories
+    TimeAttack = PoogieItem | DivaSong | Bento,
+    FreestyleNoSecretTech = Halk | PoogieItem | DivaSong | Bento | GuildPoogie | ActiveFeature | GuildFood | DivaSkill | DivaPrayerGem,
+    FreestyleWithSecretTech = FreestyleNoSecretTech | SecretTechnique,
+}
+
+/// <summary>
+/// Equipment type. <see href="https://github.com/var-username/Monster-Hunter-Frontier-Patterns/"/>
+/// </summary>
+[Flags]
+[JsonConverter(typeof(JsonStringEnumConverter))]
+public enum EquipmentType : uint
+{
+    [DefaultValue(General)]
+    General = 0,
+    SP = 1,
+    Gou = 2,
+    Evolution = 4,
+    HC = 8,
+    UNK1 = 16,
+    Ravi = HC | UNK1,
+}
+
+/// <summary>
+/// Active features enabled.
+/// </summary>
+[Flags]
+[JsonConverter(typeof(JsonStringEnumConverter))]
+public enum ActiveFeature : uint
+{
+    [DefaultValue(None)]
+    None = 0,
+    GreatSword = 1,
+    HeavyBowgun = 2,
+    Hammer = 4,
+    Lance = 8,
+    SwordAndShield = 16,
+    LightBowgun = 32,
+    DualSwords = 64,
+    LongSword = 128,
+    HuntingHorn = 256,
+    Gunlance = 512,
+    Bow = 1024,
+    Tonfa = 2048,
+    SwitchAxeF = 4096,
+    MagnetSpike = 8192,
+    All = GreatSword | HeavyBowgun | Hammer | Lance | SwordAndShield | LightBowgun | DualSwords | LongSword | HuntingHorn | Gunlance | Bow | Tonfa | SwitchAxeF | MagnetSpike,
 }

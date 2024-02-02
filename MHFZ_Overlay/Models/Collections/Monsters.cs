@@ -47,7 +47,7 @@ public static class Monsters
         { 29, "Rocks" },
         { 30, "Ioprey" },
         { 31, "Iodrome" },
-        { 32, "Pugis" },
+        { 32, "Poogies" },
         { 33, "Kirin" },
         { 34, "Cephalos" },
         { 35, "Giaprey / Giadrome" },

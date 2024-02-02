@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Drawing.Imaging;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -28,6 +29,7 @@ using MHFZ_Overlay.Models.Constant;
 using MHFZ_Overlay.Models.Structures;
 using MHFZ_Overlay.Services;
 using MHFZ_Overlay.Services.Converter;
+using NLog;
 using RESTCountries.NET.Models;
 using RESTCountries.NET.Services;
 using SkiaSharp;
@@ -46,9 +48,9 @@ public abstract class AddressModel : INotifyPropertyChanged
 
     private static readonly DatabaseService DatabaseManagerInstance = DatabaseService.GetInstance();
 
-    public ObservableCollection<ObservablePoint> AttackBuffCollection { get; set; } = new ();
+    public ObservableCollection<ObservablePoint> AttackBuffCollection { get; set; } = new();
 
-    private readonly Mem m = new ();
+    private readonly Mem m = new();
 
     private int savedMonster1MaxHP;
 
@@ -124,6 +126,12 @@ public abstract class AddressModel : INotifyPropertyChanged
     public bool ShowSharpness { get; set; }
 
     public bool ShowSessionTimeInfo { get; set; }
+
+    public bool ShowPlayerPositionInfo { get; set; }
+
+    public bool ShowDivaSongTimer { get; set; }
+
+    public bool ShowGuildFoodTimer { get; set; }
 
     public bool ShowMonsterPartHP { get; set; }
 
@@ -325,6 +333,42 @@ public abstract class AddressModel : INotifyPropertyChanged
     public abstract int DivaSkillUsesLeft();
 
     public abstract int HalkFullness();
+
+    public abstract int HalkLevel();
+
+    public abstract int HalkIntimacy();
+
+    public abstract int HalkHealth();
+
+    public abstract int HalkAttack();
+
+    public abstract int HalkDefense();
+
+    public abstract int HalkIntellect();
+
+    public abstract int HalkSkill1();
+
+    public abstract int HalkSkill2();
+    
+    public abstract int HalkSkill3();
+    
+    public abstract int HalkElementNone();
+    
+    public abstract int HalkFire();
+    
+    public abstract int HalkThunder();
+    
+    public abstract int HalkWater();
+    
+    public abstract int HalkIce();
+    
+    public abstract int HalkDragon();
+    
+    public abstract int HalkSleep();
+    
+    public abstract int HalkParalysis();
+    
+    public abstract int HalkPoison();
 
     public abstract int RankBand();
 
@@ -1264,16 +1308,84 @@ public abstract class AddressModel : INotifyPropertyChanged
     /// <returns></returns>
     public abstract int QuestToggleMonsterMode();
 
+    /// <summary>
+    /// Course rights. 14 is hl+ex
+    /// </summary>
+    /// <returns></returns>
+    public abstract int Rights();
+
+    public abstract decimal PlayerPositionX();
+
+    public abstract decimal PlayerPositionY();
+
+    public abstract decimal PlayerPositionZ();
+
+    public abstract decimal PlayerPositionInQuestX();
+
+    public abstract decimal PlayerPositionInQuestY();
+
+    public abstract decimal PlayerPositionInQuestZ();
+
+    public abstract int ActiveFeature1();
+
+    /// <summary>
+    /// Alternative.
+    /// </summary>
+    /// <returns></returns>
+    public abstract int ActiveFeature2();
+
+    /// <summary>
+    /// Alternative.
+    /// </summary>
+    /// <returns></returns>
+    public abstract int ActiveFeature3();
+
+    /// <summary>
+    /// Updates every 11 seconds
+    /// </summary>
+    /// <returns></returns>
+    public abstract int ServerHeartbeat();
+
+    public abstract int GuildFoodStart();
+
+    public abstract int DivaSongStart();
+    
+    public abstract int GuildPoogie1Skill();
+    
+    public abstract int GuildPoogie2Skill();
+    
+    public abstract int GuildPoogie3Skill();
+    
+    public abstract int DivaPrayerGemRedSkill();
+    
+    public abstract int DivaPrayerGemRedLevel();
+    
+    public abstract int DivaPrayerGemYellowSkill();
+    
+    public abstract int DivaPrayerGemYellowLevel();
+    
+    public abstract int DivaPrayerGemGreenSkill();
+    
+    public abstract int DivaPrayerGemGreenLevel();
+    
+    public abstract int DivaPrayerGemBlueSkill();
+    
+    public abstract int DivaPrayerGemBlueLevel();
+    
+    public abstract bool HalkOn();
+    
+    public abstract bool HalkPotEffectOn();
+
+
     /// <TODO>
     /// [] Not Done
     /// [X] Done
     /// [O] WIP
-    /// [] Prayer gems, 
     /// [] bento, 
     /// [] sharpness table, 
     /// [] pvp, 
-    /// [] zenith in road, guild pugi, gear rarity colors.
-    /// [] Database would store prayer gems, bento, sharpness table, pvp, guild pugi. Should i use separate table?
+    /// [] zenith in road, gear rarity colors.
+    /// [] Database would store bento, sharpness table, pvp. Should i use separate table?
     /// </TODO>
 
     public bool HasMonster2
@@ -1666,13 +1778,17 @@ TreeScope.Children, condition);
             || s.Monster4HealthBarShown
             || s.EnableMap
             || s.PersonalBestTimePercentShown
-            || s.EnablePersonalBestPaceColor) // TODO monster 1 overview? and update README
+            || s.EnablePersonalBestPaceColor
+            || s.PlayerPositionShown) // TODO monster 1 overview? and update README
         {
             return OverlayMode.Standard;
         }
         else if (s.TimerInfoShown && s.EnableInputLogging && s.EnableQuestLogging && s.OverlayModeWatermarkShown)
         {
-            if (this.DivaSkillUsesLeft() == 0 && this.StyleRank1() != 15 && this.StyleRank2() != 15)
+            var gems = new List<int> { DivaPrayerGemRedSkill(), DivaPrayerGemRedLevel(), DivaPrayerGemYellowSkill(), DivaPrayerGemYellowLevel(), DivaPrayerGemGreenSkill(), DivaPrayerGemGreenLevel(), DivaPrayerGemBlueSkill(), DivaPrayerGemBlueLevel() };
+            var guildPoogies = new List<int> { GuildPoogie1Skill(), GuildPoogie2Skill(), GuildPoogie3Skill() };
+            // TODO test
+            if (!HalkPotEffectOn() && GetGuildPoogieEffect(guildPoogies) == "No Poogie" && this.GuildFoodSkill() == 0 && !HalkOn() && GetDivaPrayerGems(gems) == "None" && !IsActiveFeatureOn(GetActiveFeature(), this.WeaponType()) && !IsBitfieldContainingFlag((uint)this.Rights(), CourseRightsFirstByte.Support, (uint)CourseRightsFirstByte.All, true, 1) && this.DivaSkillUsesLeft() == 0 && this.StyleRank1() != 15 && this.StyleRank2() != 15)
             {
                 return OverlayMode.TimeAttack;
             }
@@ -1689,6 +1805,49 @@ TreeScope.Children, condition);
         {
             return OverlayMode.Zen;
         }
+    }
+
+    /// <summary>
+    /// TODO needs real testing
+    /// </summary>
+    /// <param name="model"></param>
+    /// <returns></returns>
+    public int GetActiveFeature()
+    {
+        var activeFeatures = new[] { this.ActiveFeature1(), this.ActiveFeature2(), this.ActiveFeature3() };
+
+        foreach (var activeFeature in activeFeatures)
+        {
+            if (IsValidBitfield((uint)activeFeature, (uint)ActiveFeature.All))
+            {
+                return activeFeature;
+            }
+        }
+
+        LoggerInstance.Warn("Active feature not found: {0} {1} {2}", activeFeatures[0], activeFeatures[1], activeFeatures[2]);
+        return 0;
+    }
+
+    public bool IsBitfieldContainingFlag<T>(uint bitfield, T flag, uint all, bool extractByte = false, int bytePosition = 0) where T : Enum
+    {
+        byte value = extractByte ? (byte)(((uint)bitfield >> (bytePosition * 8)) & 0xFF) : (byte)bitfield;
+
+        // Validate
+        if (!IsValidBitfield(value, all))
+        {
+            return false;
+        }
+
+        // Convert
+        T convertedValue = (T)Enum.ToObject(typeof(T), value);
+
+        var isFlagSet = convertedValue.HasFlag(flag);
+        return isFlagSet;
+    }
+
+    public bool IsValidBitfield(uint value, uint all)
+    {
+        return (value & all) == value;
     }
 
     public bool CaravanOverride()
@@ -2427,6 +2586,88 @@ TreeScope.Children, condition);
         }
     }
 
+    public bool DivaSongEnding
+    {
+        get
+        {
+            if (DivaSongStart() <= 0)
+            {
+                return true;
+            }
+
+            var expiry = DivaSongStart() + (60 * 90);
+            double secondsLeft = expiry - ServerHeartbeat();
+
+            return secondsLeft <= 60*10;
+        }
+    }
+
+    public bool DivaSongEnded
+    {
+        get
+        {
+            if (DivaSongStart() <= 0)
+            {
+                return true;
+            }
+
+            var expiry = DivaSongStart() + (60 * 90);
+            double secondsLeft = expiry - ServerHeartbeat();
+
+            return secondsLeft <= 0;
+        }
+    }
+
+    /// <summary>
+    /// Whether the buff is still active even if it expired inside quest but after quest start.
+    /// </summary>
+    public bool DivaSongActive { get; set; }
+
+    /// <summary>
+    /// Whether the buff is still active even if it expired inside quest but after quest start.
+    /// </summary>
+    public bool GuildFoodActive { get; set; }
+
+    public bool GuildFoodEnding
+    {
+        get
+        {
+            if (GuildFoodStart() <= 0)
+            {
+                return true;
+            }
+
+            var expiry = GuildFoodStart() + (60 * 90);
+            double secondsLeft = expiry - ServerHeartbeat();
+
+            return secondsLeft <= 60 * 10;
+        }
+    }
+
+    public bool GuildFoodEnded
+    {
+        get
+        {
+            if (GuildFoodStart() <= 0)
+            {
+                return true;
+            }
+
+            var expiry = GuildFoodStart() + (60 * 90);
+            double secondsLeft = expiry - ServerHeartbeat();
+
+            return secondsLeft <= 0;
+        }
+    }
+
+    public string DivaSongFill => DivaSongEnding ? CatppuccinMochaColors.NameHex["Red"] : CatppuccinMochaColors.NameHex["Rosewater"];
+
+    public string GuildFoodFill => GuildFoodEnding ? CatppuccinMochaColors.NameHex["Red"] : CatppuccinMochaColors.NameHex["Rosewater"];
+
+    public double DivaSongOpacity => DivaSongEnding ? 1 : .5;
+
+    public double GuildFoodOpacity => GuildFoodEnding ? 1 : .5;
+
     public string IsOnPace
     {
         get
@@ -2655,6 +2896,10 @@ TreeScope.Children, condition);
     public string APMIcon { get; set; } = "../../Assets/Icons/png/flame_ul.png";
 
     public string PersonalBestIcon { get; set; } = "../../Assets/Icons/png/quest_clock.png";
+
+    public string DivaSongIcon { get; set; } = "../../Assets/Icons/png/diva_fountain.png";
+
+    public string GuildFoodIcon { get; set; } = "../../Assets/Icons/png/guild_hall.png";
 
     /// <summary>
     /// <para>Gets player true raw.</para>
@@ -4459,7 +4704,7 @@ TreeScope.Children, condition);
             {
                 return "Visible";
             }
-            else{
+            else {
                 return "Collapsed";
             }
         }
@@ -4506,13 +4751,13 @@ TreeScope.Children, condition);
                 WeaponBlademaster.IDName.TryGetValue(this.BlademasterWeaponID(), out var wepname);
                 var address = this.BlademasterWeaponID().ToString("X4", CultureInfo.InvariantCulture).ToUpperInvariant();  // gives you hex 4 digit "007B"
 
-                return string.Format(CultureInfo.InvariantCulture, "{0}{1} ({2}) | {3}\n{4} | {5} | {6}", wepname, lv, address, style, this.GetDecoName(this.WeaponDeco1ID(), 1), this.GetDecoName(this.WeaponDeco2ID(), 2), this.GetDecoName(this.WeaponDeco3ID(), 3));
+                return string.Format(CultureInfo.InvariantCulture, "{0}{1} ({2}) | {3}\n{4} | {5} | {6}", wepname, lv, address, style, this.GetDecoName(this.WeaponDeco1ID(), EquipmentSlot.One), this.GetDecoName(this.WeaponDeco2ID(), EquipmentSlot.Two), this.GetDecoName(this.WeaponDeco3ID(), EquipmentSlot.Three));
             }
             else if (className == "Gunner")
             {
                 WeaponGunner.IDName.TryGetValue(this.GunnerWeaponID(), out var wepname);
                 var address = this.GunnerWeaponID().ToString("X4", CultureInfo.InvariantCulture).ToUpperInvariant();  // gives you hex 4 digit "007B"
-                return string.Format(CultureInfo.InvariantCulture, "{0}{1} ({2}) | {3}\n{4} | {5} | {6}", wepname, lv, address, style, this.GetDecoName(this.WeaponDeco1ID(), 1), this.GetDecoName(this.WeaponDeco2ID(), 2), this.GetDecoName(this.WeaponDeco3ID(), 3));
+                return string.Format(CultureInfo.InvariantCulture, "{0}{1} ({2}) | {3}\n{4} | {5} | {6}", wepname, lv, address, style, this.GetDecoName(this.WeaponDeco1ID(), EquipmentSlot.One), this.GetDecoName(this.WeaponDeco2ID(), EquipmentSlot.Two), this.GetDecoName(this.WeaponDeco3ID(), EquipmentSlot.Three));
             }
             else
             {
@@ -5115,7 +5360,7 @@ TreeScope.Children, condition);
     /// The decos.
     /// </value>
     /// <returns></returns>
-    public string GetDecoName(int id, int slot = 0, bool isForImage = false)
+    public string GetDecoName(int id, EquipmentSlot slot = EquipmentSlot.None, bool isForImage = false)
     {
         var decoName = string.Empty;
 
@@ -5135,7 +5380,7 @@ TreeScope.Children, condition);
             decoName += string.Empty;
         }
 
-        if (decoName == "Empty" && slot != 0)
+        if (decoName == "Empty" && slot != EquipmentSlot.None)
         {
             return this.GetSigilName(slot);
         }
@@ -5160,8 +5405,25 @@ TreeScope.Children, condition);
     /// The sigils.
     /// </value>
     /// <returns></returns>
-    public string GetSigilName(int slot)
+    public string GetSigilName(EquipmentSlot slot)
     {
+        if (slot == EquipmentSlot.None)
+        {
+            return "Empty";
+        }
+
+        var decoSlot1Occupied = WeaponDeco1ID() > 0;
+        var decoSlot2Occupied = WeaponDeco2ID() > 0;
+        var decoSlot3Occupied = WeaponDeco3ID() > 0;
+
+        if ((decoSlot1Occupied && decoSlot2Occupied && decoSlot3Occupied)
+            || (decoSlot1Occupied && slot == EquipmentSlot.One)
+            || (decoSlot2Occupied && slot == EquipmentSlot.Two)
+            || (decoSlot3Occupied && slot == EquipmentSlot.Three))
+        {
+            return "Empty";
+        }
+
         var sigilSkillList = SkillSigil.IDName;
         var sigilNames = new int[] { this.Sigil1Name1(), this.Sigil1Name2(), this.Sigil1Name3(), this.Sigil2Name1(), this.Sigil2Name2(), this.Sigil2Name3(), this.Sigil3Name1(), this.Sigil3Name2(), this.Sigil3Name3() };
         var sigilValues = new int[] { this.Sigil1Value1(), this.Sigil1Value2(), this.Sigil1Value3(), this.Sigil2Value1(), this.Sigil2Value2(), this.Sigil2Value3(), this.Sigil3Value1(), this.Sigil3Value2(), this.Sigil3Value3() };
@@ -5172,7 +5434,32 @@ TreeScope.Children, condition);
             sigilTypes[i] = type ?? string.Empty;
         }
 
-        var index = (slot - 1) * 3;
+        var index = 0;
+        var slotNumber = 1;
+
+        switch (slot)
+        {
+            case EquipmentSlot.Two:
+                slotNumber = 2;
+                break;
+            case EquipmentSlot.Three:
+                slotNumber = 3;
+                break;
+        }
+
+        if ((decoSlot1Occupied && decoSlot2Occupied)
+            || (decoSlot1Occupied && !decoSlot2Occupied && !decoSlot3Occupied && slot == EquipmentSlot.Two))
+        {
+            index = 0;
+        }
+        else if (decoSlot1Occupied && !decoSlot2Occupied && !decoSlot3Occupied && slot == EquipmentSlot.Three){
+            index = 3;
+        }
+        else if (!decoSlot1Occupied && !decoSlot2Occupied && !decoSlot3Occupied)
+        {
+            index = (slotNumber - 1) * 3;
+        }
+
         if (sigilValues[index] == 0 || sigilNames[index] == 0)
         {
             return "Empty";
@@ -7515,6 +7802,7 @@ TreeScope.Children, condition);
     /// <returns></returns>
     public string GenerateGearStats(long? runID = null)
     {
+        // TODO: update
         if (runID == null)
         {
             // save gear to variable
@@ -7549,6 +7837,13 @@ TreeScope.Children, condition);
             var styleRankSkills = DatabaseManagerInstance.GetStyleRankSkills((long)runID);
             var zenithSkills = DatabaseManagerInstance.GetZenithSkills((long)runID);
             var quest = DatabaseManagerInstance.GetQuest((long)runID);
+            var diva = DatabaseManagerInstance.GetDiva((long)runID);
+            var activeFeature = DatabaseManagerInstance.GetActiveFeature((long)runID);
+            var courses = DatabaseManagerInstance.GetCourses((long)runID);
+            var guildPoogie = DatabaseManagerInstance.GetGuildPoogie((long)runID);
+            var halk = DatabaseManagerInstance.GetHalk((long)runID);
+            var toggleMode = DatabaseManagerInstance.GetQuestToggleMode((long)runID);
+            var overlayHash = DatabaseManagerInstance.GetOverlayHash((long)runID);
 
             var createdBy = playerGear.CreatedBy;
             var weaponClass = this.GetWeaponClass((int?)playerGear.WeaponClassID);
@@ -7577,7 +7872,7 @@ TreeScope.Children, condition);
             var armorSkills = GetArmorSkillsForRunID((int)activeSkills.ActiveSkill1ID, (int)activeSkills.ActiveSkill2ID, (int)activeSkills.ActiveSkill3ID, (int)activeSkills.ActiveSkill4ID, (int)activeSkills.ActiveSkill5ID, (int)activeSkills.ActiveSkill6ID, (int)activeSkills.ActiveSkill7ID, (int)activeSkills.ActiveSkill8ID, (int)activeSkills.ActiveSkill9ID, (int)activeSkills.ActiveSkill10ID, (int)activeSkills.ActiveSkill11ID, (int)activeSkills.ActiveSkill12ID, (int)activeSkills.ActiveSkill13ID, (int)activeSkills.ActiveSkill14ID, (int)activeSkills.ActiveSkill15ID, (int)activeSkills.ActiveSkill16ID, (int)activeSkills.ActiveSkill17ID, (int)activeSkills.ActiveSkill18ID, (int)activeSkills.ActiveSkill19ID);
             var caravanSkillsList = GetCaravanSkillsForRunID((int)caravanSkills.CaravanSkill1ID, (int)caravanSkills.CaravanSkill2ID, (int)caravanSkills.CaravanSkill3ID);
             var divaSkill = GetDivaSkillNameFromID((int)playerGear.DivaSkillID);
-            var guildFood = GetArmorSkill((int)playerGear.GuildFoodID);
+            var guildFood = GetArmorSkill((int)playerGear.GuildFoodID) == "None" ? "No Food" : GetArmorSkill((int)playerGear.GuildFoodID);
             var styleRankSkillsList = GetGSRSkillsForRunID((int)styleRankSkills.StyleRankSkill1ID, (int)styleRankSkills.StyleRankSkill2ID);
             var inventory = GetItemsForRunID(new int[] { (int)playerInventory.Item1ID, (int)playerInventory.Item2ID, (int)playerInventory.Item3ID, (int)playerInventory.Item4ID, (int)playerInventory.Item5ID, (int)playerInventory.Item6ID, (int)playerInventory.Item7ID, (int)playerInventory.Item8ID, (int)playerInventory.Item9ID, (int)playerInventory.Item10ID, (int)playerInventory.Item11ID, (int)playerInventory.Item12ID, (int)playerInventory.Item13ID, (int)playerInventory.Item14ID, (int)playerInventory.Item15ID, (int)playerInventory.Item16ID, (int)playerInventory.Item17ID, (int)playerInventory.Item18ID, (int)playerInventory.Item19ID, (int)playerInventory.Item20ID });
             var ammo = GetItemsForRunID(new int[] { (int)ammoPouch.Item1ID, (int)ammoPouch.Item2ID, (int)ammoPouch.Item3ID, (int)ammoPouch.Item4ID, (int)ammoPouch.Item5ID, (int)ammoPouch.Item6ID, (int)ammoPouch.Item7ID, (int)ammoPouch.Item8ID, (int)ammoPouch.Item9ID, (int)ammoPouch.Item10ID });
@@ -7589,6 +7884,12 @@ TreeScope.Children, condition);
             var questObjectiveName = quest.ObjectiveName;
             var questCategory = quest.ActualOverlayMode;
             var partySize = quest.PartySize;
+
+            var toggleModeName = toggleMode.QuestToggleMode == null ? "Normal" : EZlion.Mapper.QuestToggleMode.IDName[(int)toggleMode.QuestToggleMode];
+            var activeFeatureState = activeFeature.ActiveFeature == null ? false : IsActiveFeatureOn((long)activeFeature.ActiveFeature, playerGear.WeaponTypeID);
+            var halkSkill1 = halk.HalkSkill1 == null ? "None" : EZlion.Mapper.SkillHalk.IDName[(int)halk.HalkSkill1];
+            var halkSkill2 = halk.HalkSkill2 == null ? "None" : EZlion.Mapper.SkillHalk.IDName[(int)halk.HalkSkill2];
+            var halkSkill3 = halk.HalkSkill3 == null ? "None" : EZlion.Mapper.SkillHalk.IDName[(int)halk.HalkSkill3];
 
             // TODO: fix
             // var partnyaBagItems = GetItemsForRunID(new int[] { (int)partnyaBag.Item1ID, (int)partnyaBag.Item2ID, (int)partnyaBag.Item3ID, (int)partnyaBag.Item4ID, (int)partnyaBag.Item5ID, (int)partnyaBag.Item6ID, (int)partnyaBag.Item7ID, (int)partnyaBag.Item8ID, (int)partnyaBag.Item9ID, (int)partnyaBag.Item10ID });
@@ -7619,31 +7920,57 @@ Active Skills{17}:
 Caravan Skills:
 {19}
 
-Diva Skill:
+Diva:
 {20}
+Song {21}
 
-Guild Food:
-{21}
-
-Style Rank:
+Diva Prayer Gems:
 {22}
 
-Items:
+Guild:
 {23}
-
-Ammo:
 {24}
 
-Poogie Item:
+Style Rank:
 {25}
 
-Road/Duremudira Skills:
+Items:
 {26}
 
-Quest: {27}
-{28} {29} {30}
-Category: {31}
-Party Size: {32}",
+Ammo:
+{27}
+
+Poogie Item:
+{28}
+
+Road/Duremudira Skills:
+{29}
+
+Quest: {30}
+{31} {32} {33}
+Category: {34}
+Party Size: {35}
+Mode: {36}
+Active Feature {37}
+
+Courses:
+{38}
+
+Halk:
+{39}
+Halk Pot {40}
+LV{41}
+Element Type {42}
+Status Type {43}
+Intimacy {44}
+Health {45}
+Attack {46}
+Defense {47}
+Intellect {48}
+{49} | {50} | {51}
+
+Overlay Hash: {52}
+",
                 createdBy,
                 weaponClass,
                 gender,
@@ -7664,22 +7991,295 @@ Party Size: {32}",
                 gouBoost,
                 armorSkills,
                 caravanSkillsList,
-                divaSkill,
+                divaSkill == "None" ? "No Skill" : divaSkill,
+                diva.DivaSongBuffOn > 0 ? "ON" : "OFF",
+                GetDivaPrayerGems(diva),
                 guildFood,
+                GetGuildPoogieEffect(guildPoogie),
                 styleRankSkillsList,
                 inventory,
                 ammo,
                 poogieItem,
                 roadDureSkillsList,
 
-            // partnyaBagItems
+            // TODO partnyaBagItems
                 questName,
                 questObjectiveType,
                 questObjectiveQuantity,
                 questObjectiveName,
                 questCategory,
-                partySize);
+                partySize,
+                toggleModeName,
+                activeFeatureState == true ? "ON" : "OFF",
+                $"Main: {GetMainCourses(courses.Rights)}\nAdditional: {GetAdditionalCourses(courses.Rights)}",
+                halk.HalkOn > 0 ? "Active" : "Inactive",
+                halk.HalkPotEffectOn > 0 ? "ON" : "OFF",
+                halk.HalkLevel,
+                GetHalkElement(halk),
+                GetHalkStatus(halk),
+                halk.HalkIntimacy,
+                halk.HalkHealth,
+                halk.HalkAttack,
+                halk.HalkDefense,
+                halk.HalkIntellect,
+                halkSkill1,
+                halkSkill2,
+                halkSkill3,
+                overlayHash.OverlayHash
+                );
         }
+    }
+
+    public string GetMainCourses(long? rights)
+    {
+        if (rights == null || rights <= 0 || rights > 0xFFFF)
+        {
+            return "None";
+        }
+
+        // Map the first and second bytes to course rights names
+        var courseNames = MapCourseRightsToNames((long)rights, 0, typeof(CourseRightsSecondByte));
+        // Join the names with commas
+        return string.Join(", ", courseNames).Trim();
+    }
+
+    public string GetAdditionalCourses(long? rights)
+    {
+        if (rights == null || rights <= 0 || rights > 0xFFFF)
+        {
+            return "None";
+        }
+
+        // Map the first and second bytes to course rights names
+        var courseNames = MapCourseRightsToNames((long)rights, 1, typeof(CourseRightsFirstByte));
+        // Join the names with commas
+        return string.Join(", ", courseNames).Trim();
+    }
+
+    private IEnumerable<string> MapCourseRightsToNames(long rights, int bytePosition, Type enumType)
+    {
+        if ((rights < 0x0100 && bytePosition == 1) || rights == 0)
+        {
+            yield return "None";
+            yield break;
+        }
+
+        foreach (var name in Enum.GetNames(enumType))
+        {
+            if (name == "None")
+                continue;
+
+            if (enumType == typeof(CourseRightsFirstByte))
+            {
+                if (IsBitfieldContainingFlag((uint)rights, (CourseRightsFirstByte)Enum.Parse(enumType, name), (uint)CourseRightsFirstByte.All, true, bytePosition))
+                {
+                    yield return name;
+                }
+            }
+            else if (enumType == typeof(CourseRightsSecondByte))
+            {
+                if (IsBitfieldContainingFlag((uint)rights, (CourseRightsSecondByte)Enum.Parse(enumType, name), (uint)CourseRightsSecondByte.All, true, bytePosition))
+                {
+                    yield return name;
+                }
+            }
+        }
+    }
+
+    public bool IsActiveFeatureOn(long activeFeature, long weaponTypeID)
+    {
+        if (activeFeature <= 0)
+        {
+            return false;
+        }
+
+        uint weaponFlag = (uint)Math.Pow(2, weaponTypeID);
+        return IsBitfieldContainingFlag((uint)activeFeature, (ActiveFeature)weaponFlag, (uint)ActiveFeature.All);
+    }
+
+    public string GetHalkElement(QuestsHalk halk)
+    {
+        var element = "None";
+
+        if (halk.HalkFire >= 100)
+        {
+            return "Fire";
+        }
+        if (halk.HalkWater >= 100)
+        {
+            return "Water";
+        }
+        if (halk.HalkThunder >= 100)
+        {
+            return "Thunder";
+        }
+        if (halk.HalkIce >= 100)
+        {
+            return "Ice";
+        }
+        if (halk.HalkDragon >= 100)
+        {
+            return "Dragon";
+        }
+
+        return element;
+    }
+
+    public string GetHalkStatus(QuestsHalk halk)
+    {
+        var status = "None";
+
+        if (halk.HalkPoison >= 100)
+        {
+            return "Poison";
+        }
+        if (halk.HalkSleep >= 100)
+        {
+            return "Sleep";
+        }
+        if (halk.HalkParalysis >= 100)
+        {
+            return "Paralysis";
+        }
+
+        return status;
+    }
+
+    public string GetGuildPoogieEffect(QuestsGuildPoogie poogie)
+    {
+        var effect = "No Poogie";
+
+        if (poogie.GuildPoogie1Skill >= 1)
+        {
+            return EZlion.Mapper.SkillGuildPoogie.IDName[(int)poogie.GuildPoogie1Skill];
+        }
+
+        if (poogie.GuildPoogie2Skill >= 1)
+        {
+            return EZlion.Mapper.SkillGuildPoogie.IDName[(int)poogie.GuildPoogie2Skill];
+        }
+
+        if (poogie.GuildPoogie3Skill >= 1)
+        {
+            return EZlion.Mapper.SkillGuildPoogie.IDName[(int)poogie.GuildPoogie3Skill];
+        }
+
+        return effect;
+    }
+
+    public string GetGuildPoogieEffect(List<int> poogie)
+    {
+        var effect = "No Poogie";
+
+        if (poogie[0] >= 1)
+        {
+            return EZlion.Mapper.SkillGuildPoogie.IDName[(int)poogie[0]];
+        }
+
+        if (poogie[1] >= 1)
+        {
+            return EZlion.Mapper.SkillGuildPoogie.IDName[(int)poogie[1]];
+        }
+
+        if (poogie[2] >= 1)
+        {
+            return EZlion.Mapper.SkillGuildPoogie.IDName[(int)poogie[2]];
+        }
+
+        return effect;
+    }
+
+    public string GetDivaPrayerGems(QuestsDiva diva)
+    {
+        var gems = string.Empty;
+        var gemTypes = new long?[] { diva.DivaPrayerGemRedSkill, diva.DivaPrayerGemYellowSkill, diva.DivaPrayerGemGreenSkill, diva.DivaPrayerGemBlueSkill };
+        var gemLevels = new long?[] { diva.DivaPrayerGemRedLevel, diva.DivaPrayerGemYellowLevel, diva.DivaPrayerGemGreenLevel, diva.DivaPrayerGemBlueLevel };
+
+        for (var i = 0; i < gemTypes.Length; i++)
+        {
+            var skillId = gemTypes[i];
+
+            if (skillId == null)
+            {
+                continue;
+            }
+
+            if (SkillDivaPrayerGem.IDName.TryGetValue((int)skillId, out var skillName)
+                && skillName != "None" && skillName != string.Empty)
+            {
+                var gemColor = string.Empty;
+
+                switch (i){
+                    case 0:
+                        gemColor = "Red";
+                        break;
+                    case 1:
+                        gemColor = "Yellow";
+                        break;
+                    case 2:
+                        gemColor = "Green";
+                        break;
+                    case 3:
+                        gemColor = "Blue";
+                        break;
+                }
+
+                gems += $"{gemColor} 💎 {skillName} LV{gemLevels[i]}";
+                if (i != gemTypes.Length - 1)
+                {
+                    gems += "\n";
+                }
+            }
+        }
+
+        return string.IsNullOrEmpty(gems) ? "None" : gems;
+    }
+
+    /// <summary>
+    /// red yellow green blue. type level.
+    /// </summary>
+    /// <param name="diva"></param>
+    /// <returns></returns>
+    public string GetDivaPrayerGems(List<int> diva)
+    {
+        var gems = string.Empty;
+        var gemTypes = new int[] { diva[0], diva[2], diva[4], diva[6] };
+        var gemLevels = new int[] { diva[1], diva[3], diva[4], diva[5] };
+
+        for (var i = 0; i < gemTypes.Length; i++)
+        {
+            var skillId = gemTypes[i];
+
+            if (SkillDivaPrayerGem.IDName.TryGetValue((int)skillId, out var skillName)
+                && skillName != "None" && skillName != string.Empty)
+            {
+                var gemColor = string.Empty;
+
+                switch (i)
+                {
+                    case 0:
+                        gemColor = "Red";
+                        break;
+                    case 1:
+                        gemColor = "Yellow";
+                        break;
+                    case 2:
+                        gemColor = "Green";
+                        break;
+                    case 3:
+                        gemColor = "Blue";
+                        break;
+                }
+
+                gems += $"{gemColor} 💎 {skillName} LV{gemLevels[i]}";
+                if (i != gemTypes.Length - 1)
+                {
+                    gems += "\n";
+                }
+            }
+        }
+
+        return string.IsNullOrEmpty(gems) ? "None" : gems;
     }
 
     public int CalculateTotalLargeMonstersHunted() => this.RoadFatalisSlain() +
@@ -9419,7 +10019,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         }
     }
 
-    public string GetWeaponDecos => string.Format(CultureInfo.InvariantCulture, "{0}, {1}, {2}", this.GetDecoName(this.WeaponDeco1ID(), 1, true), this.GetDecoName(this.WeaponDeco2ID(), 2, true), this.GetDecoName(this.WeaponDeco3ID(), 3, true));
+    public string GetWeaponDecos => string.Format(CultureInfo.InvariantCulture, "{0}, {1}, {2}", this.GetDecoName(this.WeaponDeco1ID(), EquipmentSlot.One, true), this.GetDecoName(this.WeaponDeco2ID(), EquipmentSlot.Two, true), this.GetDecoName(this.WeaponDeco3ID(), EquipmentSlot.Three, true));
 
     public string GetArmorHeadNameForGuildCard
     {
@@ -9513,7 +10113,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
 
             if (className is "Blademaster" or "Gunner")
             {
-                return string.Format(CultureInfo.InvariantCulture, "{0} | {1} | {2}", this.GetDecoName(this.WeaponDeco1ID(), 1), this.GetDecoName(this.WeaponDeco2ID(), 2), this.GetDecoName(this.WeaponDeco3ID(), 3));
+                return string.Format(CultureInfo.InvariantCulture, "{0} | {1} | {2}", this.GetDecoName(this.WeaponDeco1ID(), EquipmentSlot.One), this.GetDecoName(this.WeaponDeco2ID(), EquipmentSlot.Two), this.GetDecoName(this.WeaponDeco3ID(), EquipmentSlot.Three));
             }
             else
             {
@@ -12486,6 +13086,79 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             return duration;
         }
     }
+
+    public string GuildFoodTimeLeft
+    {
+        get
+        {
+            if (GuildFoodStart() <= 0)
+            {
+                return "0m";
+            }
+
+            var expiry  = GuildFoodStart() + (60 * 90);
+            double secondsLeft = expiry - ServerHeartbeat();
+
+            if (secondsLeft <= 0)
+            {
+                return "0m";
+            }
+
+            return $"{Math.Truncate(secondsLeft/60.0)}m";
+        }
+    }
+
+    public string DivaSongTimeLeft
+    {
+        get
+        {
+            if (DivaSongStart() <= 0)
+            {
+                return "0m";
+            }
+
+            var expiry = DivaSongStart() + (60 * 90);
+            double secondsLeft = expiry - ServerHeartbeat();
+
+            if (secondsLeft <= 0)
+            {
+                return "0m";
+            }
+
+            return $"{Math.Truncate(secondsLeft / 60.0)}m";
+        }
+    }
+
+    public string CurrentPlayerPosition
+    {
+        get
+        {
+            var s = (Settings)Application.Current.TryFindResource("Settings");
+
+            if (s.PlayerPositionMode == "Automatic")
+            {
+                if (this.QuestID() != 0)
+                {
+                    return $"{decimal.Truncate(PlayerPositionInQuestX())}, {decimal.Truncate(PlayerPositionInQuestY())}, {decimal.Truncate(PlayerPositionInQuestZ())}";
+                }
+                else
+                {
+                    return $"{decimal.Truncate(PlayerPositionX())}, {decimal.Truncate(PlayerPositionY())}, {decimal.Truncate(PlayerPositionZ())}";
+                }
+
+            } else if (s.PlayerPositionMode == "Lobby")
+            {
+                return $"{decimal.Truncate(PlayerPositionX())}, {decimal.Truncate(PlayerPositionY())}, {decimal.Truncate(PlayerPositionZ())}";
+
+            } else if (s.PlayerPositionMode == "Quest")
+            {
+                return $"{decimal.Truncate(PlayerPositionInQuestX())}, {decimal.Truncate(PlayerPositionInQuestY())}, {decimal.Truncate(PlayerPositionInQuestZ())}";
+
+            }
+
+            return "?, ?, ?";
+        }
+    } 
 
     public int CurrentMonster1MaxHP { get; set; }
 
