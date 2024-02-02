@@ -805,3 +805,42 @@ public enum FrontierMonsterRank
     Gou = 3,
     GRank = 7,
 }
+
+public enum DivaPrayerGemType
+{
+    None = 0,
+    WindStorm = 1,
+    Agility = 2,
+    SeveringPower = 3,
+    Elegance = 4,
+    Earth = 5,
+    Heaven = 6,
+    Tempest = 7,
+    CuttingEdge = 8,
+    Striking = 9,
+    RisingBullet = 10,
+    StatusLength = 11,
+    Abnormality = 12,
+    Lethality = 13,
+    HeavyThunder = 14,
+    Unshakable = 15,
+    Ringing = 16,
+    Mobilisation = 17,
+    Protection = 18,
+    PowerfulStrikes = 19,
+    Fireproof = 20,
+    Waterproof = 21,
+    Iceproof = 22,
+    Dragonproof = 23,
+    Thunderproof = 24,
+    Immunity = 25,
+}
+
+public enum DivaPrayerGemColor
+{
+    None,
+    Red,
+    Yellow,
+    Green,
+    Blue,
+}
