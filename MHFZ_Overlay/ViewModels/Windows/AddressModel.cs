@@ -1788,7 +1788,7 @@ TreeScope.Children, condition);
             var gems = new List<int> { DivaPrayerGemRedSkill(), DivaPrayerGemRedLevel(), DivaPrayerGemYellowSkill(), DivaPrayerGemYellowLevel(), DivaPrayerGemGreenSkill(), DivaPrayerGemGreenLevel(), DivaPrayerGemBlueSkill(), DivaPrayerGemBlueLevel() };
             var guildPoogies = new List<int> { GuildPoogie1Skill(), GuildPoogie2Skill(), GuildPoogie3Skill() };
             // TODO test
-            if (!HalkPotEffectOn() && GetGuildPoogieEffect(guildPoogies) == "No Poogie" && this.GuildFoodSkill() == 0 && !HalkOn() && GetDivaPrayerGems(gems) == "None" && !IsActiveFeatureOn(GetActiveFeature(), this.WeaponType()) && !HasBitfieldFlag((uint)this.Rights(), CourseRightsFirstByte.Support) && this.DivaSkillUsesLeft() == 0 && this.StyleRank1() != 15 && this.StyleRank2() != 15)
+            if (!HalkPotEffectOn() && GetGuildPoogieEffect(guildPoogies) == "No Poogie" && this.GuildFoodSkill() == 0 && !HalkOn() && GetDivaPrayerGems(gems) == "None" && !IsActiveFeatureOn(GetActiveFeature(), this.WeaponType()) && !IsBitfieldContainingFlag((uint)this.Rights(), CourseRightsFirstByte.Support) && this.DivaSkillUsesLeft() == 0 && this.StyleRank1() != 15 && this.StyleRank2() != 15)
             {
                 return OverlayMode.TimeAttack;
             }
@@ -1828,15 +1828,15 @@ TreeScope.Children, condition);
         return 0;
     }
 
-    public bool HasBitfieldFlag(uint value, CourseRightsFirstByte flag)
+    public bool IsBitfieldContainingFlag(uint bitfield, CourseRightsFirstByte flag)
     {
-        if (value < 0x0100)
+        if (bitfield < 0x0100)
         {
             return false;
         }
 
         // Extract the first byte
-        byte firstByte = (byte)(value & 0xFF);
+        byte firstByte = (byte)(bitfield & 0xFF);
 
         // Validate
         if ((firstByte & (uint)CourseRightsFirstByte.All) != firstByte)
@@ -1851,10 +1851,10 @@ TreeScope.Children, condition);
         return rights.HasFlag(flag);
     }
 
-    public bool HasBitfieldFlag(uint value, CourseRightsSecondByte flag)
+    public bool IsBitfieldContainingFlag(uint bitfield, CourseRightsSecondByte flag)
     {
         // Extract the byte
-        byte secondByte = (byte)(value & 0xFF);
+        byte secondByte = (byte)(bitfield & 0xFF);
 
         // Validate
         if ((secondByte & (uint)CourseRightsSecondByte.All) != secondByte)
@@ -1869,19 +1869,20 @@ TreeScope.Children, condition);
         return rights.HasFlag(flag);
     }
 
-    public bool HasBitfieldFlag<T>(uint value, T flag, uint all) where T : Enum
+    public bool IsBitfieldContainingFlag<T>(uint bitfield, T flag, uint all) where T : Enum
     {
         // Validate
-        if (!IsValidBitfield(value, all))
+        if (!IsValidBitfield(bitfield, all))
         {
             return false;
         }
 
         // Convert
-        T convertedValue = (T)Enum.ToObject(typeof(T), value);
+        T convertedValue = (T)Enum.ToObject(typeof(T), bitfield);
 
-        // Check if the flag is set
-        return convertedValue.HasFlag(flag);
+
+        var isFlagSet = convertedValue.HasFlag(flag);
+        return isFlagSet;
     }
 
     public bool IsValidBitfield(uint value, uint all)
@@ -8108,14 +8109,14 @@ Overlay Hash: {52}
 
             if (enumType == typeof(CourseRightsFirstByte))
             {
-                if (HasBitfieldFlag((uint)Enum.Parse(enumType, name), (CourseRightsFirstByte)value))
+                if (IsBitfieldContainingFlag((uint)(CourseRightsFirstByte)value, (CourseRightsFirstByte)Enum.Parse(enumType, name)))
                 {
                     yield return name;
                 }
             }
             else if (enumType == typeof(CourseRightsSecondByte))
             {
-                if (HasBitfieldFlag((uint)Enum.Parse(enumType, name), (CourseRightsSecondByte)value))
+                if (IsBitfieldContainingFlag((uint)(CourseRightsSecondByte)value, (CourseRightsSecondByte)Enum.Parse(enumType, name)))
                 {
                     yield return name;
                 }
@@ -8125,8 +8126,13 @@ Overlay Hash: {52}
 
     public bool IsActiveFeatureOn(long activeFeature, long weaponTypeID)
     {
-        uint value = (uint)Math.Pow(2, weaponTypeID);
-        return HasBitfieldFlag(value, (ActiveFeature)(uint)activeFeature, (uint)ActiveFeature.All);
+        if (activeFeature <= 0)
+        {
+            return false;
+        }
+
+        uint weaponFlag = (uint)Math.Pow(2, weaponTypeID);
+        return IsBitfieldContainingFlag((uint)activeFeature, (ActiveFeature)weaponFlag, (uint)ActiveFeature.All);
     }
 
     public string GetHalkElement(QuestsHalk halk)

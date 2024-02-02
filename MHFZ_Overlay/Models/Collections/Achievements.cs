@@ -5806,5 +5806,83 @@ During the travel to your destination, the top of the Great Forest, you notice t
             Hint = "POWER!",
             }
         },
+        {
+            441, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Muse",
+            Description = string.Empty,
+            Rank = AchievementRank.Gold,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/diva_fountain.png",
+            Objective = "Use Diva Song buff in 100 quests.",
+            IsSecret = false,
+            Hint = string.Empty,
+            }
+        },
+        {
+            442, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Blessed Hunter",
+            Description = string.Empty,
+            Rank = AchievementRank.Platinum,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/diva_prayer_gems.png",
+            Objective = "Use Diva prayer gems in 777 quests.",
+            IsSecret = false,
+            Hint = string.Empty,
+            }
+        },
+        {
+            443, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Oink oink!",
+            Description = string.Empty,
+            Rank = AchievementRank.Silver,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/my_tore.png",
+            Objective = "Use guild poogie skill in 100 quests.",
+            IsSecret = false,
+            Hint = string.Empty,
+            }
+        },
+        {
+            444, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Halk's Friend",
+            Description = string.Empty,
+            Rank = AchievementRank.Gold,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/my_support.png",
+            Objective = "Level up your halk to LV3.",
+            IsSecret = false,
+            Hint = string.Empty,
+            }
+        },
+        {
+            445, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Active Hunter",
+            Description = string.Empty,
+            Rank = AchievementRank.Silver,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/small_gs.png",
+            Objective = "Use the active features of all weapon types.",
+            IsSecret = false,
+            Hint = string.Empty,
+            }
+        },
+        {
+            446, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "That's a Lotta Damage!",
+            Description = string.Empty,
+            Rank = AchievementRank.Silver,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/attack_up.png",
+            Objective = "Reach the maximum true raw in a quest.",
+            IsSecret = false,
+            Hint = string.Empty,
+            }
+        }
     });
 }
