@@ -1788,7 +1788,7 @@ TreeScope.Children, condition);
             var gems = new List<int> { DivaPrayerGemRedSkill(), DivaPrayerGemRedLevel(), DivaPrayerGemYellowSkill(), DivaPrayerGemYellowLevel(), DivaPrayerGemGreenSkill(), DivaPrayerGemGreenLevel(), DivaPrayerGemBlueSkill(), DivaPrayerGemBlueLevel() };
             var guildPoogies = new List<int> { GuildPoogie1Skill(), GuildPoogie2Skill(), GuildPoogie3Skill() };
             // TODO test
-            if (!HalkPotEffectOn() && GetGuildPoogieEffect(guildPoogies) == "No Poogie" && this.GuildFoodSkill() == 0 && !HalkOn() && GetDivaPrayerGems(gems) == "None" && !IsActiveFeatureOn(GetActiveFeature(), this.WeaponType()) && !IsBitfieldContainingFlag((uint)this.Rights(), CourseRightsFirstByte.Support) && this.DivaSkillUsesLeft() == 0 && this.StyleRank1() != 15 && this.StyleRank2() != 15)
+            if (!HalkPotEffectOn() && GetGuildPoogieEffect(guildPoogies) == "No Poogie" && this.GuildFoodSkill() == 0 && !HalkOn() && GetDivaPrayerGems(gems) == "None" && !IsActiveFeatureOn(GetActiveFeature(), this.WeaponType()) && !IsBitfieldContainingFlag((uint)this.Rights(), CourseRightsFirstByte.Support, (uint)CourseRightsFirstByte.All, true, 1) && this.DivaSkillUsesLeft() == 0 && this.StyleRank1() != 15 && this.StyleRank2() != 15)
             {
                 return OverlayMode.TimeAttack;
             }
@@ -1828,58 +1828,18 @@ TreeScope.Children, condition);
         return 0;
     }
 
-    public bool IsBitfieldContainingFlag(uint bitfield, CourseRightsFirstByte flag)
+    public bool IsBitfieldContainingFlag<T>(uint bitfield, T flag, uint all, bool extractByte = false, int bytePosition = 0) where T : Enum
     {
-        if (bitfield < 0x0100)
-        {
-            return false;
-        }
-
-        // Extract the first byte
-        byte firstByte = (byte)(bitfield & 0xFF);
+        byte value = extractByte ? (byte)(((uint)bitfield >> (bytePosition * 8)) & 0xFF) : (byte)bitfield;
 
         // Validate
-        if ((firstByte & (uint)CourseRightsFirstByte.All) != firstByte)
-        {
-            return false;
-        }
-
-        // Convert the first byte to CourseRightsFirstByte
-        CourseRightsFirstByte rights = (CourseRightsFirstByte)firstByte;
-
-        // Check if the flag is set
-        return rights.HasFlag(flag);
-    }
-
-    public bool IsBitfieldContainingFlag(uint bitfield, CourseRightsSecondByte flag)
-    {
-        // Extract the byte
-        byte secondByte = (byte)(bitfield & 0xFF);
-
-        // Validate
-        if ((secondByte & (uint)CourseRightsSecondByte.All) != secondByte)
-        {
-            return false;
-        }
-
-        // Convert the first byte to CourseRightsFirstByte
-        CourseRightsSecondByte rights = (CourseRightsSecondByte)secondByte;
-
-        // Check if the flag is set
-        return rights.HasFlag(flag);
-    }
-
-    public bool IsBitfieldContainingFlag<T>(uint bitfield, T flag, uint all) where T : Enum
-    {
-        // Validate
-        if (!IsValidBitfield(bitfield, all))
+        if (!IsValidBitfield(value, all))
         {
             return false;
         }
 
         // Convert
-        T convertedValue = (T)Enum.ToObject(typeof(T), bitfield);
-
+        T convertedValue = (T)Enum.ToObject(typeof(T), value);
 
         var isFlagSet = convertedValue.HasFlag(flag);
         return isFlagSet;
@@ -2662,6 +2622,11 @@ TreeScope.Children, condition);
     /// Whether the buff is still active even if it expired inside quest but after quest start.
     /// </summary>
     public bool DivaSongActive { get; set; }
+
+    /// <summary>
+    /// Whether the buff is still active even if it expired inside quest but after quest start.
+    /// </summary>
+    public bool GuildFoodActive { get; set; }
 
     public bool GuildFoodEnding
     {
@@ -8026,7 +7991,7 @@ Overlay Hash: {52}
                 gouBoost,
                 armorSkills,
                 caravanSkillsList,
-                divaSkill,
+                divaSkill == "None" ? "No Skill" : divaSkill,
                 diva.DivaSongBuffOn > 0 ? "ON" : "OFF",
                 GetDivaPrayerGems(diva),
                 guildFood,
@@ -8099,9 +8064,6 @@ Overlay Hash: {52}
             yield break;
         }
 
-        // Extract the required byte
-        byte value = (byte)(((ulong)rights >> (bytePosition * 8)) & 0xFF);
-
         foreach (var name in Enum.GetNames(enumType))
         {
             if (name == "None")
@@ -8109,14 +8071,14 @@ Overlay Hash: {52}
 
             if (enumType == typeof(CourseRightsFirstByte))
             {
-                if (IsBitfieldContainingFlag((uint)(CourseRightsFirstByte)value, (CourseRightsFirstByte)Enum.Parse(enumType, name)))
+                if (IsBitfieldContainingFlag((uint)rights, (CourseRightsFirstByte)Enum.Parse(enumType, name), (uint)CourseRightsFirstByte.All, true, bytePosition))
                 {
                     yield return name;
                 }
             }
             else if (enumType == typeof(CourseRightsSecondByte))
             {
-                if (IsBitfieldContainingFlag((uint)(CourseRightsSecondByte)value, (CourseRightsSecondByte)Enum.Parse(enumType, name)))
+                if (IsBitfieldContainingFlag((uint)rights, (CourseRightsSecondByte)Enum.Parse(enumType, name), (uint)CourseRightsSecondByte.All, true, bytePosition))
                 {
                     yield return name;
                 }

@@ -1308,7 +1308,7 @@ The process may take some time, as the program attempts to download from GitHub 
         this.DataLoader.Model.ShowSessionTimeInfo = v && s.SessionTimeShown;
         this.DataLoader.Model.ShowPlayerPositionInfo = v && s.PlayerPositionShown;
         this.DataLoader.Model.ShowDivaSongTimer = v && s.DivaSongTimerShown && this.DataLoader.Model.DivaSongActive;
-        this.DataLoader.Model.ShowGuildFoodTimer = v && s.GuildFoodTimerShown && this.DataLoader.Model.GuildFoodSkill() > 0;
+        this.DataLoader.Model.ShowGuildFoodTimer = v && s.GuildFoodTimerShown && this.DataLoader.Model.GuildFoodActive;
 
         this.DataLoader.Model.ShowMap = v && s.EnableMap;
         this.DataLoader.Model.ShowFrameCounter = v && s.FrameCounterShown;
@@ -1946,7 +1946,7 @@ The process may take some time, as the program attempts to download from GitHub 
                 this.CalculatedQuestDataForDisplay = true;
                 this.UpdateQuestDataForDisplay();
                 this.DataLoader.Model.DivaSongActive = this.DataLoader.Model.DivaSongEnded ? false : true;
-                //this.DataLoader.Model.GuildFoodActive = this.DataLoader.Model.DivaSongEnded ? false : true;
+                this.DataLoader.Model.GuildFoodActive = this.DataLoader.Model.GuildFoodEnded ? false : true;
             }
         }
 
@@ -1962,7 +1962,7 @@ The process may take some time, as the program attempts to download from GitHub 
             this.CalculatedQuestDataForDisplay = false;
             // TODO test
             this.DataLoader.Model.DivaSongActive = this.DataLoader.Model.DivaSongEnded ? false : true;
-            //this.DataLoader.Model.GuildFoodActive = this.DataLoader.Model.DivaSongEnded ? false : true;
+            this.DataLoader.Model.GuildFoodActive = this.DataLoader.Model.GuildFoodEnded ? false : true;
             return Task.CompletedTask;
         }
         else if (!this.DataLoader.Model.LoadedItemsAtQuestStart && this.DataLoader.Model.QuestState() == 0 && this.DataLoader.Model.QuestID() != 0)

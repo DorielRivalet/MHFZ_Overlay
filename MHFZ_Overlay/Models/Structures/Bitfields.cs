@@ -393,7 +393,7 @@ public enum GauntletBoost : uint
 }
 
 /// <summary>
-/// Course Rights first byte.
+/// Course Rights first byte. Byte position 1.
 /// </summary>
 [Flags]
 [JsonConverter(typeof(JsonStringEnumConverter))]
@@ -416,7 +416,7 @@ public enum CourseRightsFirstByte : uint
 }
 
 /// <summary>
-/// Course Rights second byte.
+/// Course Rights second byte.  Byte position 0.
 /// </summary>
 [Flags]
 [JsonConverter(typeof(JsonStringEnumConverter))]
