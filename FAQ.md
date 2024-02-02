@@ -54,8 +54,8 @@ Use the preset option found in the General tab. Keep reading if you want to know
 
 - Speedrun Mode Categories: Enable the required settings in the Quest Logs section, disable **everything** else, including Quest Pace Color (Monster Icon, Quest Timer + Percentage, KBM Layout, Personal Best and Discord Rich Presence optional)
 
-- Time Attack: Do not use diva skills.
-- Freestyle: Use diva skills with/without Secret Technique Style Rank Skill.
+- Time Attack: Do not use halk, guild poogie, active feature, guild food, diva skill and diva prayer gem.
+- Freestyle: Use any of the above or everything else with/without Secret Technique Style Rank Skill.
 
 **Important**: It is recommended to make a backup of the `MHFZ_Overlay.sqlite` file periodically. The file is located inside the database folder, which is inside your game folder. Don't lose your speedrun records!
 
@@ -65,7 +65,7 @@ Use the preset option found in the General tab. Keep reading if you want to know
 
 ![Discord Rich Presence](./demo/discord11.png)
 
-~~Congrats, now you won't be accused of cheating~~
+The current speedrun categories are pending an overhaul. Zen mode is not counted as a speedrun mode.
 
 ## How to Record Videos with the Overlay?
 
@@ -241,6 +241,8 @@ If DS4Windows does not work for you, you can search for alternatives, but it is 
 |Personal Best Attempts|✔️|❌|❌|
 |Completions Counter|✔️|❌|❌|
 |Run Pace|✔️ Color|❌|❌|
+|Quest Pace Graph|✔️|❌|❌|
+|Player Coordinates|✔️|❌|❌|
 |Settings Save on Update|✔️|❌|❌|
 |Save Stats to File|✔️|❌|❌|
 |Copy Stats to Clipboard|✔️|❌|❌|
@@ -249,9 +251,9 @@ If DS4Windows does not work for you, you can search for alternatives, but it is 
 |Database Backups|✔️ Local|❌|❌|
 |Past Quests Info|✔️|❌|❌|
 |Achievements|✔️|❌|❌|
-|Show Quest Change|✔️|❌|❌
+|Show Quest Change|✔️|❌|❌|
 |Show Area Change|✔️|❌|❌|
-|KBM Layout|✔️|❌|❌
+|KBM Layout|✔️|❌|❌|
 |Gamepad Layout|✔️|❌|❌|
 |Input Logs|✔️|❌|❌|
 |Quest ID|✔️|❌|❌|
@@ -270,7 +272,7 @@ If DS4Windows does not work for you, you can search for alternatives, but it is 
 |Logging|✔️|❌|❌|
 |Logging Options|✔️|❌|❌|
 |Color Options|✔️|✔️|✔️|
-|Buff Icons |❌|❌|❌
+|Buff Icons |✔️|❌|❌|
 |Debuff Icons |❌|❌|❌|
 |Hub Activities|❌|❌|❌|
 |Settings Search|❌|❌|❌|
@@ -301,7 +303,7 @@ If DS4Windows does not work for you, you can search for alternatives, but it is 
 
 As an added bonus:
 
-|    | mhf-z overlay v0.25.0 (DorielRivalet) | HunterPie v2.8.0 (HunterPie) |
+|    | mhf-z overlay v0.34.0 (DorielRivalet) | HunterPie v2.8.0 (HunterPie) |
 |:----------|:---------:|:---------:|
 |Discord Rich Presence|✔️|✔️|
 |Rich Presence Quest Name|✔️|❌|
@@ -333,6 +335,8 @@ As an added bonus:
 |Personal Best Attempts|✔️|❌|
 |Completions Counter|✔️|❌|
 |Run Pace|✔️ Color|❌|
+|Quest Pace Graph|✔️|❌|
+|Player Coordinates|✔️|❌|
 |Settings Save on Update|✔️|✔️|
 |Save Stats to File|✔️|❌|
 |Copy Stats to Clipboard|✔️|❌|
@@ -362,7 +366,7 @@ As an added bonus:
 |Logging|✔️ File|✔️ Console|
 |Logging Options|✔️|❌|
 |Color Options|✔️|❌|
-|Buff Icons |❌|✔️|
+|Buff Icons |✔️|✔️|
 |Debuff Icons |❌|✔️|
 |Hub Activities|❌|✔️|
 |Settings Search|❌|✔️ by Section|
