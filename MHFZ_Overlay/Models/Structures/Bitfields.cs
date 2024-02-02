@@ -416,6 +416,25 @@ public enum CourseRightsFirstByte : uint
 }
 
 /// <summary>
+/// Course Rights second byte.
+/// </summary>
+[Flags]
+[JsonConverter(typeof(JsonStringEnumConverter))]
+public enum CourseRightsSecondByte : uint
+{
+    [DefaultValue(None)]
+    None = 0,
+    UNK1 = 1,
+    Trial = 2,
+    HunterLife = 4,
+    Extra = 8,
+    UNK2 = 16,
+    UNK3 = 32,
+    Premium = 64,
+    All = UNK1 | Trial | HunterLife | Extra | UNK2 | UNK3 | Premium,
+}
+
+/// <summary>
 /// TODO Run filters by buff.
 /// </summary>
 [Flags]

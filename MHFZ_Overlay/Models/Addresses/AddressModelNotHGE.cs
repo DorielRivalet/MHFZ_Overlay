@@ -461,7 +461,7 @@ public sealed class AddressModelNotHGE : AddressModel
     public override int HalkDefense() => this.M.ReadByte("mhfo.dll+6101988");
 
     /// <inheritdoc/>
-    public override int HalkIntelligence() => this.M.ReadByte("mhfo.dll+6101989");
+    public override int HalkIntellect() => this.M.ReadByte("mhfo.dll+6101989");
 
     /// <inheritdoc/>
     public override int HalkSkill1() => this.M.ReadByte("mhfo.dll+610198A");

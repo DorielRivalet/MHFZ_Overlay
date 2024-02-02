@@ -11,9 +11,9 @@ public sealed class QuestsHalk
 {
     public long? QuestsHalkID { get; set; }
 
-    public bool? HalkOn { get; set; }
+    public long? HalkOn { get; set; }
 
-    public bool? HalkPotEffectOn { get; set; }
+    public long? HalkPotEffectOn { get; set; }
 
     public long? HalkFullness { get; set; }
 
@@ -27,7 +27,7 @@ public sealed class QuestsHalk
 
     public long? HalkDefense { get; set; }
 
-    public long? HalkIntelligence { get; set; }
+    public long? HalkIntellect { get; set; }
 
     public long? HalkSkill1 { get; set; }
 

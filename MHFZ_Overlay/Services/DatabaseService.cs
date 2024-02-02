@@ -88,6 +88,15 @@ public sealed class DatabaseService
 
     public HashSet<QuestsToggleMode> AllQuestsToggleMode { get; set; }
 
+    public HashSet<QuestsActiveFeature> AllQuestsActiveFeature { get; set; }
+
+    public HashSet<QuestsHalk> AllQuestsHalk { get; set; }
+
+    public HashSet<QuestsDiva> AllQuestsDiva { get; set; }
+
+    public HashSet<QuestsGuildPoogie> AllQuestsGuildPoogie { get; set; }
+
+
     public TimeSpan SnackbarTimeOut { get; set; } = TimeSpan.FromSeconds(5);
 
     private string? connectionString { get; set; }
@@ -1863,7 +1872,7 @@ public sealed class DatabaseService
 
                     using (var cmd = new SQLiteCommand(sql, conn))
                     {
-                        var activeFeature = GetActiveFeature(model);
+                        var activeFeature = dataLoader.Model.GetActiveFeature();
 
                         cmd.Parameters.AddWithValue("@ActiveFeature", activeFeature);
                         cmd.Parameters.AddWithValue("@RunID", runID);
@@ -1904,7 +1913,7 @@ public sealed class DatabaseService
                         HalkHealth,
                         HalkAttack,
                         HalkDefense,
-                        HalkIntelligence,
+                        HalkIntellect,
                         HalkSkill1,
                         HalkSkill2,
                         HalkSkill3,
@@ -1927,7 +1936,7 @@ public sealed class DatabaseService
                         @HalkHealth,
                         @HalkAttack,
                         @HalkDefense,
-                        @HalkIntelligence,
+                        @HalkIntellect,
                         @HalkSkill1,
                         @HalkSkill2,
                         @HalkSkill3,
@@ -1953,7 +1962,7 @@ public sealed class DatabaseService
                         cmd.Parameters.AddWithValue("@HalkHealth", model.HalkHealth());
                         cmd.Parameters.AddWithValue("@HalkAttack", model.HalkAttack());
                         cmd.Parameters.AddWithValue("@HalkDefense", model.HalkDefense());
-                        cmd.Parameters.AddWithValue("@HalkIntelligence", model.HalkIntelligence());
+                        cmd.Parameters.AddWithValue("@HalkIntellect", model.HalkIntellect());
                         cmd.Parameters.AddWithValue("@HalkSkill1", model.HalkSkill1());
                         cmd.Parameters.AddWithValue("@HalkSkill2", model.HalkSkill2());
                         cmd.Parameters.AddWithValue("@HalkSkill3", model.HalkSkill3());
@@ -1999,7 +2008,8 @@ public sealed class DatabaseService
 
                     using (var cmd = new SQLiteCommand(sql, conn))
                     {
-                        cmd.Parameters.AddWithValue("@DivaSongBuffOn", !model.DivaSongEnded);
+                        // TODO test
+                        cmd.Parameters.AddWithValue("@DivaSongBuffOn", model.DivaSongActive);
                         cmd.Parameters.AddWithValue("@DivaPrayerGemRedSkill", model.DivaPrayerGemRedSkill());
                         cmd.Parameters.AddWithValue("@DivaPrayerGemRedLevel", model.DivaPrayerGemRedLevel());
                         cmd.Parameters.AddWithValue("@DivaPrayerGemYellowSkill", model.DivaPrayerGemYellowSkill());
@@ -2060,7 +2070,7 @@ public sealed class DatabaseService
                     var cuffSlot2 = model.Cuff2ID();
                     var styleID = model.WeaponStyle();
                     var weaponIconID = weaponTypeID;
-                    var divaSkillID = model.DivaSkill();
+                    var divaSkillID = model.DivaSkillUsesLeft() > 0 ? model.DivaSkill() : 0;
                     var guildFoodID = model.GuildFoodSkill();
                     var poogieItemID = model.PoogieItemUseID();
 
@@ -2465,6 +2475,10 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
         var lastGachaCard = this.GetLastGachaCard(conn);
         var lastPlayerInventory = this.GetLastPlayerInventory(conn);
         var lastQuestsToggleMode = this.GetLastQuestsToggleMode(conn);
+        var lastQuestsActiveFeature = this.GetLastQuestsActiveFeature(conn);
+        var lastQuestsDiva = this.GetLastQuestsDiva(conn);
+        var lastQuestsHalk = this.GetLastQuestsHalk(conn);
+        var lastQuestsGuildPoogie = this.GetLastQuestsGuildPoogie(conn);
 
         if (lastQuest.RunID != 0)
         {
@@ -2600,6 +2614,42 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
                 Logger.Warn(CultureInfo.InvariantCulture, "Last quests toggle mode already found in hash set");
             }
         }
+
+        if (lastQuestsHalk.QuestsHalkID != 0)
+        {
+            var questsHalkAdded = this.AllQuestsHalk.Add(lastQuestsHalk);
+            if (!questsHalkAdded)
+            {
+                Logger.Warn(CultureInfo.InvariantCulture, "Last quests halk already found in hash set");
+            }
+        }
+
+        if (lastQuestsDiva.QuestsDivaID != 0)
+        {
+            var questsDivaAdded = this.AllQuestsDiva.Add(lastQuestsDiva);
+            if (!questsDivaAdded)
+            {
+                Logger.Warn(CultureInfo.InvariantCulture, "Last quests diva already found in hash set");
+            }
+        }
+
+        if (lastQuestsActiveFeature.QuestsActiveFeatureID != 0)
+        {
+            var questsActiveFeatureAdded = this.AllQuestsActiveFeature.Add(lastQuestsActiveFeature);
+            if (!questsActiveFeatureAdded)
+            {
+                Logger.Warn(CultureInfo.InvariantCulture, "Last quests active feature already found in hash set");
+            }
+        }
+
+        if (lastQuestsGuildPoogie.QuestsGuildPoogieID != 0)
+        {
+            var questsGuildPoogieAdded = this.AllQuestsGuildPoogie.Add(lastQuestsGuildPoogie);
+            if (!questsGuildPoogieAdded)
+            {
+                Logger.Warn(CultureInfo.InvariantCulture, "Last quests guild poogie already found in hash set");
+            }
+        }
     }
 
     private void CreateDatabaseTriggers(SQLiteConnection conn)
@@ -2623,6 +2673,7 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
                 // bingo
                 // mezfesminigames
                 // mezfes
+                // run buffs tables: prayer gem, guild poogie, halk, active feature, etc.
                 using (var cmd = new SQLiteCommand(conn))
                 {
                     cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_audit_deletion
@@ -3336,27 +3387,6 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
         }
 
         return overlayHash;
-    }
-
-    /// <summary>
-    /// TODO needs real testing
-    /// </summary>
-    /// <param name="model"></param>
-    /// <returns></returns>
-    public int GetActiveFeature(AddressModel model)
-    {
-        var activeFeatures = new[] { model.ActiveFeature1(), model.ActiveFeature2(), model.ActiveFeature3() };
-
-        foreach (var activeFeature in activeFeatures)
-        {
-            if (model.IsValidBitfield((uint)activeFeature, (uint)ActiveFeature.All))
-            {
-                return activeFeature;
-            }
-        }
-
-        Logger.Warn("Active feature not found: {0} {1} {2}", activeFeatures[0], activeFeatures[1], activeFeatures[2]);
-        return 0;
     }
 
     /// <summary>
@@ -5655,7 +5685,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                 HalkHealth INTEGER NOT NULL DEFAULT 0,
                 HalkAttack INTEGER NOT NULL DEFAULT 0,
                 HalkDefense INTEGER NOT NULL DEFAULT 0,
-                HalkIntelligence INTEGER NOT NULL DEFAULT 0,
+                HalkIntellect INTEGER NOT NULL DEFAULT 0,
                 HalkSkill1 INTEGER NOT NULL DEFAULT 0,
                 HalkSkill2 INTEGER NOT NULL DEFAULT 0,
                 HalkSkill3 INTEGER NOT NULL DEFAULT 0,
@@ -7221,6 +7251,365 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
         return quest;
     }
 
+    public QuestsDiva GetDiva(long runID)
+    {
+        QuestsDiva questsDiva = new();
+        if (string.IsNullOrEmpty(this.dataSource))
+        {
+            Logger.Warn(CultureInfo.InvariantCulture, "Cannot get diva. dataSource: {0}", this.dataSource);
+            return questsDiva;
+        }
+
+        // Use a SQL query to retrieve the Quest for the specific RunID from the database
+        using (var conn = new SQLiteConnection(this.dataSource))
+        {
+            conn.Open();
+            using (var transaction = conn.BeginTransaction())
+            {
+                try
+                {
+                    using (var cmd = new SQLiteCommand("SELECT * FROM QuestsDiva WHERE RunID = @runID", conn))
+                    {
+                        cmd.Parameters.AddWithValue("@runID", runID);
+
+                        using (var reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                questsDiva = new QuestsDiva
+                                {
+                                    QuestsDivaID = long.Parse(reader["QuestsDivaID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    DivaSongBuffOn = long.Parse(reader["DivaSongBuffOn"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    DivaPrayerGemRedSkill = long.Parse(reader["DivaPrayerGemRedSkill"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    DivaPrayerGemRedLevel = long.Parse(reader["DivaPrayerGemRedLevel"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    DivaPrayerGemYellowSkill = long.Parse(reader["DivaPrayerGemYellowSkill"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    DivaPrayerGemYellowLevel = long.Parse(reader["DivaPrayerGemYellowLevel"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    DivaPrayerGemGreenSkill = long.Parse(reader["DivaPrayerGemGreenSkill"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    DivaPrayerGemGreenLevel = long.Parse(reader["DivaPrayerGemGreenLevel"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    DivaPrayerGemBlueSkill = long.Parse(reader["DivaPrayerGemBlueSkill"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    DivaPrayerGemBlueLevel = long.Parse(reader["DivaPrayerGemBlueLevel"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    RunID = long.Parse(reader["RunID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                };
+                            }
+                        }
+                    }
+
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    HandleError(transaction, ex);
+                }
+            }
+        }
+
+        return questsDiva;
+    }
+
+    public QuestsActiveFeature GetActiveFeature(long runID)
+    {
+        QuestsActiveFeature data = new();
+        if (string.IsNullOrEmpty(this.dataSource))
+        {
+            Logger.Warn(CultureInfo.InvariantCulture, "Cannot get active feature. dataSource: {0}", this.dataSource);
+            return data;
+        }
+
+        // Use a SQL query to retrieve the Quest for the specific RunID from the database
+        using (var conn = new SQLiteConnection(this.dataSource))
+        {
+            conn.Open();
+            using (var transaction = conn.BeginTransaction())
+            {
+                try
+                {
+                    using (var cmd = new SQLiteCommand("SELECT * FROM QuestsActiveFeature WHERE RunID = @runID", conn))
+                    {
+                        cmd.Parameters.AddWithValue("@runID", runID);
+
+                        using (var reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                data = new QuestsActiveFeature
+                                {
+                                    QuestsActiveFeatureID = long.Parse(reader["QuestsActiveFeatureID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    ActiveFeature = long.Parse(reader["ActiveFeature"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    RunID = long.Parse(reader["RunID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                };
+                            }
+                        }
+                    }
+
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    HandleError(transaction, ex);
+                }
+            }
+        }
+
+        return data;
+    }
+
+    public QuestsCourse GetCourses(long runID)
+    {
+        QuestsCourse data = new();
+        if (string.IsNullOrEmpty(this.dataSource))
+        {
+            Logger.Warn(CultureInfo.InvariantCulture, "Cannot get courses. dataSource: {0}", this.dataSource);
+            return data;
+        }
+
+        // Use a SQL query to retrieve the Quest for the specific RunID from the database
+        using (var conn = new SQLiteConnection(this.dataSource))
+        {
+            conn.Open();
+            using (var transaction = conn.BeginTransaction())
+            {
+                try
+                {
+                    using (var cmd = new SQLiteCommand("SELECT * FROM QuestsCourse WHERE RunID = @runID", conn))
+                    {
+                        cmd.Parameters.AddWithValue("@runID", runID);
+
+                        using (var reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                data = new QuestsCourse
+                                {
+                                    QuestsCourseID = long.Parse(reader["QuestsCourseID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    Rights = long.Parse(reader["Rights"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    RunID = long.Parse(reader["RunID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                };
+                            }
+                        }
+                    }
+
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    HandleError(transaction, ex);
+                }
+            }
+        }
+
+        return data;
+    }
+
+    public QuestsGuildPoogie GetGuildPoogie(long runID)
+    {
+        QuestsGuildPoogie data = new();
+        if (string.IsNullOrEmpty(this.dataSource))
+        {
+            Logger.Warn(CultureInfo.InvariantCulture, "Cannot get guild poogie. dataSource: {0}", this.dataSource);
+            return data;
+        }
+
+        // Use a SQL query to retrieve the Quest for the specific RunID from the database
+        using (var conn = new SQLiteConnection(this.dataSource))
+        {
+            conn.Open();
+            using (var transaction = conn.BeginTransaction())
+            {
+                try
+                {
+                    using (var cmd = new SQLiteCommand("SELECT * FROM QuestsGuildPoogie WHERE RunID = @runID", conn))
+                    {
+                        cmd.Parameters.AddWithValue("@runID", runID);
+
+                        using (var reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                data = new QuestsGuildPoogie
+                                {
+                                    QuestsGuildPoogieID = long.Parse(reader["QuestsGuildPoogieID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    GuildPoogie1Skill = long.Parse(reader["GuildPoogie1Skill"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    GuildPoogie2Skill = long.Parse(reader["GuildPoogie2Skill"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    GuildPoogie3Skill = long.Parse(reader["GuildPoogie3Skill"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    RunID = long.Parse(reader["RunID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                };
+                            }
+                        }
+                    }
+
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    HandleError(transaction, ex);
+                }
+            }
+        }
+
+        return data;
+    }
+
+    public QuestsHalk GetHalk(long runID)
+    {
+        QuestsHalk data = new();
+        if (string.IsNullOrEmpty(this.dataSource))
+        {
+            Logger.Warn(CultureInfo.InvariantCulture, "Cannot get halk. dataSource: {0}", this.dataSource);
+            return data;
+        }
+
+        // Use a SQL query to retrieve the Quest for the specific RunID from the database
+        using (var conn = new SQLiteConnection(this.dataSource))
+        {
+            conn.Open();
+            using (var transaction = conn.BeginTransaction())
+            {
+                try
+                {
+                    using (var cmd = new SQLiteCommand("SELECT * FROM QuestsHalk WHERE RunID = @runID", conn))
+                    {
+                        cmd.Parameters.AddWithValue("@runID", runID);
+
+                        using (var reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                data = new QuestsHalk
+                                {
+                                    QuestsHalkID = long.Parse(reader["QuestsHalkID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    HalkOn = long.Parse(reader["HalkOn"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    HalkPotEffectOn = long.Parse(reader["HalkPotEffectOn"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    HalkFullness = long.Parse(reader["HalkFullness"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    HalkLevel = long.Parse(reader["HalkLevel"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    HalkIntimacy = long.Parse(reader["HalkIntimacy"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    HalkHealth = long.Parse(reader["HalkHealth"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    HalkAttack = long.Parse(reader["HalkAttack"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    HalkDefense = long.Parse(reader["HalkDefense"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    HalkIntellect = long.Parse(reader["HalkIntellect"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    HalkSkill1 = long.Parse(reader["HalkSkill1"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    HalkSkill2 = long.Parse(reader["HalkSkill2"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    HalkSkill3 = long.Parse(reader["HalkSkill3"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    HalkElementNone = long.Parse(reader["HalkElementNone"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    HalkFire = long.Parse(reader["HalkFire"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    HalkThunder = long.Parse(reader["HalkThunder"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    HalkWater = long.Parse(reader["HalkWater"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    HalkIce = long.Parse(reader["HalkIce"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    HalkDragon = long.Parse(reader["HalkDragon"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    HalkSleep = long.Parse(reader["HalkSleep"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    HalkParalysis = long.Parse(reader["HalkParalysis"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    HalkPoison = long.Parse(reader["HalkPoison"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    RunID = long.Parse(reader["RunID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                };
+                            }
+                        }
+                    }
+
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    HandleError(transaction, ex);
+                }
+            }
+        }
+
+        return data;
+    }
+
+    public QuestsToggleMode GetQuestToggleMode(long runID)
+    {
+        QuestsToggleMode data = new();
+        if (string.IsNullOrEmpty(this.dataSource))
+        {
+            Logger.Warn(CultureInfo.InvariantCulture, "Cannot get quest toggle mode. dataSource: {0}", this.dataSource);
+            return data;
+        }
+
+        // Use a SQL query to retrieve the Quest for the specific RunID from the database
+        using (var conn = new SQLiteConnection(this.dataSource))
+        {
+            conn.Open();
+            using (var transaction = conn.BeginTransaction())
+            {
+                try
+                {
+                    using (var cmd = new SQLiteCommand("SELECT * FROM QuestsToggleMode WHERE RunID = @runID", conn))
+                    {
+                        cmd.Parameters.AddWithValue("@runID", runID);
+
+                        using (var reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                data = new QuestsToggleMode
+                                {
+                                    QuestsToggleModeID = long.Parse(reader["QuestsToggleModeID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    QuestToggleMode = long.Parse(reader["QuestToggleMode"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    RunID = long.Parse(reader["RunID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                };
+                            }
+                        }
+                    }
+
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    HandleError(transaction, ex);
+                }
+            }
+        }
+
+        return data;
+    }
+
+    public QuestsOverlayHash GetOverlayHash(long runID)
+    {
+        QuestsOverlayHash data = new();
+        if (string.IsNullOrEmpty(this.dataSource))
+        {
+            Logger.Warn(CultureInfo.InvariantCulture, "Cannot get overlay hash. dataSource: {0}", this.dataSource);
+            return data;
+        }
+
+        // Use a SQL query to retrieve the Quest for the specific RunID from the database
+        using (var conn = new SQLiteConnection(this.dataSource))
+        {
+            conn.Open();
+            using (var transaction = conn.BeginTransaction())
+            {
+                try
+                {
+                    using (var cmd = new SQLiteCommand("SELECT * FROM QuestsOverlayHash WHERE RunID = @runID", conn))
+                    {
+                        cmd.Parameters.AddWithValue("@runID", runID);
+
+                        using (var reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                data = new QuestsOverlayHash
+                                {
+                                    QuestsOverlayHashID = long.Parse(reader["QuestsOverlayHashID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    OverlayHash = reader["OverlayHash"]?.ToString() ?? "0",
+                                    RunID = long.Parse(reader["RunID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                };
+                            }
+                        }
+                    }
+
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    HandleError(transaction, ex);
+                }
+            }
+        }
+
+        return data;
+    }
+
     private Quest GetLastQuest(SQLiteConnection conn)
     {
         Quest quest = new ();
@@ -8035,6 +8424,172 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
         return last;
     }
 
+    private QuestsActiveFeature GetLastQuestsActiveFeature(SQLiteConnection conn)
+    {
+        QuestsActiveFeature last = new();
+        using (var transaction = conn.BeginTransaction())
+        {
+            try
+            {
+                using (var cmd = new SQLiteCommand("SELECT * FROM QuestsActiveFeature ORDER BY QuestsActiveFeatureID DESC LIMIT 1", conn))
+                {
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            last = new QuestsActiveFeature
+                            {
+                                QuestsActiveFeatureID = long.Parse(reader["QuestsActiveFeatureID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                ActiveFeature = long.Parse(reader["ActiveFeature"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                RunID = long.Parse(reader["RunID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                            };
+                        }
+                    }
+                }
+
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                HandleError(transaction, ex);
+            }
+        }
+
+        return last;
+    }
+
+    private QuestsGuildPoogie GetLastQuestsGuildPoogie(SQLiteConnection conn)
+    {
+        QuestsGuildPoogie last = new();
+        using (var transaction = conn.BeginTransaction())
+        {
+            try
+            {
+                using (var cmd = new SQLiteCommand("SELECT * FROM QuestsGuildPoogie ORDER BY QuestsGuildPoogieID DESC LIMIT 1", conn))
+                {
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            last = new QuestsGuildPoogie
+                            {
+                                QuestsGuildPoogieID = long.Parse(reader["QuestsGuildPoogieID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                GuildPoogie1Skill = long.Parse(reader["GuildPoogie1Skill"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                GuildPoogie2Skill = long.Parse(reader["GuildPoogie2Skill"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                GuildPoogie3Skill = long.Parse(reader["GuildPoogie3Skill"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                RunID = long.Parse(reader["RunID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                            };
+                        }
+                    }
+                }
+
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                HandleError(transaction, ex);
+            }
+        }
+
+        return last;
+    }
+
+    private QuestsDiva GetLastQuestsDiva(SQLiteConnection conn)
+    {
+        QuestsDiva last = new();
+        using (var transaction = conn.BeginTransaction())
+        {
+            try
+            {
+                using (var cmd = new SQLiteCommand("SELECT * FROM QuestsDiva ORDER BY QuestsDivaID DESC LIMIT 1", conn))
+                {
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            last = new QuestsDiva
+                            {
+                                QuestsDivaID = long.Parse(reader["QuestsDivaID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                DivaSongBuffOn = long.Parse(reader["DivaSongBuffOn"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                DivaPrayerGemRedSkill = long.Parse(reader["DivaPrayerGemRedSkill"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                DivaPrayerGemRedLevel = long.Parse(reader["DivaPrayerGemRedLevel"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                DivaPrayerGemYellowSkill = long.Parse(reader["DivaPrayerGemYellowSkill"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                DivaPrayerGemYellowLevel = long.Parse(reader["DivaPrayerGemYellowLevel"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                DivaPrayerGemGreenSkill = long.Parse(reader["DivaPrayerGemGreenSkill"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                DivaPrayerGemGreenLevel = long.Parse(reader["DivaPrayerGemGreenLevel"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                DivaPrayerGemBlueSkill = long.Parse(reader["DivaPrayerGemBlueSkill"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                DivaPrayerGemBlueLevel = long.Parse(reader["DivaPrayerGemBlueLevel"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                RunID = long.Parse(reader["RunID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                            };
+                        }
+                    }
+                }
+
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                HandleError(transaction, ex);
+            }
+        }
+
+        return last;
+    }
+
+    private QuestsHalk GetLastQuestsHalk(SQLiteConnection conn)
+    {
+        QuestsHalk last = new();
+        using (var transaction = conn.BeginTransaction())
+        {
+            try
+            {
+                using (var cmd = new SQLiteCommand("SELECT * FROM QuestsHalk ORDER BY QuestsHalkID DESC LIMIT 1", conn))
+                {
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            last = new QuestsHalk
+                            {
+                                QuestsHalkID = long.Parse(reader["QuestsHalkID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                HalkOn = long.Parse(reader["HalkOn"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                HalkPotEffectOn = long.Parse(reader["HalkPotEffectOn"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                HalkFullness = long.Parse(reader["HalkFullness"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                HalkLevel = long.Parse(reader["HalkLevel"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                HalkIntimacy = long.Parse(reader["HalkIntimacy"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                HalkHealth = long.Parse(reader["HalkHealth"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                HalkAttack = long.Parse(reader["HalkAttack"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                HalkDefense = long.Parse(reader["HalkDefense"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                HalkIntellect = long.Parse(reader["HalkIntellect"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                HalkSkill1 = long.Parse(reader["HalkSkill1"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                HalkSkill2 = long.Parse(reader["HalkSkill2"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                HalkSkill3 = long.Parse(reader["HalkSkill3"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                HalkElementNone = long.Parse(reader["HalkElementNone"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                HalkFire = long.Parse(reader["HalkFire"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                HalkThunder = long.Parse(reader["HalkThunder"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                HalkWater = long.Parse(reader["HalkWater"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                HalkIce = long.Parse(reader["HalkIce"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                HalkDragon = long.Parse(reader["HalkDragon"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                HalkSleep = long.Parse(reader["HalkSleep"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                HalkParalysis = long.Parse(reader["HalkParalysis"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                HalkPoison = long.Parse(reader["HalkPoison"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                RunID = long.Parse(reader["RunID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                            };
+                        }
+                    }
+                }
+
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                HandleError(transaction, ex);
+            }
+        }
+
+        return last;
+    }
+
     /// <summary>
     /// Loads the database data into hash sets. This is used to avoid querying the database when checking for achievement unlocks.
     /// When inserting into these hashsets, the database must also be updated, and viceversa.
@@ -8070,6 +8625,11 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                 this.AllGachaCards = this.GetAllGachaCards(conn);
                 this.AllPlayerInventories = this.GetAllPlayerInventories(conn);
                 this.AllQuestsToggleMode = this.GetAllQuestsToggleMode(conn);
+                this.AllQuestsActiveFeature = this.GetAllQuestsActiveFeature(conn);
+                this.AllQuestsGuildPoogie = this.GetAllQuestsGuildPoogie(conn);
+                this.AllQuestsDiva = this.GetAllQuestsDiva(conn);
+                this.AllQuestsHalk = this.GetAllQuestsHalk(conn);
+
             }
         }
         catch (Exception ex)
@@ -8079,6 +8639,8 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
         dataLoader.Model.ShowSaveIcon = false;
     }
+
+
 
     public RoadDureSkills GetRoadDureSkills(long runID)
     {
@@ -8243,6 +8805,185 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
         return hashSet;
     }
+
+    private HashSet<QuestsActiveFeature> GetAllQuestsActiveFeature(SQLiteConnection conn)
+    {
+        HashSet<QuestsActiveFeature> hashSet = new HashSet<QuestsActiveFeature>();
+
+        using (var transaction = conn.BeginTransaction())
+        {
+            try
+            {
+                using (var cmd = new SQLiteCommand(@"SELECT * FROM QuestsActiveFeature", conn))
+                {
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            QuestsActiveFeature data = new QuestsActiveFeature
+                            {
+                                QuestsActiveFeatureID = long.Parse(reader["QuestsActiveFeatureID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                ActiveFeature = long.Parse(reader["ActiveFeature"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                RunID = long.Parse(reader["RunID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                            };
+
+                            hashSet.Add(data);
+                        }
+                    }
+                }
+
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                HandleError(transaction, ex);
+            }
+        }
+
+        return hashSet;
+    }
+
+    private HashSet<QuestsGuildPoogie> GetAllQuestsGuildPoogie(SQLiteConnection conn)
+    {
+        HashSet<QuestsGuildPoogie> hashSet = new HashSet<QuestsGuildPoogie>();
+
+        using (var transaction = conn.BeginTransaction())
+        {
+            try
+            {
+                using (var cmd = new SQLiteCommand(@"SELECT * FROM QuestsGuildPoogie", conn))
+                {
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            QuestsGuildPoogie data = new QuestsGuildPoogie
+                            {
+                                QuestsGuildPoogieID = long.Parse(reader["QuestsGuildPoogieID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                GuildPoogie1Skill = long.Parse(reader["GuildPoogie1Skill"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                GuildPoogie2Skill = long.Parse(reader["GuildPoogie2Skill"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                GuildPoogie3Skill = long.Parse(reader["GuildPoogie3Skill"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                RunID = long.Parse(reader["RunID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                            };
+
+                            hashSet.Add(data);
+                        }
+                    }
+                }
+
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                HandleError(transaction, ex);
+            }
+        }
+
+        return hashSet;
+    }
+
+    private HashSet<QuestsDiva> GetAllQuestsDiva(SQLiteConnection conn)
+    {
+        HashSet<QuestsDiva> hashSet = new HashSet<QuestsDiva>();
+
+        using (var transaction = conn.BeginTransaction())
+        {
+            try
+            {
+                using (var cmd = new SQLiteCommand(@"SELECT * FROM QuestsDiva", conn))
+                {
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            QuestsDiva data = new QuestsDiva
+                            {
+                                QuestsDivaID = long.Parse(reader["QuestsDivaID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                DivaSongBuffOn = long.Parse(reader["DivaSongBuffOn"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                DivaPrayerGemRedSkill = long.Parse(reader["DivaPrayerGemRedSkill"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                DivaPrayerGemRedLevel = long.Parse(reader["DivaPrayerGemRedLevel"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                DivaPrayerGemYellowSkill = long.Parse(reader["DivaPrayerGemYellowSkill"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                DivaPrayerGemYellowLevel = long.Parse(reader["DivaPrayerGemYellowLevel"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                DivaPrayerGemGreenSkill = long.Parse(reader["DivaPrayerGemGreenSkill"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                DivaPrayerGemGreenLevel = long.Parse(reader["DivaPrayerGemGreenLevel"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                DivaPrayerGemBlueSkill = long.Parse(reader["DivaPrayerGemBlueSkill"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                DivaPrayerGemBlueLevel = long.Parse(reader["DivaPrayerGemBlueLevel"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                RunID = long.Parse(reader["RunID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                            };
+
+                            hashSet.Add(data);
+                        }
+                    }
+                }
+
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                HandleError(transaction, ex);
+            }
+        }
+
+        return hashSet;
+    }
+
+    private HashSet<QuestsHalk> GetAllQuestsHalk(SQLiteConnection conn)
+    {
+        HashSet<QuestsHalk> hashSet = new HashSet<QuestsHalk>();
+
+        using (var transaction = conn.BeginTransaction())
+        {
+            try
+            {
+                using (var cmd = new SQLiteCommand(@"SELECT * FROM QuestsHalk", conn))
+                {
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            QuestsHalk data = new QuestsHalk
+                            {
+                                QuestsHalkID = long.Parse(reader["QuestsHalkID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                HalkOn = long.Parse(reader["HalkOn"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                HalkPotEffectOn = long.Parse(reader["HalkPotEffectOn"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                HalkFullness = long.Parse(reader["HalkFullness"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                HalkLevel = long.Parse(reader["HalkLevel"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                HalkIntimacy = long.Parse(reader["HalkIntimacy"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                HalkHealth = long.Parse(reader["HalkHealth"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                HalkAttack = long.Parse(reader["HalkAttack"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                HalkDefense = long.Parse(reader["HalkDefense"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                HalkIntellect = long.Parse(reader["HalkIntellect"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                HalkSkill1 = long.Parse(reader["HalkSkill1"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                HalkSkill2 = long.Parse(reader["HalkSkill2"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                HalkSkill3 = long.Parse(reader["HalkSkill3"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                HalkElementNone = long.Parse(reader["HalkElementNone"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                HalkFire = long.Parse(reader["HalkFire"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                HalkThunder = long.Parse(reader["HalkThunder"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                HalkWater = long.Parse(reader["HalkWater"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                HalkIce = long.Parse(reader["HalkIce"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                HalkDragon = long.Parse(reader["HalkDragon"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                HalkSleep = long.Parse(reader["HalkSleep"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                HalkParalysis = long.Parse(reader["HalkParalysis"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                HalkPoison = long.Parse(reader["HalkPoison"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                RunID = long.Parse(reader["RunID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                            };
+
+                            hashSet.Add(data);
+                        }
+                    }
+                }
+
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                HandleError(transaction, ex);
+            }
+        }
+
+        return hashSet;
+    }
+
 
     private HashSet<GachaCardInventory> GetAllGachaCards(SQLiteConnection conn)
     {
@@ -15459,8 +16200,7 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
     /// <param name="newSchema"></param>
     /// <param name="updateQuery"></param>
     /// <param name="tableName"></param>
-    /// <returns>true if succeeded</returns>
-    private static bool AlterTableData(SQLiteConnection connection, string newSchema, string updateQuery, string tableName)
+    private static void AlterTableData(SQLiteConnection connection, string newSchema, string updateQuery, string tableName)
     {
         Logger.Info(CultureInfo.InvariantCulture, $"Altering {tableName} table");
 
@@ -15660,10 +16400,8 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
         {
             // Roll back the transaction if any errors occur
             Logger.Error(ex, "Could not alter table {0}", tableName);
-            return false;
+            LoggingService.WriteCrashLog(ex, string.Format(CultureInfo.InvariantCulture, "Could not alter table {0}", tableName));
         }
-
-        return true;
     }
 
     private static void AlterTableGameFolder(SQLiteConnection connection, string newSchema)

@@ -1859,7 +1859,7 @@
     <PackageReference Include="CsvHelper" Version="30.0.1" />
     <PackageReference Include="DiscordRichPresence" Version="1.2.1.24" />
     <PackageReference Include="DotNetProjects.Extended.Wpf.Toolkit" Version="5.0.103" />
-    <PackageReference Include="EZlion" Version="6.1.0-beta" />
+    <PackageReference Include="EZlion" Version="7.0.0-beta" />
     <PackageReference Include="FontAwesome.Sharp" Version="6.3.0" />
     <PackageReference Include="LiveChartsCore.SkiaSharpView.WPF" Version="2.0.0-beta.920" />
     <PackageReference Include="Memory.dll.x86" Version="1.2.24" />

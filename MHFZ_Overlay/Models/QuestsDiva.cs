@@ -10,7 +10,7 @@ using System;
 public sealed class QuestsDiva
 {
     public long? QuestsDivaID { get; set; }
-    public bool? DivaSongBuffOn { get; set; }
+    public long? DivaSongBuffOn { get; set; }
     public long? DivaPrayerGemRedSkill { get; set; }
     public long? DivaPrayerGemRedLevel { get; set; }
     public long? DivaPrayerGemYellowSkill { get; set; }
