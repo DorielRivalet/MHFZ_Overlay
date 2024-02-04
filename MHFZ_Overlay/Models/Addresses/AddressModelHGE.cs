@@ -1887,4 +1887,7 @@ public sealed class AddressModelHGE : AddressModel
     /// <inheritdoc/>
     public override bool HalkPotEffectOn() => this.M.ReadByte("mhfo-hd.dll+DC6C524") > 0 ? true : false;
 
+    /// <inheritdoc/>
+    public override int DivaSongFromGuildStart() => this.M.ReadInt("mhfo-hd.dll+ED3EB24");
+
 }

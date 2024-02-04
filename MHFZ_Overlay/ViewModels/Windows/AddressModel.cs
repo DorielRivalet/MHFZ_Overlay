@@ -1376,6 +1376,7 @@ public abstract class AddressModel : INotifyPropertyChanged
     
     public abstract bool HalkPotEffectOn();
 
+    public abstract int DivaSongFromGuildStart();
 
     /// <TODO>
     /// [] Not Done
@@ -2590,12 +2591,14 @@ TreeScope.Children, condition);
     {
         get
         {
-            if (DivaSongStart() <= 0)
+            var divaSongStart = Math.Max(DivaSongStart(), DivaSongFromGuildStart());
+
+            if (divaSongStart <= 0)
             {
                 return true;
             }
 
-            var expiry = DivaSongStart() + (60 * 90);
+            var expiry = divaSongStart + (60 * 90);
             double secondsLeft = expiry - ServerHeartbeat();
 
             return secondsLeft <= 60*10;
@@ -2606,12 +2609,14 @@ TreeScope.Children, condition);
     {
         get
         {
-            if (DivaSongStart() <= 0)
+            var divaSongStart = Math.Max(DivaSongStart(), DivaSongFromGuildStart());
+
+            if (divaSongStart <= 0)
             {
                 return true;
             }
 
-            var expiry = DivaSongStart() + (60 * 90);
+            var expiry = divaSongStart + (60 * 90);
             double secondsLeft = expiry - ServerHeartbeat();
 
             return secondsLeft <= 0;
@@ -13112,12 +13117,14 @@ After all that you’ve unlocked magnet spike! You should get a material to make
     {
         get
         {
-            if (DivaSongStart() <= 0)
+            var divaSongStart = Math.Max(DivaSongStart(), DivaSongFromGuildStart());
+
+            if (divaSongStart <= 0)
             {
                 return "0m";
             }
 
-            var expiry = DivaSongStart() + (60 * 90);
+            var expiry = divaSongStart + (60 * 90);
             double secondsLeft = expiry - ServerHeartbeat();
 
             if (secondsLeft <= 0)
