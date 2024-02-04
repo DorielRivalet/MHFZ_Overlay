@@ -717,6 +717,7 @@
     <None Remove="Assets\Icons\png\quest_info.png" />
     <None Remove="Assets\Icons\png\rasta_bar.png" />
     <None Remove="Assets\Icons\png\red_soul.png" />
+    <None Remove="Assets\Icons\png\rengoku.png" />
     <None Remove="Assets\Icons\png\right_click.png" />
     <None Remove="Assets\Icons\png\sand_clock.png" />
     <None Remove="Assets\Icons\png\sand_clock2.png" />
@@ -1741,6 +1742,7 @@
     <Resource Include="Assets\Icons\png\quest_info.png" />
     <Resource Include="Assets\Icons\png\rasta_bar.png" />
     <Resource Include="Assets\Icons\png\red_soul.png" />
+    <Resource Include="Assets\Icons\png\rengoku.png" />
     <Resource Include="Assets\Icons\png\right_click.png" />
     <Resource Include="Assets\Icons\png\sand_clock.png" />
     <Resource Include="Assets\Icons\png\sand_clock2.png" />

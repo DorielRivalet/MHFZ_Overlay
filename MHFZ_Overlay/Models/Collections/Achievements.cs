@@ -5883,6 +5883,32 @@ During the travel to your destination, the top of the Great Forest, you notice t
             IsSecret = false,
             Hint = string.Empty,
             }
+        },
+        {
+            447, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "The Long and Winding Road",
+            Description = string.Empty,
+            Rank = AchievementRank.Platinum,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/rengoku.png",
+            Objective = "Reach a total of 10,000 road floors completed.",
+            IsSecret = false,
+            Hint = string.Empty,
+            }
+        },
+        {
+            448, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Over the Hills and Far Away",
+            Description = string.Empty,
+            Rank = AchievementRank.Gold,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/flame_ul.png",
+            Objective = "Complete 1 UL Azure Rathalos quest solo (Speedrun/Zen) in Forest and Hills under 5 minutes.",
+            IsSecret = false,
+            Hint = string.Empty,
+            }
         }
     });
 }

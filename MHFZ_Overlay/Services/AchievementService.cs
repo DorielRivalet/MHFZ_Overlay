@@ -2730,6 +2730,28 @@ public sealed class AchievementService : IAchievementService
                 {
                     return false;
                 }
+            case 447:
+                return dataLoader.Model.RoadTotalStagesMultiplayer() >= 10_000;
+            case 448: // TODO test
+                var foundQuest = from quest in databaseManagerInstance.AllQuests
+                                     where (quest.PartySize == 1 &&
+                                     quest.QuestID == 0 &&
+                                     (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode == "Freestyle No Secret Tech" || quest.ActualOverlayMode == "Freestyle w/ Secret Tech") && quest.FinalTimeValue <= Numbers.Frames1Minute * 5)
+                                     select quest;
+
+                if (foundQuest.Count() == 0)
+                {
+                    return false;
+                }
+
+                if (databaseManagerInstance.AllQuestsToggleMode.Any(q => q.RunID == foundQuest.First().RunID && q.QuestToggleMode == 3))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
         }
     }
 
