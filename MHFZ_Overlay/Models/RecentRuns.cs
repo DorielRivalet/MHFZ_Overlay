@@ -26,4 +26,7 @@ public sealed class RecentRuns
     public string ActualOverlayMode { get; set; } = Messages.OverlayModePlaceholder;
 
     public long PartySize { get; set; }
+
+    public long RunBuffs { get; set; }
+
 }

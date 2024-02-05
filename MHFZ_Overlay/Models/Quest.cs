@@ -85,4 +85,7 @@ public sealed class Quest
     public string? ActualOverlayMode { get; set; } = string.Empty;
 
     public long? PartySize { get; set; } = 0;
+
+    public long? RunBuffs { get; set; } = 0;
+
 }

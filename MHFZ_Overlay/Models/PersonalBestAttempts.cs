@@ -15,4 +15,6 @@ public sealed class PersonalBestAttempts
     public string ActualOverlayMode { get; set; } = string.Empty;
 
     public long Attempts { get; set; }
+
+    public long RunBuffs { get; set; }
 }

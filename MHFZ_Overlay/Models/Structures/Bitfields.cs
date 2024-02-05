@@ -463,6 +463,8 @@ public enum RunBuff : uint
     TimeAttack = PoogieItem | DivaSong | Bento,
     FreestyleNoSecretTech = Halk | PoogieItem | DivaSong | Bento | GuildPoogie | ActiveFeature | GuildFood | DivaSkill | DivaPrayerGem,
     FreestyleWithSecretTech = FreestyleNoSecretTech | SecretTechnique,
+
+    All =  Halk | PoogieItem | DivaSong | HalkPotEffect | Bento | GuildPoogie | ActiveFeature | GuildFood | DivaSkill | SecretTechnique | DivaPrayerGem | CourseAttackBoost,
 }
 
 /// <summary>

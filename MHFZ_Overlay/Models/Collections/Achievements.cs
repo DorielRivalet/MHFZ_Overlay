@@ -5909,6 +5909,19 @@ During the travel to your destination, the top of the Great Forest, you notice t
             IsSecret = false,
             Hint = string.Empty,
             }
+        },
+        {
+            449, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "PLUS ULTRA",
+            Description = string.Empty,
+            Rank = AchievementRank.Bronze,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/hunter.jpg",
+            Objective = "Attempt a quest with all run buffs active at once.",
+            IsSecret = false,
+            Hint = string.Empty,
+            }
         }
     });
 }

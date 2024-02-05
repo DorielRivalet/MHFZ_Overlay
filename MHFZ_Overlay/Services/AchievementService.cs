@@ -2752,6 +2752,8 @@ public sealed class AchievementService : IAchievementService
                 {
                     return false;
                 }
+            case 449:
+                return databaseManagerInstance.AllQuestAttempts.Any(q => q.RunBuffs >= (long)RunBuff.All);
         }
     }
 
