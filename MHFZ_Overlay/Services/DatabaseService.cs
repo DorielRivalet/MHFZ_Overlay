@@ -468,6 +468,7 @@ public sealed class DatabaseService
         var runID = 0;
         var questID = dataLoader.Model.QuestID();
         var actualOverlayMode = string.Empty;
+        long runBuffs = (long)dataLoader.Model.GetRunBuffs();
         dataLoader.Model.ShowSaveIcon = true;
         var timeLeft = dataLoader.Model.TimeInt();
 
@@ -833,15 +834,19 @@ public sealed class DatabaseService
                             ActualOverlayMode,
                             PartySize,
                             pg.WeaponTypeID
+                            qrb.RunBuffs
                         FROM 
                             Quests q
                         JOIN
                             PlayerGear pg ON q.RunID = pg.RunID
+                        JOIN
+                            QuestsRunBuffs qrb ON q.RunID = qrb.RunID
                         WHERE 
                             q.QuestID = @questID
                             AND pg.WeaponTypeID = @weaponTypeID
                             AND q.ActualOverlayMode = @category
                             AND q.PartySize = @partySize
+                            AND qrb.RunBuffs = @runBuffs
                         ORDER BY 
                             FinalTimeValue ASC
                         LIMIT 1", conn))
@@ -850,6 +855,7 @@ public sealed class DatabaseService
                         cmd.Parameters.AddWithValue("@weaponTypeID", weaponType);
                         cmd.Parameters.AddWithValue("@category", actualOverlayMode);
                         cmd.Parameters.AddWithValue("@partySize", partySize);
+                        cmd.Parameters.AddWithValue("@runBuffs", runBuffs);
 
                         var reader = cmd.ExecuteReader();
                         if (reader.Read())
@@ -863,11 +869,13 @@ public sealed class DatabaseService
                     sql = @"INSERT INTO PersonalBests(
                         RunID,
                         Attempts,
-                        PartySize
+                        PartySize,
+                        RunBuffs
                         ) VALUES (
                         @RunID,
                         @Attempts,
-                        @PartySize)";
+                        @PartySize,
+                        @RunBuffs)";
                     using (var cmd = new SQLiteCommand(sql, conn))
                     {
                         if (finalTimeValue < personalBest || personalBest == 0)
@@ -876,6 +884,7 @@ public sealed class DatabaseService
                             cmd.Parameters.AddWithValue("@RunID", runID);
                             cmd.Parameters.AddWithValue("@Attempts", attempts);
                             cmd.Parameters.AddWithValue("@PartySize", partySize);
+                            cmd.Parameters.AddWithValue("@RunBuffs", runBuffs);
 
                             // Execute the stored procedure
                             cmd.ExecuteNonQuery();
@@ -889,13 +898,14 @@ public sealed class DatabaseService
                                 SET 
                                     Attempts = 0 
                                 WHERE 
-                                    (QuestID, WeaponTypeID, ActualOverlayMode, PartySize) = (@QuestID, @WeaponTypeID, @ActualOverlayMode, @PartySize)";
+                                    (QuestID, WeaponTypeID, ActualOverlayMode, PartySize, RunBuffs) = (@QuestID, @WeaponTypeID, @ActualOverlayMode, @PartySize, @RunBuffs)";
                         using (var cmd = new SQLiteCommand(sql, conn))
                         {
                             cmd.Parameters.AddWithValue("@QuestID", questID);
                             cmd.Parameters.AddWithValue("@WeaponTypeID", weaponType);
                             cmd.Parameters.AddWithValue("@ActualOverlayMode", actualOverlayMode);
                             cmd.Parameters.AddWithValue("@PartySize", partySize);
+                            cmd.Parameters.AddWithValue("@RunBuffs", runBuffs);
 
                             // Execute the stored procedure
                             cmd.ExecuteNonQuery();
