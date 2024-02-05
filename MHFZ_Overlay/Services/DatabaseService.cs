@@ -6561,7 +6561,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
         return personalBest;
     }
 
-    public string GetPersonalBest(long questID, int weaponTypeID, string category, string timerMode, DataLoader dataLoader, long partySize)
+    public string GetPersonalBest(long questID, int weaponTypeID, string category, string timerMode, DataLoader dataLoader, long partySize, long runBuffs)
     {
         var personalBest = Messages.TimerNotLoaded;
         if (string.IsNullOrEmpty(this.dataSource))
@@ -6593,6 +6593,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                                 AND pg.WeaponTypeID = @weaponTypeID
                                 AND q.ActualOverlayMode = @category
                                 AND q.PartySize = @partySize
+                                AND q.RunBuffs = @runBuffs
                             ORDER BY 
                                 FinalTimeValue ASC
                             LIMIT 1", conn))
@@ -6601,6 +6602,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                         cmd.Parameters.AddWithValue("@weaponTypeID", weaponTypeID);
                         cmd.Parameters.AddWithValue("@category", category);
                         cmd.Parameters.AddWithValue("@partySize", partySize);
+                        cmd.Parameters.AddWithValue("@runBuffs", runBuffs);
 
                         var reader = cmd.ExecuteReader();
                         if (reader.Read())
@@ -6914,7 +6916,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
         return personalBests;
     }
 
-    public int UpsertQuestAttempts(long questID, int weaponTypeID, string category, long partySize)
+    public int UpsertQuestAttempts(long questID, int weaponTypeID, string category, long partySize, long runBuffs)
     {
         var attempts = 0;
         if (string.IsNullOrEmpty(this.dataSource))
@@ -6938,11 +6940,11 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                         {
                             command.CommandText =
                                 @"INSERT INTO 
-                            QuestAttempts (QuestID, WeaponTypeID, ActualOverlayMode, Attempts, PartySize)
+                            QuestAttempts (QuestID, WeaponTypeID, ActualOverlayMode, Attempts, PartySize, RunBuffs)
                         VALUES 
-                            (@QuestID, @WeaponTypeID, @ActualOverlayMode, 1, @PartySize)
+                            (@QuestID, @WeaponTypeID, @ActualOverlayMode, 1, @PartySize, @RunBuffs)
                         ON CONFLICT 
-                            (QuestID, WeaponTypeID, ActualOverlayMode, PartySize) 
+                            (QuestID, WeaponTypeID, ActualOverlayMode, PartySize, RunBuffs) 
                         DO UPDATE
                         SET 
                             Attempts = Attempts + 1
@@ -6953,6 +6955,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                             command.Parameters.AddWithValue("@WeaponTypeID", weaponTypeID);
                             command.Parameters.AddWithValue("@ActualOverlayMode", category);
                             command.Parameters.AddWithValue("@PartySize", partySize);
+                            command.Parameters.AddWithValue("@RunBuffs", runBuffs);
 
                             attempts = Convert.ToInt32(command.ExecuteScalar(), CultureInfo.InvariantCulture);
                         }
@@ -6983,7 +6986,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
         return attempts;
     }
 
-    public int UpsertPersonalBestAttempts(long questID, int weaponTypeID, string category, long partySize)
+    public int UpsertPersonalBestAttempts(long questID, int weaponTypeID, string category, long partySize, long runBuffs)
     {
         var attempts = 0;
         if (string.IsNullOrEmpty(this.dataSource))
@@ -7007,11 +7010,11 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                         {
                             command.CommandText =
                                 @"INSERT INTO 
-                            PersonalBestAttempts (QuestID, WeaponTypeID, ActualOverlayMode, Attempts, PartySize)
+                            PersonalBestAttempts (QuestID, WeaponTypeID, ActualOverlayMode, Attempts, PartySize, RunBuffs)
                         VALUES 
-                            (@QuestID, @WeaponTypeID, @ActualOverlayMode, 1, @PartySize)
+                            (@QuestID, @WeaponTypeID, @ActualOverlayMode, 1, @PartySize, @RunBuffs)
                         ON CONFLICT 
-                            (QuestID, WeaponTypeID, ActualOverlayMode, PartySize) 
+                            (QuestID, WeaponTypeID, ActualOverlayMode, PartySize, RunBuffs) 
                         DO UPDATE
                         SET 
                             Attempts = Attempts + 1
@@ -7022,6 +7025,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                             command.Parameters.AddWithValue("@WeaponTypeID", weaponTypeID);
                             command.Parameters.AddWithValue("@ActualOverlayMode", category);
                             command.Parameters.AddWithValue("@PartySize", partySize);
+                            command.Parameters.AddWithValue("@RunBuffs", runBuffs);
 
                             attempts = Convert.ToInt32(command.ExecuteScalar(), CultureInfo.InvariantCulture);
                         }
@@ -12473,7 +12477,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
         return questCompletions;
     }
 
-    public string GetQuestCompletions(long questID, string actualOverlayMode, int weaponTypeID, long partySize)
+    public string GetQuestCompletions(long questID, string actualOverlayMode, int weaponTypeID, long partySize, long runBuffs)
     {
         var questCompletions = "0";
         if (string.IsNullOrEmpty(this.dataSource))
@@ -12500,13 +12504,15 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                             q.QuestID = @QuestID
                         AND q.ActualOverlayMode = @ActualOverlayMode
                         AND pg.WeaponTypeID = @WeaponTypeID
-                        AND q.PartySize = @PartySize";
+                        AND q.PartySize = @PartySize
+                        AND q.RunBuffs = @RunBuffs";
                     using (var cmd = new SQLiteCommand(sql, conn))
                     {
                         cmd.Parameters.AddWithValue("@QuestID", questID);
                         cmd.Parameters.AddWithValue("@ActualOverlayMode", actualOverlayMode);
                         cmd.Parameters.AddWithValue("@WeaponTypeID", weaponTypeID);
                         cmd.Parameters.AddWithValue("@PartySize", partySize);
+                        cmd.Parameters.AddWithValue("@RunBuffs", runBuffs);
 
                         using (var reader = cmd.ExecuteReader())
                         {
@@ -12654,7 +12660,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
         return attemptsPerPersonalBest;
     }
 
-    public double GetQuestAttemptsPerPersonalBest(long questID, int weaponTypeID, string actualOverlayMode, string questAttempts, long partySize)
+    public double GetQuestAttemptsPerPersonalBest(long questID, int weaponTypeID, string actualOverlayMode, string questAttempts, long partySize, long runBuffs)
     {
         var attemptsPerPersonalBest = 0.0;
         if (string.IsNullOrEmpty(this.dataSource))
@@ -12663,7 +12669,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
             return attemptsPerPersonalBest;
         }
 
-        var personalBestCount = GetPersonalBestsCount(questID, weaponTypeID, actualOverlayMode, partySize);
+        var personalBestCount = GetPersonalBestsCount(questID, weaponTypeID, actualOverlayMode, partySize, runBuffs);
         if (personalBestCount > 0)
         {
             attemptsPerPersonalBest = double.Parse(questAttempts, CultureInfo.InvariantCulture) / personalBestCount;
@@ -12734,7 +12740,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
         return personalBestCount;
     }
 
-    public int GetPersonalBestsCount(long questID, int weaponTypeID, string category, long partySize)
+    public int GetPersonalBestsCount(long questID, int weaponTypeID, string category, long partySize, long runBuffs)
     {
         int personalBestCount = 0;
         long? previousBestTime = null;
@@ -12762,13 +12768,15 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                             q.QuestID = @questID AND
                             q.ActualOverlayMode = @category AND
                             pg.WeaponTypeID = @weaponTypeID AND
-                            q.PartySize = @partySize
+                            q.PartySize = @partySize AND
+                            q.RunBuffs = @runBuffs
                         ORDER BY q.RunID ASC", conn))
                     {
                         cmd.Parameters.AddWithValue("@questID", questID);
                         cmd.Parameters.AddWithValue("@weaponTypeID", weaponTypeID);
                         cmd.Parameters.AddWithValue("@category", category);
                         cmd.Parameters.AddWithValue("@partySize", partySize);
+                        cmd.Parameters.AddWithValue("@runBuffs", runBuffs);
 
                         using (var reader = cmd.ExecuteReader())
                         {
