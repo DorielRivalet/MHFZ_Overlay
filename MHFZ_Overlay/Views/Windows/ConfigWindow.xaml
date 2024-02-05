@@ -148,6 +148,9 @@
                         <LineBreak/>
                         <LineBreak/>
                         Select an option from the Section drop-down menu in order to view these statistics. The compendium section may take some time to load.
+                        <LineBreak/>
+                        <LineBreak/>
+                        See the FAQ for checking the run buffs of old categories.
                     </TextBlock>
                 </Grid>
             </DataTemplate>
@@ -1538,7 +1541,7 @@
                                         <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="3" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=EnableInputLogging}"/>
                                         <StackPanel Margin="5" Orientation="Horizontal" Grid.Row="4" Grid.Column="0" >
                                             <ui:SymbolIcon Symbol="Info28" FontSize="28" Foreground="{StaticResource Blue}" Margin="0,0,5,0" ToolTip="Required for Speedrun Modes"/>
-                                            <TextBlock ToolTip="Show a watermark that displays the overlay mode" Style="{StaticResource ConfigTextBox}" Text="Overlay Mode Watermark" />
+                                            <TextBlock ToolTip="Show a watermark that displays the overlay mode. If using speedrun mode, also shows the run buffs value." Style="{StaticResource ConfigTextBox}" Text="Overlay Mode Watermark" />
                                         </StackPanel>
                                         <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="4" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=OverlayModeWatermarkShown}"/>
 
@@ -1680,39 +1683,41 @@
                                             <RowDefinition Height="40"/>
                                             <RowDefinition Height="1*"/>
                                         </Grid.RowDefinitions>
-                                        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0" ToolTip="Search by Quest ID">
-                                            <TextBlock Padding="10,0,10,0" Text="Quest ID" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                            <ui:Button BorderThickness="0"  Background="Transparent" Width="48" Height="40" Click="QuestIDButton_Click">
-                                                <Button.Content>
-                                                    <ui:SymbolIcon Symbol="Search32" Foreground="{StaticResource Green}" FontSize="24"/>
-                                                </Button.Content>
-                                            </ui:Button>
-                                            <ui:TextBox x:Name="QuestIDTextBox" IsUndoEnabled="False"  Grid.Row="0" Grid.Column="1" Text="0"  PreviewTextInput="ValidateNumber" Width="200" MaxLength="8"/>
-                                        </StackPanel>
-                                        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1" ToolTip="Search by Run ID">
-                                            <TextBlock Padding="10,0,10,0" Text="Run ID" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                            <ui:Button BorderThickness="0"  Background="Transparent" Width="48" Height="40">
-                                                <Button.Content>
-                                                    <ui:SymbolIcon Symbol="Search32" Foreground="{StaticResource Green}" FontSize="24"/>
-                                                </Button.Content>
-                                            </ui:Button>
-                                            <ui:TextBox x:Name="RunIDTextBox" IsUndoEnabled="False"  Grid.Row="0" Grid.Column="1" Text="0"  PreviewTextInput="ValidateNumber" Width="200" MaxLength="8"/>
-                                        </StackPanel>
-                                        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="2" ToolTip="Search Option" 
-                                ToolTipService.ToolTip="Please view the FAQ to see what the categories are about.&#x0a;VERY IMPORTANT: None of the categories or rules are set in stone.&#x0a;Things that are not currently tracked are: Prayer Gems, Login Boost, Halk Pot, Hunter Aid Attack Multiplier, Diva Defense Weapon Boost, Active Feature, etc.&#x0a;Please make a pull request or send a requested feature issue if you can help track these in the overlay.">
-                                            <TextBlock Style="{StaticResource ConfigTextBox}" Grid.Row="0" Grid.Column="0" Margin="5" Text="Category"/>
-                                            <ComboBox x:Name="OverlayModeComboBox"  Grid.Column="1" Grid.Row="0" Width="230" SelectedIndex="0">
-                                                <ComboBoxItem>Time Attack</ComboBoxItem>
-                                                <ComboBoxItem>Freestyle w/ Secret Tech</ComboBoxItem>
-                                                <ComboBoxItem>Freestyle No Secret Tech</ComboBoxItem>
-                                                <ComboBoxItem>Zen</ComboBoxItem>
-                                                <ComboBoxItem>Standard</ComboBoxItem>
-                                            </ComboBox>
-                                        </StackPanel>
-                                        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="3" ToolTip="Search Option">
-                                            <TextBlock ToolTip="Select option" Style="{StaticResource ConfigTextBox}" Grid.Row="0" Grid.Column="0" Margin="5" Text="Section"/>
-                                            <ComboBox x:Name="OverlayModeOptionComboBox"  Grid.Column="1" Grid.Row="0" Width="240" ItemsSource="{Binding QuestLogsSearchOption}" SelectedItem="{Binding SelectedOption}" DisplayMemberPath="Name" SelectionChanged="QuestLogsSectionComboBox_SelectionChanged"/>
-                                        </StackPanel>
+                                            <StackPanel Orientation="Horizontal" Grid.ColumnSpan="9">
+                                                <TextBlock Padding="10,0,10,0" Text="Quest ID" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                <ui:Button BorderThickness="0"  Background="Transparent" Width="48" Height="40" Click="QuestIDButton_Click">
+                                                    <Button.Content>
+                                                        <ui:SymbolIcon Symbol="Search32" Foreground="{StaticResource Green}" FontSize="24"/>
+                                                    </Button.Content>
+                                                </ui:Button>
+                                                <ui:TextBox x:Name="QuestIDTextBox" IsUndoEnabled="False"  Grid.Row="0" Grid.Column="1" Text="0"  PreviewTextInput="ValidateNumber" Width="100" MaxLength="8"/>
+                                            
+                                                <TextBlock Padding="10,0,10,0" Text="Run ID" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                <ui:Button BorderThickness="0"  Background="Transparent" Width="48" Height="40">
+                                                    <Button.Content>
+                                                        <ui:SymbolIcon Symbol="Search32" Foreground="{StaticResource Green}" FontSize="24"/>
+                                                    </Button.Content>
+                                                </ui:Button>
+                                                <ui:TextBox x:Name="RunIDTextBox" IsUndoEnabled="False"  Grid.Row="0" Grid.Column="1" Text="0"  PreviewTextInput="ValidateNumber" Width="100" MaxLength="8"/>
+                                                <TextBlock Style="{StaticResource ConfigTextBox}" Grid.Row="0" Grid.Column="0" Margin="5" Text="Category"/>
+                                                <ComboBox x:Name="OverlayModeComboBox"  Grid.Column="1" Grid.Row="0" Width="150" SelectedIndex="0">
+                                                    <ComboBoxItem>Speedrun</ComboBoxItem>
+                                                    <ComboBoxItem>Zen</ComboBoxItem>
+                                                    <ComboBoxItem>Standard</ComboBoxItem>
+                                                </ComboBox>
+                                                <TextBlock ToolTip="Select option" Style="{StaticResource ConfigTextBox}" Margin="5" Text="Run Buffs"/>
+                                                <!--<ComboBox x:Name="RunBuffsOptionComboBox"  Grid.Column="1" Grid.Row="0" Width="200" ItemsSource="{Binding }" DisplayMemberPath="Name" SelectionChanged="QuestLogsSectionComboBox_SelectionChanged"/>-->
+                                                <!--https://stackoverflow.com/questions/508506/is-there-any-native-wpf-multiselect-combobox-available-->
+                                                <ComboBox ItemsSource="{Binding RunBuffsSearchOption}" Width="200">
+                                                    <ComboBox.ItemTemplate>
+                                                        <DataTemplate>
+                                                            <CheckBox Content="{Binding Name}" IsChecked="{Binding IsSelected}"></CheckBox>
+                                                        </DataTemplate>
+                                                    </ComboBox.ItemTemplate>
+                                                </ComboBox>
+                                                <TextBlock ToolTip="Select option" Style="{StaticResource ConfigTextBox}" Grid.Row="0" Grid.Column="0" Margin="5" Text="Section"/>
+                                                <ComboBox x:Name="OverlayModeOptionComboBox"  Grid.Column="1" Grid.Row="0" Width="240" ItemsSource="{Binding QuestLogsSearchOption}" SelectedItem="{Binding SelectedOption}" DisplayMemberPath="Name" SelectionChanged="QuestLogsSectionComboBox_SelectionChanged"/>
+                                            </StackPanel>
                                         <Grid x:Name="DiscordEmbedWeaponPersonalBest" Grid.Row="1">
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="Auto" />

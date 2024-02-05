@@ -6588,12 +6588,14 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                                 Quests q
                             JOIN
                                 PlayerGear pg ON q.RunID = pg.RunID
+                            JOIN
+                                QuestsRunBuffs qrb ON q.RunID = qrb.RunID
                             WHERE 
                                 QuestID = @questID
                                 AND pg.WeaponTypeID = @weaponTypeID
                                 AND q.ActualOverlayMode = @category
                                 AND q.PartySize = @partySize
-                                AND q.RunBuffs = @runBuffs
+                                AND qrb.RunBuffs = @runBuffs
                             ORDER BY 
                                 FinalTimeValue ASC
                             LIMIT 1", conn))
@@ -12500,12 +12502,14 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                             Quests q
                         JOIN 
                             PlayerGear pg ON q.RunID = pg.RunID
+                        JOIN
+                            QuestsRunBuffs qrb ON q.RunID = qrb.RunID
                         WHERE 
                             q.QuestID = @QuestID
                         AND q.ActualOverlayMode = @ActualOverlayMode
                         AND pg.WeaponTypeID = @WeaponTypeID
                         AND q.PartySize = @PartySize
-                        AND q.RunBuffs = @RunBuffs";
+                        AND qrb.RunBuffs = @RunBuffs";
                     using (var cmd = new SQLiteCommand(sql, conn))
                     {
                         cmd.Parameters.AddWithValue("@QuestID", questID);
@@ -12764,12 +12768,14 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                             Quests q
                         JOIN
                             PlayerGear pg ON q.RunID = pg.RunID
+                        JOIN
+                            QuestsRunBuffs qrb ON q.RunID = qrb.RunID
                         WHERE
                             q.QuestID = @questID AND
                             q.ActualOverlayMode = @category AND
                             pg.WeaponTypeID = @weaponTypeID AND
                             q.PartySize = @partySize AND
-                            q.RunBuffs = @runBuffs
+                            qrb.RunBuffs = @runBuffs
                         ORDER BY q.RunID ASC", conn))
                     {
                         cmd.Parameters.AddWithValue("@questID", questID);

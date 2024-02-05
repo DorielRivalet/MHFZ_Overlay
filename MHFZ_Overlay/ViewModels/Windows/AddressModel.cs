@@ -1636,9 +1636,7 @@ TreeScope.Children, condition);
             OverlayMode.NoGame => "No Game",
             OverlayMode.MainMenu => "Main Menu",
             OverlayMode.WorldSelect => "World Select",
-            OverlayMode.TimeAttack => "Time Attack",
-            OverlayMode.FreestyleSecretTech => "Freestyle w/ Secret Tech",
-            OverlayMode.Freestyle => "Freestyle No Secret Tech",
+            OverlayMode.Speedrun => "Speedrun",
             OverlayMode.Zen => "Zen",
             _ => "Not Found",
         };
@@ -1661,10 +1659,20 @@ TreeScope.Children, condition);
             // TODO: test
             if (OverlayModeDictionary.Count == 2 && OverlayModeDictionary.First().Value == "Standard")
             {
+                if (OverlayModeDictionary.Last().Value == "Speedrun")
+                {
+                    return "Speedrun+" + $" ({(uint)GetRunBuffs()})";
+                }
+
                 return OverlayModeDictionary.Last().Value + "+";
             }
             else
             {
+                if (OverlayModeDictionary.First().Value == "Speedrun")
+                {
+                    return "Speedrun+" + $" ({(uint)GetRunBuffs()})";
+                }
+
                 return OverlayModeDictionary.First().Value + "+";
             }
         }
@@ -1690,9 +1698,7 @@ TreeScope.Children, condition);
                     OverlayMode.NoGame => "Game not found | ",
                     OverlayMode.MainMenu => "Main menu | ",
                     OverlayMode.WorldSelect => "World Select | ",
-                    OverlayMode.TimeAttack => "Time Attack | ",
-                    OverlayMode.FreestyleSecretTech => "Freestyle Secret Tech | ",
-                    OverlayMode.Freestyle => "Freestyle | ", // TODO rename?
+                    OverlayMode.Speedrun => "Speedrun | ",
                     OverlayMode.Zen => "Zen | ",
                     _ => string.Empty,
 
@@ -1786,21 +1792,7 @@ TreeScope.Children, condition);
         }
         else if (s.TimerInfoShown && s.EnableInputLogging && s.EnableQuestLogging && s.OverlayModeWatermarkShown)
         {
-            var gems = new List<int> { DivaPrayerGemRedSkill(), DivaPrayerGemRedLevel(), DivaPrayerGemYellowSkill(), DivaPrayerGemYellowLevel(), DivaPrayerGemGreenSkill(), DivaPrayerGemGreenLevel(), DivaPrayerGemBlueSkill(), DivaPrayerGemBlueLevel() };
-            var guildPoogies = new List<int> { GuildPoogie1Skill(), GuildPoogie2Skill(), GuildPoogie3Skill() };
-            // TODO test
-            if (!HalkPotEffectOn() && GetGuildPoogieEffect(guildPoogies) == "No Poogie" && this.GuildFoodSkill() == 0 && !HalkOn() && GetDivaPrayerGems(gems) == "None" && !IsActiveFeatureOn(GetActiveFeature(), this.WeaponType()) && !IsBitfieldContainingFlag((uint)this.Rights(), CourseRightsFirstByte.Support, (uint)CourseRightsFirstByte.All, true, 1) && this.DivaSkillUsesLeft() == 0 && this.StyleRank1() != 15 && this.StyleRank2() != 15)
-            {
-                return OverlayMode.TimeAttack;
-            }
-            else if (this.StyleRank1() == 15 || this.StyleRank2() == 15)
-            {
-                return OverlayMode.FreestyleSecretTech;
-            }
-            else
-            {
-                return OverlayMode.Freestyle;
-            }
+            return OverlayMode.Speedrun;
         }
         else
         {
@@ -2772,63 +2764,63 @@ TreeScope.Children, condition);
 
         if (HalkOn())
         {
-            runBuffs = runBuffs | RunBuff.Halk;
+            runBuffs |= RunBuff.Halk;
         }
 
         if (PoogieItemUseID() > 0)
         {
-            runBuffs = runBuffs | RunBuff.PoogieItem;
+            runBuffs |= RunBuff.PoogieItem;
         }
 
         if (DivaSongActive)
         {
-            runBuffs = runBuffs | RunBuff.DivaSong;
+            runBuffs |= RunBuff.DivaSong;
         }
 
         if (HalkPotEffectOn() || isHalkPotEquipped())
         {
-            runBuffs = runBuffs | RunBuff.HalkPotEffect;
+            runBuffs |= RunBuff.HalkPotEffect;
         }
 
         // TODO bento
-        //if (HalkOn())
-        //{
-        //    runBuffs = runBuffs | RunBuff.Halk;
-        //}
+        if (true == true)
+        {
+            runBuffs |= RunBuff.Bento;
+        }
 
         if (GuildPoogie1Skill() > 0 || GuildPoogie2Skill() > 0 || GuildPoogie3Skill() > 0)
         {
-            runBuffs = runBuffs | RunBuff.GuildPoogie;
+            runBuffs |= RunBuff.GuildPoogie;
         }
 
         if (IsActiveFeatureOn(GetActiveFeature(), WeaponType()))
         {
-            runBuffs = runBuffs | RunBuff.ActiveFeature;
+            runBuffs |= RunBuff.ActiveFeature;
         }
 
         if (GuildFoodSkill() > 0)
         {
-            runBuffs = runBuffs | RunBuff.GuildFood;
+            runBuffs |= RunBuff.GuildFood;
         }
 
         if (DivaSkill() > 0 && DivaSkillUsesLeft() > 0)
         {
-            runBuffs = runBuffs | RunBuff.DivaSkill;
+            runBuffs |= RunBuff.DivaSkill;
         }
 
         if (StyleRank1() == 15 || StyleRank2() == 15)
         {
-            runBuffs = runBuffs | RunBuff.SecretTechnique;
+            runBuffs |= RunBuff.SecretTechnique;
         }
 
         if (DivaPrayerGemRedSkill() != 0 || DivaPrayerGemYellowSkill() != 0 || DivaPrayerGemGreenSkill() != 0 || DivaPrayerGemBlueSkill() != 0)
         {
-            runBuffs = runBuffs | RunBuff.DivaPrayerGem;
+            runBuffs |= RunBuff.DivaPrayerGem;
         }
 
         if (GetAdditionalCourses(Rights()).Contains("Support"))
         {
-            runBuffs = runBuffs | RunBuff.CourseAttackBoost;
+            runBuffs |= RunBuff.CourseAttackBoost;
         }
 
         return runBuffs;
@@ -13085,7 +13077,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         }
     }
 
-    public string OverlayModeWatermarkText => ShowOverlayModeFinalMode() ? GetFinalOverlayModeForDisplay() : GetOverlayModeForStorage();
+    public string OverlayModeWatermarkText => ShowOverlayModeFinalMode() ? GetFinalOverlayModeForDisplay() : GetOverlayModeForStorage() == "Speedrun" ? $"Speedrun ({(uint)GetRunBuffs()})" : GetOverlayModeForStorage();
 
     public string QuestIDBind => this.QuestID().ToString(CultureInfo.InvariantCulture);
 
@@ -13113,6 +13105,22 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         new QuestLogsOption { Name = "Stats (Graphs)", IsSelected = false },
         new QuestLogsOption { Name = "Stats (Text)", IsSelected = false },
         new QuestLogsOption { Name = "Quest Pace", IsSelected = false },
+    };
+
+    public ObservableCollection<QuestLogsOption> RunBuffsSearchOption { get; set; } = new ObservableCollection<QuestLogsOption>()
+    {
+        new QuestLogsOption { Name = "Halk", IsSelected = false },
+        new QuestLogsOption { Name = "Poogie Item", IsSelected = false },
+        new QuestLogsOption { Name = "Diva Song", IsSelected = false },
+        new QuestLogsOption { Name = "Halk Pot Effect", IsSelected = false },
+        new QuestLogsOption { Name = "Bento", IsSelected = false },
+        new QuestLogsOption { Name = "Guild Poogie", IsSelected = false },
+        new QuestLogsOption { Name = "Active Feature", IsSelected = false },
+        new QuestLogsOption { Name = "Guild Food", IsSelected = false },
+        new QuestLogsOption { Name = "Diva Skill", IsSelected = false },
+        new QuestLogsOption { Name = "Secret Technique", IsSelected = false },
+        new QuestLogsOption { Name = "Diva Prayer Gem", IsSelected = false },
+        new QuestLogsOption { Name = "Course Attack Boost", IsSelected = false },
     };
 
     public QuestLogsOption SelectedOption { get; set; } = new QuestLogsOption { Name = "Default", IsSelected = true };
