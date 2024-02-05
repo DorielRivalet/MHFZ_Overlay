@@ -833,7 +833,7 @@ public sealed class DatabaseService
                             FinalTimeDisplay,
                             ActualOverlayMode,
                             PartySize,
-                            pg.WeaponTypeID
+                            pg.WeaponTypeID,
                             qrb.RunBuffs
                         FROM 
                             Quests q
