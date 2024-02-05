@@ -2729,6 +2729,111 @@ TreeScope.Children, condition);
         }
     }
 
+    public bool isShitenQuest(int questID)
+    {
+        return questID switch
+        {
+            Numbers.QuestIDUpperShitenDisufiroa => true,
+            Numbers.QuestIDLowerShitenDisufiroa => true,
+            Numbers.QuestIDUpperShitenUnknown => true,
+            Numbers.QuestIDLowerShitenUnknown => true,
+            _ => false
+        };
+    }
+
+    public bool isHalkPotEquipped()
+    {
+        return (PouchItem1ID() == 4952 || PouchItem2ID() == 4952 || PouchItem3ID() == 4952 || PouchItem4ID() == 4952 || PouchItem5ID() == 4952 || PouchItem6ID() == 4952 || PouchItem7ID() == 4952 || PouchItem8ID() == 4952 || PouchItem9ID() == 4952 || PouchItem10ID() == 4952 || PouchItem11ID() == 4952 || PouchItem12ID() == 4952 || PouchItem13ID() == 4952 || PouchItem14ID() == 4952 || PouchItem15ID() == 4952 || PouchItem16ID() == 4952 || PouchItem17ID() == 4952 || PouchItem18ID() == 4952 || PouchItem19ID() == 4952 || PouchItem20ID() == 4952 || PartnyaBagItem1ID() == 4952 || PartnyaBagItem2ID() == 4952 || PartnyaBagItem3ID() == 4952 || PartnyaBagItem4ID() == 4952 || PartnyaBagItem5ID() == 4952 || PartnyaBagItem6ID() == 4952 || PartnyaBagItem7ID() == 4952 || PartnyaBagItem8ID() == 4952 || PartnyaBagItem9ID() == 4952 || PartnyaBagItem10ID() == 4952);
+    }
+
+    /// <summary>
+    /// TODO quest exceptions
+    /// </summary>
+    /// <param name="overlayMode"></param>
+    /// <returns></returns>
+    public RunBuff GetRunBuffs(string overlayMode = "")
+    {
+        if (overlayMode != string.Empty)
+        {
+            switch (overlayMode)
+            {
+                case "Freestyle No Secret Tech":
+                    return RunBuff.FreestyleNoSecretTech;
+                case "Freestyle w/ Secret Tech":
+                    return RunBuff.FreestyleWithSecretTech;
+                case "Time Attack":
+                    return RunBuff.TimeAttack;
+                default:
+                    return RunBuff.None;
+            }
+        }
+
+        var runBuffs = RunBuff.None;
+
+        if (HalkOn())
+        {
+            runBuffs = runBuffs | RunBuff.Halk;
+        }
+
+        if (PoogieItemUseID() > 0)
+        {
+            runBuffs = runBuffs | RunBuff.PoogieItem;
+        }
+
+        if (DivaSongActive)
+        {
+            runBuffs = runBuffs | RunBuff.DivaSong;
+        }
+
+        if (HalkPotEffectOn() || isHalkPotEquipped())
+        {
+            runBuffs = runBuffs | RunBuff.HalkPotEffect;
+        }
+
+        // TODO bento
+        //if (HalkOn())
+        //{
+        //    runBuffs = runBuffs | RunBuff.Halk;
+        //}
+
+        if (GuildPoogie1Skill() > 0 || GuildPoogie2Skill() > 0 || GuildPoogie3Skill() > 0)
+        {
+            runBuffs = runBuffs | RunBuff.GuildPoogie;
+        }
+
+        if (IsActiveFeatureOn(GetActiveFeature(), WeaponType()))
+        {
+            runBuffs = runBuffs | RunBuff.ActiveFeature;
+        }
+
+        if (GuildFoodSkill() > 0)
+        {
+            runBuffs = runBuffs | RunBuff.GuildFood;
+        }
+
+        if (DivaSkill() > 0 && DivaSkillUsesLeft() > 0)
+        {
+            runBuffs = runBuffs | RunBuff.DivaSkill;
+        }
+
+        if (StyleRank1() == 15 || StyleRank2() == 15)
+        {
+            runBuffs = runBuffs | RunBuff.SecretTechnique;
+        }
+
+        if (DivaPrayerGemRedSkill() != 0 || DivaPrayerGemYellowSkill() != 0 || DivaPrayerGemGreenSkill() != 0 || DivaPrayerGemBlueSkill() != 0)
+        {
+            runBuffs = runBuffs | RunBuff.DivaPrayerGem;
+        }
+
+        if (GetAdditionalCourses(Rights()).Contains("Support"))
+        {
+            runBuffs = runBuffs | RunBuff.CourseAttackBoost;
+        }
+
+        return runBuffs;
+    }
+
     public static double GetAverageHitsPerSecond(int weaponTypeID)
     {
         var weaponFound = WeaponCanUseReflect.WeaponTypeID.ContainsKey(weaponTypeID);
