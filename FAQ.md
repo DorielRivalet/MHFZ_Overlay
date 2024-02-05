@@ -3,6 +3,7 @@
 - [Frequently Asked Questions](#frequently-asked-questions)
   - [How to Enable Discord Rich Presence?](#how-to-enable-discord-rich-presence)
   - [How to Enable Speedrun Categories \& Zen Mode?](#how-to-enable-speedrun-categories--zen-mode)
+  - [What are Run Buffs in the Quest Logs section?](#what-are-run-buffs-in-the-quest-logs-section)
   - [How to Record Videos with the Overlay?](#how-to-record-videos-with-the-overlay)
   - [My game slows down when recording with the Overlay, what should I do?](#my-game-slows-down-when-recording-with-the-overlay-what-should-i-do)
   - [How to Enable Quest Logging?](#how-to-enable-quest-logging)
@@ -54,9 +55,6 @@ Use the preset option found in the General tab. Keep reading if you want to know
 
 - Speedrun Mode Categories: Enable the required settings in the Quest Logs section, disable **everything** else, including Quest Pace Color (Monster Icon, Quest Timer + Percentage, KBM Layout, Personal Best and Discord Rich Presence optional)
 
-- Time Attack: Do not use halk, guild poogie, active feature, guild food, diva skill and diva prayer gem.
-- Freestyle: Use any of the above or everything else with/without Secret Technique Style Rank Skill.
-
 **Important**: It is recommended to make a backup of the `MHFZ_Overlay.sqlite` file periodically. The file is located inside the database folder, which is inside your game folder. Don't lose your speedrun records!
 
 ![Discord Rich Presence](./demo/discord8.png)
@@ -65,7 +63,34 @@ Use the preset option found in the General tab. Keep reading if you want to know
 
 ![Discord Rich Presence](./demo/discord11.png)
 
-The current speedrun categories are pending an overhaul. Zen mode is not counted as a speedrun mode.
+## What are Run Buffs in the Quest Logs section?
+
+Run Buffs are the buffs that you can filter by when searching for quests:
+
+| Name                      | Value |
+|---------------------------|-------|
+| Halk                      |  1     |
+| Poogie Item                |  2     |
+| Diva Song                  |  4     |
+| Halk Pot Effect             |  8     |
+| Bento                     |  16    |
+| Guild Poogie               |  32    |
+| Active Feature             |  64    |
+| Guild Food                 |  128   |
+| Diva Skill                 |  256   |
+| Secret Technique           |  512   |
+| Diva Prayer Gem             |  1024  |
+| Course Attack Boost         |  2048  |
+| All                       |  4095  |
+| Time Attack                |  7     |
+| Freestyle No Secret Tech     |  1023  |
+| Freestyle With Secret Tech   |  1535  |
+
+If you had the old categories in your runs, these are their run buffs equivalents:
+
+- Time Attack: Poogie Item, Diva Song, Bento.
+- Freestyle No Secret Tech: Halk, Poogie Item, Diva Song, Bento, Guild Poogie, Active Feature, Guild Food, Diva Skill, Diva Prayer Gem.
+- Freestyle With Secret Tech: Freestyle No Secret Tech run buffs and Secret Technique.
 
 ## How to Record Videos with the Overlay?
 
