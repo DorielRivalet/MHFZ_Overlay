@@ -2978,7 +2978,7 @@
 d:Text="Strong Attack+6, Lance Tech 【Heavenly Spear】, Sword God+3, Abnormality, Reflect+3
 Vampirism+2, Fortification+2, Drawing Arts+2, Rush, Ceaseless
 Furious, Obscurity, Ice Age, Solid Determination, Flash Conversion
-Thunder Clad, Vigorous" Text="{Binding GetActiveSkillsForImage,Mode=OneTime}" FontFamily="MS Gothic Bold" FontSize="16" Margin="95,0,0,0" Width="420" TextWrapping="Wrap"/>
+Thunder Clad, Vigorous, Hunter Valhalla, Assistance" Text="{Binding GetActiveSkillsForImage,Mode=OneTime}" FontFamily="MS Gothic Bold" FontSize="16" Margin="95,0,0,0" Width="475" TextWrapping="Wrap"/>
 
                                                 <TextBlock Foreground="#fafa50" Grid.Column="0" Grid.Row="9" HorizontalAlignment="Left" Text="Autom.:" FontFamily="MS Gothic Bold" FontSize="16" Margin="35,0,0,0"/>
                                                 <TextBlock Grid.RowSpan="2" Grid.Column="0" Grid.Row="9" d:Text="Thunder Attack Large, Evasion+2, Guard+2, Focus+2, Hunger Negated" HorizontalAlignment="Left" Text="{Binding GetAutomaticSkillsForImage,Mode=OneTime}" FontFamily="MS Gothic Bold" FontSize="16" Margin="95,0,0,0" Width="420" TextWrapping="Wrap"/>
