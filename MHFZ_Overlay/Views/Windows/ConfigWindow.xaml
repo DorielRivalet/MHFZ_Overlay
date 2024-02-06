@@ -293,6 +293,14 @@
                                         </Style>
                                     </DataGridTextColumn.ElementStyle>
                                 </DataGridTextColumn>
+                                <DataGridTextColumn Header="Run Buffs" Binding="{Binding RunBuffs}" Width="96">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="TextWrapping" Value="Wrap" />
+                                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
                                 <DataGridTextColumn Header="Party Size" Binding="{Binding PartySize}" Width="96">
                                     <DataGridTextColumn.ElementStyle>
                                         <Style TargetType="TextBlock">
@@ -670,6 +678,14 @@
                                     </DataGridTextColumn.ElementStyle>
                                 </DataGridTextColumn>
                                 <DataGridTextColumn Header="Category" Binding="{Binding ActualOverlayMode}" Width="128">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="TextWrapping" Value="Wrap" />
+                                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Header="Run Buffs" Binding="{Binding RunBuffs}" Width="96">
                                     <DataGridTextColumn.ElementStyle>
                                         <Style TargetType="TextBlock">
                                             <Setter Property="TextWrapping" Value="Wrap" />
@@ -1674,7 +1690,7 @@
                                 <Grid Margin="5" Height="Auto" Width="Auto">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="1*"/>
+                                            <ColumnDefinition Width="Auto"/>
                                             <ColumnDefinition Width="1*"/>
                                             <ColumnDefinition Width="1*"/>
                                             <ColumnDefinition Width="1*"/>
@@ -1706,9 +1722,9 @@
                                                     <ComboBoxItem>Standard</ComboBoxItem>
                                                 </ComboBox>
                                                 <TextBlock ToolTip="Select option" Style="{StaticResource ConfigTextBox}" Margin="5" Text="Run Buffs"/>
-                                                <!--<ComboBox x:Name="RunBuffsOptionComboBox"  Grid.Column="1" Grid.Row="0" Width="200" ItemsSource="{Binding }" DisplayMemberPath="Name" SelectionChanged="QuestLogsSectionComboBox_SelectionChanged"/>-->
+                                                <!--<ComboBox   Grid.Column="1" Grid.Row="0" Width="200" ItemsSource="{Binding }" DisplayMemberPath="Name" SelectionChanged="QuestLogsSectionComboBox_SelectionChanged"/>-->
                                                 <!--https://stackoverflow.com/questions/508506/is-there-any-native-wpf-multiselect-combobox-available-->
-                                                <ComboBox ItemsSource="{Binding RunBuffsSearchOption}" Width="200">
+                                                <ComboBox x:Name="RunBuffsOptionComboBox" ItemsSource="{Binding RunBuffsSearchOption}" Width="200">
                                                     <ComboBox.ItemTemplate>
                                                         <DataTemplate>
                                                             <CheckBox Content="{Binding Name}" IsChecked="{Binding IsSelected}"></CheckBox>

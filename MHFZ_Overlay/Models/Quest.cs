@@ -86,6 +86,4 @@ public sealed class Quest
 
     public long? PartySize { get; set; } = 0;
 
-    public long? RunBuffs { get; set; } = 0;
-
 }

@@ -1263,7 +1263,7 @@ public partial class ConfigWindow : FluentWindow
         if (!string.IsNullOrEmpty(this.QuestIDTextBox.Text))
         {
             this.SetDefaultInfoInQuestIDWeaponSection();
-            DatabaseManager.QuestIDButtonClick(sender, e, this);
+            DatabaseManager.QuestIDButtonClick(sender, e, this, (uint)GetRunBuffs(MainWindow.DataLoader.Model.RunBuffsSearchOption));
         }
     }
 
@@ -1476,7 +1476,7 @@ public partial class ConfigWindow : FluentWindow
 
         this.questPaceWeaponSelected = selectedWeapon;
 
-        var allQuestsRuns = DatabaseManager.GetQuests(long.Parse(this.QuestIDTextBox.Text.Trim()), this.questPaceWeaponSelected, this.OverlayModeComboBox.Text.Trim());
+        var allQuestsRuns = DatabaseManager.GetQuests(long.Parse(this.QuestIDTextBox.Text.Trim()), this.questPaceWeaponSelected, this.OverlayModeComboBox.Text.Trim(), (uint)GetRunBuffs(this.MainWindow.DataLoader.Model.RunBuffsSearchOption));
 
         if (allQuestsRuns.Count == 0)
         {
@@ -2634,7 +2634,7 @@ Run IDs with best paces for each HP% Dealt:
     private void Top20Runs_DataGridLoaded(object sender, RoutedEventArgs e)
     {
         this.top20RunsDataGrid = (DataGrid)sender;
-        this.MainWindow.DataLoader.Model.FastestRuns = DatabaseManager.GetFastestRuns(this);
+        this.MainWindow.DataLoader.Model.FastestRuns = DatabaseManager.GetFastestRuns(this, (uint)GetRunBuffs(MainWindow.DataLoader.Model.RunBuffsSearchOption));
         this.top20RunsDataGrid.ItemsSource = this.MainWindow.DataLoader.Model.FastestRuns;
         this.top20RunsDataGrid.Items.Refresh();
     }
@@ -2670,7 +2670,7 @@ Run IDs with best paces for each HP% Dealt:
     public static void SaveCSVFromListOfRecentRuns(List<RecentRuns> recentRuns, string filePath)
     {
         var sb = new StringBuilder();
-        sb.AppendLine("Objective Image,Quest Name,Run ID,Quest ID,Youtube ID,Final Time Display,Date,Actual Overlay Mode,Party Size");
+        sb.AppendLine("Objective Image,Quest Name,Run ID,Quest ID,Youtube ID,Final Time Display,Date,Actual Overlay Mode,Run Buffs,Party Size");
 
         foreach (var run in recentRuns)
         {
@@ -2679,8 +2679,9 @@ Run IDs with best paces for each HP% Dealt:
             var youtubeID = run.YouTubeID.Replace(",", string.Empty);
             var finalTimeDisplay = run.FinalTimeDisplay.Replace(",", string.Empty);
             var actualOverlayMode = run.ActualOverlayMode.Replace(",", string.Empty);
+            var runBuffs = run.RunBuffs.ToString().Replace(",", string.Empty);
 
-            var line = $"{objectiveImage},{questName},{run.RunID},{run.QuestID},{youtubeID},{finalTimeDisplay},{run.Date},{actualOverlayMode},{run.PartySize}";
+            var line = $"{objectiveImage},{questName},{run.RunID},{run.QuestID},{youtubeID},{finalTimeDisplay},{run.Date},{actualOverlayMode},{runBuffs},{run.PartySize}";
             sb.AppendLine(line);
         }
 
@@ -2713,7 +2714,7 @@ Run IDs with best paces for each HP% Dealt:
         }
 
         this.top20RunsSelectedWeapon = selectedWeapon;
-        this.MainWindow.DataLoader.Model.FastestRuns = DatabaseManager.GetFastestRuns(this, selectedWeapon);
+        this.MainWindow.DataLoader.Model.FastestRuns = DatabaseManager.GetFastestRuns(this, (uint)GetRunBuffs(MainWindow.DataLoader.Model.RunBuffsSearchOption), selectedWeapon);
         this.top20RunsDataGrid.ItemsSource = this.MainWindow.DataLoader.Model.FastestRuns;
         this.top20RunsDataGrid.Items.Refresh();
 
@@ -2872,7 +2873,7 @@ Run IDs with best paces for each HP% Dealt:
     public static void SaveCSVFromListOfRecentRuns(ObservableCollection<RecentRuns> recentRuns, string filePath)
     {
         var sb = new StringBuilder();
-        sb.AppendLine("Objective Image,Quest Name,Run ID,Quest ID,Youtube ID,Final Time Display,Date,Actual Overlay Mode,Party Size");
+        sb.AppendLine("Objective Image,Quest Name,Run ID,Quest ID,Youtube ID,Final Time Display,Date,Actual Overlay Mode,Run Buffs,Party Size");
 
         foreach (var run in recentRuns)
         {
@@ -2881,8 +2882,9 @@ Run IDs with best paces for each HP% Dealt:
             var youtubeID = run.YouTubeID.Replace(",", string.Empty);
             var finalTimeDisplay = run.FinalTimeDisplay.Replace(",", string.Empty);
             var actualOverlayMode = run.ActualOverlayMode.Replace(",", string.Empty);
+            var runBuffs = run.RunBuffs.ToString().Replace(",", string.Empty);
 
-            var line = $"{objectiveImage},{questName},{run.RunID},{run.QuestID},{youtubeID},{finalTimeDisplay},{run.Date},{actualOverlayMode},{run.PartySize}";
+            var line = $"{objectiveImage},{questName},{run.RunID},{run.QuestID},{youtubeID},{finalTimeDisplay},{run.Date},{actualOverlayMode},{runBuffs},{run.PartySize}";
             sb.AppendLine(line);
         }
 
@@ -2892,7 +2894,7 @@ Run IDs with best paces for each HP% Dealt:
     public static void SaveCSVFromListOfFastestRuns(List<FastestRun> fastestRuns, string filePath)
     {
         var sb = new StringBuilder();
-        sb.AppendLine("Objective Image,Quest Name,Run ID,Quest ID,Youtube ID,Final Time Display,Date");
+        sb.AppendLine("Objective Image,Quest Name,Run ID,Quest ID,Youtube ID,Final Time Display,Run Buffs,Date");
 
         foreach (var run in fastestRuns)
         {
@@ -2900,8 +2902,9 @@ Run IDs with best paces for each HP% Dealt:
             var questName = run.QuestName.Replace(",", string.Empty);
             var youtubeID = run.YouTubeID.Replace(",", string.Empty);
             var finalTimeDisplay = run.FinalTimeDisplay.Replace(",", string.Empty);
+            var runBuffs = run.RunBuffs.ToString().Replace(",", string.Empty);
 
-            var line = $"{objectiveImage},{questName},{run.RunID},{run.QuestID},{youtubeID},{finalTimeDisplay},{run.Date}";
+            var line = $"{objectiveImage},{questName},{run.RunID},{run.QuestID},{youtubeID},{finalTimeDisplay},{runBuffs},{run.Date}";
             sb.AppendLine(line);
         }
 
@@ -4928,6 +4931,74 @@ Run IDs with best paces for each HP% Dealt:
         this.graphChart.YAxes = this.YAxes;
     }
 
+    private RunBuff GetRunBuffs(ObservableCollection<QuestLogsOption> options)
+    {
+
+        var runBuffs = RunBuff.None;
+
+        if (options.Any(o => o.Name == "Halk" && o.IsSelected))
+        {
+            runBuffs |= RunBuff.Halk;
+        }
+
+        if (options.Any(o => o.Name == "Poogie Item" && o.IsSelected))
+        {
+            runBuffs |= RunBuff.PoogieItem;
+        }
+
+        if (options.Any(o => o.Name == "Diva Song" && o.IsSelected))
+        {
+            runBuffs |= RunBuff.DivaSong;
+        }
+
+        if (options.Any(o => o.Name == "Halk Pot Effect" && o.IsSelected))
+        {
+            runBuffs |= RunBuff.HalkPotEffect;
+        }
+
+        if (options.Any(o => o.Name == "Bento" && o.IsSelected))
+        {
+            runBuffs |= RunBuff.Bento;
+        }
+
+        if (options.Any(o => o.Name == "Guild Poogie" && o.IsSelected))
+        {
+            runBuffs |= RunBuff.GuildPoogie;
+        }
+
+        if (options.Any(o => o.Name == "Active Feature" && o.IsSelected))
+        {
+            runBuffs |= RunBuff.ActiveFeature;
+        }
+
+        if (options.Any(o => o.Name == "Guild Food" && o.IsSelected))
+        {
+            runBuffs |= RunBuff.GuildFood;
+        }
+
+        if (options.Any(o => o.Name == "Diva Skill" && o.IsSelected))
+        {
+            runBuffs |= RunBuff.DivaSkill;
+        }
+
+        if (options.Any(o => o.Name == "Secret Technique" && o.IsSelected))
+        {
+            runBuffs |= RunBuff.SecretTechnique;
+        }
+
+        if (options.Any(o => o.Name == "Diva Prayer Gem" && o.IsSelected))
+        {
+            runBuffs |= RunBuff.DivaPrayerGem;
+        }
+
+        if (options.Any(o => o.Name == "Course Attack Boost" && o.IsSelected))
+        {
+            runBuffs |= RunBuff.CourseAttackBoost;
+        }
+
+        return runBuffs;
+    }
+
     private void PersonalBestRefreshButton_Click(object sender, RoutedEventArgs e)
     {
         if (this.personalBestChart == null || this.personalBestSelectedWeapon == string.Empty || this.personalBestSelectedType == string.Empty)
@@ -4959,10 +5030,10 @@ Run IDs with best paces for each HP% Dealt:
         switch (this.personalBestSelectedType)
         {
             case "(Quest ID) Personal Best by Date":
-                this.SetStepLineSeriesForPersonalBestByDate(DatabaseManager.GetPersonalBestsByDate(questID, weaponTypeID, this.OverlayModeComboBox.Text));
+                this.SetStepLineSeriesForPersonalBestByDate(DatabaseManager.GetPersonalBestsByDate(questID, weaponTypeID, this.OverlayModeComboBox.Text, (uint)GetRunBuffs(this.MainWindow.DataLoader.Model.RunBuffsSearchOption)));
                 break;
             case "(Quest ID) Personal Best by Attempts":
-                this.SetStepLineSeriesForPersonalBestByAttempts(DatabaseManager.GetPersonalBestsByAttempts(questID, weaponTypeID, this.OverlayModeComboBox.Text));
+                this.SetStepLineSeriesForPersonalBestByAttempts(DatabaseManager.GetPersonalBestsByAttempts(questID, weaponTypeID, this.OverlayModeComboBox.Text, (uint)GetRunBuffs(this.MainWindow.DataLoader.Model.RunBuffsSearchOption)));
                 break;
             default:
                 this.personalBestChart.Series = this.PersonalBestSeries ?? Array.Empty<ISeries>(); // TODO test

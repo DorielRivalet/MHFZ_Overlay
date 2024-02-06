@@ -10332,18 +10332,9 @@ After all that you’ve unlocked magnet spike! You should get a material to make
 
     public string GetPoogieItemForImage => GetItemName(this.PoogieItemUseID());
 
-    public string GetAlternateMonsterImage(int id, bool forDiscord = false)
+    public string GetAlternateMonsterImage(int id)
     {
-        var pathContext = string.Empty;
-
-        if (forDiscord)
-        {
-            pathContext = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/";
-        }
-        else
-        {
-            pathContext = "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/";
-        }
+        var pathContext = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/";
 
         switch (id)
         {

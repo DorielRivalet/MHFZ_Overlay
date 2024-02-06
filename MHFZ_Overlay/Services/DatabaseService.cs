@@ -831,8 +831,8 @@ public sealed class DatabaseService
                             TimeLeft, 
                             FinalTimeValue,
                             FinalTimeDisplay,
-                            ActualOverlayMode,
-                            PartySize,
+                            q.ActualOverlayMode,
+                            q.PartySize,
                             pg.WeaponTypeID,
                             qrb.RunBuffs
                         FROM 
@@ -6509,7 +6509,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
         return success;
     }
 
-    public long GetPersonalBestElapsedTimeValue(long questID, int weaponTypeID, string category)
+    public long GetPersonalBestElapsedTimeValue(long questID, int weaponTypeID, string category, uint runBuffs)
     {
         if (string.IsNullOrEmpty(this.dataSource))
         {
@@ -6592,7 +6592,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                                 TimeLeft, 
                                 FinalTimeValue,
                                 FinalTimeDisplay,
-                                ActualOverlayMode,
+                                q.ActualOverlayMode,
                                 pg.WeaponTypeID
                             FROM 
                                 Quests q
@@ -6649,7 +6649,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
         return personalBest;
     }
 
-    public async Task<string> GetPersonalBestAsync(long questID, int weaponTypeID, string category, string timerMode, DataLoader dataLoader)
+    public async Task<string> GetPersonalBestAsync(long questID, int weaponTypeID, string category, string timerMode, DataLoader dataLoader, uint runBuffs)
     {
         var personalBest = Messages.TimerNotLoaded;
         if (string.IsNullOrEmpty(this.dataSource))
@@ -6740,7 +6740,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
         return personalBest;
     }
 
-    public Dictionary<DateTime, long> GetPersonalBestsByDate(long questID, int weaponTypeID, string category)
+    public Dictionary<DateTime, long> GetPersonalBestsByDate(long questID, int weaponTypeID, string category, uint runBuffs)
     {
         Dictionary<DateTime, long> personalBests = new();
         if (string.IsNullOrEmpty(this.dataSource))
@@ -6762,16 +6762,20 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                         q.ActualOverlayMode,
                         pg.WeaponTypeID,
                         q.CreatedAt,
-                        q.RunID
+                        q.RunID,
+                        qrb.RunBuffs
                     FROM 
                         Quests q
                     JOIN
                         PlayerGear pg ON q.RunID = pg.RunID
+                    JOIN
+                        QuestsRunBuffs qrb ON q.RunID = qrb.RunID
                     WHERE 
                         q.QuestID = @questID
                         AND pg.WeaponTypeID = @weaponTypeID
                         AND q.ActualOverlayMode = @category
                         AND q.PartySize = 1
+                        AND qrb.RunBuffs = @runBuffs
                     ORDER BY 
                         q.CreatedAt ASC",
                         conn))
@@ -6779,6 +6783,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                         cmd.Parameters.AddWithValue("@questID", questID);
                         cmd.Parameters.AddWithValue("@weaponTypeID", weaponTypeID);
                         cmd.Parameters.AddWithValue("@category", category);
+                        cmd.Parameters.AddWithValue("@runBuffs", runBuffs);
 
                         var reader = cmd.ExecuteReader();
                         Dictionary<DateTime, long> personalBestTimes = new();
@@ -6841,7 +6846,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
     }
 
     // Get personal best times by attempts
-    public Dictionary<long, long> GetPersonalBestsByAttempts(long questID, int weaponTypeID, string category)
+    public Dictionary<long, long> GetPersonalBestsByAttempts(long questID, int weaponTypeID, string category, uint runBuffs)
     {
         Dictionary<long, long> personalBests = new();
         if (string.IsNullOrEmpty(this.dataSource))
@@ -6860,7 +6865,8 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                     using (var cmd = new SQLiteCommand(
                         @"SELECT 
                                 pb.Attempts,
-                                q.FinalTimeValue
+                                q.FinalTimeValue,
+                                pb.RunBuffs
                             FROM 
                                 PersonalBests pb
                             JOIN
@@ -6871,6 +6877,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                                 q.QuestID = @questID
                                 AND pg.WeaponTypeID = @weaponTypeID
                                 AND q.ActualOverlayMode = @category
+                                AND pb.RunBuffs = @runBuffs
                                 AND q.PartySize = 1
                             ORDER BY 
                                 pb.Attempts ASC",
@@ -6879,6 +6886,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                         cmd.Parameters.AddWithValue("@questID", questID);
                         cmd.Parameters.AddWithValue("@weaponTypeID", weaponTypeID);
                         cmd.Parameters.AddWithValue("@category", category);
+                        cmd.Parameters.AddWithValue("@runBuffs", runBuffs);
 
                         var reader = cmd.ExecuteReader();
 
@@ -7068,7 +7076,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
         return attempts;
     }
 
-    public async Task<int> UpsertQuestAttemptsAsync(long questID, int weaponTypeID, string category)
+    public async Task<int> UpsertQuestAttemptsAsync(long questID, int weaponTypeID, string category, uint runBuffs)
     {
         var attempts = 0;
         if (string.IsNullOrEmpty(this.dataSource))
@@ -7136,7 +7144,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
         return attempts;
     }
 
-    public async Task<int> UpsertPersonalBestAttemptsAsync(long questID, int weaponTypeID, string category)
+    public async Task<int> UpsertPersonalBestAttemptsAsync(long questID, int weaponTypeID, string category, uint runBuffs)
     {
         var attempts = 0;
         if (string.IsNullOrEmpty(this.dataSource))
@@ -7205,7 +7213,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
     }
 
     // TODO test
-    public long GetQuestAttempts(long questID, int weaponTypeID, string category)
+    public long GetQuestAttempts(long questID, int weaponTypeID, string category, uint runBuffs)
     {
         long attempts = 0;
         if (string.IsNullOrEmpty(this.dataSource))
@@ -7230,11 +7238,13 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                         WHERE 
                             QuestID = @questID
                             AND WeaponTypeID = @weaponTypeID
-                            AND ActualOverlayMode = @category", conn))
+                            AND ActualOverlayMode = @category
+                            AND RunBuffs = @runBuffs", conn))
                     {
                         cmd.Parameters.Add("@questID", DbType.Int64).Value = questID;
                         cmd.Parameters.Add("@weaponTypeID", DbType.Int32).Value = weaponTypeID;
                         cmd.Parameters.Add("@category", DbType.String).Value = category;
+                        cmd.Parameters.Add("@runBuffs", DbType.Int32).Value = runBuffs;
 
                         var result = cmd.ExecuteScalar();
                         if (result != null)
@@ -8252,6 +8262,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                                 WeaponTypeID = long.Parse(reader["WeaponTypeID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
                                 ActualOverlayMode = reader["ActualOverlayMode"]?.ToString() ?? "0",
                                 Attempts = long.Parse(reader["Attempts"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                RunBuffs = long.Parse(reader["RunBuffs"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
                             };
                         }
                     }
@@ -8288,6 +8299,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                                 WeaponTypeID = long.Parse(reader["WeaponTypeID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
                                 ActualOverlayMode = reader["ActualOverlayMode"]?.ToString() ?? "0",
                                 Attempts = long.Parse(reader["Attempts"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                RunBuffs = long.Parse(reader["RunBuffs"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
                             };
                         }
                     }
@@ -9279,6 +9291,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                                 WeaponTypeID = long.Parse(reader["WeaponTypeID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
                                 ActualOverlayMode = reader["ActualOverlayMode"]?.ToString() ?? "0",
                                 Attempts = long.Parse(reader["Attempts"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                RunBuffs = long.Parse(reader["RunBuffs"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
                             };
 
                             hashSet.Add(data);
@@ -9548,6 +9561,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                                 WeaponTypeID = long.Parse(reader["WeaponTypeID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
                                 ActualOverlayMode = reader["ActualOverlayMode"]?.ToString() ?? "0",
                                 Attempts = long.Parse(reader["Attempts"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                RunBuffs = long.Parse(reader["RunBuffs"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
                             };
 
                             hashSet.Add(data);
@@ -11614,7 +11628,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
     }
 
     // TODO add check if there are runs for the quest id?
-    public List<FastestRun> GetFastestRuns(ConfigWindow configWindow, string weaponName = "All Weapons")
+    public List<FastestRun> GetFastestRuns(ConfigWindow configWindow, uint selectedRunBuffs, string weaponName = "All Weapons")
     {
         var fastestRuns = new List<FastestRun>();
         if (string.IsNullOrEmpty(this.dataSource))
@@ -11646,15 +11660,19 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                                             FinalTimeDisplay, 
                                             Date, 
                                             ActualOverlayMode, 
-                                            PartySize
+                                            PartySize,
+                                            qrb.RunBuffs
                                         FROM 
                                             Quests q
                                         JOIN 
                                             QuestName qn ON q.QuestID = qn.QuestNameID
+                                        JOIN 
+                                            QuestsRunBuffs qrb ON q.RunID = qrb.RunID
                                         WHERE 
                                             q.QuestID = @questID 
                                             AND q.PartySize = 1
                                             AND q.ActualOverlayMode = @SelectedOverlayMode
+                                            AND qrb.RunBuffs = @SelectedRunBuffs
                                         ORDER BY 
                                             FinalTimeValue ASC
                                         LIMIT 20";
@@ -11671,18 +11689,22 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                                             Date, 
                                             ActualOverlayMode, 
                                             PartySize,
-                                            pg.WeaponTypeID
+                                            pg.WeaponTypeID,
+                                            qrb.RunBuffs
                                         FROM 
                                             Quests q
                                         JOIN 
                                             QuestName qn ON q.QuestID = qn.QuestNameID
                                         JOIN
                                             PlayerGear pg ON q.RunID =  pg.RunID
+                                        JOIN
+                                            QuestsRunBuffs qrb ON q.RunID =  qrb.RunID
                                         WHERE 
                                             q.QuestID = @questID 
                                             AND q.PartySize = 1
                                             AND q.ActualOverlayMode = @SelectedOverlayMode
                                             AND pg.WeaponTypeID = @SelectedWeaponTypeID
+                                            AND qrb.RunBuffs = @SelectedRunBuffs
                                         ORDER BY 
                                             FinalTimeValue ASC
                                         LIMIT 20";
@@ -11692,7 +11714,6 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                         using (var cmd = new SQLiteCommand(sql, conn))
                         {
                             var selectedOverlayMode = ((ComboBoxItem)configWindow.OverlayModeComboBox.SelectedItem).Content.ToString();
-
                             // idk if this is needed
                             if (string.IsNullOrEmpty(selectedOverlayMode))
                             {
@@ -11701,6 +11722,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
                             cmd.Parameters.AddWithValue("@questID", questID);
                             cmd.Parameters.AddWithValue("@SelectedOverlayMode", selectedOverlayMode);
+                            cmd.Parameters.AddWithValue("@SelectedRunBuffs", selectedRunBuffs);
 
                             if (weaponName != "All Weapons")
                             {
@@ -11727,6 +11749,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                                             YouTubeID = (string)reader["YouTubeID"],
                                             FinalTimeDisplay = (string)reader["FinalTimeDisplay"],
                                             Date = DateTime.Parse((string)reader["Date"], CultureInfo.InvariantCulture),
+                                            RunBuffs = long.Parse(reader["RunBuffs"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
                                         });
                                     }
                                 }
@@ -11777,11 +11800,14 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                                     FinalTimeDisplay, 
                                     Date, 
                                     ActualOverlayMode, 
-                                    PartySize
+                                    PartySize,
+                                    qrb.RunBuffs
                                 FROM 
                                     Quests q
                                 JOIN 
                                     QuestName qn ON q.QuestID = qn.QuestNameID
+                                JOIN 
+                                    QuestsRunBuffs qrb ON q.RunID = qrb.RunID
                                 WHERE
                                     q.PartySize = 1
                                     AND q.YouTubeID = 'dQw4w9WgXcQ'
@@ -11811,6 +11837,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                                         YouTubeID = (string)reader["YouTubeID"],
                                         FinalTimeDisplay = (string)reader["FinalTimeDisplay"],
                                         Date = DateTime.Parse((string)reader["Date"], CultureInfo.InvariantCulture),
+                                        RunBuffs = long.Parse(reader["RunBuffs"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
                                     });
                                 }
                             }
@@ -11986,17 +12013,20 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                     @"SELECT 
                             ObjectiveImage, 
                             qn.QuestNameName, 
-                            RunID, 
+                            q.RunID, 
                             QuestID, 
                             YouTubeID, 
                             FinalTimeDisplay, 
                             Date, 
                             ActualOverlayMode, 
-                            PartySize
+                            PartySize,
+                            qrb.RunBuffs
                         FROM 
                             Quests q
                         JOIN
                             QuestName qn ON q.QuestID = qn.QuestNameID
+                        JOIN
+                            QuestsRunBuffs qrb ON q.RunID = qrb.RunID
                         ORDER BY 
                             Date DESC
                         LIMIT 10", conn))
@@ -12023,6 +12053,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                                         Date = DateTime.Parse((string)reader["Date"], CultureInfo.InvariantCulture),
                                         ActualOverlayMode = (string)reader["ActualOverlayMode"],
                                         PartySize = (long)reader["PartySize"],
+                                        RunBuffs = long.Parse(reader["RunBuffs"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
                                     };
                                     recentRuns.Add(recentRun);
                                 }
@@ -12067,21 +12098,24 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                     @"SELECT 
                         ObjectiveImage, 
                         qn.QuestNameName, 
-                        RunID, 
+                        q.RunID, 
                         QuestID, 
                         YouTubeID, 
                         FinalTimeDisplay, 
                         Date, 
                         ActualOverlayMode, 
-                        PartySize
+                        PartySize,
+                        qrb.RunBuffs
                     FROM 
                         Quests q
                     JOIN
                         QuestName qn ON q.QuestID = qn.QuestNameID
+                    JOIN
+                        QuestsRunBuffs qrb ON q.RunID = qrb.RunID
                     WHERE
                         DATE(Date) = DATE(@SelectedDate)
                     ORDER BY 
-                        RunID ASC", conn))
+                        q.RunID ASC", conn))
                     {
                         cmd.Parameters.AddWithValue("@SelectedDate", selectedDate.Value.Date);
                         using (var reader = cmd.ExecuteReader())
@@ -12106,6 +12140,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                                         Date = DateTime.Parse((string)reader["Date"], CultureInfo.InvariantCulture),
                                         ActualOverlayMode = (string)reader["ActualOverlayMode"],
                                         PartySize = (long)reader["PartySize"],
+                                        RunBuffs = long.Parse(reader["RunBuffs"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
                                     };
                                     recentRuns.Add(recentRun);
                                 }
@@ -12225,7 +12260,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
         return weaponUsageData;
     }
 
-    public void QuestIDButtonClick(object sender, RoutedEventArgs e, ConfigWindow configWindow)
+    public void QuestIDButtonClick(object sender, RoutedEventArgs e, ConfigWindow configWindow, uint selectedRunBuffs)
     {
         if (string.IsNullOrEmpty(this.dataSource))
         {
@@ -12252,7 +12287,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                 try
                 {
                     using (var cmd = new SQLiteCommand(
-                    @"SELECT 
+                    @"SELECT
                             q.ObjectiveImage,
                             q.ObjectiveTypeID,
                             q.ObjectiveQuantity,
@@ -12274,7 +12309,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                         {
                             if (!reader.HasRows)
                             {
-                                var message = string.Format(CultureInfo.InvariantCulture, "Quest ID not found. Please use the Quest ID option in Settings and go into a quest in order to view the ID needed to search. You may also not have completed any runs for the selected Quest ID or for the selected category.\n\nQuest ID: {0}\nOverlay Mode: {1}\n{2}", questID, selectedOverlayMode, reader.ToString());
+                                var message = string.Format(CultureInfo.InvariantCulture, "Quest ID not found. Please use the Quest ID option in Settings and go into a quest in order to view the ID needed to search. You may also not have completed any runs for the selected Quest ID or for the selected category.\n\nQuest ID: {0}\nOverlay Mode: {1}\nRun Buffs: {2}\n{3}", questID, selectedOverlayMode, selectedRunBuffs, reader.ToString());
                                 var snackbar = new Snackbar(configWindow.ConfigWindowSnackBarPresenter)
                                 {
                                     Style = (Style)configWindow.FindResource("CatppuccinMochaSnackBar"),
@@ -12303,27 +12338,32 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                     @"SELECT 
                                 pg.WeaponTypeID, 
                                 MIN(q.FinalTimeValue) as BestTime, 
-                                q.RunID
+                                q.RunID,
+                                qrb.RunBuffs
                             FROM 
                                 Quests q 
                             JOIN 
-                                PlayerGear pg ON q.RunID = pg.RunID 
+                                PlayerGear pg ON q.RunID = pg.RunID
+                            JOIN 
+                                QuestsRunBuffs qrb ON q.RunID = qrb.RunID 
                             WHERE 
                                 q.QuestID = @QuestID 
                                 AND q.PartySize = 1 
                                 AND q.ActualOverlayMode = @SelectedOverlayMode
+                                AND qrb.RunBuffs = @SelectedRunBuffs
                             GROUP BY 
                                 pg.WeaponTypeID
                             ", conn))
                     {
                         cmd.Parameters.AddWithValue("@QuestID", questID);
                         cmd.Parameters.AddWithValue("@SelectedOverlayMode", selectedOverlayMode);
+                        cmd.Parameters.AddWithValue("@SelectedRunBuffs", selectedRunBuffs);
 
                         using (var reader = cmd.ExecuteReader())
                         {
                             if (!reader.HasRows)
                             {
-                                var message = string.Format(CultureInfo.InvariantCulture, "Quest ID not found. Please use the Quest ID option in Settings and go into a quest in order to view the ID needed to search. You may also not have completed any runs for the selected Quest ID or for the selected category.\n\nQuest ID: {0}\nOverlay Mode: {1}\n{2}", questID, selectedOverlayMode, reader.ToString());
+                                var message = string.Format(CultureInfo.InvariantCulture, "Quest ID not found. Please use the Quest ID option in Settings and go into a quest in order to view the ID needed to search. You may also not have completed any runs for the selected Quest ID or for the selected category.\n\nQuest ID: {0}\nOverlay Mode: {1}\nRun Buffs: {2}\n{3}", questID, selectedOverlayMode, selectedRunBuffs, reader.ToString());
                                 var snackbar = new Snackbar(configWindow.ConfigWindowSnackBarPresenter)
                                 {
                                     Style = (Style)configWindow.FindResource("CatppuccinMochaSnackBar"),
@@ -12603,7 +12643,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
         return questCompletions;
     }
 
-    public async Task<string> GetQuestAttemptsAsync(long questID, string actualOverlayMode, int weaponTypeID)
+    public async Task<string> GetQuestAttemptsAsync(long questID, string actualOverlayMode, int weaponTypeID, uint runBuffs)
     {
         var questAttempts = "0";
         if (string.IsNullOrEmpty(this.dataSource))
@@ -12655,7 +12695,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
         return questAttempts;
     }
 
-    public async Task<double> GetQuestAttemptsPerPersonalBestAsync(long questID, int weaponTypeID, string actualOverlayMode)
+    public async Task<double> GetQuestAttemptsPerPersonalBestAsync(long questID, int weaponTypeID, string actualOverlayMode, uint runBuffs)
     {
         var attemptsPerPersonalBest = 0.0;
         if (string.IsNullOrEmpty(this.dataSource))
@@ -12664,8 +12704,8 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
             return attemptsPerPersonalBest;
         }
 
-        var questAttempts = await GetQuestAttemptsAsync(questID, actualOverlayMode, weaponTypeID);
-        var personalBestCount = await GetPersonalBestsCountAsync(questID, weaponTypeID, actualOverlayMode);
+        var questAttempts = await GetQuestAttemptsAsync(questID, actualOverlayMode, weaponTypeID, runBuffs);
+        var personalBestCount = await GetPersonalBestsCountAsync(questID, weaponTypeID, actualOverlayMode, runBuffs);
         if (personalBestCount > 0)
         {
             attemptsPerPersonalBest = double.Parse(questAttempts, CultureInfo.InvariantCulture) / personalBestCount;
@@ -12692,7 +12732,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
         return attemptsPerPersonalBest;
     }
 
-    public async Task<int> GetPersonalBestsCountAsync(long questID, int weaponTypeID, string category)
+    public async Task<int> GetPersonalBestsCountAsync(long questID, int weaponTypeID, string category, uint runBuffs)
     {
         int personalBestCount = 0;
         long? previousBestTime = null;
@@ -12822,7 +12862,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
         return personalBestCount;
     }
 
-    public List<Quest> GetQuests(long questID, string weaponName, string actualOverlayMode)
+    public List<Quest> GetQuests(long questID, string weaponName, string actualOverlayMode, uint runBuffs)
     {
         List<Quest> quests = new();
         if (string.IsNullOrEmpty(this.dataSource))
@@ -12847,16 +12887,20 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                             Quests q
                         JOIN 
                             PlayerGear pg ON q.RunID = pg.RunID
+                        JOIN 
+                            QuestsRunBuffs qrb ON q.RunID = qrb.RunID
                         WHERE 
                             q.QuestID = @QuestID
                         AND q.ActualOverlayMode = @ActualOverlayMode
                         AND pg.WeaponTypeID = @WeaponTypeID
+                        AND qrb.RunBuffs = @RunBuffs
                         ORDER BY RunID ASC";
                     using (var cmd = new SQLiteCommand(sql, conn))
                     {
                         cmd.Parameters.AddWithValue("@QuestID", questID);
                         cmd.Parameters.AddWithValue("@ActualOverlayMode", actualOverlayMode);
                         cmd.Parameters.AddWithValue("@WeaponTypeID", weaponTypeID);
+                        cmd.Parameters.AddWithValue("@RunBuffs", runBuffs);
 
                         using (var reader = cmd.ExecuteReader())
                         {
