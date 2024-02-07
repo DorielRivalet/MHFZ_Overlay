@@ -7917,9 +7917,157 @@ TreeScope.Children, condition);
 
             // zp in bold for markdown
             // fruits and speedrunner items also in bold
-            this.SavedGearStats = string.Format(CultureInfo.InvariantCulture, "【MHF-Z】Overlay {0} {1}({2}){3}\n\n{4}{5}: {6}\nHead: {7}\nChest: {8}\nArms: {9}\nWaist: {10}\nLegs: {11}\nCuffs: {12}\n\nWeapon Attack: {13} | Total Defense: {14}\n\nZenith Skills:\n{15}\n\nAutomatic Skills:\n{16}\n\nActive Skills{17}:\n{18}\n\nCaravan Skills:\n{19}\n\nDiva Skill:\n{20}\n\nGuild Food:\n{21}\n\nStyle Rank:\n{22}\n\nItems:\n{23}\n\nAmmo:\n{24}\n\nPoogie Item:\n{25}\n\nRoad/Duremudira Skills:\n{26}\n", App.CurrentProgramVersion, this.GetWeaponClass(), GetGender(), GetMetadata, GetGearDescription, this.CurrentWeaponName, this.GetRealWeaponName, this.GetArmorHeadName, this.GetArmorChestName, this.GetArmorArmName, this.GetArmorWaistName, this.GetArmorLegName, this.GetCuffs, this.BloatedWeaponAttack().ToString(CultureInfo.InvariantCulture), this.TotalDefense().ToString(CultureInfo.InvariantCulture), this.GetZenithSkills, this.GetAutomaticSkills, showGouBoost, this.GetArmorSkills, this.GetCaravanSkills, GetDivaSkillNameFromID(this.DivaSkill()), GetArmorSkill(this.GuildFoodSkill()), this.GetGSRSkills, this.GetItemPouch, this.GetAmmoPouch, GetItemName(this.PoogieItemUseID()), this.GetRoadDureSkills);
-            this.MarkdownSavedGearStats = string.Format(CultureInfo.InvariantCulture, "__【MHF-Z】Overlay {0}__ *{1}({2})*{3}\n\n{4}**{5}**: {6}\n**Head:** {7}\n**Chest:** {8}\n**Arms:** {9}\n**Waist:** {10}\n**Legs:** {11}\n**Cuffs:** {12}\n\n**Weapon Attack:** {13} | **Total Defense:** {14}\n\n**Zenith Skills:**\n{15}\n\n**Automatic Skills:**\n{16}\n\n**Active Skills{17}:**\n{18}\n\n**Caravan Skills:**\n{19}\n\n**Diva Skill:**\n{20}\n\n**Guild Food:**\n{21}\n\n**Style Rank:**\n{22}\n\n**Items:**\n{23}\n\n**Ammo:**\n{24}\n\n**Poogie Item:**\n{25}\n\n**Road/Duremudira Skills:**\n{26}\n", App.CurrentProgramVersion, this.GetWeaponClass(), GetGender(), GetMetadata, GetGearDescription, this.CurrentWeaponName, this.GetRealWeaponName, this.GetArmorHeadName, this.GetArmorChestName, this.GetArmorArmName, this.GetArmorWaistName, this.GetArmorLegName, this.GetCuffs, this.BloatedWeaponAttack().ToString(CultureInfo.InvariantCulture), this.TotalDefense().ToString(CultureInfo.InvariantCulture), this.GetZenithSkills, this.GetAutomaticSkills, showGouBoost, this.GetArmorSkills, this.GetCaravanSkills, GetDivaSkillNameFromID(this.DivaSkill()), GetArmorSkill(this.GuildFoodSkill()), this.GetGSRSkills, this.GetItemPouch, this.GetAmmoPouch, GetItemName(this.PoogieItemUseID()), this.GetRoadDureSkills);
-            return string.Format(CultureInfo.InvariantCulture, "【MHF-Z】Overlay {0} {1}({2}){3}\n\n{4}{5}: {6}\nHead: {7}\nChest: {8}\nArms: {9}\nWaist: {10}\nLegs: {11}\nCuffs: {12}\n\nWeapon Attack: {13} | Total Defense: {14}\n\nZenith Skills:\n{15}\n\nAutomatic Skills:\n{16}\n\nActive Skills{17}:\n{18}\n\nCaravan Skills:\n{19}\n\nDiva Skill:\n{20}\n\nGuild Food:\n{21}\n\nStyle Rank:\n{22}\n\nItems:\n{23}\n\nAmmo:\n{24}\n\nPoogie Item:\n{25}\n\nRoad/Duremudira Skills:\n{26}\n", App.CurrentProgramVersion, this.GetWeaponClass(), GetGender(), GetMetadata, GetGearDescription, this.CurrentWeaponName, this.GetRealWeaponName, this.GetArmorHeadName, this.GetArmorChestName, this.GetArmorArmName, this.GetArmorWaistName, this.GetArmorLegName, this.GetCuffs, this.BloatedWeaponAttack().ToString(CultureInfo.InvariantCulture), this.TotalDefense().ToString(CultureInfo.InvariantCulture), this.GetZenithSkills, this.GetAutomaticSkills, showGouBoost, this.GetArmorSkills, this.GetCaravanSkills, GetDivaSkillNameFromID(this.DivaSkill()), GetArmorSkill(this.GuildFoodSkill()), this.GetGSRSkills, this.GetItemPouch, this.GetAmmoPouch, GetItemName(this.PoogieItemUseID()), this.GetRoadDureSkills);
+            var stats = string.Format(
+                CultureInfo.InvariantCulture,
+                @$"【MHF-Z】Overlay {App.CurrentProgramVersion} {this.GetWeaponClass()}({GetGender()}){GetMetadata}
+
+Set Name: {GetGearDescription}
+{this.CurrentWeaponName}: {this.GetRealWeaponName}
+Head: {this.GetArmorHeadName}
+Chest: {this.GetArmorChestName}
+Arms: {this.GetArmorArmName}
+Waist: {this.GetArmorWaistName}
+Legs: {this.GetArmorLegName}
+Cuffs: {this.GetCuffs}
+
+Weapon Attack: {this.BloatedWeaponAttack().ToString(CultureInfo.InvariantCulture)} | Total Defense: {this.TotalDefense().ToString(CultureInfo.InvariantCulture)}
+
+Zenith Skills:
+{this.GetZenithSkills}
+
+Automatic Skills:
+{this.GetAutomaticSkills}
+
+Active Skills{showGouBoost}:
+{this.GetArmorSkills}
+
+Caravan Skills:
+{this.GetCaravanSkills}
+
+Diva:
+{GetDivaSkillNameFromID(this.DivaSkill())}
+Song {(DivaSongActive ? "ON" : "OFF")}
+
+Diva Prayer Gems:
+{GetDivaPrayerGems()}
+
+Guild:
+{GetArmorSkill(this.GuildFoodSkill())}
+{GetGuildPoogieEffect()}
+
+Style Rank:
+{this.GetGSRSkills}
+
+Items:
+{this.GetItemPouch}
+
+Ammo:
+{this.GetAmmoPouch}
+
+Poogie Item:
+{GetItemName(this.PoogieItemUseID())}
+
+Road/Duremudira Skills:
+{this.GetRoadDureSkills}
+
+Active Feature {(IsActiveFeatureOn(GetActiveFeature(), WeaponType()) ? "ON" : "OFF")}
+
+Courses:
+Main: {GetMainCourses()}
+Additional: {GetAdditionalCourses()}
+
+Halk:
+{(HalkOn() ? "Active" : "Inactive")}
+Halk Pot {(isHalkPotEquipped() || HalkPotEffectOn() ? "ON" : "OFF")}
+LV{HalkLevel()}
+Element Type {GetHalkElement()}
+Status Type {GetHalkStatus()}
+Intimacy {HalkIntimacy()}
+Health {HalkHealth()}
+Attack {HalkAttack()}
+Defense {HalkDefense()}
+Intellect {HalkIntellect()}
+{HalkSkill1()} | {HalkSkill2()} | {HalkSkill3()}
+
+Overlay Hash: {DatabaseManagerInstance.GetOverlayHash()}
+");
+            this.SavedGearStats = stats;
+            var formattedStats = string.Format(
+                CultureInfo.InvariantCulture,
+                @$"__【MHF-Z】Overlay {App.CurrentProgramVersion}__ *{this.GetWeaponClass()}({GetGender()})*{GetMetadata}
+
+Set Name: {GetGearDescription}
+**{this.CurrentWeaponName}:** {this.GetRealWeaponName}
+**Head:** {this.GetArmorHeadName}
+**Chest:** {this.GetArmorChestName}
+**Arms:** {this.GetArmorArmName}
+**Waist:** {this.GetArmorWaistName}
+**Legs:** {this.GetArmorLegName}
+**Cuffs:** {this.GetCuffs}
+
+**Weapon Attack:** {this.BloatedWeaponAttack().ToString(CultureInfo.InvariantCulture)} | **Total Defense:** {this.TotalDefense().ToString(CultureInfo.InvariantCulture)}
+
+**Zenith Skills:**
+{this.GetZenithSkills}
+
+**Automatic Skills:**
+{this.GetAutomaticSkills}
+
+**Active Skills{showGouBoost}:**
+{this.GetArmorSkills}
+
+**Caravan Skills:**
+{this.GetCaravanSkills}
+
+**Diva:**
+{GetDivaSkillNameFromID(this.DivaSkill())}
+Song {(DivaSongActive ? "ON" : "OFF")}
+
+**Diva Prayer Gems:**
+{GetDivaPrayerGems()}
+
+**Guild:**
+{GetArmorSkill(this.GuildFoodSkill())}
+{GetGuildPoogieEffect()}
+
+**Style Rank:**
+{this.GetGSRSkills}
+
+**Items:**
+{this.GetItemPouch}
+
+**Ammo:**
+{this.GetAmmoPouch}
+
+**Poogie Item:**
+{GetItemName(this.PoogieItemUseID())}
+
+**Road/Duremudira Skills:**
+{this.GetRoadDureSkills}
+
+**Active Feature {(IsActiveFeatureOn(GetActiveFeature(), WeaponType()) ? "ON" : "OFF")}**
+
+**Courses:**
+Main: {GetMainCourses()}
+Additional: {GetAdditionalCourses()}
+
+**Halk:**
+{(HalkOn() ? "Active" : "Inactive")}
+Halk Pot {(isHalkPotEquipped() || HalkPotEffectOn() ? "ON" : "OFF")}
+LV{HalkLevel()}
+Element Type {GetHalkElement()}
+Status Type {GetHalkStatus()}
+Intimacy {HalkIntimacy()}
+Health {HalkHealth()}
+Attack {HalkAttack()}
+Defense {HalkDefense()}
+Intellect {HalkIntellect()}
+{HalkSkill1()} | {HalkSkill2()} | {HalkSkill3()}
+
+**Overlay Hash:** {DatabaseManagerInstance.GetOverlayHash()}
+");
+            this.MarkdownSavedGearStats = formattedStats;
+            return stats;
         }
         else
         {
@@ -8158,6 +8306,32 @@ Overlay Hash: {52}
         return string.Join(", ", courseNames).Trim();
     }
 
+    public string GetMainCourses()
+    {
+        if (Rights() <= 0 || Rights() > 0xFFFF)
+        {
+            return "None";
+        }
+
+        // Map the first and second bytes to course rights names
+        var courseNames = MapCourseRightsToNames((long)Rights(), 0, typeof(CourseRightsSecondByte));
+        // Join the names with commas
+        return string.Join(", ", courseNames).Trim();
+    }
+
+    public string GetAdditionalCourses()
+    {
+        if (Rights() <= 0 || Rights() > 0xFFFF)
+        {
+            return "None";
+        }
+
+        // Map the first and second bytes to course rights names
+        var courseNames = MapCourseRightsToNames((long)Rights(), 1, typeof(CourseRightsFirstByte));
+        // Join the names with commas
+        return string.Join(", ", courseNames).Trim();
+    }
+
     private IEnumerable<string> MapCourseRightsToNames(long rights, int bytePosition, Type enumType)
     {
         if ((rights < 0x0100 && bytePosition == 1) || rights == 0)
@@ -8197,6 +8371,54 @@ Overlay Hash: {52}
 
         uint weaponFlag = (uint)Math.Pow(2, weaponTypeID);
         return IsBitfieldContainingFlag((uint)activeFeature, (ActiveFeature)weaponFlag, (uint)ActiveFeature.All);
+    }
+
+    public string GetHalkElement()
+    {
+        var element = "None";
+
+        if (HalkFire() >= 100)
+        {
+            return "Fire";
+        }
+        if (HalkWater() >= 100)
+        {
+            return "Water";
+        }
+        if (HalkThunder() >= 100)
+        {
+            return "Thunder";
+        }
+        if (HalkIce() >= 100)
+        {
+            return "Ice";
+        }
+        if (HalkDragon() >= 100)
+        {
+            return "Dragon";
+        }
+
+        return element;
+    }
+
+    public string GetHalkStatus()
+    {
+        var status = "None";
+
+        if (HalkPoison() >= 100)
+        {
+            return "Poison";
+        }
+        if (HalkSleep() >= 100)
+        {
+            return "Sleep";
+        }
+        if (HalkParalysis() >= 100)
+        {
+            return "Paralysis";
+        }
+
+        return status;
     }
 
     public string GetHalkElement(QuestsHalk halk)
@@ -8269,6 +8491,28 @@ Overlay Hash: {52}
         return effect;
     }
 
+    public string GetGuildPoogieEffect()
+    {
+        var effect = "No Poogie";
+
+        if (GuildPoogie1Skill() >= 1)
+        {
+            return EZlion.Mapper.SkillGuildPoogie.IDName[GuildPoogie1Skill()];
+        }
+
+        if (GuildPoogie2Skill() >= 1)
+        {
+            return EZlion.Mapper.SkillGuildPoogie.IDName[GuildPoogie2Skill()];
+        }
+
+        if (GuildPoogie3Skill() >= 1)
+        {
+            return EZlion.Mapper.SkillGuildPoogie.IDName[GuildPoogie3Skill()];
+        }
+
+        return effect;
+    }
+
     public string GetGuildPoogieEffect(List<int> poogie)
     {
         var effect = "No Poogie";
@@ -8312,6 +8556,53 @@ Overlay Hash: {52}
                 var gemColor = string.Empty;
 
                 switch (i){
+                    case 0:
+                        gemColor = "Red";
+                        break;
+                    case 1:
+                        gemColor = "Yellow";
+                        break;
+                    case 2:
+                        gemColor = "Green";
+                        break;
+                    case 3:
+                        gemColor = "Blue";
+                        break;
+                }
+
+                gems += $"{gemColor} 💎 {skillName} LV{gemLevels[i]}";
+                if (i != gemTypes.Length - 1)
+                {
+                    gems += "\n";
+                }
+            }
+        }
+
+        return string.IsNullOrEmpty(gems) ? "None" : gems;
+    }
+
+    public string GetDivaPrayerGems()
+    {
+        var gems = string.Empty;
+        var gemTypes = new long?[] { DivaPrayerGemRedSkill(), DivaPrayerGemYellowSkill(), DivaPrayerGemGreenSkill(), DivaPrayerGemBlueSkill() };
+        var gemLevels = new long?[] { DivaPrayerGemRedLevel(), DivaPrayerGemYellowLevel(), DivaPrayerGemGreenLevel(), DivaPrayerGemBlueLevel() };
+
+        for (var i = 0; i < gemTypes.Length; i++)
+        {
+            var skillId = gemTypes[i];
+
+            if (skillId == null)
+            {
+                continue;
+            }
+
+            if (SkillDivaPrayerGem.IDName.TryGetValue((int)skillId, out var skillName)
+                && skillName != "None" && skillName != string.Empty)
+            {
+                var gemColor = string.Empty;
+
+                switch (i)
+                {
                     case 0:
                         gemColor = "Red";
                         break;
