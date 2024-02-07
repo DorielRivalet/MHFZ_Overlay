@@ -1890,4 +1890,16 @@ public sealed class AddressModelHGE : AddressModel
     /// <inheritdoc/>
     public override int DivaSongFromGuildStart() => this.M.ReadInt("mhfo-hd.dll+ED3EB24");
 
+    /// <inheritdoc/>
+    public override int QuestVariant1() => this.M.ReadByte("mhfo-hd.dll+2AFA897");
+
+    /// <inheritdoc/>
+    public override int QuestVariant2() => this.M.ReadByte("mhfo-hd.dll+2AFA898");
+
+    /// <inheritdoc/>
+    public override int QuestVariant3() => this.M.ReadByte("mhfo-hd.dll+2AFA899");
+
+    /// <inheritdoc/>
+    public override int QuestVariant4() => this.M.ReadByte("mhfo-hd.dll+2AFA89A");
+
 }

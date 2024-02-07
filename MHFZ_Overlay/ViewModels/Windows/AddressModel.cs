@@ -1378,6 +1378,19 @@ public abstract class AddressModel : INotifyPropertyChanged
 
     public abstract int DivaSongFromGuildStart();
 
+    public abstract int QuestVariant1();
+
+    public abstract int QuestVariant2();
+
+    public abstract int QuestVariant3();
+
+    /// <summary>
+    /// unused?
+    /// </summary>
+    /// <returns></returns>
+    public abstract int QuestVariant4();
+
+
     /// <TODO>
     /// [] Not Done
     /// [X] Done
@@ -2738,11 +2751,6 @@ TreeScope.Children, condition);
         return (PouchItem1ID() == 4952 || PouchItem2ID() == 4952 || PouchItem3ID() == 4952 || PouchItem4ID() == 4952 || PouchItem5ID() == 4952 || PouchItem6ID() == 4952 || PouchItem7ID() == 4952 || PouchItem8ID() == 4952 || PouchItem9ID() == 4952 || PouchItem10ID() == 4952 || PouchItem11ID() == 4952 || PouchItem12ID() == 4952 || PouchItem13ID() == 4952 || PouchItem14ID() == 4952 || PouchItem15ID() == 4952 || PouchItem16ID() == 4952 || PouchItem17ID() == 4952 || PouchItem18ID() == 4952 || PouchItem19ID() == 4952 || PouchItem20ID() == 4952 || PartnyaBagItem1ID() == 4952 || PartnyaBagItem2ID() == 4952 || PartnyaBagItem3ID() == 4952 || PartnyaBagItem4ID() == 4952 || PartnyaBagItem5ID() == 4952 || PartnyaBagItem6ID() == 4952 || PartnyaBagItem7ID() == 4952 || PartnyaBagItem8ID() == 4952 || PartnyaBagItem9ID() == 4952 || PartnyaBagItem10ID() == 4952);
     }
 
-    /// <summary>
-    /// TODO quest exceptions
-    /// </summary>
-    /// <param name="overlayMode"></param>
-    /// <returns></returns>
     public RunBuff GetRunBuffs(string overlayMode = "")
     {
         if (overlayMode != string.Empty)
@@ -2762,7 +2770,7 @@ TreeScope.Children, condition);
 
         var runBuffs = RunBuff.None;
 
-        if (HalkOn())
+        if (HalkOn() && !(IsBitfieldContainingFlag((uint)QuestVariant2(), Models.Structures.QuestVariant2.DisableHalkPoogieCuff, (uint)Models.Structures.QuestVariant2.All) || IsBitfieldContainingFlag((uint)QuestVariant2(), Models.Structures.QuestVariant2.Road, (uint)Models.Structures.QuestVariant2.All)))
         {
             runBuffs |= RunBuff.Halk;
         }
@@ -2777,7 +2785,7 @@ TreeScope.Children, condition);
             runBuffs |= RunBuff.DivaSong;
         }
 
-        if (HalkPotEffectOn() || isHalkPotEquipped())
+        if ((HalkPotEffectOn() || isHalkPotEquipped()) && !(IsBitfieldContainingFlag((uint)QuestVariant2(), Models.Structures.QuestVariant2.DisableHalkPotionCourseAttack, (uint)Models.Structures.QuestVariant2.All) || IsBitfieldContainingFlag((uint)QuestVariant2(), Models.Structures.QuestVariant2.Level9999, (uint)Models.Structures.QuestVariant2.All) || IsBitfieldContainingFlag((uint)QuestVariant2(), Models.Structures.QuestVariant2.Road, (uint)Models.Structures.QuestVariant2.All)))
         {
             runBuffs |= RunBuff.HalkPotEffect;
         }
@@ -2793,7 +2801,7 @@ TreeScope.Children, condition);
             runBuffs |= RunBuff.GuildPoogie;
         }
 
-        if (IsActiveFeatureOn(GetActiveFeature(), WeaponType()))
+        if (IsActiveFeatureOn(GetActiveFeature(), WeaponType()) && !IsBitfieldContainingFlag((uint)QuestVariant2(), Models.Structures.QuestVariant2.DisableActiveFeature, (uint)Models.Structures.QuestVariant2.All))
         {
             runBuffs |= RunBuff.ActiveFeature;
         }
@@ -2803,22 +2811,22 @@ TreeScope.Children, condition);
             runBuffs |= RunBuff.GuildFood;
         }
 
-        if (DivaSkill() > 0 && DivaSkillUsesLeft() > 0)
+        if ((DivaSkill() > 0 && DivaSkillUsesLeft() > 0) && !IsBitfieldContainingFlag((uint)QuestVariant2(), Models.Structures.QuestVariant2.Road, (uint)Models.Structures.QuestVariant2.All))
         {
             runBuffs |= RunBuff.DivaSkill;
         }
 
-        if (StyleRank1() == 15 || StyleRank2() == 15)
+        if ((StyleRank1() == 15 || StyleRank2() == 15) && !IsBitfieldContainingFlag((uint)QuestVariant2(), Models.Structures.QuestVariant2.Level9999, (uint)Models.Structures.QuestVariant2.All))
         {
             runBuffs |= RunBuff.SecretTechnique;
         }
 
-        if (DivaPrayerGemRedSkill() != 0 || DivaPrayerGemYellowSkill() != 0 || DivaPrayerGemGreenSkill() != 0 || DivaPrayerGemBlueSkill() != 0)
+        if ((DivaPrayerGemRedSkill() != 0 || DivaPrayerGemYellowSkill() != 0 || DivaPrayerGemGreenSkill() != 0 || DivaPrayerGemBlueSkill() != 0) && !IsBitfieldContainingFlag((uint)QuestVariant2(), Models.Structures.QuestVariant2.Road, (uint)Models.Structures.QuestVariant2.All))
         {
             runBuffs |= RunBuff.DivaPrayerGem;
         }
 
-        if (GetAdditionalCourses(Rights()).Contains("Support"))
+        if (GetAdditionalCourses(Rights()).Contains("Support") && !(IsBitfieldContainingFlag((uint)QuestVariant2(), Models.Structures.QuestVariant2.DisableHalkPotionCourseAttack, (uint)Models.Structures.QuestVariant2.All) || IsBitfieldContainingFlag((uint)QuestVariant2(), Models.Structures.QuestVariant2.Level9999, (uint)Models.Structures.QuestVariant2.All)))
         {
             runBuffs |= RunBuff.CourseAttackBoost;
         }

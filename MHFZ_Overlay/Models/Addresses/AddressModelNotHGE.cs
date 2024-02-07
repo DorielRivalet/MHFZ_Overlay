@@ -1808,4 +1808,17 @@ public sealed class AddressModelNotHGE : AddressModel
 
     /// <inheritdoc/>
     public override int DivaSongFromGuildStart() => this.M.ReadInt("mhfo.dll+6104384");
+
+    /// <inheritdoc/>
+    public override int QuestVariant1() => this.M.ReadByte("mhfo.dll+28C2CE7");
+
+    /// <inheritdoc/>
+    public override int QuestVariant2() => this.M.ReadByte("mhfo.dll+28C2CE8");
+
+    /// <inheritdoc/>
+    public override int QuestVariant3() => this.M.ReadByte("mhfo.dll+28C2CE9");
+
+    /// <inheritdoc/>
+    public override int QuestVariant4() => this.M.ReadByte("mhfo.dll+28C2CEA");
+
 }
