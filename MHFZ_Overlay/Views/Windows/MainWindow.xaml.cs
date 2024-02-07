@@ -1754,8 +1754,6 @@ The process may take some time, as the program attempts to download from GitHub 
 
     public static MediaPlayer? MainWindowMediaPlayer { get; private set; }
 
-    private double PressedInputOpacity { get; set; } = 0.5;
-
     /// <summary>
     /// Subscribes this instance for player input.
     /// </summary>
@@ -2109,7 +2107,7 @@ The process may take some time, as the program attempts to download from GitHub 
         {
             var s = (Settings)Application.Current.TryFindResource("Settings");
 
-            if (s.EnableInputLogging && !this.DataLoader.Model.MouseInputDictionary.ContainsKey(this.DataLoader.Model.TimeInt()) && this.DataLoader.Model.QuestID() != 0 && this.DataLoader.Model.TimeInt() != this.DataLoader.Model.TimeDefInt() && this.DataLoader.Model.QuestState() == 0 && this.DataLoader.Model.PreviousTimeInt != this.DataLoader.Model.TimeInt() && image.Opacity == this.UnpressedInputOpacity)
+            if (s.EnableInputLogging && !this.DataLoader.Model.MouseInputDictionary.ContainsKey(this.DataLoader.Model.TimeInt()) && this.DataLoader.Model.QuestID() != 0 && this.DataLoader.Model.TimeInt() != this.DataLoader.Model.TimeDefInt() && this.DataLoader.Model.QuestState() == 0 && this.DataLoader.Model.PreviousTimeInt != this.DataLoader.Model.TimeInt() && image.Opacity == s.PlayerInputUnpressedOpacity)
             {
                 try
                 {
@@ -2121,7 +2119,7 @@ The process may take some time, as the program attempts to download from GitHub 
                 }
             }
 
-            this.Dispatcher.BeginInvoke(new Action(() => image.Opacity = this.PressedInputOpacity));
+            this.Dispatcher.BeginInvoke(new Action(() => image.Opacity = s.PlayerInputPressedOpacity));
         }
 
         // uncommenting the following line will suppress the middle mouse button click
@@ -2132,7 +2130,9 @@ The process may take some time, as the program attempts to download from GitHub 
     {
         if (this.mouseImages.TryGetValue(e.Button, out var image))
         {
-            this.Dispatcher.BeginInvoke(new Action(() => image.Opacity = this.UnpressedInputOpacity));
+            var s = (Settings)Application.Current.TryFindResource("Settings");
+
+            this.Dispatcher.BeginInvoke(new Action(() => image.Opacity = s.PlayerInputUnpressedOpacity));
         }
     }
 
@@ -2143,7 +2143,7 @@ The process may take some time, as the program attempts to download from GitHub 
         {
             var s = (Settings)Application.Current.TryFindResource("Settings");
 
-            if (s.EnableInputLogging && !this.DataLoader.Model.KeystrokesDictionary.ContainsKey(this.DataLoader.Model.TimeInt()) && this.DataLoader.Model.QuestID() != 0 && this.DataLoader.Model.TimeInt() != this.DataLoader.Model.TimeDefInt() && this.DataLoader.Model.QuestState() == 0 && this.DataLoader.Model.PreviousTimeInt != this.DataLoader.Model.TimeInt() && image.Opacity == this.UnpressedInputOpacity)
+            if (s.EnableInputLogging && !this.DataLoader.Model.KeystrokesDictionary.ContainsKey(this.DataLoader.Model.TimeInt()) && this.DataLoader.Model.QuestID() != 0 && this.DataLoader.Model.TimeInt() != this.DataLoader.Model.TimeDefInt() && this.DataLoader.Model.QuestState() == 0 && this.DataLoader.Model.PreviousTimeInt != this.DataLoader.Model.TimeInt() && image.Opacity == s.PlayerInputUnpressedOpacity)
             {
                 try
                 {
@@ -2155,7 +2155,7 @@ The process may take some time, as the program attempts to download from GitHub 
                 }
             }
 
-            this.Dispatcher.BeginInvoke(new Action(() => image.Opacity = this.PressedInputOpacity));
+            this.Dispatcher.BeginInvoke(new Action(() => image.Opacity = s.PlayerInputPressedOpacity));
         }
     }
 
@@ -2163,7 +2163,9 @@ The process may take some time, as the program attempts to download from GitHub 
     {
         if (this.keyImages.TryGetValue(e.KeyCode, out var image))
         {
-            this.Dispatcher.BeginInvoke(new Action(() => image.Opacity = this.UnpressedInputOpacity));
+            var s = (Settings)Application.Current.TryFindResource("Settings");
+
+            this.Dispatcher.BeginInvoke(new Action(() => image.Opacity = s.PlayerInputUnpressedOpacity));
         }
     }
 
@@ -2178,27 +2180,67 @@ The process may take some time, as the program attempts to download from GitHub 
         this.keyImages.Add(Keys.D3, this.Key3);
         this.keyImages.Add(Keys.D4, this.Key4);
         this.keyImages.Add(Keys.D5, this.Key5);
+        this.keyImages.Add(Keys.D6, this.Key6);
         this.keyImages.Add(Keys.Q, this.KeyQ);
         this.keyImages.Add(Keys.W, this.KeyW);
         this.keyImages.Add(Keys.E, this.KeyE);
         this.keyImages.Add(Keys.R, this.KeyR);
         this.keyImages.Add(Keys.T, this.KeyT);
+        this.keyImages.Add(Keys.Y, this.KeyY);
+
         this.keyImages.Add(Keys.A, this.KeyA);
         this.keyImages.Add(Keys.S, this.KeyS);
         this.keyImages.Add(Keys.D, this.KeyD);
         this.keyImages.Add(Keys.F, this.KeyF);
         this.keyImages.Add(Keys.G, this.KeyG);
+        this.keyImages.Add(Keys.H, this.KeyH);
+
         this.keyImages.Add(Keys.LShiftKey, this.KeyShift);
         this.keyImages.Add(Keys.Z, this.KeyZ);
         this.keyImages.Add(Keys.X, this.KeyX);
         this.keyImages.Add(Keys.C, this.KeyC);
         this.keyImages.Add(Keys.V, this.KeyV);
+        this.keyImages.Add(Keys.B, this.KeyB);
+
         this.keyImages.Add(Keys.LControlKey, this.KeyCtrl);
+        this.keyImages.Add(Keys.Alt, this.KeyAlt);
         this.keyImages.Add(Keys.Space, this.KeySpace);
 
         this.mouseImages.Add(MouseButtons.Left, this.MouseLeftClick);
         this.mouseImages.Add(MouseButtons.Middle, this.MouseMiddleClick);
         this.mouseImages.Add(MouseButtons.Right, this.MouseRightClick);
+
+        var s = (Settings)Application.Current.TryFindResource("Settings");
+        Key1.Opacity = s.PlayerInputUnpressedOpacity;
+        Key2.Opacity = s.PlayerInputUnpressedOpacity;
+        Key3.Opacity = s.PlayerInputUnpressedOpacity;
+        Key4.Opacity = s.PlayerInputUnpressedOpacity;
+        Key5.Opacity = s.PlayerInputUnpressedOpacity;
+        Key6.Opacity = s.PlayerInputUnpressedOpacity;
+        KeyQ.Opacity = s.PlayerInputUnpressedOpacity;
+        KeyW.Opacity = s.PlayerInputUnpressedOpacity;
+        KeyE.Opacity = s.PlayerInputUnpressedOpacity;
+        KeyR.Opacity = s.PlayerInputUnpressedOpacity;
+        KeyT.Opacity = s.PlayerInputUnpressedOpacity;
+        KeyY.Opacity = s.PlayerInputUnpressedOpacity;
+        KeyA.Opacity = s.PlayerInputUnpressedOpacity;
+        KeyS.Opacity = s.PlayerInputUnpressedOpacity;
+        KeyD.Opacity = s.PlayerInputUnpressedOpacity;
+        KeyF.Opacity = s.PlayerInputUnpressedOpacity;
+        KeyG.Opacity = s.PlayerInputUnpressedOpacity;
+        KeyH.Opacity = s.PlayerInputUnpressedOpacity;
+        KeyShift.Opacity = s.PlayerInputUnpressedOpacity;
+        KeyZ.Opacity = s.PlayerInputUnpressedOpacity;
+        KeyX.Opacity = s.PlayerInputUnpressedOpacity;
+        KeyC.Opacity = s.PlayerInputUnpressedOpacity;
+        KeyV.Opacity = s.PlayerInputUnpressedOpacity;
+        KeyB.Opacity = s.PlayerInputUnpressedOpacity;
+        KeyCtrl.Opacity = s.PlayerInputUnpressedOpacity;
+        KeyAlt.Opacity = s.PlayerInputUnpressedOpacity;
+        KeySpace.Opacity = s.PlayerInputUnpressedOpacity;
+        MouseMiddleClick.Opacity = s.PlayerInputUnpressedOpacity;
+        MouseLeftClick.Opacity = s.PlayerInputUnpressedOpacity;
+        MouseRightClick.Opacity = s.PlayerInputUnpressedOpacity;
     }
 
     private void AddGamepadImages()
@@ -2218,10 +2260,25 @@ The process may take some time, as the program attempts to download from GitHub 
         this.gamepadTriggersImages.Add(this.gamepad.RightTrigger, this.ButtonR2);
         this.gamepadJoystickImages.Add(this.gamepad.LeftJoystick, this.LJoystickMovement);
         this.gamepadJoystickImages.Add(this.gamepad.RightJoystick, this.RJoystickMovement);
+        var s = (Settings)Application.Current.TryFindResource("Settings");
+
+        this.ButtonA.Opacity = s.PlayerInputUnpressedOpacity;
+        this.ButtonB.Opacity = s.PlayerInputUnpressedOpacity;
+        this.ButtonX.Opacity = s.PlayerInputUnpressedOpacity;
+        this.ButtonY.Opacity = s.PlayerInputUnpressedOpacity;
+        this.ButtonStart.Opacity = s.PlayerInputUnpressedOpacity;
+        this.ButtonSelect.Opacity = s.PlayerInputUnpressedOpacity;
+        this.LJoystick.Opacity = s.PlayerInputUnpressedOpacity;
+        this.RJoystick.Opacity = s.PlayerInputUnpressedOpacity;
+        this.ButtonL1.Opacity = s.PlayerInputUnpressedOpacity;
+        this.ButtonR1.Opacity = s.PlayerInputUnpressedOpacity;
+        this.ButtonL2.Opacity = s.PlayerInputUnpressedOpacity;
+        this.ButtonR2.Opacity = s.PlayerInputUnpressedOpacity;
+        this.LJoystickMovement.Opacity = s.PlayerInputUnpressedOpacity;
+        this.RJoystickMovement.Opacity = s.PlayerInputUnpressedOpacity;
+
         LoggerInstance.Debug(CultureInfo.InvariantCulture, "Added images. images count: {0}, triggers count: {1}, joystick count: {2}", this.gamepadImages.Count, this.gamepadTriggersImages.Count, this.gamepadJoystickImages.Count);
     }
-
-    private double UnpressedInputOpacity { get; set; } = 0.2;
 
     private float TriggerActivationThreshold { get; set; } = 0.5f;
 
@@ -2232,36 +2289,39 @@ The process may take some time, as the program attempts to download from GitHub 
     private void Gamepad_RightTriggerReleased(object? sender, EventArgs e)
     {
         if (this.gamepadTriggersImages.TryGetValue(this.gamepad.RightTrigger, out var image))
-        {
-            this.Dispatcher.BeginInvoke(new Action(() => image.Opacity = this.UnpressedInputOpacity));
+        {var s = (Settings)Application.Current.TryFindResource("Settings");
+            this.Dispatcher.BeginInvoke(new Action(() => image.Opacity = s.PlayerInputUnpressedOpacity));
         }
     }
 
     private void Gamepad_LeftTriggerReleased(object? sender, EventArgs e)
     {
         if (this.gamepadTriggersImages.TryGetValue(this.gamepad.LeftTrigger, out var image))
-        {
-            this.Dispatcher.BeginInvoke(new Action(() => image.Opacity = this.UnpressedInputOpacity));
+        {var s = (Settings)Application.Current.TryFindResource("Settings");
+            this.Dispatcher.BeginInvoke(new Action(() => image.Opacity = s.PlayerInputUnpressedOpacity));
         }
     }
 
     private void Gamepad_ButtonReleased(object? sender, DigitalButtonEventArgs<XInputButton> e)
     {
+        var s = (Settings)Application.Current.TryFindResource("Settings");
+
         if (e.Button == this.gamepad.Buttons.DPadLeft || e.Button == this.gamepad.Buttons.DPadUp || e.Button == this.gamepad.Buttons.DPadRight || e.Button == this.gamepad.Buttons.DPadDown)
         {
-            this.Dispatcher.BeginInvoke(new Action(() => this.UpdateDpadImage(this.UnpressedInputOpacity)));
+
+            this.Dispatcher.BeginInvoke(new Action(() => this.UpdateDpadImage(s.PlayerInputUnpressedOpacity)));
         }
         else if (e.Button == this.gamepad.Buttons.LS)
         {
-            this.Dispatcher.BeginInvoke(new Action(() => this.UpdateLeftStickImage(this.UnpressedInputOpacity)));
+            this.Dispatcher.BeginInvoke(new Action(() => this.UpdateLeftStickImage(s.PlayerInputUnpressedOpacity)));
         }
         else if (e.Button == this.gamepad.Buttons.RS)
         {
-            this.Dispatcher.BeginInvoke(new Action(() => this.UpdateRightStickImage(this.UnpressedInputOpacity)));
+            this.Dispatcher.BeginInvoke(new Action(() => this.UpdateRightStickImage(s.PlayerInputUnpressedOpacity)));
         }
         else if (this.gamepadImages.TryGetValue(e.Button, out var image))
         {
-            this.Dispatcher.BeginInvoke(new Action(() => image.Opacity = this.UnpressedInputOpacity));
+            this.Dispatcher.BeginInvoke(new Action(() => image.Opacity = s.PlayerInputUnpressedOpacity));
         }
     }
 
@@ -2271,7 +2331,7 @@ The process may take some time, as the program attempts to download from GitHub 
         {
             var s = (Settings)Application.Current.TryFindResource("Settings");
 
-            if (s.EnableInputLogging && !this.DataLoader.Model.GamepadInputDictionary.ContainsKey(this.DataLoader.Model.TimeInt()) && this.DataLoader.Model.QuestID() != 0 && this.DataLoader.Model.TimeInt() != this.DataLoader.Model.TimeDefInt() && this.DataLoader.Model.QuestState() == 0 && this.DataLoader.Model.PreviousTimeInt != this.DataLoader.Model.TimeInt() && image.Opacity == this.UnpressedInputOpacity)
+            if (s.EnableInputLogging && !this.DataLoader.Model.GamepadInputDictionary.ContainsKey(this.DataLoader.Model.TimeInt()) && this.DataLoader.Model.QuestID() != 0 && this.DataLoader.Model.TimeInt() != this.DataLoader.Model.TimeDefInt() && this.DataLoader.Model.QuestState() == 0 && this.DataLoader.Model.PreviousTimeInt != this.DataLoader.Model.TimeInt() && image.Opacity == s.PlayerInputUnpressedOpacity)
             {
                 try
                 {
@@ -2283,7 +2343,7 @@ The process may take some time, as the program attempts to download from GitHub 
                 }
             }
 
-            this.Dispatcher.BeginInvoke(new Action(() => image.Opacity = this.PressedInputOpacity));
+            this.Dispatcher.BeginInvoke(new Action(() => image.Opacity = s.PlayerInputPressedOpacity));
         }
     }
 
@@ -2293,7 +2353,7 @@ The process may take some time, as the program attempts to download from GitHub 
         {
             var s = (Settings)Application.Current.TryFindResource("Settings");
 
-            if (s.EnableInputLogging && !this.DataLoader.Model.GamepadInputDictionary.ContainsKey(this.DataLoader.Model.TimeInt()) && this.DataLoader.Model.QuestID() != 0 && this.DataLoader.Model.TimeInt() != this.DataLoader.Model.TimeDefInt() && this.DataLoader.Model.QuestState() == 0 && this.DataLoader.Model.PreviousTimeInt != this.DataLoader.Model.TimeInt() && image.Opacity == this.UnpressedInputOpacity)
+            if (s.EnableInputLogging && !this.DataLoader.Model.GamepadInputDictionary.ContainsKey(this.DataLoader.Model.TimeInt()) && this.DataLoader.Model.QuestID() != 0 && this.DataLoader.Model.TimeInt() != this.DataLoader.Model.TimeDefInt() && this.DataLoader.Model.QuestState() == 0 && this.DataLoader.Model.PreviousTimeInt != this.DataLoader.Model.TimeInt() && image.Opacity == s.PlayerInputUnpressedOpacity)
             {
                 try
                 {
@@ -2305,7 +2365,7 @@ The process may take some time, as the program attempts to download from GitHub 
                 }
             }
 
-            this.Dispatcher.BeginInvoke(new Action(() => image.Opacity = this.PressedInputOpacity));
+            this.Dispatcher.BeginInvoke(new Action(() => image.Opacity = s.PlayerInputPressedOpacity));
         }
     }
 
@@ -2339,14 +2399,17 @@ The process may take some time, as the program attempts to download from GitHub 
         // Get the joystick's X and Y positions
         var x = this.gamepad.LeftJoystick.X;
         var y = this.gamepad.LeftJoystick.Y;
-        var opacity = this.PressedInputOpacity;
+        var s = (Settings)Application.Current.TryFindResource("Settings");
+
+        var opacity = s.PlayerInputPressedOpacity;
+
 
         // Calculate the joystick direction based on X and Y values
         Direction direction;
         if (Math.Abs(x) <= this.JoystickThreshold && Math.Abs(y) <= this.JoystickThreshold)
         {
             direction = Direction.None;
-            opacity = this.UnpressedInputOpacity;
+            opacity = s.PlayerInputUnpressedOpacity;
         }
         else if (Math.Abs(x) <= this.JoystickThreshold && y > this.JoystickThreshold)
         {
@@ -2383,7 +2446,7 @@ The process may take some time, as the program attempts to download from GitHub 
         else
         {
             direction = Direction.None;
-            opacity = this.UnpressedInputOpacity;
+            opacity = s.PlayerInputUnpressedOpacity;
         }
 
         // Get the image path based on the direction
@@ -2433,14 +2496,16 @@ The process may take some time, as the program attempts to download from GitHub 
         // Get the joystick's X and Y positions
         var x = this.gamepad.RightJoystick.X;
         var y = this.gamepad.RightJoystick.Y;
-        var opacity = this.PressedInputOpacity;
+        var s = (Settings)Application.Current.TryFindResource("Settings");
+
+        var opacity = s.PlayerInputPressedOpacity;
 
         // Calculate the joystick direction based on X and Y values
         Direction direction;
         if (Math.Abs(x) <= this.JoystickThreshold && Math.Abs(y) <= this.JoystickThreshold)
         {
             direction = Direction.None;
-            opacity = this.UnpressedInputOpacity;
+            opacity = s.PlayerInputUnpressedOpacity;
         }
         else if (Math.Abs(x) <= this.JoystickThreshold && y > this.JoystickThreshold)
         {
@@ -2477,7 +2542,7 @@ The process may take some time, as the program attempts to download from GitHub 
         else
         {
             direction = Direction.None;
-            opacity = this.UnpressedInputOpacity;
+            opacity = s.PlayerInputUnpressedOpacity;
         }
 
         // Get the image path based on the direction
@@ -2501,7 +2566,7 @@ The process may take some time, as the program attempts to download from GitHub 
     {
         var s = (Settings)Application.Current.TryFindResource("Settings");
 
-        if (s.EnableInputLogging && !this.DataLoader.Model.GamepadInputDictionary.ContainsKey(this.DataLoader.Model.TimeInt()) && this.DataLoader.Model.QuestID() != 0 && this.DataLoader.Model.TimeInt() != this.DataLoader.Model.TimeDefInt() && this.DataLoader.Model.QuestState() == 0 && this.DataLoader.Model.PreviousTimeInt != this.DataLoader.Model.TimeInt() && this.DPad.Opacity == this.UnpressedInputOpacity)
+        if (s.EnableInputLogging && !this.DataLoader.Model.GamepadInputDictionary.ContainsKey(this.DataLoader.Model.TimeInt()) && this.DataLoader.Model.QuestID() != 0 && this.DataLoader.Model.TimeInt() != this.DataLoader.Model.TimeDefInt() && this.DataLoader.Model.QuestState() == 0 && this.DataLoader.Model.PreviousTimeInt != this.DataLoader.Model.TimeInt() && this.DPad.Opacity == s.PlayerInputUnpressedOpacity)
         {
             try
             {
@@ -2513,7 +2578,7 @@ The process may take some time, as the program attempts to download from GitHub 
             }
         }
 
-        this.Dispatcher.BeginInvoke(new Action(() => this.UpdateDpadImage(this.PressedInputOpacity)));
+        this.Dispatcher.BeginInvoke(new Action(() => this.UpdateDpadImage(s.PlayerInputPressedOpacity)));
     }
 
     private void Gamepad_ButtonPressed(object? sender, DigitalButtonEventArgs<XInputButton> e)
@@ -2528,7 +2593,7 @@ The process may take some time, as the program attempts to download from GitHub 
         {
             var s = (Settings)Application.Current.TryFindResource("Settings");
 
-            if (s.EnableInputLogging && !this.DataLoader.Model.GamepadInputDictionary.ContainsKey(this.DataLoader.Model.TimeInt()) && this.DataLoader.Model.QuestID() != 0 && this.DataLoader.Model.TimeInt() != this.DataLoader.Model.TimeDefInt() && this.DataLoader.Model.QuestState() == 0 && this.DataLoader.Model.PreviousTimeInt != this.DataLoader.Model.TimeInt() && image.Opacity == this.UnpressedInputOpacity)
+            if (s.EnableInputLogging && !this.DataLoader.Model.GamepadInputDictionary.ContainsKey(this.DataLoader.Model.TimeInt()) && this.DataLoader.Model.QuestID() != 0 && this.DataLoader.Model.TimeInt() != this.DataLoader.Model.TimeDefInt() && this.DataLoader.Model.QuestState() == 0 && this.DataLoader.Model.PreviousTimeInt != this.DataLoader.Model.TimeInt() && image.Opacity == s.PlayerInputUnpressedOpacity)
             {
                 try
                 {
@@ -2542,15 +2607,15 @@ The process may take some time, as the program attempts to download from GitHub 
 
             if (e.Button == this.gamepad.Buttons.LS)
             {
-                this.Dispatcher.BeginInvoke(new Action(() => this.UpdateLeftStickImage(this.PressedInputOpacity)));
+                this.Dispatcher.BeginInvoke(new Action(() => this.UpdateLeftStickImage(s.PlayerInputPressedOpacity)));
             }
             else if (e.Button == this.gamepad.Buttons.RS)
             {
-                this.Dispatcher.BeginInvoke(new Action(() => this.UpdateRightStickImage(this.PressedInputOpacity)));
+                this.Dispatcher.BeginInvoke(new Action(() => this.UpdateRightStickImage(s.PlayerInputPressedOpacity)));
             }
             else
             {
-                this.Dispatcher.BeginInvoke(new Action(() => image.Opacity = this.PressedInputOpacity));
+                this.Dispatcher.BeginInvoke(new Action(() => image.Opacity = s.PlayerInputPressedOpacity));
             }
         }
     }

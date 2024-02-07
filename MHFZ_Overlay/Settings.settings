@@ -1016,5 +1016,11 @@
     <Setting Name="GuildFoodTimerY" Type="System.Double" Scope="User">
       <Value Profile="(Default)">60</Value>
     </Setting>
+    <Setting Name="PlayerInputUnpressedOpacity" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">0.2</Value>
+    </Setting>
+    <Setting Name="PlayerInputPressedOpacity" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">0.5</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

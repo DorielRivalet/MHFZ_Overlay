@@ -267,7 +267,10 @@
     <None Remove="Assets\Icons\png\key_3.png" />
     <None Remove="Assets\Icons\png\key_4.png" />
     <None Remove="Assets\Icons\png\key_5.png" />
+    <None Remove="Assets\Icons\png\key_6.png" />
     <None Remove="Assets\Icons\png\key_a.png" />
+    <None Remove="Assets\Icons\png\key_alt.png" />
+    <None Remove="Assets\Icons\png\key_b.png" />
     <None Remove="Assets\Icons\png\key_c.png" />
     <None Remove="Assets\Icons\png\key_ctrl.png" />
     <None Remove="Assets\Icons\png\key_d.png" />
@@ -284,6 +287,7 @@
     <None Remove="Assets\Icons\png\key_v.png" />
     <None Remove="Assets\Icons\png\key_w.png" />
     <None Remove="Assets\Icons\png\key_x.png" />
+    <None Remove="Assets\Icons\png\key_y.png" />
     <None Remove="Assets\Icons\png\key_z.png" />
     <None Remove="Assets\Icons\png\knife.png" />
     <None Remove="Assets\Icons\png\left_click.png" />
@@ -1292,7 +1296,10 @@
     <Resource Include="Assets\Icons\png\key_3.png" />
     <Resource Include="Assets\Icons\png\key_4.png" />
     <Resource Include="Assets\Icons\png\key_5.png" />
+    <Resource Include="Assets\Icons\png\key_6.png" />
     <Resource Include="Assets\Icons\png\key_a.png" />
+    <Resource Include="Assets\Icons\png\key_alt.png" />
+    <Resource Include="Assets\Icons\png\key_b.png" />
     <Resource Include="Assets\Icons\png\key_c.png" />
     <Resource Include="Assets\Icons\png\key_ctrl.png" />
     <Resource Include="Assets\Icons\png\key_d.png" />
@@ -1309,6 +1316,7 @@
     <Resource Include="Assets\Icons\png\key_v.png" />
     <Resource Include="Assets\Icons\png\key_w.png" />
     <Resource Include="Assets\Icons\png\key_x.png" />
+    <Resource Include="Assets\Icons\png\key_y.png" />
     <Resource Include="Assets\Icons\png\key_z.png" />
     <Resource Include="Assets\Icons\png\knife.png" />
     <Resource Include="Assets\Icons\png\left_click.png" />

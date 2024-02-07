@@ -1186,6 +1186,7 @@
                                 <RowDefinition Height="40"/>
                                 <RowDefinition Height="40"/>
                                 <RowDefinition Height="40"/>
+                                <RowDefinition Height="40"/>
                             </Grid.RowDefinitions>
 
                             <StackPanel Orientation="Horizontal" Margin="5,0,0,0" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
@@ -2437,6 +2438,7 @@
                                 <RowDefinition Height="40"/>
                                 <RowDefinition Height="40"/>
                                 <RowDefinition Height="40"/>
+                                <RowDefinition Height="40"/>
                             </Grid.RowDefinitions>
 
                             <StackPanel Margin="5" Orientation="Horizontal" Grid.Row="0" Grid.Column="0" ToolTip="Show Timer">
@@ -2695,7 +2697,41 @@
                                 <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Text="{Binding Source={StaticResource Settings},Path=MapAreaWidth}"  PreviewTextInput="ValidateNumber"/>
                                 <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Text="{Binding Source={StaticResource Settings},Path=MapAreaHeight}"  PreviewTextInput="ValidateNumber"/>
                             </StackPanel>
-                            <StackPanel Margin="5" Orientation="Horizontal" Grid.Row="55" Grid.Column="0" ToolTip="Show KBM Layout">
+                            <StackPanel Margin="5" Orientation="Horizontal" Grid.Row="55">
+                                    <ui:SymbolIcon Margin="0,0,5,0" Symbol="Info28" Foreground="{StaticResource Yellow}" FontSize="28" ToolTip="Overlay Restart Required"/>
+
+                                    <TextBlock Text="Player Unpressed Input Opacity" ToolTip="Select the opacity" Style="{StaticResource ConfigTextBox}"/>
+                            </StackPanel>
+                            <DockPanel Grid.Row="55" Grid.Column="1">
+                                <ui:TextBox IsUndoEnabled="False"  PreviewTextInput="ValidateDecimalNumber" DockPanel.Dock="Right" TextAlignment="Right" Width="80">
+                                    <TextBox.Text>
+                                            <Binding Path="PlayerInputUnpressedOpacity" Source="{StaticResource Settings}" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <validationrules:RangeValidationRule Minimum="0" Maximum="1" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </ui:TextBox>
+                                <Slider IsSnapToTickEnabled="True" TickFrequency=".1" TickPlacement="Both" Minimum="0" Maximum="1" Value="{Binding Path=PlayerInputUnpressedOpacity, Source={StaticResource Settings}}"  />
+                            </DockPanel>
+                            <StackPanel Margin="5" Orientation="Horizontal" Grid.Row="56">
+                                    <ui:SymbolIcon Margin="0,0,5,0" Symbol="Info28" Foreground="{StaticResource Yellow}" FontSize="28" ToolTip="Overlay Restart Required"/>
+
+                                    <TextBlock Text="Player Pressed Input Opacity" ToolTip="Select the opacity" Style="{StaticResource ConfigTextBox}"/>
+                            </StackPanel>
+                                <DockPanel Grid.Row="56" Grid.Column="1">
+                                    <ui:TextBox IsUndoEnabled="False"  PreviewTextInput="ValidateDecimalNumber" DockPanel.Dock="Right" TextAlignment="Right" Width="80">
+                                        <TextBox.Text>
+                                            <Binding Path="PlayerInputPressedOpacity" Source="{StaticResource Settings}" UpdateSourceTrigger="PropertyChanged">
+                                                <Binding.ValidationRules>
+                                                    <validationrules:RangeValidationRule Minimum="0" Maximum="1" />
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Text>
+                                    </ui:TextBox>
+                                    <Slider IsSnapToTickEnabled="True" TickFrequency=".1" TickPlacement="Both" Minimum="0" Maximum="1" Value="{Binding Path=PlayerInputPressedOpacity, Source={StaticResource Settings}}"  />
+                                </DockPanel>
+                                <StackPanel Margin="5" Orientation="Horizontal" Grid.Row="57" Grid.Column="0" ToolTip="Show KBM Layout">
                                 <Button Margin="0,0,5,0" Background="Transparent" BorderThickness="0" BorderBrush="Transparent" VerticalAlignment="Center">
                                     <Button.Content>
                                         <ui:SymbolIcon Symbol="Keyboard24" Foreground="{StaticResource Blue}" FontSize="24"/>
@@ -2703,15 +2739,15 @@
                                 </Button>
                                 <TextBlock Margin="5" Style="{StaticResource ConfigTextBox}" Text="Keyboard and Mouse Layout"/>
                             </StackPanel>
-                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="55" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=KBMLayoutShown}"/>
-                            <TextBlock Margin="5" Style="{StaticResource ConfigTextBox}" Grid.Row="56" Grid.Column="0"  Text="Keyboard and Mouse Layout Position"/>
-                            <StackPanel Orientation="Horizontal" Grid.Row="56" Grid.Column="1" HorizontalAlignment="Center">
+                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="57" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=KBMLayoutShown}"/>
+                            <TextBlock Margin="5" Style="{StaticResource ConfigTextBox}" Grid.Row="58" Grid.Column="0"  Text="Keyboard and Mouse Layout Position"/>
+                            <StackPanel Orientation="Horizontal" Grid.Row="58" Grid.Column="1" HorizontalAlignment="Center">
                                 <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="X" Text="{Binding Source={StaticResource Settings},Path=KBMLayoutX}"  PreviewTextInput="ValidateNumber"/>
                                 <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="Y" Margin="5,0,0,0" Text="{Binding Source={StaticResource Settings},Path=KBMLayoutY}"  PreviewTextInput="ValidateNumber"/>
                             </StackPanel>
-                            <TextBlock Margin="5" Style="{StaticResource ConfigTextBox}" Grid.Row="57" Grid.Column="0"  Text="Keyboard and Mouse Layout Size"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="57" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=KBMLayoutSize}"  PreviewTextInput="ValidateNumber"/>
-                            <StackPanel Margin="5" Orientation="Horizontal" Grid.Row="58" Grid.Column="0" ToolTip="Show Gamepad Layout. See the FAQ if you cannot get this to work.">
+                            <TextBlock Margin="5" Style="{StaticResource ConfigTextBox}" Grid.Row="59" Grid.Column="0"  Text="Keyboard and Mouse Layout Size"/>
+                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="59" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=KBMLayoutSize}"  PreviewTextInput="ValidateNumber"/>
+                            <StackPanel Margin="5" Orientation="Horizontal" Grid.Row="60" Grid.Column="0" ToolTip="Show Gamepad Layout. See the FAQ if you cannot get this to work.">
                                 <Button Margin="0,0,5,0" Background="Transparent" BorderThickness="0" BorderBrush="Transparent" VerticalAlignment="Center">
                                     <Button.Content>
                                         <ui:SymbolIcon Symbol="XboxController24" Foreground="{StaticResource Blue}" FontSize="24"/>
@@ -2719,28 +2755,28 @@
                                 </Button>
                                 <TextBlock Margin="5" Style="{StaticResource ConfigTextBox}" Text="Controller/Gamepad Layout"/>
                             </StackPanel>
-                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="58" Grid.Column="1" IsChecked="{Binding Source={StaticResource Settings}, Path=GamepadShown}"/>
-                            <TextBlock Margin="5" Style="{StaticResource ConfigTextBox}" Grid.Row="59" Grid.Column="0"  Text="Controller/Gamepad Layout Position"/>
-                            <StackPanel Orientation="Horizontal" Grid.Row="59" Grid.Column="1" HorizontalAlignment="Center">
+                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="60" Grid.Column="1" IsChecked="{Binding Source={StaticResource Settings}, Path=GamepadShown}"/>
+                            <TextBlock Margin="5" Style="{StaticResource ConfigTextBox}" Grid.Row="61" Grid.Column="0"  Text="Controller/Gamepad Layout Position"/>
+                            <StackPanel Orientation="Horizontal" Grid.Row="61" Grid.Column="1" HorizontalAlignment="Center">
                                 <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="X" Text="{Binding Source={StaticResource Settings},Path=GamepadX}"  PreviewTextInput="ValidateNumber"/>
                                 <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="Y" Margin="5,0,0,0" Text="{Binding Source={StaticResource Settings},Path=GamepadY}"  PreviewTextInput="ValidateNumber"/>
                             </StackPanel>
-                            <TextBlock Margin="5" Style="{StaticResource ConfigTextBox}" Grid.Row="60" Grid.Column="0"  Text="Controller/Gamepad Layout Size"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="60" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=GamepadSize}"  PreviewTextInput="ValidateNumber"/>
-                            <StackPanel Margin="5" Orientation="Horizontal" Grid.Row="61" Grid.Column="0" ToolTip="Show Actions Per Minute (actions are defined as the total sum of keystrokes, mouse button presses and gamepad inputs)">
+                            <TextBlock Margin="5" Style="{StaticResource ConfigTextBox}" Grid.Row="62" Grid.Column="0"  Text="Controller/Gamepad Layout Size"/>
+                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="62" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=GamepadSize}"  PreviewTextInput="ValidateNumber"/>
+                            <StackPanel Margin="5" Orientation="Horizontal" Grid.Row="63" Grid.Column="0" ToolTip="Show Actions Per Minute (actions are defined as the total sum of keystrokes, mouse button presses and gamepad inputs)">
                                 <Image Source="../../Assets/Icons/png/flame_ul.png" Margin="0,0,5,0"/>
                                 <TextBlock Style="{StaticResource ConfigTextBox}" Text="Actions per Minute"/>
                             </StackPanel>
-                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="61" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=ActionsPerMinuteShown}"/>
-                            <TextBlock Margin="5" Style="{StaticResource ConfigTextBox}" Grid.Row="62" Grid.Column="0"  Text="Actions per Minute Position"/>
-                            <StackPanel Orientation="Horizontal" Grid.Row="62" Grid.Column="1" HorizontalAlignment="Center">
+                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="63" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=ActionsPerMinuteShown}"/>
+                            <TextBlock Margin="5" Style="{StaticResource ConfigTextBox}" Grid.Row="64" Grid.Column="0"  Text="Actions per Minute Position"/>
+                            <StackPanel Orientation="Horizontal" Grid.Row="64" Grid.Column="1" HorizontalAlignment="Center">
                                 <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="X" Text="{Binding Source={StaticResource Settings},Path=ActionsPerMinuteX}"  PreviewTextInput="ValidateNumber"/>
                                 <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="Y" Margin="5,0,0,0" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=ActionsPerMinuteY}"  PreviewTextInput="ValidateNumber"/>
                             </StackPanel>
-                            <TextBlock Margin="5" ToolTip="Enable Actions per Minute color when surpassing the average actions per minute of the equipped weapon type" Style="{StaticResource ConfigTextBox}" Grid.Row="63" Grid.Column="0"  Text="Average Actions per Minute Color"/>
-                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="63" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableAverageActionsPerMinuteColor}"/>
+                            <TextBlock Margin="5" ToolTip="Enable Actions per Minute color when surpassing the average actions per minute of the equipped weapon type" Style="{StaticResource ConfigTextBox}" Grid.Row="65" Grid.Column="0"  Text="Average Actions per Minute Color"/>
+                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="65" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=EnableAverageActionsPerMinuteColor}"/>
 
-                            <StackPanel Margin="5" ToolTip="Show Current Session Time" Grid.Row="64" Grid.Column="0" Orientation="Horizontal">
+                            <StackPanel Margin="5" ToolTip="Show Current Session Time" Grid.Row="66" Grid.Column="0" Orientation="Horizontal">
                                 <Button Margin="0,0,5,0" Background="Transparent" BorderThickness="0" BorderBrush="Transparent" VerticalAlignment="Center">
                                     <Button.Content>
                                         <ui:SymbolIcon Symbol="Timer24" Foreground="{StaticResource Rosewater}" FontSize="24"/>
@@ -2748,13 +2784,13 @@
                                 </Button>
                                 <TextBlock Style="{StaticResource ConfigTextBox}" Text="Current Session Time"/>
                             </StackPanel>
-                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="64" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=SessionTimeShown}"/>
-                            <TextBlock Margin="5" Style="{StaticResource ConfigTextBox}" Grid.Row="65" Grid.Column="0"  Text="Current Session Time Position"/>
-                            <StackPanel Orientation="Horizontal" Grid.Row="65" Grid.Column="1" HorizontalAlignment="Center">
+                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="66" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=SessionTimeShown}"/>
+                            <TextBlock Margin="5" Style="{StaticResource ConfigTextBox}" Grid.Row="67" Grid.Column="0"  Text="Current Session Time Position"/>
+                            <StackPanel Orientation="Horizontal" Grid.Row="67" Grid.Column="1" HorizontalAlignment="Center">
                                 <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="X" Text="{Binding Source={StaticResource Settings},Path=SessionTimeX}"  PreviewTextInput="ValidateNumber"/>
                                 <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="Y" Margin="5,0,0,0" Text="{Binding Source={StaticResource Settings},Path=SessionTimeY}"  PreviewTextInput="ValidateNumber"/>
                             </StackPanel>
-                            <StackPanel Margin="5" Orientation="Horizontal" Grid.Row="66" Grid.Column="0" ToolTip="Show Player Coordinates (truncated)">
+                            <StackPanel Margin="5" Orientation="Horizontal" Grid.Row="68" Grid.Column="0" ToolTip="Show Player Coordinates (truncated)">
                                 <Button Margin="0,0,5,0" Background="Transparent" BorderThickness="0" BorderBrush="Transparent" VerticalAlignment="Center">
                                     <Button.Content>
                                         <ui:SymbolIcon Symbol="CompassNorthwest24" Foreground="{StaticResource Rosewater}" FontSize="24"/>
@@ -2762,41 +2798,41 @@
                                 </Button>
                                 <TextBlock Style="{StaticResource ConfigTextBox}" Text="Player Coordinates"/>
                             </StackPanel>
-                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="66" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=PlayerPositionShown}"/>
+                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="68" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=PlayerPositionShown}"/>
 
-                            <TextBlock Margin="5" Style="{StaticResource ConfigTextBox}" Grid.Row="67" Grid.Column="0"  Text="Player Coordinates Position"/>
-                            <StackPanel Orientation="Horizontal" Grid.Row="67" Grid.Column="1" HorizontalAlignment="Center">
+                            <TextBlock Margin="5" Style="{StaticResource ConfigTextBox}" Grid.Row="69" Grid.Column="0"  Text="Player Coordinates Position"/>
+                            <StackPanel Orientation="Horizontal" Grid.Row="69" Grid.Column="1" HorizontalAlignment="Center">
                                 <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="X" Text="{Binding Source={StaticResource Settings},Path=PlayerPositionX}"  PreviewTextInput="ValidateNumber"/>
                                 <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="Y" Margin="5,0,0,0" Text="{Binding Source={StaticResource Settings},Path=PlayerPositionY}"  PreviewTextInput="ValidateNumber"/>
                             </StackPanel>
 
-                            <TextBlock Margin="5" ToolTip="Select Player Coordinates Mode" Style="{StaticResource ConfigTextBox}" Grid.Row="68" Grid.Column="0"  Text="Player Coordinates Mode"/>
-                            <ComboBox Grid.Column="1" Grid.Row="68" SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=PlayerPositionMode}">
+                            <TextBlock Margin="5" ToolTip="Select Player Coordinates Mode" Style="{StaticResource ConfigTextBox}" Grid.Row="70" Grid.Column="0"  Text="Player Coordinates Mode"/>
+                            <ComboBox Grid.Column="1" Grid.Row="70" SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=PlayerPositionMode}">
                                 <ComboBoxItem>Automatic</ComboBoxItem>
                                 <ComboBoxItem>Lobby</ComboBoxItem>
                                 <ComboBoxItem>Quest</ComboBoxItem>
                             </ComboBox>
 
-                            <StackPanel Margin="5" Orientation="Horizontal" Grid.Row="69" Grid.Column="0" ToolTip="Show Diva Song Timer">
+                            <StackPanel Margin="5" Orientation="Horizontal" Grid.Row="71" Grid.Column="0" ToolTip="Show Diva Song Timer">
                                 <Image Source="../../Assets/Icons/png/diva_fountain.png" Margin="0,0,5,0"/>
                                     <TextBlock Style="{StaticResource ConfigTextBox}" Text="Diva Song Timer"/>
                                 </StackPanel>
-                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="69" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=DivaSongTimerShown}"/>
+                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="71" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=DivaSongTimerShown}"/>
 
-                            <TextBlock Margin="5" Style="{StaticResource ConfigTextBox}" Grid.Row="70" Grid.Column="0"  Text="Diva Song Timer Position"/>
-                            <StackPanel Orientation="Horizontal" Grid.Row="70" Grid.Column="1" HorizontalAlignment="Center">
+                            <TextBlock Margin="5" Style="{StaticResource ConfigTextBox}" Grid.Row="72" Grid.Column="0"  Text="Diva Song Timer Position"/>
+                            <StackPanel Orientation="Horizontal" Grid.Row="72" Grid.Column="1" HorizontalAlignment="Center">
                                 <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="X" Text="{Binding Source={StaticResource Settings},Path=DivaSongTimerX}"  PreviewTextInput="ValidateNumber"/>
                                 <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="Y" Margin="5,0,0,0" Text="{Binding Source={StaticResource Settings},Path=DivaSongTimerY}"  PreviewTextInput="ValidateNumber"/>
                             </StackPanel>
 
-                                <StackPanel Margin="5" Orientation="Horizontal" Grid.Row="71" Grid.Column="0" ToolTip="Show Guild Food Timer">
+                            <StackPanel Margin="5" Orientation="Horizontal" Grid.Row="73" Grid.Column="0" ToolTip="Show Guild Food Timer">
                                 <Image Source="../../Assets/Icons/png/guild_hall.png" Margin="0,0,5,0"/>
                                 <TextBlock Style="{StaticResource ConfigTextBox}" Text="Guild Food Timer" />
                             </StackPanel>
-                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="71" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=GuildFoodTimerShown}"/>
+                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="73" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=GuildFoodTimerShown}"/>
 
-                            <TextBlock Margin="5" Style="{StaticResource ConfigTextBox}" Grid.Row="72" Grid.Column="0"  Text="Guild Food Timer Position"/>
-                            <StackPanel Orientation="Horizontal" Grid.Row="72" Grid.Column="1" HorizontalAlignment="Center">
+                            <TextBlock Margin="5" Style="{StaticResource ConfigTextBox}" Grid.Row="74" Grid.Column="0"  Text="Guild Food Timer Position"/>
+                            <StackPanel Orientation="Horizontal" Grid.Row="74" Grid.Column="1" HorizontalAlignment="Center">
                                 <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="X" Text="{Binding Source={StaticResource Settings},Path=GuildFoodTimerX}"  PreviewTextInput="ValidateNumber"/>
                                 <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="Y" Margin="5,0,0,0" Text="{Binding Source={StaticResource Settings},Path=GuildFoodTimerY}"  PreviewTextInput="ValidateNumber"/>
                             </StackPanel>
