@@ -287,7 +287,7 @@ public enum QuestVariant2 : uint
     DisableActiveFeature = 16,
     FixedDifficulty = 32,
     /// <summary>
-    /// no secret tech, transcend, halk pot, course atk, diva skill, prayer gem
+    /// no secret tech, transcend, halk pot, course atk, prayer gem
     /// </summary>
     Level9999 = 64,
     /// <summary>
@@ -310,7 +310,7 @@ public enum QuestVariant3 : uint
     RequireGRank = 2,
     NoSimpleMode = 4,
     /// <summary>
-    /// no transcend?
+    /// no transcend? no diva skills
     /// </summary>
     NoGPSkills = 8,
     Zenith = 16,
@@ -479,15 +479,15 @@ public enum RunBuff : uint
     CourseAttackBoost = 2048,
 
     // old overlay categories
-    TimeAttack = Halk | PoogieItem | DivaSong | Bento | GuildPoogie | ActiveFeature | GuildFood,
-    FreestyleNoSecretTech = TimeAttack | DivaSkill | DivaPrayerGem,
+    TimeAttack = Halk | PoogieItem | DivaSong | Bento | GuildPoogie | GuildFood,
+    FreestyleNoSecretTech = TimeAttack | ActiveFeature | DivaSkill | DivaPrayerGem,
     FreestyleWithSecretTech = FreestyleNoSecretTech | SecretTechnique,
 
     // leaderboard in website
     // TA
     LeaderboardTimeAttack = TimeAttack,
     // FDS
-    LeaderboardFreestyleDivaSkill = LeaderboardTimeAttack | DivaSkill,
+    LeaderboardFreestyleDivaSkill = LeaderboardTimeAttack | ActiveFeature | DivaSkill,
     // FDP (FreestyleNoSecretTech in old category)
     LeaderboardFreestyleDivaPrayerGem = LeaderboardFreestyleDivaSkill | DivaPrayerGem,
     // FST (FreestyleWithSecretTech in old category)

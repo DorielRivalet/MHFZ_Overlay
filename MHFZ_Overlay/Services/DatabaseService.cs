@@ -1970,7 +1970,7 @@ public sealed class DatabaseService
                     using (var cmd = new SQLiteCommand(sql, conn))
                     {
                         cmd.Parameters.AddWithValue("@HalkOn", model.HalkOn());
-                        cmd.Parameters.AddWithValue("@HalkPotEffectOn", model.HalkPotEffectOn() || model.isHalkPotEquipped());
+                        cmd.Parameters.AddWithValue("@HalkPotEffectOn", model.HalkPotEffectOn() || model.IsHalkPotEquipped());
                         cmd.Parameters.AddWithValue("@HalkFullness", model.HalkFullness());
                         cmd.Parameters.AddWithValue("@HalkLevel", model.HalkLevel());
                         cmd.Parameters.AddWithValue("@HalkIntimacy", model.HalkIntimacy());

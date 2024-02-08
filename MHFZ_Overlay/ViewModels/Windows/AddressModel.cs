@@ -1835,6 +1835,16 @@ TreeScope.Children, condition);
         return 0;
     }
 
+    /// <summary>
+    /// This only works for bitfield argument values 255 and below, if you don't intend to extract bytes. Consider using HasFlag directly if so.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="bitfield"></param>
+    /// <param name="flag"></param>
+    /// <param name="all"></param>
+    /// <param name="extractByte"></param>
+    /// <param name="bytePosition"></param>
+    /// <returns></returns>
     public bool IsBitfieldContainingFlag<T>(uint bitfield, T flag, uint all, bool extractByte = false, int bytePosition = 0) where T : Enum
     {
         byte value = extractByte ? (byte)(((uint)bitfield >> (bytePosition * 8)) & 0xFF) : (byte)bitfield;
@@ -2747,7 +2757,7 @@ TreeScope.Children, condition);
         };
     }
 
-    public bool isHalkPotEquipped()
+    public bool IsHalkPotEquipped()
     {
         return (PouchItem1ID() == 4952 || PouchItem2ID() == 4952 || PouchItem3ID() == 4952 || PouchItem4ID() == 4952 || PouchItem5ID() == 4952 || PouchItem6ID() == 4952 || PouchItem7ID() == 4952 || PouchItem8ID() == 4952 || PouchItem9ID() == 4952 || PouchItem10ID() == 4952 || PouchItem11ID() == 4952 || PouchItem12ID() == 4952 || PouchItem13ID() == 4952 || PouchItem14ID() == 4952 || PouchItem15ID() == 4952 || PouchItem16ID() == 4952 || PouchItem17ID() == 4952 || PouchItem18ID() == 4952 || PouchItem19ID() == 4952 || PouchItem20ID() == 4952 || PartnyaBagItem1ID() == 4952 || PartnyaBagItem2ID() == 4952 || PartnyaBagItem3ID() == 4952 || PartnyaBagItem4ID() == 4952 || PartnyaBagItem5ID() == 4952 || PartnyaBagItem6ID() == 4952 || PartnyaBagItem7ID() == 4952 || PartnyaBagItem8ID() == 4952 || PartnyaBagItem9ID() == 4952 || PartnyaBagItem10ID() == 4952);
     }
@@ -2773,29 +2783,28 @@ TreeScope.Children, condition);
     public string CalculateRunBuffsTag(RunBuff runBuffs)
     {
         var value = (uint)runBuffs;
-        var all = (uint)RunBuff.All;
 
-        if (IsBitfieldContainingFlag(value, RunBuff.CourseAttackBoost, all))
+        if (runBuffs.HasFlag(RunBuff.CourseAttackBoost))
         {
             return "FCA";
         }
 
-        if (IsBitfieldContainingFlag(value, RunBuff.SecretTechnique, all))
+        if (runBuffs.HasFlag(RunBuff.SecretTechnique))
         {
             return "FST";
         }
 
-        if (IsBitfieldContainingFlag(value, RunBuff.DivaPrayerGem, all))
+        if (runBuffs.HasFlag(RunBuff.DivaPrayerGem))
         {
             return "FDP";
         }
 
-        if (IsBitfieldContainingFlag(value, RunBuff.DivaSkill, all))
+        if (runBuffs.HasFlag(RunBuff.DivaSkill))
         {
             return "FDS";
         }
 
-        if (!IsBitfieldContainingFlag(value, RunBuff.HalkPotEffect, all))
+        if (!runBuffs.HasFlag(RunBuff.HalkPotEffect) && !runBuffs.HasFlag(RunBuff.ActiveFeature))
         {
             return "TA";
         }
@@ -2831,9 +2840,10 @@ TreeScope.Children, condition);
         }
 
         var runBuffs = RunBuff.None;
-        var questVariant2 = (uint)QuestVariant2();
+        var questVariant2 = (QuestVariant2)QuestVariant2();
+        var questVariant3 = (QuestVariant3)QuestVariant3();
 
-        if (HalkOn() && !(IsBitfieldContainingFlag(questVariant2, Models.Structures.QuestVariant2.DisableHalkPoogieCuff, (uint)Models.Structures.QuestVariant2.All) || IsBitfieldContainingFlag(questVariant2, Models.Structures.QuestVariant2.Road, (uint)Models.Structures.QuestVariant2.All)))
+        if (HalkOn() && !(questVariant2.HasFlag(Models.Structures.QuestVariant2.DisableHalkPoogieCuff)) || questVariant2.HasFlag(Models.Structures.QuestVariant2.Road))
         {
             runBuffs |= RunBuff.Halk;
         }
@@ -2848,7 +2858,7 @@ TreeScope.Children, condition);
             runBuffs |= RunBuff.DivaSong;
         }
 
-        if ((HalkPotEffectOn() || isHalkPotEquipped()) && !(IsBitfieldContainingFlag(questVariant2, Models.Structures.QuestVariant2.DisableHalkPotionCourseAttack, (uint)Models.Structures.QuestVariant2.All) || IsBitfieldContainingFlag(questVariant2, Models.Structures.QuestVariant2.Level9999, (uint)Models.Structures.QuestVariant2.All) || IsBitfieldContainingFlag(questVariant2, Models.Structures.QuestVariant2.Road, (uint)Models.Structures.QuestVariant2.All)))
+        if ((HalkPotEffectOn() || IsHalkPotEquipped()) && !(questVariant2.HasFlag(Models.Structures.QuestVariant2.DisableHalkPotionCourseAttack) || questVariant2.HasFlag(Models.Structures.QuestVariant2.Level9999) || questVariant2.HasFlag(Models.Structures.QuestVariant2.Road)))
         {
             runBuffs |= RunBuff.HalkPotEffect;
         }
@@ -2864,7 +2874,7 @@ TreeScope.Children, condition);
             runBuffs |= RunBuff.GuildPoogie;
         }
 
-        if (IsActiveFeatureOn(GetActiveFeature(), WeaponType()) && !IsBitfieldContainingFlag(questVariant2, Models.Structures.QuestVariant2.DisableActiveFeature, (uint)Models.Structures.QuestVariant2.All))
+        if (IsActiveFeatureOn(GetActiveFeature(), WeaponType()) && !questVariant2.HasFlag(Models.Structures.QuestVariant2.DisableActiveFeature))
         {
             runBuffs |= RunBuff.ActiveFeature;
         }
@@ -2874,22 +2884,22 @@ TreeScope.Children, condition);
             runBuffs |= RunBuff.GuildFood;
         }
 
-        if ((DivaSkill() > 0 && DivaSkillUsesLeft() > 0) && !(IsBitfieldContainingFlag(questVariant2, Models.Structures.QuestVariant2.Road, (uint)Models.Structures.QuestVariant2.All) || IsBitfieldContainingFlag(questVariant2, Models.Structures.QuestVariant2.Level9999, (uint)Models.Structures.QuestVariant2.All)))
+        if ((DivaSkill() > 0 && DivaSkillUsesLeft() > 0) && !(questVariant2.HasFlag(Models.Structures.QuestVariant2.Road) || questVariant3.HasFlag(Models.Structures.QuestVariant3.NoGPSkills)))
         {
             runBuffs |= RunBuff.DivaSkill;
         }
 
-        if ((StyleRank1() == 15 || StyleRank2() == 15) && !IsBitfieldContainingFlag(questVariant2, Models.Structures.QuestVariant2.Level9999, (uint)Models.Structures.QuestVariant2.All))
+        if ((StyleRank1() == 15 || StyleRank2() == 15) && !questVariant2.HasFlag(Models.Structures.QuestVariant2.Level9999))
         {
             runBuffs |= RunBuff.SecretTechnique;
         }
 
-        if ((DivaPrayerGemRedSkill() != 0 || DivaPrayerGemYellowSkill() != 0 || DivaPrayerGemGreenSkill() != 0 || DivaPrayerGemBlueSkill() != 0) && !(IsBitfieldContainingFlag(questVariant2, Models.Structures.QuestVariant2.Road, (uint)Models.Structures.QuestVariant2.All) || IsBitfieldContainingFlag(questVariant2, Models.Structures.QuestVariant2.Level9999, (uint)Models.Structures.QuestVariant2.All)))
+        if ((DivaPrayerGemRedSkill() != 0 || DivaPrayerGemYellowSkill() != 0 || DivaPrayerGemGreenSkill() != 0 || DivaPrayerGemBlueSkill() != 0) && !(questVariant2.HasFlag(Models.Structures.QuestVariant2.Road) || questVariant2.HasFlag(Models.Structures.QuestVariant2.Level9999)))
         {
             runBuffs |= RunBuff.DivaPrayerGem;
         }
 
-        if (GetAdditionalCourses(Rights()).Contains("Support") && !(IsBitfieldContainingFlag(questVariant2, Models.Structures.QuestVariant2.DisableHalkPotionCourseAttack, (uint)Models.Structures.QuestVariant2.All) || IsBitfieldContainingFlag(questVariant2, Models.Structures.QuestVariant2.Level9999, (uint)Models.Structures.QuestVariant2.All)))
+        if (GetAdditionalCourses(Rights()).Contains("Support") && !(questVariant2.HasFlag(Models.Structures.QuestVariant2.DisableHalkPotionCourseAttack) || questVariant2.HasFlag(Models.Structures.QuestVariant2.Level9999)))
         {
             runBuffs |= RunBuff.CourseAttackBoost;
         }
@@ -8049,7 +8059,7 @@ Additional: {GetAdditionalCourses()}
 
 Halk:
 {(HalkOn() ? "Active" : "Inactive")}
-Halk Pot {(isHalkPotEquipped() || HalkPotEffectOn() ? "ON" : "OFF")}
+Halk Pot {(IsHalkPotEquipped() || HalkPotEffectOn() ? "ON" : "OFF")}
 LV{HalkLevel()}
 Element Type {GetHalkElement()}
 Status Type {GetHalkStatus()}
@@ -8124,7 +8134,7 @@ Additional: {GetAdditionalCourses()}
 
 **Halk:**
 {(HalkOn() ? "Active" : "Inactive")}
-Halk Pot {(isHalkPotEquipped() || HalkPotEffectOn() ? "ON" : "OFF")}
+Halk Pot {(IsHalkPotEquipped() || HalkPotEffectOn() ? "ON" : "OFF")}
 LV{HalkLevel()}
 Element Type {GetHalkElement()}
 Status Type {GetHalkStatus()}
@@ -8435,13 +8445,15 @@ Overlay Hash: {52}
 
     public bool IsActiveFeatureOn(long activeFeature, long weaponTypeID)
     {
-        if (activeFeature <= 0)
+        if (activeFeature <= 0 || activeFeature > (long)ActiveFeature.All)
         {
             return false;
         }
 
-        uint weaponFlag = (uint)Math.Pow(2, weaponTypeID);
-        return IsBitfieldContainingFlag((uint)activeFeature, (ActiveFeature)weaponFlag, (uint)ActiveFeature.All);
+        var weaponFlag = (ActiveFeature)Math.Pow(2, weaponTypeID);
+        var activeFeatureFlags = (ActiveFeature)activeFeature;
+
+        return activeFeatureFlags.HasFlag(weaponFlag);
     }
 
     public string GetHalkElement()
