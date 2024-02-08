@@ -287,11 +287,11 @@ public enum QuestVariant2 : uint
     DisableActiveFeature = 16,
     FixedDifficulty = 32,
     /// <summary>
-    /// no secret tech, transcend, halk pot. no course atk?
+    /// no secret tech, transcend, halk pot, course atk, diva skill, prayer gem
     /// </summary>
     Level9999 = 64,
     /// <summary>
-    /// no rasta, partnya, halk, soul revival or similar, halk pot, diva skill.
+    /// no rasta, partnya, halk, soul revival or similar, halk pot, diva skill, diva prayer gem
     /// </summary>
     Road = 128,
     All = 255,
@@ -454,7 +454,7 @@ public enum CourseRightsSecondByte : uint
 }
 
 /// <summary>
-/// TODO Run filters by buff.
+/// The run buffs.
 /// </summary>
 [Flags]
 [JsonConverter(typeof(JsonStringEnumConverter))]
@@ -478,10 +478,22 @@ public enum RunBuff : uint
     /// </summary>
     CourseAttackBoost = 2048,
 
-    // old categories
-    TimeAttack = PoogieItem | DivaSong | Bento,
-    FreestyleNoSecretTech = Halk | PoogieItem | DivaSong | Bento | GuildPoogie | ActiveFeature | GuildFood | DivaSkill | DivaPrayerGem,
+    // old overlay categories
+    TimeAttack = Halk | PoogieItem | DivaSong | Bento | GuildPoogie | ActiveFeature | GuildFood,
+    FreestyleNoSecretTech = TimeAttack | DivaSkill | DivaPrayerGem,
     FreestyleWithSecretTech = FreestyleNoSecretTech | SecretTechnique,
+
+    // leaderboard in website
+    // TA
+    LeaderboardTimeAttack = TimeAttack,
+    // FDS
+    LeaderboardFreestyleDivaSkill = LeaderboardTimeAttack | DivaSkill,
+    // FDP (FreestyleNoSecretTech in old category)
+    LeaderboardFreestyleDivaPrayerGem = LeaderboardFreestyleDivaSkill | DivaPrayerGem,
+    // FST (FreestyleWithSecretTech in old category)
+    LeaderboardFreestyleSecretTechnique = LeaderboardFreestyleDivaPrayerGem | SecretTechnique,
+    // FCA
+    LeaderboardFreestyleCourseAttackBoost = LeaderboardFreestyleSecretTechnique | CourseAttackBoost | HalkPotEffect,
 
     All =  Halk | PoogieItem | DivaSong | HalkPotEffect | Bento | GuildPoogie | ActiveFeature | GuildFood | DivaSkill | SecretTechnique | DivaPrayerGem | CourseAttackBoost,
 }

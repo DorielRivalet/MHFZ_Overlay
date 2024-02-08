@@ -4,6 +4,8 @@
 
 namespace MHFZ_Overlay.Models.Constant;
 
+using System.Windows.Forms;
+
 /// <summary>
 /// Static messages and placeholder strings.
 /// </summary>
@@ -46,4 +48,17 @@ public static class Messages
     public const string EmptyImage = "https://i.imgur.com/aAcPJGb.png";
 
     public const string CustomQuestName = "Custom Quest";
+
+    public const string OverlayModeTimeAttack = "Time Attack";
+
+    public const string OverlayModeStandard = "Standard";
+
+    public const string OverlayModeFreestyleNoSecretTech = "Freestyle No Secret Tech";
+
+    public const string OverlayModeFreestyleWithSecretTech = "Freestyle w/ Secret Tech";
+
+    public const string OverlayModeConfiguring = "Configuring";
+
+    public const string OverlayModeSpeedrun = "Speedrun";
+
 }

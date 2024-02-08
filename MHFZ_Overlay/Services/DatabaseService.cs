@@ -2050,7 +2050,7 @@ public sealed class DatabaseService
                     using (var cmd = new SQLiteCommand(sql, conn))
                     {
                         // TODO test
-                        cmd.Parameters.AddWithValue("@RunBuffs", model.GetRunBuffs());
+                        cmd.Parameters.AddWithValue("@RunBuffs", runBuffs);
                         cmd.Parameters.AddWithValue("@RunID", runID);
                         cmd.ExecuteNonQuery();
                     }
@@ -17432,7 +17432,7 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
                                 continue;
                             }
 
-                            var newActualOverlayMode = actualOverlayMode == "Time Attack" || actualOverlayMode == "Freestyle No Secret Tech" || actualOverlayMode == "Freestyle w/ Secret Tech" ? "Speedrun" : actualOverlayMode;
+                            var newActualOverlayMode = actualOverlayMode == Messages.OverlayModeTimeAttack || actualOverlayMode == Messages.OverlayModeFreestyleNoSecretTech || actualOverlayMode == Messages.OverlayModeFreestyleWithSecretTech ? Messages.OverlayModeSpeedrun : actualOverlayMode;
 
                             using (var cmd2 = new SQLiteCommand(conn))
                             {
@@ -17499,7 +17499,7 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
                                 continue;
                             }
 
-                            var newActualOverlayMode = actualOverlayMode == "Time Attack" || actualOverlayMode == "Freestyle No Secret Tech" || actualOverlayMode == "Freestyle w/ Secret Tech" ? "Speedrun" : actualOverlayMode;
+                            var newActualOverlayMode = actualOverlayMode == Messages.OverlayModeTimeAttack || actualOverlayMode == Messages.OverlayModeFreestyleNoSecretTech || actualOverlayMode == Messages.OverlayModeFreestyleWithSecretTech ? Messages.OverlayModeSpeedrun : actualOverlayMode;
 
                             using (var cmd2 = new SQLiteCommand(conn))
                             {

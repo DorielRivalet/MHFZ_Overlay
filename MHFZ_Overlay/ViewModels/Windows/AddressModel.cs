@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Data.SQLite;
 using System.Diagnostics;
 using System.Drawing.Imaging;
 using System.Globalization;
@@ -2751,26 +2752,37 @@ TreeScope.Children, condition);
         return (PouchItem1ID() == 4952 || PouchItem2ID() == 4952 || PouchItem3ID() == 4952 || PouchItem4ID() == 4952 || PouchItem5ID() == 4952 || PouchItem6ID() == 4952 || PouchItem7ID() == 4952 || PouchItem8ID() == 4952 || PouchItem9ID() == 4952 || PouchItem10ID() == 4952 || PouchItem11ID() == 4952 || PouchItem12ID() == 4952 || PouchItem13ID() == 4952 || PouchItem14ID() == 4952 || PouchItem15ID() == 4952 || PouchItem16ID() == 4952 || PouchItem17ID() == 4952 || PouchItem18ID() == 4952 || PouchItem19ID() == 4952 || PouchItem20ID() == 4952 || PartnyaBagItem1ID() == 4952 || PartnyaBagItem2ID() == 4952 || PartnyaBagItem3ID() == 4952 || PartnyaBagItem4ID() == 4952 || PartnyaBagItem5ID() == 4952 || PartnyaBagItem6ID() == 4952 || PartnyaBagItem7ID() == 4952 || PartnyaBagItem8ID() == 4952 || PartnyaBagItem9ID() == 4952 || PartnyaBagItem10ID() == 4952);
     }
 
+    /// <summary>
+    /// Gets the run buffs
+    /// </summary>
+    /// <param name="overlayMode"></param>
+    /// <returns></returns>
     public RunBuff GetRunBuffs(string overlayMode = "")
     {
         if (overlayMode != string.Empty)
         {
             switch (overlayMode)
             {
-                case "Freestyle No Secret Tech":
+                case Messages.OverlayModeFreestyleNoSecretTech:
                     return RunBuff.FreestyleNoSecretTech;
-                case "Freestyle w/ Secret Tech":
+                case Messages.OverlayModeFreestyleWithSecretTech:
                     return RunBuff.FreestyleWithSecretTech;
-                case "Time Attack":
+                case Messages.OverlayModeTimeAttack:
                     return RunBuff.TimeAttack;
                 default:
+                    // we do not know the quest variants in 0.34, so we set as none.
+                    // if we do not take into account quest variants, calculating the run buffs
+                    // may be wrong because, for example, if we detect that halk was on we increase by 1 but
+                    // in quests where halk is disabled the value in db is still positive, although in-game
+                    // halk is off.
                     return RunBuff.None;
             }
         }
 
         var runBuffs = RunBuff.None;
+        var questVariant2 = (uint)QuestVariant2();
 
-        if (HalkOn() && !(IsBitfieldContainingFlag((uint)QuestVariant2(), Models.Structures.QuestVariant2.DisableHalkPoogieCuff, (uint)Models.Structures.QuestVariant2.All) || IsBitfieldContainingFlag((uint)QuestVariant2(), Models.Structures.QuestVariant2.Road, (uint)Models.Structures.QuestVariant2.All)))
+        if (HalkOn() && !(IsBitfieldContainingFlag(questVariant2, Models.Structures.QuestVariant2.DisableHalkPoogieCuff, (uint)Models.Structures.QuestVariant2.All) || IsBitfieldContainingFlag(questVariant2, Models.Structures.QuestVariant2.Road, (uint)Models.Structures.QuestVariant2.All)))
         {
             runBuffs |= RunBuff.Halk;
         }
@@ -2785,7 +2797,7 @@ TreeScope.Children, condition);
             runBuffs |= RunBuff.DivaSong;
         }
 
-        if ((HalkPotEffectOn() || isHalkPotEquipped()) && !(IsBitfieldContainingFlag((uint)QuestVariant2(), Models.Structures.QuestVariant2.DisableHalkPotionCourseAttack, (uint)Models.Structures.QuestVariant2.All) || IsBitfieldContainingFlag((uint)QuestVariant2(), Models.Structures.QuestVariant2.Level9999, (uint)Models.Structures.QuestVariant2.All) || IsBitfieldContainingFlag((uint)QuestVariant2(), Models.Structures.QuestVariant2.Road, (uint)Models.Structures.QuestVariant2.All)))
+        if ((HalkPotEffectOn() || isHalkPotEquipped()) && !(IsBitfieldContainingFlag(questVariant2, Models.Structures.QuestVariant2.DisableHalkPotionCourseAttack, (uint)Models.Structures.QuestVariant2.All) || IsBitfieldContainingFlag(questVariant2, Models.Structures.QuestVariant2.Level9999, (uint)Models.Structures.QuestVariant2.All) || IsBitfieldContainingFlag(questVariant2, Models.Structures.QuestVariant2.Road, (uint)Models.Structures.QuestVariant2.All)))
         {
             runBuffs |= RunBuff.HalkPotEffect;
         }
@@ -2801,7 +2813,7 @@ TreeScope.Children, condition);
             runBuffs |= RunBuff.GuildPoogie;
         }
 
-        if (IsActiveFeatureOn(GetActiveFeature(), WeaponType()) && !IsBitfieldContainingFlag((uint)QuestVariant2(), Models.Structures.QuestVariant2.DisableActiveFeature, (uint)Models.Structures.QuestVariant2.All))
+        if (IsActiveFeatureOn(GetActiveFeature(), WeaponType()) && !IsBitfieldContainingFlag(questVariant2, Models.Structures.QuestVariant2.DisableActiveFeature, (uint)Models.Structures.QuestVariant2.All))
         {
             runBuffs |= RunBuff.ActiveFeature;
         }
@@ -2811,22 +2823,22 @@ TreeScope.Children, condition);
             runBuffs |= RunBuff.GuildFood;
         }
 
-        if ((DivaSkill() > 0 && DivaSkillUsesLeft() > 0) && !IsBitfieldContainingFlag((uint)QuestVariant2(), Models.Structures.QuestVariant2.Road, (uint)Models.Structures.QuestVariant2.All))
+        if ((DivaSkill() > 0 && DivaSkillUsesLeft() > 0) && !(IsBitfieldContainingFlag(questVariant2, Models.Structures.QuestVariant2.Road, (uint)Models.Structures.QuestVariant2.All) || IsBitfieldContainingFlag(questVariant2, Models.Structures.QuestVariant2.Level9999, (uint)Models.Structures.QuestVariant2.All)))
         {
             runBuffs |= RunBuff.DivaSkill;
         }
 
-        if ((StyleRank1() == 15 || StyleRank2() == 15) && !IsBitfieldContainingFlag((uint)QuestVariant2(), Models.Structures.QuestVariant2.Level9999, (uint)Models.Structures.QuestVariant2.All))
+        if ((StyleRank1() == 15 || StyleRank2() == 15) && !IsBitfieldContainingFlag(questVariant2, Models.Structures.QuestVariant2.Level9999, (uint)Models.Structures.QuestVariant2.All))
         {
             runBuffs |= RunBuff.SecretTechnique;
         }
 
-        if ((DivaPrayerGemRedSkill() != 0 || DivaPrayerGemYellowSkill() != 0 || DivaPrayerGemGreenSkill() != 0 || DivaPrayerGemBlueSkill() != 0) && !IsBitfieldContainingFlag((uint)QuestVariant2(), Models.Structures.QuestVariant2.Road, (uint)Models.Structures.QuestVariant2.All))
+        if ((DivaPrayerGemRedSkill() != 0 || DivaPrayerGemYellowSkill() != 0 || DivaPrayerGemGreenSkill() != 0 || DivaPrayerGemBlueSkill() != 0) && !(IsBitfieldContainingFlag(questVariant2, Models.Structures.QuestVariant2.Road, (uint)Models.Structures.QuestVariant2.All) || IsBitfieldContainingFlag(questVariant2, Models.Structures.QuestVariant2.Level9999, (uint)Models.Structures.QuestVariant2.All)))
         {
             runBuffs |= RunBuff.DivaPrayerGem;
         }
 
-        if (GetAdditionalCourses(Rights()).Contains("Support") && !(IsBitfieldContainingFlag((uint)QuestVariant2(), Models.Structures.QuestVariant2.DisableHalkPotionCourseAttack, (uint)Models.Structures.QuestVariant2.All) || IsBitfieldContainingFlag((uint)QuestVariant2(), Models.Structures.QuestVariant2.Level9999, (uint)Models.Structures.QuestVariant2.All)))
+        if (GetAdditionalCourses(Rights()).Contains("Support") && !(IsBitfieldContainingFlag(questVariant2, Models.Structures.QuestVariant2.DisableHalkPotionCourseAttack, (uint)Models.Structures.QuestVariant2.All) || IsBitfieldContainingFlag(questVariant2, Models.Structures.QuestVariant2.Level9999, (uint)Models.Structures.QuestVariant2.All)))
         {
             runBuffs |= RunBuff.CourseAttackBoost;
         }
