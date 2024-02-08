@@ -1558,7 +1558,7 @@
                                         <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="3" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=EnableInputLogging}"/>
                                         <StackPanel Margin="5" Orientation="Horizontal" Grid.Row="4" Grid.Column="0" >
                                             <ui:SymbolIcon Symbol="Info28" FontSize="28" Foreground="{StaticResource Blue}" Margin="0,0,5,0" ToolTip="Required for Speedrun Modes"/>
-                                            <TextBlock ToolTip="Show a watermark that displays the overlay mode. If using speedrun mode, also shows the run buffs value." Style="{StaticResource ConfigTextBox}" Text="Overlay Mode Watermark" />
+                                            <TextBlock ToolTip="Show a watermark that displays the overlay mode. If using speedrun mode, also shows the run buffs value. See the FAQ for the values of TA, FDS, FDP, FST and FCA." Style="{StaticResource ConfigTextBox}" Text="Overlay Mode Watermark" />
                                         </StackPanel>
                                         <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="4" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=OverlayModeWatermarkShown}"/>
 

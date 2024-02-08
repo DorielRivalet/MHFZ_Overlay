@@ -1675,7 +1675,7 @@ TreeScope.Children, condition);
             {
                 if (OverlayModeDictionary.Last().Value == "Speedrun")
                 {
-                    return "Speedrun+" + $" ({(uint)GetRunBuffs()})";
+                    return "Speedrun+" + $" ({GetRunBuffsTag(GetRunBuffs())})";
                 }
 
                 return OverlayModeDictionary.Last().Value + "+";
@@ -1684,7 +1684,7 @@ TreeScope.Children, condition);
             {
                 if (OverlayModeDictionary.First().Value == "Speedrun")
                 {
-                    return "Speedrun+" + $" ({(uint)GetRunBuffs()})";
+                    return "Speedrun+" + $" ({GetRunBuffsTag(GetRunBuffs())})";
                 }
 
                 return OverlayModeDictionary.First().Value + "+";
@@ -2750,6 +2750,57 @@ TreeScope.Children, condition);
     public bool isHalkPotEquipped()
     {
         return (PouchItem1ID() == 4952 || PouchItem2ID() == 4952 || PouchItem3ID() == 4952 || PouchItem4ID() == 4952 || PouchItem5ID() == 4952 || PouchItem6ID() == 4952 || PouchItem7ID() == 4952 || PouchItem8ID() == 4952 || PouchItem9ID() == 4952 || PouchItem10ID() == 4952 || PouchItem11ID() == 4952 || PouchItem12ID() == 4952 || PouchItem13ID() == 4952 || PouchItem14ID() == 4952 || PouchItem15ID() == 4952 || PouchItem16ID() == 4952 || PouchItem17ID() == 4952 || PouchItem18ID() == 4952 || PouchItem19ID() == 4952 || PouchItem20ID() == 4952 || PartnyaBagItem1ID() == 4952 || PartnyaBagItem2ID() == 4952 || PartnyaBagItem3ID() == 4952 || PartnyaBagItem4ID() == 4952 || PartnyaBagItem5ID() == 4952 || PartnyaBagItem6ID() == 4952 || PartnyaBagItem7ID() == 4952 || PartnyaBagItem8ID() == 4952 || PartnyaBagItem9ID() == 4952 || PartnyaBagItem10ID() == 4952);
+    }
+
+    public string GetRunBuffsTag(RunBuff runBuff)
+    {
+        return runBuff switch
+        {
+            RunBuff.LeaderboardTimeAttack => "TA",
+            RunBuff.LeaderboardFreestyleDivaSkill => "FDS",
+            RunBuff.LeaderboardFreestyleDivaPrayerGem => "FDP",
+            RunBuff.LeaderboardFreestyleSecretTechnique => "FST",
+            RunBuff.LeaderboardFreestyleCourseAttackBoost => "FCA",
+            _ => CalculateRunBuffsTag(runBuff),
+        };
+    }
+
+    /// <summary>
+    /// TODO test
+    /// </summary>
+    /// <param name="runBuffs"></param>
+    /// <returns></returns>
+    public string CalculateRunBuffsTag(RunBuff runBuffs)
+    {
+        var value = (uint)runBuffs;
+        var all = (uint)RunBuff.All;
+
+        if (IsBitfieldContainingFlag(value, RunBuff.CourseAttackBoost, all))
+        {
+            return "FCA";
+        }
+
+        if (IsBitfieldContainingFlag(value, RunBuff.SecretTechnique, all))
+        {
+            return "FST";
+        }
+
+        if (IsBitfieldContainingFlag(value, RunBuff.DivaPrayerGem, all))
+        {
+            return "FDP";
+        }
+
+        if (IsBitfieldContainingFlag(value, RunBuff.DivaSkill, all))
+        {
+            return "FDS";
+        }
+
+        if (!IsBitfieldContainingFlag(value, RunBuff.HalkPotEffect, all))
+        {
+            return "TA";
+        }
+
+        return value.ToString();
     }
 
     /// <summary>
@@ -13379,7 +13430,23 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         }
     }
 
-    public string OverlayModeWatermarkText => ShowOverlayModeFinalMode() ? GetFinalOverlayModeForDisplay() : GetOverlayModeForStorage() == "Speedrun" ? $"Speedrun ({(uint)GetRunBuffs()})" : GetOverlayModeForStorage();
+    public string OverlayModeWatermarkText
+    {
+        get
+        {
+            if (ShowOverlayModeFinalMode())
+            {
+                return GetFinalOverlayModeForDisplay();
+            }
+
+            if (GetOverlayModeForStorage() == "Speedrun")
+            {
+                return $"Speedrun ({GetRunBuffsTag(GetRunBuffs())})";
+            }
+
+            return GetOverlayModeForStorage();
+        }
+    }
 
     public string QuestIDBind => this.QuestID().ToString(CultureInfo.InvariantCulture);
 

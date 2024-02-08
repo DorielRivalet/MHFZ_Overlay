@@ -2041,9 +2041,11 @@ public sealed class DatabaseService
 
                     sql = @"INSERT INTO QuestsRunBuffs (
                         RunBuffs,
+                        RunBuffsTag,
                         RunID
                         ) VALUES (
                         @RunBuffs,
+                        @RunBuffsTag,
                         @RunID
                         )";
 
@@ -2051,13 +2053,38 @@ public sealed class DatabaseService
                     {
                         // TODO test
                         cmd.Parameters.AddWithValue("@RunBuffs", runBuffs);
+                        cmd.Parameters.AddWithValue("@RunBuffsTag", dataLoader.Model.GetRunBuffsTag((RunBuff)runBuffs));
                         cmd.Parameters.AddWithValue("@RunID", runID);
                         cmd.ExecuteNonQuery();
                     }
 
                     Logger.Debug("Inserted into QuestsRunBuffs table");
 
+                    sql = @"INSERT INTO QuestsQuestVariant (
+                        QuestVariant1,
+                        QuestVariant2,
+                        QuestVariant3,
+                        QuestVariant4,
+                        RunID
+                        ) VALUES (
+                        @QuestVariant1,
+                        @QuestVariant2,
+                        @QuestVariant3,
+                        @QuestVariant4,
+                        @RunID
+                        )";
 
+                    using (var cmd = new SQLiteCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@QuestVariant1", model.QuestVariant1());
+                        cmd.Parameters.AddWithValue("@QuestVariant2", model.QuestVariant2());
+                        cmd.Parameters.AddWithValue("@QuestVariant3", model.QuestVariant3());
+                        cmd.Parameters.AddWithValue("@QuestVariant4", model.QuestVariant4());
+                        cmd.Parameters.AddWithValue("@RunID", runID);
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    Logger.Debug("Inserted into QuestsQuestVariant table");
 
 
 
@@ -3105,7 +3132,25 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
                     cmd.ExecuteNonQuery();
                 }
 
-                // TODO run buffs
+                using (var cmd = new SQLiteCommand(conn))
+                {
+                    cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_quests_quest_variant_updates
+                        AFTER UPDATE ON QuestsQuestVariant
+                        BEGIN
+                          SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
+                        END;";
+                    cmd.ExecuteNonQuery();
+                }
+
+                using (var cmd = new SQLiteCommand(conn))
+                {
+                    cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_quests_quest_variant_deletion
+                        AFTER DELETE ON QuestsQuestVariant
+                        BEGIN
+                          SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
+                        END;";
+                    cmd.ExecuteNonQuery();
+                }
 
                 using (var cmd = new SQLiteCommand(conn))
                 {
@@ -3429,8 +3474,9 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
                             // Separate command for the insert operation
                             using (var cmd2 = new SQLiteCommand(conn))
                             {
-                                cmd2.CommandText = "INSERT INTO QuestsRunBuffs(RunBuffs, RunID) VALUES (@RunBuffs, @RunID)";
+                                cmd2.CommandText = "INSERT INTO QuestsRunBuffs(RunBuffs, RunBuffsTag, RunID) VALUES (@RunBuffs, @RunBuffsTag, @RunID)";
                                 cmd2.Parameters.AddWithValue("@RunBuffs", dataLoader.Model.GetRunBuffs(actualOverlayMode));
+                                cmd2.Parameters.AddWithValue("@RunBuffsTag", dataLoader.Model.GetRunBuffsTag(dataLoader.Model.GetRunBuffs(actualOverlayMode)));
                                 cmd2.Parameters.AddWithValue("@RunID", runID);
 
                                 cmd2.ExecuteNonQuery();
@@ -5952,6 +5998,21 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                 sql = @"CREATE TABLE IF NOT EXISTS QuestsRunBuffs(
                 QuestsRunBuffsID INTEGER PRIMARY KEY AUTOINCREMENT,
                 RunBuffs INTEGER NOT NULL DEFAULT 0,
+                RunBuffsTag TEXT NOT NULL DEFAULT '',
+                RunID INTEGER NOT NULL,
+                FOREIGN KEY(RunID) REFERENCES Quests(RunID)
+                )";
+                using (var cmd = new SQLiteCommand(sql, conn))
+                {
+                    cmd.ExecuteNonQuery();
+                }
+
+                sql = @"CREATE TABLE IF NOT EXISTS QuestsQuestVariant(
+                QuestsQuestVariantID INTEGER PRIMARY KEY AUTOINCREMENT,
+                QuestVariant1 INTEGER NOT NULL DEFAULT 0,
+                QuestVariant2 INTEGER NOT NULL DEFAULT 0,
+                QuestVariant3 INTEGER NOT NULL DEFAULT 0,
+                QuestVariant4 INTEGER NOT NULL DEFAULT 0,
                 RunID INTEGER NOT NULL,
                 FOREIGN KEY(RunID) REFERENCES Quests(RunID)
                 )";
@@ -17541,6 +17602,7 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
         sql = @"CREATE TABLE IF NOT EXISTS QuestsRunBuffs(
                 QuestsRunBuffsID INTEGER PRIMARY KEY AUTOINCREMENT,
                 RunBuffs INTEGER NOT NULL DEFAULT 0,
+                RunBuffsTag TEXT NOT NULL DEFAULT '',
                 RunID INTEGER NOT NULL,
                 FOREIGN KEY(RunID) REFERENCES Quests(RunID)
                 )";
