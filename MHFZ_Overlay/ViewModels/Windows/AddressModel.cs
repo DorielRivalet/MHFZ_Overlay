@@ -1347,13 +1347,6 @@ public abstract class AddressModel : INotifyPropertyChanged
 
     public abstract int LandSlot();
 
-
-    /// <summary>
-    /// Updates every 11 seconds
-    /// </summary>
-    /// <returns></returns>
-    public int ServerHeartbeat => LandSlot() % 2 == 0 ? ServerHeartbeatLandEven() : ServerHeartbeatLandOdd();
-
     public abstract int GuildFoodStart();
 
     public abstract int DivaSongStart();
@@ -1398,6 +1391,11 @@ public abstract class AddressModel : INotifyPropertyChanged
     /// <returns></returns>
     public abstract int QuestVariant4();
 
+    /// <summary>
+    /// Updates every 11 seconds
+    /// </summary>
+    /// <returns></returns>
+    public int ServerHeartbeat => LandSlot() % 2 == 0 ? ServerHeartbeatLandEven() : ServerHeartbeatLandOdd();
 
     /// <TODO>
     /// [] Not Done
@@ -9099,191 +9097,85 @@ Overlay Hash: {52}
         EZlion.Mapper.WeaponType.IDName.TryGetValue((int)mostUsedWeaponType, out var mostUsedWeaponTypeName);
         Item.IDName.TryGetValue((int)mostCommonDecorationID, out var mostCommonDecorationName);
         SkillArmor.IDName.TryGetValue((int)leastUsedArmorSkill, out var leastUsedArmorSkillName);
+        SkillGuildPoogie.IDName.TryGetValue((int)questCompendium.MostCommonGuildPoogie, out var mostCommonGuildPoogie);
 
         return string.Format(
             CultureInfo.InvariantCulture,
-            @"{0} (UTC)
-{1}
+            $@"{createdAt} (UTC)
+{createdBy}
 
 Quest
-Most Completed Quest: {2} (Attempted {3}) [Quest ID {4}]
-Most Attempted Quest: {5} (Completed {6}) [Quest ID {7}]
-Total Quests Completed/Attempted: {8}/{9}
-Quest Completion Time Elapsed (Average/Median): {10} / {11}
-Total Time Elapsed during Quest: {12}
-Most Completed Quest with Carts: {13} [Quest ID {14}]
-Total Carts in Quest (Average/Median): {15} ({16}/{17})
-Quest Party Size (Average/Median/Mode): {18}/{19}/{20}
-Percent of Solo Quests: {21}
-Percent of Guild Food in Quests: {22}
-Percent of Diva Skill in Quests: {23}
-Percent of Skill Fruit in Quests: {24}
-Most Common Diva Skill in Quests: {25}
-Most Common Guild Food in Quests: {26}
+Most Completed Quest: {mostCompletedQuest} (Attempted {mostCompletedQuestAttempts}) [Quest ID {mostCompletedQuestID}]
+Most Attempted Quest: {mostAttemptedQuest} (Completed {mostAttemptedQuestCompletions}) [Quest ID {mostAttemptedQuestID}]
+Total Quests Completed/Attempted: {totalQuestsCompleted}/{totalQuestsAttempted}
+Quest Completion Time Elapsed (Average/Median): {TimeService.GetMinutesSecondsMillisecondsFromFrames((long)questCompletionTimeElapsedAverage)} / {TimeService.GetMinutesSecondsMillisecondsFromFrames((long)questCompletionTimeElapsedMedian)}
+Total Time Elapsed during Quest: {TimeService.GetMinutesSecondsMillisecondsFromFrames(totalTimeElapsedDuringQuest)}
+Most Completed Quest with Carts: {mostCompletedQuestWithCarts} [Quest ID {mostCompletedQuestWithCartsQuestID}]
+Total Carts in Quest (Average/Median): {totalCartsInQuest} ({string.Format(CultureInfo.InvariantCulture, "{0:0.##}", totalCartsInQuestAverage)}/{string.Format(CultureInfo.InvariantCulture, "{0:0.##}", totalCartsInQuestMedian)})
+Quest Party Size (Average/Median/Mode): {string.Format(CultureInfo.InvariantCulture, "{0:0.##}", questPartySizeAverage)}/{string.Format(CultureInfo.InvariantCulture, "{0:0.##}", questPartySizeMedian)}/{questPartySizeMode}
+Percent of Solo Quests: {string.Format(CultureInfo.InvariantCulture, "{0:0.##}%", percentOfSoloQuests)}
+Percent of Guild Poogie in Quests: {string.Format(CultureInfo.InvariantCulture, "{0:0.##}%", questCompendium.PercentOfGuildPoogie)}
+Percent of Guild Food in Quests: {string.Format(CultureInfo.InvariantCulture, "{0:0.##}%", percentOfGuildFood)}
+Percent of Diva Song in Quests: {string.Format(CultureInfo.InvariantCulture, "{0:0.##}%", questCompendium.PercentOfDivaSong)}
+Percent of Diva Skill in Quests: {string.Format(CultureInfo.InvariantCulture, "{0:0.##}%", percentOfDivaSkill)}
+Percent of Diva Prayer Gem in Quests: {string.Format(CultureInfo.InvariantCulture, "{0:0.##}%", questCompendium.PercentOfDivaPrayerGem)}
+Percent of Skill Fruit in Quests: {string.Format(CultureInfo.InvariantCulture, "{0:0.##}%", percentOfSkillFruit)}
+Percent of Halk in Quests: {string.Format(CultureInfo.InvariantCulture, "{0:0.##}%", questCompendium.PercentOfHalkOn)}
+Percent of Halk Pot Effect in Quests: {string.Format(CultureInfo.InvariantCulture, "{0:0.##}%", questCompendium.PercentOfHalkPotEffectOn)}
+Percent of Active Feature in Quests: {string.Format(CultureInfo.InvariantCulture, "{0:0.##}%", questCompendium.PercentOfActiveFeature)}
+Percent of Course Attack Boost in Quests: {string.Format(CultureInfo.InvariantCulture, "{0:0.##}%", questCompendium.PercentOfCourseAttackBoost)}
+Most Common Guild Poogie in Quests: {mostCommonGuildPoogie}
+Most Common Guild Food in Quests: {mostCommonGuildFoodName}
+Most Common Diva Skill in Quests: {mostCommonDivaSkillName}
 
 Gear
-Most Used Weapon Type: {27}
-Total Unique Armor Pieces/Weapons/Decorations used: {28}/{29}/{30}
-Most Common Decoration: {31} [ID {32}]
-Least Used Armor Skill: {33}
+Most Used Weapon Type: {mostUsedWeaponTypeName}
+Total Unique Armor Pieces/Weapons/Decorations used: {totalUniqueArmorPieces}/{totalUniqueWeapons}/{totalUniqueDecorations}
+Most Common Decoration: {mostCommonDecorationName} [ID {mostCommonDecorationID.ToString("X", CultureInfo.InvariantCulture)}]
+Least Used Armor Skill: {leastUsedArmorSkillName}
 
 Hunter Performance
-Highest True Raw (Average/Median): {34} ({35}/{36}) [Run ID {37}]
-Highest Single Hit Damage (Average/Median): {38} ({39}/{40}) [Run ID {41}]
-Highest Hit Count (Average/Median): {42} ({43}/{44}) [Run ID {45}]
-Highest Hits Taken/Blocked (Average/Median): {46} ({47}/{48}) [Run ID {49}]
-Highest DPS (Average/Median): {50} ({51}/{52}) [Run ID {53}]
-Highest Hits per Second (Average/Median): {54} ({55}/{56}) [Run ID {57}]
-Highest Hits Taken/Blocked per Second (Average/Median): {58} ({59}/{60}) [Run ID {61}]
-Highest Actions per Minute (Average/Median): {62} ({63}/{64}) [Run ID {65}]
-Total Hits Count: {66}
-Total Hits Taken/Blocked: {67}
-Total Actions: {68}
-Health (Average/Median/Mode): {69}/{70}/{71}
-Stamina (Average/Median/Mode): {72}/{73}/{74}
+Highest True Raw (Average/Median): {highestTrueRaw} ({string.Format(CultureInfo.InvariantCulture, "{0:0.##}", trueRawAverage)}/{string.Format(CultureInfo.InvariantCulture, "{0:0.##}", trueRawMedian)}) [Run ID {highestTrueRawRunID}]
+Highest Single Hit Damage (Average/Median): {highestSingleHitDamage} ({string.Format(CultureInfo.InvariantCulture, "{0:0.##}", singleHitDamageAverage)}/{string.Format(CultureInfo.InvariantCulture, "{0:0.##}", singleHitDamageMedian)}) [Run ID {highestSingleHitDamageRunID}]
+Highest Hit Count (Average/Median): {highestHitCount} ({string.Format(CultureInfo.InvariantCulture, "{0:0.##}", hitCountAverage)}/{string.Format(CultureInfo.InvariantCulture, "{0:0.##}", hitCountMedian)}) [Run ID {highestHitCountRunID}]
+Highest Hits Taken/Blocked (Average/Median): {highestHitsTakenBlocked} ({string.Format(CultureInfo.InvariantCulture, "{0:0.##}", hitsTakenBlockedAverage)}/{string.Format(CultureInfo.InvariantCulture, "{0:0.##}", hitsTakenBlockedMedian)}) [Run ID {highestHitsTakenBlockedRunID}]
+Highest DPS (Average/Median): {string.Format(CultureInfo.InvariantCulture, "{0:0.##}", highestDPS)} ({string.Format(CultureInfo.InvariantCulture, "{0:0.##}", dPSAverage)}/{string.Format(CultureInfo.InvariantCulture, "{0:0.##}", dPSMedian)}) [Run ID {highestDPSRunID}]
+Highest Hits per Second (Average/Median): {string.Format(CultureInfo.InvariantCulture, "{0:0.##}", highestHitsPerSecond)} ({string.Format(CultureInfo.InvariantCulture, "{0:0.##}", hitsPerSecondAverage)}/{string.Format(CultureInfo.InvariantCulture, "{0:0.##}", hitsPerSecondMedian)}) [Run ID {highestHitsPerSecondRunID}]
+Highest Hits Taken/Blocked per Second (Average/Median): {string.Format(CultureInfo.InvariantCulture, "{0:0.##}", highestHitsTakenBlockedPerSecond)} ({string.Format(CultureInfo.InvariantCulture, "{0:0.##}", hitsTakenBlockedPerSecondAverage)}/{string.Format(CultureInfo.InvariantCulture, "{0:0.##}", hitsTakenBlockedPerSecondMedian)}) [Run ID {highestHitsTakenBlockedPerSecondRunID}]
+Highest Actions per Minute (Average/Median): {string.Format(CultureInfo.InvariantCulture, "{0:0.##}", highestActionsPerMinute)} ({string.Format(CultureInfo.InvariantCulture, "{0:0.##}", actionsPerMinuteAverage)}/{string.Format(CultureInfo.InvariantCulture, "{0:0.##}", actionsPerMinuteMedian)}) [Run ID {highestActionsPerMinuteRunID}]
+Total Hits Count: {totalHitsCount}
+Total Hits Taken/Blocked: {totalHitsTakenBlocked}
+Total Actions: {totalActions}
+Health (Average/Median/Mode): {string.Format(CultureInfo.InvariantCulture, "{0:0.##}", healthAverage)}/{string.Format(CultureInfo.InvariantCulture, "{0:0.##}", healthMedian)}/{healthMode}
+Stamina (Average/Median/Mode): {string.Format(CultureInfo.InvariantCulture, "{0:0.##}", staminaAverage)}/{string.Format(CultureInfo.InvariantCulture, "{0:0.##}", staminaMedian)}/{staminaMode}
 
 Mezeporta Festival (MezFes)
-Minigames Played: {75}
-Uruki Pachinko Times Played: {76}
-Uruki Pachinko High-score (Average/Median): {77} ({78}/{79})
-Guuku Scoop Times Played: {80}
-Guuku Scoop High-score (Average/Median): {81} ({82}/{83})
-Nyanrendo Times Played: {84}
-Nyanrendo High-score (Average/Median): {85} ({86}/{87})
-Panic Honey Times Played: {88}
-Panic Honey High-score (Average/Median): {89} ({90}/{91})
-Dokkan Battle Cats Times Played: {92}
-Dokkan Battle Cats High-score (Average/Median): {93} ({94}/{95})
+Minigames Played: {minigamesPlayed}
+Uruki Pachinko Times Played: {urukiPachinkoTimesPlayed}
+Uruki Pachinko High-score (Average/Median): {urukiPachinkoHighscore} ({string.Format(CultureInfo.InvariantCulture, "{0:0.##}", urukiPachinkoScoreAverage)}/{string.Format(CultureInfo.InvariantCulture, "{0:0.##}", urukiPachinkoScoreMedian)})
+Guuku Scoop Times Played: {guukuScoopTimesPlayed}
+Guuku Scoop High-score (Average/Median): {guukuScoopHighscore} ({string.Format(CultureInfo.InvariantCulture, "{0:0.##}", guukuScoopScoreAverage)}/{string.Format(CultureInfo.InvariantCulture, "{0:0.##}", guukuScoopScoreMedian)})
+Nyanrendo Times Played: {nyanrendoTimesPlayed}
+Nyanrendo High-score (Average/Median): {nyanrendoHighscore} ({string.Format(CultureInfo.InvariantCulture, "{0:0.##}", nyanrendoScoreAverage)}/{string.Format(CultureInfo.InvariantCulture, "{0:0.##}", nyanrendoScoreMedian)})
+Panic Honey Times Played: {panicHoneyTimesPlayed}
+Panic Honey High-score (Average/Median): {panicHoneyHighscore} ({string.Format(CultureInfo.InvariantCulture, "{0:0.##}", panicHoneyScoreAverage)}/{string.Format(CultureInfo.InvariantCulture, "{0:0.##}", panicHoneyScoreMedian)})
+Dokkan Battle Cats Times Played: {dokkanBattleCatsTimesPlayed}
+Dokkan Battle Cats High-score (Average/Median): {dokkanBattleCatsHighscore} ({string.Format(CultureInfo.InvariantCulture, "{0:0.##}", dokkanBattleCatsScoreAverage)}/{string.Format(CultureInfo.InvariantCulture, "{0:0.##}", dokkanBattleCatsScoreMedian)})
 
 Monster
-Highest Monster Attack Multiplier: {96} [Run ID {97}]
-Lowest Monster Attack Multiplier: {98} [Run ID {99}]
-Highest Monster Defense Rate: {100} [Run ID {101}]
-Lowest Monster Defense Rate: {102} [Run ID {103}]
-Highest Monster Size Multiplier: {104} [Run ID {105}]
-Lowest Monster Size Multiplier: {106} [Run ID {107}]
-Total Large Monsters Hunted: {108}
-Total Small Monsters Hunted: {109}
+Highest Monster Attack Multiplier: {monster1AttackMultiplierHighest} [Run ID {monster1AttackMultiplierHighestRunID}]
+Lowest Monster Attack Multiplier: {monster1AttackMultiplierLowest} [Run ID {monster1AttackMultiplierLowestRunID}]
+Highest Monster Defense Rate: {monster1DefenseRateHighest} [Run ID {monster1DefenseRateHighestRunID}]
+Lowest Monster Defense Rate: {monster1DefenseRateLowest} [Run ID {monster1DefenseRateLowestRunID}]
+Highest Monster Size Multiplier: {monster1SizeMultiplierHighest} [Run ID {monster1SizeMultiplierHighestRunID}]
+Lowest Monster Size Multiplier: {monster1SizeMultiplierLowest} [Run ID {monster1SizeMultiplierLowestRunID}]
+Total Large Monsters Hunted: {totalLargeMonstersHunted}
+Total Small Monsters Hunted: {totalSmallMonstersHunted}
 
 Miscellaneous
-Total Overlay Sessions: {110}
-Session Duration (Highest/Lowest/Average/Median): {111} / {112} / {113} / {114}
-",
-            createdAt,
-            createdBy,
-            mostCompletedQuest,
-            mostCompletedQuestAttempts,
-            mostCompletedQuestID,
-            mostAttemptedQuest,
-            mostAttemptedQuestCompletions,
-            mostAttemptedQuestID,
-            totalQuestsCompleted,
-            totalQuestsAttempted,
-            TimeService.GetMinutesSecondsMillisecondsFromFrames((long)questCompletionTimeElapsedAverage),
-            TimeService.GetMinutesSecondsMillisecondsFromFrames((long)questCompletionTimeElapsedMedian),
-            TimeService.GetMinutesSecondsMillisecondsFromFrames(totalTimeElapsedDuringQuest),
-            mostCompletedQuestWithCarts,
-            mostCompletedQuestWithCartsQuestID,
-            totalCartsInQuest,
-            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", totalCartsInQuestAverage),
-            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", totalCartsInQuestMedian),
-            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", questPartySizeAverage),
-            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", questPartySizeMedian),
-            questPartySizeMode,
-            string.Format(CultureInfo.InvariantCulture, "{0:0.##}%", percentOfSoloQuests),
-            string.Format(CultureInfo.InvariantCulture, "{0:0.##}%", percentOfGuildFood),
-            string.Format(CultureInfo.InvariantCulture, "{0:0.##}%", percentOfDivaSkill),
-            string.Format(CultureInfo.InvariantCulture, "{0:0.##}%", percentOfSkillFruit),
-            mostCommonDivaSkillName,
-            mostCommonGuildFoodName,
-            mostUsedWeaponTypeName,
-            totalUniqueArmorPieces,
-            totalUniqueWeapons,
-            totalUniqueDecorations,
-            mostCommonDecorationName,
-            mostCommonDecorationID.ToString("X", CultureInfo.InvariantCulture),
-            leastUsedArmorSkillName,
-            highestTrueRaw,
-            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", trueRawAverage),
-            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", trueRawMedian),
-            highestTrueRawRunID,
-            highestSingleHitDamage,
-            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", singleHitDamageAverage),
-            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", singleHitDamageMedian),
-            highestSingleHitDamageRunID,
-            highestHitCount,
-            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", hitCountAverage),
-            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", hitCountMedian),
-            highestHitCountRunID,
-            highestHitsTakenBlocked,
-            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", hitsTakenBlockedAverage),
-            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", hitsTakenBlockedMedian),
-            highestHitsTakenBlockedRunID,
-            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", highestDPS),
-            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", dPSAverage),
-            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", dPSMedian),
-            highestDPSRunID,
-            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", highestHitsPerSecond),
-            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", hitsPerSecondAverage),
-            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", hitsPerSecondMedian),
-            highestHitsPerSecondRunID,
-            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", highestHitsTakenBlockedPerSecond),
-            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", hitsTakenBlockedPerSecondAverage),
-            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", hitsTakenBlockedPerSecondMedian),
-            highestHitsTakenBlockedPerSecondRunID,
-            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", highestActionsPerMinute),
-            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", actionsPerMinuteAverage),
-            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", actionsPerMinuteMedian),
-            highestActionsPerMinuteRunID,
-            totalHitsCount,
-            totalHitsTakenBlocked,
-            totalActions,
-            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", healthAverage),
-            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", healthMedian),
-            healthMode,
-            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", staminaAverage),
-            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", staminaMedian),
-            staminaMode,
-            minigamesPlayed,
-            urukiPachinkoTimesPlayed,
-            urukiPachinkoHighscore,
-            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", urukiPachinkoScoreAverage),
-            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", urukiPachinkoScoreMedian),
-            guukuScoopTimesPlayed,
-            guukuScoopHighscore,
-            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", guukuScoopScoreAverage),
-            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", guukuScoopScoreMedian),
-            nyanrendoTimesPlayed,
-            nyanrendoHighscore,
-            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", nyanrendoScoreAverage),
-            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", nyanrendoScoreMedian),
-            panicHoneyTimesPlayed,
-            panicHoneyHighscore,
-            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", panicHoneyScoreAverage),
-            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", panicHoneyScoreMedian),
-            dokkanBattleCatsTimesPlayed,
-            dokkanBattleCatsHighscore,
-            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", dokkanBattleCatsScoreAverage),
-            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", dokkanBattleCatsScoreMedian),
-            monster1AttackMultiplierHighest,
-            monster1AttackMultiplierHighestRunID,
-            monster1AttackMultiplierLowest,
-            monster1AttackMultiplierLowestRunID,
-            monster1DefenseRateHighest,
-            monster1DefenseRateHighestRunID,
-            monster1DefenseRateLowest,
-            monster1DefenseRateLowestRunID,
-            monster1SizeMultiplierHighest,
-            monster1SizeMultiplierHighestRunID,
-            monster1SizeMultiplierLowest,
-            monster1SizeMultiplierLowestRunID,
-            totalLargeMonstersHunted,
-            totalSmallMonstersHunted,
-            totalOverlaySessions,
-            TimeSpan.FromSeconds(sessionDurationHighest).ToString(TimeFormats.HoursMinutesSecondsMilliseconds, CultureInfo.InvariantCulture),
-            TimeSpan.FromSeconds(sessionDurationLowest).ToString(TimeFormats.HoursMinutesSecondsMilliseconds, CultureInfo.InvariantCulture),
-            TimeSpan.FromSeconds(sessionDurationAverage).ToString(TimeFormats.HoursMinutesSecondsMilliseconds, CultureInfo.InvariantCulture),
-            TimeSpan.FromSeconds(sessionDurationMedian).ToString(TimeFormats.HoursMinutesSecondsMilliseconds, CultureInfo.InvariantCulture));
+Total Overlay Sessions: {totalOverlaySessions}
+Session Duration (Highest/Lowest/Average/Median): {TimeSpan.FromSeconds(sessionDurationHighest).ToString(TimeFormats.HoursMinutesSecondsMilliseconds, CultureInfo.InvariantCulture)} / {TimeSpan.FromSeconds(sessionDurationLowest).ToString(TimeFormats.HoursMinutesSecondsMilliseconds, CultureInfo.InvariantCulture)} / {TimeSpan.FromSeconds(sessionDurationAverage).ToString(TimeFormats.HoursMinutesSecondsMilliseconds, CultureInfo.InvariantCulture)} / {TimeSpan.FromSeconds(sessionDurationMedian).ToString(TimeFormats.HoursMinutesSecondsMilliseconds, CultureInfo.InvariantCulture)}
+");
     }
 
     public static string GetGameArmorSkillsHealthAndStamina => "Health and Stamina\n\nHealth\t○\tHealth+50\t40\tMaximum Health +50\n\nHealth+40\t30\tMaximum Health +40\n\nHealth+30\t20\tMaximum Health +30\n\nHealth+20\t15\tMaximum Health +20\n\nHealth+10\t10\tMaximum Health +10\n\nHealth-10\t-10\tMaximum Health -10\n\nHealth-20\t-15\tMaximum Health -20\n\nHealth-30\t-20\tMaximum Health -30\n\nRecovery Speed\t○\tRecovery Speed+2\t20\t4x Health Recovery Speed\n\nRecovery Speed+1\t10\t3x Health Recovery Speed\n\nRecovery Speed-1\t-10\t3x Slower Health Recovery Speed\n\nRecovery Speed-2\t-20\t4x Slower Health Recovery Speed\n\nHunger\t○\tHunger Negated\t15\tStamina bar length does not decrease in length over time.\n\nHunger Halved\t10\tStamina bar length decreases at 0.5x the speed over time.\n\nHunger Up (Sm)\t-10\tStamina bar length decreases at 1.5x the speed over time\n\nHunger Up (Lg)\t-15\tStamina bar length decreases at 2.0x the speed over time\n\nRecovery\t×\tRecovery Items Up\t10\tRecovery item effect boosted 1.25x\n\nRecovery Items Down\t-10\tRecovery item effectlowered to 0.75x\n\nVampirism\t×\tVampirism+2\t20\tWhen attacking a monster, there is an 80% that your Health will recover.\n\nVampirism+1\t10\tWhen attacking a monster, there is a 60% that your Health will recover.\n\nHerbal Science\t×\tMedical Sage\t10\tInstant recovery of any Red HP when using any healing item.\n\nAdditional effects if multiple party members have the skill：\n\n2Players: recovery items apply to the entire party.\n\n3Players: recovery items apply to the entire party, +20extra HP Recovery\n\n4Players: recovery items apply to the entire party, +50extra HP Recovery\n\n※※Stacks with Recovery skill, only pure recovery items are party wide (e.g.Max Potions yes,Ancient Potions no.)\n\nStamina Recovery\t○\tStamina Recovery Up【Large】\t20\tDoubles stamina recovery speed over time\n\nStamina Rec (Small)\t10\tStamina recovery speed increases by 1.5 times over time.\n\nStamina Rec Down\t-10\tHalves stamina recovery speed over time\n\nStamina\t○\t\n\nStamina values usually decrease by 15 units\n\nPeerless\t20\tStamina decrease rate is halved (decrease is reduced to 8 units)\n\nIn addition, the reduction of stamina when evading or guarding is reduced to 50%.\n\nMarathon Runner\t10\tStamina decrease rate is halved (decrease is reduced to 8 units)\n\nIn addition, the reduction of stamina when evading or guarding is reduced to 75%.\n\nShort Sprinter\t-10\tStamina depletion speed is increased by 1.2 times (up to 18 units)\n\nEating\t×\tSpeed Eating\t10\tIncreases the speed of eating consumables such as meat and healing potions.\n\nSlow Eating\t-10\tReduces the speed of eating consumables such as meat and healing potions.\n\nGluttony\t×\tScavenger\t15\tUsing consumables restores 25 maximum stamina\n\nGourmand\t10\tStamina recovery when eating meat is increased by 25";

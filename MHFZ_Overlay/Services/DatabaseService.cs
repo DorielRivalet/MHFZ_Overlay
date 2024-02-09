@@ -14320,6 +14320,68 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
                     questCompendium.PercentOfSkillFruit = skillFruitUsagePercentage;
 
+                    query = @"
+                        SELECT 
+                            RunBuffs
+                        FROM QuestsRunBuffs";
+
+                    var totalQuests = 0;
+                    List<RunBuff> runBuffsList = new();
+
+                    using (var cmd = new SQLiteCommand(query, conn))
+                    {
+                        using (var reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                var runBuffs = (long)reader["RunBuffs"];
+                                runBuffsList.Add((RunBuff)runBuffs);
+                                totalQuests++;
+                            }
+                        }
+                    }
+
+                    var runBuffCount = new Dictionary<RunBuff, int>()
+                    {
+                        { RunBuff.Halk, 0 },
+                        { RunBuff.PoogieItem, 0 },
+                        { RunBuff.DivaSong, 0 },
+                        { RunBuff.HalkPotEffect, 0 },
+                        { RunBuff.Bento, 0 },
+                        { RunBuff.GuildPoogie, 0 },
+                        { RunBuff.ActiveFeature, 0 },
+                        { RunBuff.GuildFood, 0 },
+                        { RunBuff.DivaSkill, 0 },
+                        { RunBuff.SecretTechnique, 0 },
+                        { RunBuff.DivaPrayerGem, 0 },
+                        { RunBuff.CourseAttackBoost, 0 },
+                    };
+
+                    foreach (var runBuff in runBuffsList)
+                    {
+                        foreach (var kvp in runBuffCount)
+                        {
+                            if (runBuff.HasFlag(kvp.Key))
+                            {
+                                runBuffCount[kvp.Key]++;
+                                break;
+                            }
+                        }
+                    }
+                 
+                    if (totalQuests > 0)
+                    {
+                        questCompendium.PercentOfActiveFeature = runBuffCount[RunBuff.ActiveFeature] * 100.0 / totalQuests;
+                        questCompendium.PercentOfDivaSong = runBuffCount[RunBuff.DivaSong] * 100.0 / totalQuests;
+                        questCompendium.PercentOfDivaPrayerGem = runBuffCount[RunBuff.DivaPrayerGem] * 100.0 / totalQuests;
+                        questCompendium.PercentOfGuildPoogie = runBuffCount[RunBuff.GuildPoogie] * 100.0 / totalQuests;
+                        questCompendium.PercentOfHalkOn = runBuffCount[RunBuff.Halk] * 100.0 / totalQuests;
+                        questCompendium.PercentOfHalkPotEffectOn = runBuffCount[RunBuff.HalkPotEffect] * 100.0 / totalQuests;
+                        questCompendium.PercentOfCourseAttackBoost = runBuffCount[RunBuff.CourseAttackBoost] * 100.0 / totalQuests;
+                    }
+
+                    questCompendium.MostCommonGuildPoogie = GetMostCommonGuildPoogie(conn);
+
                     transaction.Commit();
                 }
                 catch (Exception ex)
@@ -14947,6 +15009,52 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                 }
             }
         }
+    }
+
+    private static long GetMostCommonGuildPoogie(SQLiteConnection conn)
+    {
+        var guildPoogies = new List<long>();
+        var query = @"SELECT
+                        GuildPoogie1Skill, GuildPoogie2Skill, GuildPoogie3Skill
+                    FROM
+                        QuestsGuildPoogie";
+        using (var cmd = new SQLiteCommand(query, conn))
+        {
+            using (var reader = cmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    var skill1 = (long)reader["GuildPoogie1Skill"];
+                    var skill2 = (long)reader["GuildPoogie2Skill"];
+                    var skill3 = (long)reader["GuildPoogie3Skill"];
+
+                    if (skill1 > 0)
+                    {
+                        guildPoogies.Add(skill1);
+                        continue;
+                    }
+
+                    if (skill2 > 0)
+                    {
+                        guildPoogies.Add(skill2);
+                        continue;
+                    }
+
+                    if (skill3 > 0)
+                    {
+                        guildPoogies.Add(skill3);
+                        continue;
+                    }
+                }
+            }
+        }
+
+        var mostCommonGuildPoogie = guildPoogies
+            .GroupBy(n => n) // Group the numbers
+            .OrderByDescending(g => g.Count()) // Order the groups by their count
+            .FirstOrDefault()?.Key; // Get the key of the first group (most common number)
+
+        return (long)(mostCommonGuildPoogie == null ? 0 : mostCommonGuildPoogie);
     }
 
     /// <summary>

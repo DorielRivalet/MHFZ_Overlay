@@ -57,6 +57,22 @@ public sealed class QuestCompendium
 
     public double PercentOfSkillFruit { get; set; }
 
+    public double PercentOfActiveFeature { get; set; }
+
+    public double PercentOfDivaSong { get; set; }
+
+    public double PercentOfDivaPrayerGem { get; set; }
+
+    public double PercentOfHalkOn { get; set; }
+
+    public double PercentOfHalkPotEffectOn { get; set; }
+
+    public double PercentOfCourseAttackBoost { get; set; }
+
+    public double PercentOfGuildPoogie { get; set; }
+
+    public long MostCommonGuildPoogie { get; set; }
+
     public long MostCommonDivaSkill { get; set; }
 
     public long MostCommonGuildFood { get; set; }
