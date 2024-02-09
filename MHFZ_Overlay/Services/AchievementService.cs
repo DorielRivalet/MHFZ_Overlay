@@ -2705,7 +2705,7 @@ public sealed class AchievementService : IAchievementService
                 }
 
                 return weaponUsageArray.All(n => n == 1);
-            case 446: // TODO test
+            case 446:
                 var maxTrueRaw = 8_000;
 
                 var foundQuestData = from quest in databaseManagerInstance.AllQuests
@@ -2735,8 +2735,8 @@ public sealed class AchievementService : IAchievementService
             case 448: // TODO test
                 var foundQuest = from quest in databaseManagerInstance.AllQuests
                                      where (quest.PartySize == 1 &&
-                                     quest.QuestID == 0 &&
-                                     (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Speedrun") && quest.FinalTimeValue <= Numbers.Frames1Minute * 5)
+                                     quest.QuestID == 23_349 &&
+                                     (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Speedrun") && quest.FinalTimeValue < Numbers.Frames1Minute * 5)
                                      select quest;
 
                 if (foundQuest.Count() == 0)
