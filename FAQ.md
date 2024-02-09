@@ -82,15 +82,25 @@ Run Buffs are the buffs that you can filter by when searching for quests:
 | Diva Prayer Gem             |  1024  |
 | Course Attack Boost         |  2048  |
 | All                       |  4095  |
-| Time Attack                |  7     |
-| Freestyle No Secret Tech     |  1023  |
-| Freestyle With Secret Tech   |  1535  |
+| Time Attack                |  183     |
+| Freestyle No Secret Tech     |  1527  |
+| Freestyle With Secret Tech   |  2039  |
 
 If you had the old categories in your runs, these are their run buffs equivalents:
 
-- Time Attack: Poogie Item, Diva Song, Bento.
-- Freestyle No Secret Tech: Halk, Poogie Item, Diva Song, Bento, Guild Poogie, Active Feature, Guild Food, Diva Skill, Diva Prayer Gem.
-- Freestyle With Secret Tech: Freestyle No Secret Tech run buffs and Secret Technique.
+- Time Attack: Halk + Poogie Item + Diva Song + Bento + Guild Poogie + Guild Food.
+- Freestyle No Secret Tech: Time Attack buffs + Active Feature + Diva Skill + Diva Prayer Gem.
+- Freestyle With Secret Tech: Freestyle No Secret Tech buffs + Secret Technique.
+
+When you set the overlay mode to Speedrun, the run buffs value or tag will be displayed on watermark in parentheses. Tags that are submitted to leaderboard will be:
+
+|Name|Tag|Value|Buffs|
+|-|-|-|-|
+|Time Attack|TA|183|Halk + Poogie Item + Diva Song + Bento + Guild Poogie + Guild Food|
+|Freestyle Diva Skill|FDS|503|TA + Diva Skill + Active Feature|
+|Freestyle Diva Prayer Gem|FDP|1527|FDS + Diva Prayer Gem|
+|Freestyle Secret Tech|FST|2039|FDP + Secret Technique|
+|Freestyle Course Attack Boost|FCA|4095|FST + Course Attack Boost + Halk Pot Effect|
 
 ## How to Record Videos with the Overlay?
 
