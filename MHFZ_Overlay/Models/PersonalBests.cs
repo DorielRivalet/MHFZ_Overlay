@@ -8,7 +8,7 @@ using System;
 
 public sealed class PersonalBests
 {
-    public PersonalBests(string weaponType, long attempts, DateTime createdAt, string actualOverlayMode, long runID, long timeLeft)
+    public PersonalBests(string weaponType, long attempts, DateTime createdAt, string actualOverlayMode, long runID, long timeLeft, long runBuffs)
     {
         this.WeaponType = weaponType;
         this.Attempts = attempts;
@@ -16,6 +16,7 @@ public sealed class PersonalBests
         this.ActualOverlayMode = actualOverlayMode;
         this.RunID = runID;
         this.TimeLeft = timeLeft;
+        this.RunBuffs = runBuffs;
     }
 
     public string WeaponType { get; set; }
@@ -29,4 +30,7 @@ public sealed class PersonalBests
     public long RunID { get; set; }
 
     public long TimeLeft { get; set; }
+
+    public long RunBuffs { get; set; }
+
 }

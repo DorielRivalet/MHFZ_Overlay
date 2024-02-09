@@ -7,7 +7,7 @@ For the addresses, check the respective files.
 
 ## IDs
 
-- [Mappers](../Mappers)
+- [Mappers](https://github.com/DorielRivalet/ezlion/tree/main/src/packages/csharp/EZlion/EZlion/Mapper)
 - [Bitfields and Enumerations](../Structures)
 
 ### Sigil Skills

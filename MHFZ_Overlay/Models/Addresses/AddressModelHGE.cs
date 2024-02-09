@@ -1837,7 +1837,13 @@ public sealed class AddressModelHGE : AddressModel
     public override int ActiveFeature3() => this.M.Read2Byte("mhfo-hd.dll+E41A2A8");
 
     /// <inheritdoc/>
-    public override int ServerHeartbeat() => this.M.ReadInt("mhfo-hd.dll+EABD4F0");
+    public override int ServerHeartbeatLandOdd() => this.M.ReadInt("mhfo-hd.dll+EABD4F0");
+
+    /// <inheritdoc/>
+    public override int ServerHeartbeatLandEven() => this.M.ReadInt("mhfo-hd.dll+E9D1EB0");
+
+    /// <inheritdoc/>
+    public override int LandSlot() => this.M.ReadInt("mhfo-hd.dll+EDFB940");
 
     /// <inheritdoc/>
     public override int GuildFoodStart() => this.M.ReadInt("mhfo-hd.dll+E7FED08");
@@ -1886,5 +1892,20 @@ public sealed class AddressModelHGE : AddressModel
 
     /// <inheritdoc/>
     public override bool HalkPotEffectOn() => this.M.ReadByte("mhfo-hd.dll+DC6C524") > 0 ? true : false;
+
+    /// <inheritdoc/>
+    public override int DivaSongFromGuildStart() => this.M.ReadInt("mhfo-hd.dll+ED3EB24");
+
+    /// <inheritdoc/>
+    public override int QuestVariant1() => this.M.ReadByte("mhfo-hd.dll+2AFA897");
+
+    /// <inheritdoc/>
+    public override int QuestVariant2() => this.M.ReadByte("mhfo-hd.dll+2AFA898");
+
+    /// <inheritdoc/>
+    public override int QuestVariant3() => this.M.ReadByte("mhfo-hd.dll+2AFA899");
+
+    /// <inheritdoc/>
+    public override int QuestVariant4() => this.M.ReadByte("mhfo-hd.dll+2AFA89A");
 
 }

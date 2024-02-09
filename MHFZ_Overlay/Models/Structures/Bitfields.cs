@@ -245,7 +245,7 @@ public enum QuestWeaponTypesDisabled : uint
     Bow = 1024,
     Tonfa = 2048,
     SwitchAxeF = 4096,
-    // TODO MS Flag 64
+    MagnetSpike = 8192,
 }
 
 /// <summary>
@@ -257,6 +257,9 @@ public enum QuestVariant1 : uint
 {
     [DefaultValue(HR)]
     HR = 0,
+    /// <summary>
+    /// SR
+    /// </summary>
     Hiden = 1,
     HardcoreFixed = 2,
     HardcoreUnlimitedToggle = 4,
@@ -265,6 +268,7 @@ public enum QuestVariant1 : uint
     Diva = 32,
     HarcoreNormalToggle = 64,
     UnlimitedFixed = 128,
+    All = 255,
 }
 
 /// <summary>
@@ -277,13 +281,20 @@ public enum QuestVariant2 : uint
     [DefaultValue(None)]
     None = 0,
     Level1 = 1,
-    DisableHalkPotion = 2,
-    DisableHalkPoogie = 4,
+    DisableHalkPotionCourseAttack = 2,
+    DisableHalkPoogieCuff = 4,
     Timer = 8,
     DisableActiveFeature = 16,
     FixedDifficulty = 32,
+    /// <summary>
+    /// no secret tech, transcend, halk pot, course atk, prayer gem
+    /// </summary>
     Level9999 = 64,
+    /// <summary>
+    /// no rasta, partnya, halk, soul revival or similar, halk pot, diva skill, diva prayer gem
+    /// </summary>
     Road = 128,
+    All = 255,
 }
 
 /// <summary>
@@ -297,12 +308,19 @@ public enum QuestVariant3 : uint
     None = 0,
     DisableRewardBonus = 1,
     RequireGRank = 2,
-    UNK1 = 4,
-    UNK2 = 8,
+    NoSimpleMode = 4,
+    /// <summary>
+    /// no transcend? no diva skills
+    /// </summary>
+    NoGPSkills = 8,
     Zenith = 16,
+    /// <summary>
+    /// Interception
+    /// </summary>
     DivaDefense = 32,
     UNK3Course = 64,
     DisabledSigil = 128,
+    All = 255,
 }
 
 /// <summary>
@@ -322,6 +340,7 @@ public enum QuestVariant4 : uint
     UNK5 = 32,
     UNK6 = 64,
     UNK7 = 128,
+    All = 255,
 }
 
 /// <summary>
@@ -435,7 +454,7 @@ public enum CourseRightsSecondByte : uint
 }
 
 /// <summary>
-/// TODO Run filters by buff.
+/// The run buffs.
 /// </summary>
 [Flags]
 [JsonConverter(typeof(JsonStringEnumConverter))]
@@ -459,10 +478,24 @@ public enum RunBuff : uint
     /// </summary>
     CourseAttackBoost = 2048,
 
-    // old categories
-    TimeAttack = PoogieItem | DivaSong | Bento,
-    FreestyleNoSecretTech = Halk | PoogieItem | DivaSong | Bento | GuildPoogie | ActiveFeature | GuildFood | DivaSkill | DivaPrayerGem,
+    // old overlay categories
+    TimeAttack = Halk | PoogieItem | DivaSong | Bento | GuildPoogie | GuildFood,
+    FreestyleNoSecretTech = TimeAttack | ActiveFeature | DivaSkill | DivaPrayerGem,
     FreestyleWithSecretTech = FreestyleNoSecretTech | SecretTechnique,
+
+    // leaderboard in website
+    // TA
+    LeaderboardTimeAttack = TimeAttack,
+    // FDS
+    LeaderboardFreestyleDivaSkill = LeaderboardTimeAttack | ActiveFeature | DivaSkill,
+    // FDP (FreestyleNoSecretTech in old category)
+    LeaderboardFreestyleDivaPrayerGem = LeaderboardFreestyleDivaSkill | DivaPrayerGem,
+    // FST (FreestyleWithSecretTech in old category)
+    LeaderboardFreestyleSecretTechnique = LeaderboardFreestyleDivaPrayerGem | SecretTechnique,
+    // FCA
+    LeaderboardFreestyleCourseAttackBoost = LeaderboardFreestyleSecretTechnique | CourseAttackBoost | HalkPotEffect,
+
+    All =  Halk | PoogieItem | DivaSong | HalkPotEffect | Bento | GuildPoogie | ActiveFeature | GuildFood | DivaSkill | SecretTechnique | DivaPrayerGem | CourseAttackBoost,
 }
 
 /// <summary>

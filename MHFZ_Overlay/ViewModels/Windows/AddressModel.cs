@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Data.SQLite;
 using System.Diagnostics;
 using System.Drawing.Imaging;
 using System.Globalization;
@@ -1340,11 +1341,11 @@ public abstract class AddressModel : INotifyPropertyChanged
     /// <returns></returns>
     public abstract int ActiveFeature3();
 
-    /// <summary>
-    /// Updates every 11 seconds
-    /// </summary>
-    /// <returns></returns>
-    public abstract int ServerHeartbeat();
+    public abstract int ServerHeartbeatLandEven();
+
+    public abstract int ServerHeartbeatLandOdd();
+
+    public abstract int LandSlot();
 
     public abstract int GuildFoodStart();
 
@@ -1376,6 +1377,25 @@ public abstract class AddressModel : INotifyPropertyChanged
     
     public abstract bool HalkPotEffectOn();
 
+    public abstract int DivaSongFromGuildStart();
+
+    public abstract int QuestVariant1();
+
+    public abstract int QuestVariant2();
+
+    public abstract int QuestVariant3();
+
+    /// <summary>
+    /// unused?
+    /// </summary>
+    /// <returns></returns>
+    public abstract int QuestVariant4();
+
+    /// <summary>
+    /// Updates every 11 seconds
+    /// </summary>
+    /// <returns></returns>
+    public int ServerHeartbeat => LandSlot() % 2 == 0 ? ServerHeartbeatLandEven() : ServerHeartbeatLandOdd();
 
     /// <TODO>
     /// [] Not Done
@@ -1635,9 +1655,7 @@ TreeScope.Children, condition);
             OverlayMode.NoGame => "No Game",
             OverlayMode.MainMenu => "Main Menu",
             OverlayMode.WorldSelect => "World Select",
-            OverlayMode.TimeAttack => "Time Attack",
-            OverlayMode.FreestyleSecretTech => "Freestyle w/ Secret Tech",
-            OverlayMode.Freestyle => "Freestyle No Secret Tech",
+            OverlayMode.Speedrun => "Speedrun",
             OverlayMode.Zen => "Zen",
             _ => "Not Found",
         };
@@ -1660,10 +1678,20 @@ TreeScope.Children, condition);
             // TODO: test
             if (OverlayModeDictionary.Count == 2 && OverlayModeDictionary.First().Value == "Standard")
             {
+                if (OverlayModeDictionary.Last().Value == "Speedrun")
+                {
+                    return "Speedrun+" + $" ({GetRunBuffsTag(GetRunBuffs())})";
+                }
+
                 return OverlayModeDictionary.Last().Value + "+";
             }
             else
             {
+                if (OverlayModeDictionary.First().Value == "Speedrun")
+                {
+                    return "Speedrun+" + $" ({GetRunBuffsTag(GetRunBuffs())})";
+                }
+
                 return OverlayModeDictionary.First().Value + "+";
             }
         }
@@ -1689,9 +1717,7 @@ TreeScope.Children, condition);
                     OverlayMode.NoGame => "Game not found | ",
                     OverlayMode.MainMenu => "Main menu | ",
                     OverlayMode.WorldSelect => "World Select | ",
-                    OverlayMode.TimeAttack => "Time Attack | ",
-                    OverlayMode.FreestyleSecretTech => "Freestyle Secret Tech | ",
-                    OverlayMode.Freestyle => "Freestyle | ", // TODO rename?
+                    OverlayMode.Speedrun => "Speedrun | ",
                     OverlayMode.Zen => "Zen | ",
                     _ => string.Empty,
 
@@ -1785,21 +1811,7 @@ TreeScope.Children, condition);
         }
         else if (s.TimerInfoShown && s.EnableInputLogging && s.EnableQuestLogging && s.OverlayModeWatermarkShown)
         {
-            var gems = new List<int> { DivaPrayerGemRedSkill(), DivaPrayerGemRedLevel(), DivaPrayerGemYellowSkill(), DivaPrayerGemYellowLevel(), DivaPrayerGemGreenSkill(), DivaPrayerGemGreenLevel(), DivaPrayerGemBlueSkill(), DivaPrayerGemBlueLevel() };
-            var guildPoogies = new List<int> { GuildPoogie1Skill(), GuildPoogie2Skill(), GuildPoogie3Skill() };
-            // TODO test
-            if (!HalkPotEffectOn() && GetGuildPoogieEffect(guildPoogies) == "No Poogie" && this.GuildFoodSkill() == 0 && !HalkOn() && GetDivaPrayerGems(gems) == "None" && !IsActiveFeatureOn(GetActiveFeature(), this.WeaponType()) && !IsBitfieldContainingFlag((uint)this.Rights(), CourseRightsFirstByte.Support, (uint)CourseRightsFirstByte.All, true, 1) && this.DivaSkillUsesLeft() == 0 && this.StyleRank1() != 15 && this.StyleRank2() != 15)
-            {
-                return OverlayMode.TimeAttack;
-            }
-            else if (this.StyleRank1() == 15 || this.StyleRank2() == 15)
-            {
-                return OverlayMode.FreestyleSecretTech;
-            }
-            else
-            {
-                return OverlayMode.Freestyle;
-            }
+            return OverlayMode.Speedrun;
         }
         else
         {
@@ -1828,6 +1840,16 @@ TreeScope.Children, condition);
         return 0;
     }
 
+    /// <summary>
+    /// This only works for bitfield argument values 255 and below, if you don't intend to extract bytes. Consider using HasFlag directly if so.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="bitfield"></param>
+    /// <param name="flag"></param>
+    /// <param name="all"></param>
+    /// <param name="extractByte"></param>
+    /// <param name="bytePosition"></param>
+    /// <returns></returns>
     public bool IsBitfieldContainingFlag<T>(uint bitfield, T flag, uint all, bool extractByte = false, int bytePosition = 0) where T : Enum
     {
         byte value = extractByte ? (byte)(((uint)bitfield >> (bytePosition * 8)) & 0xFF) : (byte)bitfield;
@@ -2590,13 +2612,15 @@ TreeScope.Children, condition);
     {
         get
         {
-            if (DivaSongStart() <= 0)
+            var divaSongStart = Math.Max(DivaSongStart(), DivaSongFromGuildStart());
+
+            if (divaSongStart <= 0)
             {
                 return true;
             }
 
-            var expiry = DivaSongStart() + (60 * 90);
-            double secondsLeft = expiry - ServerHeartbeat();
+            var expiry = divaSongStart + (60 * 90);
+            double secondsLeft = expiry - ServerHeartbeat;
 
             return secondsLeft <= 60*10;
         }
@@ -2606,13 +2630,15 @@ TreeScope.Children, condition);
     {
         get
         {
-            if (DivaSongStart() <= 0)
+            var divaSongStart = Math.Max(DivaSongStart(), DivaSongFromGuildStart());
+
+            if (divaSongStart <= 0)
             {
                 return true;
             }
 
-            var expiry = DivaSongStart() + (60 * 90);
-            double secondsLeft = expiry - ServerHeartbeat();
+            var expiry = divaSongStart + (60 * 90);
+            double secondsLeft = expiry - ServerHeartbeat;
 
             return secondsLeft <= 0;
         }
@@ -2638,7 +2664,7 @@ TreeScope.Children, condition);
             }
 
             var expiry = GuildFoodStart() + (60 * 90);
-            double secondsLeft = expiry - ServerHeartbeat();
+            double secondsLeft = expiry - ServerHeartbeat;
 
             return secondsLeft <= 60 * 10;
         }
@@ -2654,7 +2680,7 @@ TreeScope.Children, condition);
             }
 
             var expiry = GuildFoodStart() + (60 * 90);
-            double secondsLeft = expiry - ServerHeartbeat();
+            double secondsLeft = expiry - ServerHeartbeat;
 
             return secondsLeft <= 0;
         }
@@ -2722,6 +2748,169 @@ TreeScope.Children, condition);
                 return "#f5e0dc";
             }
         }
+    }
+
+    public bool isShitenQuest(int questID)
+    {
+        return questID switch
+        {
+            Numbers.QuestIDUpperShitenDisufiroa => true,
+            Numbers.QuestIDLowerShitenDisufiroa => true,
+            Numbers.QuestIDUpperShitenUnknown => true,
+            Numbers.QuestIDLowerShitenUnknown => true,
+            _ => false
+        };
+    }
+
+    public bool IsHalkPotEquipped()
+    {
+        return (PouchItem1ID() == 4952 || PouchItem2ID() == 4952 || PouchItem3ID() == 4952 || PouchItem4ID() == 4952 || PouchItem5ID() == 4952 || PouchItem6ID() == 4952 || PouchItem7ID() == 4952 || PouchItem8ID() == 4952 || PouchItem9ID() == 4952 || PouchItem10ID() == 4952 || PouchItem11ID() == 4952 || PouchItem12ID() == 4952 || PouchItem13ID() == 4952 || PouchItem14ID() == 4952 || PouchItem15ID() == 4952 || PouchItem16ID() == 4952 || PouchItem17ID() == 4952 || PouchItem18ID() == 4952 || PouchItem19ID() == 4952 || PouchItem20ID() == 4952 || PartnyaBagItem1ID() == 4952 || PartnyaBagItem2ID() == 4952 || PartnyaBagItem3ID() == 4952 || PartnyaBagItem4ID() == 4952 || PartnyaBagItem5ID() == 4952 || PartnyaBagItem6ID() == 4952 || PartnyaBagItem7ID() == 4952 || PartnyaBagItem8ID() == 4952 || PartnyaBagItem9ID() == 4952 || PartnyaBagItem10ID() == 4952);
+    }
+
+    public string GetRunBuffsTag(RunBuff runBuff)
+    {
+        return runBuff switch
+        {
+            RunBuff.None => "None",
+            RunBuff.LeaderboardTimeAttack => "TA",
+            RunBuff.LeaderboardFreestyleDivaSkill => "FDS",
+            RunBuff.LeaderboardFreestyleDivaPrayerGem => "FDP",
+            RunBuff.LeaderboardFreestyleSecretTechnique => "FST",
+            RunBuff.LeaderboardFreestyleCourseAttackBoost => "FCA",
+            _ => CalculateRunBuffsTag(runBuff),
+        };
+    }
+
+    /// <summary>
+    /// TODO test
+    /// </summary>
+    /// <param name="runBuffs"></param>
+    /// <returns></returns>
+    public string CalculateRunBuffsTag(RunBuff runBuffs)
+    {
+        var value = (uint)runBuffs;
+
+        if (runBuffs.HasFlag(RunBuff.CourseAttackBoost))
+        {
+            return "FCA";
+        }
+
+        if (runBuffs.HasFlag(RunBuff.SecretTechnique) && !runBuffs.HasFlag(RunBuff.HalkPotEffect))
+        {
+            return "FST";
+        }
+
+        if (runBuffs.HasFlag(RunBuff.DivaPrayerGem) && !runBuffs.HasFlag(RunBuff.HalkPotEffect))
+        {
+            return "FDP";
+        }
+
+        if (runBuffs.HasFlag(RunBuff.DivaSkill) && !runBuffs.HasFlag(RunBuff.HalkPotEffect))
+        {
+            return "FDS";
+        }
+
+        if (!runBuffs.HasFlag(RunBuff.HalkPotEffect) && !runBuffs.HasFlag(RunBuff.ActiveFeature))
+        {
+            return "TA";
+        }
+
+        return value.ToString();
+    }
+
+    /// <summary>
+    /// Gets the run buffs
+    /// </summary>
+    /// <param name="overlayMode"></param>
+    /// <returns></returns>
+    public RunBuff GetRunBuffs(string overlayMode = "")
+    {
+        if (overlayMode != string.Empty)
+        {
+            switch (overlayMode)
+            {
+                case Messages.OverlayModeFreestyleNoSecretTech:
+                    return RunBuff.FreestyleNoSecretTech;
+                case Messages.OverlayModeFreestyleWithSecretTech:
+                    return RunBuff.FreestyleWithSecretTech;
+                case Messages.OverlayModeTimeAttack:
+                    return RunBuff.TimeAttack;
+                default:
+                    // we do not know the quest variants in 0.34, so we set as none.
+                    // if we do not take into account quest variants, calculating the run buffs
+                    // may be wrong because, for example, if we detect that halk was on we increase by 1 but
+                    // in quests where halk is disabled the value in db is still positive, although in-game
+                    // halk is off.
+                    return RunBuff.None;
+            }
+        }
+
+        var runBuffs = RunBuff.None;
+        var questVariant2 = (QuestVariant2)QuestVariant2();
+        var questVariant3 = (QuestVariant3)QuestVariant3();
+
+        if (HalkOn() && !(questVariant2.HasFlag(Models.Structures.QuestVariant2.DisableHalkPoogieCuff)) || questVariant2.HasFlag(Models.Structures.QuestVariant2.Road))
+        {
+            runBuffs |= RunBuff.Halk;
+        }
+
+        if (PoogieItemUseID() > 0)
+        {
+            runBuffs |= RunBuff.PoogieItem;
+        }
+
+        if (DivaSongActive)
+        {
+            runBuffs |= RunBuff.DivaSong;
+        }
+
+        if ((HalkPotEffectOn() || IsHalkPotEquipped()) && !(questVariant2.HasFlag(Models.Structures.QuestVariant2.DisableHalkPotionCourseAttack) || questVariant2.HasFlag(Models.Structures.QuestVariant2.Level9999) || questVariant2.HasFlag(Models.Structures.QuestVariant2.Road)))
+        {
+            runBuffs |= RunBuff.HalkPotEffect;
+        }
+
+        // TODO bento
+        if (true == true)
+        {
+            runBuffs |= RunBuff.Bento;
+        }
+
+        if (GuildPoogie1Skill() > 0 || GuildPoogie2Skill() > 0 || GuildPoogie3Skill() > 0)
+        {
+            runBuffs |= RunBuff.GuildPoogie;
+        }
+
+        if (IsActiveFeatureOn(GetActiveFeature(), WeaponType()) && !questVariant2.HasFlag(Models.Structures.QuestVariant2.DisableActiveFeature))
+        {
+            runBuffs |= RunBuff.ActiveFeature;
+        }
+
+        if (GuildFoodSkill() > 0)
+        {
+            runBuffs |= RunBuff.GuildFood;
+        }
+
+        if ((DivaSkill() > 0 && DivaSkillUsesLeft() > 0) && !(questVariant2.HasFlag(Models.Structures.QuestVariant2.Road) || questVariant3.HasFlag(Models.Structures.QuestVariant3.NoGPSkills)))
+        {
+            runBuffs |= RunBuff.DivaSkill;
+        }
+
+        if ((StyleRank1() == 15 || StyleRank2() == 15) && !questVariant2.HasFlag(Models.Structures.QuestVariant2.Level9999))
+        {
+            runBuffs |= RunBuff.SecretTechnique;
+        }
+
+        if ((DivaPrayerGemRedSkill() != 0 || DivaPrayerGemYellowSkill() != 0 || DivaPrayerGemGreenSkill() != 0 || DivaPrayerGemBlueSkill() != 0) && !(questVariant2.HasFlag(Models.Structures.QuestVariant2.Road) || questVariant2.HasFlag(Models.Structures.QuestVariant2.Level9999)))
+        {
+            runBuffs |= RunBuff.DivaPrayerGem;
+        }
+
+        if (GetAdditionalCourses(Rights()).Contains("Support") && !(questVariant2.HasFlag(Models.Structures.QuestVariant2.DisableHalkPotionCourseAttack) || questVariant2.HasFlag(Models.Structures.QuestVariant2.Level9999)))
+        {
+            runBuffs |= RunBuff.CourseAttackBoost;
+        }
+
+        return runBuffs;
     }
 
     public static double GetAverageHitsPerSecond(int weaponTypeID)
@@ -7815,9 +8004,157 @@ TreeScope.Children, condition);
 
             // zp in bold for markdown
             // fruits and speedrunner items also in bold
-            this.SavedGearStats = string.Format(CultureInfo.InvariantCulture, "【MHF-Z】Overlay {0} {1}({2}){3}\n\n{4}{5}: {6}\nHead: {7}\nChest: {8}\nArms: {9}\nWaist: {10}\nLegs: {11}\nCuffs: {12}\n\nWeapon Attack: {13} | Total Defense: {14}\n\nZenith Skills:\n{15}\n\nAutomatic Skills:\n{16}\n\nActive Skills{17}:\n{18}\n\nCaravan Skills:\n{19}\n\nDiva Skill:\n{20}\n\nGuild Food:\n{21}\n\nStyle Rank:\n{22}\n\nItems:\n{23}\n\nAmmo:\n{24}\n\nPoogie Item:\n{25}\n\nRoad/Duremudira Skills:\n{26}\n", App.CurrentProgramVersion, this.GetWeaponClass(), GetGender(), GetMetadata, GetGearDescription, this.CurrentWeaponName, this.GetRealWeaponName, this.GetArmorHeadName, this.GetArmorChestName, this.GetArmorArmName, this.GetArmorWaistName, this.GetArmorLegName, this.GetCuffs, this.BloatedWeaponAttack().ToString(CultureInfo.InvariantCulture), this.TotalDefense().ToString(CultureInfo.InvariantCulture), this.GetZenithSkills, this.GetAutomaticSkills, showGouBoost, this.GetArmorSkills, this.GetCaravanSkills, GetDivaSkillNameFromID(this.DivaSkill()), GetArmorSkill(this.GuildFoodSkill()), this.GetGSRSkills, this.GetItemPouch, this.GetAmmoPouch, GetItemName(this.PoogieItemUseID()), this.GetRoadDureSkills);
-            this.MarkdownSavedGearStats = string.Format(CultureInfo.InvariantCulture, "__【MHF-Z】Overlay {0}__ *{1}({2})*{3}\n\n{4}**{5}**: {6}\n**Head:** {7}\n**Chest:** {8}\n**Arms:** {9}\n**Waist:** {10}\n**Legs:** {11}\n**Cuffs:** {12}\n\n**Weapon Attack:** {13} | **Total Defense:** {14}\n\n**Zenith Skills:**\n{15}\n\n**Automatic Skills:**\n{16}\n\n**Active Skills{17}:**\n{18}\n\n**Caravan Skills:**\n{19}\n\n**Diva Skill:**\n{20}\n\n**Guild Food:**\n{21}\n\n**Style Rank:**\n{22}\n\n**Items:**\n{23}\n\n**Ammo:**\n{24}\n\n**Poogie Item:**\n{25}\n\n**Road/Duremudira Skills:**\n{26}\n", App.CurrentProgramVersion, this.GetWeaponClass(), GetGender(), GetMetadata, GetGearDescription, this.CurrentWeaponName, this.GetRealWeaponName, this.GetArmorHeadName, this.GetArmorChestName, this.GetArmorArmName, this.GetArmorWaistName, this.GetArmorLegName, this.GetCuffs, this.BloatedWeaponAttack().ToString(CultureInfo.InvariantCulture), this.TotalDefense().ToString(CultureInfo.InvariantCulture), this.GetZenithSkills, this.GetAutomaticSkills, showGouBoost, this.GetArmorSkills, this.GetCaravanSkills, GetDivaSkillNameFromID(this.DivaSkill()), GetArmorSkill(this.GuildFoodSkill()), this.GetGSRSkills, this.GetItemPouch, this.GetAmmoPouch, GetItemName(this.PoogieItemUseID()), this.GetRoadDureSkills);
-            return string.Format(CultureInfo.InvariantCulture, "【MHF-Z】Overlay {0} {1}({2}){3}\n\n{4}{5}: {6}\nHead: {7}\nChest: {8}\nArms: {9}\nWaist: {10}\nLegs: {11}\nCuffs: {12}\n\nWeapon Attack: {13} | Total Defense: {14}\n\nZenith Skills:\n{15}\n\nAutomatic Skills:\n{16}\n\nActive Skills{17}:\n{18}\n\nCaravan Skills:\n{19}\n\nDiva Skill:\n{20}\n\nGuild Food:\n{21}\n\nStyle Rank:\n{22}\n\nItems:\n{23}\n\nAmmo:\n{24}\n\nPoogie Item:\n{25}\n\nRoad/Duremudira Skills:\n{26}\n", App.CurrentProgramVersion, this.GetWeaponClass(), GetGender(), GetMetadata, GetGearDescription, this.CurrentWeaponName, this.GetRealWeaponName, this.GetArmorHeadName, this.GetArmorChestName, this.GetArmorArmName, this.GetArmorWaistName, this.GetArmorLegName, this.GetCuffs, this.BloatedWeaponAttack().ToString(CultureInfo.InvariantCulture), this.TotalDefense().ToString(CultureInfo.InvariantCulture), this.GetZenithSkills, this.GetAutomaticSkills, showGouBoost, this.GetArmorSkills, this.GetCaravanSkills, GetDivaSkillNameFromID(this.DivaSkill()), GetArmorSkill(this.GuildFoodSkill()), this.GetGSRSkills, this.GetItemPouch, this.GetAmmoPouch, GetItemName(this.PoogieItemUseID()), this.GetRoadDureSkills);
+            var stats = string.Format(
+                CultureInfo.InvariantCulture,
+                @$"【MHF-Z】Overlay {App.CurrentProgramVersion} {this.GetWeaponClass()}({GetGender()}){GetMetadata}
+
+Set Name: {GetGearDescription}
+{this.CurrentWeaponName}: {this.GetRealWeaponName}
+Head: {this.GetArmorHeadName}
+Chest: {this.GetArmorChestName}
+Arms: {this.GetArmorArmName}
+Waist: {this.GetArmorWaistName}
+Legs: {this.GetArmorLegName}
+Cuffs: {this.GetCuffs}
+
+Weapon Attack: {this.BloatedWeaponAttack().ToString(CultureInfo.InvariantCulture)} | Total Defense: {this.TotalDefense().ToString(CultureInfo.InvariantCulture)}
+
+Zenith Skills:
+{this.GetZenithSkills}
+
+Automatic Skills:
+{this.GetAutomaticSkills}
+
+Active Skills{showGouBoost}:
+{this.GetArmorSkills}
+
+Caravan Skills:
+{this.GetCaravanSkills}
+
+Diva:
+{GetDivaSkillNameFromID(this.DivaSkill())}
+Song {(DivaSongActive ? "ON" : "OFF")}
+
+Diva Prayer Gems:
+{GetDivaPrayerGems()}
+
+Guild:
+{GetArmorSkill(this.GuildFoodSkill())}
+{GetGuildPoogieEffect()}
+
+Style Rank:
+{this.GetGSRSkills}
+
+Items:
+{this.GetItemPouch}
+
+Ammo:
+{this.GetAmmoPouch}
+
+Poogie Item:
+{GetItemName(this.PoogieItemUseID())}
+
+Road/Duremudira Skills:
+{this.GetRoadDureSkills}
+
+Active Feature {(IsActiveFeatureOn(GetActiveFeature(), WeaponType()) ? "ON" : "OFF")}
+
+Courses:
+Main: {GetMainCourses()}
+Additional: {GetAdditionalCourses()}
+
+Halk:
+{(HalkOn() ? "Active" : "Inactive")}
+Halk Pot {(IsHalkPotEquipped() || HalkPotEffectOn() ? "ON" : "OFF")}
+LV{HalkLevel()}
+Element Type {GetHalkElement()}
+Status Type {GetHalkStatus()}
+Intimacy {HalkIntimacy()}
+Health {HalkHealth()}
+Attack {HalkAttack()}
+Defense {HalkDefense()}
+Intellect {HalkIntellect()}
+{HalkSkill1()} | {HalkSkill2()} | {HalkSkill3()}
+
+Overlay Hash: {DatabaseManagerInstance.GetOverlayHash()}
+");
+            this.SavedGearStats = stats;
+            var formattedStats = string.Format(
+                CultureInfo.InvariantCulture,
+                @$"__【MHF-Z】Overlay {App.CurrentProgramVersion}__ *{this.GetWeaponClass()}({GetGender()})*{GetMetadata}
+
+Set Name: {GetGearDescription}
+**{this.CurrentWeaponName}:** {this.GetRealWeaponName}
+**Head:** {this.GetArmorHeadName}
+**Chest:** {this.GetArmorChestName}
+**Arms:** {this.GetArmorArmName}
+**Waist:** {this.GetArmorWaistName}
+**Legs:** {this.GetArmorLegName}
+**Cuffs:** {this.GetCuffs}
+
+**Weapon Attack:** {this.BloatedWeaponAttack().ToString(CultureInfo.InvariantCulture)} | **Total Defense:** {this.TotalDefense().ToString(CultureInfo.InvariantCulture)}
+
+**Zenith Skills:**
+{this.GetZenithSkills}
+
+**Automatic Skills:**
+{this.GetAutomaticSkills}
+
+**Active Skills{showGouBoost}:**
+{this.GetArmorSkills}
+
+**Caravan Skills:**
+{this.GetCaravanSkills}
+
+**Diva:**
+{GetDivaSkillNameFromID(this.DivaSkill())}
+Song {(DivaSongActive ? "ON" : "OFF")}
+
+**Diva Prayer Gems:**
+{GetDivaPrayerGems()}
+
+**Guild:**
+{GetArmorSkill(this.GuildFoodSkill())}
+{GetGuildPoogieEffect()}
+
+**Style Rank:**
+{this.GetGSRSkills}
+
+**Items:**
+{this.GetItemPouch}
+
+**Ammo:**
+{this.GetAmmoPouch}
+
+**Poogie Item:**
+{GetItemName(this.PoogieItemUseID())}
+
+**Road/Duremudira Skills:**
+{this.GetRoadDureSkills}
+
+**Active Feature {(IsActiveFeatureOn(GetActiveFeature(), WeaponType()) ? "ON" : "OFF")}**
+
+**Courses:**
+Main: {GetMainCourses()}
+Additional: {GetAdditionalCourses()}
+
+**Halk:**
+{(HalkOn() ? "Active" : "Inactive")}
+Halk Pot {(IsHalkPotEquipped() || HalkPotEffectOn() ? "ON" : "OFF")}
+LV{HalkLevel()}
+Element Type {GetHalkElement()}
+Status Type {GetHalkStatus()}
+Intimacy {HalkIntimacy()}
+Health {HalkHealth()}
+Attack {HalkAttack()}
+Defense {HalkDefense()}
+Intellect {HalkIntellect()}
+{HalkSkill1()} | {HalkSkill2()} | {HalkSkill3()}
+
+**Overlay Hash:** {DatabaseManagerInstance.GetOverlayHash()}
+");
+            this.MarkdownSavedGearStats = formattedStats;
+            return stats;
         }
         else
         {
@@ -8056,6 +8393,32 @@ Overlay Hash: {52}
         return string.Join(", ", courseNames).Trim();
     }
 
+    public string GetMainCourses()
+    {
+        if (Rights() <= 0 || Rights() > 0xFFFF)
+        {
+            return "None";
+        }
+
+        // Map the first and second bytes to course rights names
+        var courseNames = MapCourseRightsToNames((long)Rights(), 0, typeof(CourseRightsSecondByte));
+        // Join the names with commas
+        return string.Join(", ", courseNames).Trim();
+    }
+
+    public string GetAdditionalCourses()
+    {
+        if (Rights() <= 0 || Rights() > 0xFFFF)
+        {
+            return "None";
+        }
+
+        // Map the first and second bytes to course rights names
+        var courseNames = MapCourseRightsToNames((long)Rights(), 1, typeof(CourseRightsFirstByte));
+        // Join the names with commas
+        return string.Join(", ", courseNames).Trim();
+    }
+
     private IEnumerable<string> MapCourseRightsToNames(long rights, int bytePosition, Type enumType)
     {
         if ((rights < 0x0100 && bytePosition == 1) || rights == 0)
@@ -8088,13 +8451,63 @@ Overlay Hash: {52}
 
     public bool IsActiveFeatureOn(long activeFeature, long weaponTypeID)
     {
-        if (activeFeature <= 0)
+        if (activeFeature <= 0 || activeFeature > (long)ActiveFeature.All)
         {
             return false;
         }
 
-        uint weaponFlag = (uint)Math.Pow(2, weaponTypeID);
-        return IsBitfieldContainingFlag((uint)activeFeature, (ActiveFeature)weaponFlag, (uint)ActiveFeature.All);
+        var weaponFlag = (ActiveFeature)Math.Pow(2, weaponTypeID);
+        var activeFeatureFlags = (ActiveFeature)activeFeature;
+
+        return activeFeatureFlags.HasFlag(weaponFlag);
+    }
+
+    public string GetHalkElement()
+    {
+        var element = "None";
+
+        if (HalkFire() >= 100)
+        {
+            return "Fire";
+        }
+        if (HalkWater() >= 100)
+        {
+            return "Water";
+        }
+        if (HalkThunder() >= 100)
+        {
+            return "Thunder";
+        }
+        if (HalkIce() >= 100)
+        {
+            return "Ice";
+        }
+        if (HalkDragon() >= 100)
+        {
+            return "Dragon";
+        }
+
+        return element;
+    }
+
+    public string GetHalkStatus()
+    {
+        var status = "None";
+
+        if (HalkPoison() >= 100)
+        {
+            return "Poison";
+        }
+        if (HalkSleep() >= 100)
+        {
+            return "Sleep";
+        }
+        if (HalkParalysis() >= 100)
+        {
+            return "Paralysis";
+        }
+
+        return status;
     }
 
     public string GetHalkElement(QuestsHalk halk)
@@ -8167,6 +8580,28 @@ Overlay Hash: {52}
         return effect;
     }
 
+    public string GetGuildPoogieEffect()
+    {
+        var effect = "No Poogie";
+
+        if (GuildPoogie1Skill() >= 1)
+        {
+            return EZlion.Mapper.SkillGuildPoogie.IDName[GuildPoogie1Skill()];
+        }
+
+        if (GuildPoogie2Skill() >= 1)
+        {
+            return EZlion.Mapper.SkillGuildPoogie.IDName[GuildPoogie2Skill()];
+        }
+
+        if (GuildPoogie3Skill() >= 1)
+        {
+            return EZlion.Mapper.SkillGuildPoogie.IDName[GuildPoogie3Skill()];
+        }
+
+        return effect;
+    }
+
     public string GetGuildPoogieEffect(List<int> poogie)
     {
         var effect = "No Poogie";
@@ -8210,6 +8645,53 @@ Overlay Hash: {52}
                 var gemColor = string.Empty;
 
                 switch (i){
+                    case 0:
+                        gemColor = "Red";
+                        break;
+                    case 1:
+                        gemColor = "Yellow";
+                        break;
+                    case 2:
+                        gemColor = "Green";
+                        break;
+                    case 3:
+                        gemColor = "Blue";
+                        break;
+                }
+
+                gems += $"{gemColor} 💎 {skillName} LV{gemLevels[i]}";
+                if (i != gemTypes.Length - 1)
+                {
+                    gems += "\n";
+                }
+            }
+        }
+
+        return string.IsNullOrEmpty(gems) ? "None" : gems;
+    }
+
+    public string GetDivaPrayerGems()
+    {
+        var gems = string.Empty;
+        var gemTypes = new long?[] { DivaPrayerGemRedSkill(), DivaPrayerGemYellowSkill(), DivaPrayerGemGreenSkill(), DivaPrayerGemBlueSkill() };
+        var gemLevels = new long?[] { DivaPrayerGemRedLevel(), DivaPrayerGemYellowLevel(), DivaPrayerGemGreenLevel(), DivaPrayerGemBlueLevel() };
+
+        for (var i = 0; i < gemTypes.Length; i++)
+        {
+            var skillId = gemTypes[i];
+
+            if (skillId == null)
+            {
+                continue;
+            }
+
+            if (SkillDivaPrayerGem.IDName.TryGetValue((int)skillId, out var skillName)
+                && skillName != "None" && skillName != string.Empty)
+            {
+                var gemColor = string.Empty;
+
+                switch (i)
+                {
                     case 0:
                         gemColor = "Red";
                         break;
@@ -8615,191 +9097,85 @@ Overlay Hash: {52}
         EZlion.Mapper.WeaponType.IDName.TryGetValue((int)mostUsedWeaponType, out var mostUsedWeaponTypeName);
         Item.IDName.TryGetValue((int)mostCommonDecorationID, out var mostCommonDecorationName);
         SkillArmor.IDName.TryGetValue((int)leastUsedArmorSkill, out var leastUsedArmorSkillName);
+        SkillGuildPoogie.IDName.TryGetValue((int)questCompendium.MostCommonGuildPoogie, out var mostCommonGuildPoogie);
 
         return string.Format(
             CultureInfo.InvariantCulture,
-            @"{0} (UTC)
-{1}
+            $@"{createdAt} (UTC)
+{createdBy}
 
 Quest
-Most Completed Quest: {2} (Attempted {3}) [Quest ID {4}]
-Most Attempted Quest: {5} (Completed {6}) [Quest ID {7}]
-Total Quests Completed/Attempted: {8}/{9}
-Quest Completion Time Elapsed (Average/Median): {10} / {11}
-Total Time Elapsed during Quest: {12}
-Most Completed Quest with Carts: {13} [Quest ID {14}]
-Total Carts in Quest (Average/Median): {15} ({16}/{17})
-Quest Party Size (Average/Median/Mode): {18}/{19}/{20}
-Percent of Solo Quests: {21}
-Percent of Guild Food in Quests: {22}
-Percent of Diva Skill in Quests: {23}
-Percent of Skill Fruit in Quests: {24}
-Most Common Diva Skill in Quests: {25}
-Most Common Guild Food in Quests: {26}
+Most Completed Quest: {mostCompletedQuest} (Attempted {mostCompletedQuestAttempts}) [Quest ID {mostCompletedQuestID}]
+Most Attempted Quest: {mostAttemptedQuest} (Completed {mostAttemptedQuestCompletions}) [Quest ID {mostAttemptedQuestID}]
+Total Quests Completed/Attempted: {totalQuestsCompleted}/{totalQuestsAttempted}
+Quest Completion Time Elapsed (Average/Median): {TimeService.GetMinutesSecondsMillisecondsFromFrames((long)questCompletionTimeElapsedAverage)} / {TimeService.GetMinutesSecondsMillisecondsFromFrames((long)questCompletionTimeElapsedMedian)}
+Total Time Elapsed during Quest: {TimeService.GetMinutesSecondsMillisecondsFromFrames(totalTimeElapsedDuringQuest)}
+Most Completed Quest with Carts: {mostCompletedQuestWithCarts} [Quest ID {mostCompletedQuestWithCartsQuestID}]
+Total Carts in Quest (Average/Median): {totalCartsInQuest} ({string.Format(CultureInfo.InvariantCulture, "{0:0.##}", totalCartsInQuestAverage)}/{string.Format(CultureInfo.InvariantCulture, "{0:0.##}", totalCartsInQuestMedian)})
+Quest Party Size (Average/Median/Mode): {string.Format(CultureInfo.InvariantCulture, "{0:0.##}", questPartySizeAverage)}/{string.Format(CultureInfo.InvariantCulture, "{0:0.##}", questPartySizeMedian)}/{questPartySizeMode}
+Percent of Solo Quests: {string.Format(CultureInfo.InvariantCulture, "{0:0.##}%", percentOfSoloQuests)}
+Percent of Guild Poogie in Quests: {string.Format(CultureInfo.InvariantCulture, "{0:0.##}%", questCompendium.PercentOfGuildPoogie)}
+Percent of Guild Food in Quests: {string.Format(CultureInfo.InvariantCulture, "{0:0.##}%", percentOfGuildFood)}
+Percent of Diva Song in Quests: {string.Format(CultureInfo.InvariantCulture, "{0:0.##}%", questCompendium.PercentOfDivaSong)}
+Percent of Diva Skill in Quests: {string.Format(CultureInfo.InvariantCulture, "{0:0.##}%", percentOfDivaSkill)}
+Percent of Diva Prayer Gem in Quests: {string.Format(CultureInfo.InvariantCulture, "{0:0.##}%", questCompendium.PercentOfDivaPrayerGem)}
+Percent of Skill Fruit in Quests: {string.Format(CultureInfo.InvariantCulture, "{0:0.##}%", percentOfSkillFruit)}
+Percent of Halk in Quests: {string.Format(CultureInfo.InvariantCulture, "{0:0.##}%", questCompendium.PercentOfHalkOn)}
+Percent of Halk Pot Effect in Quests: {string.Format(CultureInfo.InvariantCulture, "{0:0.##}%", questCompendium.PercentOfHalkPotEffectOn)}
+Percent of Active Feature in Quests: {string.Format(CultureInfo.InvariantCulture, "{0:0.##}%", questCompendium.PercentOfActiveFeature)}
+Percent of Course Attack Boost in Quests: {string.Format(CultureInfo.InvariantCulture, "{0:0.##}%", questCompendium.PercentOfCourseAttackBoost)}
+Most Common Guild Poogie in Quests: {mostCommonGuildPoogie}
+Most Common Guild Food in Quests: {mostCommonGuildFoodName}
+Most Common Diva Skill in Quests: {mostCommonDivaSkillName}
 
 Gear
-Most Used Weapon Type: {27}
-Total Unique Armor Pieces/Weapons/Decorations used: {28}/{29}/{30}
-Most Common Decoration: {31} [ID {32}]
-Least Used Armor Skill: {33}
+Most Used Weapon Type: {mostUsedWeaponTypeName}
+Total Unique Armor Pieces/Weapons/Decorations used: {totalUniqueArmorPieces}/{totalUniqueWeapons}/{totalUniqueDecorations}
+Most Common Decoration: {mostCommonDecorationName} [ID {mostCommonDecorationID.ToString("X", CultureInfo.InvariantCulture)}]
+Least Used Armor Skill: {leastUsedArmorSkillName}
 
 Hunter Performance
-Highest True Raw (Average/Median): {34} ({35}/{36}) [Run ID {37}]
-Highest Single Hit Damage (Average/Median): {38} ({39}/{40}) [Run ID {41}]
-Highest Hit Count (Average/Median): {42} ({43}/{44}) [Run ID {45}]
-Highest Hits Taken/Blocked (Average/Median): {46} ({47}/{48}) [Run ID {49}]
-Highest DPS (Average/Median): {50} ({51}/{52}) [Run ID {53}]
-Highest Hits per Second (Average/Median): {54} ({55}/{56}) [Run ID {57}]
-Highest Hits Taken/Blocked per Second (Average/Median): {58} ({59}/{60}) [Run ID {61}]
-Highest Actions per Minute (Average/Median): {62} ({63}/{64}) [Run ID {65}]
-Total Hits Count: {66}
-Total Hits Taken/Blocked: {67}
-Total Actions: {68}
-Health (Average/Median/Mode): {69}/{70}/{71}
-Stamina (Average/Median/Mode): {72}/{73}/{74}
+Highest True Raw (Average/Median): {highestTrueRaw} ({string.Format(CultureInfo.InvariantCulture, "{0:0.##}", trueRawAverage)}/{string.Format(CultureInfo.InvariantCulture, "{0:0.##}", trueRawMedian)}) [Run ID {highestTrueRawRunID}]
+Highest Single Hit Damage (Average/Median): {highestSingleHitDamage} ({string.Format(CultureInfo.InvariantCulture, "{0:0.##}", singleHitDamageAverage)}/{string.Format(CultureInfo.InvariantCulture, "{0:0.##}", singleHitDamageMedian)}) [Run ID {highestSingleHitDamageRunID}]
+Highest Hit Count (Average/Median): {highestHitCount} ({string.Format(CultureInfo.InvariantCulture, "{0:0.##}", hitCountAverage)}/{string.Format(CultureInfo.InvariantCulture, "{0:0.##}", hitCountMedian)}) [Run ID {highestHitCountRunID}]
+Highest Hits Taken/Blocked (Average/Median): {highestHitsTakenBlocked} ({string.Format(CultureInfo.InvariantCulture, "{0:0.##}", hitsTakenBlockedAverage)}/{string.Format(CultureInfo.InvariantCulture, "{0:0.##}", hitsTakenBlockedMedian)}) [Run ID {highestHitsTakenBlockedRunID}]
+Highest DPS (Average/Median): {string.Format(CultureInfo.InvariantCulture, "{0:0.##}", highestDPS)} ({string.Format(CultureInfo.InvariantCulture, "{0:0.##}", dPSAverage)}/{string.Format(CultureInfo.InvariantCulture, "{0:0.##}", dPSMedian)}) [Run ID {highestDPSRunID}]
+Highest Hits per Second (Average/Median): {string.Format(CultureInfo.InvariantCulture, "{0:0.##}", highestHitsPerSecond)} ({string.Format(CultureInfo.InvariantCulture, "{0:0.##}", hitsPerSecondAverage)}/{string.Format(CultureInfo.InvariantCulture, "{0:0.##}", hitsPerSecondMedian)}) [Run ID {highestHitsPerSecondRunID}]
+Highest Hits Taken/Blocked per Second (Average/Median): {string.Format(CultureInfo.InvariantCulture, "{0:0.##}", highestHitsTakenBlockedPerSecond)} ({string.Format(CultureInfo.InvariantCulture, "{0:0.##}", hitsTakenBlockedPerSecondAverage)}/{string.Format(CultureInfo.InvariantCulture, "{0:0.##}", hitsTakenBlockedPerSecondMedian)}) [Run ID {highestHitsTakenBlockedPerSecondRunID}]
+Highest Actions per Minute (Average/Median): {string.Format(CultureInfo.InvariantCulture, "{0:0.##}", highestActionsPerMinute)} ({string.Format(CultureInfo.InvariantCulture, "{0:0.##}", actionsPerMinuteAverage)}/{string.Format(CultureInfo.InvariantCulture, "{0:0.##}", actionsPerMinuteMedian)}) [Run ID {highestActionsPerMinuteRunID}]
+Total Hits Count: {totalHitsCount}
+Total Hits Taken/Blocked: {totalHitsTakenBlocked}
+Total Actions: {totalActions}
+Health (Average/Median/Mode): {string.Format(CultureInfo.InvariantCulture, "{0:0.##}", healthAverage)}/{string.Format(CultureInfo.InvariantCulture, "{0:0.##}", healthMedian)}/{healthMode}
+Stamina (Average/Median/Mode): {string.Format(CultureInfo.InvariantCulture, "{0:0.##}", staminaAverage)}/{string.Format(CultureInfo.InvariantCulture, "{0:0.##}", staminaMedian)}/{staminaMode}
 
 Mezeporta Festival (MezFes)
-Minigames Played: {75}
-Uruki Pachinko Times Played: {76}
-Uruki Pachinko High-score (Average/Median): {77} ({78}/{79})
-Guuku Scoop Times Played: {80}
-Guuku Scoop High-score (Average/Median): {81} ({82}/{83})
-Nyanrendo Times Played: {84}
-Nyanrendo High-score (Average/Median): {85} ({86}/{87})
-Panic Honey Times Played: {88}
-Panic Honey High-score (Average/Median): {89} ({90}/{91})
-Dokkan Battle Cats Times Played: {92}
-Dokkan Battle Cats High-score (Average/Median): {93} ({94}/{95})
+Minigames Played: {minigamesPlayed}
+Uruki Pachinko Times Played: {urukiPachinkoTimesPlayed}
+Uruki Pachinko High-score (Average/Median): {urukiPachinkoHighscore} ({string.Format(CultureInfo.InvariantCulture, "{0:0.##}", urukiPachinkoScoreAverage)}/{string.Format(CultureInfo.InvariantCulture, "{0:0.##}", urukiPachinkoScoreMedian)})
+Guuku Scoop Times Played: {guukuScoopTimesPlayed}
+Guuku Scoop High-score (Average/Median): {guukuScoopHighscore} ({string.Format(CultureInfo.InvariantCulture, "{0:0.##}", guukuScoopScoreAverage)}/{string.Format(CultureInfo.InvariantCulture, "{0:0.##}", guukuScoopScoreMedian)})
+Nyanrendo Times Played: {nyanrendoTimesPlayed}
+Nyanrendo High-score (Average/Median): {nyanrendoHighscore} ({string.Format(CultureInfo.InvariantCulture, "{0:0.##}", nyanrendoScoreAverage)}/{string.Format(CultureInfo.InvariantCulture, "{0:0.##}", nyanrendoScoreMedian)})
+Panic Honey Times Played: {panicHoneyTimesPlayed}
+Panic Honey High-score (Average/Median): {panicHoneyHighscore} ({string.Format(CultureInfo.InvariantCulture, "{0:0.##}", panicHoneyScoreAverage)}/{string.Format(CultureInfo.InvariantCulture, "{0:0.##}", panicHoneyScoreMedian)})
+Dokkan Battle Cats Times Played: {dokkanBattleCatsTimesPlayed}
+Dokkan Battle Cats High-score (Average/Median): {dokkanBattleCatsHighscore} ({string.Format(CultureInfo.InvariantCulture, "{0:0.##}", dokkanBattleCatsScoreAverage)}/{string.Format(CultureInfo.InvariantCulture, "{0:0.##}", dokkanBattleCatsScoreMedian)})
 
 Monster
-Highest Monster Attack Multiplier: {96} [Run ID {97}]
-Lowest Monster Attack Multiplier: {98} [Run ID {99}]
-Highest Monster Defense Rate: {100} [Run ID {101}]
-Lowest Monster Defense Rate: {102} [Run ID {103}]
-Highest Monster Size Multiplier: {104} [Run ID {105}]
-Lowest Monster Size Multiplier: {106} [Run ID {107}]
-Total Large Monsters Hunted: {108}
-Total Small Monsters Hunted: {109}
+Highest Monster Attack Multiplier: {monster1AttackMultiplierHighest} [Run ID {monster1AttackMultiplierHighestRunID}]
+Lowest Monster Attack Multiplier: {monster1AttackMultiplierLowest} [Run ID {monster1AttackMultiplierLowestRunID}]
+Highest Monster Defense Rate: {monster1DefenseRateHighest} [Run ID {monster1DefenseRateHighestRunID}]
+Lowest Monster Defense Rate: {monster1DefenseRateLowest} [Run ID {monster1DefenseRateLowestRunID}]
+Highest Monster Size Multiplier: {monster1SizeMultiplierHighest} [Run ID {monster1SizeMultiplierHighestRunID}]
+Lowest Monster Size Multiplier: {monster1SizeMultiplierLowest} [Run ID {monster1SizeMultiplierLowestRunID}]
+Total Large Monsters Hunted: {totalLargeMonstersHunted}
+Total Small Monsters Hunted: {totalSmallMonstersHunted}
 
 Miscellaneous
-Total Overlay Sessions: {110}
-Session Duration (Highest/Lowest/Average/Median): {111} / {112} / {113} / {114}
-",
-            createdAt,
-            createdBy,
-            mostCompletedQuest,
-            mostCompletedQuestAttempts,
-            mostCompletedQuestID,
-            mostAttemptedQuest,
-            mostAttemptedQuestCompletions,
-            mostAttemptedQuestID,
-            totalQuestsCompleted,
-            totalQuestsAttempted,
-            TimeService.GetMinutesSecondsMillisecondsFromFrames((long)questCompletionTimeElapsedAverage),
-            TimeService.GetMinutesSecondsMillisecondsFromFrames((long)questCompletionTimeElapsedMedian),
-            TimeService.GetMinutesSecondsMillisecondsFromFrames(totalTimeElapsedDuringQuest),
-            mostCompletedQuestWithCarts,
-            mostCompletedQuestWithCartsQuestID,
-            totalCartsInQuest,
-            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", totalCartsInQuestAverage),
-            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", totalCartsInQuestMedian),
-            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", questPartySizeAverage),
-            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", questPartySizeMedian),
-            questPartySizeMode,
-            string.Format(CultureInfo.InvariantCulture, "{0:0.##}%", percentOfSoloQuests),
-            string.Format(CultureInfo.InvariantCulture, "{0:0.##}%", percentOfGuildFood),
-            string.Format(CultureInfo.InvariantCulture, "{0:0.##}%", percentOfDivaSkill),
-            string.Format(CultureInfo.InvariantCulture, "{0:0.##}%", percentOfSkillFruit),
-            mostCommonDivaSkillName,
-            mostCommonGuildFoodName,
-            mostUsedWeaponTypeName,
-            totalUniqueArmorPieces,
-            totalUniqueWeapons,
-            totalUniqueDecorations,
-            mostCommonDecorationName,
-            mostCommonDecorationID.ToString("X", CultureInfo.InvariantCulture),
-            leastUsedArmorSkillName,
-            highestTrueRaw,
-            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", trueRawAverage),
-            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", trueRawMedian),
-            highestTrueRawRunID,
-            highestSingleHitDamage,
-            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", singleHitDamageAverage),
-            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", singleHitDamageMedian),
-            highestSingleHitDamageRunID,
-            highestHitCount,
-            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", hitCountAverage),
-            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", hitCountMedian),
-            highestHitCountRunID,
-            highestHitsTakenBlocked,
-            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", hitsTakenBlockedAverage),
-            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", hitsTakenBlockedMedian),
-            highestHitsTakenBlockedRunID,
-            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", highestDPS),
-            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", dPSAverage),
-            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", dPSMedian),
-            highestDPSRunID,
-            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", highestHitsPerSecond),
-            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", hitsPerSecondAverage),
-            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", hitsPerSecondMedian),
-            highestHitsPerSecondRunID,
-            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", highestHitsTakenBlockedPerSecond),
-            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", hitsTakenBlockedPerSecondAverage),
-            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", hitsTakenBlockedPerSecondMedian),
-            highestHitsTakenBlockedPerSecondRunID,
-            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", highestActionsPerMinute),
-            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", actionsPerMinuteAverage),
-            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", actionsPerMinuteMedian),
-            highestActionsPerMinuteRunID,
-            totalHitsCount,
-            totalHitsTakenBlocked,
-            totalActions,
-            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", healthAverage),
-            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", healthMedian),
-            healthMode,
-            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", staminaAverage),
-            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", staminaMedian),
-            staminaMode,
-            minigamesPlayed,
-            urukiPachinkoTimesPlayed,
-            urukiPachinkoHighscore,
-            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", urukiPachinkoScoreAverage),
-            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", urukiPachinkoScoreMedian),
-            guukuScoopTimesPlayed,
-            guukuScoopHighscore,
-            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", guukuScoopScoreAverage),
-            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", guukuScoopScoreMedian),
-            nyanrendoTimesPlayed,
-            nyanrendoHighscore,
-            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", nyanrendoScoreAverage),
-            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", nyanrendoScoreMedian),
-            panicHoneyTimesPlayed,
-            panicHoneyHighscore,
-            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", panicHoneyScoreAverage),
-            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", panicHoneyScoreMedian),
-            dokkanBattleCatsTimesPlayed,
-            dokkanBattleCatsHighscore,
-            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", dokkanBattleCatsScoreAverage),
-            string.Format(CultureInfo.InvariantCulture, "{0:0.##}", dokkanBattleCatsScoreMedian),
-            monster1AttackMultiplierHighest,
-            monster1AttackMultiplierHighestRunID,
-            monster1AttackMultiplierLowest,
-            monster1AttackMultiplierLowestRunID,
-            monster1DefenseRateHighest,
-            monster1DefenseRateHighestRunID,
-            monster1DefenseRateLowest,
-            monster1DefenseRateLowestRunID,
-            monster1SizeMultiplierHighest,
-            monster1SizeMultiplierHighestRunID,
-            monster1SizeMultiplierLowest,
-            monster1SizeMultiplierLowestRunID,
-            totalLargeMonstersHunted,
-            totalSmallMonstersHunted,
-            totalOverlaySessions,
-            TimeSpan.FromSeconds(sessionDurationHighest).ToString(TimeFormats.HoursMinutesSecondsMilliseconds, CultureInfo.InvariantCulture),
-            TimeSpan.FromSeconds(sessionDurationLowest).ToString(TimeFormats.HoursMinutesSecondsMilliseconds, CultureInfo.InvariantCulture),
-            TimeSpan.FromSeconds(sessionDurationAverage).ToString(TimeFormats.HoursMinutesSecondsMilliseconds, CultureInfo.InvariantCulture),
-            TimeSpan.FromSeconds(sessionDurationMedian).ToString(TimeFormats.HoursMinutesSecondsMilliseconds, CultureInfo.InvariantCulture));
+Total Overlay Sessions: {totalOverlaySessions}
+Session Duration (Highest/Lowest/Average/Median): {TimeSpan.FromSeconds(sessionDurationHighest).ToString(TimeFormats.HoursMinutesSecondsMilliseconds, CultureInfo.InvariantCulture)} / {TimeSpan.FromSeconds(sessionDurationLowest).ToString(TimeFormats.HoursMinutesSecondsMilliseconds, CultureInfo.InvariantCulture)} / {TimeSpan.FromSeconds(sessionDurationAverage).ToString(TimeFormats.HoursMinutesSecondsMilliseconds, CultureInfo.InvariantCulture)} / {TimeSpan.FromSeconds(sessionDurationMedian).ToString(TimeFormats.HoursMinutesSecondsMilliseconds, CultureInfo.InvariantCulture)}
+");
     }
 
     public static string GetGameArmorSkillsHealthAndStamina => "Health and Stamina\n\nHealth\t○\tHealth+50\t40\tMaximum Health +50\n\nHealth+40\t30\tMaximum Health +40\n\nHealth+30\t20\tMaximum Health +30\n\nHealth+20\t15\tMaximum Health +20\n\nHealth+10\t10\tMaximum Health +10\n\nHealth-10\t-10\tMaximum Health -10\n\nHealth-20\t-15\tMaximum Health -20\n\nHealth-30\t-20\tMaximum Health -30\n\nRecovery Speed\t○\tRecovery Speed+2\t20\t4x Health Recovery Speed\n\nRecovery Speed+1\t10\t3x Health Recovery Speed\n\nRecovery Speed-1\t-10\t3x Slower Health Recovery Speed\n\nRecovery Speed-2\t-20\t4x Slower Health Recovery Speed\n\nHunger\t○\tHunger Negated\t15\tStamina bar length does not decrease in length over time.\n\nHunger Halved\t10\tStamina bar length decreases at 0.5x the speed over time.\n\nHunger Up (Sm)\t-10\tStamina bar length decreases at 1.5x the speed over time\n\nHunger Up (Lg)\t-15\tStamina bar length decreases at 2.0x the speed over time\n\nRecovery\t×\tRecovery Items Up\t10\tRecovery item effect boosted 1.25x\n\nRecovery Items Down\t-10\tRecovery item effectlowered to 0.75x\n\nVampirism\t×\tVampirism+2\t20\tWhen attacking a monster, there is an 80% that your Health will recover.\n\nVampirism+1\t10\tWhen attacking a monster, there is a 60% that your Health will recover.\n\nHerbal Science\t×\tMedical Sage\t10\tInstant recovery of any Red HP when using any healing item.\n\nAdditional effects if multiple party members have the skill：\n\n2Players: recovery items apply to the entire party.\n\n3Players: recovery items apply to the entire party, +20extra HP Recovery\n\n4Players: recovery items apply to the entire party, +50extra HP Recovery\n\n※※Stacks with Recovery skill, only pure recovery items are party wide (e.g.Max Potions yes,Ancient Potions no.)\n\nStamina Recovery\t○\tStamina Recovery Up【Large】\t20\tDoubles stamina recovery speed over time\n\nStamina Rec (Small)\t10\tStamina recovery speed increases by 1.5 times over time.\n\nStamina Rec Down\t-10\tHalves stamina recovery speed over time\n\nStamina\t○\t\n\nStamina values usually decrease by 15 units\n\nPeerless\t20\tStamina decrease rate is halved (decrease is reduced to 8 units)\n\nIn addition, the reduction of stamina when evading or guarding is reduced to 50%.\n\nMarathon Runner\t10\tStamina decrease rate is halved (decrease is reduced to 8 units)\n\nIn addition, the reduction of stamina when evading or guarding is reduced to 75%.\n\nShort Sprinter\t-10\tStamina depletion speed is increased by 1.2 times (up to 18 units)\n\nEating\t×\tSpeed Eating\t10\tIncreases the speed of eating consumables such as meat and healing potions.\n\nSlow Eating\t-10\tReduces the speed of eating consumables such as meat and healing potions.\n\nGluttony\t×\tScavenger\t15\tUsing consumables restores 25 maximum stamina\n\nGourmand\t10\tStamina recovery when eating meat is increased by 25";
@@ -10230,18 +10606,9 @@ After all that you’ve unlocked magnet spike! You should get a material to make
 
     public string GetPoogieItemForImage => GetItemName(this.PoogieItemUseID());
 
-    public string GetAlternateMonsterImage(int id, bool forDiscord = false)
+    public string GetAlternateMonsterImage(int id)
     {
-        var pathContext = string.Empty;
-
-        if (forDiscord)
-        {
-            pathContext = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/";
-        }
-        else
-        {
-            pathContext = "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/";
-        }
+        var pathContext = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/";
 
         switch (id)
         {
@@ -12975,7 +13342,23 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         }
     }
 
-    public string OverlayModeWatermarkText => ShowOverlayModeFinalMode() ? GetFinalOverlayModeForDisplay() : GetOverlayModeForStorage();
+    public string OverlayModeWatermarkText
+    {
+        get
+        {
+            if (ShowOverlayModeFinalMode())
+            {
+                return GetFinalOverlayModeForDisplay();
+            }
+
+            if (GetOverlayModeForStorage() == "Speedrun")
+            {
+                return $"Speedrun ({GetRunBuffsTag(GetRunBuffs())})";
+            }
+
+            return GetOverlayModeForStorage();
+        }
+    }
 
     public string QuestIDBind => this.QuestID().ToString(CultureInfo.InvariantCulture);
 
@@ -13003,6 +13386,22 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         new QuestLogsOption { Name = "Stats (Graphs)", IsSelected = false },
         new QuestLogsOption { Name = "Stats (Text)", IsSelected = false },
         new QuestLogsOption { Name = "Quest Pace", IsSelected = false },
+    };
+
+    public ObservableCollection<QuestLogsOption> RunBuffsSearchOption { get; set; } = new ObservableCollection<QuestLogsOption>()
+    {
+        new QuestLogsOption { Name = "Halk", IsSelected = false },
+        new QuestLogsOption { Name = "Poogie Item", IsSelected = false },
+        new QuestLogsOption { Name = "Diva Song", IsSelected = false },
+        new QuestLogsOption { Name = "Halk Pot Effect", IsSelected = false },
+        new QuestLogsOption { Name = "Bento", IsSelected = false },
+        new QuestLogsOption { Name = "Guild Poogie", IsSelected = false },
+        new QuestLogsOption { Name = "Active Feature", IsSelected = false },
+        new QuestLogsOption { Name = "Guild Food", IsSelected = false },
+        new QuestLogsOption { Name = "Diva Skill", IsSelected = false },
+        new QuestLogsOption { Name = "Secret Technique", IsSelected = false },
+        new QuestLogsOption { Name = "Diva Prayer Gem", IsSelected = false },
+        new QuestLogsOption { Name = "Course Attack Boost", IsSelected = false },
     };
 
     public QuestLogsOption SelectedOption { get; set; } = new QuestLogsOption { Name = "Default", IsSelected = true };
@@ -13097,7 +13496,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             }
 
             var expiry  = GuildFoodStart() + (60 * 90);
-            double secondsLeft = expiry - ServerHeartbeat();
+            double secondsLeft = expiry - ServerHeartbeat;
 
             if (secondsLeft <= 0)
             {
@@ -13112,13 +13511,15 @@ After all that you’ve unlocked magnet spike! You should get a material to make
     {
         get
         {
-            if (DivaSongStart() <= 0)
+            var divaSongStart = Math.Max(DivaSongStart(), DivaSongFromGuildStart());
+
+            if (divaSongStart <= 0)
             {
                 return "0m";
             }
 
-            var expiry = DivaSongStart() + (60 * 90);
-            double secondsLeft = expiry - ServerHeartbeat();
+            var expiry = divaSongStart + (60 * 90);
+            double secondsLeft = expiry - ServerHeartbeat;
 
             if (secondsLeft <= 0)
             {
@@ -13178,7 +13579,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         return s.OverlayWatermarkMode == "Final";
     }
 
-    public static string FindAreaIcon(int id)
+    public static string FindAreaIcon(int id, bool forDiscord = false)
     {
         var areaGroup = new List<int> { 0 };
 
@@ -13193,7 +13594,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             }
         }
 
-        return DetermineAreaIcon(areaGroup);
+        return DetermineAreaIcon(areaGroup, forDiscord);
     }
 
     /// <summary>
@@ -13348,28 +13749,44 @@ After all that you’ve unlocked magnet spike! You should get a material to make
     /// </summary>
     /// <param name="id">The identifier.</param>
     /// <returns></returns>
-    public static string GetAreaIconFromID(int id) // TODO: are highlands, tidal island or painted falls icons correct?
+    public static string GetAreaIconFromID(int id, bool forDiscord = false) // TODO: are highlands, tidal island or painted falls icons correct?
     {
         if (id >= 470 && id < 0)
         {
-            return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/cattleya.png";
+            if (forDiscord)
+            {
+                return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/cattleya.png";
+            }
+
+            return @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/area/cattleya.png";
         }
         else
         {
-            return FindAreaIcon(id);
+            return FindAreaIcon(id, forDiscord);
         }
     }
 
-    public static string DetermineAreaIcon(List<int> key)
+    public static string DetermineAreaIcon(List<int> key, bool forDiscord = false)
     {
         var areaIcon = AreaIcons.AreaIconID.ContainsKey(key);
         if (!areaIcon)
         {
-            return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/cattleya.png";
+            if (forDiscord)
+            {
+                return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/cattleya.png";
+            }
+
+            return @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/area/cattleya.png";
         }
         else
         {
-            return AreaIcons.AreaIconID[key];
+            var areaIconValue = AreaIcons.AreaIconID[key];
+            if (forDiscord)
+            {
+                areaIconValue = areaIconValue.ToString().Replace(@"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/area/", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/");
+            }
+
+            return areaIconValue;
         }
     }
 

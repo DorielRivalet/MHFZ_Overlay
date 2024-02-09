@@ -471,9 +471,7 @@ public enum OverlayMode
     NoGame,
     MainMenu,
     WorldSelect,
-    TimeAttack,
-    FreestyleSecretTech,
-    Freestyle,
+    Speedrun,
     Zen,
 }
 

@@ -1,5 +1,43 @@
 
 
+## [0.35.0](https://github.com/DorielRivalet/MHFZ_Overlay/compare/v0.34.0...v0.35.0) (2024-02-09)
+
+
+### Features
+
+* add area images ([31e42b6](https://github.com/DorielRivalet/MHFZ_Overlay/commit/31e42b668f6eb3f72a128394fc7bedbc4a418bd2))
+* add more achievements ([6fb7771](https://github.com/DorielRivalet/MHFZ_Overlay/commit/6fb77715685381b9a50b1f19832682cba484f874))
+* add more achievements ([f0ddef3](https://github.com/DorielRivalet/MHFZ_Overlay/commit/f0ddef367f7cb34f6259ac5e232c15536092ab20))
+* add player input opacity options ([ae72aef](https://github.com/DorielRivalet/MHFZ_Overlay/commit/ae72aef9f67ab5764dbf5689c1a43df391fad0b5)), closes [DorielRivalet/mhfz-overlay#279](https://github.com/DorielRivalet/mhfz-overlay/issues/279)
+* add quest variants filter ([4a1d029](https://github.com/DorielRivalet/MHFZ_Overlay/commit/4a1d029824c3a6ebf64ee5ae31f44a5be572bc34)), closes [DorielRivalet/mhfz-overlay#277](https://github.com/DorielRivalet/mhfz-overlay/issues/277)
+* add run buffs ([296546e](https://github.com/DorielRivalet/MHFZ_Overlay/commit/296546e5480539beee46c456cb7891f2d77f4eda)), closes [DorielRivalet/mhfz-overlay#261](https://github.com/DorielRivalet/mhfz-overlay/issues/261)
+* add run buffs filters ([49fbddc](https://github.com/DorielRivalet/MHFZ_Overlay/commit/49fbddc580129b328ea8708dd2dafa07c89d812e)), closes [DorielRivalet/mhfz-overlay#263](https://github.com/DorielRivalet/mhfz-overlay/issues/263)
+* add run buffs in watermark ([1426697](https://github.com/DorielRivalet/MHFZ_Overlay/commit/1426697a251cc1ae4c7ecca46bd49ffefb760a90)), closes [DorielRivalet/mhfz-overlay#262](https://github.com/DorielRivalet/mhfz-overlay/issues/262)
+* add run buffs tags ([d9242d2](https://github.com/DorielRivalet/MHFZ_Overlay/commit/d9242d2a1c39640aad47c70796eea9ef3de410a2))
+* update achievements ([71be1b6](https://github.com/DorielRivalet/MHFZ_Overlay/commit/71be1b6c40b0c486c75a2635047f01fa7e208825))
+* update attempts display to include run buffs ([48bbd18](https://github.com/DorielRivalet/MHFZ_Overlay/commit/48bbd18e17b04154a4722bc8a398904a7b64f6b7))
+* update compendium section ([6c2fba7](https://github.com/DorielRivalet/MHFZ_Overlay/commit/6c2fba7a426c35d27c132412365cdc6d6dc0cc6e)), closes [DorielRivalet/mhfz-overlay#274](https://github.com/DorielRivalet/mhfz-overlay/issues/274)
+* update gear stats text ([5cf3adc](https://github.com/DorielRivalet/MHFZ_Overlay/commit/5cf3adc0a72ade7c959142527698b30eb180cb0d)), closes [DorielRivalet/mhfz-overlay#278](https://github.com/DorielRivalet/mhfz-overlay/issues/278)
+* update run buffs ([1f37698](https://github.com/DorielRivalet/MHFZ_Overlay/commit/1f376984abc412b3d490641ba62648179dbefc4e))
+
+
+### Bug Fixes
+
+* buff timers ([1289ddb](https://github.com/DorielRivalet/MHFZ_Overlay/commit/1289ddb84b2c3308071d36ebcaec24157a9e75e3))
+* diva song in guild hall ([ff1651b](https://github.com/DorielRivalet/MHFZ_Overlay/commit/ff1651bfed13850b2e7292b92722601774cc8f14)), closes [DorielRivalet/mhfz-overlay#276](https://github.com/DorielRivalet/mhfz-overlay/issues/276)
+* guild card formatting ([39dd150](https://github.com/DorielRivalet/MHFZ_Overlay/commit/39dd150ffa7a86422ba8d9bae4657d5b8394c087))
+* run buffs ([a3a2c2d](https://github.com/DorielRivalet/MHFZ_Overlay/commit/a3a2c2d648281b3bab14fa3152b7436d6b696d34))
+* run buffs insert ([df16966](https://github.com/DorielRivalet/MHFZ_Overlay/commit/df16966b39d7b504db673264ab653ccf3563e8be))
+* run buffs tags ([35cd5eb](https://github.com/DorielRivalet/MHFZ_Overlay/commit/35cd5eb70252a3ec4a49bf4c8d3172c01570529d))
+* **sqlite:** missing comma ([a837884](https://github.com/DorielRivalet/MHFZ_Overlay/commit/a8378843b946e0b26571a5a62b310b9258919abe))
+
+
+### For Developers
+
+* bump version ([6ac2af7](https://github.com/DorielRivalet/MHFZ_Overlay/commit/6ac2af783fe312563f7ef0918984bf5ebc084859))
+* **FAQ:** add run buffs tags ([400fcfc](https://github.com/DorielRivalet/MHFZ_Overlay/commit/400fcfcd06813fdd5a17921f2e49fdb1f6af8d26))
+* update FAQ.md ([7e35d71](https://github.com/DorielRivalet/MHFZ_Overlay/commit/7e35d719ab9a7ac123624b68122b74e811ffb045))
+
 ## [0.34.0](https://github.com/DorielRivalet/MHFZ_Overlay/compare/v0.33.0...v0.34.0) (2024-02-02)
 
 

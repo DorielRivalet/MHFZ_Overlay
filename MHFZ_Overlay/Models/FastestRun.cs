@@ -22,4 +22,6 @@ public sealed class FastestRun
     public string FinalTimeDisplay { get; set; } = Messages.MaximumTimerPlaceholder;
 
     public DateTime Date { get; set; }
+
+    public long RunBuffs { get; set; }
 }

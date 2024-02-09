@@ -336,6 +336,7 @@
                 <ColumnDefinition  Width="1*" />
                 <ColumnDefinition  Width="1*" />
                 <ColumnDefinition  Width="1*" />
+                <ColumnDefinition  Width="1*" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
@@ -346,31 +347,36 @@
             </Grid.RowDefinitions>
             <Border x:Name="KBMLayoutGridBorder" BorderBrush="{StaticResource Red}" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="10" Grid.RowSpan="10" BorderThickness="0"/>
 
-            <Image d:Opacity="1" Opacity="0.2"  x:Name="Key1" Source="../../Assets/Icons/png/key_1.png" Grid.Row="0" Grid.Column="0"/>
-            <Image d:Opacity="1" Opacity="0.2" x:Name="Key2" Source="../../Assets/Icons/png/key_2.png" Grid.Row="0" Grid.Column="1"/>
-            <Image d:Opacity="1" Opacity="0.2" x:Name="Key3" Source="../../Assets/Icons/png/key_3.png" Grid.Row="0" Grid.Column="2"/>
-            <Image d:Opacity="1" Opacity="0.2" x:Name="Key4" Source="../../Assets/Icons/png/key_4.png" Grid.Row="0" Grid.Column="3"/>
-            <Image d:Opacity="1" Opacity="0.2" x:Name="Key5" Source="../../Assets/Icons/png/key_5.png" Grid.Row="0" Grid.Column="4"/>
-            <Image d:Opacity="1" x:Name="KeyQ" Opacity="0.2" Source="../../Assets/Icons/png/key_q.png" Grid.Row="1" Grid.Column="0"/>
-            <Image d:Opacity="1" x:Name="KeyW" Opacity="0.2" Source="../../Assets/Icons/png/key_w.png" Grid.Row="1" Grid.Column="1"/>
-            <Image d:Opacity="1" x:Name="KeyE" Opacity="0.2" Source="../../Assets/Icons/png/key_e.png" Grid.Row="1" Grid.Column="2"/>
-            <Image d:Opacity="1" x:Name="KeyR" Opacity="0.2" Source="../../Assets/Icons/png/key_r.png" Grid.Row="1" Grid.Column="3"/>
-            <Image d:Opacity="1" x:Name="KeyT" Opacity="0.2" Source="../../Assets/Icons/png/key_t.png" Grid.Row="1" Grid.Column="4"/>
-            <Image d:Opacity="1" x:Name="KeyA" Opacity="0.2" Source="../../Assets/Icons/png/key_a.png" Grid.Row="2" Grid.Column="0"/>
-            <Image d:Opacity="1" x:Name="KeyS" Opacity="0.2" Source="../../Assets/Icons/png/key_s.png" Grid.Row="2" Grid.Column="1"/>
-            <Image d:Opacity="1" x:Name="KeyD" Opacity="0.2" Source="../../Assets/Icons/png/key_d.png" Grid.Row="2" Grid.Column="2"/>
-            <Image d:Opacity="1" x:Name="KeyF" Opacity="0.2" Source="../../Assets/Icons/png/key_f.png" Grid.Row="2" Grid.Column="3"/>
-            <Image d:Opacity="1" x:Name="KeyG" Opacity="0.2" Source="../../Assets/Icons/png/key_g.png" Grid.Row="2" Grid.Column="4"/>
-            <Image d:Opacity="1" x:Name="KeyShift" Opacity="0.2" Source="../../Assets/Icons/png/key_shift.png" Grid.Row="3" Grid.Column="0"/>
-            <Image d:Opacity="1" x:Name="KeyZ" Opacity="0.2" Source="../../Assets/Icons/png/key_z.png" Grid.Row="3" Grid.Column="1"/>
-            <Image d:Opacity="1" x:Name="KeyX" Opacity="0.2" Source="../../Assets/Icons/png/key_x.png" Grid.Row="3" Grid.Column="2"/>
-            <Image d:Opacity="1" x:Name="KeyC" Opacity="0.2" Source="../../Assets/Icons/png/key_c.png" Grid.Row="3" Grid.Column="3"/>
-            <Image d:Opacity="1" x:Name="KeyV" Opacity="0.2" Source="../../Assets/Icons/png/key_v.png" Grid.Row="3" Grid.Column="4"/>
-            <Image d:Opacity="1" x:Name="KeyCtrl" Opacity="0.2" Source="../../Assets/Icons/png/key_ctrl.png" Grid.Row="4" Grid.Column="0"/>
-            <Image d:Opacity="1" x:Name="KeySpace" Opacity="0.2" Source="../../Assets/Icons/png/key_space.png" Grid.Row="4" Grid.Column="1"/>
-            <Image d:Opacity="1" x:Name="MouseLeftClick" Opacity="0.2" Source="../../Assets/Icons/png/left_click.png" Grid.Row="4" Grid.Column="2"/>
-            <Image d:Opacity="1" x:Name="MouseMiddleClick" Opacity="0.2" Source="../../Assets/Icons/png/middle_click.png" Grid.Row="4" Grid.Column="3"/>
-            <Image d:Opacity="1" x:Name="MouseRightClick" Opacity="0.2" Source="../../Assets/Icons/png/right_click.png" Grid.Row="4" Grid.Column="4"/>
+            <Image d:Opacity="1" Opacity="0"  x:Name="Key1" Source="../../Assets/Icons/png/key_1.png" Grid.Row="0" Grid.Column="0"/>
+            <Image d:Opacity="1" Opacity="0" x:Name="Key2" Source="../../Assets/Icons/png/key_2.png" Grid.Row="0" Grid.Column="1"/>
+            <Image d:Opacity="1" Opacity="0" x:Name="Key3" Source="../../Assets/Icons/png/key_3.png" Grid.Row="0" Grid.Column="2"/>
+            <Image d:Opacity="1" Opacity="0" x:Name="Key4" Source="../../Assets/Icons/png/key_4.png" Grid.Row="0" Grid.Column="3"/>
+            <Image d:Opacity="1" Opacity="0" x:Name="Key5" Source="../../Assets/Icons/png/key_5.png" Grid.Row="0" Grid.Column="4"/>
+            <Image d:Opacity="1" Opacity="0" x:Name="Key6" Source="../../Assets/Icons/png/key_6.png" Grid.Row="0" Grid.Column="5"/>
+            <Image d:Opacity="1" x:Name="KeyQ" Opacity="0" Source="../../Assets/Icons/png/key_q.png" Grid.Row="1" Grid.Column="0"/>
+            <Image d:Opacity="1" x:Name="KeyW" Opacity="0" Source="../../Assets/Icons/png/key_w.png" Grid.Row="1" Grid.Column="1"/>
+            <Image d:Opacity="1" x:Name="KeyE" Opacity="0" Source="../../Assets/Icons/png/key_e.png" Grid.Row="1" Grid.Column="2"/>
+            <Image d:Opacity="1" x:Name="KeyR" Opacity="0" Source="../../Assets/Icons/png/key_r.png" Grid.Row="1" Grid.Column="3"/>
+            <Image d:Opacity="1" x:Name="KeyT" Opacity="0" Source="../../Assets/Icons/png/key_t.png" Grid.Row="1" Grid.Column="4"/>
+            <Image d:Opacity="1" x:Name="KeyY" Opacity="0" Source="../../Assets/Icons/png/key_y.png" Grid.Row="1" Grid.Column="5"/>
+            <Image d:Opacity="1" x:Name="KeyA" Opacity="0" Source="../../Assets/Icons/png/key_a.png" Grid.Row="2" Grid.Column="0"/>
+            <Image d:Opacity="1" x:Name="KeyS" Opacity="0" Source="../../Assets/Icons/png/key_s.png" Grid.Row="2" Grid.Column="1"/>
+            <Image d:Opacity="1" x:Name="KeyD" Opacity="0" Source="../../Assets/Icons/png/key_d.png" Grid.Row="2" Grid.Column="2"/>
+            <Image d:Opacity="1" x:Name="KeyF" Opacity="0" Source="../../Assets/Icons/png/key_f.png" Grid.Row="2" Grid.Column="3"/>
+            <Image d:Opacity="1" x:Name="KeyG" Opacity="0" Source="../../Assets/Icons/png/key_g.png" Grid.Row="2" Grid.Column="4"/>
+            <Image d:Opacity="1" x:Name="KeyH" Opacity="0" Source="../../Assets/Icons/png/key_h.png" Grid.Row="2" Grid.Column="5"/>
+            <Image d:Opacity="1" x:Name="KeyShift" Opacity="0" Source="../../Assets/Icons/png/key_shift.png" Grid.Row="3" Grid.Column="0"/>
+            <Image d:Opacity="1" x:Name="KeyZ" Opacity="0" Source="../../Assets/Icons/png/key_z.png" Grid.Row="3" Grid.Column="1"/>
+            <Image d:Opacity="1" x:Name="KeyX" Opacity="0" Source="../../Assets/Icons/png/key_x.png" Grid.Row="3" Grid.Column="2"/>
+            <Image d:Opacity="1" x:Name="KeyC" Opacity="0" Source="../../Assets/Icons/png/key_c.png" Grid.Row="3" Grid.Column="3"/>
+            <Image d:Opacity="1" x:Name="KeyV" Opacity="0" Source="../../Assets/Icons/png/key_v.png" Grid.Row="3" Grid.Column="4"/>
+            <Image d:Opacity="1" x:Name="KeyB" Opacity="0" Source="../../Assets/Icons/png/key_b.png" Grid.Row="3" Grid.Column="5"/>
+            <Image d:Opacity="1" x:Name="KeyCtrl" Opacity="0" Source="../../Assets/Icons/png/key_ctrl.png" Grid.Row="4" Grid.Column="0"/>
+            <Image d:Opacity="1" x:Name="KeyAlt" Opacity="0" Source="../../Assets/Icons/png/key_alt.png" Grid.Row="4" Grid.Column="1"/>
+            <Image d:Opacity="1" x:Name="KeySpace" Opacity="0" Source="../../Assets/Icons/png/key_space.png" Grid.Row="4" Grid.Column="2"/>
+            <Image d:Opacity="1" x:Name="MouseLeftClick" Opacity="0" Source="../../Assets/Icons/png/left_click.png" Grid.Row="4" Grid.Column="3"/>
+            <Image d:Opacity="1" x:Name="MouseMiddleClick" Opacity="0" Source="../../Assets/Icons/png/middle_click.png" Grid.Row="4" Grid.Column="4"/>
+            <Image d:Opacity="1" x:Name="MouseRightClick" Opacity="0" Source="../../Assets/Icons/png/right_click.png" Grid.Row="4" Grid.Column="5"/>
         </Grid>
         <Grid Background="{Binding Source={StaticResource Settings},Path=HPBackGroundColor}" x:Name="GamepadGrid" Canvas.Left="{Binding Source={StaticResource Settings},Path=GamepadX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=GamepadY}" Width="{Binding Path=GamepadSize, Source={StaticResource Settings}}" Height="{Binding Path=GamepadSize, Source={StaticResource Settings}}" MouseLeftButtonDown="ElementMouseLeftButtonDown"
             Visibility="{Binding ElementName=Window, Path=DataLoader.Model.ShowGamepadLayout, Converter={StaticResource BoolToVis}}">
@@ -394,21 +400,21 @@
             </Grid.RowDefinitions>
             <Border x:Name="GamepadGridBorder" BorderBrush="{StaticResource Red}" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="10" Grid.RowSpan="10" BorderThickness="0"/>
 
-            <Image x:Name="ButtonL2" d:Opacity="1" Opacity="0.2" Source="../../Assets/Icons/png/gamepad_l2.png" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Stretch="Fill"/>
-            <Image x:Name="ButtonR2" d:Opacity="1" Opacity="0.2" Source="../../Assets/Icons/png/gamepad_r2.png" Grid.Row="0" Grid.Column="5" Grid.ColumnSpan="2" Stretch="Fill"/>
-            <Image x:Name="ButtonL1" d:Opacity="1" Opacity="0.2" Source="../../Assets/Icons/png/gamepad_l1.png" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Stretch="Fill"/>
-            <Image x:Name="ButtonR1" d:Opacity="1" Opacity="0.2" Source="../../Assets/Icons/png/gamepad_r1.png" Grid.Row="1" Grid.Column="5" Grid.ColumnSpan="2" Stretch="Fill"/>
-            <Image x:Name="DPad" d:Opacity="1" Opacity="0.2" Source="../../Assets/Icons/png/gamepad_dpad.png" Grid.Row="2" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="3" />
-            <Image x:Name="LJoystick" d:Opacity="1" Opacity="0.2" Source="../../Assets/Icons/png/gamepad_joystick.png" Grid.Row="4" Grid.RowSpan="2" Grid.Column="2" Grid.ColumnSpan="2"/>
-            <Image x:Name="RJoystick" d:Opacity="1" Opacity="0.2" Source="../../Assets/Icons/png/gamepad_joystick.png" Grid.Row="4" Grid.RowSpan="2" Grid.Column="4" Grid.ColumnSpan="2"/>
-            <Image x:Name="LJoystickMovement" d:Opacity="1" Opacity="0.2" Source="../../Assets/Icons/png/gamepad_joystick_up.png" Grid.Row="4" Grid.RowSpan="2" Grid.Column="2" Grid.ColumnSpan="2"/>
-            <Image x:Name="RJoystickMovement" d:Opacity="1" Opacity="0.2" Source="../../Assets/Icons/png/gamepad_joystick_up.png" Grid.Row="4" Grid.RowSpan="2" Grid.Column="4" Grid.ColumnSpan="2"/>
-            <Image x:Name="ButtonA" d:Opacity="1" Opacity="0.2" Source="../../Assets/Icons/png/gamepad_a.png" Grid.Row="4" Grid.Column="6"/>
-            <Image x:Name="ButtonB" d:Opacity="1" Opacity="0.2" Source="../../Assets/Icons/png/gamepad_b.png" Grid.Row="3" Grid.Column="7"/>
-            <Image x:Name="ButtonX" d:Opacity="1" Opacity="0.2" Source="../../Assets/Icons/png/gamepad_x.png" Grid.Row="3" Grid.Column="5"/>
-            <Image x:Name="ButtonY" d:Opacity="1" Opacity="0.2" Source="../../Assets/Icons/png/gamepad_y.png" Grid.Row="2" Grid.Column="6"/>
-            <Image x:Name="ButtonSelect" d:Opacity="1" Opacity="0.2" Source="../../Assets/Icons/png/gamepad_select.png" Grid.Row="3" Grid.Column="3"/>
-            <Image x:Name="ButtonStart" d:Opacity="1" Opacity="0.2" Source="../../Assets/Icons/png/gamepad_start.png" Grid.Row="3" Grid.Column="4"/>
+            <Image x:Name="ButtonL2" d:Opacity="1" Opacity="0" Source="../../Assets/Icons/png/gamepad_l2.png" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Stretch="Fill"/>
+            <Image x:Name="ButtonR2" d:Opacity="1" Opacity="0" Source="../../Assets/Icons/png/gamepad_r2.png" Grid.Row="0" Grid.Column="5" Grid.ColumnSpan="2" Stretch="Fill"/>
+            <Image x:Name="ButtonL1" d:Opacity="1" Opacity="0" Source="../../Assets/Icons/png/gamepad_l1.png" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Stretch="Fill"/>
+            <Image x:Name="ButtonR1" d:Opacity="1" Opacity="0" Source="../../Assets/Icons/png/gamepad_r1.png" Grid.Row="1" Grid.Column="5" Grid.ColumnSpan="2" Stretch="Fill"/>
+            <Image x:Name="DPad" d:Opacity="1" Opacity="0" Source="../../Assets/Icons/png/gamepad_dpad.png" Grid.Row="2" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="3" />
+            <Image x:Name="LJoystick" d:Opacity="1" Opacity="0" Source="../../Assets/Icons/png/gamepad_joystick.png" Grid.Row="4" Grid.RowSpan="2" Grid.Column="2" Grid.ColumnSpan="2"/>
+            <Image x:Name="RJoystick" d:Opacity="1" Opacity="0" Source="../../Assets/Icons/png/gamepad_joystick.png" Grid.Row="4" Grid.RowSpan="2" Grid.Column="4" Grid.ColumnSpan="2"/>
+            <Image x:Name="LJoystickMovement" d:Opacity="1" Opacity="0" Source="../../Assets/Icons/png/gamepad_joystick_up.png" Grid.Row="4" Grid.RowSpan="2" Grid.Column="2" Grid.ColumnSpan="2"/>
+            <Image x:Name="RJoystickMovement" d:Opacity="1" Opacity="0" Source="../../Assets/Icons/png/gamepad_joystick_up.png" Grid.Row="4" Grid.RowSpan="2" Grid.Column="4" Grid.ColumnSpan="2"/>
+            <Image x:Name="ButtonA" d:Opacity="1" Opacity="0" Source="../../Assets/Icons/png/gamepad_a.png" Grid.Row="4" Grid.Column="6"/>
+            <Image x:Name="ButtonB" d:Opacity="1" Opacity="0" Source="../../Assets/Icons/png/gamepad_b.png" Grid.Row="3" Grid.Column="7"/>
+            <Image x:Name="ButtonX" d:Opacity="1" Opacity="0" Source="../../Assets/Icons/png/gamepad_x.png" Grid.Row="3" Grid.Column="5"/>
+            <Image x:Name="ButtonY" d:Opacity="1" Opacity="0" Source="../../Assets/Icons/png/gamepad_y.png" Grid.Row="2" Grid.Column="6"/>
+            <Image x:Name="ButtonSelect" d:Opacity="1" Opacity="0" Source="../../Assets/Icons/png/gamepad_select.png" Grid.Row="3" Grid.Column="3"/>
+            <Image x:Name="ButtonStart" d:Opacity="1" Opacity="0" Source="../../Assets/Icons/png/gamepad_start.png" Grid.Row="3" Grid.Column="4"/>
         </Grid>
         <Grid Background="{Binding Source={StaticResource Settings},Path=HPBackGroundColor}" x:Name="Monster1HpBar" Canvas.Left="{Binding Source={StaticResource Settings},Path=Monster1HealthBarX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=Monster1HealthBarY}" MouseLeftButtonDown="ElementMouseLeftButtonDown"
               Visibility="{Binding ElementName=Window, Path=DataLoader.Model.ShowMonster1HPBar, Converter={StaticResource BoolToVis}}">

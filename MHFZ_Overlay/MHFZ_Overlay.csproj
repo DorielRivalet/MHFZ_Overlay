@@ -20,7 +20,7 @@
 	<Title>mhfz-overlay</Title>
 	<Copyright>Doriel Rivalet</Copyright>
 	<Authors>Doriel Rivalet</Authors>
-	<Version>0.34.0</Version>
+	<Version>0.35.0</Version>
 	<PackageProjectUrl>https://github.com/DorielRivalet/mhfz-overlay</PackageProjectUrl>
 	<RepositoryUrl>https://github.com/DorielRivalet/mhfz-overlay.git</RepositoryUrl>
 	<RepositoryType>git</RepositoryType>
@@ -159,6 +159,41 @@
     <None Remove="Assets\Icons\achievement\zenny.jpg" />
     <None Remove="Assets\Icons\gif\scroll_rainbow.gif" />
     <None Remove="Assets\Icons\ico\mhfzoverlayicon256.ico" />
+    <None Remove="Assets\Icons\png\area\balloon.png" />
+    <None Remove="Assets\Icons\png\area\blacksmith.png" />
+    <None Remove="Assets\Icons\png\area\cattleya.png" />
+    <None Remove="Assets\Icons\png\area\desert.png" />
+    <None Remove="Assets\Icons\png\area\diva_fountain.png" />
+    <None Remove="Assets\Icons\png\area\dure.gif" />
+    <None Remove="Assets\Icons\png\area\entrance.png" />
+    <None Remove="Assets\Icons\png\area\flower_fields.png" />
+    <None Remove="Assets\Icons\png\area\forest_and_hills.png" />
+    <None Remove="Assets\Icons\png\area\gorge.png" />
+    <None Remove="Assets\Icons\png\area\great_forest.png" />
+    <None Remove="Assets\Icons\png\area\guild_hall.png" />
+    <None Remove="Assets\Icons\png\area\highlands.png" />
+    <None Remove="Assets\Icons\png\area\jungle.png" />
+    <None Remove="Assets\Icons\png\area\map.png" />
+    <None Remove="Assets\Icons\png\area\mezfes.png" />
+    <None Remove="Assets\Icons\png\area\my_gallery.png" />
+    <None Remove="Assets\Icons\png\area\my_garden.png" />
+    <None Remove="Assets\Icons\png\area\my_house.png" />
+    <None Remove="Assets\Icons\png\area\my_missions.png" />
+    <None Remove="Assets\Icons\png\area\my_support.png" />
+    <None Remove="Assets\Icons\png\area\my_tore.png" />
+    <None Remove="Assets\Icons\png\area\painted_falls.png" />
+    <None Remove="Assets\Icons\png\area\pallone_caravan.png" />
+    <None Remove="Assets\Icons\png\area\polar_sea.png" />
+    <None Remove="Assets\Icons\png\area\pvp.png" />
+    <None Remove="Assets\Icons\png\area\rasta_bar.png" />
+    <None Remove="Assets\Icons\png\area\rengoku.png" />
+    <None Remove="Assets\Icons\png\area\snowy_mountains.png" />
+    <None Remove="Assets\Icons\png\area\swamp.png" />
+    <None Remove="Assets\Icons\png\area\tent.png" />
+    <None Remove="Assets\Icons\png\area\tidal_island.png" />
+    <None Remove="Assets\Icons\png\area\tower.png" />
+    <None Remove="Assets\Icons\png\area\volcano.png" />
+    <None Remove="Assets\Icons\png\area\white_lake.png" />
     <None Remove="Assets\Icons\png\armor_skills.png" />
     <None Remove="Assets\Icons\png\arrow_down.png" />
     <None Remove="Assets\Icons\png\arrow_left.png" />
@@ -267,7 +302,10 @@
     <None Remove="Assets\Icons\png\key_3.png" />
     <None Remove="Assets\Icons\png\key_4.png" />
     <None Remove="Assets\Icons\png\key_5.png" />
+    <None Remove="Assets\Icons\png\key_6.png" />
     <None Remove="Assets\Icons\png\key_a.png" />
+    <None Remove="Assets\Icons\png\key_alt.png" />
+    <None Remove="Assets\Icons\png\key_b.png" />
     <None Remove="Assets\Icons\png\key_c.png" />
     <None Remove="Assets\Icons\png\key_ctrl.png" />
     <None Remove="Assets\Icons\png\key_d.png" />
@@ -284,6 +322,7 @@
     <None Remove="Assets\Icons\png\key_v.png" />
     <None Remove="Assets\Icons\png\key_w.png" />
     <None Remove="Assets\Icons\png\key_x.png" />
+    <None Remove="Assets\Icons\png\key_y.png" />
     <None Remove="Assets\Icons\png\key_z.png" />
     <None Remove="Assets\Icons\png\knife.png" />
     <None Remove="Assets\Icons\png\left_click.png" />
@@ -717,6 +756,7 @@
     <None Remove="Assets\Icons\png\quest_info.png" />
     <None Remove="Assets\Icons\png\rasta_bar.png" />
     <None Remove="Assets\Icons\png\red_soul.png" />
+    <None Remove="Assets\Icons\png\rengoku.png" />
     <None Remove="Assets\Icons\png\right_click.png" />
     <None Remove="Assets\Icons\png\sand_clock.png" />
     <None Remove="Assets\Icons\png\sand_clock2.png" />
@@ -1183,6 +1223,41 @@
       <Generator>MSBuild:Compile</Generator>
     </Resource>
     <Resource Include="Assets\Icons\Plate_Icon_White.xaml" />
+    <Resource Include="Assets\Icons\png\area\balloon.png" />
+    <Resource Include="Assets\Icons\png\area\blacksmith.png" />
+    <Resource Include="Assets\Icons\png\area\cattleya.png" />
+    <Resource Include="Assets\Icons\png\area\desert.png" />
+    <Resource Include="Assets\Icons\png\area\diva_fountain.png" />
+    <Resource Include="Assets\Icons\png\area\dure.gif" />
+    <Resource Include="Assets\Icons\png\area\entrance.png" />
+    <Resource Include="Assets\Icons\png\area\flower_fields.png" />
+    <Resource Include="Assets\Icons\png\area\forest_and_hills.png" />
+    <Resource Include="Assets\Icons\png\area\gorge.png" />
+    <Resource Include="Assets\Icons\png\area\great_forest.png" />
+    <Resource Include="Assets\Icons\png\area\guild_hall.png" />
+    <Resource Include="Assets\Icons\png\area\highlands.png" />
+    <Resource Include="Assets\Icons\png\area\jungle.png" />
+    <Resource Include="Assets\Icons\png\area\map.png" />
+    <Resource Include="Assets\Icons\png\area\mezfes.png" />
+    <Resource Include="Assets\Icons\png\area\my_gallery.png" />
+    <Resource Include="Assets\Icons\png\area\my_garden.png" />
+    <Resource Include="Assets\Icons\png\area\my_house.png" />
+    <Resource Include="Assets\Icons\png\area\my_missions.png" />
+    <Resource Include="Assets\Icons\png\area\my_support.png" />
+    <Resource Include="Assets\Icons\png\area\my_tore.png" />
+    <Resource Include="Assets\Icons\png\area\painted_falls.png" />
+    <Resource Include="Assets\Icons\png\area\pallone_caravan.png" />
+    <Resource Include="Assets\Icons\png\area\polar_sea.png" />
+    <Resource Include="Assets\Icons\png\area\pvp.png" />
+    <Resource Include="Assets\Icons\png\area\rasta_bar.png" />
+    <Resource Include="Assets\Icons\png\area\rengoku.png" />
+    <Resource Include="Assets\Icons\png\area\snowy_mountains.png" />
+    <Resource Include="Assets\Icons\png\area\swamp.png" />
+    <Resource Include="Assets\Icons\png\area\tent.png" />
+    <Resource Include="Assets\Icons\png\area\tidal_island.png" />
+    <Resource Include="Assets\Icons\png\area\tower.png" />
+    <Resource Include="Assets\Icons\png\area\volcano.png" />
+    <Resource Include="Assets\Icons\png\area\white_lake.png" />
     <Resource Include="Assets\Icons\png\armor_skills.png" />
     <Resource Include="Assets\Icons\png\arrow_down.png" />
     <Resource Include="Assets\Icons\png\arrow_left.png" />
@@ -1291,7 +1366,10 @@
     <Resource Include="Assets\Icons\png\key_3.png" />
     <Resource Include="Assets\Icons\png\key_4.png" />
     <Resource Include="Assets\Icons\png\key_5.png" />
+    <Resource Include="Assets\Icons\png\key_6.png" />
     <Resource Include="Assets\Icons\png\key_a.png" />
+    <Resource Include="Assets\Icons\png\key_alt.png" />
+    <Resource Include="Assets\Icons\png\key_b.png" />
     <Resource Include="Assets\Icons\png\key_c.png" />
     <Resource Include="Assets\Icons\png\key_ctrl.png" />
     <Resource Include="Assets\Icons\png\key_d.png" />
@@ -1308,6 +1386,7 @@
     <Resource Include="Assets\Icons\png\key_v.png" />
     <Resource Include="Assets\Icons\png\key_w.png" />
     <Resource Include="Assets\Icons\png\key_x.png" />
+    <Resource Include="Assets\Icons\png\key_y.png" />
     <Resource Include="Assets\Icons\png\key_z.png" />
     <Resource Include="Assets\Icons\png\knife.png" />
     <Resource Include="Assets\Icons\png\left_click.png" />
@@ -1741,6 +1820,7 @@
     <Resource Include="Assets\Icons\png\quest_info.png" />
     <Resource Include="Assets\Icons\png\rasta_bar.png" />
     <Resource Include="Assets\Icons\png\red_soul.png" />
+    <Resource Include="Assets\Icons\png\rengoku.png" />
     <Resource Include="Assets\Icons\png\right_click.png" />
     <Resource Include="Assets\Icons\png\sand_clock.png" />
     <Resource Include="Assets\Icons\png\sand_clock2.png" />
