@@ -303,7 +303,7 @@ public sealed class DiscordService
             if ((dataLoader.Model.ObjectiveType() == 0x0 || dataLoader.Model.ObjectiveType() == 0x02 || dataLoader.Model.ObjectiveType() == 0x1002) && dataLoader.Model.QuestID() != 23527 && dataLoader.Model.QuestID() != 23628 && dataLoader.Model.QuestID() != 21731 && dataLoader.Model.QuestID() != 21749 && dataLoader.Model.QuestID() != 21746 && dataLoader.Model.QuestID() != 21750)
             {
                 largeImageTextString = string.Format(CultureInfo.InvariantCulture, "{0}{1}", GetQuestInformation(dataLoader), dataLoader.Model.GetAreaName(dataLoader.Model.AreaID()));
-                PresenceTemplate.Assets.LargeImageKey = ViewModels.Windows.AddressModel.GetAreaIconFromID(dataLoader.Model.AreaID());
+                PresenceTemplate.Assets.LargeImageKey = ViewModels.Windows.AddressModel.GetAreaIconFromID(dataLoader.Model.AreaID(), true);
                 PresenceTemplate.Assets.LargeImageText = largeImageTextString.Length <= MaxDiscordRPCStringLength ? largeImageTextString : largeImageTextString[.. (MaxDiscordRPCStringLength - 3)] + "...";
             }
 
@@ -311,14 +311,14 @@ public sealed class DiscordService
             else if (dataLoader.Model.AreaID() is 391 or 392 or 394 or 415 or 416)
             {
                 largeImageTextString = string.Format(CultureInfo.InvariantCulture, "{0}{1}", GetQuestInformation(dataLoader), dataLoader.Model.GetAreaName(dataLoader.Model.AreaID()));
-                PresenceTemplate.Assets.LargeImageKey = ViewModels.Windows.AddressModel.GetAreaIconFromID(dataLoader.Model.AreaID());
+                PresenceTemplate.Assets.LargeImageKey = ViewModels.Windows.AddressModel.GetAreaIconFromID(dataLoader.Model.AreaID(), true);
                 PresenceTemplate.Assets.LargeImageText = largeImageTextString.Length <= MaxDiscordRPCStringLength ? largeImageTextString : largeImageTextString[.. (MaxDiscordRPCStringLength - 3)] + "...";
             }
 
             // Duremudira Doors
             else if (dataLoader.Model.AreaID() is 399 or 414)
             {
-                PresenceTemplate.Assets.LargeImageKey = ViewModels.Windows.AddressModel.GetAreaIconFromID(dataLoader.Model.AreaID());
+                PresenceTemplate.Assets.LargeImageKey = ViewModels.Windows.AddressModel.GetAreaIconFromID(dataLoader.Model.AreaID(), true);
                 largeImageTextString = string.Format(CultureInfo.InvariantCulture, "{0}{1}", GetQuestInformation(dataLoader), dataLoader.Model.GetAreaName(dataLoader.Model.AreaID()));
                 PresenceTemplate.Assets.LargeImageText = largeImageTextString.Length <= MaxDiscordRPCStringLength ? largeImageTextString : largeImageTextString[.. (MaxDiscordRPCStringLength - 3)] + "...";
             }
@@ -334,7 +334,7 @@ public sealed class DiscordService
             // Hunter's Road Base Camp
             else if (dataLoader.Model.AreaID() == 459)
             {
-                PresenceTemplate.Assets.LargeImageKey = ViewModels.Windows.AddressModel.GetAreaIconFromID(dataLoader.Model.AreaID());
+                PresenceTemplate.Assets.LargeImageKey = ViewModels.Windows.AddressModel.GetAreaIconFromID(dataLoader.Model.AreaID(), true);
                 largeImageTextString = string.Format(CultureInfo.InvariantCulture, "{0}{1} | Faints: {2}/{3}", GetQuestInformation(dataLoader), dataLoader.Model.GetAreaName(dataLoader.Model.AreaID()), dataLoader.Model.CurrentFaints(), dataLoader.Model.GetMaxFaints());
                 PresenceTemplate.Assets.LargeImageText = largeImageTextString.Length <= MaxDiscordRPCStringLength ? largeImageTextString : largeImageTextString[.. (MaxDiscordRPCStringLength - 3)] + "...";
             }
@@ -461,7 +461,7 @@ public sealed class DiscordService
                     break;
             }
 
-            PresenceTemplate.Assets.LargeImageKey = ViewModels.Windows.AddressModel.GetAreaIconFromID(dataLoader.Model.AreaID());
+            PresenceTemplate.Assets.LargeImageKey = ViewModels.Windows.AddressModel.GetAreaIconFromID(dataLoader.Model.AreaID(), true);
             largeImageTextString = dataLoader.Model.GetAreaName(dataLoader.Model.AreaID());
             PresenceTemplate.Assets.LargeImageText = largeImageTextString.Length <= MaxDiscordRPCStringLength ? largeImageTextString : string.Concat(largeImageTextString.AsSpan(0, MaxDiscordRPCStringLength - 3), "...");
         }

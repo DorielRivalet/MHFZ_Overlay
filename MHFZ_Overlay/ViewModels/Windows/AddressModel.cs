@@ -13579,7 +13579,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         return s.OverlayWatermarkMode == "Final";
     }
 
-    public static string FindAreaIcon(int id)
+    public static string FindAreaIcon(int id, bool forDiscord = false)
     {
         var areaGroup = new List<int> { 0 };
 
@@ -13594,7 +13594,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             }
         }
 
-        return DetermineAreaIcon(areaGroup);
+        return DetermineAreaIcon(areaGroup, forDiscord);
     }
 
     /// <summary>
@@ -13749,28 +13749,44 @@ After all that you’ve unlocked magnet spike! You should get a material to make
     /// </summary>
     /// <param name="id">The identifier.</param>
     /// <returns></returns>
-    public static string GetAreaIconFromID(int id) // TODO: are highlands, tidal island or painted falls icons correct?
+    public static string GetAreaIconFromID(int id, bool forDiscord = false) // TODO: are highlands, tidal island or painted falls icons correct?
     {
         if (id >= 470 && id < 0)
         {
-            return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/cattleya.png";
+            if (forDiscord)
+            {
+                return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/cattleya.png";
+            }
+
+            return @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/area/cattleya.png";
         }
         else
         {
-            return FindAreaIcon(id);
+            return FindAreaIcon(id, forDiscord);
         }
     }
 
-    public static string DetermineAreaIcon(List<int> key)
+    public static string DetermineAreaIcon(List<int> key, bool forDiscord = false)
     {
         var areaIcon = AreaIcons.AreaIconID.ContainsKey(key);
         if (!areaIcon)
         {
-            return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/cattleya.png";
+            if (forDiscord)
+            {
+                return "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/cattleya.png";
+            }
+
+            return @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/area/cattleya.png";
         }
         else
         {
-            return AreaIcons.AreaIconID[key];
+            var areaIconValue = AreaIcons.AreaIconID[key];
+            if (forDiscord)
+            {
+                areaIconValue = areaIconValue.ToString().Replace(@"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/area/", "https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/");
+            }
+
+            return areaIconValue;
         }
     }
 
