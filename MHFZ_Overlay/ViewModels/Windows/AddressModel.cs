@@ -2795,17 +2795,17 @@ TreeScope.Children, condition);
             return "FCA";
         }
 
-        if (runBuffs.HasFlag(RunBuff.SecretTechnique))
+        if (runBuffs.HasFlag(RunBuff.SecretTechnique) && !runBuffs.HasFlag(RunBuff.HalkPotEffect))
         {
             return "FST";
         }
 
-        if (runBuffs.HasFlag(RunBuff.DivaPrayerGem))
+        if (runBuffs.HasFlag(RunBuff.DivaPrayerGem) && !runBuffs.HasFlag(RunBuff.HalkPotEffect))
         {
             return "FDP";
         }
 
-        if (runBuffs.HasFlag(RunBuff.DivaSkill))
+        if (runBuffs.HasFlag(RunBuff.DivaSkill) && !runBuffs.HasFlag(RunBuff.HalkPotEffect))
         {
             return "FDS";
         }
