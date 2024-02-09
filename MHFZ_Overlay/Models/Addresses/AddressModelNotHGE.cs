@@ -1756,7 +1756,13 @@ public sealed class AddressModelNotHGE : AddressModel
     public override int ActiveFeature3() => this.M.Read2Byte("mhfo.dll+57E26E8");
 
     /// <inheritdoc/>
-    public override int ServerHeartbeat() => this.M.ReadInt("mhfo.dll+5E83A00");
+    public override int ServerHeartbeatLandOdd() => this.M.ReadInt("mhfo.dll+5E83A00");
+
+    /// <inheritdoc/>
+    public override int ServerHeartbeatLandEven() => this.M.ReadInt("mhfo.dll+5D983C0");
+
+    /// <inheritdoc/>
+    public override int LandSlot() => this.M.ReadInt("mhfo.dll+61C11A0");
 
     /// <inheritdoc/>
     public override int GuildFoodStart() => this.M.ReadInt("mhfo.dll+5BC70E0");

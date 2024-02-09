@@ -1341,11 +1341,18 @@ public abstract class AddressModel : INotifyPropertyChanged
     /// <returns></returns>
     public abstract int ActiveFeature3();
 
+    public abstract int ServerHeartbeatLandEven();
+
+    public abstract int ServerHeartbeatLandOdd();
+
+    public abstract int LandSlot();
+
+
     /// <summary>
     /// Updates every 11 seconds
     /// </summary>
     /// <returns></returns>
-    public abstract int ServerHeartbeat();
+    public int ServerHeartbeat => LandSlot() % 2 == 0 ? ServerHeartbeatLandEven() : ServerHeartbeatLandOdd();
 
     public abstract int GuildFoodStart();
 
@@ -2615,7 +2622,7 @@ TreeScope.Children, condition);
             }
 
             var expiry = divaSongStart + (60 * 90);
-            double secondsLeft = expiry - ServerHeartbeat();
+            double secondsLeft = expiry - ServerHeartbeat;
 
             return secondsLeft <= 60*10;
         }
@@ -2633,7 +2640,7 @@ TreeScope.Children, condition);
             }
 
             var expiry = divaSongStart + (60 * 90);
-            double secondsLeft = expiry - ServerHeartbeat();
+            double secondsLeft = expiry - ServerHeartbeat;
 
             return secondsLeft <= 0;
         }
@@ -2659,7 +2666,7 @@ TreeScope.Children, condition);
             }
 
             var expiry = GuildFoodStart() + (60 * 90);
-            double secondsLeft = expiry - ServerHeartbeat();
+            double secondsLeft = expiry - ServerHeartbeat;
 
             return secondsLeft <= 60 * 10;
         }
@@ -2675,7 +2682,7 @@ TreeScope.Children, condition);
             }
 
             var expiry = GuildFoodStart() + (60 * 90);
-            double secondsLeft = expiry - ServerHeartbeat();
+            double secondsLeft = expiry - ServerHeartbeat;
 
             return secondsLeft <= 0;
         }
@@ -2766,6 +2773,7 @@ TreeScope.Children, condition);
     {
         return runBuff switch
         {
+            RunBuff.None => "None",
             RunBuff.LeaderboardTimeAttack => "TA",
             RunBuff.LeaderboardFreestyleDivaSkill => "FDS",
             RunBuff.LeaderboardFreestyleDivaPrayerGem => "FDP",
@@ -13596,7 +13604,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             }
 
             var expiry  = GuildFoodStart() + (60 * 90);
-            double secondsLeft = expiry - ServerHeartbeat();
+            double secondsLeft = expiry - ServerHeartbeat;
 
             if (secondsLeft <= 0)
             {
@@ -13619,7 +13627,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             }
 
             var expiry = divaSongStart + (60 * 90);
-            double secondsLeft = expiry - ServerHeartbeat();
+            double secondsLeft = expiry - ServerHeartbeat;
 
             if (secondsLeft <= 0)
             {
