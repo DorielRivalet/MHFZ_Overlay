@@ -2,7 +2,7 @@
 
 The following libraries have been utilized in the development of this software:
 
-- [Clowd.Squirrel](https://github.com/clowd/Clowd.Squirrel): Used for installation process.
+- [Velopack](https://github.com/velopack/velopack): Used for installation process.
 - [DiscordRichPresence](https://github.com/Lachee/discord-rpc-csharp): Used for Discord rich presence integration.
 - [WPF UI](https://github.com/lepoco/wpfui): Used for UI design.
 - [Memory.dll](https://github.com/erfg12/memory.dll): Used for reading game addresses.
