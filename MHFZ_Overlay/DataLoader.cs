@@ -269,7 +269,7 @@ public sealed class DataLoader
     // there are currently no workarounds.
     public void CheckForExternalProcesses()
     {
-        if (App.IsClowdSquirrelUpdating || DatabaseManager.SchemaChanged)
+        if (Program.IsVelopackUpdating || DatabaseManager.SchemaChanged)
         {
             return;
         }
@@ -337,7 +337,7 @@ public sealed class DataLoader
     // TODO: test
     public void CheckForIllegalModifications()
     {
-        if (App.IsClowdSquirrelUpdating)
+        if (Program.IsVelopackUpdating)
         {
             return;
         }

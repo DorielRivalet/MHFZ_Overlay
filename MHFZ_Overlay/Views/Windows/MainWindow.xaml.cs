@@ -48,10 +48,8 @@ using Microsoft.Extensions.DependencyModel;
 using NLog;
 using Octokit;
 using SkiaSharp;
-using Wpf.Ui.Common;
-using Wpf.Ui.Contracts;
+using Wpf.Ui;
 using Wpf.Ui.Controls;
-using Wpf.Ui.Services;
 using XInputium;
 using XInputium.XInput;
 using Application = System.Windows.Application;
@@ -396,7 +394,7 @@ public partial class MainWindow : Window
 
         this.DataLoader.Model.ShowSaveIcon = false;
 
-        LoggerInstance.Info(CultureInfo.InvariantCulture, "Loaded MHF-Z Overlay {0}", App.CurrentProgramVersion);
+        LoggerInstance.Info(CultureInfo.InvariantCulture, "Loaded MHF-Z Overlay {0}", Program.CurrentProgramVersion);
 
         // In your initialization or setup code
         ISnackbarService snackbarService = new SnackbarService();
@@ -575,7 +573,7 @@ public partial class MainWindow : Window
         var releases = await this.ghClient.Repository.Release.GetAll("DorielRivalet", "MHFZ_Overlay");
         var latest = releases[0];
         var latestRelease = latest.TagName;
-        if (latestRelease != App.CurrentProgramVersion)
+        if (latestRelease != Program.CurrentProgramVersion)
         {
             var s = (Settings)Application.Current.TryFindResource("Settings");
             if (s.EnableUpdateNotifier)
@@ -587,7 +585,7 @@ public partial class MainWindow : Window
                     @"Detected different version ({0}) from latest ({1}). Do you want to update the overlay?
 
 The process may take some time, as the program attempts to download from GitHub Releases. You will get a notification once the process is complete.",
-                    App.CurrentProgramVersion, latest.TagName),
+                    Program.CurrentProgramVersion, latest.TagName),
                     "【MHF-Z】Overlay Update Available",
                     MessageBoxButton.YesNo,
                     MessageBoxImage.Asterisk,
@@ -595,7 +593,7 @@ The process may take some time, as the program attempts to download from GitHub 
 
                 if (messageBoxResult.ToString() == "Yes")
                 {
-                    await App.UpdateMyApp();
+                    await Program.UpdateMyApp();
                 }
             }
         }
@@ -2699,7 +2697,7 @@ The process may take some time, as the program attempts to download from GitHub 
 
     private void Window_Loaded(object sender, RoutedEventArgs e)
     {
-        if (App.IsFirstRun)
+        if (Program.WasFirstRun)
         {
             OnboardEndUser();
         }

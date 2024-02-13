@@ -69,7 +69,7 @@ public sealed class DiscordService
     /// </summary>
     private static readonly RichPresence PresenceTemplate = new ()
     {
-        Details = "【MHF-Z】Overlay " + App.CurrentProgramVersion,
+        Details = "【MHF-Z】Overlay " + Program.CurrentProgramVersion,
         State = "Loading...",
 
         // check img folder
@@ -82,7 +82,7 @@ public sealed class DiscordService
         },
         Buttons = new Button[]
             {
-                new Button() { Label = "【MHF-Z】Overlay " + App.CurrentProgramVersion, Url = "https://github.com/DorielRivalet/mhfz-overlay" },
+                new Button() { Label = "【MHF-Z】Overlay " + Program.CurrentProgramVersion, Url = "https://github.com/DorielRivalet/mhfz-overlay" },
                 new Button() { Label = "Discord RPC C# Dev Site", Url = "https://lachee.dev/" },
             },
     };
@@ -136,7 +136,7 @@ public sealed class DiscordService
             {
                 new Button()
                 {
-                    Label = "【MHF-Z】Overlay " + App.CurrentProgramVersion,
+                    Label = "【MHF-Z】Overlay " + Program.CurrentProgramVersion,
                     Url = "https://github.com/DorielRivalet/mhfz-overlay",
                 },
                 new Button()
@@ -153,7 +153,7 @@ public sealed class DiscordService
                 {
                     new Button()
                     {
-                        Label = "【MHF-Z】Overlay " + App.CurrentProgramVersion,
+                        Label = "【MHF-Z】Overlay " + Program.CurrentProgramVersion,
                         Url = "https://github.com/DorielRivalet/mhfz-overlay",
                     },
                     new Button()

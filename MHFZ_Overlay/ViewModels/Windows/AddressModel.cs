@@ -76,7 +76,7 @@ public abstract class AddressModel : INotifyPropertyChanged
         this.M = m;
     }
 
-    public static string FullCurrentProgramVersion => string.Format(CultureInfo.InvariantCulture, "Monster Hunter Frontier Z Overlay {0}", App.CurrentProgramVersion);
+    public static string FullCurrentProgramVersion => string.Format(CultureInfo.InvariantCulture, "Monster Hunter Frontier Z Overlay {0}", Program.CurrentProgramVersion);
 
     public DateTime DateTimeUtcNow { get; set; } = DateTime.UtcNow;
 
@@ -1433,7 +1433,7 @@ public abstract class AddressModel : INotifyPropertyChanged
 
     public bool HasMonster4 => this.ShowHPBar(this.LargeMonster4ID(), this.Monster4HPInt());
 
-    public static string SimplifiedCurrentProgramVersion => string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay {0}", App.CurrentProgramVersion);
+    public static string SimplifiedCurrentProgramVersion => string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay {0}", Program.CurrentProgramVersion);
 
     public string HitCount
     {
@@ -1488,7 +1488,7 @@ public abstract class AddressModel : INotifyPropertyChanged
         return s.HitsPerSecondShown;
     }
 
-    public static string GetFullCurrentProgramVersion() => string.Format(CultureInfo.InvariantCulture, "Monster Hunter Frontier Z Overlay {0}", App.CurrentProgramVersion);
+    public static string GetFullCurrentProgramVersion() => string.Format(CultureInfo.InvariantCulture, "Monster Hunter Frontier Z Overlay {0}", Program.CurrentProgramVersion);
 
     public static bool ShowTotalHitsTakenBlockedPerSecond()
     {
@@ -8012,7 +8012,7 @@ TreeScope.Children, condition);
             // fruits and speedrunner items also in bold
             var stats = string.Format(
                 CultureInfo.InvariantCulture,
-                @$"【MHF-Z】Overlay {App.CurrentProgramVersion} {this.GetWeaponClass()}({GetGender()}){GetMetadata}
+                @$"【MHF-Z】Overlay {Program.CurrentProgramVersion} {this.GetWeaponClass()}({GetGender()}){GetMetadata}
 
 Set Name: {GetGearDescription}
 {this.CurrentWeaponName}: {this.GetRealWeaponName}
@@ -8087,7 +8087,7 @@ Overlay Hash: {DatabaseManagerInstance.GetOverlayHash()}
             this.SavedGearStats = stats;
             var formattedStats = string.Format(
                 CultureInfo.InvariantCulture,
-                @$"__【MHF-Z】Overlay {App.CurrentProgramVersion}__ *{this.GetWeaponClass()}({GetGender()})*{GetMetadata}
+                @$"__【MHF-Z】Overlay {Program.CurrentProgramVersion}__ *{this.GetWeaponClass()}({GetGender()})*{GetMetadata}
 
 Set Name: {GetGearDescription}
 **{this.CurrentWeaponName}:** {this.GetRealWeaponName}
