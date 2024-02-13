@@ -95,6 +95,7 @@ public static class Numbers
 
     TODO replace the numbers in source code as necessary
      */
+    public const int QuestIDKeoaruboru = 58043;
 
     public const int QuestIDZ4AkuraVashimu = 23539;
 
@@ -165,6 +166,8 @@ public static class Numbers
     public const int QuestIDRulingGuanzorumu5m = 56126;
 
     public const int QuestIDShiftingMiRu = 55531;
+
+    public const int QuestIDShiftingMiRuHistoric = 55920;
 
     public const int QuestIDBlinkingNargacugaForest = 55534;
 

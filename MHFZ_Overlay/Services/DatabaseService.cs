@@ -43,8 +43,8 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NLog;
 using Octokit;
-using SharpCompress.Common;
-using Wpf.Ui.Common;
+
+using Wpf.Ui;
 using Wpf.Ui.Controls;
 using Formatting = Newtonsoft.Json.Formatting;
 using MessageBox = System.Windows.MessageBox;
@@ -101,6 +101,7 @@ public sealed class DatabaseService
 
     public HashSet<QuestsGuildPoogie> AllQuestsGuildPoogie { get; set; }
 
+    public long TotalOverlaySessions { get; set; }
 
     public TimeSpan SnackbarTimeOut { get; set; } = TimeSpan.FromSeconds(5);
 
@@ -8941,6 +8942,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                 this.AllQuestsGuildPoogie = this.GetAllQuestsGuildPoogie(conn);
                 this.AllQuestsDiva = this.GetAllQuestsDiva(conn);
                 this.AllQuestsHalk = this.GetAllQuestsHalk(conn);
+                TotalOverlaySessions = GetTableRowCount("SessionID", "Session", conn);
 
             }
         }

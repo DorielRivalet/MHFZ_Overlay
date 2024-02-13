@@ -23,7 +23,7 @@ using MHFZ_Overlay.ViewModels.Windows;
 using MHFZ_Overlay.Views.Windows;
 using Newtonsoft.Json;
 using NLog;
-using Wpf.Ui.Common;
+using Wpf.Ui;
 using Wpf.Ui.Controls;
 
 public sealed class AchievementService : IAchievementService
@@ -1275,9 +1275,9 @@ public sealed class AchievementService : IAchievementService
             case 154:
                 return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDRulingGuanzorumu && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Speedrun"));
             case 155:
-                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDShiftingMiRu);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID is Numbers.QuestIDShiftingMiRu or Numbers.QuestIDShiftingMiRuHistoric);
             case 156:
-                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDShiftingMiRu) >= Numbers.RequiredCompletionsMonsterSlayer)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID is Numbers.QuestIDShiftingMiRu or Numbers.QuestIDShiftingMiRuHistoric) >= Numbers.RequiredCompletionsMonsterSlayer)
                 {
                     return true;
                 }
@@ -1287,7 +1287,7 @@ public sealed class AchievementService : IAchievementService
                 }
 
             case 157:
-                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDShiftingMiRu) >= Numbers.RequiredCompletionsMonsterAnnihilator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID is Numbers.QuestIDShiftingMiRu or Numbers.QuestIDShiftingMiRuHistoric) >= Numbers.RequiredCompletionsMonsterAnnihilator)
                 {
                     return true;
                 }
@@ -1297,7 +1297,7 @@ public sealed class AchievementService : IAchievementService
                 }
 
             case 158:
-                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDShiftingMiRu) >= Numbers.RequiredCompletionsMonsterExterminator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID is Numbers.QuestIDShiftingMiRu or Numbers.QuestIDShiftingMiRuHistoric) >= Numbers.RequiredCompletionsMonsterExterminator)
                 {
                     return true;
                 }
@@ -1307,7 +1307,7 @@ public sealed class AchievementService : IAchievementService
                 }
 
             case 159:
-                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDShiftingMiRu && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Speedrun"));
+                return databaseManagerInstance.AllQuests.Any(quest => (quest.QuestID is Numbers.QuestIDShiftingMiRu or Numbers.QuestIDShiftingMiRuHistoric) && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Speedrun"));
             case 160:
                 return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID is Numbers.QuestIDBlinkingNargacugaForest or Numbers.QuestIDBlinkingNargacugaHistoric);
             case 161:
@@ -1598,7 +1598,7 @@ public sealed class AchievementService : IAchievementService
             case 197:
                 return databaseManagerInstance.AllQuests.Any(quest =>
                 {
-                    if (quest.QuestID != Numbers.QuestIDShiftingMiRu || quest.KeyStrokesDictionary == null)
+                    if ((quest.QuestID != Numbers.QuestIDShiftingMiRu && quest.QuestID != Numbers.QuestIDShiftingMiRu) || quest.KeyStrokesDictionary == null)
                     {
                         return false;
                     }
@@ -2037,7 +2037,7 @@ public sealed class AchievementService : IAchievementService
             case 308:
                 return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDThirstyPariapuria && quest.FinalTimeValue < Numbers.Frames1Minute * 3);
             case 309:
-                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDShiftingMiRu && quest.FinalTimeValue < Numbers.Frames1Minute * 5);
+                return databaseManagerInstance.AllQuests.Any(quest => (quest.QuestID is Numbers.QuestIDShiftingMiRu or Numbers.QuestIDShiftingMiRuHistoric) && quest.FinalTimeValue < Numbers.Frames1Minute * 5);
             case 310:
                 return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDRulingGuanzorumu && quest.FinalTimeValue < Numbers.Frames1Minute * 5);
             case 311:
@@ -2754,6 +2754,30 @@ public sealed class AchievementService : IAchievementService
                 }
             case 449:
                 return databaseManagerInstance.AllQuestAttempts.Any(q => q.RunBuffs >= (long)RunBuff.All);
+            case 450:
+                var questsWithCarts = from quest in databaseManagerInstance.AllQuests
+                                      where (quest.CartsDictionary != null && JsonConvert.DeserializeObject<Dictionary<int, int>>(quest.CartsDictionary)?.Count >= 1)
+                                      select quest;
+                var totalCarts = 0;
+
+                if (questsWithCarts == null || questsWithCarts.Count() == 0)
+                {
+                    return false;
+                }
+
+                foreach (var quest in questsWithCarts)
+                {
+                    if (quest.CartsDictionary == null)
+                    {
+                        continue;
+                    }
+                    var questCartsCount = JsonConvert.DeserializeObject<Dictionary<int, int>>(quest.CartsDictionary)?.Count ?? 0;
+                    totalCarts += questCartsCount;
+                }
+
+                return totalCarts >= 100;
+            case 451:
+                return databaseManagerInstance.TotalOverlaySessions >= 1_000;
         }
     }
 
