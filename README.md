@@ -40,7 +40,6 @@
   - [Features not yet implemented](#features-not-yet-implemented)
   - [Bugs](#bugs)
   - [Frequently Asked Questions](#frequently-asked-questions)
-  - [How to Manually Update with Update.exe](#how-to-manually-update-with-updateexe)
   - [How to Uninstall](#how-to-uninstall)
   - [Changelog](#changelog)
   - [Documentation](#documentation)
@@ -349,10 +348,6 @@ Some sections have context menus where you can save the section contents to a fi
 ## Frequently Asked Questions
 
 [FAQ](https://github.com/DorielRivalet/mhfz-overlay/blob/main/FAQ.md).
-
-## How to Manually Update with Update.exe
-
-`update.exe --update https://www.github.com/DorielRivalet/mhfz-overlay/releases/download/ENTER VERSION NUMBER (e.g. v0.6.4)`
 
 ## How to Uninstall
 

@@ -102,6 +102,10 @@ When you set the overlay mode to Speedrun, the run buffs value or tag will be di
 |Freestyle Secret Tech|FST|2039|FDP + Secret Technique|
 |Freestyle Course Attack Boost|FCA|4095|FST + Course Attack Boost + Halk Pot Effect|
 
+On quests where you cannot use diva skills but you use active feature, it counts as TA, making it a requirement.
+
+Bento is currently required in all runs.
+
 ## How to Record Videos with the Overlay?
 
 1. [Download OBS](https://obsproject.com/)
