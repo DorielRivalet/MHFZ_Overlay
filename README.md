@@ -17,7 +17,6 @@
 
 - [Monster Hunter Frontier Z Overlay](#monster-hunter-frontier-z-overlay)
   - [About](#about)
-  - [Requirements](#requirements)
   - [System Requirements](#system-requirements)
     - [Minimum](#minimum)
     - [Recommended](#recommended)
@@ -59,18 +58,13 @@ The overlay is highly configurable, with a wide range of options available to su
 
 We hope you find this overlay useful and enjoyable, and we welcome any feedback or suggestions you may have. Happy hunting!
 
-## Requirements
-
-- [.NET Desktop Runtime 6.0 x64](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-desktop-6.0.7-windows-x64-installer).
-- [.NET Desktop Runtime 6.0 x86](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-desktop-6.0.8-windows-x86-installer).
-
 ## System Requirements
 
 ### Minimum
 
 - OS: Windows 10 (64-bit)
 - Processor:  Intel® Core™ i3-4130 or Core™ i5-3470
-- Memory: 8 GB RAM
+- Memory: 6 GB RAM
 - Storage: 500 MB available space
 - Additional Notes: 1080p/30fps when refresh rate is set to 1. System requirements subject to change during software development.
 
@@ -78,22 +72,21 @@ We hope you find this overlay useful and enjoyable, and we welcome any feedback 
 
 - OS: Windows 10 (64-bit)
 - Processor: Intel® Core™ i5-4460 or better
-- Memory: 8 GB RAM
+- Memory: 6 GB RAM
 - Storage: 500 MB available space
 - Additional Notes: 1080p/30fps when refresh rate is set to 30. System requirements subject to change during software development.
 
 Please note that these system requirements are estimates and may vary based on your specific hardware configuration. If you encounter any performance issues or have different hardware specifications, please provide feedback or send an issue for assistance. We appreciate your input in helping us improve the overlay's compatibility with a wider range of hardware setups.
 
-If you record and/or stream with the overlay, the recommended RAM is 16 GB and the recommended processor is Intel® Core™ i7 or better.
+If you record and/or stream with the overlay, the recommended processor is Intel® Core™ i7 or better.
 
 ## Installation
 
-1. [Get **ALL** of the requirements](#requirements).
-2. [Download the latest version from the *Releases*](https://github.com/DorielRivalet/mhfz-overlay/releases/latest/download/MHFZ_OverlaySetup.exe).
-3. Make sure *Windows* or your antivirus did not delete the file (because it reads the game's memory, *Windows* might detect it as a trojan, so you might have to get it out of quarantine).
-4. Run `MHFZ_OverlaySetup.exe` **as Administrator**.
-5. [Bonk monsters!](https://c.tenor.com/60Tr3Zeg6RkAAAAd/fumo-bonk.gif)
-6. [Be sure to leave some feedback here!](https://forms.gle/hrAVWMcYS5HEo1v7A)
+1. [Download the latest version from the *Releases*](https://github.com/DorielRivalet/mhfz-overlay/releases/latest/download/MHFZ_Overlay-win-Setup.exe).
+2. Make sure *Windows* or your antivirus did not delete the file (because it reads the game's memory, *Windows* might detect it as a trojan, so you might have to get it out of quarantine).
+3. Run `MHFZ_OverlaySetup.exe` **as Administrator**.
+4. [Bonk monsters!](https://c.tenor.com/60Tr3Zeg6RkAAAAd/fumo-bonk.gif)
+5. [Be sure to leave some feedback here!](https://forms.gle/hrAVWMcYS5HEo1v7A)
 
 > [!NOTE]<br>
 > It's recommended to start the overlay when you are done loading into Mezeporta.
