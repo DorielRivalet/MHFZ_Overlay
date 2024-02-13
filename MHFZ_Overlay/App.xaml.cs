@@ -30,10 +30,26 @@ public partial class App : Application
     /// <inheritdoc/>
     protected override void OnStartup(StartupEventArgs e)
     {
-        Logger.Info("Starting up App");
+        Logger.Info("Starting up App...");
         this.DispatcherUnhandledException += App_DispatcherUnhandledException;
 
+        var loggingRules = NLog.LogManager.Configuration.LoggingRules;
+        var s = (Settings)App.Current.TryFindResource("Settings");
+        loggingRules[0].SetLoggingLevels(LoggingService.GetLogLevel(s.LogLevel), NLog.LogLevel.Fatal);
+        Logger.Info(CultureInfo.InvariantCulture, "Started WPF application");
+        Logger.Trace(CultureInfo.InvariantCulture, "Call stack: {0}", new StackTrace().ToString());
+        Logger.Debug(CultureInfo.InvariantCulture, "OS: {0}, is64BitOS: {1}, is64BitProcess: {2}, CLR version: {3}", Environment.OSVersion, Environment.Is64BitOperatingSystem, Environment.Is64BitProcess, Environment.Version);
+        SetRenderingMode(s.RenderingMode);
+
         base.OnStartup(e);
+    }
+
+    private static void SetRenderingMode(string renderingMode)
+    {
+        RenderOptions.ProcessRenderMode = renderingMode == "Hardware"
+            ? RenderMode.Default
+            : RenderMode.SoftwareOnly;
+        Logger.Info(CultureInfo.InvariantCulture, $"Rendering mode: {renderingMode}");
     }
 
     private static void App_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e) =>

@@ -108,13 +108,6 @@ MessageBoxImage.Information);
                 typeof(FrameworkElement),
                 new FrameworkPropertyMetadata(XmlLanguage.GetLanguage(CultureInfo.CurrentCulture.Name)));
 
-            var loggingRules = NLog.LogManager.Configuration.LoggingRules;
-            var s = (Settings)App.Current.TryFindResource("Settings");
-            loggingRules[0].SetLoggingLevels(LoggingService.GetLogLevel(s.LogLevel), NLog.LogLevel.Fatal);
-            Logger.Info(CultureInfo.InvariantCulture, "Started WPF application");
-            Logger.Trace(CultureInfo.InvariantCulture, "Call stack: {0}", new StackTrace().ToString());
-            Logger.Debug(CultureInfo.InvariantCulture, "OS: {0}, is64BitOS: {1}, is64BitProcess: {2}, CLR version: {3}", Environment.OSVersion, Environment.Is64BitOperatingSystem, Environment.Is64BitProcess, Environment.Version);
-
             // TODO: test if this doesnt conflict with squirrel update
             CurrentProgramVersion = $"v{GetAssemblyVersion}";
             if (CurrentProgramVersion == "v0.0.0")
@@ -129,12 +122,14 @@ MessageBoxImage.Information);
             }
             // Logging is essential for debugging! Ideally you should write it to a file.
             // Log = new MemoryLogger();
+            var loggerFactory = new NLog.Extensions.Logging.NLogLoggerFactory();
+            var velopackLogger = loggerFactory.CreateLogger("VelopackLogger");
 
             // It's important to Run() the VelopackApp as early as possible in app startup.
             VelopackApp.Build()
                 .WithRestarted((v) => VelopackUpdatedAndRestarted(v))
                 .WithFirstRun((v) => VelopackFirstRun(v))
-                .Run((Microsoft.Extensions.Logging.ILogger?)Logger);
+                .Run(velopackLogger);
 
             // ... other app init code after ...
             RestoreSettings();
@@ -149,16 +144,18 @@ MessageBoxImage.Information);
             //    .Where(x => x.Key == "WpfSampleReleaseDir")
             //    .Single().Value;
 
+            stopwatch.Stop();
+
+            // Get the elapsed time in milliseconds
+            var elapsedTimeMs = stopwatch.Elapsed.TotalMilliseconds;
+            // Print the elapsed time
+            Logger.Debug($"Program initialization Elapsed Time: {elapsedTimeMs} ms");
+
             // We can now launch the WPF application as normal.
             var app = new App();
             app.InitializeComponent();
             app.Run();
-            stopwatch.Stop();
-            // Get the elapsed time in milliseconds
-            var elapsedTimeMs = stopwatch.Elapsed.TotalMilliseconds;
-            // Print the elapsed time
-            Logger.Debug($"App ctor Elapsed Time: {elapsedTimeMs} ms");
-            SetRenderingMode(s.RenderingMode);
+
         }
         catch (Exception ex)
         {
@@ -222,14 +219,6 @@ If after overlay startup your settings did not transfer over, try restarting the
             splashScreen.Close(TimeSpan.FromSeconds(0.1));
             MessageBox.Show("An error has occurred with the update process, see logs.log for more information", Messages.ErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
         }
-    }
-
-    private static void SetRenderingMode(string renderingMode)
-    {
-        RenderOptions.ProcessRenderMode = renderingMode == "Hardware"
-            ? RenderMode.Default
-            : RenderMode.SoftwareOnly;
-        Logger.Info(CultureInfo.InvariantCulture, $"Rendering mode: {renderingMode}");
     }
 
     // https://github.com/Squirrel/Squirrel.Windows/issues/198#issuecomment-299262613
