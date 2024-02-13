@@ -14,7 +14,7 @@ using MHFZ_Overlay.Models.Structures;
 using MHFZ_Overlay.Services;
 using MHFZ_Overlay.Views.Windows;
 using Octokit;
-using Wpf.Ui.Common;
+using Wpf.Ui;
 using Wpf.Ui.Controls;
 
 /// <summary>
