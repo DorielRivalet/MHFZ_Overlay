@@ -32,7 +32,7 @@ using MHFZ_Overlay.Models.Structures;
 using MHFZ_Overlay.Services;
 using MHFZ_Overlay.Views.Windows;
 using SkiaSharp;
-using Wpf.Ui.Common;
+using Wpf.Ui;
 using Wpf.Ui.Controls;
 using MessageBox = System.Windows.MessageBox;
 using LiveChartsCore.SkiaSharpView.VisualElements;

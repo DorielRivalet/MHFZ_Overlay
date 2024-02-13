@@ -11,25 +11,27 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <ApplicationIcon>mhfzoverlayicon256.ico</ApplicationIcon>
     <RunAnalyzersDuringLiveAnalysis>False</RunAnalyzersDuringLiveAnalysis>
-	<EnableWindowsTargeting>true</EnableWindowsTargeting>
+	  <EnableWindowsTargeting>true</EnableWindowsTargeting>
     <!-- Project is not a test project -->
     <SonarQubeTestProject>false</SonarQubeTestProject>
-	<DebugType>pdbonly</DebugType>
-	<AssemblyTitle>MHFZ_Overlay</AssemblyTitle>
-	<AssemblyName>MHFZ_Overlay</AssemblyName>
-	<Title>mhfz-overlay</Title>
-	<Copyright>Doriel Rivalet</Copyright>
-	<Authors>Doriel Rivalet</Authors>
-	<Version>0.35.0</Version>
-	<PackageProjectUrl>https://github.com/DorielRivalet/mhfz-overlay</PackageProjectUrl>
-	<RepositoryUrl>https://github.com/DorielRivalet/mhfz-overlay.git</RepositoryUrl>
-	<RepositoryType>git</RepositoryType>
-	<PackageTags>monster-hunter</PackageTags>
-	<PackageLicenseExpression>MIT</PackageLicenseExpression>
-	<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
-	<PackageIcon>mhfzoverlay128.png</PackageIcon>
-	<Description>A simple, customizable overlay with Discord Rich Presence integration for Monster Hunter Frontier Z on Windows</Description>
-	<EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
+    <DebugType>pdbonly</DebugType>
+    <AssemblyTitle>MHFZ_Overlay</AssemblyTitle>
+    <AssemblyName>MHFZ_Overlay</AssemblyName>
+    <Title>mhfz-overlay</Title>
+    <Product>MHFZ Overlay</Product>
+    <Copyright>Doriel Rivalet</Copyright>
+    <Authors>Doriel Rivalet</Authors>
+    <Version>0.36.1</Version>
+    <PackageProjectUrl>https://github.com/DorielRivalet/mhfz-overlay</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/DorielRivalet/mhfz-overlay.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>monster-hunter</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <PackageIcon>mhfzoverlay128.png</PackageIcon>
+    <Description>A simple, customizable overlay with Discord Rich Presence integration for Monster Hunter Frontier Z on Windows</Description>
+	  <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
+    <StartupObject>MHFZ_Overlay.Program</StartupObject>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -762,6 +764,7 @@
     <None Remove="Assets\Icons\png\sand_clock2.png" />
     <None Remove="Assets\Icons\png\sand_clock2_red.png" />
     <None Remove="Assets\Icons\png\sigils.png" />
+    <None Remove="Assets\Icons\png\skull.png" />
     <None Remove="Assets\Icons\png\sleep.png" />
     <None Remove="Assets\Icons\png\small_bow.png" />
     <None Remove="Assets\Icons\png\small_ds.png" />
@@ -1826,6 +1829,7 @@
     <Resource Include="Assets\Icons\png\sand_clock2.png" />
     <Resource Include="Assets\Icons\png\sand_clock2_red.png" />
     <Resource Include="Assets\Icons\png\sigils.png" />
+    <Resource Include="Assets\Icons\png\skull.png" />
     <Resource Include="Assets\Icons\png\sleep.png" />
     <Resource Include="Assets\Icons\png\small_bow.png" />
     <Resource Include="Assets\Icons\png\small_ds.png" />
@@ -1933,27 +1937,28 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Clowd.Squirrel" Version="2.9.42" />
-    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1" />
-    <PackageReference Include="CompiledBindings.WPF" Version="1.0.16" />
-    <PackageReference Include="CsvHelper" Version="30.0.1" />
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
+    <PackageReference Include="CompiledBindings.WPF" Version="1.0.17.6" />
+    <PackageReference Include="CsvHelper" Version="31.0.0" />
     <PackageReference Include="DiscordRichPresence" Version="1.2.1.24" />
-    <PackageReference Include="DotNetProjects.Extended.Wpf.Toolkit" Version="5.0.103" />
+    <PackageReference Include="DotNetProjects.Extended.Wpf.Toolkit" Version="5.0.113" />
     <PackageReference Include="EZlion" Version="7.0.0-beta" />
     <PackageReference Include="FontAwesome.Sharp" Version="6.3.0" />
     <PackageReference Include="LiveChartsCore.SkiaSharpView.WPF" Version="2.0.0-beta.920" />
-    <PackageReference Include="Memory.dll.x86" Version="1.2.24" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
-    <PackageReference Include="Microsoft.Extensions.DependencyModel" Version="7.0.0" />
-    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.1938.49" />
+    <PackageReference Include="MathNet.Numerics" Version="5.0.0" />
+    <PackageReference Include="Memory.dll.x86" Version="1.2.26" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyModel" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2277.86" />
     <PackageReference Include="MouseKeyHook" Version="5.7.1" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="NLog" Version="5.2.4" />
-    <PackageReference Include="NuGet.CommandLine" Version="6.7.0">
+    <PackageReference Include="NLog" Version="5.2.8" />
+    <PackageReference Include="NLog.Extensions.Logging" Version="5.3.8" />
+    <PackageReference Include="NuGet.CommandLine" Version="6.8.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Octokit" Version="7.1.0" />
+    <PackageReference Include="Octokit" Version="9.1.2" />
     <PackageReference Include="RESTCountries.NET" Version="3.0.1" />
     <PackageReference Include="ShowMeTheXAML.MSBuild" Version="2.0.0" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
@@ -1961,14 +1966,15 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="System.Data.SQLite.Core" Version="1.0.118" />
-    <PackageReference Include="System.Drawing.Common" Version="7.0.0" />
-    <PackageReference Include="VirtualizingWrapPanel" Version="1.5.7" />
-    <PackageReference Include="WPF-UI" Version="3.0.0-preview.5" />
-    <PackageReference Include="WPF-UI.Tray" Version="3.0.0-preview.5" />
+    <PackageReference Include="System.Drawing.Common" Version="8.0.1" />
+    <PackageReference Include="Velopack" Version="0.0.320" />
+    <PackageReference Include="VirtualizingWrapPanel" Version="2.0.5" />
+    <PackageReference Include="WPF-UI" Version="3.0.0" />
+    <PackageReference Include="WPF-UI.Tray" Version="3.0.0-preview.11" />
     <PackageReference Include="WpfAnimatedGif" Version="2.0.2" />
-    <PackageReference Include="XamlAnimatedGif" Version="2.2.0" />
+    <PackageReference Include="XamlAnimatedGif" Version="2.2.1" />
     <PackageReference Include="XInputium" Version="1.2.0" />
-    <PackageReference Include="xunit" Version="2.5.0" />
+    <PackageReference Include="xunit" Version="2.6.6" />
   </ItemGroup>
 
   <ItemGroup>

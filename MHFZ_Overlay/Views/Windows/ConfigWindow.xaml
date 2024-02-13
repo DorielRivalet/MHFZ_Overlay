@@ -1123,7 +1123,7 @@
                         KeyboardNavigation.TabIndex="1"
                         Grid.Column="0"
                         Grid.Row="0"
-                        Margin="2,2,2,0"
+                        Margin="2,2,2,12"
                         IsItemsHost="true"/>
                         </ScrollViewer>
                         <ContentPresenter x:Name="PART_SelectedContentHost"
@@ -2950,7 +2950,7 @@
                           KeyboardNavigation.TabIndex="1"
                           Grid.Column="0"
                           Grid.Row="0"
-                          Margin="2,2,2,0"
+                          Margin="2,2,2,12"
                           IsItemsHost="true"/>
                                                 </ScrollViewer>
                                                 <ContentPresenter x:Name="PART_SelectedContentHost"

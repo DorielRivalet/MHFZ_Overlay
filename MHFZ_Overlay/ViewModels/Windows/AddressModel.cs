@@ -76,7 +76,7 @@ public abstract class AddressModel : INotifyPropertyChanged
         this.M = m;
     }
 
-    public static string FullCurrentProgramVersion => string.Format(CultureInfo.InvariantCulture, "Monster Hunter Frontier Z Overlay {0}", App.CurrentProgramVersion);
+    public static string FullCurrentProgramVersion => string.Format(CultureInfo.InvariantCulture, "Monster Hunter Frontier Z Overlay {0}", Program.CurrentProgramVersion);
 
     public DateTime DateTimeUtcNow { get; set; } = DateTime.UtcNow;
 
@@ -1341,9 +1341,9 @@ public abstract class AddressModel : INotifyPropertyChanged
     /// <returns></returns>
     public abstract int ActiveFeature3();
 
-    public abstract int ServerHeartbeatLandEven();
+    public abstract int ServerHeartbeatLandAlternative ();
 
-    public abstract int ServerHeartbeatLandOdd();
+    public abstract int ServerHeartbeatLandMain();
 
     public abstract int LandSlot();
 
@@ -1395,7 +1395,7 @@ public abstract class AddressModel : INotifyPropertyChanged
     /// Updates every 11 seconds
     /// </summary>
     /// <returns></returns>
-    public int ServerHeartbeat => LandSlot() % 2 == 0 ? ServerHeartbeatLandEven() : ServerHeartbeatLandOdd();
+    public int ServerHeartbeat => ServerHeartbeatLandMain() > ServerHeartbeatLandAlternative() ? ServerHeartbeatLandMain() : ServerHeartbeatLandAlternative();
 
     /// <TODO>
     /// [] Not Done
@@ -1433,7 +1433,7 @@ public abstract class AddressModel : INotifyPropertyChanged
 
     public bool HasMonster4 => this.ShowHPBar(this.LargeMonster4ID(), this.Monster4HPInt());
 
-    public static string SimplifiedCurrentProgramVersion => string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay {0}", App.CurrentProgramVersion);
+    public static string SimplifiedCurrentProgramVersion => string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay {0}", Program.CurrentProgramVersion);
 
     public string HitCount
     {
@@ -1488,7 +1488,7 @@ public abstract class AddressModel : INotifyPropertyChanged
         return s.HitsPerSecondShown;
     }
 
-    public static string GetFullCurrentProgramVersion() => string.Format(CultureInfo.InvariantCulture, "Monster Hunter Frontier Z Overlay {0}", App.CurrentProgramVersion);
+    public static string GetFullCurrentProgramVersion() => string.Format(CultureInfo.InvariantCulture, "Monster Hunter Frontier Z Overlay {0}", Program.CurrentProgramVersion);
 
     public static bool ShowTotalHitsTakenBlockedPerSecond()
     {
@@ -1680,7 +1680,7 @@ TreeScope.Children, condition);
             {
                 if (OverlayModeDictionary.Last().Value == "Speedrun")
                 {
-                    return "Speedrun+" + $" ({GetRunBuffsTag(GetRunBuffs())})";
+                    return "Speedrun+" + $" ({GetRunBuffsTag(GetRunBuffs(), (QuestVariant2)QuestVariant2(), (QuestVariant3)QuestVariant3())})";
                 }
 
                 return OverlayModeDictionary.Last().Value + "+";
@@ -1689,7 +1689,7 @@ TreeScope.Children, condition);
             {
                 if (OverlayModeDictionary.First().Value == "Speedrun")
                 {
-                    return "Speedrun+" + $" ({GetRunBuffsTag(GetRunBuffs())})";
+                    return "Speedrun+" + $" ({GetRunBuffsTag(GetRunBuffs(), (QuestVariant2)QuestVariant2(), (QuestVariant3)QuestVariant3())})";
                 }
 
                 return OverlayModeDictionary.First().Value + "+";
@@ -2767,7 +2767,7 @@ TreeScope.Children, condition);
         return (PouchItem1ID() == 4952 || PouchItem2ID() == 4952 || PouchItem3ID() == 4952 || PouchItem4ID() == 4952 || PouchItem5ID() == 4952 || PouchItem6ID() == 4952 || PouchItem7ID() == 4952 || PouchItem8ID() == 4952 || PouchItem9ID() == 4952 || PouchItem10ID() == 4952 || PouchItem11ID() == 4952 || PouchItem12ID() == 4952 || PouchItem13ID() == 4952 || PouchItem14ID() == 4952 || PouchItem15ID() == 4952 || PouchItem16ID() == 4952 || PouchItem17ID() == 4952 || PouchItem18ID() == 4952 || PouchItem19ID() == 4952 || PouchItem20ID() == 4952 || PartnyaBagItem1ID() == 4952 || PartnyaBagItem2ID() == 4952 || PartnyaBagItem3ID() == 4952 || PartnyaBagItem4ID() == 4952 || PartnyaBagItem5ID() == 4952 || PartnyaBagItem6ID() == 4952 || PartnyaBagItem7ID() == 4952 || PartnyaBagItem8ID() == 4952 || PartnyaBagItem9ID() == 4952 || PartnyaBagItem10ID() == 4952);
     }
 
-    public string GetRunBuffsTag(RunBuff runBuff)
+    public string GetRunBuffsTag(RunBuff runBuff, QuestVariant2 questVariant2, QuestVariant3 questVariant3)
     {
         return runBuff switch
         {
@@ -2777,7 +2777,7 @@ TreeScope.Children, condition);
             RunBuff.LeaderboardFreestyleDivaPrayerGem => "FDP",
             RunBuff.LeaderboardFreestyleSecretTechnique => "FST",
             RunBuff.LeaderboardFreestyleCourseAttackBoost => "FCA",
-            _ => CalculateRunBuffsTag(runBuff),
+            _ => CalculateRunBuffsTag(runBuff, questVariant2, questVariant3),
         };
     }
 
@@ -2786,7 +2786,7 @@ TreeScope.Children, condition);
     /// </summary>
     /// <param name="runBuffs"></param>
     /// <returns></returns>
-    public string CalculateRunBuffsTag(RunBuff runBuffs)
+    public string CalculateRunBuffsTag(RunBuff runBuffs, QuestVariant2 questVariant2, QuestVariant3 questVariant3)
     {
         var value = (uint)runBuffs;
 
@@ -2811,6 +2811,18 @@ TreeScope.Children, condition);
         }
 
         if (!runBuffs.HasFlag(RunBuff.HalkPotEffect) && !runBuffs.HasFlag(RunBuff.ActiveFeature))
+        {
+            return "TA";
+        }
+
+        // elz 3m
+        if (runBuffs.HasFlag(RunBuff.LeaderboardTimeAttack) && runBuffs.HasFlag(RunBuff.ActiveFeature) && (questVariant3.HasFlag(Models.Structures.QuestVariant3.NoGPSkills)))
+        {
+            return "TA";
+        }
+
+        // dures and w/e
+        if (runBuffs.HasFlag(RunBuff.PoogieItem) && runBuffs.HasFlag(RunBuff.DivaSong) && runBuffs.HasFlag(RunBuff.Bento) && runBuffs.HasFlag(RunBuff.GuildPoogie) && runBuffs.HasFlag(RunBuff.ActiveFeature) && runBuffs.HasFlag(RunBuff.GuildFood) && (questVariant2.HasFlag(Models.Structures.QuestVariant2.Road) || questVariant3.HasFlag(Models.Structures.QuestVariant3.NoGPSkills)))
         {
             return "TA";
         }
@@ -2849,7 +2861,7 @@ TreeScope.Children, condition);
         var questVariant2 = (QuestVariant2)QuestVariant2();
         var questVariant3 = (QuestVariant3)QuestVariant3();
 
-        if (HalkOn() && !(questVariant2.HasFlag(Models.Structures.QuestVariant2.DisableHalkPoogieCuff)) || questVariant2.HasFlag(Models.Structures.QuestVariant2.Road))
+        if (HalkOn() && !(questVariant2.HasFlag(Models.Structures.QuestVariant2.DisableHalkPoogieCuff) || questVariant2.HasFlag(Models.Structures.QuestVariant2.Road)))
         {
             runBuffs |= RunBuff.Halk;
         }
@@ -8006,7 +8018,7 @@ TreeScope.Children, condition);
             // fruits and speedrunner items also in bold
             var stats = string.Format(
                 CultureInfo.InvariantCulture,
-                @$"【MHF-Z】Overlay {App.CurrentProgramVersion} {this.GetWeaponClass()}({GetGender()}){GetMetadata}
+                @$"【MHF-Z】Overlay {Program.CurrentProgramVersion} {this.GetWeaponClass()}({GetGender()}){GetMetadata}
 
 Set Name: {GetGearDescription}
 {this.CurrentWeaponName}: {this.GetRealWeaponName}
@@ -8081,7 +8093,7 @@ Overlay Hash: {DatabaseManagerInstance.GetOverlayHash()}
             this.SavedGearStats = stats;
             var formattedStats = string.Format(
                 CultureInfo.InvariantCulture,
-                @$"__【MHF-Z】Overlay {App.CurrentProgramVersion}__ *{this.GetWeaponClass()}({GetGender()})*{GetMetadata}
+                @$"__【MHF-Z】Overlay {Program.CurrentProgramVersion}__ *{this.GetWeaponClass()}({GetGender()})*{GetMetadata}
 
 Set Name: {GetGearDescription}
 **{this.CurrentWeaponName}:** {this.GetRealWeaponName}
@@ -13353,7 +13365,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
 
             if (GetOverlayModeForStorage() == "Speedrun")
             {
-                return $"Speedrun ({GetRunBuffsTag(GetRunBuffs())})";
+                return $"Speedrun ({GetRunBuffsTag(GetRunBuffs(), (QuestVariant2)QuestVariant2(), (QuestVariant3)QuestVariant3())})";
             }
 
             return GetOverlayModeForStorage();

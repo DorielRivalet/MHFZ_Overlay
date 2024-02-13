@@ -43,8 +43,8 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NLog;
 using Octokit;
-using SharpCompress.Common;
-using Wpf.Ui.Common;
+
+using Wpf.Ui;
 using Wpf.Ui.Controls;
 using Formatting = Newtonsoft.Json.Formatting;
 using MessageBox = System.Windows.MessageBox;
@@ -101,6 +101,7 @@ public sealed class DatabaseService
 
     public HashSet<QuestsGuildPoogie> AllQuestsGuildPoogie { get; set; }
 
+    public long TotalOverlaySessions { get; set; }
 
     public TimeSpan SnackbarTimeOut { get; set; } = TimeSpan.FromSeconds(5);
 
@@ -2053,7 +2054,7 @@ public sealed class DatabaseService
                     {
                         // TODO test
                         cmd.Parameters.AddWithValue("@RunBuffs", runBuffs);
-                        cmd.Parameters.AddWithValue("@RunBuffsTag", dataLoader.Model.GetRunBuffsTag((RunBuff)runBuffs));
+                        cmd.Parameters.AddWithValue("@RunBuffsTag", dataLoader.Model.GetRunBuffsTag((RunBuff)runBuffs, (QuestVariant2)dataLoader.Model.QuestVariant2(), (QuestVariant3)dataLoader.Model.QuestVariant3()));
                         cmd.Parameters.AddWithValue("@RunID", runID);
                         cmd.ExecuteNonQuery();
                     }
@@ -3476,7 +3477,7 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
                             {
                                 cmd2.CommandText = "INSERT INTO QuestsRunBuffs(RunBuffs, RunBuffsTag, RunID) VALUES (@RunBuffs, @RunBuffsTag, @RunID)";
                                 cmd2.Parameters.AddWithValue("@RunBuffs", dataLoader.Model.GetRunBuffs(actualOverlayMode));
-                                cmd2.Parameters.AddWithValue("@RunBuffsTag", dataLoader.Model.GetRunBuffsTag(dataLoader.Model.GetRunBuffs(actualOverlayMode)));
+                                cmd2.Parameters.AddWithValue("@RunBuffsTag", dataLoader.Model.GetRunBuffsTag(dataLoader.Model.GetRunBuffs(actualOverlayMode), (QuestVariant2)dataLoader.Model.QuestVariant2(), (QuestVariant3)dataLoader.Model.QuestVariant3()));
                                 cmd2.Parameters.AddWithValue("@RunID", runID);
 
                                 cmd2.ExecuteNonQuery();
@@ -8941,6 +8942,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                 this.AllQuestsGuildPoogie = this.GetAllQuestsGuildPoogie(conn);
                 this.AllQuestsDiva = this.GetAllQuestsDiva(conn);
                 this.AllQuestsHalk = this.GetAllQuestsHalk(conn);
+                TotalOverlaySessions = GetTableRowCount("SessionID", "Session", conn);
 
             }
         }
@@ -16094,7 +16096,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 @"No new schema updates found! Schema version: {0}", fromVersion),
                             string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} to {1})",
                             previousVersion,
-                            App.CurrentProgramVersion),
+                            Program.CurrentProgramVersion),
                             MessageBoxButton.OK,
                             MessageBoxImage.Information);
                         break;
@@ -16201,9 +16203,9 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                 var currentUserVersion = this.GetUserVersion(connection);
 
                 // this will always run the next time the user runs the program after a fresh install. So it always runs at least once.
-                if (App.IsClowdSquirrelUpdating == false && ((App.CurrentProgramVersion != null && App.CurrentProgramVersion.Trim() != previousVersion.Trim()) || currentUserVersion == 0))
+                if (Program.IsVelopackUpdating == false && ((Program.CurrentProgramVersion != null && Program.CurrentProgramVersion.Trim() != previousVersion.Trim()) || currentUserVersion == 0))
                 {
-                    Logger.Info(CultureInfo.InvariantCulture, "Found different program version or userVersion 0. Current: {0}, Previous: {1}, userVersion: {2}", App.CurrentProgramVersion, previousVersion, currentUserVersion);
+                    Logger.Info(CultureInfo.InvariantCulture, "Found different program version or userVersion 0. Current: {0}, Previous: {1}, userVersion: {2}", Program.CurrentProgramVersion, previousVersion, currentUserVersion);
 
                     var result = MessageBox.Show(
 @"A new version of the program has been installed.
@@ -16211,7 +16213,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 Do you want to perform the necessary database updates? A backup of your current MHFZ_Overlay.sqlite file will be done if you accept.
 
 Updating the database structure may take some time, it will transport all of your current data straight to the latest database structure, regardless of the previous database version.",
-string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} to {1})", previousVersion, App.CurrentProgramVersion), MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
+string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} to {1})", previousVersion, Program.CurrentProgramVersion), MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
                     if (result == MessageBoxResult.Yes)
                     {
                         this.UpdateDatabaseSchema(connection, dataLoader, currentUserVersion);
@@ -17765,7 +17767,7 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
                 if (string.IsNullOrEmpty(previousVersion))
                 {
                     Logger.Info(CultureInfo.InvariantCulture, "previousVersionFilePath contents are empty, writing to file");
-                    if (App.CurrentProgramVersion == null)
+                    if (Program.CurrentProgramVersion == null)
                     {
                         Logger.Fatal(CultureInfo.InvariantCulture, "CurrentProgramVersion does not exist");
                         MessageBox.Show("Current Program Version not found.");
@@ -17773,7 +17775,7 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
                         return;
                     }
 
-                    previousVersion = App.CurrentProgramVersion.Trim();
+                    previousVersion = Program.CurrentProgramVersion.Trim();
                     File.WriteAllText(previousVersionFilePath, previousVersion);
                     Logger.Info(CultureInfo.InvariantCulture, "Writing previous version {0} to file {1}", previousVersion, previousVersionFilePath);
                 }
@@ -17785,7 +17787,7 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
             else
             {
                 Logger.Info(CultureInfo.InvariantCulture, "previousVersionFilePath does not exist, creating file");
-                if (App.CurrentProgramVersion == null)
+                if (Program.CurrentProgramVersion == null)
                 {
                     Logger.Fatal(CultureInfo.InvariantCulture, "CurrentProgramVersion does not exist");
                     MessageBox.Show("Current Program Version not found.");
@@ -17793,7 +17795,7 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
                     return;
                 }
 
-                previousVersion = App.CurrentProgramVersion.Trim();
+                previousVersion = Program.CurrentProgramVersion.Trim();
                 File.WriteAllText(previousVersionFilePath, previousVersion);
                 Logger.Info(CultureInfo.InvariantCulture, "Writing previous version {0} to file {1}", previousVersion, previousVersionFilePath);
             }
@@ -17821,7 +17823,7 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
                     versionInFile = "Fresh Install";
                 }
 
-                if (App.CurrentProgramVersion == null)
+                if (Program.CurrentProgramVersion == null)
                 {
                     Logger.Fatal(CultureInfo.InvariantCulture, "CurrentProgramVersion does not exist");
                     MessageBox.Show("Current Program Version not found.");
@@ -17829,7 +17831,7 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
                     return;
                 }
 
-                previousVersion = App.CurrentProgramVersion.Trim();
+                previousVersion = Program.CurrentProgramVersion.Trim();
                 File.WriteAllText(previousVersionFilePath, previousVersion);
                 Logger.Info(CultureInfo.InvariantCulture, "previousVersionFilePath found, writing new version number from {0} to {1}", versionInFile, previousVersion);
             }

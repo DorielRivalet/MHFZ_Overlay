@@ -252,6 +252,148 @@ public sealed class BingoService
         return (int)Math.Ceiling(finalScore);
     }
 
+    /// <summary>
+    /// Returns final score + qubit beacon score.
+    /// </summary>
+    /// <param name="finalScore"></param>
+    /// <returns></returns>
+    public int CalculateQubitDivaPrayerGemScore(int score, int gemLv)
+    {
+        // Convert the finalScore to binary and count the digits.
+        string binaryFinalScore = Convert.ToString(score, 2);
+        int numDigits = binaryFinalScore.Length;
+
+        // Initialize the extraScore with the value of finalScore.
+        int updatedScore = score;
+
+        // Use a Random object for generating probabilities.
+        Random random = new Random();
+
+        // Iterate over each digit in the binary representation.
+        for (int i = 0; i < numDigits; i++)
+        {
+            // Calculate the probability of flipping the current digit.
+            // The probability decreases by half for each subsequent digit.
+            double probability = Math.Pow(0.5, i);
+
+            // Generate a random number and check if it is less than the probability.
+            if (random.NextDouble() < probability)
+            {
+                // If the condition is met, flip the corresponding bit in the extraScore.
+                updatedScore ^= (1 << (numDigits - i - 1));
+            }
+        }
+
+        // Return the updated extraScore.
+        return updatedScore * (1 + gemLv/100);
+    }
+
+    public int CalculateOddDivaPrayerGemScore(int score, int gemLv)
+    {
+        int updatedScore = score;
+        if (updatedScore % 2 == 0)
+        {
+            updatedScore = (int)Math.Truncate(updatedScore * (1 + gemLv/100) * 1.25);
+        }
+        else
+        {
+            updatedScore = (int)Math.Truncate(updatedScore * (1 + gemLv / 100) * 0.95);
+        }
+        return updatedScore;
+    }
+
+    public int CalculateVoidDivaPrayerGemScore(int score, int gemLv)
+    {
+        int updatedScore = score;
+        int voidScore = 1;
+        char[] chars = score.ToString().ToArray();
+        var charsString = string.Empty;
+        for (int i = 0; i < chars.Length; i++)
+        {
+            switch (chars[i])
+            {
+                case '0':
+                    voidScore += (int)Math.Truncate(updatedScore * 1.05);
+                    break;
+                case '1':
+                case '2':
+                case '3':
+                case '4':
+                    chars[i] = '0';
+                    break;
+                default:
+                    chars[i] = '9';
+                    break;
+            }
+            charsString.Append(chars[i]);
+        }
+
+        updatedScore = int.Parse(charsString) + voidScore;
+
+        return updatedScore;
+    }
+
+    public int CalculateCakeDivaPrayerGemScore(int score, int gemLv)
+    {
+        int updatedScore = score;
+        return updatedScore;
+    }
+
+    public int CalculateSnakeDivaPrayerGemScore(int score, int gemLv)
+    {
+        int updatedScore = score;
+        return updatedScore;
+    }
+
+    public int CalculateFestiveDivaPrayerGemScore(int score, int gemLv)
+    {
+        int updatedScore = score;
+        return updatedScore;
+    }
+
+    public int CalculateRepeaterDivaPrayerGemScore(int score, int gemLv)
+    {
+        int updatedScore = score;
+        return updatedScore;
+    }
+
+    public int CalculateRubyDivaPrayerGemScore(int score, int gemLv)
+    {
+        int updatedScore = score;
+        return updatedScore;
+    }
+    public int CalculateSapphireDivaPrayerGemScore(int score, int gemLv)
+    {
+        int updatedScore = score;
+        return updatedScore;
+    }
+    public int CalculateQuartzDivaPrayerGemScore(int score, int gemLv)
+    {
+        int updatedScore = score;
+        return updatedScore;
+    }
+    public int CalculateEmeraldDivaPrayerGemScore(int score, int gemLv)
+    {
+        int updatedScore = score;
+        return updatedScore;
+    }
+    public int CalculateRainbowDivaPrayerGemScore(int score, int gemLv)
+    {
+        int updatedScore = score;
+        return updatedScore;
+    }
+    public int CalculateNumberXDivaPrayerGemScore(int score, int gemLv)
+    {
+        int updatedScore = score;
+        return updatedScore;
+    }
+
+    public int CalculateNeighborDivaPrayerGemScore(int score, int gemLv)
+    {
+        int updatedScore = score;
+        return updatedScore;
+    }
+
     public decimal CalculateRealTimeScore(int elapsedRealTimeInSeconds, decimal realTimeScoreMultiplier, int maxRealTimeScore, int extremeDifficultyMultiplier)
     {
         var maxRealTimeScoreMinuteLimit = 10 * extremeDifficultyMultiplier;

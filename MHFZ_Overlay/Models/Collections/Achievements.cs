@@ -5922,6 +5922,32 @@ During the travel to your destination, the top of the Great Forest, you notice t
             IsSecret = false,
             Hint = string.Empty,
             }
+        },
+        {
+            450, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Skill Issue 💀",
+            Description = string.Empty,
+            Rank = AchievementRank.Bronze,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/skull.png",
+            Objective = "Cart a total of 100 times.",
+            IsSecret = false,
+            Hint = string.Empty,
+            }
+        },
+        {
+            451, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Start Me Up",
+            Description = string.Empty,
+            Rank = AchievementRank.Bronze,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/gamepad_start.png",
+            Objective = "Start the overlay 1,000 times.",
+            IsSecret = false,
+            Hint = string.Empty,
+            }
         }
     });
 }

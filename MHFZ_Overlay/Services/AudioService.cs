@@ -9,7 +9,7 @@ using System.Diagnostics;
 using System.Windows.Media;
 using MHFZ_Overlay.Services.Contracts;
 using NLog;
-using SharpCompress.Common;
+
 
 public sealed class AudioService : IAudio
 {
