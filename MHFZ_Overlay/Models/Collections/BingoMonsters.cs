@@ -846,7 +846,7 @@ public static class BingoMonsters
                 new BingoMonster {
                     Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/shifting_mi_ru.png",
                     Name = "Shifting Mi Ru",
-                    QuestIDs = new List<int> {  Numbers.QuestIDShiftingMiRu,  },
+                    QuestIDs = new List<int> {  Numbers.QuestIDShiftingMiRu, Numbers.QuestIDShiftingMiRuHistoric, },
                     BaseScore = 30,
                     Type = FrontierMonsterType.Other,
                     },
