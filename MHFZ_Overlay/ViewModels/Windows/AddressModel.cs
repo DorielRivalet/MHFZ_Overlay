@@ -1341,9 +1341,9 @@ public abstract class AddressModel : INotifyPropertyChanged
     /// <returns></returns>
     public abstract int ActiveFeature3();
 
-    public abstract int ServerHeartbeatLandEven();
+    public abstract int ServerHeartbeatLandAlternative ();
 
-    public abstract int ServerHeartbeatLandOdd();
+    public abstract int ServerHeartbeatLandMain();
 
     public abstract int LandSlot();
 
@@ -1395,7 +1395,7 @@ public abstract class AddressModel : INotifyPropertyChanged
     /// Updates every 11 seconds
     /// </summary>
     /// <returns></returns>
-    public int ServerHeartbeat => LandSlot() % 2 == 0 ? ServerHeartbeatLandEven() : ServerHeartbeatLandOdd();
+    public int ServerHeartbeat => ServerHeartbeatLandMain() > ServerHeartbeatLandAlternative() ? ServerHeartbeatLandMain() : ServerHeartbeatLandAlternative();
 
     /// <TODO>
     /// [] Not Done
@@ -2815,8 +2815,14 @@ TreeScope.Children, condition);
             return "TA";
         }
 
+        // elz 3m
+        if (runBuffs.HasFlag(RunBuff.LeaderboardTimeAttack) && runBuffs.HasFlag(RunBuff.ActiveFeature) && (questVariant3.HasFlag(Models.Structures.QuestVariant3.NoGPSkills)))
+        {
+            return "TA";
+        }
+
         // dures and w/e
-        if (runBuffs.HasFlag(RunBuff.LeaderboardTimeAttack) && runBuffs.HasFlag(RunBuff.ActiveFeature) && (questVariant2.HasFlag(Models.Structures.QuestVariant2.Road) || questVariant2.HasFlag(Models.Structures.QuestVariant3.NoGPSkills)))
+        if (runBuffs.HasFlag(RunBuff.PoogieItem) && runBuffs.HasFlag(RunBuff.DivaSong) && runBuffs.HasFlag(RunBuff.Bento) && runBuffs.HasFlag(RunBuff.GuildPoogie) && runBuffs.HasFlag(RunBuff.ActiveFeature) && runBuffs.HasFlag(RunBuff.GuildFood) && (questVariant2.HasFlag(Models.Structures.QuestVariant2.Road) || questVariant3.HasFlag(Models.Structures.QuestVariant3.NoGPSkills)))
         {
             return "TA";
         }
@@ -2855,7 +2861,7 @@ TreeScope.Children, condition);
         var questVariant2 = (QuestVariant2)QuestVariant2();
         var questVariant3 = (QuestVariant3)QuestVariant3();
 
-        if (HalkOn() && !(questVariant2.HasFlag(Models.Structures.QuestVariant2.DisableHalkPoogieCuff)) || questVariant2.HasFlag(Models.Structures.QuestVariant2.Road))
+        if (HalkOn() && !(questVariant2.HasFlag(Models.Structures.QuestVariant2.DisableHalkPoogieCuff) || questVariant2.HasFlag(Models.Structures.QuestVariant2.Road)))
         {
             runBuffs |= RunBuff.Halk;
         }
