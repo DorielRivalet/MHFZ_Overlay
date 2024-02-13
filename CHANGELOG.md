@@ -1,5 +1,44 @@
 
 
+## [0.36.1](https://github.com/DorielRivalet/MHFZ_Overlay/compare/v0.35.0...v0.36.1) (2024-02-13)
+
+
+### Features
+
+* add more achievements ([857ef2c](https://github.com/DorielRivalet/MHFZ_Overlay/commit/857ef2c05a2974e0bebf40a6710ff1d1731ac7db))
+* **bingo:** update values ([45471d9](https://github.com/DorielRivalet/MHFZ_Overlay/commit/45471d969fd09986944a9e017fdc220650c5890f))
+* migrate to velopack ([43015e5](https://github.com/DorielRivalet/MHFZ_Overlay/commit/43015e5a43c99d2d17de19da4806b15cdf96931b))
+* update wpfui ([cebdc79](https://github.com/DorielRivalet/MHFZ_Overlay/commit/cebdc79f275d7d711e70c9b57a77221107a1d1e2))
+
+
+### Bug Fixes
+
+* detect TA in Duremudira quests ([0f56065](https://github.com/DorielRivalet/MHFZ_Overlay/commit/0f56065ae8caf637f8267290baecbfd34a47b55f))
+* horizontal scrollbars ([989532b](https://github.com/DorielRivalet/MHFZ_Overlay/commit/989532b133b250df4454dd316805d4b636c5d36a))
+* initialization ([d36eb2f](https://github.com/DorielRivalet/MHFZ_Overlay/commit/d36eb2f2870d712892792c242bf5e8b9231c84f0))
+* run buffs ([056730c](https://github.com/DorielRivalet/MHFZ_Overlay/commit/056730c59ad2f88dcb112f911eda2f6184dbb67a))
+
+
+### For Developers
+
+* add run buffs requirements ([18537db](https://github.com/DorielRivalet/MHFZ_Overlay/commit/18537dbc8b14d5150259e368eaf938b944ef840e))
+* bump version ([e53dc3d](https://github.com/DorielRivalet/MHFZ_Overlay/commit/e53dc3db2718335d28dc806bc6d5439a865c5860))
+* **deps-dev:** bump @commitlint/cli from 17.7.1 to 18.6.0 ([9c84ba9](https://github.com/DorielRivalet/MHFZ_Overlay/commit/9c84ba96e5e1e32310997b9e4ec3a90a344b2481))
+* **deps-dev:** bump @commitlint/cli from 18.6.0 to 18.6.1 ([5cc68d9](https://github.com/DorielRivalet/MHFZ_Overlay/commit/5cc68d92125749ae94b93626384b1c93095a6547))
+* **deps-dev:** bump @commitlint/config-conventional ([5e7bfcf](https://github.com/DorielRivalet/MHFZ_Overlay/commit/5e7bfcfec0f0b118eb6dcf2b0ee3b86933abf04b))
+* **deps-dev:** bump husky from 8.0.3 to 9.0.10 ([7645675](https://github.com/DorielRivalet/MHFZ_Overlay/commit/7645675f041234dffee32b670fb517c5f65deeb5))
+* **deps:** bump @release-it/conventional-changelog from 7.0.1 to 7.0.2 ([896f8ca](https://github.com/DorielRivalet/MHFZ_Overlay/commit/896f8ca3659a5b850c9ffc290b71f81ca1ea546c))
+* **deps:** bump actions/cache from 3 to 4 ([9f4259a](https://github.com/DorielRivalet/MHFZ_Overlay/commit/9f4259a1c6608c435844e8d89e557628bae6ba25))
+* **deps:** bump actions/setup-dotnet from 3 to 4 ([1f9a673](https://github.com/DorielRivalet/MHFZ_Overlay/commit/1f9a67346b33c60ad8308377a55d9d0e8cd0a493))
+* **deps:** bump actions/setup-java from 3 to 4 ([c053ed3](https://github.com/DorielRivalet/MHFZ_Overlay/commit/c053ed3345f9a2ae9f42d55b875094a87d95c0ad))
+* **deps:** bump actions/stale from 8 to 9 ([5986bef](https://github.com/DorielRivalet/MHFZ_Overlay/commit/5986bef8053bbae73f4f4451075e00bcc483fad8))
+* **deps:** bump actions/upload-artifact from 3 to 4 ([4b5ae72](https://github.com/DorielRivalet/MHFZ_Overlay/commit/4b5ae72318942f4a49c843070ac9bcf6c18ea43d))
+* **deps:** bump dessant/lock-threads from 4 to 5 ([ff1288a](https://github.com/DorielRivalet/MHFZ_Overlay/commit/ff1288a5f3c8faf9361c1a42b827afde9c3cd266))
+* **deps:** bump github/codeql-action from 2 to 3 ([085b2c2](https://github.com/DorielRivalet/MHFZ_Overlay/commit/085b2c24d1b89cb6131a17695eae8082f12495ae))
+* **deps:** bump peter-evans/create-pull-request from 5 to 6 ([ea33b65](https://github.com/DorielRivalet/MHFZ_Overlay/commit/ea33b652324b105ce70731c01af69e8c98048533))
+* **deps:** bump release-it and @release-it/conventional-changelog ([9b409f2](https://github.com/DorielRivalet/MHFZ_Overlay/commit/9b409f2f20ae6d966c790c6d45d8533c1d1cee3c))
+* **deps:** bump release-it from 16.1.5 to 16.3.0 ([d3d81cc](https://github.com/DorielRivalet/MHFZ_Overlay/commit/d3d81ccb2a856314f2466164ed13dc6ce8e6ae24))
+
 ## [0.35.0](https://github.com/DorielRivalet/MHFZ_Overlay/compare/v0.34.0...v0.35.0) (2024-02-09)
 
 
