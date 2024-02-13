@@ -287,7 +287,7 @@ public enum QuestVariant2 : uint
     DisableActiveFeature = 16,
     FixedDifficulty = 32,
     /// <summary>
-    /// no secret tech, transcend, halk pot, course atk, prayer gem
+    /// no secret tech, transcend, halk pot, course atk, prayer gem, twin hiden
     /// </summary>
     Level9999 = 64,
     /// <summary>

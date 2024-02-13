@@ -2054,7 +2054,7 @@ public sealed class DatabaseService
                     {
                         // TODO test
                         cmd.Parameters.AddWithValue("@RunBuffs", runBuffs);
-                        cmd.Parameters.AddWithValue("@RunBuffsTag", dataLoader.Model.GetRunBuffsTag((RunBuff)runBuffs));
+                        cmd.Parameters.AddWithValue("@RunBuffsTag", dataLoader.Model.GetRunBuffsTag((RunBuff)runBuffs, (QuestVariant2)dataLoader.Model.QuestVariant2(), (QuestVariant3)dataLoader.Model.QuestVariant3()));
                         cmd.Parameters.AddWithValue("@RunID", runID);
                         cmd.ExecuteNonQuery();
                     }
@@ -3477,7 +3477,7 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
                             {
                                 cmd2.CommandText = "INSERT INTO QuestsRunBuffs(RunBuffs, RunBuffsTag, RunID) VALUES (@RunBuffs, @RunBuffsTag, @RunID)";
                                 cmd2.Parameters.AddWithValue("@RunBuffs", dataLoader.Model.GetRunBuffs(actualOverlayMode));
-                                cmd2.Parameters.AddWithValue("@RunBuffsTag", dataLoader.Model.GetRunBuffsTag(dataLoader.Model.GetRunBuffs(actualOverlayMode)));
+                                cmd2.Parameters.AddWithValue("@RunBuffsTag", dataLoader.Model.GetRunBuffsTag(dataLoader.Model.GetRunBuffs(actualOverlayMode), (QuestVariant2)dataLoader.Model.QuestVariant2(), (QuestVariant3)dataLoader.Model.QuestVariant3()));
                                 cmd2.Parameters.AddWithValue("@RunID", runID);
 
                                 cmd2.ExecuteNonQuery();

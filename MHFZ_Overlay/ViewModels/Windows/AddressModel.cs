@@ -1680,7 +1680,7 @@ TreeScope.Children, condition);
             {
                 if (OverlayModeDictionary.Last().Value == "Speedrun")
                 {
-                    return "Speedrun+" + $" ({GetRunBuffsTag(GetRunBuffs())})";
+                    return "Speedrun+" + $" ({GetRunBuffsTag(GetRunBuffs(), (QuestVariant2)QuestVariant2(), (QuestVariant3)QuestVariant3())})";
                 }
 
                 return OverlayModeDictionary.Last().Value + "+";
@@ -1689,7 +1689,7 @@ TreeScope.Children, condition);
             {
                 if (OverlayModeDictionary.First().Value == "Speedrun")
                 {
-                    return "Speedrun+" + $" ({GetRunBuffsTag(GetRunBuffs())})";
+                    return "Speedrun+" + $" ({GetRunBuffsTag(GetRunBuffs(), (QuestVariant2)QuestVariant2(), (QuestVariant3)QuestVariant3())})";
                 }
 
                 return OverlayModeDictionary.First().Value + "+";
@@ -2767,7 +2767,7 @@ TreeScope.Children, condition);
         return (PouchItem1ID() == 4952 || PouchItem2ID() == 4952 || PouchItem3ID() == 4952 || PouchItem4ID() == 4952 || PouchItem5ID() == 4952 || PouchItem6ID() == 4952 || PouchItem7ID() == 4952 || PouchItem8ID() == 4952 || PouchItem9ID() == 4952 || PouchItem10ID() == 4952 || PouchItem11ID() == 4952 || PouchItem12ID() == 4952 || PouchItem13ID() == 4952 || PouchItem14ID() == 4952 || PouchItem15ID() == 4952 || PouchItem16ID() == 4952 || PouchItem17ID() == 4952 || PouchItem18ID() == 4952 || PouchItem19ID() == 4952 || PouchItem20ID() == 4952 || PartnyaBagItem1ID() == 4952 || PartnyaBagItem2ID() == 4952 || PartnyaBagItem3ID() == 4952 || PartnyaBagItem4ID() == 4952 || PartnyaBagItem5ID() == 4952 || PartnyaBagItem6ID() == 4952 || PartnyaBagItem7ID() == 4952 || PartnyaBagItem8ID() == 4952 || PartnyaBagItem9ID() == 4952 || PartnyaBagItem10ID() == 4952);
     }
 
-    public string GetRunBuffsTag(RunBuff runBuff)
+    public string GetRunBuffsTag(RunBuff runBuff, QuestVariant2 questVariant2, QuestVariant3 questVariant3)
     {
         return runBuff switch
         {
@@ -2777,7 +2777,7 @@ TreeScope.Children, condition);
             RunBuff.LeaderboardFreestyleDivaPrayerGem => "FDP",
             RunBuff.LeaderboardFreestyleSecretTechnique => "FST",
             RunBuff.LeaderboardFreestyleCourseAttackBoost => "FCA",
-            _ => CalculateRunBuffsTag(runBuff),
+            _ => CalculateRunBuffsTag(runBuff, questVariant2, questVariant3),
         };
     }
 
@@ -2786,7 +2786,7 @@ TreeScope.Children, condition);
     /// </summary>
     /// <param name="runBuffs"></param>
     /// <returns></returns>
-    public string CalculateRunBuffsTag(RunBuff runBuffs)
+    public string CalculateRunBuffsTag(RunBuff runBuffs, QuestVariant2 questVariant2, QuestVariant3 questVariant3)
     {
         var value = (uint)runBuffs;
 
@@ -2811,6 +2811,12 @@ TreeScope.Children, condition);
         }
 
         if (!runBuffs.HasFlag(RunBuff.HalkPotEffect) && !runBuffs.HasFlag(RunBuff.ActiveFeature))
+        {
+            return "TA";
+        }
+
+        // dures and w/e
+        if (runBuffs.HasFlag(RunBuff.LeaderboardTimeAttack) && runBuffs.HasFlag(RunBuff.ActiveFeature) && (questVariant2.HasFlag(Models.Structures.QuestVariant2.Road) || questVariant2.HasFlag(Models.Structures.QuestVariant3.NoGPSkills)))
         {
             return "TA";
         }
@@ -13353,7 +13359,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
 
             if (GetOverlayModeForStorage() == "Speedrun")
             {
-                return $"Speedrun ({GetRunBuffsTag(GetRunBuffs())})";
+                return $"Speedrun ({GetRunBuffsTag(GetRunBuffs(), (QuestVariant2)QuestVariant2(), (QuestVariant3)QuestVariant3())})";
             }
 
             return GetOverlayModeForStorage();
