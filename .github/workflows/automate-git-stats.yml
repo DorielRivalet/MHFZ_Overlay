@@ -82,7 +82,7 @@ jobs:
         working-directory: ./scripts
 
       - name: Create git_anonymized.txt artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: git-text-file-anonymized
           path: ./scripts/input/git_anonymized.txt
@@ -126,7 +126,7 @@ jobs:
         run: rm ./scripts/input/git_anonymized.txt
 
       - name: Generate image artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: generated-git-stats-images
           path: ./scripts/output
