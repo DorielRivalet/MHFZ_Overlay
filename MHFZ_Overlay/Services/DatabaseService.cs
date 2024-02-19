@@ -3441,12 +3441,14 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
         LoggingService.WriteCrashLog(ex, $"SQLite error (version: {serverVersion})");
     }
 
-    public void FillRunBuffs(SQLiteConnection conn, DataLoader dataLoader)
+    public int UpsertRunBuffs(SQLiteConnection conn, DataLoader dataLoader)
     {
+        var updatedRows = 0;
+
         if (string.IsNullOrEmpty(this.dataSource))
         {
-            Logger.Warn(CultureInfo.InvariantCulture, "Cannot update run buffs. dataSource: {0}", this.dataSource);
-            return;
+            Logger.Warn(CultureInfo.InvariantCulture, "Cannot upsert run buffs. dataSource: {0}", this.dataSource);
+            return updatedRows;
         }
 
         // Start a transaction
@@ -3454,9 +3456,19 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
         {
             try
             {
+
+                using (var cmd0 = new SQLiteCommand(conn))
+                {
+                    cmd0.CommandText = @"DROP TRIGGER IF EXISTS prevent_quests_run_buffs_updates";
+                    cmd0.ExecuteNonQuery();
+                }
+
                 using (var cmd = new SQLiteCommand(conn))
                 {
-                    cmd.CommandText = "SELECT * FROM Quests";
+                    cmd.CommandText = @"SELECT
+                                            q.*, qrb.RunBuffs
+                                    FROM Quests q
+                                    LEFT JOIN QuestsRunBuffs qrb ON q.RunID = qrb.RunID";
 
                     using (var reader = cmd.ExecuteReader())
                     {
@@ -3464,18 +3476,35 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
                         {
                             var actualOverlayMode = reader["ActualOverlayMode"].ToString();
                             var runID = long.Parse(reader["RunID"]?.ToString() ?? "0", CultureInfo.InvariantCulture);
+                            var questID = long.Parse(reader["QuestID"]?.ToString() ?? "0", CultureInfo.InvariantCulture);
 
                             if (actualOverlayMode == null || runID == 0)
                             {
                                 continue;
                             }
 
-                            // Separate command for the insert operation
+                            string? runBuffsString = reader["RunBuffs"].ToString();
+                            RunBuff runBuffs = RunBuff.None;
+
                             using (var cmd2 = new SQLiteCommand(conn))
                             {
-                                cmd2.CommandText = "INSERT INTO QuestsRunBuffs(RunBuffs, RunBuffsTag, RunID) VALUES (@RunBuffs, @RunBuffsTag, @RunID)";
-                                cmd2.Parameters.AddWithValue("@RunBuffs", dataLoader.Model.GetRunBuffs(actualOverlayMode));
-                                cmd2.Parameters.AddWithValue("@RunBuffsTag", dataLoader.Model.GetRunBuffsTag(dataLoader.Model.GetRunBuffs(actualOverlayMode), (QuestVariant2)dataLoader.Model.QuestVariant2(), (QuestVariant3)dataLoader.Model.QuestVariant3()));
+                                // Check if the row exists
+                                if (runBuffsString != null && runBuffsString != string.Empty) // >=v0.35
+                                {
+                                    // Row exists, so update it
+                                    cmd2.CommandText = @"UPDATE QuestsRunBuffs SET RunBuffs = @RunBuffs, RunBuffsTag = @RunBuffsTag WHERE RunID = @RunID";
+                                    updatedRows++;
+
+                                    runBuffs = (RunBuff)long.Parse(reader["RunBuffs"]?.ToString() ?? "0", CultureInfo.InvariantCulture);
+                                }
+                                else // <v0.35
+                                {
+                                    // Row doesn't exist, so insert it
+                                    cmd2.CommandText = @"INSERT INTO QuestsRunBuffs(RunBuffs, RunBuffsTag, RunID) VALUES (@RunBuffs, @RunBuffsTag, @RunID)";
+                                }
+
+                                cmd2.Parameters.AddWithValue("@RunBuffs", dataLoader.Model.GetRunBuffs(questID, actualOverlayMode, GetBaseRunBuffs(actualOverlayMode, (long)runBuffs)));
+                                cmd2.Parameters.AddWithValue("@RunBuffsTag", dataLoader.Model.GetRunBuffsTag(dataLoader.Model.GetRunBuffs(questID, actualOverlayMode, GetBaseRunBuffs(actualOverlayMode, (long)runBuffs)), (QuestVariant2)dataLoader.Model.QuestVariant2(), (QuestVariant3)dataLoader.Model.QuestVariant3()));
                                 cmd2.Parameters.AddWithValue("@RunID", runID);
 
                                 cmd2.ExecuteNonQuery();
@@ -3484,16 +3513,28 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
                     }
                 }
 
+                using (var cmd = new SQLiteCommand(conn))
+                {
+                    cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_quests_run_buffs_updates
+                        AFTER UPDATE ON QuestsRunBuffs
+                        BEGIN
+                          SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
+                        END;";
+                    cmd.ExecuteNonQuery();
+                }
+
                 // Commit the transaction
                 transaction.Commit();
             }
             catch (Exception ex)
             {
+                transaction.Rollback();
                 HandleError(transaction, ex);
             }
         }
 
         Logger.Debug("Updated run buffs table");
+        return updatedRows;
     }
 
     /// <summary>
@@ -3515,7 +3556,7 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
             try
             {
                 string sql = @"
-                SELECT pb.*, q.ActualOverlayMode
+                SELECT pb.*, q.ActualOverlayMode, q.QuestID
                 FROM PersonalBests pb
                 LEFT JOIN Quests q ON pb.RunID = q.RunID";
 
@@ -3526,7 +3567,9 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
                         while (reader.Read())
                         {
                             var runID = long.Parse(reader["RunID"]?.ToString() ?? "0", CultureInfo.InvariantCulture);
+                            var questID = long.Parse(reader["QuestID"]?.ToString() ?? "0", CultureInfo.InvariantCulture);
                             var actualOverlayMode = reader["ActualOverlayMode"].ToString();
+                            var runBuffs = long.Parse(reader["RunBuffs"]?.ToString() ?? "0", CultureInfo.InvariantCulture);
 
                             if (runID == 0 || actualOverlayMode == null)
                             {
@@ -3537,7 +3580,7 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
                             using (var cmd2 = new SQLiteCommand(conn))
                             {
                                 cmd2.CommandText = "UPDATE PersonalBests SET RunBuffs = @RunBuffs WHERE RunID = @RunID";
-                                cmd2.Parameters.AddWithValue("@RunBuffs", dataLoader.Model.GetRunBuffs(actualOverlayMode));
+                                cmd2.Parameters.AddWithValue("@RunBuffs", dataLoader.Model.GetRunBuffs(questID, actualOverlayMode, GetBaseRunBuffs(actualOverlayMode, runBuffs)));
                                 cmd2.Parameters.AddWithValue("@RunID", runID);
 
                                 cmd2.ExecuteNonQuery();
@@ -3558,6 +3601,17 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
         Logger.Debug("Updated run buffs for PersonalBests table");
     }
 
+    private RunBuff GetBaseRunBuffs(string mode, long buffs)
+    {
+        return mode switch
+        {
+            Messages.OverlayModeTimeAttack => RunBuff.TimeAttack,
+            Messages.OverlayModeFreestyleNoSecretTech => RunBuff.FreestyleNoSecretTech,
+            Messages.OverlayModeFreestyleWithSecretTech => RunBuff.FreestyleWithSecretTech,
+            _ => (RunBuff)buffs,
+        };
+    }
+
     public void UpdateTableRunBuffs(string tableName, SQLiteConnection conn, DataLoader dataLoader)
     {
         if (string.IsNullOrEmpty(this.dataSource))
@@ -3572,6 +3626,7 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
             try
             {
                 string sql = $"SELECT * FROM {tableName}";
+                HashSet<long> processedRowIds = new HashSet<long>();
 
                 using (var cmd = new SQLiteCommand(sql, conn))
                 {
@@ -3579,22 +3634,121 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
                     {
                         while (reader.Read())
                         {
-                            var actualOverlayMode = reader["ActualOverlayMode"].ToString();
+                            var oldActualOverlayMode = reader["ActualOverlayMode"].ToString();
                             var rowID = long.Parse(reader[$"{tableName}ID"]?.ToString() ?? "0", CultureInfo.InvariantCulture);
+                            var oldQuestID = long.Parse(reader["QuestID"]?.ToString() ?? "0", CultureInfo.InvariantCulture);
+                            var oldWeaponTypeID = long.Parse(reader["WeaponTypeID"]?.ToString() ?? "0", CultureInfo.InvariantCulture);
+                            var oldPartySize = long.Parse(reader["PartySize"]?.ToString() ?? "0", CultureInfo.InvariantCulture);
+                            var oldRunBuffs = long.Parse(reader["RunBuffs"]?.ToString() ?? "0", CultureInfo.InvariantCulture);
+                            var oldAttempts = long.Parse(reader["Attempts"]?.ToString() ?? "0", CultureInfo.InvariantCulture);
 
-                            if (actualOverlayMode == null || rowID == 0)
+                            // Skip if the row has already been processed
+                            if (processedRowIds.Contains(rowID))
                             {
                                 continue;
                             }
 
-                            using (var cmd2 = new SQLiteCommand(conn))
+                            if (oldActualOverlayMode == null || rowID == 0)
                             {
-                                cmd2.CommandText = $"UPDATE {tableName} SET RunBuffs = @RunBuffs WHERE {tableName}ID = @rowID";
-                                cmd2.Parameters.AddWithValue("@RunBuffs", dataLoader.Model.GetRunBuffs(actualOverlayMode));
-                                cmd2.Parameters.AddWithValue("@rowID", rowID);
-
-                                cmd2.ExecuteNonQuery();
+                                processedRowIds.Add(rowID);
+                                continue;
                             }
+
+                            if (oldRunBuffs == 0 && oldActualOverlayMode != Messages.OverlayModeFreestyleNoSecretTech && oldActualOverlayMode != Messages.OverlayModeFreestyleWithSecretTech && oldActualOverlayMode != Messages.OverlayModeTimeAttack && oldActualOverlayMode != Messages.OverlayModeSpeedrun)
+                            {
+                                // After successful processing, add the row ID to the list of processed IDs
+                                processedRowIds.Add(rowID);
+                                continue;
+                            }
+
+                            long newRunBuffs = (long)dataLoader.Model.GetRunBuffs(oldQuestID, oldActualOverlayMode, GetBaseRunBuffs(oldActualOverlayMode, oldRunBuffs));
+
+                            if (oldRunBuffs == newRunBuffs || (oldRunBuffs > 0 && newRunBuffs == 0))
+                            {
+                                processedRowIds.Add(rowID);
+                                continue;
+                            }
+
+                            // Step  2: Search for a row with the same field values except for RunBuffs
+                            using (var cmdSearch = new SQLiteCommand(conn))
+                            {
+                                cmdSearch.CommandText = $@"
+                                SELECT * FROM {tableName}
+                                WHERE QuestID = @QuestID AND WeaponTypeID = @WeaponTypeID AND ActualOverlayMode = @ActualOverlayMode AND PartySize = @PartySize AND RunBuffs = @NewRunBuffs";
+                                cmdSearch.Parameters.AddWithValue("@QuestID", oldQuestID);
+                                cmdSearch.Parameters.AddWithValue("@WeaponTypeID", oldWeaponTypeID);
+                                cmdSearch.Parameters.AddWithValue("@ActualOverlayMode", oldActualOverlayMode);
+                                cmdSearch.Parameters.AddWithValue("@PartySize", oldPartySize);
+                                cmdSearch.Parameters.AddWithValue("@NewRunBuffs", newRunBuffs);
+
+                                using (var searchReader = cmdSearch.ExecuteReader())
+                                {
+                                    if (searchReader.HasRows)
+                                    {
+                                        Logger.Debug($"Found potential unique constraint violation. oldRunBuffs: {oldRunBuffs}, newRunBuffs: {newRunBuffs}");
+
+                                        // Step  3: Potential unique constraint violation detected
+                                        while (searchReader.Read())
+                                        {
+                                            var newAttempts = long.Parse(searchReader["Attempts"]?.ToString() ?? "0", CultureInfo.InvariantCulture);
+
+                                            // Step  4: Delete the old row and insert a new one
+                                            using (var cmdDelete = new SQLiteCommand(conn))
+                                            {
+                                                cmdDelete.CommandText = $"DELETE FROM {tableName} WHERE {tableName}ID = @OldRowID";
+                                                cmdDelete.Parameters.AddWithValue("@OldRowID", rowID);
+                                                cmdDelete.ExecuteNonQuery();
+                                            }
+
+                                            Logger.Debug($"Deleted old row {rowID} from {tableName}");
+
+                                            using (var cmdInsert = new SQLiteCommand(conn))
+                                            {
+                                                cmdInsert.CommandText = $@"
+                                        INSERT INTO {tableName} (QuestID, WeaponTypeID, ActualOverlayMode, PartySize, RunBuffs, Attempts)
+                                        VALUES (@QuestID, @WeaponTypeID, @ActualOverlayMode, @PartySize, @NewRunBuffs, @NewAttempts)";
+                                                cmdInsert.Parameters.AddWithValue("@QuestID", oldQuestID);
+                                                cmdInsert.Parameters.AddWithValue("@WeaponTypeID", oldWeaponTypeID);
+                                                cmdInsert.Parameters.AddWithValue("@ActualOverlayMode", oldActualOverlayMode);
+                                                cmdInsert.Parameters.AddWithValue("@PartySize", oldPartySize);
+                                                cmdInsert.Parameters.AddWithValue("@NewRunBuffs", newRunBuffs);
+                                                cmdInsert.Parameters.AddWithValue("@NewAttempts", Math.Max(oldAttempts, newAttempts));
+                                                cmdInsert.ExecuteNonQuery();
+                                            }
+
+                                            var lastInsertSql = "SELECT LAST_INSERT_ROWID()";
+                                            long newRowID = 0;
+
+                                            using (var lastInsertCmd = new SQLiteCommand(lastInsertSql, conn))
+                                            {
+                                                newRowID = Convert.ToInt32(lastInsertCmd.ExecuteScalar(), CultureInfo.InvariantCulture);
+                                            }
+
+                                            // Add the new row ID to the processed IDs set
+                                            processedRowIds.Add(newRowID);
+
+                                            Logger.Debug($"Inserted into {tableName}. oldAttempts: {oldAttempts}, newAttempts: {newAttempts}, newRowID: {newRowID}.");
+
+                                        }
+                                    }
+                                    else
+                                    {
+                                        // No conflict, just update the row
+                                        using (var cmdUpdate = new SQLiteCommand(conn))
+                                        {
+                                            cmdUpdate.CommandText = $"UPDATE {tableName} SET RunBuffs = @NewRunBuffs WHERE {tableName}ID = @rowID";
+                                            cmdUpdate.Parameters.AddWithValue("@NewRunBuffs", newRunBuffs);
+                                            cmdUpdate.Parameters.AddWithValue("@rowID", rowID);
+                                            cmdUpdate.ExecuteNonQuery();
+                                        }
+
+                                        Logger.Debug($"Updated row {rowID} of {tableName}. oldRunBuffs: {oldRunBuffs}, newRunBuffs: {newRunBuffs}.");
+                                    }
+                                }
+                            }
+
+                            // After successful processing, add the row ID to the list of processed IDs
+                            processedRowIds.Add(rowID);
                         }
                     }
                 }
@@ -16116,7 +16270,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                             // sqlite3_exec(db, "ALTER TABLE entries ADD COLUMN touched_at TEXT;", NULL, NULL, NULL);
                     {
                         this.PerformUpdateToVersion_0_25_0(conn);
-                        this.EnforceForeignKeys(conn);
+                        // this.EnforceForeignKeys(conn);
                         newVersion++;
                         Logger.Info(CultureInfo.InvariantCulture, "Updated schema to version v0.25.0. newVersion {0}", newVersion);
                         goto case 2;
@@ -16124,16 +16278,24 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                     case 2: // 0.34.0
                         // fix attempts and pb attempts, set partysize default to 1 for the extra attempts from 2p/3p/4p.
                         this.PerformUpdateToVersion_0_34_0(conn);
-                        this.EnforceForeignKeys(conn);
+                        // this.EnforceForeignKeys(conn);
                         newVersion++;
                         Logger.Info(CultureInfo.InvariantCulture, "Updated schema to version v0.34.0. newVersion {0}", newVersion);
                         goto case 3;
                     case 3: // 0.35.0
                     {
                         this.PerformUpdateToVersion_0_35_0(conn, dataLoader);
-                        this.EnforceForeignKeys(conn);
+                        // this.EnforceForeignKeys(conn);
                         newVersion++;
                         Logger.Info(CultureInfo.InvariantCulture, "Updated schema to version v0.35.0. newVersion {0}", newVersion);
+                        goto case 4;
+                    }
+                    case 4:// 0.37.0
+                    {
+                        this.PerformUpdateToVersion_0_37_0(conn, dataLoader);
+                        this.EnforceForeignKeys(conn);
+                        newVersion++;
+                        Logger.Info(CultureInfo.InvariantCulture, "Updated schema to version v0.37.0. newVersion {0}", newVersion);
                         break;
                     }
                     // case 2://v0.24.0
@@ -18091,29 +18253,10 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
     /// <param name="connection"></param>
     private void UpdateRunBuffs(SQLiteConnection connection, DataLoader dataLoader)
     {
-        // 1. recreate runbuffs table
-        var sql = @"DROP TABLE IF EXISTS QuestsRunBuffs";
-        using (var cmd = new SQLiteCommand(sql, connection))
-        {
-            cmd.ExecuteNonQuery();
-        }
-
-        sql = @"CREATE TABLE IF NOT EXISTS QuestsRunBuffs(
-                QuestsRunBuffsID INTEGER PRIMARY KEY AUTOINCREMENT,
-                RunBuffs INTEGER NOT NULL DEFAULT 0,
-                RunBuffsTag TEXT NOT NULL DEFAULT '',
-                RunID INTEGER NOT NULL,
-                FOREIGN KEY(RunID) REFERENCES Quests(RunID)
-                )";
-        using (var cmd = new SQLiteCommand(sql, connection))
-        {
-            cmd.ExecuteNonQuery();
-        }
-
         // 2. for every row in quests table, add a row to runbuffs table:
         // runid taken from quests table
         // runbuffs from GetRunBuffs(string actualoverlaymode from quests table)
-        FillRunBuffs(connection, dataLoader);
+        var updatedRows = UpsertRunBuffs(connection, dataLoader);
 
         // 3. for every row in personalbests, update personalbests.runbuffs:
         // get actualoverlaymode by doing personalbests.RunID = quests.RunID, then quests.ActualOverlayMode.
@@ -18134,6 +18277,8 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
         // else if questattempts.ActualOverlayMode = "TimeAttack" then update questattempts.runbuffs to (Enum) RunBuff.TimeAttack.
 
         UpdateTableRunBuffs("QuestAttempts", connection, dataLoader);
+
+        Logger.Debug($"Updated QuestsRunBuffs rows: {updatedRows}");
     }
 
     // TODO: should i put this in FileManager?

@@ -2862,33 +2862,136 @@ TreeScope.Children, condition);
         return value.ToString();
     }
 
+    public QuestsQuestVariant GetQuestVariants(long questID)
+    {
+        QuestsQuestVariant questVariants = new();
+
+        if (QuestVariants.QuestIDVariant.ContainsKey(questID))
+        {
+            questVariants.QuestVariant1 = QuestVariants.QuestIDVariant[questID].QuestVariant1;
+            questVariants.QuestVariant2 = QuestVariants.QuestIDVariant[questID].QuestVariant2;
+            questVariants.QuestVariant3 = QuestVariants.QuestIDVariant[questID].QuestVariant3;
+            questVariants.QuestVariant4 = QuestVariants.QuestIDVariant[questID].QuestVariant4;
+        }
+
+        return questVariants;
+    }
+
     /// <summary>
-    /// Gets the run buffs
+    /// Decrements the run buffs input if the quest variants disallow it.
+    /// </summary>
+    /// <param name="runBuffs"></param>
+    /// <param name="questVariants"></param>
+    /// <returns></returns>
+    public RunBuff GetRunBuffs(RunBuff runBuffs, QuestsQuestVariant questVariants)
+    {
+        var questVariant2 = (QuestVariant2?)questVariants.QuestVariant2 ?? Models.Structures.QuestVariant2.None;
+        var questVariant3 = (QuestVariant3?)questVariants.QuestVariant3 ?? Models.Structures.QuestVariant3.None;
+
+        if (runBuffs.HasFlag(RunBuff.Halk) && (questVariant2.HasFlag(Models.Structures.QuestVariant2.DisableHalkPoogieCuff) || questVariant2.HasFlag(Models.Structures.QuestVariant2.Road)))
+        {
+            runBuffs -= RunBuff.Halk;
+        }
+
+        //if (PoogieItemUseID() > 0)
+        //{
+        //    runBuffs |= RunBuff.PoogieItem;
+        //}
+
+        //if (DivaSongActive)
+        //{
+        //    runBuffs |= RunBuff.DivaSong;
+        //}
+
+        if (runBuffs.HasFlag(RunBuff.HalkPotEffect) && (questVariant2.HasFlag(Models.Structures.QuestVariant2.DisableHalkPotionCourseAttack) || questVariant2.HasFlag(Models.Structures.QuestVariant2.Level9999) || questVariant2.HasFlag(Models.Structures.QuestVariant2.Road)))
+        {
+            runBuffs -= RunBuff.HalkPotEffect;
+        }
+
+        // TODO bento
+        //if (true == true)
+        //{
+        //    runBuffs |= RunBuff.Bento;
+        //}
+
+        //if (GuildPoogie1Skill() > 0 || GuildPoogie2Skill() > 0 || GuildPoogie3Skill() > 0)
+        //{
+        //    runBuffs |= RunBuff.GuildPoogie;
+        //}
+
+        if (runBuffs.HasFlag(RunBuff.ActiveFeature) && questVariant2.HasFlag(Models.Structures.QuestVariant2.DisableActiveFeature))
+        {
+            runBuffs -= RunBuff.ActiveFeature;
+        }
+
+        //if (GuildFoodSkill() > 0)
+        //{
+        //    runBuffs |= RunBuff.GuildFood;
+        //}
+
+        if (runBuffs.HasFlag(RunBuff.DivaSkill) && (questVariant2.HasFlag(Models.Structures.QuestVariant2.Road) || questVariant3.HasFlag(Models.Structures.QuestVariant3.NoGPSkills)))
+        {
+            runBuffs -= RunBuff.DivaSkill;
+        }
+
+        if (runBuffs.HasFlag(RunBuff.SecretTechnique) && questVariant2.HasFlag(Models.Structures.QuestVariant2.Level9999))
+        {
+            runBuffs -= RunBuff.SecretTechnique;
+        }
+
+        if (runBuffs.HasFlag(RunBuff.DivaPrayerGem) && (questVariant2.HasFlag(Models.Structures.QuestVariant2.Road) || questVariant2.HasFlag(Models.Structures.QuestVariant2.Level9999)))
+        {
+            runBuffs -= RunBuff.DivaPrayerGem;
+        }
+
+        if (runBuffs.HasFlag(RunBuff.CourseAttackBoost) && (questVariant2.HasFlag(Models.Structures.QuestVariant2.DisableHalkPotionCourseAttack) || questVariant2.HasFlag(Models.Structures.QuestVariant2.Level9999)))
+        {
+            runBuffs -= RunBuff.CourseAttackBoost;
+        }
+
+        return runBuffs;
+    }
+
+    /// <summary>
+    /// Gets the run buffs. The runBuffs parameter should be given by doing GetBaseRunBuffs.
     /// </summary>
     /// <param name="overlayMode"></param>
     /// <returns></returns>
-    public RunBuff GetRunBuffs(string overlayMode = "")
+    public RunBuff GetRunBuffs(long questID, string overlayMode, RunBuff runBuffs)
     {
-        if (overlayMode != string.Empty)
+        if (overlayMode != string.Empty && questID > 0)
         {
+            QuestsQuestVariant questVariants = GetQuestVariants(questID);
+
             switch (overlayMode)
             {
                 case Messages.OverlayModeFreestyleNoSecretTech:
-                    return RunBuff.FreestyleNoSecretTech;
+                    return GetRunBuffs(RunBuff.FreestyleNoSecretTech, questVariants);
                 case Messages.OverlayModeFreestyleWithSecretTech:
-                    return RunBuff.FreestyleWithSecretTech;
+                    return GetRunBuffs(RunBuff.FreestyleWithSecretTech, questVariants);
                 case Messages.OverlayModeTimeAttack:
-                    return RunBuff.TimeAttack;
+                    return GetRunBuffs(RunBuff.TimeAttack, questVariants);
+                case Messages.OverlayModeSpeedrun:
+                    return GetRunBuffs(runBuffs, questVariants);
                 default:
+                    // todo update
                     // we do not know the quest variants in 0.34, so we set as none.
                     // if we do not take into account quest variants, calculating the run buffs
                     // may be wrong because, for example, if we detect that halk was on we increase by 1 but
                     // in quests where halk is disabled the value in db is still positive, although in-game
-                    // halk is off.
+                    // halk is off. Also setting this to TA tags would not take into account that the runs may have used HP bars etc.
                     return RunBuff.None;
             }
         }
+        else
+        {
+            LoggerInstance.Error($"Wrong argument values for GetRunBuffs. QuestID {questID} OverlayMode {overlayMode}");
+            return RunBuff.None;
+        }
+    }
 
+    public RunBuff GetRunBuffs()
+    {
         var runBuffs = RunBuff.None;
         var questVariant2 = (QuestVariant2)QuestVariant2();
         var questVariant3 = (QuestVariant3)QuestVariant3();
