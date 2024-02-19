@@ -17735,7 +17735,7 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
     }
 
     /// <summary>
-    /// TODO replace none images
+    /// Updates objective images.
     /// </summary>
     /// <param name="conn"></param>
     private void UpdateQuestsObjectiveImage(SQLiteConnection conn)
@@ -17814,7 +17814,7 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
             }
         }
 
-        Logger.Debug("Updated speedrun modes in quests table");
+        Logger.Debug("Updated objective images in quests table");
     }
 
     /// <summary>
