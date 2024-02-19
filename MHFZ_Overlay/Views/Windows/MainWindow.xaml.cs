@@ -710,7 +710,7 @@ The process may take some time, as the program attempts to download from GitHub 
         if (this.DataLoader.Model.PreviousQuestID != this.DataLoader.Model.QuestID() && this.DataLoader.Model.QuestID() != 0)
         {
             this.DataLoader.Model.PreviousQuestID = this.DataLoader.Model.QuestID();
-            LoggerInstance.Info(CultureInfo.InvariantCulture, $"In quest: ID {this.DataLoader.Model.PreviousQuestID} | {AddressModel.GetQuestNameFromID(this.DataLoader.Model.PreviousQuestID)}");
+            LoggerInstance.Info(CultureInfo.InvariantCulture, $"In quest: ID {this.DataLoader.Model.PreviousQuestID} | {AddressModel.GetQuestName(this.DataLoader.Model.PreviousQuestID)}");
             this.ShowQuestName();
         }
         else if (this.DataLoader.Model.QuestID() == 0 && this.DataLoader.Model.PreviousQuestID != 0)

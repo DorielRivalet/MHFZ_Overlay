@@ -41,6 +41,10 @@ public static class Messages
 
     public const string MonsterImageNotLoaded = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/none.png";
 
+    public const string MonsterImageBaseLinkGitHub = @"https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/";
+
+    public const string MonsterImageBaseLinkApp = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/";
+
     public const string SecretAchievement = "???";
 
     public const string UnknownMonsterIcon = "https://i.imgur.com/3pQEtzw.png";

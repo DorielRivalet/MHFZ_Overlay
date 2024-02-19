@@ -14,6 +14,7 @@ using System.Drawing.Imaging;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Security.RightsManagement;
 using System.Text;
 using System.Windows;
 using System.Windows.Automation;
@@ -201,9 +202,9 @@ public abstract class AddressModel : INotifyPropertyChanged
                 return true;
             }
 
-            if (this.CaravanOverride())
+            if (this.AlternativeQuestOverride())
             {
-                return this.ShowHPBar(this.CaravanMonster1ID(), this.Monster1HPInt());
+                return this.ShowHPBar(this.AlternativeQuestMonster1ID(), this.Monster1HPInt());
             }
             else
             {
@@ -350,25 +351,25 @@ public abstract class AddressModel : INotifyPropertyChanged
     public abstract int HalkSkill1();
 
     public abstract int HalkSkill2();
-    
+
     public abstract int HalkSkill3();
-    
+
     public abstract int HalkElementNone();
-    
+
     public abstract int HalkFire();
-    
+
     public abstract int HalkThunder();
-    
+
     public abstract int HalkWater();
-    
+
     public abstract int HalkIce();
-    
+
     public abstract int HalkDragon();
-    
+
     public abstract int HalkSleep();
-    
+
     public abstract int HalkParalysis();
-    
+
     public abstract int HalkPoison();
 
     public abstract int RankBand();
@@ -581,10 +582,10 @@ public abstract class AddressModel : INotifyPropertyChanged
 
     public abstract int CaravanScore();
 
-    public abstract int CaravanMonster1ID();
+    public abstract int AlternativeQuestMonster1ID();
 
-    // unsure
-    public abstract int CaravanMonster2ID();
+    // TODO unsure
+    public abstract int AlternativeQuestMonster2ID();
 
     public abstract int BlademasterWeaponID();
 
@@ -1341,7 +1342,7 @@ public abstract class AddressModel : INotifyPropertyChanged
     /// <returns></returns>
     public abstract int ActiveFeature3();
 
-    public abstract int ServerHeartbeatLandAlternative ();
+    public abstract int ServerHeartbeatLandAlternative();
 
     public abstract int ServerHeartbeatLandMain();
 
@@ -1350,31 +1351,31 @@ public abstract class AddressModel : INotifyPropertyChanged
     public abstract int GuildFoodStart();
 
     public abstract int DivaSongStart();
-    
+
     public abstract int GuildPoogie1Skill();
-    
+
     public abstract int GuildPoogie2Skill();
-    
+
     public abstract int GuildPoogie3Skill();
-    
+
     public abstract int DivaPrayerGemRedSkill();
-    
+
     public abstract int DivaPrayerGemRedLevel();
-    
+
     public abstract int DivaPrayerGemYellowSkill();
-    
+
     public abstract int DivaPrayerGemYellowLevel();
-    
+
     public abstract int DivaPrayerGemGreenSkill();
-    
+
     public abstract int DivaPrayerGemGreenLevel();
-    
+
     public abstract int DivaPrayerGemBlueSkill();
-    
+
     public abstract int DivaPrayerGemBlueLevel();
-    
+
     public abstract bool HalkOn();
-    
+
     public abstract bool HalkPotEffectOn();
 
     public abstract int DivaSongFromGuildStart();
@@ -1412,14 +1413,16 @@ public abstract class AddressModel : INotifyPropertyChanged
     {
         get
         {
+            // road
+            // TODO replace all instances of magic numbers
             if (this.QuestID() is 23527 or 23628)
             {
                 return true;
             }
 
-            if (this.CaravanOverride())
+            if (this.AlternativeQuestOverride())
             {
-                return this.ShowHPBar(this.CaravanMonster2ID(), this.Monster2HPInt()) && this.GetNotRoad();
+                return this.ShowHPBar(this.AlternativeQuestMonster2ID(), this.Monster2HPInt()) && this.GetNotRoad();
             }
             else
             {
@@ -1552,11 +1555,11 @@ public abstract class AddressModel : INotifyPropertyChanged
     }
 
     /// <summary>
-    /// Gets the name of the quest.
+    /// Gets the name of the quest for discord.
     /// </summary>
     /// <param name="id">The identifier.</param>
     /// <returns></returns>
-    public static string GetQuestNameFromID(int id)
+    public static string GetDiscordQuestNameFromID(int id)
     {
         if (id > 63421 && DiscordService.ShowDiscordQuestNames())
         {
@@ -1569,6 +1572,13 @@ public abstract class AddressModel : INotifyPropertyChanged
         }
 
         EZlion.Mapper.Quest.IDName.TryGetValue(id, out var questValue1);  // returns true
+
+        return questValue1 + string.Empty;
+    }
+
+    public static string GetQuestName(int questID)
+    {
+        EZlion.Mapper.Quest.IDName.TryGetValue(questID, out var questValue1);  // returns true
 
         return questValue1 + string.Empty;
     }
@@ -1872,27 +1882,37 @@ TreeScope.Children, condition);
         return (value & all) == value;
     }
 
-    public bool CaravanOverride()
+    public bool AlternativeQuestOverride()
     {
         var s = (Settings)Application.Current.TryFindResource("Settings");
         return s.EnableCaravanOverride switch
         {
             "Enabled" => true,
             "Disabled" => false,
-            "Automatic" => this.IsAlternativeQuestName(),
+            "Automatic" => this.IsAlternativeQuestName() || this.IsDure(),
             _ => false,
         };
     }
 
-    private bool QuestNameContainsAlternativeTitle() => GetQuestNameFromID(this.QuestID()).Contains("Daily Limited Quest≫") ||
-            GetQuestNameFromID(this.QuestID()).Contains("Daily Quest≫") ||
-            GetQuestNameFromID(this.QuestID()).Contains("Guild Quest≫") ||
-            GetQuestNameFromID(this.QuestID()).Contains("Interception Base≫") ||
-            GetQuestNameFromID(this.QuestID()).Contains("Interception Quest≫") ||
-            GetQuestNameFromID(this.QuestID()).Contains("Interception Urgent Quest≫") ||
-            GetQuestNameFromID(this.QuestID()).Contains("Great Slaying Quest≫") ||
-            GetQuestNameFromID(this.QuestID()).Contains("G Rank Great Slaying≫") ||
-            GetQuestNameFromID(this.QuestID()).Contains("New Weapon Type Acquisition≫");
+    private bool QuestNameContainsAlternativeTitle() => GetQuestName(this.QuestID()).Contains("Daily Limited Quest≫") ||
+            GetQuestName(this.QuestID()).Contains("Daily Quest≫") ||
+            GetQuestName(this.QuestID()).Contains("Guild Quest≫") ||
+            GetQuestName(this.QuestID()).Contains("Interception Base≫") ||
+            GetQuestName(this.QuestID()).Contains("Interception Quest≫") ||
+            GetQuestName(this.QuestID()).Contains("Interception Urgent Quest≫") ||
+            GetQuestName(this.QuestID()).Contains("Great Slaying Quest≫") ||
+            GetQuestName(this.QuestID()).Contains("G Rank Great Slaying≫") ||
+            GetQuestName(this.QuestID()).Contains("New Weapon Type Acquisition≫");
+
+    private bool QuestNameContainsAlternativeTitle(int questID) => GetQuestName(questID).Contains("Daily Limited Quest≫") ||
+        GetQuestName(questID).Contains("Daily Quest≫") ||
+        GetQuestName(questID).Contains("Guild Quest≫") ||
+        GetQuestName(questID).Contains("Interception Base≫") ||
+        GetQuestName(questID).Contains("Interception Quest≫") ||
+        GetQuestName(questID).Contains("Interception Urgent Quest≫") ||
+        GetQuestName(questID).Contains("Great Slaying Quest≫") ||
+        GetQuestName(questID).Contains("G Rank Great Slaying≫") ||
+        GetQuestName(questID).Contains("New Weapon Type Acquisition≫");
 
     private bool PreviousHubAreaIDIsAlternative() => this.PreviousHubAreaID switch
     {
@@ -1901,9 +1921,21 @@ TreeScope.Children, condition);
         _ => false,
     };
 
-    private bool IsAlternativeQuestName()
+    public bool IsAlternativeQuestName()
     {
         if (this.QuestNameContainsAlternativeTitle() || this.PreviousHubAreaIDIsAlternative())
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public bool IsAlternativeQuestName(int questID)
+    {
+        if (this.QuestNameContainsAlternativeTitle(questID))
         {
             return true;
         }
@@ -1940,9 +1972,9 @@ TreeScope.Children, condition);
         {
             monsterID = this.RoadSelectedMonster() == 0 ? this.LargeMonster1ID() : this.LargeMonster2ID();
         }
-        else if (this.CaravanOverride())
+        else if (this.AlternativeQuestOverride())
         {
-            monsterID = this.CaravanMonster1ID();
+            monsterID = this.AlternativeQuestMonster1ID();
         }
 
         if (this.GetDureName() != "None")
@@ -2622,7 +2654,7 @@ TreeScope.Children, condition);
             var expiry = divaSongStart + (60 * 90);
             double secondsLeft = expiry - ServerHeartbeat;
 
-            return secondsLeft <= 60*10;
+            return secondsLeft <= 60 * 10;
         }
     }
 
@@ -3900,6 +3932,34 @@ TreeScope.Children, condition);
         }
     }
 
+    public string GetDureName(int questID)
+    {
+        if (questID is 21731 or 21749)
+        {
+            return "1st District Duremudira";
+        }
+        else if (questID is 21746 or 21750)
+        {
+            return "2nd District Duremudira";
+        }
+        else if (questID is 21747 or 21734)
+        {
+            return "3rd District Duremudira";
+        }
+        else if (questID == 21748)
+        {
+            return "4th District Duremudira";
+        }
+        else if (questID is 23648 or 23649)
+        {
+            return "Arrogant Duremudira";
+        }
+        else
+        {
+            return "None";
+        }
+    }
+
     // quest ids
     // ravi 62105 TODO: same ids in all phases?
     // violent 62101
@@ -3980,7 +4040,7 @@ TreeScope.Children, condition);
         }
     }
 
-    public string Monster2Name => this.CaravanOverride() ? this.GetMonsterName(this.CaravanMonster2ID(), false) : this.GetMonsterName(this.LargeMonster2ID(), false);
+    public string Monster2Name => this.AlternativeQuestOverride() ? this.GetMonsterName(this.AlternativeQuestMonster2ID(), false) : this.GetMonsterName(this.LargeMonster2ID(), false);
 
     public string Monster3Name => this.GetMonsterName(this.LargeMonster3ID(), false);
 
@@ -4003,9 +4063,9 @@ TreeScope.Children, condition);
             {
                 id = this.RoadSelectedMonster() == 0 ? this.LargeMonster1ID() : this.LargeMonster2ID();
             }
-            else if (this.CaravanOverride())
+            else if (this.AlternativeQuestOverride())
             {
-                id = this.CaravanMonster1ID();
+                id = this.AlternativeQuestMonster1ID();
             }
             else
             {
@@ -4412,9 +4472,9 @@ TreeScope.Children, condition);
             {
                 id = this.RoadSelectedMonster() == 0 ? this.LargeMonster1ID() : this.LargeMonster2ID();
             }
-            else if (this.CaravanOverride())
+            else if (this.AlternativeQuestOverride())
             {
-                id = this.CaravanMonster1ID();
+                id = this.AlternativeQuestMonster1ID();
             }
             else
             {
@@ -4626,9 +4686,9 @@ TreeScope.Children, condition);
             {
                 id = this.RoadSelectedMonster() == 0 ? this.LargeMonster2ID() : this.LargeMonster1ID();
             }
-            else if (this.CaravanOverride())
+            else if (this.AlternativeQuestOverride())
             {
-                id = this.CaravanMonster2ID();
+                id = this.AlternativeQuestMonster2ID();
             }
             else
             {
@@ -11242,6 +11302,18 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         return this.GetRankName(id);
     }
 
+    public string GetDuremudiraIcon(int questID)
+    {
+        return questID switch
+        {
+            Numbers.QuestIDArrogantDuremudira => MonsterImages.MonsterImageID[167],
+            Numbers.QuestIDArrogantDuremudiraRepel => MonsterImages.MonsterImageID[167],
+            Numbers.QuestIDFirstDistrictDuremudira => MonsterImages.MonsterImageID[132],
+            Numbers.QuestIDSecondDistrictDuremudira => MonsterImages.MonsterImageID[132],
+            _ => MonsterImages.MonsterImageID[132],
+        };
+    }
+
     /// <summary>
     /// Gets the monster icon.
     /// </summary>
@@ -11268,9 +11340,9 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         {
             id = this.RoadSelectedMonster() == 0 ? this.LargeMonster1ID() : this.LargeMonster2ID();
         }
-        else if (this.CaravanOverride())
+        else if (this.AlternativeQuestOverride())
         {
-            id = this.CaravanMonster1ID();
+            id = this.AlternativeQuestMonster1ID();
         }
 
         // Duremudira Arena
@@ -11296,7 +11368,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
     /// <returns></returns>
     public string GetStarGrade(bool isLargeImageText = false)
     {
-        if ((DiscordService.ShowDiscordQuestNames() && !isLargeImageText) || this.CaravanOverride())
+        if ((DiscordService.ShowDiscordQuestNames() && !isLargeImageText) || this.AlternativeQuestOverride())
         {
             return string.Empty;
         }
@@ -11348,6 +11420,18 @@ After all that you’ve unlocked magnet spike! You should get a material to make
     public bool IsDure()
     {
         if (this.GetDureName() != "None")
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public bool IsDure(int questID)
+    {
+        if (this.GetDureName(questID) != "None")
         {
             return true;
         }
@@ -11431,9 +11515,9 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         {
             id = this.RoadSelectedMonster() == 0 ? this.LargeMonster1ID() : this.LargeMonster2ID();
         }
-        else if (this.CaravanOverride())
+        else if (this.AlternativeQuestOverride())
         {
-            id = this.CaravanMonster1ID();
+            id = this.AlternativeQuestMonster1ID();
         }
         else
         {
@@ -12343,6 +12427,8 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         // TODO: the above update process should be simplified. refactoring might be needed
         // in many places, not just this function.
         var timeInt = this.TimeInt();
+        var monster1ID = IsAlternativeQuestName() || IsDure() ? this.AlternativeQuestMonster1ID() : this.LargeMonster1ID();
+        var monster2ID = IsAlternativeQuestName() || IsDure() ? this.AlternativeQuestMonster2ID() : this.LargeMonster2ID();
 
         if (this.IsRoad() && this.AreaID() == 459) // Hunter's Road Base Camp
         {
@@ -12440,7 +12526,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 this.PreviousMonster1HP = this.Monster1HPInt();
                 Dictionary<int, int> monster1HPDictionaryMonsterInfo = new ()
                 {
-                    { this.LargeMonster1ID(), this.Monster1HPInt() },
+                    { monster1ID, this.Monster1HPInt() },
                 };
                 this.Monster1HPDictionary.Add(this.TimeInt(), monster1HPDictionaryMonsterInfo);
             }
@@ -12457,7 +12543,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 this.PreviousMonster2HP = this.Monster2HPInt();
                 Dictionary<int, int> monster2HPDictionaryMonsterInfo = new ()
                 {
-                    { this.LargeMonster2ID(), this.Monster2HPInt() },
+                    {monster2ID, this.Monster2HPInt() },
                 };
                 this.Monster2HPDictionary.Add(this.TimeInt(), monster2HPDictionaryMonsterInfo);
             }
@@ -12931,7 +13017,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 this.PreviousMonster1AttackMultiplier = this.Monster1AttackMultForDictionary();
                 Dictionary<int, double> monster1AttackMultiplierDictionaryMonsterInfo = new ()
                 {
-                    { this.LargeMonster1ID(), this.Monster1AttackMultForDictionary() },
+                    { monster1ID, this.Monster1AttackMultForDictionary() },
                 };
                 this.Monster1AttackMultiplierDictionary.Add(this.TimeInt(), monster1AttackMultiplierDictionaryMonsterInfo);
             }
@@ -12948,7 +13034,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 this.PreviousMonster1DefenseRate = this.Monster1DefMultForDictionary();
                 Dictionary<int, double> monster1DefenseRateDictionaryMonsterInfo = new ()
                 {
-                    { this.LargeMonster1ID(), this.Monster1DefMultForDictionary() },
+                    { monster1ID, this.Monster1DefMultForDictionary() },
                 };
                 this.Monster1DefenseRateDictionary.Add(this.TimeInt(), monster1DefenseRateDictionaryMonsterInfo);
             }
@@ -12965,7 +13051,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 this.PreviousMonster1SizeMultiplier = this.Monster1SizeMultForDictionary();
                 Dictionary<int, double> monster1SizeMultiplierDictionaryMonsterInfo = new ()
                 {
-                    { this.LargeMonster1ID(), this.Monster1SizeMultForDictionary() },
+                    { monster1ID, this.Monster1SizeMultForDictionary() },
                 };
                 this.Monster1SizeMultiplierDictionary.Add(this.TimeInt(), monster1SizeMultiplierDictionaryMonsterInfo);
             }
@@ -12982,7 +13068,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 this.PreviousMonster1PoisonThreshold = this.Monster1PoisonForDictionary();
                 Dictionary<int, int> monster1PoisonThresholdDictionaryMonsterInfo = new ()
                 {
-                    { this.LargeMonster1ID(), this.Monster1PoisonForDictionary() },
+                    { monster1ID, this.Monster1PoisonForDictionary() },
                 };
                 this.Monster1PoisonThresholdDictionary.Add(this.TimeInt(), monster1PoisonThresholdDictionaryMonsterInfo);
             }
@@ -12999,7 +13085,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 this.PreviousMonster1SleepThreshold = this.Monster1SleepForDictionary();
                 Dictionary<int, int> monster1SleepThresholdDictionaryMonsterInfo = new ()
                 {
-                    { this.LargeMonster1ID(), this.Monster1SleepForDictionary() },
+                    { monster1ID, this.Monster1SleepForDictionary() },
                 };
                 this.Monster1SleepThresholdDictionary.Add(this.TimeInt(), monster1SleepThresholdDictionaryMonsterInfo);
             }
@@ -13016,7 +13102,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 this.PreviousMonster1ParalysisThreshold = this.Monster1ParalysisForDictionary();
                 Dictionary<int, int> monster1ParalysisThresholdDictionaryMonsterInfo = new ()
                 {
-                    { this.LargeMonster1ID(), this.Monster1ParalysisForDictionary() },
+                    { monster1ID, this.Monster1ParalysisForDictionary() },
                 };
                 this.Monster1ParalysisThresholdDictionary.Add(this.TimeInt(), monster1ParalysisThresholdDictionaryMonsterInfo);
             }
@@ -13033,7 +13119,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 this.PreviousMonster1BlastThreshold = this.Monster1BlastForDictionary();
                 Dictionary<int, int> monster1BlastThresholdDictionaryMonsterInfo = new ()
                 {
-                    { this.LargeMonster1ID(), this.Monster1BlastForDictionary() },
+                    { monster1ID, this.Monster1BlastForDictionary() },
                 };
                 this.Monster1BlastThresholdDictionary.Add(this.TimeInt(), monster1BlastThresholdDictionaryMonsterInfo);
             }
@@ -13050,7 +13136,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 this.PreviousMonster1StunThreshold = this.Monster1StunForDictionary();
                 Dictionary<int, int> monster1StunThresholdDictionaryMonsterInfo = new ()
                 {
-                    { this.LargeMonster1ID(), this.Monster1StunForDictionary() },
+                    { monster1ID, this.Monster1StunForDictionary() },
                 };
                 this.Monster1StunThresholdDictionary.Add(this.TimeInt(), monster1StunThresholdDictionaryMonsterInfo);
             }
@@ -13655,6 +13741,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
 
     /// <summary>
     /// Gets the max faints.
+    /// TODO optimize
     /// </summary>
     /// <returns></returns>
     public string GetMaxFaints()
@@ -13670,7 +13757,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             case "Shiten/Conquest/Pioneer/Daily/Caravan/Interception Quests":
                 return this.AlternativeMaxFaints().ToString(CultureInfo.InvariantCulture);
             case "Automatic":
-                if (this.RoadOverride() is not null and false)
+                if (this.RoadOverride() is not null and false) //TODO test
                 {
                     return this.MaxFaints().ToString(CultureInfo.InvariantCulture);
                 }
@@ -13678,7 +13765,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 if
                 (
 
-                        (this.CaravanOverride() && !(
+                        (this.AlternativeQuestOverride() && !(
                             this.QuestID() == 23603 ||
                             this.RankBand() == 70 ||
                             this.QuestID() == 23602 ||

@@ -626,12 +626,12 @@ public sealed class AddressModelNotHGE : AddressModel
     public override int CaravanScore() => this.M.ReadInt("mhfo.dll+6154FC4");
 
     /// <inheritdoc/>
-    public override int CaravanMonster1ID() => this.M.ReadByte("mhfo.dll+28C2C84");
+    public override int AlternativeQuestMonster1ID() => this.M.ReadByte("mhfo.dll+28C2C84");
 
     // unsure
 
     /// <inheritdoc/>
-    public override int CaravanMonster2ID() => this.M.ReadByte("mhfo.dll+28C2C8C");
+    public override int AlternativeQuestMonster2ID() => this.M.ReadByte("mhfo.dll+28C2C8C");
 
     /// <inheritdoc/>
     public override int BlademasterWeaponID() => this.M.Read2Byte("mhfo.dll+5033F92");

@@ -10,6 +10,7 @@ using System;
 namespace MHFZ_Overlay.Services;
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
@@ -472,8 +473,11 @@ public sealed class DatabaseService
         long runBuffs = (long)dataLoader.Model.GetRunBuffs();
         dataLoader.Model.ShowSaveIcon = true;
         var timeLeft = dataLoader.Model.TimeInt();
+        var monster1ID = dataLoader.Model.IsAlternativeQuestName() || dataLoader.Model.IsDure() ? dataLoader.Model.AlternativeQuestMonster1ID() : dataLoader.Model.LargeMonster1ID();
+        var monster2ID = dataLoader.Model.IsAlternativeQuestName() || dataLoader.Model.IsDure() ? dataLoader.Model.AlternativeQuestMonster2ID() : dataLoader.Model.LargeMonster2ID();
 
         // TODO dure timedefint address
+        // TODO arrogant is different?
         var timeDefIint = questID != Numbers.QuestIDFirstDistrictDuremudira && questID != Numbers.QuestIDSecondDistrictDuremudira ? dataLoader.Model.TimeDefInt() : Numbers.DuremudiraTimeLimitFrames;
 
         var finalTimeValue = timeDefIint - timeLeft;
@@ -630,15 +634,15 @@ public sealed class DatabaseService
                         // Convert the elapsed time to a DateTime object
                         string objectiveImage;
 
-                        // Gathering/etc
-                        if ((dataLoader.Model.ObjectiveType() == 0x0 || dataLoader.Model.ObjectiveType() == 0x02 || dataLoader.Model.ObjectiveType() == 0x1002) && dataLoader.Model.QuestID() != 23527 && dataLoader.Model.QuestID() != 23628 && dataLoader.Model.QuestID() != 21749 && dataLoader.Model.QuestID() != 21750 && dataLoader.Model.QuestID() != Numbers.QuestIDFirstDistrictDuremudira && dataLoader.Model.QuestID() != Numbers.QuestIDSecondDistrictDuremudira)
+                        if (dataLoader.Model.QuestID() == Numbers.QuestIDSecondDistrictDuremudira || dataLoader.Model.QuestID() == Numbers.QuestIDFirstDistrictDuremudira || dataLoader.Model.QuestID() == Numbers.QuestIDArrogantDuremudiraRepel || dataLoader.Model.QuestID() == Numbers.QuestIDArrogantDuremudira)
                         {
-                            objectiveImage = ViewModels.Windows.AddressModel.GetAreaIconFromID(dataLoader.Model.AreaID());
+                            objectiveImage = dataLoader.Model.GetDuremudiraIcon(dataLoader.Model.QuestID());
                         }
 
-                        else if (dataLoader.Model.QuestID() == Numbers.QuestIDSecondDistrictDuremudira || dataLoader.Model.QuestID() == Numbers.QuestIDFirstDistrictDuremudira)
+                        // Gathering/etc
+                        else if ((dataLoader.Model.ObjectiveType() == 0x0 || dataLoader.Model.ObjectiveType() == 0x02 || dataLoader.Model.ObjectiveType() == 0x1002) && dataLoader.Model.QuestID() != 23527 && dataLoader.Model.QuestID() != 23628 && dataLoader.Model.QuestID() != 21749 && dataLoader.Model.QuestID() != 21750)
                         {
-                            objectiveImage = dataLoader.Model.GetMonsterIcon(132);
+                            objectiveImage = ViewModels.Windows.AddressModel.GetAreaIconFromID(dataLoader.Model.AreaID());
                         }
 
                         // Tenrou Sky Corridor areas
@@ -653,26 +657,20 @@ public sealed class DatabaseService
                             objectiveImage = ViewModels.Windows.AddressModel.GetAreaIconFromID(dataLoader.Model.AreaID());
                         }
 
-                        // Duremudira Arena
-                        else if (dataLoader.Model.AreaID() == 398)
-                        {
-                            objectiveImage = dataLoader.Model.GetMonsterIcon(dataLoader.Model.LargeMonster1ID());
-                        }
-
                         // Hunter's Road Base Camp
                         else if (dataLoader.Model.AreaID() == 459)
                         {
                             objectiveImage = ViewModels.Windows.AddressModel.GetAreaIconFromID(dataLoader.Model.AreaID());
                         }
 
-                        // Raviente
+                        // TODO test Raviente
                         else if (dataLoader.Model.AreaID() is 309 or (>= 311 and <= 321) or (>= 417 and <= 422) or 437 or (>= 440 and <= 444))
                         {
-                            objectiveImage = dataLoader.Model.GetMonsterIcon(dataLoader.Model.LargeMonster1ID());
+                            objectiveImage = dataLoader.Model.GetMonsterIcon(monster1ID);
                         }
                         else
                         {
-                            objectiveImage = dataLoader.Model.GetMonsterIcon(dataLoader.Model.LargeMonster1ID());
+                            objectiveImage = dataLoader.Model.GetMonsterIcon(monster1ID);
                         }
 
                         var objectiveTypeID = model.ObjectiveType();
@@ -3435,7 +3433,7 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
         // Roll back the transaction
         if (transaction != null)
         {
-            serverVersion = transaction.Connection.ServerVersion;
+            serverVersion = transaction.Connection?.ServerVersion ?? "null";
             transaction.Rollback();
         }
 
@@ -17560,12 +17558,403 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
                INNER JOIN Quests ON PersonalBests.RunID = Quests.RunID";
 
         AlterTablePersonalBests(connection, sql, transferDataSql);
+    }
 
+    private void PerformUpdateToVersion_0_37_0(SQLiteConnection connection, DataLoader dataLoader)
+    {
         // TODO replace actualoverlaymode speedruns and runbuffs at 0. first do the runbuffs.
         UpdateRunBuffs(connection, dataLoader);
         UpdateQuestsActualOverlayMode(connection);
         UpdateTableActualOverlayMode("PersonalBestAttempts", connection);
         UpdateTableActualOverlayMode("QuestAttempts", connection);
+
+        UpdateQuestsObjectiveImage(connection);
+        UpdateQuestsMonsterDictionaries(connection, dataLoader);
+    }
+
+    /// <summary>
+    /// TODO replace none images
+    /// </summary>
+    /// <param name="conn"></param>
+    private void UpdateQuestsObjectiveImage(SQLiteConnection conn)
+    {
+        if (string.IsNullOrEmpty(this.dataSource))
+        {
+            Logger.Warn(CultureInfo.InvariantCulture, "Cannot update objective images for quests table. dataSource: {0}", this.dataSource);
+            return;
+        }
+
+        // Start a transaction
+        using (var transaction = conn.BeginTransaction())
+        {
+            try
+            {
+                using (var cmd0 = new SQLiteCommand(conn))
+                {
+                    cmd0.CommandText = @"DROP TRIGGER IF EXISTS prevent_quest_updates";
+                    cmd0.ExecuteNonQuery();
+                }
+
+                using (var cmd = new SQLiteCommand(conn))
+                {
+                    cmd.CommandText = "SELECT * FROM Quests";
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            var img = reader["ObjectiveImage"].ToString();
+                            var runID = long.Parse(reader["RunID"]?.ToString() ?? "0", CultureInfo.InvariantCulture);
+                            var questID = long.Parse(reader["QuestID"]?.ToString() ?? "0", CultureInfo.InvariantCulture);
+
+                            if (runID == 0 || img == "" || img == null || questID == 0)
+                            {
+                                continue;
+                            }
+
+                            var newImg = questID == Numbers.QuestIDFirstDistrictDuremudira || questID == Numbers.QuestIDSecondDistrictDuremudira ? MonsterImages.MonsterImageID[132] : img.Replace(Messages.MonsterImageBaseLinkGitHub, Messages.MonsterImageBaseLinkApp);
+
+                            if (newImg == img)
+                            {
+                                continue;
+                            }
+
+                            using (var cmd2 = new SQLiteCommand(conn))
+                            {
+                                cmd2.CommandText = "UPDATE Quests SET ObjectiveImage = @newImg WHERE RunID = @RunID";
+                                cmd2.Parameters.AddWithValue("@RunID", runID);
+                                cmd2.Parameters.AddWithValue("@newImg", newImg);
+
+                                cmd2.ExecuteNonQuery();
+                            }
+                        }
+                    }
+                }
+
+                using (var cmd1 = new SQLiteCommand(conn))
+                {
+                    cmd1.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_quest_updates
+                        AFTER UPDATE ON Quests
+                        FOR EACH ROW
+                        WHEN NEW.YouTubeID = OLD.YouTubeID
+                        BEGIN
+                            SELECT RAISE(ABORT, 'Cannot update quest fields');
+                        END;";
+                    cmd1.ExecuteNonQuery();
+                }
+
+                // Commit the transaction
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                HandleError(transaction, ex);
+            }
+        }
+
+        Logger.Debug("Updated speedrun modes in quests table");
+    }
+
+    /// <summary>
+    /// For dures/ravi/etc.
+    /// </summary>
+    /// <param name="conn"></param>
+    private void UpdateQuestsMonsterDictionaries(SQLiteConnection conn, DataLoader dataLoader)
+    {
+        if (string.IsNullOrEmpty(this.dataSource))
+        {
+            Logger.Warn(CultureInfo.InvariantCulture, "Cannot update monster dictionaries for quests table. dataSource: {0}", this.dataSource);
+            return;
+        }
+
+        // Start a transaction
+        using (var transaction = conn.BeginTransaction())
+        {
+            try
+            {
+                using (var cmd0 = new SQLiteCommand(conn))
+                {
+                    cmd0.CommandText = @"DROP TRIGGER IF EXISTS prevent_quest_updates";
+                    cmd0.ExecuteNonQuery();
+                }
+
+                using (var cmd = new SQLiteCommand(conn))
+                {
+                    cmd.CommandText = "SELECT * FROM Quests";
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            var questID = long.Parse(reader["QuestID"]?.ToString() ?? "0", CultureInfo.InvariantCulture);
+
+                            if (questID != Numbers.QuestIDFirstDistrictDuremudira || questID != Numbers.QuestIDSecondDistrictDuremudira)
+                            {
+                                continue;
+                            }
+
+                            string monster1HPString = reader["Monster1HPDictionary"].ToString() ?? "{}";
+
+                            if (monster1HPString == string.Empty || monster1HPString == "{}")
+                            {
+                                continue;
+                            }
+
+                            string monster1AttackMultiplierString = reader["Monster1AttackMultiplierDictionary"].ToString() ?? "{}";
+                            string monster1DefenseRateString = reader["Monster1DefenseRateictionary"].ToString() ?? "{}";
+                            string monster1SizeMultiplierString = reader["Monster1SizeMultiplierDictionary"].ToString() ?? "{}";
+                            string monster1StunThresholdString = reader["Monster1StunThresholdDictionary"].ToString() ?? "{}";
+                            string monster1PartThresholdString = reader["Monster1PartThresholdDictionary"].ToString() ?? "{}";
+
+                            var runID = long.Parse(reader["RunID"]?.ToString() ?? "0", CultureInfo.InvariantCulture);
+
+                            var monster1HPDictionary = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int, int>>>(monster1HPString);
+                            var monster1AttackMultiplierDictionary = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int, int>>>(monster1AttackMultiplierString);
+                            var monster1DefenseRateDictionary = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int, int>>>(monster1DefenseRateString);
+                            var monster1SizeMultiplierDictionary = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int, int>>>(monster1SizeMultiplierString);
+                            var monster1StunThresholdDictionary = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int, int>>>(monster1StunThresholdString);
+                            var monster1PartThresholdDictionary = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int, List<int>>>>(monster1PartThresholdString);
+
+                            if (monster1HPDictionary == null || runID == 0 || monster1HPDictionary.Count == 0 || questID == 0)
+                            {
+                                continue;
+                            }
+
+                            Dictionary<int, Dictionary<int, int>> newMonster1HPDictionary = new();
+                            Dictionary<int, Dictionary<int, int>> newMonster1AttackMultiplierDictionary = new();
+                            Dictionary<int, Dictionary<int, int>> newMonster1DefenseRateDictionary = new();
+                            Dictionary<int, Dictionary<int, int>> newMonster1SizeMultiplierDictionary = new();
+                            Dictionary<int, Dictionary<int, int>> newMonster1StunThresholdDictionary = new();
+                            Dictionary<int, Dictionary<int, List<int>>> newMonster1PartThresholdDictionary = new();
+
+                            // check if its dure or alt quest
+                            // if it is, change it
+                            // TODO ravi?
+                            foreach (var entry in monster1HPDictionary)
+                            {
+                                var monsterID = entry.Value.FirstOrDefault().Key;
+
+                                if (dataLoader.Model.IsDure((int)questID) || dataLoader.Model.IsAlternativeQuestName((int)questID))
+                                {
+                                    switch (questID)
+                                    {
+                                        case Numbers.QuestIDArrogantDuremudira:
+                                        case Numbers.QuestIDArrogantDuremudiraRepel:
+                                            monsterID = 167;
+                                            break;
+                                        case Numbers.QuestIDFirstDistrictDuremudira:
+                                        case Numbers.QuestIDSecondDistrictDuremudira:
+                                            monsterID = 132;
+                                            break;
+                                    }
+                                }
+
+                                Dictionary<int, int> monsterEntry = new Dictionary<int, int>()
+                                {
+                                    {monsterID, entry.Value.FirstOrDefault().Value},
+                                };
+
+                                newMonster1HPDictionary.Add(entry.Key, monsterEntry);
+                            }
+
+                            if (monster1AttackMultiplierDictionary != null)
+                            {
+                                foreach (var entry in monster1AttackMultiplierDictionary)
+                                {
+                                    var monsterID = entry.Value.FirstOrDefault().Key;
+
+                                    if (dataLoader.Model.IsDure((int)questID) || dataLoader.Model.IsAlternativeQuestName((int)questID))
+                                    {
+                                        switch (questID)
+                                        {
+                                            case Numbers.QuestIDArrogantDuremudira:
+                                            case Numbers.QuestIDArrogantDuremudiraRepel:
+                                                monsterID = 167;
+                                                break;
+                                            case Numbers.QuestIDFirstDistrictDuremudira:
+                                            case Numbers.QuestIDSecondDistrictDuremudira:
+                                                monsterID = 132;
+                                                break;
+                                        }
+                                    }
+
+                                    Dictionary<int, int> monsterEntry = new Dictionary<int, int>()
+                                {
+                                    {monsterID, entry.Value.FirstOrDefault().Value},
+                                };
+
+                                    newMonster1AttackMultiplierDictionary.Add(entry.Key, monsterEntry);
+                                }
+                            }
+
+                            if (monster1DefenseRateDictionary != null)
+                            {
+                                foreach (var entry in monster1DefenseRateDictionary)
+                                {
+                                    var monsterID = entry.Value.FirstOrDefault().Key;
+
+                                    if (dataLoader.Model.IsDure((int)questID) || dataLoader.Model.IsAlternativeQuestName((int)questID))
+                                    {
+                                        switch (questID)
+                                        {
+                                            case Numbers.QuestIDArrogantDuremudira:
+                                            case Numbers.QuestIDArrogantDuremudiraRepel:
+                                                monsterID = 167;
+                                                break;
+                                            case Numbers.QuestIDFirstDistrictDuremudira:
+                                            case Numbers.QuestIDSecondDistrictDuremudira:
+                                                monsterID = 132;
+                                                break;
+                                        }
+                                    }
+
+                                    Dictionary<int, int> monsterEntry = new Dictionary<int, int>()
+                                {
+                                    {monsterID, entry.Value.FirstOrDefault().Value},
+                                };
+
+                                    newMonster1DefenseRateDictionary.Add(entry.Key, monsterEntry);
+                                }
+                            }
+
+                            if (monster1SizeMultiplierDictionary != null)
+                            {
+                                foreach (var entry in monster1SizeMultiplierDictionary)
+                                {
+                                    var monsterID = entry.Value.FirstOrDefault().Key;
+
+                                    if (dataLoader.Model.IsDure((int)questID) || dataLoader.Model.IsAlternativeQuestName((int)questID))
+                                    {
+                                        switch (questID)
+                                        {
+                                            case Numbers.QuestIDArrogantDuremudira:
+                                            case Numbers.QuestIDArrogantDuremudiraRepel:
+                                                monsterID = 167;
+                                                break;
+                                            case Numbers.QuestIDFirstDistrictDuremudira:
+                                            case Numbers.QuestIDSecondDistrictDuremudira:
+                                                monsterID = 132;
+                                                break;
+                                        }
+                                    }
+
+                                    Dictionary<int, int> monsterEntry = new Dictionary<int, int>()
+                                {
+                                    {monsterID, entry.Value.FirstOrDefault().Value},
+                                };
+
+                                    newMonster1SizeMultiplierDictionary.Add(entry.Key, monsterEntry);
+                                }
+                            }
+
+                            if (monster1StunThresholdDictionary != null)
+                            {
+                                foreach (var entry in monster1StunThresholdDictionary)
+                                {
+                                    var monsterID = entry.Value.FirstOrDefault().Key;
+
+                                    if (dataLoader.Model.IsDure((int)questID) || dataLoader.Model.IsAlternativeQuestName((int)questID))
+                                    {
+                                        switch (questID)
+                                        {
+                                            case Numbers.QuestIDArrogantDuremudira:
+                                            case Numbers.QuestIDArrogantDuremudiraRepel:
+                                                monsterID = 167;
+                                                break;
+                                            case Numbers.QuestIDFirstDistrictDuremudira:
+                                            case Numbers.QuestIDSecondDistrictDuremudira:
+                                                monsterID = 132;
+                                                break;
+                                        }
+                                    }
+
+                                    Dictionary<int, int> monsterEntry = new Dictionary<int, int>()
+                                {
+                                    {monsterID, entry.Value.FirstOrDefault().Value},
+                                };
+
+                                    newMonster1StunThresholdDictionary.Add(entry.Key, monsterEntry);
+                                }
+                            }
+
+                            if (monster1PartThresholdDictionary != null)
+                            {
+                                foreach (var entry in monster1PartThresholdDictionary)
+                                {
+                                    var monsterID = entry.Value.FirstOrDefault().Key;
+
+                                    if (dataLoader.Model.IsDure((int)questID) || dataLoader.Model.IsAlternativeQuestName((int)questID))
+                                    {
+                                        switch (questID)
+                                        {
+                                            case Numbers.QuestIDArrogantDuremudira:
+                                            case Numbers.QuestIDArrogantDuremudiraRepel:
+                                                monsterID = 167;
+                                                break;
+                                            case Numbers.QuestIDFirstDistrictDuremudira:
+                                            case Numbers.QuestIDSecondDistrictDuremudira:
+                                                monsterID = 132;
+                                                break;
+                                        }
+                                    }
+
+                                    Dictionary<int, List<int>> monsterEntry = new Dictionary<int, List<int>>()
+                                {
+                                    {monsterID, entry.Value.FirstOrDefault().Value},
+                                };
+
+                                    newMonster1PartThresholdDictionary.Add(entry.Key, monsterEntry);
+                                }
+                            }
+
+                            using (var cmd2 = new SQLiteCommand(conn))
+                            {
+                                cmd2.CommandText = @"UPDATE
+                                                        Quests
+                                                    SET
+                                                        Monster1HPDictionary = @Monster1HPDictionary,
+                                                        Monster1AttackMultiplierDictionary = @Monster1AttackMultiplierDictionary,
+                                                        Monster1DefenseRateictionary = @Monster1DefenseRateictionary,
+                                                        Monster1SizeMultiplierDictionary = @Monster1SizeMultiplierDictionary,
+                                                        Monster1StunThresholdDictionary = @Monster1StunThresholdDictionary,
+                                                        Monster1PartThresholdDictionary = @Monster1PartThresholdDictionary                          WHERE
+                                                        RunID = @RunID";
+                                cmd2.Parameters.AddWithValue("@RunID", runID);
+                                cmd2.Parameters.AddWithValue("@Monster1HPDictionary", newMonster1HPDictionary);
+                                cmd2.Parameters.AddWithValue("@Monster1AttackMultiplierDictionary", newMonster1AttackMultiplierDictionary);
+                                cmd2.Parameters.AddWithValue("@Monster1DefenseRateictionary", newMonster1DefenseRateDictionary);
+                                cmd2.Parameters.AddWithValue("@Monster1SizeMultiplierDictionary", newMonster1SizeMultiplierDictionary);
+                                cmd2.Parameters.AddWithValue("@Monster1StunThresholdDictionary", newMonster1StunThresholdDictionary);
+                                cmd2.Parameters.AddWithValue("@Monster1PartThresholdDictionary", newMonster1PartThresholdDictionary);
+
+                                cmd2.ExecuteNonQuery();
+                            }
+                        }
+                    }
+                }
+
+                using (var cmd1 = new SQLiteCommand(conn))
+                {
+                    cmd1.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_quest_updates
+                        AFTER UPDATE ON Quests
+                        FOR EACH ROW
+                        WHEN NEW.YouTubeID = OLD.YouTubeID
+                        BEGIN
+                            SELECT RAISE(ABORT, 'Cannot update quest fields');
+                        END;";
+                    cmd1.ExecuteNonQuery();
+                }
+
+                // Commit the transaction
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                HandleError(transaction, ex);
+            }
+        }
+
+        Logger.Debug("Updated monster dictionaries in quests table");
     }
 
     private void UpdateQuestsActualOverlayMode(SQLiteConnection conn)
