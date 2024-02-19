@@ -84,7 +84,7 @@ If you record and/or stream with the overlay, the recommended processor is Intel
 
 1. [Download the latest version from the *Releases*](https://github.com/DorielRivalet/mhfz-overlay/releases/latest/download/MHFZ_Overlay-win-Setup.exe).
 2. Make sure *Windows* or your antivirus did not delete the file (because it reads the game's memory, *Windows* might detect it as a trojan, so you might have to get it out of quarantine).
-3. Run `MHFZ_OverlaySetup.exe` **as Administrator**.
+3. Run `MHFZ_Overlay-win-Setup.exe` **as Administrator**.
 4. [Bonk monsters!](https://c.tenor.com/60Tr3Zeg6RkAAAAd/fumo-bonk.gif)
 5. [Be sure to leave some feedback here!](https://forms.gle/hrAVWMcYS5HEo1v7A)
 
