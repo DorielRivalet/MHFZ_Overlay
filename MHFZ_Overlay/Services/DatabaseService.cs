@@ -476,6 +476,17 @@ public sealed class DatabaseService
         var monster1ID = dataLoader.Model.IsAlternativeQuestName() || dataLoader.Model.IsDure() ? dataLoader.Model.AlternativeQuestMonster1ID() : dataLoader.Model.LargeMonster1ID();
         var monster2ID = dataLoader.Model.IsAlternativeQuestName() || dataLoader.Model.IsDure() ? dataLoader.Model.AlternativeQuestMonster2ID() : dataLoader.Model.LargeMonster2ID();
 
+        var s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
+
+        var gameFolderPathStatus = s.GameFolderPath == @"C:\Program Files (x86)\CAPCOM\Monster Hunter Frontier Online" ? "Standard" : "Custom";
+        var mhfdatHash = CalculateFileHash(s.GameFolderPath, @"\dat\mhfdat.bin");
+        var mhfemdHash = CalculateFileHash(s.GameFolderPath, @"\dat\mhfemd.bin");
+        var mhfinfHash = CalculateFileHash(s.GameFolderPath, @"\dat\mhfinf.bin");
+        var mhfsqdHash = CalculateFileHash(s.GameFolderPath, @"\dat\mhfsqd.bin");
+        var mhfodllHash = CalculateFileHash(s.GameFolderPath, @"\mhfo.dll");
+        var mhfohddllHash = CalculateFileHash(s.GameFolderPath, @"\mhfo-hd.dll");
+        var mhfexeHash = CalculateFileHash(s.GameFolderPath, @"\mhf.exe");
+
         // TODO dure timedefint address
         // TODO arrogant is different?
         var timeDefIint = questID != Numbers.QuestIDFirstDistrictDuremudira && questID != Numbers.QuestIDSecondDistrictDuremudira ? dataLoader.Model.TimeDefInt() : Numbers.DuremudiraTimeLimitFrames;
@@ -484,8 +495,6 @@ public sealed class DatabaseService
 
         // Calculate the elapsed time of the quest
         var finalTimeDisplay = TimeService.GetMinutesSecondsMillisecondsFromFrames((long)finalTimeValue);
-
-        var s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
 
         if (!ViewModels.Windows.AddressModel.ValidateGameFolder() || !s.EnableQuestLogging || !dataLoader.Model.QuestCleared)
         {
@@ -941,15 +950,6 @@ public sealed class DatabaseService
 
                     using (var cmd = new SQLiteCommand(sql, conn))
                     {
-                        var gameFolderPathStatus = s.GameFolderPath == @"C:\Program Files (x86)\CAPCOM\Monster Hunter Frontier Online" ? "Standard" : "Custom";
-                        var mhfdatHash = CalculateFileHash(s.GameFolderPath, @"\dat\mhfdat.bin");
-                        var mhfemdHash = CalculateFileHash(s.GameFolderPath, @"\dat\mhfemd.bin");
-                        var mhfinfHash = CalculateFileHash(s.GameFolderPath, @"\dat\mhfinf.bin");
-                        var mhfsqdHash = CalculateFileHash(s.GameFolderPath, @"\dat\mhfsqd.bin");
-                        var mhfodllHash = CalculateFileHash(s.GameFolderPath, @"\mhfo.dll");
-                        var mhfohddllHash = CalculateFileHash(s.GameFolderPath, @"\mhfo-hd.dll");
-                        var mhfexeHash = CalculateFileHash(s.GameFolderPath, @"\mhf.exe");
-
                         var gameFolderData = string.Format(CultureInfo.InvariantCulture,
                             "{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}",
                             createdAt, createdBy, runID,
@@ -2085,7 +2085,31 @@ public sealed class DatabaseService
 
                     Logger.Debug("Inserted into QuestsQuestVariant table");
 
+                    sql = @"INSERT INTO QuestsGamePatch (
+                        mhfdatInfo,
+                        mhfemdInfo,
+                        mhfodllInfo,
+                        mhfohddllInfo,
+                        RunID
+                        ) VALUES (
+                        @mhfdatInfo,
+                        @mhfemdInfo,
+                        @mhfodllInfo,
+                        @mhfohddllInfo,
+                        @RunID
+                        )";
 
+                    using (var cmd = new SQLiteCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@mhfdatInfo", model.GetGamePatchInfo(GamePatchFile.dat, mhfdatHash));
+                        cmd.Parameters.AddWithValue("@mhfemdInfo", model.GetGamePatchInfo(GamePatchFile.emd, mhfemdHash));
+                        cmd.Parameters.AddWithValue("@mhfodllInfo", model.GetGamePatchInfo(GamePatchFile.dll, mhfodllHash));
+                        cmd.Parameters.AddWithValue("@mhfohddllInfo", model.GetGamePatchInfo(GamePatchFile.hddll, mhfohddllHash));
+                        cmd.Parameters.AddWithValue("@RunID", runID);
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    Logger.Debug("Inserted into QuestsGamePatch table");
 
 
                     // TODO more tables
