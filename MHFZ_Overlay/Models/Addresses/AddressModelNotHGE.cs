@@ -599,7 +599,7 @@ public sealed class AddressModelNotHGE : AddressModel
     public override int AlternativeMonster1Part10() => 1;
 
     /// <inheritdoc/>
-    public override int DivaSkill() => this.M.ReadByte("mhfo.dll+6104368");
+    public override int DivaSkill() => this.M.ReadByte("mhfo.dll+5A95364");
 
     /// <inheritdoc/>
     public override int StarGrades() => this.M.ReadByte("mhfo.dll+5B3D086");

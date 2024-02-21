@@ -689,7 +689,7 @@ public sealed class AddressModelHGE : AddressModel
     public override int AlternativeMonster1Part10() => 1;
 
     /// <inheritdoc/>
-    public override int DivaSkill() => this.M.ReadByte("mhfo-hd.dll+ED3EB08");
+    public override int DivaSkill() => this.M.ReadByte("mhfo-hd.dll+E6CCF24"); // also "mhfo-hd.dll"+ED8BE60
 
     /// <inheritdoc/>
     public override int StarGrades() => this.M.ReadByte("mhfo-hd.dll+E774CAE");
