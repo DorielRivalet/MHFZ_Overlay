@@ -842,3 +842,32 @@ public enum DivaPrayerGemColor
     Green,
     Blue,
 }
+
+public enum GamePatch
+{
+    Vanilla,
+    Seph,
+    Ezemania,
+    Otyav1_1,
+    Tenrou,
+    Mezelounge,
+    /// <summary>
+    /// TODO
+    /// </summary>
+    Standard,
+}
+
+public enum GamePatchLanguage
+{
+    JP,
+    EN,
+    FR,
+}
+
+public enum GamePatchFile
+{
+    dat,
+    emd,
+    dll,
+    hddll,
+}

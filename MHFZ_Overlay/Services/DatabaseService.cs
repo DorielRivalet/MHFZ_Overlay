@@ -941,19 +941,19 @@ public sealed class DatabaseService
 
                     using (var cmd = new SQLiteCommand(sql, conn))
                     {
-                        var gameFolderPath = s.GameFolderPath;
-                        var mhfdatHash = CalculateFileHash(gameFolderPath, @"\dat\mhfdat.bin");
-                        var mhfemdHash = CalculateFileHash(gameFolderPath, @"\dat\mhfemd.bin");
-                        var mhfinfHash = CalculateFileHash(gameFolderPath, @"\dat\mhfinf.bin");
-                        var mhfsqdHash = CalculateFileHash(gameFolderPath, @"\dat\mhfsqd.bin");
-                        var mhfodllHash = CalculateFileHash(gameFolderPath, @"\mhfo.dll");
-                        var mhfohddllHash = CalculateFileHash(gameFolderPath, @"\mhfo-hd.dll");
-                        var mhfexeHash = CalculateFileHash(gameFolderPath, @"\mhf.exe");
+                        var gameFolderPathStatus = s.GameFolderPath == @"C:\Program Files (x86)\CAPCOM\Monster Hunter Frontier Online" ? "Standard" : "Custom";
+                        var mhfdatHash = CalculateFileHash(s.GameFolderPath, @"\dat\mhfdat.bin");
+                        var mhfemdHash = CalculateFileHash(s.GameFolderPath, @"\dat\mhfemd.bin");
+                        var mhfinfHash = CalculateFileHash(s.GameFolderPath, @"\dat\mhfinf.bin");
+                        var mhfsqdHash = CalculateFileHash(s.GameFolderPath, @"\dat\mhfsqd.bin");
+                        var mhfodllHash = CalculateFileHash(s.GameFolderPath, @"\mhfo.dll");
+                        var mhfohddllHash = CalculateFileHash(s.GameFolderPath, @"\mhfo-hd.dll");
+                        var mhfexeHash = CalculateFileHash(s.GameFolderPath, @"\mhf.exe");
 
                         var gameFolderData = string.Format(CultureInfo.InvariantCulture,
                             "{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}",
                             createdAt, createdBy, runID,
-                            gameFolderPath, mhfdatHash, mhfemdHash,
+                            gameFolderPathStatus, mhfdatHash, mhfemdHash,
                             mhfinfHash, mhfsqdHash, mhfodllHash,
                             mhfohddllHash, mhfexeHash);
                         var gameFolderHash = CalculateStringHash(gameFolderData);
@@ -962,7 +962,7 @@ public sealed class DatabaseService
                         cmd.Parameters.AddWithValue("@CreatedAt", createdAt);
                         cmd.Parameters.AddWithValue("@CreatedBy", createdBy);
                         cmd.Parameters.AddWithValue("@RunID", runID);
-                        cmd.Parameters.AddWithValue("@GameFolderPath", gameFolderPath);
+                        cmd.Parameters.AddWithValue("@GameFolderPath", gameFolderPathStatus);
                         cmd.Parameters.AddWithValue("@mhfdatHash", mhfdatHash);
                         cmd.Parameters.AddWithValue("@mhfemdHash", mhfemdHash);
                         cmd.Parameters.AddWithValue("@mhfinfHash", mhfinfHash);
@@ -3145,6 +3145,26 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
                 {
                     cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_quests_quest_variant_deletion
                         AFTER DELETE ON QuestsQuestVariant
+                        BEGIN
+                          SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
+                        END;";
+                    cmd.ExecuteNonQuery();
+                }
+
+                using (var cmd = new SQLiteCommand(conn))
+                {
+                    cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_quests_game_patch_updates
+                        AFTER UPDATE ON QuestsGamePatch
+                        BEGIN
+                          SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
+                        END;";
+                    cmd.ExecuteNonQuery();
+                }
+
+                using (var cmd = new SQLiteCommand(conn))
+                {
+                    cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_quests_game_patch_deletion
+                        AFTER DELETE ON QuestsGamePatch
                         BEGIN
                           SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
                         END;";
@@ -6166,6 +6186,20 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                 QuestVariant2 INTEGER NOT NULL DEFAULT 0,
                 QuestVariant3 INTEGER NOT NULL DEFAULT 0,
                 QuestVariant4 INTEGER NOT NULL DEFAULT 0,
+                RunID INTEGER NOT NULL,
+                FOREIGN KEY(RunID) REFERENCES Quests(RunID)
+                )";
+                using (var cmd = new SQLiteCommand(sql, conn))
+                {
+                    cmd.ExecuteNonQuery();
+                }
+
+                sql = @"CREATE TABLE IF NOT EXISTS QuestsGamePatch(
+                QuestsGamePatchID INTEGER PRIMARY KEY AUTOINCREMENT,
+                mhfdatInfo TEXT NOT NULL DEFAULT '',
+                mhfemdInfo TEXT NOT NULL DEFAULT '',
+                mhfodllInfo TEXT NOT NULL DEFAULT '',
+                mhfohddllInfo TEXT NOT NULL DEFAULT '',
                 RunID INTEGER NOT NULL,
                 FOREIGN KEY(RunID) REFERENCES Quests(RunID)
                 )";
@@ -17732,6 +17766,167 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
 
         UpdateQuestsObjectiveImage(connection);
         UpdateQuestsMonsterDictionaries(connection, dataLoader);
+        FillQuestsGamePatch(connection, dataLoader);
+
+        // for privacy
+        ChangeGameFolderPath(connection);
+    }
+
+    private void ChangeGameFolderPath(SQLiteConnection conn)
+    {
+        if (string.IsNullOrEmpty(this.dataSource))
+        {
+            Logger.Warn(CultureInfo.InvariantCulture, "Cannot change game folder path. dataSource: {0}", this.dataSource);
+            return;
+        }
+
+        // Start a transaction
+        using (var transaction = conn.BeginTransaction())
+        {
+            try
+            {
+                using (var cmd0 = new SQLiteCommand(conn))
+                {
+                    cmd0.CommandText = @"DROP TRIGGER IF EXISTS prevent_game_folder_updates";
+                    cmd0.ExecuteNonQuery();
+                }
+
+                using (var cmd = new SQLiteCommand(conn))
+                {
+                    cmd.CommandText = "SELECT * FROM GameFolder";
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            var path = reader["GameFolderPath"]?.ToString() ?? string.Empty;
+                            var runID = long.Parse(reader["RunID"]?.ToString() ?? "0", CultureInfo.InvariantCulture);
+
+                            if (path == string.Empty || path == null || runID == 0)
+                            {
+                                continue;
+                            }
+
+                            var newPath = path == @"C:\Program Files (x86)\CAPCOM\Monster Hunter Frontier Online" ? "Standard" : "Custom";
+
+                            using (var cmd2 = new SQLiteCommand(conn))
+                            {
+                                cmd2.CommandText =
+                                @"UPDATE GameFolder SET GameFolderPath = @GameFolderPath WHERE RunID = @RunID";
+                                cmd2.Parameters.AddWithValue("@RunID", runID);
+                                cmd2.Parameters.AddWithValue("@GameFolderPath", newPath);
+
+                                cmd2.ExecuteNonQuery();
+                            }
+                        }
+                    }
+                }
+
+                using (var cmd1 = new SQLiteCommand(conn))
+                {
+                    cmd1.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_game_folder_updates
+                        AFTER UPDATE ON GameFolder
+                        BEGIN
+                          SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
+                        END;";
+                    cmd1.ExecuteNonQuery();
+                }
+
+                // Commit the transaction
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                HandleError(transaction, ex);
+            }
+        }
+
+        Logger.Debug("Changed game folder paths in GameFolder table");
+    }
+
+    private void FillQuestsGamePatch(SQLiteConnection conn, DataLoader dataLoader)
+    {
+        if (string.IsNullOrEmpty(this.dataSource))
+        {
+            Logger.Warn(CultureInfo.InvariantCulture, "Cannot fill game patch. dataSource: {0}", this.dataSource);
+            return;
+        }
+
+        // Start a transaction
+        using (var transaction = conn.BeginTransaction())
+        {
+            try
+            {
+                using (var cmd0 = new SQLiteCommand(conn))
+                {
+                    cmd0.CommandText = @"DROP TRIGGER IF EXISTS prevent_quests_game_patch_updates";
+                    cmd0.ExecuteNonQuery();
+                }
+
+                using (var cmd = new SQLiteCommand(conn))
+                {
+                    cmd.CommandText = "SELECT * FROM GameFolder";
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            var runID = long.Parse(reader["RunID"]?.ToString() ?? "0", CultureInfo.InvariantCulture);
+                            var dat = reader["mhfdatHash"]?.ToString() ?? "0";
+                            var emd = reader["mhfemdHash"]?.ToString() ?? "0";
+                            var mhfodll = reader["mhfodllHash"]?.ToString() ?? "0";
+                            var mhfohddll = reader["mhfohddllHash"]?.ToString() ?? "0";
+
+                            if (runID == 0)
+                            {
+                                continue;
+                            }
+
+                            using (var cmd2 = new SQLiteCommand(conn))
+                            {
+                                cmd2.CommandText =
+                                @"INSERT INTO
+                                    QuestsGamePatch(RunID, mhfdatInfo, mhfemdInfo, mhfodllInfo, mhfohddllInfo)
+                                VALUES
+                                    (
+                                    @RunID,
+                                    @mhfdatInfo,
+                                    @mhfemdInfo,
+                                    @mhfodllInfo,
+                                    @mhfohddllInfo
+                                    )";
+                                cmd2.Parameters.AddWithValue("@RunID", runID);
+                                cmd2.Parameters.AddWithValue("@mhfdatInfo", dataLoader.Model.GetGamePatchInfo(GamePatchFile.dat, dat));
+                                cmd2.Parameters.AddWithValue("@mhfemdInfo", dataLoader.Model.GetGamePatchInfo(GamePatchFile.emd, emd));
+                                cmd2.Parameters.AddWithValue("@mhfodllInfo", dataLoader.Model.GetGamePatchInfo(GamePatchFile.dll, mhfodll));
+                                cmd2.Parameters.AddWithValue("@mhfohddllInfo", dataLoader.Model.GetGamePatchInfo(GamePatchFile.hddll, mhfohddll));
+
+                                cmd2.ExecuteNonQuery();
+                            }
+                        }
+                    }
+                }
+
+                using (var cmd1 = new SQLiteCommand(conn))
+                {
+                    cmd1.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_quests_game_patch_updates
+                        AFTER UPDATE ON QuestsGamePatch
+                        BEGIN
+                          SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
+                        END;";
+                    cmd1.ExecuteNonQuery();
+                }
+
+                // Commit the transaction
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                HandleError(transaction, ex);
+            }
+        }
+
+        Logger.Debug("Filled game patches values in table");
     }
 
     /// <summary>

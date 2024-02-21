@@ -1956,6 +1956,48 @@ TreeScope.Children, condition);
         return this.IsNotRoad();
     }
 
+    public string GetGamePatchInfo(GamePatchFile file, string hash)
+    {
+        var result = "Unknown";
+
+        switch (file)
+        {
+            case GamePatchFile.dat:
+                QuestsGamePatches.datHashInfo.TryGetValue(hash, out var datInfo);
+                if (datInfo != null)
+                {
+                    var a = datInfo.Keys.FirstOrDefault();
+                    var b = datInfo.Keys.FirstOrDefault().ToString();
+
+                    return $"{datInfo.Keys.FirstOrDefault().ToString()}-{datInfo.Values.FirstOrDefault().ToString()}";
+                }
+                break;
+            case GamePatchFile.emd:
+                QuestsGamePatches.datHashInfo.TryGetValue(hash, out var emdInfo);
+                if (emdInfo != null)
+                {
+                    return $"{emdInfo.Keys.FirstOrDefault().ToString()}-{emdInfo.Values.FirstOrDefault().ToString()}";
+                }
+                break;
+            case GamePatchFile.dll:
+                QuestsGamePatches.datHashInfo.TryGetValue(hash, out var dllInfo);
+                if (dllInfo != null)
+                {
+                    return $"{dllInfo.Keys.FirstOrDefault().ToString()}-{dllInfo.Values.FirstOrDefault().ToString()}";
+                }
+                break;
+            case GamePatchFile.hddll:
+                QuestsGamePatches.datHashInfo.TryGetValue(hash, out var hddllInfo);
+                if (hddllInfo != null)
+                {
+                    return $"{hddllInfo.Keys.FirstOrDefault().ToString()}-{hddllInfo.Values.FirstOrDefault().ToString()}";
+                }
+                break;
+        }
+
+        return result;
+    }
+
     // assumption: it follows ferias' monster part order top to bottom, presumably (e.g. head is at the top, so part 0 is head, and so on)
     // grouping by skeleton too
 
