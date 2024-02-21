@@ -8107,6 +8107,56 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
         return data;
     }
 
+    public QuestsGamePatch GetQuestsGamePatch(long runID)
+    {
+        QuestsGamePatch data = new();
+        if (string.IsNullOrEmpty(this.dataSource))
+        {
+            Logger.Warn(CultureInfo.InvariantCulture, "Cannot get game patch. dataSource: {0}", this.dataSource);
+            return data;
+        }
+
+        // Use a SQL query to retrieve the Quest for the specific RunID from the database
+        using (var conn = new SQLiteConnection(this.dataSource))
+        {
+            conn.Open();
+            using (var transaction = conn.BeginTransaction())
+            {
+                try
+                {
+                    using (var cmd = new SQLiteCommand("SELECT * FROM QuestsGamePatch WHERE RunID = @runID", conn))
+                    {
+                        cmd.Parameters.AddWithValue("@runID", runID);
+
+                        using (var reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                data = new QuestsGamePatch
+                                {
+                                    QuestsGamePatchID = long.Parse(reader["QuestsGamePatchID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    mhfdatInfo = reader["mhfdatInfo"]?.ToString() ?? "Unknown",
+                                    mhfemdInfo = reader["mhfemdInfo"]?.ToString() ?? "Unknown",
+                                    mhfodllInfo = reader["mhfodllInfo"]?.ToString() ?? "Unknown",
+                                    mhfohddllInfo = reader["mhfohddllInfo"]?.ToString() ?? "Unknown",
+                                    RunID = long.Parse(reader["RunID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                };
+                            }
+                        }
+                    }
+
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    HandleError(transaction, ex);
+                }
+            }
+        }
+
+        return data;
+    }
+
     private Quest GetLastQuest(SQLiteConnection conn)
     {
         Quest quest = new();
@@ -18045,7 +18095,7 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
                         {
                             var questID = long.Parse(reader["QuestID"]?.ToString() ?? "0", CultureInfo.InvariantCulture);
 
-                            if (questID != Numbers.QuestIDFirstDistrictDuremudira || questID != Numbers.QuestIDSecondDistrictDuremudira)
+                            if (questID != Numbers.QuestIDFirstDistrictDuremudira && questID != Numbers.QuestIDSecondDistrictDuremudira && questID != Numbers.QuestIDArrogantDuremudira && questID != Numbers.QuestIDArrogantDuremudiraRepel)
                             {
                                 continue;
                             }
@@ -18058,7 +18108,7 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
                             }
 
                             string monster1AttackMultiplierString = reader["Monster1AttackMultiplierDictionary"].ToString() ?? "{}";
-                            string monster1DefenseRateString = reader["Monster1DefenseRateictionary"].ToString() ?? "{}";
+                            string monster1DefenseRateString = reader["Monster1DefenseRateDictionary"].ToString() ?? "{}";
                             string monster1SizeMultiplierString = reader["Monster1SizeMultiplierDictionary"].ToString() ?? "{}";
                             string monster1StunThresholdString = reader["Monster1StunThresholdDictionary"].ToString() ?? "{}";
                             string monster1PartThresholdString = reader["Monster1PartThresholdDictionary"].ToString() ?? "{}";
@@ -18066,9 +18116,9 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
                             var runID = long.Parse(reader["RunID"]?.ToString() ?? "0", CultureInfo.InvariantCulture);
 
                             var monster1HPDictionary = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int, int>>>(monster1HPString);
-                            var monster1AttackMultiplierDictionary = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int, int>>>(monster1AttackMultiplierString);
-                            var monster1DefenseRateDictionary = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int, int>>>(monster1DefenseRateString);
-                            var monster1SizeMultiplierDictionary = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int, int>>>(monster1SizeMultiplierString);
+                            var monster1AttackMultiplierDictionary = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int, double>>>(monster1AttackMultiplierString);
+                            var monster1DefenseRateDictionary = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int, double>>>(monster1DefenseRateString);
+                            var monster1SizeMultiplierDictionary = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int, double>>>(monster1SizeMultiplierString);
                             var monster1StunThresholdDictionary = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int, int>>>(monster1StunThresholdString);
                             var monster1PartThresholdDictionary = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int, List<int>>>>(monster1PartThresholdString);
 
@@ -18078,9 +18128,9 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
                             }
 
                             Dictionary<int, Dictionary<int, int>> newMonster1HPDictionary = new();
-                            Dictionary<int, Dictionary<int, int>> newMonster1AttackMultiplierDictionary = new();
-                            Dictionary<int, Dictionary<int, int>> newMonster1DefenseRateDictionary = new();
-                            Dictionary<int, Dictionary<int, int>> newMonster1SizeMultiplierDictionary = new();
+                            Dictionary<int, Dictionary<int, double>> newMonster1AttackMultiplierDictionary = new();
+                            Dictionary<int, Dictionary<int, double>> newMonster1DefenseRateDictionary = new();
+                            Dictionary<int, Dictionary<int, double>> newMonster1SizeMultiplierDictionary = new();
                             Dictionary<int, Dictionary<int, int>> newMonster1StunThresholdDictionary = new();
                             Dictionary<int, Dictionary<int, List<int>>> newMonster1PartThresholdDictionary = new();
 
@@ -18135,7 +18185,7 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
                                         }
                                     }
 
-                                    Dictionary<int, int> monsterEntry = new Dictionary<int, int>()
+                                    Dictionary<int, double> monsterEntry = new Dictionary<int, double>()
                                 {
                                     {monsterID, entry.Value.FirstOrDefault().Value},
                                 };
@@ -18165,7 +18215,7 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
                                         }
                                     }
 
-                                    Dictionary<int, int> monsterEntry = new Dictionary<int, int>()
+                                    Dictionary<int, double> monsterEntry = new Dictionary<int, double>()
                                 {
                                     {monsterID, entry.Value.FirstOrDefault().Value},
                                 };
@@ -18195,7 +18245,7 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
                                         }
                                     }
 
-                                    Dictionary<int, int> monsterEntry = new Dictionary<int, int>()
+                                    Dictionary<int, double> monsterEntry = new Dictionary<int, double>()
                                 {
                                     {monsterID, entry.Value.FirstOrDefault().Value},
                                 };
@@ -18271,18 +18321,18 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
                                                     SET
                                                         Monster1HPDictionary = @Monster1HPDictionary,
                                                         Monster1AttackMultiplierDictionary = @Monster1AttackMultiplierDictionary,
-                                                        Monster1DefenseRateictionary = @Monster1DefenseRateictionary,
+                                                        Monster1DefenseRateDictionary = @Monster1DefenseRateDictionary,
                                                         Monster1SizeMultiplierDictionary = @Monster1SizeMultiplierDictionary,
                                                         Monster1StunThresholdDictionary = @Monster1StunThresholdDictionary,
                                                         Monster1PartThresholdDictionary = @Monster1PartThresholdDictionary                          WHERE
                                                         RunID = @RunID";
                                 cmd2.Parameters.AddWithValue("@RunID", runID);
-                                cmd2.Parameters.AddWithValue("@Monster1HPDictionary", newMonster1HPDictionary);
-                                cmd2.Parameters.AddWithValue("@Monster1AttackMultiplierDictionary", newMonster1AttackMultiplierDictionary);
-                                cmd2.Parameters.AddWithValue("@Monster1DefenseRateictionary", newMonster1DefenseRateDictionary);
-                                cmd2.Parameters.AddWithValue("@Monster1SizeMultiplierDictionary", newMonster1SizeMultiplierDictionary);
-                                cmd2.Parameters.AddWithValue("@Monster1StunThresholdDictionary", newMonster1StunThresholdDictionary);
-                                cmd2.Parameters.AddWithValue("@Monster1PartThresholdDictionary", newMonster1PartThresholdDictionary);
+                                cmd2.Parameters.AddWithValue("@Monster1HPDictionary", JsonConvert.SerializeObject(newMonster1HPDictionary));
+                                cmd2.Parameters.AddWithValue("@Monster1AttackMultiplierDictionary", JsonConvert.SerializeObject(newMonster1AttackMultiplierDictionary));
+                                cmd2.Parameters.AddWithValue("@Monster1DefenseRateDictionary", JsonConvert.SerializeObject(newMonster1DefenseRateDictionary));
+                                cmd2.Parameters.AddWithValue("@Monster1SizeMultiplierDictionary", JsonConvert.SerializeObject(newMonster1SizeMultiplierDictionary));
+                                cmd2.Parameters.AddWithValue("@Monster1StunThresholdDictionary", JsonConvert.SerializeObject(newMonster1StunThresholdDictionary));
+                                cmd2.Parameters.AddWithValue("@Monster1PartThresholdDictionary", JsonConvert.SerializeObject(newMonster1PartThresholdDictionary));
 
                                 cmd2.ExecuteNonQuery();
                             }

@@ -843,6 +843,9 @@ public enum DivaPrayerGemColor
     Blue,
 }
 
+/// <summary>
+/// Creator, origin or purpose.
+/// </summary>
 public enum GamePatch
 {
     Vanilla,
@@ -855,13 +858,23 @@ public enum GamePatch
     /// TODO
     /// </summary>
     Standard,
+    FiveMusous,
 }
 
+/// <summary>
+/// https://en.wikipedia.org/wiki/List_of_ISO_639_language_codes. Could also describe the origin rather than language.
+/// </summary>
 public enum GamePatchLanguage
 {
-    JP,
+    JA,
     EN,
     FR,
+    ZH,
+    ES,
+    PT,
+    RU,
+    EL,
+    DE,
 }
 
 public enum GamePatchFile

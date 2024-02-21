@@ -14,6 +14,7 @@ using System.Drawing.Imaging;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Security.Policy;
 using System.Security.RightsManagement;
 using System.Text;
 using System.Windows;
@@ -1966,28 +1967,28 @@ TreeScope.Children, condition);
                 QuestsGamePatches.datHashInfo.TryGetValue(hash, out var datInfo);
                 if (datInfo != null)
                 {
-                    var a = datInfo.Keys.FirstOrDefault();
-                    var b = datInfo.Keys.FirstOrDefault().ToString();
+                    //var a = datInfo.Keys.FirstOrDefault();
+                    //var b = datInfo.Keys.FirstOrDefault().ToString();
 
                     return $"{datInfo.Keys.FirstOrDefault().ToString()}-{datInfo.Values.FirstOrDefault().ToString()}";
                 }
                 break;
             case GamePatchFile.emd:
-                QuestsGamePatches.datHashInfo.TryGetValue(hash, out var emdInfo);
+                QuestsGamePatches.emdHashInfo.TryGetValue(hash, out var emdInfo);
                 if (emdInfo != null)
                 {
                     return $"{emdInfo.Keys.FirstOrDefault().ToString()}-{emdInfo.Values.FirstOrDefault().ToString()}";
                 }
                 break;
             case GamePatchFile.dll:
-                QuestsGamePatches.datHashInfo.TryGetValue(hash, out var dllInfo);
+                QuestsGamePatches.mhfodllHashInfo.TryGetValue(hash, out var dllInfo);
                 if (dllInfo != null)
                 {
                     return $"{dllInfo.Keys.FirstOrDefault().ToString()}-{dllInfo.Values.FirstOrDefault().ToString()}";
                 }
                 break;
             case GamePatchFile.hddll:
-                QuestsGamePatches.datHashInfo.TryGetValue(hash, out var hddllInfo);
+                QuestsGamePatches.mhfohddllHashInfo.TryGetValue(hash, out var hddllInfo);
                 if (hddllInfo != null)
                 {
                     return $"{hddllInfo.Keys.FirstOrDefault().ToString()}-{hddllInfo.Values.FirstOrDefault().ToString()}";
@@ -8219,6 +8220,14 @@ TreeScope.Children, condition);
                 showGouBoost = " (After Gou/Muscle Boost)";
             }
 
+            var s = (Settings)Application.Current.TryFindResource("Settings");
+
+            var gameFolderPathStatus = s.GameFolderPath == @"C:\Program Files (x86)\CAPCOM\Monster Hunter Frontier Online" ? "Standard" : "Custom";
+            var mhfdatHash = DatabaseService.CalculateFileHash(s.GameFolderPath, @"\dat\mhfdat.bin");
+            var mhfemdHash = DatabaseService.CalculateFileHash(s.GameFolderPath, @"\dat\mhfemd.bin");
+            var mhfodllHash = DatabaseService.CalculateFileHash(s.GameFolderPath, @"\mhfo.dll");
+            var mhfohddllHash = DatabaseService.CalculateFileHash(s.GameFolderPath, @"\mhfo-hd.dll");
+
             // zp in bold for markdown
             // fruits and speedrunner items also in bold
             var stats = string.Format(
@@ -8291,9 +8300,15 @@ Health {HalkHealth()}
 Attack {HalkAttack()}
 Defense {HalkDefense()}
 Intellect {HalkIntellect()}
-{HalkSkill1()} | {HalkSkill2()} | {HalkSkill3()}
+{(HalkSkill1() == 0 ? "None" : EZlion.Mapper.SkillHalk.IDName[HalkSkill1()])} | {(HalkSkill2() == 0 ? "None" : EZlion.Mapper.SkillHalk.IDName[HalkSkill2()])} | {(HalkSkill3() == 0 ? "None" : EZlion.Mapper.SkillHalk.IDName[HalkSkill3()])}
 
 Overlay Hash: {DatabaseManagerInstance.GetOverlayHash()}
+
+Game Patch Information:
+dat: {GetGamePatchInfo(GamePatchFile.dat, mhfdatHash)}
+emd: {GetGamePatchInfo(GamePatchFile.emd, mhfemdHash)}
+dll: {GetGamePatchInfo(GamePatchFile.dll, mhfodllHash)}
+hddll: {GetGamePatchInfo(GamePatchFile.hddll, mhfohddllHash)}
 ");
             this.SavedGearStats = stats;
             var formattedStats = string.Format(
@@ -8366,9 +8381,15 @@ Health {HalkHealth()}
 Attack {HalkAttack()}
 Defense {HalkDefense()}
 Intellect {HalkIntellect()}
-{HalkSkill1()} | {HalkSkill2()} | {HalkSkill3()}
+{(HalkSkill1() == 0 ? "None" : EZlion.Mapper.SkillHalk.IDName[HalkSkill1()])} | {(HalkSkill2() == 0 ? "None" : EZlion.Mapper.SkillHalk.IDName[HalkSkill2()])} | {(HalkSkill3() == 0 ? "None" : EZlion.Mapper.SkillHalk.IDName[HalkSkill3()])}
 
 **Overlay Hash:** {DatabaseManagerInstance.GetOverlayHash()}
+
+**Game Patch Information:**
+dat: {GetGamePatchInfo(GamePatchFile.dat, mhfdatHash)}
+emd: {GetGamePatchInfo(GamePatchFile.emd, mhfemdHash)}
+dll: {GetGamePatchInfo(GamePatchFile.dll, mhfodllHash)}
+hddll: {GetGamePatchInfo(GamePatchFile.hddll, mhfohddllHash)}
 ");
             this.MarkdownSavedGearStats = formattedStats;
             return stats;
@@ -8445,142 +8466,96 @@ Intellect {HalkIntellect()}
             var halkSkill2 = halk.HalkSkill2 == null ? "None" : EZlion.Mapper.SkillHalk.IDName[(int)halk.HalkSkill2];
             var halkSkill3 = halk.HalkSkill3 == null ? "None" : EZlion.Mapper.SkillHalk.IDName[(int)halk.HalkSkill3];
 
+            var courseInfo = $"Main: {GetMainCourses(courses.Rights)}\nAdditional: {GetAdditionalCourses(courses.Rights)}";
+            var patchInfo = DatabaseManagerInstance.GetQuestsGamePatch((long)runID);
+
             // TODO: fix
+            // TODO partnyaBagItems
             // var partnyaBagItems = GetItemsForRunID(new int[] { (int)partnyaBag.Item1ID, (int)partnyaBag.Item2ID, (int)partnyaBag.Item3ID, (int)partnyaBag.Item4ID, (int)partnyaBag.Item5ID, (int)partnyaBag.Item6ID, (int)partnyaBag.Item7ID, (int)partnyaBag.Item8ID, (int)partnyaBag.Item9ID, (int)partnyaBag.Item10ID });
             return string.Format(
                 CultureInfo.InvariantCulture,
-                @"{0} {1}({2}){3}
+                $@"{createdBy} {weaponClass}({gender}){metadata}
 
-Set Name: {4}
-{5}: {6}
-Head: {7}
-Chest: {8}
-Arms: {9}
-Waist: {10}
-Legs: {11}
-Cuffs: {12}
+Set Name: {gearName}
+{weaponName}: {realweaponName}
+Head: {head}
+Chest: {chest}
+Arms: {arms}
+Waist: {waist}
+Legs: {legs}
+Cuffs: {cuffs}
 
-Run Date: {13} | Run Hash: {14}
+Run Date: {date} | Run Hash: {hash}
 
 Zenith Skills:
-{15}
+{zenithSkillsList}
 
 Automatic Skills:
-{16}
+{automaticSkillsList}
 
-Active Skills{17}:
-{18}
+Active Skills{gouBoost}:
+{armorSkills}
 
 Caravan Skills:
-{19}
+{caravanSkillsList}
 
 Diva:
-{20}
-Song {21}
+{(divaSkill == "None" ? "No Skill" : divaSkill)}
+Song {(diva.DivaSongBuffOn > 0 ? "ON" : "OFF")}
 
 Diva Prayer Gems:
-{22}
+{GetDivaPrayerGems(diva)}
 
 Guild:
-{23}
-{24}
+{guildFood}
+{GetGuildPoogieEffect(guildPoogie)}
 
 Style Rank:
-{25}
+{styleRankSkillsList}
 
 Items:
-{26}
+{inventory}
 
 Ammo:
-{27}
+{ammo}
 
 Poogie Item:
-{28}
+{poogieItem}
 
 Road/Duremudira Skills:
-{29}
+{roadDureSkillsList}
 
-Quest: {30}
-{31} {32} {33}
-Category: {34}
-Party Size: {35}
-Mode: {36}
-Active Feature {37}
+Quest: {questName}
+{questObjectiveType} {questObjectiveQuantity} {questObjectiveName}
+Category: {questCategory}
+Party Size: {partySize}
+Mode: {toggleModeName}
+Active Feature {(activeFeatureState == true ? "ON" : "OFF")}
 
 Courses:
-{38}
+{courseInfo}
 
 Halk:
-{39}
-Halk Pot {40}
-LV{41}
-Element Type {42}
-Status Type {43}
-Intimacy {44}
-Health {45}
-Attack {46}
-Defense {47}
-Intellect {48}
-{49} | {50} | {51}
+{(halk.HalkOn > 0 ? "Active" : "Inactive")}
+Halk Pot {(halk.HalkPotEffectOn > 0 ? "ON" : "OFF")}
+LV{halk.HalkLevel}
+Element Type {GetHalkElement(halk)}
+Status Type {GetHalkStatus(halk)}
+Intimacy {halk.HalkIntimacy}
+Health {halk.HalkHealth}
+Attack {halk.HalkAttack}
+Defense {halk.HalkDefense}
+Intellect {halk.HalkIntellect}
+{halkSkill1} | {halkSkill2} | {halkSkill3}
 
-Overlay Hash: {52}
-",
-                createdBy,
-                weaponClass,
-                gender,
-                metadata,
-                gearName,
-                weaponName,
-                realweaponName,
-                head,
-                chest,
-                arms,
-                waist,
-                legs,
-                cuffs,
-                date,
-                hash,
-                zenithSkillsList,
-                automaticSkillsList,
-                gouBoost,
-                armorSkills,
-                caravanSkillsList,
-                divaSkill == "None" ? "No Skill" : divaSkill,
-                diva.DivaSongBuffOn > 0 ? "ON" : "OFF",
-                GetDivaPrayerGems(diva),
-                guildFood,
-                GetGuildPoogieEffect(guildPoogie),
-                styleRankSkillsList,
-                inventory,
-                ammo,
-                poogieItem,
-                roadDureSkillsList,
+Overlay Hash: {overlayHash.OverlayHash}
 
-            // TODO partnyaBagItems
-                questName,
-                questObjectiveType,
-                questObjectiveQuantity,
-                questObjectiveName,
-                questCategory,
-                partySize,
-                toggleModeName,
-                activeFeatureState == true ? "ON" : "OFF",
-                $"Main: {GetMainCourses(courses.Rights)}\nAdditional: {GetAdditionalCourses(courses.Rights)}",
-                halk.HalkOn > 0 ? "Active" : "Inactive",
-                halk.HalkPotEffectOn > 0 ? "ON" : "OFF",
-                halk.HalkLevel,
-                GetHalkElement(halk),
-                GetHalkStatus(halk),
-                halk.HalkIntimacy,
-                halk.HalkHealth,
-                halk.HalkAttack,
-                halk.HalkDefense,
-                halk.HalkIntellect,
-                halkSkill1,
-                halkSkill2,
-                halkSkill3,
-                overlayHash.OverlayHash
-                );
+Game Patch Information:
+dat: {patchInfo.mhfdatInfo}
+emd: {patchInfo.mhfemdInfo}
+dll: {patchInfo.mhfodllInfo}
+hddll: {patchInfo.mhfohddllInfo}
+");
         }
     }
 
