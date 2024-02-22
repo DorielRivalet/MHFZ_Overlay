@@ -291,7 +291,7 @@ public enum QuestVariant2 : uint
     /// </summary>
     Level9999 = 64,
     /// <summary>
-    /// no rasta, partnya, halk, soul revival or similar, halk pot, diva skill, diva prayer gem
+    /// no rasta, partner, partnya, halk, soul revival or similar, halk pot, diva skill, diva prayer gem
     /// </summary>
     Road = 128,
     All = 255,

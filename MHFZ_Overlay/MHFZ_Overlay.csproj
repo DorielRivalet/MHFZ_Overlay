@@ -21,7 +21,7 @@
     <Product>MHFZ Overlay</Product>
     <Copyright>Doriel Rivalet</Copyright>
     <Authors>Doriel Rivalet</Authors>
-    <Version>0.36.1</Version>
+    <Version>0.37.0</Version>
     <PackageProjectUrl>https://github.com/DorielRivalet/mhfz-overlay</PackageProjectUrl>
     <RepositoryUrl>https://github.com/DorielRivalet/mhfz-overlay.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
@@ -1954,27 +1954,27 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="NLog" Version="5.2.8" />
     <PackageReference Include="NLog.Extensions.Logging" Version="5.3.8" />
-    <PackageReference Include="NuGet.CommandLine" Version="6.8.0">
+    <PackageReference Include="NuGet.CommandLine" Version="6.9.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Octokit" Version="9.1.2" />
-    <PackageReference Include="RESTCountries.NET" Version="3.0.1" />
+    <PackageReference Include="RESTCountries.NET" Version="3.1.0" />
     <PackageReference Include="ShowMeTheXAML.MSBuild" Version="2.0.0" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="System.Data.SQLite.Core" Version="1.0.118" />
-    <PackageReference Include="System.Drawing.Common" Version="8.0.1" />
-    <PackageReference Include="Velopack" Version="0.0.320" />
+    <PackageReference Include="System.Drawing.Common" Version="8.0.2" />
+    <PackageReference Include="Velopack" Version="0.0.327" />
     <PackageReference Include="VirtualizingWrapPanel" Version="2.0.5" />
     <PackageReference Include="WPF-UI" Version="3.0.0" />
     <PackageReference Include="WPF-UI.Tray" Version="3.0.0-preview.11" />
     <PackageReference Include="WpfAnimatedGif" Version="2.0.2" />
-    <PackageReference Include="XamlAnimatedGif" Version="2.2.1" />
+    <PackageReference Include="XamlAnimatedGif" Version="2.2.3" />
     <PackageReference Include="XInputium" Version="1.2.0" />
-    <PackageReference Include="xunit" Version="2.6.6" />
+    <PackageReference Include="xunit" Version="2.7.0" />
   </ItemGroup>
 
   <ItemGroup>

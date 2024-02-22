@@ -1,5 +1,32 @@
 
 
+## [0.37.0](https://github.com/DorielRivalet/MHFZ_Overlay/compare/v0.36.1...v0.37.0) (2024-02-22)
+
+
+### Features
+
+* add game patch info ([a7def9e](https://github.com/DorielRivalet/MHFZ_Overlay/commit/a7def9eb1cf068c4c81fce3e2716b75e55809465))
+* add game patch information and hide paths ([20f190e](https://github.com/DorielRivalet/MHFZ_Overlay/commit/20f190e64a675660b100534386fc74a522e87739)), closes [DorielRivalet/mhfz-overlay#300](https://github.com/DorielRivalet/mhfz-overlay/issues/300)
+* add quest restrictions info ([5e18c6e](https://github.com/DorielRivalet/MHFZ_Overlay/commit/5e18c6e5aa018dd02f8c77417363c20cd0fe99d1))
+* **db:** update quest insert ([eb89589](https://github.com/DorielRivalet/MHFZ_Overlay/commit/eb89589654fc12eb359301d4cdb74f5083475918))
+
+
+### Bug Fixes
+
+* alternative quest monster id ([681b762](https://github.com/DorielRivalet/MHFZ_Overlay/commit/681b762f53a2ef5ae86e23c0084369db1944e295)), closes [DorielRivalet/mhfz-overlay#297](https://github.com/DorielRivalet/mhfz-overlay/issues/297)
+* **db:** objective images ([1019011](https://github.com/DorielRivalet/MHFZ_Overlay/commit/1019011384337ce41138dfd307285c623a069752)), closes [DorielRivalet/mhfz-overlay#296](https://github.com/DorielRivalet/mhfz-overlay/issues/296)
+* diva skill address ([6c46d31](https://github.com/DorielRivalet/MHFZ_Overlay/commit/6c46d3194ac3ac06fe6ddebda8faf9215df57992))
+* incorrect run buffs values ([d8b5cc7](https://github.com/DorielRivalet/MHFZ_Overlay/commit/d8b5cc73aec5e1bb959e0e35c99b17909c7b5a2a)), closes [DorielRivalet/mhfz-overlay#281](https://github.com/DorielRivalet/mhfz-overlay/issues/281) [DorielRivalet/mhfz-overlay#282](https://github.com/DorielRivalet/mhfz-overlay/issues/282)
+
+
+### For Developers
+
+* bump version ([138c8a3](https://github.com/DorielRivalet/MHFZ_Overlay/commit/138c8a35bdab5d66160dbfb2018c5678556887e7))
+* **deps:** update nuget packages ([c02aec6](https://github.com/DorielRivalet/MHFZ_Overlay/commit/c02aec6e64f7c4a8b195567d1948b03bf719477d))
+* update .stylecop.json ([bfbe0b1](https://github.com/DorielRivalet/MHFZ_Overlay/commit/bfbe0b13ee4d0736f8d7c9354b3dbdc6bcc27dd9))
+* update README.md ([d9a3bb4](https://github.com/DorielRivalet/MHFZ_Overlay/commit/d9a3bb4b5a27d11c7a24b39faee06263399645d2))
+* update to velopack ([022445f](https://github.com/DorielRivalet/MHFZ_Overlay/commit/022445f32e952eefbbdb0a0f7297301141aa4340))
+
 ## [0.36.1](https://github.com/DorielRivalet/MHFZ_Overlay/compare/v0.35.0...v0.36.1) (2024-02-13)
 
 

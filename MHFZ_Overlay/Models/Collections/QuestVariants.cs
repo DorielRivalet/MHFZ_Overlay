@@ -18,7 +18,7 @@ public static class QuestVariants
     /// <summary>
     /// Defaulty for GRank is 8,0,0,0
     /// </summary>
-    public static ReadOnlyDictionary<int, QuestsQuestVariant> QuestIDVariant { get; } = new(new Dictionary<int, QuestsQuestVariant>
+    public static ReadOnlyDictionary<long, QuestsQuestVariant> QuestIDVariant { get; } = new(new Dictionary<long, QuestsQuestVariant>
         {
             {
                 Numbers.QuestIDStarvingDeviljhoHistoric20m, new QuestsQuestVariant{QuestVariant1 = 8, QuestVariant2 = 32, QuestVariant3 = 3, QuestVariant4 = 0}

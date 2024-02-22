@@ -599,7 +599,7 @@ public sealed class AddressModelNotHGE : AddressModel
     public override int AlternativeMonster1Part10() => 1;
 
     /// <inheritdoc/>
-    public override int DivaSkill() => this.M.ReadByte("mhfo.dll+6104368");
+    public override int DivaSkill() => this.M.ReadByte("mhfo.dll+5A95364");
 
     /// <inheritdoc/>
     public override int StarGrades() => this.M.ReadByte("mhfo.dll+5B3D086");
@@ -626,12 +626,12 @@ public sealed class AddressModelNotHGE : AddressModel
     public override int CaravanScore() => this.M.ReadInt("mhfo.dll+6154FC4");
 
     /// <inheritdoc/>
-    public override int CaravanMonster1ID() => this.M.ReadByte("mhfo.dll+28C2C84");
+    public override int AlternativeQuestMonster1ID() => this.M.ReadByte("mhfo.dll+28C2C84");
 
     // unsure
 
     /// <inheritdoc/>
-    public override int CaravanMonster2ID() => this.M.ReadByte("mhfo.dll+28C2C8C");
+    public override int AlternativeQuestMonster2ID() => this.M.ReadByte("mhfo.dll+28C2C8C");
 
     /// <inheritdoc/>
     public override int BlademasterWeaponID() => this.M.Read2Byte("mhfo.dll+5033F92");

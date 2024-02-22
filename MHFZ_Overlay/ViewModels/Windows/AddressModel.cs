@@ -14,6 +14,8 @@ using System.Drawing.Imaging;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Security.Policy;
+using System.Security.RightsManagement;
 using System.Text;
 using System.Windows;
 using System.Windows.Automation;
@@ -201,9 +203,9 @@ public abstract class AddressModel : INotifyPropertyChanged
                 return true;
             }
 
-            if (this.CaravanOverride())
+            if (this.AlternativeQuestOverride())
             {
-                return this.ShowHPBar(this.CaravanMonster1ID(), this.Monster1HPInt());
+                return this.ShowHPBar(this.AlternativeQuestMonster1ID(), this.Monster1HPInt());
             }
             else
             {
@@ -350,25 +352,25 @@ public abstract class AddressModel : INotifyPropertyChanged
     public abstract int HalkSkill1();
 
     public abstract int HalkSkill2();
-    
+
     public abstract int HalkSkill3();
-    
+
     public abstract int HalkElementNone();
-    
+
     public abstract int HalkFire();
-    
+
     public abstract int HalkThunder();
-    
+
     public abstract int HalkWater();
-    
+
     public abstract int HalkIce();
-    
+
     public abstract int HalkDragon();
-    
+
     public abstract int HalkSleep();
-    
+
     public abstract int HalkParalysis();
-    
+
     public abstract int HalkPoison();
 
     public abstract int RankBand();
@@ -581,10 +583,10 @@ public abstract class AddressModel : INotifyPropertyChanged
 
     public abstract int CaravanScore();
 
-    public abstract int CaravanMonster1ID();
+    public abstract int AlternativeQuestMonster1ID();
 
-    // unsure
-    public abstract int CaravanMonster2ID();
+    // TODO unsure
+    public abstract int AlternativeQuestMonster2ID();
 
     public abstract int BlademasterWeaponID();
 
@@ -1341,7 +1343,7 @@ public abstract class AddressModel : INotifyPropertyChanged
     /// <returns></returns>
     public abstract int ActiveFeature3();
 
-    public abstract int ServerHeartbeatLandAlternative ();
+    public abstract int ServerHeartbeatLandAlternative();
 
     public abstract int ServerHeartbeatLandMain();
 
@@ -1350,31 +1352,31 @@ public abstract class AddressModel : INotifyPropertyChanged
     public abstract int GuildFoodStart();
 
     public abstract int DivaSongStart();
-    
+
     public abstract int GuildPoogie1Skill();
-    
+
     public abstract int GuildPoogie2Skill();
-    
+
     public abstract int GuildPoogie3Skill();
-    
+
     public abstract int DivaPrayerGemRedSkill();
-    
+
     public abstract int DivaPrayerGemRedLevel();
-    
+
     public abstract int DivaPrayerGemYellowSkill();
-    
+
     public abstract int DivaPrayerGemYellowLevel();
-    
+
     public abstract int DivaPrayerGemGreenSkill();
-    
+
     public abstract int DivaPrayerGemGreenLevel();
-    
+
     public abstract int DivaPrayerGemBlueSkill();
-    
+
     public abstract int DivaPrayerGemBlueLevel();
-    
+
     public abstract bool HalkOn();
-    
+
     public abstract bool HalkPotEffectOn();
 
     public abstract int DivaSongFromGuildStart();
@@ -1412,14 +1414,16 @@ public abstract class AddressModel : INotifyPropertyChanged
     {
         get
         {
+            // road
+            // TODO replace all instances of magic numbers
             if (this.QuestID() is 23527 or 23628)
             {
                 return true;
             }
 
-            if (this.CaravanOverride())
+            if (this.AlternativeQuestOverride())
             {
-                return this.ShowHPBar(this.CaravanMonster2ID(), this.Monster2HPInt()) && this.GetNotRoad();
+                return this.ShowHPBar(this.AlternativeQuestMonster2ID(), this.Monster2HPInt()) && this.GetNotRoad();
             }
             else
             {
@@ -1552,11 +1556,11 @@ public abstract class AddressModel : INotifyPropertyChanged
     }
 
     /// <summary>
-    /// Gets the name of the quest.
+    /// Gets the name of the quest for discord.
     /// </summary>
     /// <param name="id">The identifier.</param>
     /// <returns></returns>
-    public static string GetQuestNameFromID(int id)
+    public static string GetDiscordQuestNameFromID(int id)
     {
         if (id > 63421 && DiscordService.ShowDiscordQuestNames())
         {
@@ -1569,6 +1573,13 @@ public abstract class AddressModel : INotifyPropertyChanged
         }
 
         EZlion.Mapper.Quest.IDName.TryGetValue(id, out var questValue1);  // returns true
+
+        return questValue1 + string.Empty;
+    }
+
+    public static string GetQuestName(int questID)
+    {
+        EZlion.Mapper.Quest.IDName.TryGetValue(questID, out var questValue1);  // returns true
 
         return questValue1 + string.Empty;
     }
@@ -1872,27 +1883,37 @@ TreeScope.Children, condition);
         return (value & all) == value;
     }
 
-    public bool CaravanOverride()
+    public bool AlternativeQuestOverride()
     {
         var s = (Settings)Application.Current.TryFindResource("Settings");
         return s.EnableCaravanOverride switch
         {
             "Enabled" => true,
             "Disabled" => false,
-            "Automatic" => this.IsAlternativeQuestName(),
+            "Automatic" => this.IsAlternativeQuestName() || this.IsDure(),
             _ => false,
         };
     }
 
-    private bool QuestNameContainsAlternativeTitle() => GetQuestNameFromID(this.QuestID()).Contains("Daily Limited Quest≫") ||
-            GetQuestNameFromID(this.QuestID()).Contains("Daily Quest≫") ||
-            GetQuestNameFromID(this.QuestID()).Contains("Guild Quest≫") ||
-            GetQuestNameFromID(this.QuestID()).Contains("Interception Base≫") ||
-            GetQuestNameFromID(this.QuestID()).Contains("Interception Quest≫") ||
-            GetQuestNameFromID(this.QuestID()).Contains("Interception Urgent Quest≫") ||
-            GetQuestNameFromID(this.QuestID()).Contains("Great Slaying Quest≫") ||
-            GetQuestNameFromID(this.QuestID()).Contains("G Rank Great Slaying≫") ||
-            GetQuestNameFromID(this.QuestID()).Contains("New Weapon Type Acquisition≫");
+    private bool QuestNameContainsAlternativeTitle() => GetQuestName(this.QuestID()).Contains("Daily Limited Quest≫") ||
+            GetQuestName(this.QuestID()).Contains("Daily Quest≫") ||
+            GetQuestName(this.QuestID()).Contains("Guild Quest≫") ||
+            GetQuestName(this.QuestID()).Contains("Interception Base≫") ||
+            GetQuestName(this.QuestID()).Contains("Interception Quest≫") ||
+            GetQuestName(this.QuestID()).Contains("Interception Urgent Quest≫") ||
+            GetQuestName(this.QuestID()).Contains("Great Slaying Quest≫") ||
+            GetQuestName(this.QuestID()).Contains("G Rank Great Slaying≫") ||
+            GetQuestName(this.QuestID()).Contains("New Weapon Type Acquisition≫");
+
+    private bool QuestNameContainsAlternativeTitle(int questID) => GetQuestName(questID).Contains("Daily Limited Quest≫") ||
+        GetQuestName(questID).Contains("Daily Quest≫") ||
+        GetQuestName(questID).Contains("Guild Quest≫") ||
+        GetQuestName(questID).Contains("Interception Base≫") ||
+        GetQuestName(questID).Contains("Interception Quest≫") ||
+        GetQuestName(questID).Contains("Interception Urgent Quest≫") ||
+        GetQuestName(questID).Contains("Great Slaying Quest≫") ||
+        GetQuestName(questID).Contains("G Rank Great Slaying≫") ||
+        GetQuestName(questID).Contains("New Weapon Type Acquisition≫");
 
     private bool PreviousHubAreaIDIsAlternative() => this.PreviousHubAreaID switch
     {
@@ -1901,9 +1922,21 @@ TreeScope.Children, condition);
         _ => false,
     };
 
-    private bool IsAlternativeQuestName()
+    public bool IsAlternativeQuestName()
     {
         if (this.QuestNameContainsAlternativeTitle() || this.PreviousHubAreaIDIsAlternative())
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public bool IsAlternativeQuestName(int questID)
+    {
+        if (this.QuestNameContainsAlternativeTitle(questID))
         {
             return true;
         }
@@ -1924,6 +1957,48 @@ TreeScope.Children, condition);
         return this.IsNotRoad();
     }
 
+    public string GetGamePatchInfo(GamePatchFile file, string hash)
+    {
+        var result = "Unknown";
+
+        switch (file)
+        {
+            case GamePatchFile.dat:
+                QuestsGamePatches.datHashInfo.TryGetValue(hash, out var datInfo);
+                if (datInfo != null)
+                {
+                    //var a = datInfo.Keys.FirstOrDefault();
+                    //var b = datInfo.Keys.FirstOrDefault().ToString();
+
+                    return $"{datInfo.Keys.FirstOrDefault().ToString()}-{datInfo.Values.FirstOrDefault().ToString()}";
+                }
+                break;
+            case GamePatchFile.emd:
+                QuestsGamePatches.emdHashInfo.TryGetValue(hash, out var emdInfo);
+                if (emdInfo != null)
+                {
+                    return $"{emdInfo.Keys.FirstOrDefault().ToString()}-{emdInfo.Values.FirstOrDefault().ToString()}";
+                }
+                break;
+            case GamePatchFile.dll:
+                QuestsGamePatches.mhfodllHashInfo.TryGetValue(hash, out var dllInfo);
+                if (dllInfo != null)
+                {
+                    return $"{dllInfo.Keys.FirstOrDefault().ToString()}-{dllInfo.Values.FirstOrDefault().ToString()}";
+                }
+                break;
+            case GamePatchFile.hddll:
+                QuestsGamePatches.mhfohddllHashInfo.TryGetValue(hash, out var hddllInfo);
+                if (hddllInfo != null)
+                {
+                    return $"{hddllInfo.Keys.FirstOrDefault().ToString()}-{hddllInfo.Values.FirstOrDefault().ToString()}";
+                }
+                break;
+        }
+
+        return result;
+    }
+
     // assumption: it follows ferias' monster part order top to bottom, presumably (e.g. head is at the top, so part 0 is head, and so on)
     // grouping by skeleton too
 
@@ -1940,9 +2015,9 @@ TreeScope.Children, condition);
         {
             monsterID = this.RoadSelectedMonster() == 0 ? this.LargeMonster1ID() : this.LargeMonster2ID();
         }
-        else if (this.CaravanOverride())
+        else if (this.AlternativeQuestOverride())
         {
-            monsterID = this.CaravanMonster1ID();
+            monsterID = this.AlternativeQuestMonster1ID();
         }
 
         if (this.GetDureName() != "None")
@@ -2622,7 +2697,7 @@ TreeScope.Children, condition);
             var expiry = divaSongStart + (60 * 90);
             double secondsLeft = expiry - ServerHeartbeat;
 
-            return secondsLeft <= 60*10;
+            return secondsLeft <= 60 * 10;
         }
     }
 
@@ -2830,33 +2905,136 @@ TreeScope.Children, condition);
         return value.ToString();
     }
 
+    public QuestsQuestVariant GetQuestVariants(long questID)
+    {
+        QuestsQuestVariant questVariants = new();
+
+        if (QuestVariants.QuestIDVariant.ContainsKey(questID))
+        {
+            questVariants.QuestVariant1 = QuestVariants.QuestIDVariant[questID].QuestVariant1;
+            questVariants.QuestVariant2 = QuestVariants.QuestIDVariant[questID].QuestVariant2;
+            questVariants.QuestVariant3 = QuestVariants.QuestIDVariant[questID].QuestVariant3;
+            questVariants.QuestVariant4 = QuestVariants.QuestIDVariant[questID].QuestVariant4;
+        }
+
+        return questVariants;
+    }
+
     /// <summary>
-    /// Gets the run buffs
+    /// Decrements the run buffs input if the quest variants disallow it.
+    /// </summary>
+    /// <param name="runBuffs"></param>
+    /// <param name="questVariants"></param>
+    /// <returns></returns>
+    public RunBuff GetRunBuffs(RunBuff runBuffs, QuestsQuestVariant questVariants)
+    {
+        var questVariant2 = (QuestVariant2?)questVariants.QuestVariant2 ?? Models.Structures.QuestVariant2.None;
+        var questVariant3 = (QuestVariant3?)questVariants.QuestVariant3 ?? Models.Structures.QuestVariant3.None;
+
+        if (runBuffs.HasFlag(RunBuff.Halk) && (questVariant2.HasFlag(Models.Structures.QuestVariant2.DisableHalkPoogieCuff) || questVariant2.HasFlag(Models.Structures.QuestVariant2.Road)))
+        {
+            runBuffs -= RunBuff.Halk;
+        }
+
+        //if (PoogieItemUseID() > 0)
+        //{
+        //    runBuffs |= RunBuff.PoogieItem;
+        //}
+
+        //if (DivaSongActive)
+        //{
+        //    runBuffs |= RunBuff.DivaSong;
+        //}
+
+        if (runBuffs.HasFlag(RunBuff.HalkPotEffect) && (questVariant2.HasFlag(Models.Structures.QuestVariant2.DisableHalkPotionCourseAttack) || questVariant2.HasFlag(Models.Structures.QuestVariant2.Level9999) || questVariant2.HasFlag(Models.Structures.QuestVariant2.Road)))
+        {
+            runBuffs -= RunBuff.HalkPotEffect;
+        }
+
+        // TODO bento
+        //if (true == true)
+        //{
+        //    runBuffs |= RunBuff.Bento;
+        //}
+
+        //if (GuildPoogie1Skill() > 0 || GuildPoogie2Skill() > 0 || GuildPoogie3Skill() > 0)
+        //{
+        //    runBuffs |= RunBuff.GuildPoogie;
+        //}
+
+        if (runBuffs.HasFlag(RunBuff.ActiveFeature) && questVariant2.HasFlag(Models.Structures.QuestVariant2.DisableActiveFeature))
+        {
+            runBuffs -= RunBuff.ActiveFeature;
+        }
+
+        //if (GuildFoodSkill() > 0)
+        //{
+        //    runBuffs |= RunBuff.GuildFood;
+        //}
+
+        if (runBuffs.HasFlag(RunBuff.DivaSkill) && (questVariant2.HasFlag(Models.Structures.QuestVariant2.Road) || questVariant3.HasFlag(Models.Structures.QuestVariant3.NoGPSkills)))
+        {
+            runBuffs -= RunBuff.DivaSkill;
+        }
+
+        if (runBuffs.HasFlag(RunBuff.SecretTechnique) && questVariant2.HasFlag(Models.Structures.QuestVariant2.Level9999))
+        {
+            runBuffs -= RunBuff.SecretTechnique;
+        }
+
+        if (runBuffs.HasFlag(RunBuff.DivaPrayerGem) && (questVariant2.HasFlag(Models.Structures.QuestVariant2.Road) || questVariant2.HasFlag(Models.Structures.QuestVariant2.Level9999)))
+        {
+            runBuffs -= RunBuff.DivaPrayerGem;
+        }
+
+        if (runBuffs.HasFlag(RunBuff.CourseAttackBoost) && (questVariant2.HasFlag(Models.Structures.QuestVariant2.DisableHalkPotionCourseAttack) || questVariant2.HasFlag(Models.Structures.QuestVariant2.Level9999)))
+        {
+            runBuffs -= RunBuff.CourseAttackBoost;
+        }
+
+        return runBuffs;
+    }
+
+    /// <summary>
+    /// Gets the run buffs. The runBuffs parameter should be given by doing GetBaseRunBuffs.
     /// </summary>
     /// <param name="overlayMode"></param>
     /// <returns></returns>
-    public RunBuff GetRunBuffs(string overlayMode = "")
+    public RunBuff GetRunBuffs(long questID, string overlayMode, RunBuff runBuffs)
     {
-        if (overlayMode != string.Empty)
+        if (overlayMode != string.Empty && questID > 0)
         {
+            QuestsQuestVariant questVariants = GetQuestVariants(questID);
+
             switch (overlayMode)
             {
                 case Messages.OverlayModeFreestyleNoSecretTech:
-                    return RunBuff.FreestyleNoSecretTech;
+                    return GetRunBuffs(RunBuff.FreestyleNoSecretTech, questVariants);
                 case Messages.OverlayModeFreestyleWithSecretTech:
-                    return RunBuff.FreestyleWithSecretTech;
+                    return GetRunBuffs(RunBuff.FreestyleWithSecretTech, questVariants);
                 case Messages.OverlayModeTimeAttack:
-                    return RunBuff.TimeAttack;
+                    return GetRunBuffs(RunBuff.TimeAttack, questVariants);
+                case Messages.OverlayModeSpeedrun:
+                    return GetRunBuffs(runBuffs, questVariants);
                 default:
+                    // todo update
                     // we do not know the quest variants in 0.34, so we set as none.
                     // if we do not take into account quest variants, calculating the run buffs
                     // may be wrong because, for example, if we detect that halk was on we increase by 1 but
                     // in quests where halk is disabled the value in db is still positive, although in-game
-                    // halk is off.
+                    // halk is off. Also setting this to TA tags would not take into account that the runs may have used HP bars etc.
                     return RunBuff.None;
             }
         }
+        else
+        {
+            LoggerInstance.Error($"Wrong argument values for GetRunBuffs. QuestID {questID} OverlayMode {overlayMode}");
+            return RunBuff.None;
+        }
+    }
 
+    public RunBuff GetRunBuffs()
+    {
         var runBuffs = RunBuff.None;
         var questVariant2 = (QuestVariant2)QuestVariant2();
         var questVariant3 = (QuestVariant3)QuestVariant3();
@@ -3900,6 +4078,34 @@ TreeScope.Children, condition);
         }
     }
 
+    public string GetDureName(int questID)
+    {
+        if (questID is 21731 or 21749)
+        {
+            return "1st District Duremudira";
+        }
+        else if (questID is 21746 or 21750)
+        {
+            return "2nd District Duremudira";
+        }
+        else if (questID is 21747 or 21734)
+        {
+            return "3rd District Duremudira";
+        }
+        else if (questID == 21748)
+        {
+            return "4th District Duremudira";
+        }
+        else if (questID is 23648 or 23649)
+        {
+            return "Arrogant Duremudira";
+        }
+        else
+        {
+            return "None";
+        }
+    }
+
     // quest ids
     // ravi 62105 TODO: same ids in all phases?
     // violent 62101
@@ -3980,7 +4186,7 @@ TreeScope.Children, condition);
         }
     }
 
-    public string Monster2Name => this.CaravanOverride() ? this.GetMonsterName(this.CaravanMonster2ID(), false) : this.GetMonsterName(this.LargeMonster2ID(), false);
+    public string Monster2Name => this.AlternativeQuestOverride() ? this.GetMonsterName(this.AlternativeQuestMonster2ID(), false) : this.GetMonsterName(this.LargeMonster2ID(), false);
 
     public string Monster3Name => this.GetMonsterName(this.LargeMonster3ID(), false);
 
@@ -4003,9 +4209,9 @@ TreeScope.Children, condition);
             {
                 id = this.RoadSelectedMonster() == 0 ? this.LargeMonster1ID() : this.LargeMonster2ID();
             }
-            else if (this.CaravanOverride())
+            else if (this.AlternativeQuestOverride())
             {
-                id = this.CaravanMonster1ID();
+                id = this.AlternativeQuestMonster1ID();
             }
             else
             {
@@ -4412,9 +4618,9 @@ TreeScope.Children, condition);
             {
                 id = this.RoadSelectedMonster() == 0 ? this.LargeMonster1ID() : this.LargeMonster2ID();
             }
-            else if (this.CaravanOverride())
+            else if (this.AlternativeQuestOverride())
             {
-                id = this.CaravanMonster1ID();
+                id = this.AlternativeQuestMonster1ID();
             }
             else
             {
@@ -4626,9 +4832,9 @@ TreeScope.Children, condition);
             {
                 id = this.RoadSelectedMonster() == 0 ? this.LargeMonster2ID() : this.LargeMonster1ID();
             }
-            else if (this.CaravanOverride())
+            else if (this.AlternativeQuestOverride())
             {
-                id = this.CaravanMonster2ID();
+                id = this.AlternativeQuestMonster2ID();
             }
             else
             {
@@ -8014,6 +8220,14 @@ TreeScope.Children, condition);
                 showGouBoost = " (After Gou/Muscle Boost)";
             }
 
+            var s = (Settings)Application.Current.TryFindResource("Settings");
+
+            var gameFolderPathStatus = s.GameFolderPath == @"C:\Program Files (x86)\CAPCOM\Monster Hunter Frontier Online" ? "Standard" : "Custom";
+            var mhfdatHash = DatabaseService.CalculateFileHash(s.GameFolderPath, @"\dat\mhfdat.bin");
+            var mhfemdHash = DatabaseService.CalculateFileHash(s.GameFolderPath, @"\dat\mhfemd.bin");
+            var mhfodllHash = DatabaseService.CalculateFileHash(s.GameFolderPath, @"\mhfo.dll");
+            var mhfohddllHash = DatabaseService.CalculateFileHash(s.GameFolderPath, @"\mhfo-hd.dll");
+
             // zp in bold for markdown
             // fruits and speedrunner items also in bold
             var stats = string.Format(
@@ -8086,9 +8300,15 @@ Health {HalkHealth()}
 Attack {HalkAttack()}
 Defense {HalkDefense()}
 Intellect {HalkIntellect()}
-{HalkSkill1()} | {HalkSkill2()} | {HalkSkill3()}
+{(HalkSkill1() == 0 ? "None" : EZlion.Mapper.SkillHalk.IDName[HalkSkill1()])} | {(HalkSkill2() == 0 ? "None" : EZlion.Mapper.SkillHalk.IDName[HalkSkill2()])} | {(HalkSkill3() == 0 ? "None" : EZlion.Mapper.SkillHalk.IDName[HalkSkill3()])}
 
 Overlay Hash: {DatabaseManagerInstance.GetOverlayHash()}
+
+Game Patch Information:
+dat: {GetGamePatchInfo(GamePatchFile.dat, mhfdatHash)}
+emd: {GetGamePatchInfo(GamePatchFile.emd, mhfemdHash)}
+dll: {GetGamePatchInfo(GamePatchFile.dll, mhfodllHash)}
+hddll: {GetGamePatchInfo(GamePatchFile.hddll, mhfohddllHash)}
 ");
             this.SavedGearStats = stats;
             var formattedStats = string.Format(
@@ -8161,9 +8381,15 @@ Health {HalkHealth()}
 Attack {HalkAttack()}
 Defense {HalkDefense()}
 Intellect {HalkIntellect()}
-{HalkSkill1()} | {HalkSkill2()} | {HalkSkill3()}
+{(HalkSkill1() == 0 ? "None" : EZlion.Mapper.SkillHalk.IDName[HalkSkill1()])} | {(HalkSkill2() == 0 ? "None" : EZlion.Mapper.SkillHalk.IDName[HalkSkill2()])} | {(HalkSkill3() == 0 ? "None" : EZlion.Mapper.SkillHalk.IDName[HalkSkill3()])}
 
 **Overlay Hash:** {DatabaseManagerInstance.GetOverlayHash()}
+
+**Game Patch Information:**
+dat: {GetGamePatchInfo(GamePatchFile.dat, mhfdatHash)}
+emd: {GetGamePatchInfo(GamePatchFile.emd, mhfemdHash)}
+dll: {GetGamePatchInfo(GamePatchFile.dll, mhfodllHash)}
+hddll: {GetGamePatchInfo(GamePatchFile.hddll, mhfohddllHash)}
 ");
             this.MarkdownSavedGearStats = formattedStats;
             return stats;
@@ -8240,142 +8466,97 @@ Intellect {HalkIntellect()}
             var halkSkill2 = halk.HalkSkill2 == null ? "None" : EZlion.Mapper.SkillHalk.IDName[(int)halk.HalkSkill2];
             var halkSkill3 = halk.HalkSkill3 == null ? "None" : EZlion.Mapper.SkillHalk.IDName[(int)halk.HalkSkill3];
 
+            var courseInfo = $"Main: {GetMainCourses(courses.Rights)}\nAdditional: {GetAdditionalCourses(courses.Rights)}";
+            var patchInfo = DatabaseManagerInstance.GetQuestsGamePatch((long)runID);
+            var questRestrictions = DatabaseManagerInstance.GetQuestRestrictions((long)runID);
+
             // TODO: fix
+            // TODO partnyaBagItems
             // var partnyaBagItems = GetItemsForRunID(new int[] { (int)partnyaBag.Item1ID, (int)partnyaBag.Item2ID, (int)partnyaBag.Item3ID, (int)partnyaBag.Item4ID, (int)partnyaBag.Item5ID, (int)partnyaBag.Item6ID, (int)partnyaBag.Item7ID, (int)partnyaBag.Item8ID, (int)partnyaBag.Item9ID, (int)partnyaBag.Item10ID });
             return string.Format(
                 CultureInfo.InvariantCulture,
-                @"{0} {1}({2}){3}
+                $@"{createdBy} {weaponClass}({gender}){metadata}
 
-Set Name: {4}
-{5}: {6}
-Head: {7}
-Chest: {8}
-Arms: {9}
-Waist: {10}
-Legs: {11}
-Cuffs: {12}
+Set Name: {gearName}
+{weaponName}{(questRestrictions.Sigil ? " (disabled sigils)" : string.Empty)}: {realweaponName}
+Head: {head}
+Chest: {chest}
+Arms: {arms}
+Waist: {waist}
+Legs: {legs}
+Cuffs: {cuffs}{(questRestrictions.PoogieCuff ? " (disabled cuffs)" : string.Empty)}
 
-Run Date: {13} | Run Hash: {14}
+Run Date: {date} | Run Hash: {hash}
 
 Zenith Skills:
-{15}
+{zenithSkillsList}
 
 Automatic Skills:
-{16}
+{automaticSkillsList}
 
-Active Skills{17}:
-{18}
+Active Skills{(questRestrictions.GPSkill ? " (disabled GP Skills)" : string.Empty)}{gouBoost}:
+{armorSkills}
 
 Caravan Skills:
-{19}
+{caravanSkillsList}
 
 Diva:
-{20}
-Song {21}
+{(divaSkill == "None" ? "No Skill" : divaSkill)}{(questRestrictions.DivaSkill ? " (disabled skill)" : string.Empty)}
+Song {(diva.DivaSongBuffOn > 0 ? "ON" : "OFF")}
 
-Diva Prayer Gems:
-{22}
+Diva Prayer Gems{(questRestrictions.DivaPrayerGem ? " (disabled gems)" : string.Empty)}:
+{GetDivaPrayerGems(diva)}
 
 Guild:
-{23}
-{24}
+{guildFood}
+{GetGuildPoogieEffect(guildPoogie)}
 
-Style Rank:
-{25}
+Style Rank{(questRestrictions.SecretTechnique ? " (disabled secret technique)" : string.Empty)}{(questRestrictions.SoulRevival ? " (disabled soul revival)" : string.Empty)}{(questRestrictions.TwinHiden ? " (disabled twin hiden)" : string.Empty)}:
+{styleRankSkillsList}
 
 Items:
-{26}
+{inventory}
 
 Ammo:
-{27}
+{ammo}
 
 Poogie Item:
-{28}
+{poogieItem}
 
 Road/Duremudira Skills:
-{29}
+{roadDureSkillsList}
 
-Quest: {30}
-{31} {32} {33}
-Category: {34}
-Party Size: {35}
-Mode: {36}
-Active Feature {37}
+Quest{(questRestrictions.QuestBonusReward ? " (disabled bonus reward)" : string.Empty)}: {questName}
+{questObjectiveType} {questObjectiveQuantity} {questObjectiveName}
+Category: {questCategory}
+Party Size: {partySize}
+Mode: {toggleModeName}
+Active Feature {(activeFeatureState == true ? "ON" : "OFF")}{(questRestrictions.ActiveFeature ? " (disabled active feature)" : string.Empty)}
 
-Courses:
-{38}
+Courses{(questRestrictions.CourseAttack ? " (disabled course attack)" : string.Empty)}:
+{courseInfo}
 
 Halk:
-{39}
-Halk Pot {40}
-LV{41}
-Element Type {42}
-Status Type {43}
-Intimacy {44}
-Health {45}
-Attack {46}
-Defense {47}
-Intellect {48}
-{49} | {50} | {51}
+{(halk.HalkOn > 0 ? "Active" : "Inactive")}{(questRestrictions.Halk ? " (disabled halk)" : string.Empty)}
+Halk Pot {(halk.HalkPotEffectOn > 0 ? "ON" : "OFF")}{(questRestrictions.Sigil ? " (disabled halk pot)" : string.Empty)}
+LV{halk.HalkLevel}
+Element Type {GetHalkElement(halk)}
+Status Type {GetHalkStatus(halk)}
+Intimacy {halk.HalkIntimacy}
+Health {halk.HalkHealth}
+Attack {halk.HalkAttack}
+Defense {halk.HalkDefense}
+Intellect {halk.HalkIntellect}
+{halkSkill1} | {halkSkill2} | {halkSkill3}
 
-Overlay Hash: {52}
-",
-                createdBy,
-                weaponClass,
-                gender,
-                metadata,
-                gearName,
-                weaponName,
-                realweaponName,
-                head,
-                chest,
-                arms,
-                waist,
-                legs,
-                cuffs,
-                date,
-                hash,
-                zenithSkillsList,
-                automaticSkillsList,
-                gouBoost,
-                armorSkills,
-                caravanSkillsList,
-                divaSkill == "None" ? "No Skill" : divaSkill,
-                diva.DivaSongBuffOn > 0 ? "ON" : "OFF",
-                GetDivaPrayerGems(diva),
-                guildFood,
-                GetGuildPoogieEffect(guildPoogie),
-                styleRankSkillsList,
-                inventory,
-                ammo,
-                poogieItem,
-                roadDureSkillsList,
+Overlay Hash: {overlayHash.OverlayHash}
 
-            // TODO partnyaBagItems
-                questName,
-                questObjectiveType,
-                questObjectiveQuantity,
-                questObjectiveName,
-                questCategory,
-                partySize,
-                toggleModeName,
-                activeFeatureState == true ? "ON" : "OFF",
-                $"Main: {GetMainCourses(courses.Rights)}\nAdditional: {GetAdditionalCourses(courses.Rights)}",
-                halk.HalkOn > 0 ? "Active" : "Inactive",
-                halk.HalkPotEffectOn > 0 ? "ON" : "OFF",
-                halk.HalkLevel,
-                GetHalkElement(halk),
-                GetHalkStatus(halk),
-                halk.HalkIntimacy,
-                halk.HalkHealth,
-                halk.HalkAttack,
-                halk.HalkDefense,
-                halk.HalkIntellect,
-                halkSkill1,
-                halkSkill2,
-                halkSkill3,
-                overlayHash.OverlayHash
-                );
+Game Patch Information:
+dat: {patchInfo.mhfdatInfo}
+emd: {patchInfo.mhfemdInfo}
+dll: {patchInfo.mhfodllInfo}
+hddll: {patchInfo.mhfohddllInfo}
+");
         }
     }
 
@@ -11242,6 +11423,18 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         return this.GetRankName(id);
     }
 
+    public string GetDuremudiraIcon(int questID)
+    {
+        return questID switch
+        {
+            Numbers.QuestIDArrogantDuremudira => MonsterImages.MonsterImageID[167],
+            Numbers.QuestIDArrogantDuremudiraRepel => MonsterImages.MonsterImageID[167],
+            Numbers.QuestIDFirstDistrictDuremudira => MonsterImages.MonsterImageID[132],
+            Numbers.QuestIDSecondDistrictDuremudira => MonsterImages.MonsterImageID[132],
+            _ => MonsterImages.MonsterImageID[132],
+        };
+    }
+
     /// <summary>
     /// Gets the monster icon.
     /// </summary>
@@ -11268,9 +11461,9 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         {
             id = this.RoadSelectedMonster() == 0 ? this.LargeMonster1ID() : this.LargeMonster2ID();
         }
-        else if (this.CaravanOverride())
+        else if (this.AlternativeQuestOverride())
         {
-            id = this.CaravanMonster1ID();
+            id = this.AlternativeQuestMonster1ID();
         }
 
         // Duremudira Arena
@@ -11296,7 +11489,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
     /// <returns></returns>
     public string GetStarGrade(bool isLargeImageText = false)
     {
-        if ((DiscordService.ShowDiscordQuestNames() && !isLargeImageText) || this.CaravanOverride())
+        if ((DiscordService.ShowDiscordQuestNames() && !isLargeImageText) || this.AlternativeQuestOverride())
         {
             return string.Empty;
         }
@@ -11348,6 +11541,18 @@ After all that you’ve unlocked magnet spike! You should get a material to make
     public bool IsDure()
     {
         if (this.GetDureName() != "None")
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public bool IsDure(int questID)
+    {
+        if (this.GetDureName(questID) != "None")
         {
             return true;
         }
@@ -11431,9 +11636,9 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         {
             id = this.RoadSelectedMonster() == 0 ? this.LargeMonster1ID() : this.LargeMonster2ID();
         }
-        else if (this.CaravanOverride())
+        else if (this.AlternativeQuestOverride())
         {
-            id = this.CaravanMonster1ID();
+            id = this.AlternativeQuestMonster1ID();
         }
         else
         {
@@ -12343,6 +12548,8 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         // TODO: the above update process should be simplified. refactoring might be needed
         // in many places, not just this function.
         var timeInt = this.TimeInt();
+        var monster1ID = IsAlternativeQuestName() || IsDure() ? this.AlternativeQuestMonster1ID() : this.LargeMonster1ID();
+        var monster2ID = IsAlternativeQuestName() || IsDure() ? this.AlternativeQuestMonster2ID() : this.LargeMonster2ID();
 
         if (this.IsRoad() && this.AreaID() == 459) // Hunter's Road Base Camp
         {
@@ -12440,7 +12647,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 this.PreviousMonster1HP = this.Monster1HPInt();
                 Dictionary<int, int> monster1HPDictionaryMonsterInfo = new ()
                 {
-                    { this.LargeMonster1ID(), this.Monster1HPInt() },
+                    { monster1ID, this.Monster1HPInt() },
                 };
                 this.Monster1HPDictionary.Add(this.TimeInt(), monster1HPDictionaryMonsterInfo);
             }
@@ -12457,7 +12664,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 this.PreviousMonster2HP = this.Monster2HPInt();
                 Dictionary<int, int> monster2HPDictionaryMonsterInfo = new ()
                 {
-                    { this.LargeMonster2ID(), this.Monster2HPInt() },
+                    {monster2ID, this.Monster2HPInt() },
                 };
                 this.Monster2HPDictionary.Add(this.TimeInt(), monster2HPDictionaryMonsterInfo);
             }
@@ -12931,7 +13138,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 this.PreviousMonster1AttackMultiplier = this.Monster1AttackMultForDictionary();
                 Dictionary<int, double> monster1AttackMultiplierDictionaryMonsterInfo = new ()
                 {
-                    { this.LargeMonster1ID(), this.Monster1AttackMultForDictionary() },
+                    { monster1ID, this.Monster1AttackMultForDictionary() },
                 };
                 this.Monster1AttackMultiplierDictionary.Add(this.TimeInt(), monster1AttackMultiplierDictionaryMonsterInfo);
             }
@@ -12948,7 +13155,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 this.PreviousMonster1DefenseRate = this.Monster1DefMultForDictionary();
                 Dictionary<int, double> monster1DefenseRateDictionaryMonsterInfo = new ()
                 {
-                    { this.LargeMonster1ID(), this.Monster1DefMultForDictionary() },
+                    { monster1ID, this.Monster1DefMultForDictionary() },
                 };
                 this.Monster1DefenseRateDictionary.Add(this.TimeInt(), monster1DefenseRateDictionaryMonsterInfo);
             }
@@ -12965,7 +13172,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 this.PreviousMonster1SizeMultiplier = this.Monster1SizeMultForDictionary();
                 Dictionary<int, double> monster1SizeMultiplierDictionaryMonsterInfo = new ()
                 {
-                    { this.LargeMonster1ID(), this.Monster1SizeMultForDictionary() },
+                    { monster1ID, this.Monster1SizeMultForDictionary() },
                 };
                 this.Monster1SizeMultiplierDictionary.Add(this.TimeInt(), monster1SizeMultiplierDictionaryMonsterInfo);
             }
@@ -12982,7 +13189,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 this.PreviousMonster1PoisonThreshold = this.Monster1PoisonForDictionary();
                 Dictionary<int, int> monster1PoisonThresholdDictionaryMonsterInfo = new ()
                 {
-                    { this.LargeMonster1ID(), this.Monster1PoisonForDictionary() },
+                    { monster1ID, this.Monster1PoisonForDictionary() },
                 };
                 this.Monster1PoisonThresholdDictionary.Add(this.TimeInt(), monster1PoisonThresholdDictionaryMonsterInfo);
             }
@@ -12999,7 +13206,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 this.PreviousMonster1SleepThreshold = this.Monster1SleepForDictionary();
                 Dictionary<int, int> monster1SleepThresholdDictionaryMonsterInfo = new ()
                 {
-                    { this.LargeMonster1ID(), this.Monster1SleepForDictionary() },
+                    { monster1ID, this.Monster1SleepForDictionary() },
                 };
                 this.Monster1SleepThresholdDictionary.Add(this.TimeInt(), monster1SleepThresholdDictionaryMonsterInfo);
             }
@@ -13016,7 +13223,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 this.PreviousMonster1ParalysisThreshold = this.Monster1ParalysisForDictionary();
                 Dictionary<int, int> monster1ParalysisThresholdDictionaryMonsterInfo = new ()
                 {
-                    { this.LargeMonster1ID(), this.Monster1ParalysisForDictionary() },
+                    { monster1ID, this.Monster1ParalysisForDictionary() },
                 };
                 this.Monster1ParalysisThresholdDictionary.Add(this.TimeInt(), monster1ParalysisThresholdDictionaryMonsterInfo);
             }
@@ -13033,7 +13240,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 this.PreviousMonster1BlastThreshold = this.Monster1BlastForDictionary();
                 Dictionary<int, int> monster1BlastThresholdDictionaryMonsterInfo = new ()
                 {
-                    { this.LargeMonster1ID(), this.Monster1BlastForDictionary() },
+                    { monster1ID, this.Monster1BlastForDictionary() },
                 };
                 this.Monster1BlastThresholdDictionary.Add(this.TimeInt(), monster1BlastThresholdDictionaryMonsterInfo);
             }
@@ -13050,7 +13257,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 this.PreviousMonster1StunThreshold = this.Monster1StunForDictionary();
                 Dictionary<int, int> monster1StunThresholdDictionaryMonsterInfo = new ()
                 {
-                    { this.LargeMonster1ID(), this.Monster1StunForDictionary() },
+                    { monster1ID, this.Monster1StunForDictionary() },
                 };
                 this.Monster1StunThresholdDictionary.Add(this.TimeInt(), monster1StunThresholdDictionaryMonsterInfo);
             }
@@ -13655,6 +13862,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
 
     /// <summary>
     /// Gets the max faints.
+    /// TODO optimize
     /// </summary>
     /// <returns></returns>
     public string GetMaxFaints()
@@ -13670,7 +13878,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             case "Shiten/Conquest/Pioneer/Daily/Caravan/Interception Quests":
                 return this.AlternativeMaxFaints().ToString(CultureInfo.InvariantCulture);
             case "Automatic":
-                if (this.RoadOverride() is not null and false)
+                if (this.RoadOverride() is not null and false) //TODO test
                 {
                     return this.MaxFaints().ToString(CultureInfo.InvariantCulture);
                 }
@@ -13678,7 +13886,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 if
                 (
 
-                        (this.CaravanOverride() && !(
+                        (this.AlternativeQuestOverride() && !(
                             this.QuestID() == 23603 ||
                             this.RankBand() == 70 ||
                             this.QuestID() == 23602 ||

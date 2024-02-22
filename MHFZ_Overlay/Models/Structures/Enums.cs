@@ -842,3 +842,45 @@ public enum DivaPrayerGemColor
     Green,
     Blue,
 }
+
+/// <summary>
+/// Creator, origin or purpose.
+/// </summary>
+public enum GamePatch
+{
+    Vanilla,
+    Seph,
+    Ezemania,
+    Otyav1_1,
+    Tenrou,
+    Mezelounge,
+    /// <summary>
+    /// TODO
+    /// </summary>
+    Standard,
+    FiveMusous,
+}
+
+/// <summary>
+/// https://en.wikipedia.org/wiki/List_of_ISO_639_language_codes. Could also describe the origin rather than language.
+/// </summary>
+public enum GamePatchLanguage
+{
+    JA,
+    EN,
+    FR,
+    ZH,
+    ES,
+    PT,
+    RU,
+    EL,
+    DE,
+}
+
+public enum GamePatchFile
+{
+    dat,
+    emd,
+    dll,
+    hddll,
+}
