@@ -8181,6 +8181,119 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
         return data;
     }
 
+    public QuestRestriction GetQuestRestrictions(long runID)
+    {
+        QuestRestriction data = new();
+        if (string.IsNullOrEmpty(this.dataSource))
+        {
+            Logger.Warn(CultureInfo.InvariantCulture, "Cannot get quest restrictions. dataSource: {0}", this.dataSource);
+            return data;
+        }
+
+        // Use a SQL query to retrieve the Quest for the specific RunID from the database
+        using (var conn = new SQLiteConnection(this.dataSource))
+        {
+            conn.Open();
+            using (var transaction = conn.BeginTransaction())
+            {
+                try
+                {
+                    using (var cmd = new SQLiteCommand("SELECT * FROM QuestsQuestVariant WHERE RunID = @runID", conn))
+                    {
+                        cmd.Parameters.AddWithValue("@runID", runID);
+
+                        using (var reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                var questVariant2 = long.Parse(reader["QuestVariant2"]?.ToString() ?? "0", CultureInfo.InvariantCulture);
+                                var questVariant3 = long.Parse(reader["QuestVariant3"]?.ToString() ?? "0", CultureInfo.InvariantCulture);
+
+                                data = GetQuestRestrictions((QuestVariant2)questVariant2, (QuestVariant3)questVariant3);
+                            }
+                        }
+                    }
+
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    HandleError(transaction, ex);
+                }
+            }
+        }
+
+        return data;
+    }
+
+    private QuestRestriction GetQuestRestrictions(QuestVariant2 questVariant2, QuestVariant3 questVariant3)
+    {
+        QuestRestriction restrictions = new();
+
+        if (questVariant2.HasFlag(QuestVariant2.DisableHalkPoogieCuff))
+        {
+            restrictions.HalkPot = true;
+            restrictions.CourseAttack = true;
+        }
+
+        if (questVariant2.HasFlag(QuestVariant2.DisableHalkPoogieCuff))
+        {
+            restrictions.Halk = true;
+            restrictions.PoogieCuff = true;
+        }
+
+        if (questVariant2.HasFlag(QuestVariant2.DisableActiveFeature))
+        {
+            restrictions.ActiveFeature = true;
+        }
+
+        if (questVariant2.HasFlag(QuestVariant2.Level9999))
+        {
+            restrictions.SecretTechnique = true;
+            restrictions.Transcend = true;
+            restrictions.HalkPot = true;
+            restrictions.CourseAttack = true;
+            restrictions.DivaPrayerGem = true;
+            restrictions.TwinHiden = true;
+        }
+
+        if (questVariant2.HasFlag(QuestVariant2.Road))
+        {
+            restrictions.Rasta = true;
+            restrictions.Partner = true;
+            restrictions.Partnya = true;
+            restrictions.Halk = true;
+            restrictions.SoulRevival = true;
+            restrictions.HalkPot = true;
+            restrictions.DivaSkill = true;
+            restrictions.DivaPrayerGem = true;
+        }
+
+        if (questVariant3.HasFlag(QuestVariant3.DisableRewardBonus))
+        {
+            restrictions.QuestBonusReward = true;
+        }
+
+        if (questVariant3.HasFlag(QuestVariant3.NoSimpleMode))
+        {
+            restrictions.SimpleMode = true;
+        }
+
+        if (questVariant3.HasFlag(QuestVariant3.NoGPSkills))
+        {
+            restrictions.Transcend = true;
+            restrictions.GPSkill = true;
+            restrictions.DivaSkill = true;
+        }
+
+        if (questVariant3.HasFlag(QuestVariant3.DisabledSigil))
+        {
+            restrictions.Sigil = true;
+        }
+
+        return restrictions;
+    }
+
     private Quest GetLastQuest(SQLiteConnection conn)
     {
         Quest quest = new();

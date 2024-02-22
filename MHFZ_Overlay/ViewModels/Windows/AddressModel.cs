@@ -8468,6 +8468,7 @@ hddll: {GetGamePatchInfo(GamePatchFile.hddll, mhfohddllHash)}
 
             var courseInfo = $"Main: {GetMainCourses(courses.Rights)}\nAdditional: {GetAdditionalCourses(courses.Rights)}";
             var patchInfo = DatabaseManagerInstance.GetQuestsGamePatch((long)runID);
+            var questRestrictions = DatabaseManagerInstance.GetQuestRestrictions((long)runID);
 
             // TODO: fix
             // TODO partnyaBagItems
@@ -8477,13 +8478,13 @@ hddll: {GetGamePatchInfo(GamePatchFile.hddll, mhfohddllHash)}
                 $@"{createdBy} {weaponClass}({gender}){metadata}
 
 Set Name: {gearName}
-{weaponName}: {realweaponName}
+{weaponName}{(questRestrictions.Sigil ? " (disabled sigils)" : string.Empty)}: {realweaponName}
 Head: {head}
 Chest: {chest}
 Arms: {arms}
 Waist: {waist}
 Legs: {legs}
-Cuffs: {cuffs}
+Cuffs: {cuffs}{(questRestrictions.PoogieCuff ? " (disabled cuffs)" : string.Empty)}
 
 Run Date: {date} | Run Hash: {hash}
 
@@ -8493,24 +8494,24 @@ Zenith Skills:
 Automatic Skills:
 {automaticSkillsList}
 
-Active Skills{gouBoost}:
+Active Skills{(questRestrictions.GPSkill ? " (disabled GP Skills)" : string.Empty)}{gouBoost}:
 {armorSkills}
 
 Caravan Skills:
 {caravanSkillsList}
 
 Diva:
-{(divaSkill == "None" ? "No Skill" : divaSkill)}
+{(divaSkill == "None" ? "No Skill" : divaSkill)}{(questRestrictions.DivaSkill ? " (disabled skill)" : string.Empty)}
 Song {(diva.DivaSongBuffOn > 0 ? "ON" : "OFF")}
 
-Diva Prayer Gems:
+Diva Prayer Gems{(questRestrictions.DivaPrayerGem ? " (disabled gems)" : string.Empty)}:
 {GetDivaPrayerGems(diva)}
 
 Guild:
 {guildFood}
 {GetGuildPoogieEffect(guildPoogie)}
 
-Style Rank:
+Style Rank{(questRestrictions.SecretTechnique ? " (disabled secret technique)" : string.Empty)}{(questRestrictions.SoulRevival ? " (disabled soul revival)" : string.Empty)}{(questRestrictions.TwinHiden ? " (disabled twin hiden)" : string.Empty)}:
 {styleRankSkillsList}
 
 Items:
@@ -8525,19 +8526,19 @@ Poogie Item:
 Road/Duremudira Skills:
 {roadDureSkillsList}
 
-Quest: {questName}
+Quest{(questRestrictions.QuestBonusReward ? " (disabled bonus reward)" : string.Empty)}: {questName}
 {questObjectiveType} {questObjectiveQuantity} {questObjectiveName}
 Category: {questCategory}
 Party Size: {partySize}
 Mode: {toggleModeName}
-Active Feature {(activeFeatureState == true ? "ON" : "OFF")}
+Active Feature {(activeFeatureState == true ? "ON" : "OFF")}{(questRestrictions.ActiveFeature ? " (disabled active feature)" : string.Empty)}
 
-Courses:
+Courses{(questRestrictions.CourseAttack ? " (disabled course attack)" : string.Empty)}:
 {courseInfo}
 
 Halk:
-{(halk.HalkOn > 0 ? "Active" : "Inactive")}
-Halk Pot {(halk.HalkPotEffectOn > 0 ? "ON" : "OFF")}
+{(halk.HalkOn > 0 ? "Active" : "Inactive")}{(questRestrictions.Halk ? " (disabled halk)" : string.Empty)}
+Halk Pot {(halk.HalkPotEffectOn > 0 ? "ON" : "OFF")}{(questRestrictions.Sigil ? " (disabled halk pot)" : string.Empty)}
 LV{halk.HalkLevel}
 Element Type {GetHalkElement(halk)}
 Status Type {GetHalkStatus(halk)}
