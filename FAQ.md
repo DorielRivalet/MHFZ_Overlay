@@ -67,24 +67,24 @@ Use the preset option found in the General tab. Keep reading if you want to know
 
 Run Buffs are the buffs that you can filter by when searching for quests:
 
-| Name                      | Value |
-|---------------------------|-------|
-| Halk                      |  1     |
-| Poogie Item                |  2     |
-| Diva Song                  |  4     |
-| Halk Pot Effect             |  8     |
-| Bento                     |  16    |
-| Guild Poogie               |  32    |
-| Active Feature             |  64    |
-| Guild Food                 |  128   |
-| Diva Skill                 |  256   |
-| Secret Technique           |  512   |
-| Diva Prayer Gem             |  1024  |
-| Course Attack Boost         |  2048  |
-| All                       |  4095  |
-| Time Attack                |  183     |
-| Freestyle No Secret Tech     |  1527  |
-| Freestyle With Secret Tech   |  2039  |
+| Name                       | Value |
+| -------------------------- | ----- |
+| Halk                       | 1     |
+| Poogie Item                | 2     |
+| Diva Song                  | 4     |
+| Halk Pot Effect            | 8     |
+| Bento                      | 16    |
+| Guild Poogie               | 32    |
+| Active Feature             | 64    |
+| Guild Food                 | 128   |
+| Diva Skill                 | 256   |
+| Secret Technique           | 512   |
+| Diva Prayer Gem            | 1024  |
+| Course Attack Boost        | 2048  |
+| All                        | 4095  |
+| Time Attack                | 183   |
+| Freestyle No Secret Tech   | 1527  |
+| Freestyle With Secret Tech | 2039  |
 
 If you had the old categories in your runs, these are their run buffs equivalents:
 
@@ -94,13 +94,13 @@ If you had the old categories in your runs, these are their run buffs equivalent
 
 When you set the overlay mode to Speedrun, the run buffs value or tag will be displayed on watermark in parentheses. Tags that are submitted to leaderboard will be:
 
-|Name|Tag|Value|Buffs|
-|-|-|-|-|
-|Time Attack|TA|183|Halk + Poogie Item + Diva Song + Bento + Guild Poogie + Guild Food|
-|Freestyle Diva Skill|FDS|503|TA + Diva Skill + Active Feature|
-|Freestyle Diva Prayer Gem|FDP|1527|FDS + Diva Prayer Gem|
-|Freestyle Secret Tech|FST|2039|FDP + Secret Technique|
-|Freestyle Course Attack Boost|FCA|4095|FST + Course Attack Boost + Halk Pot Effect|
+| Name                          | Tag | Value | Buffs                                                              |
+| ----------------------------- | --- | ----- | ------------------------------------------------------------------ |
+| Time Attack                   | TA  | 183   | Halk + Poogie Item + Diva Song + Bento + Guild Poogie + Guild Food |
+| Freestyle Diva Skill          | FDS | 503   | TA + Diva Skill + Active Feature                                   |
+| Freestyle Diva Prayer Gem     | FDP | 1527  | FDS + Diva Prayer Gem                                              |
+| Freestyle Secret Tech         | FST | 2039  | FDP + Secret Technique                                             |
+| Freestyle Course Attack Boost | FCA | 4095  | FST + Course Attack Boost + Halk Pot Effect                        |
 
 On quests where you cannot use diva skills but you use active feature, it counts as TA, making it a requirement.
 
@@ -161,7 +161,7 @@ In the folder where `MHFZ_Overlay.exe` is (or in the `app-x.y.z` folder), there 
 
 ## Does this software support other operating systems?
 
-As detailed in the program's *about* section, this software is meant for Windows 10. It might work with other versions of Windows, but it may function with less stability.
+As detailed in the program's _about_ section, this software is meant for Windows 10. It might work with other versions of Windows, but it may function with less stability.
 
 ## The software messed up my computer or my game, what should I do?
 
@@ -204,7 +204,7 @@ If after updating at overlay startup your settings did not transfer over, try re
 ### Graphical User Interface
 
 1. Download [DevToys](https://www.microsoft.com/store/apps/9PGCV4V3BK4W).
-2. In *DevToys*: Go to Generators > Checksum.
+2. In _DevToys_: Go to Generators > Checksum.
 3. Enable Uppercase.
 4. Select SHA256 as Hashing Algorithm.
 5. Drag and drop the file.
@@ -248,191 +248,191 @@ If DS4Windows does not work for you, you can search for alternatives, but it is 
 
 ## How does this overlay compare to other Monster Hunter overlays?
 
-|    | mhf-z overlay v0.25.0 (DorielRivalet) | MHFZ_Overlay v0.1.0 (Imulion) | mhf_displayer v1.6.2 (suzaku01) |
-|:----------|:---------:|:---------:|:---------:|
-|Discord Rich Presence|✔️|❌|❌|
-|Rich Presence Quest Name|✔️|❌|❌|
-|Rich Presence Hunter Stats|✔️ Hit Count, etc.|❌|❌|
-|Monster HP|✔️|✔️|✔️|
-|Monster Effective HP|✔️|❌|❌|
-|Monster Parts|✔️|❌|✔️|
-|Monster Attack|✔️|✔️|✔️|
-|Monster Defense|✔️|✔️|✔️|
-|Monster Size|✔️|✔️|✔️|
-|Monster Ailments|✔️|✔️|✔️|
-|Timer Options|✔️|❌|✔️|
-|Sharpness Number|✔️|❌|❌|
-|Damage Numbers|✔️|✔️|✔️|
-|Damage Numbers Options|✔️|❌|❌|
-|DPS Graph|✔️|❌|❌|
-|Actions per Minute Graph|✔️|❌|❌|
-|True Raw Graph|✔️|❌|❌|
-|Hits/s Graph|✔️|❌|❌|
-|Hit Count|✔️|✔️|✔️|
-|Hits/s|✔️|❌|❌|
-|Block Count|✔️|❌|❌|
-|Blocks/s|✔️|❌|❌|
-|True Raw|✔️|✔️|✔️|
-|Actions per Minute|✔️|❌|❌|
-|Attempts Counter|✔️|❌|❌|
-|Quest Runs Youtube Link|✔️|❌|❌|
-|Personal Best Time|✔️|❌|❌|
-|Personal Best Attempts|✔️|❌|❌|
-|Completions Counter|✔️|❌|❌|
-|Run Pace|✔️ Color|❌|❌|
-|Quest Pace Graph|✔️|❌|❌|
-|Player Coordinates|✔️|❌|❌|
-|Settings Save on Update|✔️|❌|❌|
-|Save Stats to File|✔️|❌|❌|
-|Copy Stats to Clipboard|✔️|❌|❌|
-|Multiplayer Stats|❌|❌|❌|
-|Quest Runs Database|✔️|❌|❌|
-|Database Backups|✔️ Local|❌|❌|
-|Past Quests Info|✔️|❌|❌|
-|Achievements|✔️|❌|❌|
-|Show Quest Change|✔️|❌|❌|
-|Show Area Change|✔️|❌|❌|
-|KBM Layout|✔️|❌|❌|
-|Gamepad Layout|✔️|❌|❌|
-|Input Logs|✔️|❌|❌|
-|Quest ID|✔️|❌|❌|
-|Session Time|✔️|❌|❌|
-|Gear Info|✔️|❌|❌|
-|Map Info|✔️|❌|❌|
-|Font Options|✔️|✔️|✔️|
-|Localization|❌|❌|❌|
-|System Tray|✔️|❌|❌|
-|Auto-Close|✔️|❌|❌|
-|Performance Options|✔️|❌|❌|
-|Auto-Update|✔️|❌|❌|
-|Hotkeys|✔️|✔️|✔️|
-|Auto-Hide|✔️ Unfocused option|✔️|✔️|
-|Drag and Drop|✔️|✔️|❌|
-|Logging|✔️|❌|❌|
-|Logging Options|✔️|❌|❌|
-|Color Options|✔️|✔️|✔️|
-|Buff Icons |✔️|❌|❌|
-|Debuff Icons |❌|❌|❌|
-|Hub Activities|❌|❌|❌|
-|Settings Search|❌|❌|❌|
-|Settings Presets|✔️|❌|❌|
-|Settings Onboarding|✔️|❌|❌|
-|Overlay Watermark|✔️|❌|❌|
-|Website|❌|❌|❌|
-|Branding|❌ WIP|❌|❌|
-|End-User Documentation|✔️|❌|❌|
-|Technical Documentation|Incomplete|❌|❌|
-|License File|✔️ MIT|❌ |✔️ MIT |
-|Unit Testing|❌ WIP|❌|❌|
-|Changelog|✔️|❌|❌|
-|GitHub Actions|✔️|❌|❌|
-|Issue Template|✔️|❌|❌|
-|Pull Request Template|✔️|❌|❌|
-|Contributing File|✔️|❌|❌|
-|GitHub Milestones|✔️|❌|❌|
-|GitHub Projects|✔️|❌|❌|
-|Code Analysis|✔️ [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=DorielRivalet_MHFZ_Overlay&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=DorielRivalet_MHFZ_Overlay)|❌|❌|
-|Code Size|![img](https://img.shields.io/github/languages/code-size/dorielrivalet/mhfz-overlay)|![img](https://img.shields.io/github/languages/code-size/imulion/mhfz_overlay)|![img](https://img.shields.io/github/languages/code-size/suzaku01/mhf_displayer)|
-|#1 Contributor Commits|DorielRivalet 593 (+523,769 -460,614)|Imulion 14 (+3,427 -5)|suzaku01 68 (+9,745 -6,084)|
-|Contributors|4|1|1|
-|Commits|![img](https://img.shields.io/github/commit-activity/y/dorielrivalet/mhfz-overlay)|![img](https://img.shields.io/github/commit-activity/y/imulion/mhfz_overlay)|![img](https://img.shields.io/github/commit-activity/y/suzaku01/mhf_displayer)|
-|Last Commit|![img](https://img.shields.io/github/last-commit/dorielrivalet/mhfz-overlay)|![img](https://img.shields.io/github/last-commit/imulion/mhfz_overlay)|![img](https://img.shields.io/github/last-commit/suzaku01/mhf_displayer)|
-|Lines of Code|74405|![img](https://vercel-tokei-git-main-dorielrivalet.vercel.app/tokei/github/imulion/mhfz_overlay)|![img](https://vercel-tokei-git-main-dorielrivalet.vercel.app/tokei/github/suzaku01/mhf_displayer)|
-|Comments|4187|![img](https://vercel-tokei-git-main-dorielrivalet.vercel.app/tokei/github/imulion/mhfz_overlay?category=comments)|![img](https://vercel-tokei-git-main-dorielrivalet.vercel.app/tokei/github/suzaku01/mhf_displayer?category=comments)|
+|                            |                                                                                   mhf-z overlay v0.25.0 (DorielRivalet)                                                                                    |                                           MHFZ_Overlay v0.1.0 (Imulion)                                            |                                           mhf_displayer v1.6.2 (suzaku01)                                            |
+| :------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------: |
+| Discord Rich Presence      |                                                                                                     ✔️                                                                                                     |                                                         ❌                                                         |                                                          ❌                                                          |
+| Rich Presence Quest Name   |                                                                                                     ✔️                                                                                                     |                                                         ❌                                                         |                                                          ❌                                                          |
+| Rich Presence Hunter Stats |                                                                                             ✔️ Hit Count, etc.                                                                                             |                                                         ❌                                                         |                                                          ❌                                                          |
+| Monster HP                 |                                                                                                     ✔️                                                                                                     |                                                         ✔️                                                         |                                                          ✔️                                                          |
+| Monster Effective HP       |                                                                                                     ✔️                                                                                                     |                                                         ❌                                                         |                                                          ❌                                                          |
+| Monster Parts              |                                                                                                     ✔️                                                                                                     |                                                         ❌                                                         |                                                          ✔️                                                          |
+| Monster Attack             |                                                                                                     ✔️                                                                                                     |                                                         ✔️                                                         |                                                          ✔️                                                          |
+| Monster Defense            |                                                                                                     ✔️                                                                                                     |                                                         ✔️                                                         |                                                          ✔️                                                          |
+| Monster Size               |                                                                                                     ✔️                                                                                                     |                                                         ✔️                                                         |                                                          ✔️                                                          |
+| Monster Ailments           |                                                                                                     ✔️                                                                                                     |                                                         ✔️                                                         |                                                          ✔️                                                          |
+| Timer Options              |                                                                                                     ✔️                                                                                                     |                                                         ❌                                                         |                                                          ✔️                                                          |
+| Sharpness Number           |                                                                                                     ✔️                                                                                                     |                                                         ❌                                                         |                                                          ❌                                                          |
+| Damage Numbers             |                                                                                                     ✔️                                                                                                     |                                                         ✔️                                                         |                                                          ✔️                                                          |
+| Damage Numbers Options     |                                                                                                     ✔️                                                                                                     |                                                         ❌                                                         |                                                          ❌                                                          |
+| DPS Graph                  |                                                                                                     ✔️                                                                                                     |                                                         ❌                                                         |                                                          ❌                                                          |
+| Actions per Minute Graph   |                                                                                                     ✔️                                                                                                     |                                                         ❌                                                         |                                                          ❌                                                          |
+| True Raw Graph             |                                                                                                     ✔️                                                                                                     |                                                         ❌                                                         |                                                          ❌                                                          |
+| Hits/s Graph               |                                                                                                     ✔️                                                                                                     |                                                         ❌                                                         |                                                          ❌                                                          |
+| Hit Count                  |                                                                                                     ✔️                                                                                                     |                                                         ✔️                                                         |                                                          ✔️                                                          |
+| Hits/s                     |                                                                                                     ✔️                                                                                                     |                                                         ❌                                                         |                                                          ❌                                                          |
+| Block Count                |                                                                                                     ✔️                                                                                                     |                                                         ❌                                                         |                                                          ❌                                                          |
+| Blocks/s                   |                                                                                                     ✔️                                                                                                     |                                                         ❌                                                         |                                                          ❌                                                          |
+| True Raw                   |                                                                                                     ✔️                                                                                                     |                                                         ✔️                                                         |                                                          ✔️                                                          |
+| Actions per Minute         |                                                                                                     ✔️                                                                                                     |                                                         ❌                                                         |                                                          ❌                                                          |
+| Attempts Counter           |                                                                                                     ✔️                                                                                                     |                                                         ❌                                                         |                                                          ❌                                                          |
+| Quest Runs Youtube Link    |                                                                                                     ✔️                                                                                                     |                                                         ❌                                                         |                                                          ❌                                                          |
+| Personal Best Time         |                                                                                                     ✔️                                                                                                     |                                                         ❌                                                         |                                                          ❌                                                          |
+| Personal Best Attempts     |                                                                                                     ✔️                                                                                                     |                                                         ❌                                                         |                                                          ❌                                                          |
+| Completions Counter        |                                                                                                     ✔️                                                                                                     |                                                         ❌                                                         |                                                          ❌                                                          |
+| Run Pace                   |                                                                                                  ✔️ Color                                                                                                  |                                                         ❌                                                         |                                                          ❌                                                          |
+| Quest Pace Graph           |                                                                                                     ✔️                                                                                                     |                                                         ❌                                                         |                                                          ❌                                                          |
+| Player Coordinates         |                                                                                                     ✔️                                                                                                     |                                                         ❌                                                         |                                                          ❌                                                          |
+| Settings Save on Update    |                                                                                                     ✔️                                                                                                     |                                                         ❌                                                         |                                                          ❌                                                          |
+| Save Stats to File         |                                                                                                     ✔️                                                                                                     |                                                         ❌                                                         |                                                          ❌                                                          |
+| Copy Stats to Clipboard    |                                                                                                     ✔️                                                                                                     |                                                         ❌                                                         |                                                          ❌                                                          |
+| Multiplayer Stats          |                                                                                                     ❌                                                                                                     |                                                         ❌                                                         |                                                          ❌                                                          |
+| Quest Runs Database        |                                                                                                     ✔️                                                                                                     |                                                         ❌                                                         |                                                          ❌                                                          |
+| Database Backups           |                                                                                                  ✔️ Local                                                                                                  |                                                         ❌                                                         |                                                          ❌                                                          |
+| Past Quests Info           |                                                                                                     ✔️                                                                                                     |                                                         ❌                                                         |                                                          ❌                                                          |
+| Achievements               |                                                                                                     ✔️                                                                                                     |                                                         ❌                                                         |                                                          ❌                                                          |
+| Show Quest Change          |                                                                                                     ✔️                                                                                                     |                                                         ❌                                                         |                                                          ❌                                                          |
+| Show Area Change           |                                                                                                     ✔️                                                                                                     |                                                         ❌                                                         |                                                          ❌                                                          |
+| KBM Layout                 |                                                                                                     ✔️                                                                                                     |                                                         ❌                                                         |                                                          ❌                                                          |
+| Gamepad Layout             |                                                                                                     ✔️                                                                                                     |                                                         ❌                                                         |                                                          ❌                                                          |
+| Input Logs                 |                                                                                                     ✔️                                                                                                     |                                                         ❌                                                         |                                                          ❌                                                          |
+| Quest ID                   |                                                                                                     ✔️                                                                                                     |                                                         ❌                                                         |                                                          ❌                                                          |
+| Session Time               |                                                                                                     ✔️                                                                                                     |                                                         ❌                                                         |                                                          ❌                                                          |
+| Gear Info                  |                                                                                                     ✔️                                                                                                     |                                                         ❌                                                         |                                                          ❌                                                          |
+| Map Info                   |                                                                                                     ✔️                                                                                                     |                                                         ❌                                                         |                                                          ❌                                                          |
+| Font Options               |                                                                                                     ✔️                                                                                                     |                                                         ✔️                                                         |                                                          ✔️                                                          |
+| Localization               |                                                                                                     ❌                                                                                                     |                                                         ❌                                                         |                                                          ❌                                                          |
+| System Tray                |                                                                                                     ✔️                                                                                                     |                                                         ❌                                                         |                                                          ❌                                                          |
+| Auto-Close                 |                                                                                                     ✔️                                                                                                     |                                                         ❌                                                         |                                                          ❌                                                          |
+| Performance Options        |                                                                                                     ✔️                                                                                                     |                                                         ❌                                                         |                                                          ❌                                                          |
+| Auto-Update                |                                                                                                     ✔️                                                                                                     |                                                         ❌                                                         |                                                          ❌                                                          |
+| Hotkeys                    |                                                                                                     ✔️                                                                                                     |                                                         ✔️                                                         |                                                          ✔️                                                          |
+| Auto-Hide                  |                                                                                            ✔️ Unfocused option                                                                                             |                                                         ✔️                                                         |                                                          ✔️                                                          |
+| Drag and Drop              |                                                                                                     ✔️                                                                                                     |                                                         ✔️                                                         |                                                          ❌                                                          |
+| Logging                    |                                                                                                     ✔️                                                                                                     |                                                         ❌                                                         |                                                          ❌                                                          |
+| Logging Options            |                                                                                                     ✔️                                                                                                     |                                                         ❌                                                         |                                                          ❌                                                          |
+| Color Options              |                                                                                                     ✔️                                                                                                     |                                                         ✔️                                                         |                                                          ✔️                                                          |
+| Buff Icons                 |                                                                                                     ✔️                                                                                                     |                                                         ❌                                                         |                                                          ❌                                                          |
+| Debuff Icons               |                                                                                                     ❌                                                                                                     |                                                         ❌                                                         |                                                          ❌                                                          |
+| Hub Activities             |                                                                                                     ❌                                                                                                     |                                                         ❌                                                         |                                                          ❌                                                          |
+| Settings Search            |                                                                                                     ❌                                                                                                     |                                                         ❌                                                         |                                                          ❌                                                          |
+| Settings Presets           |                                                                                                     ✔️                                                                                                     |                                                         ❌                                                         |                                                          ❌                                                          |
+| Settings Onboarding        |                                                                                                     ✔️                                                                                                     |                                                         ❌                                                         |                                                          ❌                                                          |
+| Overlay Watermark          |                                                                                                     ✔️                                                                                                     |                                                         ❌                                                         |                                                          ❌                                                          |
+| Website                    |                                                                                                     ❌                                                                                                     |                                                         ❌                                                         |                                                          ❌                                                          |
+| Branding                   |                                                                                                   ❌ WIP                                                                                                   |                                                         ❌                                                         |                                                          ❌                                                          |
+| End-User Documentation     |                                                                                                     ✔️                                                                                                     |                                                         ❌                                                         |                                                          ❌                                                          |
+| Technical Documentation    |                                                                                                 Incomplete                                                                                                 |                                                         ❌                                                         |                                                          ❌                                                          |
+| License File               |                                                                                                   ✔️ MIT                                                                                                   |                                                         ❌                                                         |                                                        ✔️ MIT                                                        |
+| Unit Testing               |                                                                                                   ❌ WIP                                                                                                   |                                                         ❌                                                         |                                                          ❌                                                          |
+| Changelog                  |                                                                                                     ✔️                                                                                                     |                                                         ❌                                                         |                                                          ❌                                                          |
+| GitHub Actions             |                                                                                                     ✔️                                                                                                     |                                                         ❌                                                         |                                                          ❌                                                          |
+| Issue Template             |                                                                                                     ✔️                                                                                                     |                                                         ❌                                                         |                                                          ❌                                                          |
+| Pull Request Template      |                                                                                                     ✔️                                                                                                     |                                                         ❌                                                         |                                                          ❌                                                          |
+| Contributing File          |                                                                                                     ✔️                                                                                                     |                                                         ❌                                                         |                                                          ❌                                                          |
+| GitHub Milestones          |                                                                                                     ✔️                                                                                                     |                                                         ❌                                                         |                                                          ❌                                                          |
+| GitHub Projects            |                                                                                                     ✔️                                                                                                     |                                                         ❌                                                         |                                                          ❌                                                          |
+| Code Analysis              | ✔️ [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=DorielRivalet_MHFZ_Overlay&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=DorielRivalet_MHFZ_Overlay) |                                                         ❌                                                         |                                                          ❌                                                          |
+| Code Size                  |                                                            ![img](https://img.shields.io/github/languages/code-size/dorielrivalet/mhfz-overlay)                                                            |                   ![img](https://img.shields.io/github/languages/code-size/imulion/mhfz_overlay)                   |                   ![img](https://img.shields.io/github/languages/code-size/suzaku01/mhf_displayer)                   |
+| #1 Contributor Commits     |                                                                                   DorielRivalet 593 (+523,769 -460,614)                                                                                    |                                               Imulion 14 (+3,427 -5)                                               |                                             suzaku01 68 (+9,745 -6,084)                                              |
+| Contributors               |                                                                                                     4                                                                                                      |                                                         1                                                          |                                                          1                                                           |
+| Commits                    |                                                             ![img](https://img.shields.io/github/commit-activity/y/dorielrivalet/mhfz-overlay)                                                             |                    ![img](https://img.shields.io/github/commit-activity/y/imulion/mhfz_overlay)                    |                    ![img](https://img.shields.io/github/commit-activity/y/suzaku01/mhf_displayer)                    |
+| Last Commit                |                                                                ![img](https://img.shields.io/github/last-commit/dorielrivalet/mhfz-overlay)                                                                |                       ![img](https://img.shields.io/github/last-commit/imulion/mhfz_overlay)                       |                       ![img](https://img.shields.io/github/last-commit/suzaku01/mhf_displayer)                       |
+| Lines of Code              |                                                                                                   74405                                                                                                    |          ![img](https://vercel-tokei-git-main-dorielrivalet.vercel.app/tokei/github/imulion/mhfz_overlay)          |          ![img](https://vercel-tokei-git-main-dorielrivalet.vercel.app/tokei/github/suzaku01/mhf_displayer)          |
+| Comments                   |                                                                                                    4187                                                                                                    | ![img](https://vercel-tokei-git-main-dorielrivalet.vercel.app/tokei/github/imulion/mhfz_overlay?category=comments) | ![img](https://vercel-tokei-git-main-dorielrivalet.vercel.app/tokei/github/suzaku01/mhf_displayer?category=comments) |
 
 As an added bonus:
 
-|    | mhf-z overlay v0.34.0 (DorielRivalet) | HunterPie v2.8.0 (HunterPie) |
-|:----------|:---------:|:---------:|
-|Discord Rich Presence|✔️|✔️|
-|Rich Presence Quest Name|✔️|❌|
-|Rich Presence Hunter Stats|✔️ Hit Count, etc.|✔️ Rank Only|
-|Monster HP|✔️|✔️|
-|Monster Effective HP|✔️|✔️|
-|Monster Parts|✔️|✔️|
-|Monster Attack|✔️|❌|
-|Monster Defense|✔️|❌|
-|Monster Size|✔️|✔️ Crown Icon|
-|Monster Ailments|✔️|✔️|
-|Timer Options|✔️|❌|
-|Sharpness Number|✔️|✔️|
-|Damage Numbers|✔️|Built-in by Rise/World|
-|Damage Numbers Options|✔️|❌|
-|DPS Graph|✔️|✔️ Multiplayer|
-|Actions per Minute Graph|✔️|❌|
-|True Raw Graph|✔️|❌|
-|Hits/s Graph|✔️|❌|
-|Hit Count|✔️|❌|
-|Hits/s|✔️|❌|
-|Block Count|✔️|❌|
-|Blocks/s|✔️|❌|
-|True Raw|✔️|✔️|
-|Actions per Minute|✔️|❌|
-|Attempts Counter|✔️|❌|
-|Quest Runs Youtube Link|✔️|❌|
-|Personal Best Time|✔️|❌|
-|Personal Best Attempts|✔️|❌|
-|Completions Counter|✔️|❌|
-|Run Pace|✔️ Color|❌|
-|Quest Pace Graph|✔️|❌|
-|Player Coordinates|✔️|❌|
-|Settings Save on Update|✔️|✔️|
-|Save Stats to File|✔️|❌|
-|Copy Stats to Clipboard|✔️|❌|
-|Multiplayer Stats|❌|✔️|
-|Quest Runs Database|✔️|✔️|
-|Database Backups|✔️ Local|✔️ Account-based|
-|Past Quests Info|✔️|$5 for full feature|
-|Achievements|✔️|❌|
-|Show Quest Change|✔️|❌|
-|Show Area Change|✔️|❌|
-|KBM Layout|✔️|❌|
-|Gamepad Layout|✔️|❌|
-|Input Logs|✔️|❌|
-|Quest ID|✔️|❌|
-|Session Time|✔️|❌|
-|Gear Info|✔️ Guild Card|❌|
-|Map Info|✔️|Built-in by Game|
-|Font Options|✔️|❌|
-|Localization|❌|✔️|
-|System Tray|✔️|✔️|
-|Auto-Close|✔️|✔️|
-|Performance Options|✔️|✔️|
-|Auto-Update|✔️|✔️|
-|Hotkeys|✔️|✔️|
-|Auto-Hide|✔️ Unfocused option|✔️ Unfocused option|
-|Drag and Drop|✔️|✔️ Designer Mode|
-|Logging|✔️ File|✔️ Console|
-|Logging Options|✔️|❌|
-|Color Options|✔️|❌|
-|Buff Icons |✔️|✔️|
-|Debuff Icons |❌|✔️|
-|Hub Activities|❌|✔️|
-|Settings Search|❌|✔️ by Section|
-|Settings Presets|✔️|Uses Widgets instead|
-|Settings Onboarding|✔️|❌|
-|Overlay Watermark|✔️|❌|
-|Website|❌|✔️|
-|Branding|❌ WIP|✔️|
-|End-User Documentation|✔️|✔️|
-|Technical Documentation|Incomplete|Incomplete|
-|License File|✔️ MIT|✔️ MIT |
-|Unit Testing|❌WIP|✔️|
-|Changelog|✔️|✔️|
-|GitHub Actions|✔️|✔️|
-|Issue Template|✔️|❌|
-|Pull Request Template|✔️|❌|
-|Contributing File|✔️|❌|
-|GitHub Milestones|✔️|✔️|
-|GitHub Projects|✔️|✔️|
-|Code Analysis|✔️ [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=DorielRivalet_MHFZ_Overlay&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=DorielRivalet_MHFZ_Overlay)|Private|
-|Code Size|![img](https://img.shields.io/github/languages/code-size/dorielrivalet/mhfz-overlay)|![img](https://img.shields.io/github/languages/code-size/hunterpie/hunterpie)|
-|#1 Contributor Commits|DorielRivalet 593 (+523,769 -460,614)|Haato3o 935 (+168,934  -105,956)|
-|Contributors|4|17|
-|Commits|![img](https://img.shields.io/github/commit-activity/y/dorielrivalet/mhfz-overlay)|![img](https://img.shields.io/github/commit-activity/y/hunterpie/hunterpie)|
-|Last Commit|![img](https://img.shields.io/github/last-commit/dorielrivalet/mhfz-overlay)|![img](https://img.shields.io/github/last-commit/hunterpie/hunterpie)|
-|Lines of Code|74405|![img](https://vercel-tokei-git-main-dorielrivalet.vercel.app/tokei/github/hunterpie/hunterpie)|
-|Comments|4187|![img](https://vercel-tokei-git-main-dorielrivalet.vercel.app/tokei/github/hunterpie/hunterpie?category=comments)|
+|                            |                                                                                   mhf-z overlay v0.34.0 (DorielRivalet)                                                                                    |                                           HunterPie v2.8.0 (HunterPie)                                            |
+| :------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------: |
+| Discord Rich Presence      |                                                                                                     ✔️                                                                                                     |                                                        ✔️                                                         |
+| Rich Presence Quest Name   |                                                                                                     ✔️                                                                                                     |                                                        ❌                                                         |
+| Rich Presence Hunter Stats |                                                                                             ✔️ Hit Count, etc.                                                                                             |                                                   ✔️ Rank Only                                                    |
+| Monster HP                 |                                                                                                     ✔️                                                                                                     |                                                        ✔️                                                         |
+| Monster Effective HP       |                                                                                                     ✔️                                                                                                     |                                                        ✔️                                                         |
+| Monster Parts              |                                                                                                     ✔️                                                                                                     |                                                        ✔️                                                         |
+| Monster Attack             |                                                                                                     ✔️                                                                                                     |                                                        ❌                                                         |
+| Monster Defense            |                                                                                                     ✔️                                                                                                     |                                                        ❌                                                         |
+| Monster Size               |                                                                                                     ✔️                                                                                                     |                                                   ✔️ Crown Icon                                                   |
+| Monster Ailments           |                                                                                                     ✔️                                                                                                     |                                                        ✔️                                                         |
+| Timer Options              |                                                                                                     ✔️                                                                                                     |                                                        ❌                                                         |
+| Sharpness Number           |                                                                                                     ✔️                                                                                                     |                                                        ✔️                                                         |
+| Damage Numbers             |                                                                                                     ✔️                                                                                                     |                                              Built-in by Rise/World                                               |
+| Damage Numbers Options     |                                                                                                     ✔️                                                                                                     |                                                        ❌                                                         |
+| DPS Graph                  |                                                                                                     ✔️                                                                                                     |                                                  ✔️ Multiplayer                                                   |
+| Actions per Minute Graph   |                                                                                                     ✔️                                                                                                     |                                                        ❌                                                         |
+| True Raw Graph             |                                                                                                     ✔️                                                                                                     |                                                        ❌                                                         |
+| Hits/s Graph               |                                                                                                     ✔️                                                                                                     |                                                        ❌                                                         |
+| Hit Count                  |                                                                                                     ✔️                                                                                                     |                                                        ❌                                                         |
+| Hits/s                     |                                                                                                     ✔️                                                                                                     |                                                        ❌                                                         |
+| Block Count                |                                                                                                     ✔️                                                                                                     |                                                        ❌                                                         |
+| Blocks/s                   |                                                                                                     ✔️                                                                                                     |                                                        ❌                                                         |
+| True Raw                   |                                                                                                     ✔️                                                                                                     |                                                        ✔️                                                         |
+| Actions per Minute         |                                                                                                     ✔️                                                                                                     |                                                        ❌                                                         |
+| Attempts Counter           |                                                                                                     ✔️                                                                                                     |                                                        ❌                                                         |
+| Quest Runs Youtube Link    |                                                                                                     ✔️                                                                                                     |                                                        ❌                                                         |
+| Personal Best Time         |                                                                                                     ✔️                                                                                                     |                                                        ❌                                                         |
+| Personal Best Attempts     |                                                                                                     ✔️                                                                                                     |                                                        ❌                                                         |
+| Completions Counter        |                                                                                                     ✔️                                                                                                     |                                                        ❌                                                         |
+| Run Pace                   |                                                                                                  ✔️ Color                                                                                                  |                                                        ❌                                                         |
+| Quest Pace Graph           |                                                                                                     ✔️                                                                                                     |                                                        ❌                                                         |
+| Player Coordinates         |                                                                                                     ✔️                                                                                                     |                                                        ❌                                                         |
+| Settings Save on Update    |                                                                                                     ✔️                                                                                                     |                                                        ✔️                                                         |
+| Save Stats to File         |                                                                                                     ✔️                                                                                                     |                                                        ❌                                                         |
+| Copy Stats to Clipboard    |                                                                                                     ✔️                                                                                                     |                                                        ❌                                                         |
+| Multiplayer Stats          |                                                                                                     ❌                                                                                                     |                                                        ✔️                                                         |
+| Quest Runs Database        |                                                                                                     ✔️                                                                                                     |                                                        ✔️                                                         |
+| Database Backups           |                                                                                                  ✔️ Local                                                                                                  |                                                 ✔️ Account-based                                                  |
+| Past Quests Info           |                                                                                                     ✔️                                                                                                     |                                                $5 for full feature                                                |
+| Achievements               |                                                                                                     ✔️                                                                                                     |                                                        ❌                                                         |
+| Show Quest Change          |                                                                                                     ✔️                                                                                                     |                                                        ❌                                                         |
+| Show Area Change           |                                                                                                     ✔️                                                                                                     |                                                        ❌                                                         |
+| KBM Layout                 |                                                                                                     ✔️                                                                                                     |                                                        ❌                                                         |
+| Gamepad Layout             |                                                                                                     ✔️                                                                                                     |                                                        ❌                                                         |
+| Input Logs                 |                                                                                                     ✔️                                                                                                     |                                                        ❌                                                         |
+| Quest ID                   |                                                                                                     ✔️                                                                                                     |                                                        ❌                                                         |
+| Session Time               |                                                                                                     ✔️                                                                                                     |                                                        ❌                                                         |
+| Gear Info                  |                                                                                               ✔️ Guild Card                                                                                                |                                                        ❌                                                         |
+| Map Info                   |                                                                                                     ✔️                                                                                                     |                                                 Built-in by Game                                                  |
+| Font Options               |                                                                                                     ✔️                                                                                                     |                                                        ❌                                                         |
+| Localization               |                                                                                                     ❌                                                                                                     |                                                        ✔️                                                         |
+| System Tray                |                                                                                                     ✔️                                                                                                     |                                                        ✔️                                                         |
+| Auto-Close                 |                                                                                                     ✔️                                                                                                     |                                                        ✔️                                                         |
+| Performance Options        |                                                                                                     ✔️                                                                                                     |                                                        ✔️                                                         |
+| Auto-Update                |                                                                                                     ✔️                                                                                                     |                                                        ✔️                                                         |
+| Hotkeys                    |                                                                                                     ✔️                                                                                                     |                                                        ✔️                                                         |
+| Auto-Hide                  |                                                                                            ✔️ Unfocused option                                                                                             |                                                ✔️ Unfocused option                                                |
+| Drag and Drop              |                                                                                                     ✔️                                                                                                     |                                                 ✔️ Designer Mode                                                  |
+| Logging                    |                                                                                                  ✔️ File                                                                                                   |                                                    ✔️ Console                                                     |
+| Logging Options            |                                                                                                     ✔️                                                                                                     |                                                        ❌                                                         |
+| Color Options              |                                                                                                     ✔️                                                                                                     |                                                        ❌                                                         |
+| Buff Icons                 |                                                                                                     ✔️                                                                                                     |                                                        ✔️                                                         |
+| Debuff Icons               |                                                                                                     ❌                                                                                                     |                                                        ✔️                                                         |
+| Hub Activities             |                                                                                                     ❌                                                                                                     |                                                        ✔️                                                         |
+| Settings Search            |                                                                                                     ❌                                                                                                     |                                                   ✔️ by Section                                                   |
+| Settings Presets           |                                                                                                     ✔️                                                                                                     |                                               Uses Widgets instead                                                |
+| Settings Onboarding        |                                                                                                     ✔️                                                                                                     |                                                        ❌                                                         |
+| Overlay Watermark          |                                                                                                     ✔️                                                                                                     |                                                        ❌                                                         |
+| Website                    |                                                                                                     ❌                                                                                                     |                                                        ✔️                                                         |
+| Branding                   |                                                                                                   ❌ WIP                                                                                                   |                                                        ✔️                                                         |
+| End-User Documentation     |                                                                                                     ✔️                                                                                                     |                                                        ✔️                                                         |
+| Technical Documentation    |                                                                                                 Incomplete                                                                                                 |                                                    Incomplete                                                     |
+| License File               |                                                                                                   ✔️ MIT                                                                                                   |                                                      ✔️ MIT                                                       |
+| Unit Testing               |                                                                                                   ❌WIP                                                                                                    |                                                        ✔️                                                         |
+| Changelog                  |                                                                                                     ✔️                                                                                                     |                                                        ✔️                                                         |
+| GitHub Actions             |                                                                                                     ✔️                                                                                                     |                                                        ✔️                                                         |
+| Issue Template             |                                                                                                     ✔️                                                                                                     |                                                        ❌                                                         |
+| Pull Request Template      |                                                                                                     ✔️                                                                                                     |                                                        ❌                                                         |
+| Contributing File          |                                                                                                     ✔️                                                                                                     |                                                        ❌                                                         |
+| GitHub Milestones          |                                                                                                     ✔️                                                                                                     |                                                        ✔️                                                         |
+| GitHub Projects            |                                                                                                     ✔️                                                                                                     |                                                        ✔️                                                         |
+| Code Analysis              | ✔️ [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=DorielRivalet_MHFZ_Overlay&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=DorielRivalet_MHFZ_Overlay) |                                                      Private                                                      |
+| Code Size                  |                                                            ![img](https://img.shields.io/github/languages/code-size/dorielrivalet/mhfz-overlay)                                                            |                   ![img](https://img.shields.io/github/languages/code-size/hunterpie/hunterpie)                   |
+| #1 Contributor Commits     |                                                                                   DorielRivalet 593 (+523,769 -460,614)                                                                                    |                                          Haato3o 935 (+168,934 -105,956)                                          |
+| Contributors               |                                                                                                     4                                                                                                      |                                                        17                                                         |
+| Commits                    |                                                             ![img](https://img.shields.io/github/commit-activity/y/dorielrivalet/mhfz-overlay)                                                             |                    ![img](https://img.shields.io/github/commit-activity/y/hunterpie/hunterpie)                    |
+| Last Commit                |                                                                ![img](https://img.shields.io/github/last-commit/dorielrivalet/mhfz-overlay)                                                                |                       ![img](https://img.shields.io/github/last-commit/hunterpie/hunterpie)                       |
+| Lines of Code              |                                                                                                   74405                                                                                                    |          ![img](https://vercel-tokei-git-main-dorielrivalet.vercel.app/tokei/github/hunterpie/hunterpie)          |
+| Comments                   |                                                                                                    4187                                                                                                    | ![img](https://vercel-tokei-git-main-dorielrivalet.vercel.app/tokei/github/hunterpie/hunterpie?category=comments) |
 
 ## What does Effective HP and True HP mean?
 
@@ -490,7 +490,7 @@ If you have any concerns or doubts about the software, we recommend [verifying t
 
 ## What is the database used for?
 
-The overlay uses a SQLite database file for storing you past quest runs information, among other things, so that you can view graphs and statistics of your past runs. SQLite is known for being lightweight and performant, and the source code of the overlay implements various techniques to take advantage of such. See the other questions related to files and the database for more information.
+The overlay uses a SQLite database file for storing your past quest runs information, among other things, so that you can view graphs and statistics of your past runs. SQLite is known for being lightweight and performant, and the source code of the overlay implements various techniques to take advantage of such. See the other questions related to files and the database for more information.
 
 To see in more detail the performance of the overlay's database, see [the documentation](./docs/performance.md).
 
