@@ -11,7 +11,7 @@
 
 ## Overview
 
-The following steps outline the process for releasing and deploying the software using clowd.squirrel, after making changes and testing in-game.
+The following steps outline the process for releasing and deploying the software using Velopack, after making changes and testing in-game.
 
 ### Repository branch structure
 
@@ -60,12 +60,12 @@ If you are working on fixes, test your fixes before working on something else. T
 6. Update CHANGELOG.md: Run `npm run release` to automatically update the CHANGELOG.md file with the changes made. When prompted for the tag name, follow Semver's specifications and prefix with a `v`. Answer `Yes` to all except the last question ("Create a Release on GitHub?").
 7. Merge release branch into main: **Recommended to send a Pull Request to the main branch**. Otherwise, run `git checkout main` to switch to the main branch and do `git pull origin main` to pull the latest remote changes, then run `git merge release` to merge the release branch into the main branch, and finally `git push origin main`.
 8. Verify GitHub Actions: Verify that the GitHub Actions workflow has been triggered and completed successfully. If something is wrong, go back to step 1 and fix any issues without modifying the git history (no rebases and no squashes).
-9. Publish in Visual Studio: Open the solution in Visual Studio then switch from Build configuration to Release configuration. Publish the software's project using Visual Studio.
-10. Update packVersion with Clowd.Squirrel: Open the command prompt in the `C:\Users\Name\.nuget\packages\clowd.squirrel\x.x.xx\tools` folder, then run the following command, replacing the appropriate paths and version number (replace the packVersion flag with the actual version number):
-    - `Squirrel.exe pack --packId "MHFZ_Overlay" --packDirectory "ABSOLUTE_PATH\MHFZ_Overlay\MHFZ_Overlay\bin\Release\net6.0-windows\publish" --framework net6.0-x86 --packTitle="Monster Hunter Frontier Z Overlay" --packAuthors="DorielRivalet" --splashImage="ABSOLUTE_PATH\MHFZ_Overlay\splash.png" --icon="ABSOLUTE_PATH\MHFZ_Overlay\img\icon\mhfzoverlayicon256.ico" --appIcon="ABSOLUTE_PATH\MHFZ_Overlay\img\icon\mhfzoverlayicon256.ico" --packVersion "0.13.0"`
-11. Add to GitHub Releases: Create a new release on GitHub with the appropriate version number, release notes, and documentation. Lastly, attach all of the files in the generated Releases folder separately.
+9. Open terminal in `MHFZ_Overlay` project directory and run `dotnet publish -c Release --self-contained -r win-x86 -o publish`.
+10. Update packVersion with Velopack: Install `vpk` from Velopack if you don't have it, then run the following command, replacing the packVersion flag with the new version number):
+    - `vpk pack --packId MHFZ_Overlay --packDir publish --mainExe "MHFZ_Overlay.exe" --splashImage ../splash.gif --icon mhfzoverlayicon256.ico --packAuthors "DorielRivalet" --packTitle "Monster Hunter Frontier Z Overlay" --packVersion 0.36.0`
+11. Add to GitHub Releases: Create a new release on GitHub with the appropriate version number, release notes, and documentation. Lastly, attach all of the files in the generated Releases folder separately (`assets.win.json not needed`).
 
-By following these steps, the software can be releasified and deployed using clowd.squirrel, ensuring that the latest changes are packaged and released to users efficiently and reliably. Also, you are allowed to make feature branches and merge them into the release branch.
+By following these steps, the software can be releasified and deployed using Velopack, ensuring that the latest changes are packaged and released to users efficiently and reliably. Also, you are allowed to make feature branches and merge them into the release branch.
 
 ### Merging via command line
 

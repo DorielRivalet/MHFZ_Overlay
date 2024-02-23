@@ -17,7 +17,6 @@
 
 - [Monster Hunter Frontier Z Overlay](#monster-hunter-frontier-z-overlay)
   - [About](#about)
-  - [Requirements](#requirements)
   - [System Requirements](#system-requirements)
     - [Minimum](#minimum)
     - [Recommended](#recommended)
@@ -40,7 +39,6 @@
   - [Features not yet implemented](#features-not-yet-implemented)
   - [Bugs](#bugs)
   - [Frequently Asked Questions](#frequently-asked-questions)
-  - [How to Manually Update with Update.exe](#how-to-manually-update-with-updateexe)
   - [How to Uninstall](#how-to-uninstall)
   - [Changelog](#changelog)
   - [Documentation](#documentation)
@@ -60,18 +58,13 @@ The overlay is highly configurable, with a wide range of options available to su
 
 We hope you find this overlay useful and enjoyable, and we welcome any feedback or suggestions you may have. Happy hunting!
 
-## Requirements
-
-- [.NET Desktop Runtime 6.0 x64](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-desktop-6.0.7-windows-x64-installer).
-- [.NET Desktop Runtime 6.0 x86](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-desktop-6.0.8-windows-x86-installer).
-
 ## System Requirements
 
 ### Minimum
 
 - OS: Windows 10 (64-bit)
 - Processor:  Intel® Core™ i3-4130 or Core™ i5-3470
-- Memory: 8 GB RAM
+- Memory: 6 GB RAM
 - Storage: 500 MB available space
 - Additional Notes: 1080p/30fps when refresh rate is set to 1. System requirements subject to change during software development.
 
@@ -79,22 +72,21 @@ We hope you find this overlay useful and enjoyable, and we welcome any feedback 
 
 - OS: Windows 10 (64-bit)
 - Processor: Intel® Core™ i5-4460 or better
-- Memory: 8 GB RAM
+- Memory: 6 GB RAM
 - Storage: 500 MB available space
 - Additional Notes: 1080p/30fps when refresh rate is set to 30. System requirements subject to change during software development.
 
 Please note that these system requirements are estimates and may vary based on your specific hardware configuration. If you encounter any performance issues or have different hardware specifications, please provide feedback or send an issue for assistance. We appreciate your input in helping us improve the overlay's compatibility with a wider range of hardware setups.
 
-If you record and/or stream with the overlay, the recommended RAM is 16 GB and the recommended processor is Intel® Core™ i7 or better.
+If you record and/or stream with the overlay, the recommended processor is Intel® Core™ i7 or better.
 
 ## Installation
 
-1. [Get **ALL** of the requirements](#requirements).
-2. [Download the latest version from the *Releases*](https://github.com/DorielRivalet/mhfz-overlay/releases/latest/download/MHFZ_OverlaySetup.exe).
-3. Make sure *Windows* or your antivirus did not delete the file (because it reads the game's memory, *Windows* might detect it as a trojan, so you might have to get it out of quarantine).
-4. Run `MHFZ_OverlaySetup.exe` **as Administrator**.
-5. [Bonk monsters!](https://c.tenor.com/60Tr3Zeg6RkAAAAd/fumo-bonk.gif)
-6. [Be sure to leave some feedback here!](https://forms.gle/hrAVWMcYS5HEo1v7A)
+1. [Download the latest version from the *Releases*](https://github.com/DorielRivalet/mhfz-overlay/releases/latest/download/MHFZ_Overlay-win-Setup.exe).
+2. Make sure *Windows* or your antivirus did not delete the file (because it reads the game's memory, *Windows* might detect it as a trojan, so you might have to get it out of quarantine).
+3. Run `MHFZ_Overlay-win-Setup.exe` **as Administrator**.
+4. [Bonk monsters!](https://c.tenor.com/60Tr3Zeg6RkAAAAd/fumo-bonk.gif)
+5. [Be sure to leave some feedback here!](https://forms.gle/hrAVWMcYS5HEo1v7A)
 
 > [!NOTE]<br>
 > It's recommended to start the overlay when you are done loading into Mezeporta.
@@ -135,6 +127,8 @@ As an alternative to hotkeys, you can use the system tray options by right-click
 
 ![Preset](./demo/preset.png)
 
+- If you have slow performance, lower the refresh rate from 30 to 1.
+
 - If the monster HP shown is less than what its actual values should be, restart both the game and the overlay. If the HP shows 0/1 then change area for it to load. If the issue still occurs, change the Effective HP Corrector's minimum and maximum thresholds or disable Effective HP.
 
 - If you are having issues with the damage numbers when hitting the monster, change Damage Numbers Mode from Automatic to True Damage.
@@ -170,7 +164,7 @@ You can also see the monster icons or renders, and there is an option for automa
 ![Sharpness Numbers 2](./demo/sharpness2.png)
 ![Sharpness Numbers 3](./demo/sharpness3.png)
 
-- [x] Quest Timer (Two modes: elapsed time and time left. Down to the centiseconds in accuracy!).
+- [x] Quest Timer (Two modes: elapsed time and time left. Down to the milliseconds in accuracy!).
 - [x] Hit Count (counts *Reflect*, *Stylish Up*, Heatblade, *Fencing+2* and more!).
 
 ![Player Stats](./demo/playerstat1.png)
@@ -214,6 +208,10 @@ Includes icons!
 
 - [x] [Discord Rich Presence](./FAQ.md/#how-to-enable-discord-rich-presence) (custom monster icons, colored weapons, quest tier, current area, [speedrun mode, zen mode](./FAQ.md/#how-to-enable-speedrun-categories--zen-mode), and more!).
 
+![Buffs with Timers](./demo/buffs.png)
+
+- [x] Diva Song and Guild Food timers. Keep track of your buffs!
+
 ![Discord Rich Presence](./demo/discord5.png)
 ![Discord Rich Presence](./demo/discord10.png)
 
@@ -244,6 +242,8 @@ Includes icons!
 ![Most Recent](./demo/databasemostrecent.png)
 
 ![YouTube](./demo/databaseyoutube.png)
+
+![Quest Pace](./demo/questpace.png)
 
 ![Inventories](./demo/databaseinventories.png)
 
@@ -316,7 +316,6 @@ Some sections have context menus where you can save the section contents to a fi
 - Handle multiple objectives information.
 - Zenith information in Road.
 - Raviente Support Part Info.
-- Guild Pugi address.
 - Armor Set Website links.
 - Sky Corridor.
 - Drag and Drop multiple selection.
@@ -342,10 +341,6 @@ Some sections have context menus where you can save the section contents to a fi
 ## Frequently Asked Questions
 
 [FAQ](https://github.com/DorielRivalet/mhfz-overlay/blob/main/FAQ.md).
-
-## How to Manually Update with Update.exe
-
-`update.exe --update https://www.github.com/DorielRivalet/mhfz-overlay/releases/download/ENTER VERSION NUMBER (e.g. v0.6.4)`
 
 ## How to Uninstall
 
@@ -391,6 +386,8 @@ We recommend consulting the appropriate documentation file based on your needs. 
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=DorielRivalet_MHFZ_Overlay&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=DorielRivalet_MHFZ_Overlay)
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=DorielRivalet_MHFZ_Overlay&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=DorielRivalet_MHFZ_Overlay)
 
+[![CodeFactor](https://www.codefactor.io/repository/github/dorielrivalet/mhfz-overlay/badge/main)](https://www.codefactor.io/repository/github/dorielrivalet/mhfz-overlay/overview/main)
+
 ## Repository Overview
 
 [![Build Status](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2FDorielRivalet%2Fmhfz-overlay%2Fbadge%3Fref%3Dmain&style=flat)](https://actions-badge.atrox.dev/DorielRivalet/mhfz-overlay/goto?ref=main)
@@ -429,7 +426,7 @@ We recommend consulting the appropriate documentation file based on your needs. 
 - The theme and color palette used for the application is [*Catppuccin Mocha*](https://github.com/catppuccin/catppuccin).
 - The design and icons used in this project are part of [*Segoe Fluent Icons*](https://learn.microsoft.com/en-us/windows/apps/design/style/segoe-fluent-icons-font) and [WPF UI](https://github.com/lepoco/wpfui).
 - The fonts used is the in-game one, *MS Gothic*. For monospaced, the application uses Source Code Pro and MesloLGM NF. This project also uses Font Awesome's fonts. The Monster Hunter font made by XMitsarugiX comes from [here](https://www.deviantart.com/xmitsarugix/art/Monster-Hunter-Font-Type-1-and-2-380816151).
-- Thanks to Kairi for extensive beta testing and early support. [YouTube channel](https://www.youtube.com/@kairi_mhfz).
+- Thanks to [Kairi](https://www.youtube.com/@kairi_mhfz) and [Sera](https://www.youtube.com/@Sera9145) for extensive beta testing and early support.
 - The combo element icons are made by [Narwhaler](https://fanonmonsterhunter.fandom.com/wiki/User:Narwhaler).
 - Additional icons can be found [here](https://fanonmonsterhunter.fandom.com/wiki/Category:Icon).
 
@@ -438,3 +435,4 @@ We recommend consulting the appropriate documentation file based on your needs. 
 <a href="https://github.com/Catppuccin"><img style="border-radius: 50% !important;" alt="Avatar" src="https://raw.githubusercontent.com/catppuccin/catppuccin/main/assets/logos/exports/1544x1544_circle.png" width="64px" height="auto" ></a>
 <a href="https://github.com/lepoco/wpfui"><img style="background-color:#eff1f5" alt="Avatar" src="https://avatars.githubusercontent.com/u/87412094?s=200&v=4" width="64px" height="auto" ></a>
 <a href="https://www.youtube.com/@kairi_mhfz"><img style="border-radius: 50% !important;" alt="Avatar" src="https://yt3.googleusercontent.com/ytc/AOPolaQWKx3GIOgWWRu9YCHBI7lrkFjT2NxLP45IlnSM=s176-c-k-c0x00ffffff-no-rj" width="64px" height="auto" ></a>
+<a href="https://www.youtube.com/@Sera9145"><img style="border-radius: 50% !important;" alt="Avatar" src="https://yt3.googleusercontent.com/wf-Z4qoC9sCtf6b7Kp1SOfGAK9z2Ptneb8xfYwRNljvsQDd-8jaUNWeogBUDAFkMuohzLh6nEK4=s176-c-k-c0x00ffffff-no-rj" width="64px" height="auto" ></a>

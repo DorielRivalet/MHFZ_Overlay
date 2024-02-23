@@ -5806,5 +5806,148 @@ During the travel to your destination, the top of the Great Forest, you notice t
             Hint = "POWER!",
             }
         },
+        {
+            441, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Muse",
+            Description = string.Empty,
+            Rank = AchievementRank.Gold,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/diva_fountain.png",
+            Objective = "Use Diva Song buff in 100 quests.",
+            IsSecret = false,
+            Hint = string.Empty,
+            }
+        },
+        {
+            442, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Blessed Hunter",
+            Description = string.Empty,
+            Rank = AchievementRank.Platinum,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/diva_prayer_gems.png",
+            Objective = "Use Diva prayer gems in 777 quests.",
+            IsSecret = false,
+            Hint = string.Empty,
+            }
+        },
+        {
+            443, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Oink oink!",
+            Description = string.Empty,
+            Rank = AchievementRank.Silver,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/my_tore.png",
+            Objective = "Use guild poogie skill in 100 quests.",
+            IsSecret = false,
+            Hint = string.Empty,
+            }
+        },
+        {
+            444, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Halk's Friend",
+            Description = string.Empty,
+            Rank = AchievementRank.Gold,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/my_support.png",
+            Objective = "Level up your halk to LV3.",
+            IsSecret = false,
+            Hint = string.Empty,
+            }
+        },
+        {
+            445, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Active Hunter",
+            Description = string.Empty,
+            Rank = AchievementRank.Silver,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/small_gs.png",
+            Objective = "Use the active features of all weapon types.",
+            IsSecret = false,
+            Hint = string.Empty,
+            }
+        },
+        {
+            446, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "That's a Lotta Damage!",
+            Description = string.Empty,
+            Rank = AchievementRank.Silver,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/attack_up.png",
+            Objective = "Reach the maximum true raw in a quest.",
+            IsSecret = false,
+            Hint = string.Empty,
+            }
+        },
+        {
+            447, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "The Long and Winding Road",
+            Description = string.Empty,
+            Rank = AchievementRank.Platinum,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/rengoku.png",
+            Objective = "Reach a total of 10,000 road floors completed.",
+            IsSecret = false,
+            Hint = string.Empty,
+            }
+        },
+        {
+            448, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Over the Hills and Far Away",
+            Description = string.Empty,
+            Rank = AchievementRank.Gold,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/flame_ul.png",
+            Objective = "Complete 1 UL Azure Rathalos quest solo (Speedrun/Zen) in Forest and Hills under 5 minutes.",
+            IsSecret = false,
+            Hint = string.Empty,
+            }
+        },
+        {
+            449, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "PLUS ULTRA",
+            Description = string.Empty,
+            Rank = AchievementRank.Bronze,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/hunter.jpg",
+            Objective = "Attempt a quest with all run buffs active at once.",
+            IsSecret = false,
+            Hint = string.Empty,
+            }
+        },
+        {
+            450, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Skill Issue 💀",
+            Description = string.Empty,
+            Rank = AchievementRank.Bronze,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/skull.png",
+            Objective = "Cart a total of 100 times.",
+            IsSecret = false,
+            Hint = string.Empty,
+            }
+        },
+        {
+            451, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Start Me Up",
+            Description = string.Empty,
+            Rank = AchievementRank.Bronze,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/gamepad_start.png",
+            Objective = "Start the overlay 1,000 times.",
+            IsSecret = false,
+            Hint = string.Empty,
+            }
+        }
     });
 }

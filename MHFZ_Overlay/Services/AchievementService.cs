@@ -12,16 +12,18 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Media;
+using EZlion.Mapper;
 using MHFZ_Overlay;
 using MHFZ_Overlay.Models;
 using MHFZ_Overlay.Models.Collections;
 using MHFZ_Overlay.Models.Constant;
 using MHFZ_Overlay.Models.Structures;
 using MHFZ_Overlay.Services.Contracts;
+using MHFZ_Overlay.ViewModels.Windows;
 using MHFZ_Overlay.Views.Windows;
 using Newtonsoft.Json;
 using NLog;
-using Wpf.Ui.Common;
+using Wpf.Ui;
 using Wpf.Ui.Controls;
 
 public sealed class AchievementService : IAchievementService
@@ -251,7 +253,7 @@ public sealed class AchievementService : IAchievementService
                 }
 
             case 4:
-                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4AkuraVashimu && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4AkuraVashimu && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Speedrun"));
             case 5:
                 return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Anorupatisu);
             case 6:
@@ -285,7 +287,7 @@ public sealed class AchievementService : IAchievementService
                 }
 
             case 9:
-                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Anorupatisu && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Anorupatisu && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Speedrun"));
             case 10:
                 return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Blangonga);
             case 11:
@@ -319,7 +321,7 @@ public sealed class AchievementService : IAchievementService
                 }
 
             case 14:
-                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Blangonga && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Blangonga && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Speedrun"));
             case 15:
                 return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4DaimyoHermitaur);
             case 16:
@@ -353,7 +355,7 @@ public sealed class AchievementService : IAchievementService
                 }
 
             case 19:
-                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4DaimyoHermitaur && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4DaimyoHermitaur && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Speedrun"));
             case 20:
                 return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Doragyurosu);
             case 21:
@@ -387,7 +389,7 @@ public sealed class AchievementService : IAchievementService
                 }
 
             case 24:
-                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Doragyurosu && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Doragyurosu && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Speedrun"));
             case 25:
                 return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Espinas);
             case 26:
@@ -421,7 +423,7 @@ public sealed class AchievementService : IAchievementService
                 }
 
             case 29:
-                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Espinas && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Espinas && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Speedrun"));
             case 30:
                 return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Gasurabazura);
             case 31:
@@ -455,7 +457,7 @@ public sealed class AchievementService : IAchievementService
                 }
 
             case 34:
-                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Gasurabazura && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Gasurabazura && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Speedrun"));
             case 35:
                 return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Giaorugu);
             case 36:
@@ -489,7 +491,7 @@ public sealed class AchievementService : IAchievementService
                 }
 
             case 39:
-                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Giaorugu && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Giaorugu && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Speedrun"));
             case 40:
                 return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Hypnocatrice);
             case 41:
@@ -523,7 +525,7 @@ public sealed class AchievementService : IAchievementService
                 }
 
             case 44:
-                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Hypnocatrice && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Hypnocatrice && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Speedrun"));
             case 45:
                 return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Hyujikiki);
             case 46:
@@ -557,7 +559,7 @@ public sealed class AchievementService : IAchievementService
                 }
 
             case 49:
-                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Hyujikiki && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Hyujikiki && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Speedrun"));
             case 50:
                 return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Inagami);
             case 51:
@@ -591,7 +593,7 @@ public sealed class AchievementService : IAchievementService
                 }
 
             case 54:
-                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Inagami && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Inagami && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Speedrun"));
             case 55:
                 return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Khezu);
             case 56:
@@ -625,7 +627,7 @@ public sealed class AchievementService : IAchievementService
                 }
 
             case 59:
-                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Khezu && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Khezu && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Speedrun"));
             case 60:
                 return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Midogaron);
             case 61:
@@ -659,7 +661,7 @@ public sealed class AchievementService : IAchievementService
                 }
 
             case 64:
-                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Midogaron && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Midogaron && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Speedrun"));
             case 65:
                 return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDHugePlesioth);
             case 66:
@@ -693,7 +695,7 @@ public sealed class AchievementService : IAchievementService
                 }
 
             case 69:
-                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDHugePlesioth && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDHugePlesioth && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Speedrun"));
             case 70:
                 return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Rathalos);
             case 71:
@@ -727,7 +729,7 @@ public sealed class AchievementService : IAchievementService
                 }
 
             case 74:
-                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Rathalos && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Rathalos && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Speedrun"));
             case 75:
                 return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Rukodiora);
             case 76:
@@ -761,7 +763,7 @@ public sealed class AchievementService : IAchievementService
                 }
 
             case 79:
-                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Rukodiora && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Rukodiora && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Speedrun"));
             case 80:
                 return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Tigrex);
             case 81:
@@ -795,7 +797,7 @@ public sealed class AchievementService : IAchievementService
                 }
 
             case 84:
-                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Tigrex && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Tigrex && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Speedrun"));
             case 85:
                 return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Toridcless);
             case 86:
@@ -829,7 +831,7 @@ public sealed class AchievementService : IAchievementService
                 }
 
             case 89:
-                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Toridcless && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Toridcless && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Speedrun"));
             case 90:
                 return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Baruragaru);
             case 91:
@@ -863,7 +865,7 @@ public sealed class AchievementService : IAchievementService
                 }
 
             case 94:
-                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Baruragaru && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Baruragaru && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Speedrun"));
             case 95:
                 return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Bogabadorumu);
             case 96:
@@ -897,7 +899,7 @@ public sealed class AchievementService : IAchievementService
                 }
 
             case 99:
-                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Bogabadorumu && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Bogabadorumu && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Speedrun"));
             case 100:
                 return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Gravios);
             case 101:
@@ -931,7 +933,7 @@ public sealed class AchievementService : IAchievementService
                 }
 
             case 104:
-                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Gravios && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Gravios && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Speedrun"));
             case 105:
                 return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Harudomerugu);
             case 106:
@@ -965,7 +967,7 @@ public sealed class AchievementService : IAchievementService
                 }
 
             case 109:
-                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Harudomerugu && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4Harudomerugu && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Speedrun"));
             case 110:
                 return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4TaikunZamuza);
             case 111:
@@ -999,7 +1001,7 @@ public sealed class AchievementService : IAchievementService
                 }
 
             case 114:
-                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4TaikunZamuza && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDZ4TaikunZamuza && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Speedrun"));
             case 115:
                 return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDLV9999Fatalis);
             case 116:
@@ -1033,7 +1035,7 @@ public sealed class AchievementService : IAchievementService
                 }
 
             case 119:
-                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDLV9999Fatalis && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDLV9999Fatalis && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Speedrun"));
             case 120:
                 return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDLV9999CrimsonFatalis);
             case 121:
@@ -1067,7 +1069,7 @@ public sealed class AchievementService : IAchievementService
                 }
 
             case 124:
-                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDLV9999CrimsonFatalis && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDLV9999CrimsonFatalis && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Speedrun"));
             case 125:
                 return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDLV9999Shantien);
             case 126:
@@ -1101,7 +1103,7 @@ public sealed class AchievementService : IAchievementService
                 }
 
             case 129:
-                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDLV9999Shantien && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDLV9999Shantien && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Speedrun"));
             case 130:
                 return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDLV9999Disufiroa);
             case 131:
@@ -1135,7 +1137,7 @@ public sealed class AchievementService : IAchievementService
                 }
 
             case 134:
-                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDLV9999Disufiroa && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDLV9999Disufiroa && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Speedrun"));
             case 135:
                 return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDUpperShitenUnknown);
             case 136:
@@ -1169,7 +1171,7 @@ public sealed class AchievementService : IAchievementService
                 }
 
             case 139:
-                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDUpperShitenUnknown && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDUpperShitenUnknown && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Speedrun"));
             case 140:
                 return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDUpperShitenDisufiroa);
             case 141:
@@ -1203,7 +1205,7 @@ public sealed class AchievementService : IAchievementService
                 }
 
             case 144:
-                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDUpperShitenDisufiroa && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDUpperShitenDisufiroa && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Speedrun"));
             case 145:
                 return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDThirstyPariapuria);
             case 146:
@@ -1237,7 +1239,7 @@ public sealed class AchievementService : IAchievementService
                 }
 
             case 149:
-                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDThirstyPariapuria && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDThirstyPariapuria && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Speedrun"));
             case 150:
                 return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDRulingGuanzorumu);
             case 151:
@@ -1271,11 +1273,11 @@ public sealed class AchievementService : IAchievementService
                 }
 
             case 154:
-                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDRulingGuanzorumu && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDRulingGuanzorumu && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Speedrun"));
             case 155:
-                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDShiftingMiRu);
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID is Numbers.QuestIDShiftingMiRu or Numbers.QuestIDShiftingMiRuHistoric);
             case 156:
-                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDShiftingMiRu) >= Numbers.RequiredCompletionsMonsterSlayer)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID is Numbers.QuestIDShiftingMiRu or Numbers.QuestIDShiftingMiRuHistoric) >= Numbers.RequiredCompletionsMonsterSlayer)
                 {
                     return true;
                 }
@@ -1285,7 +1287,7 @@ public sealed class AchievementService : IAchievementService
                 }
 
             case 157:
-                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDShiftingMiRu) >= Numbers.RequiredCompletionsMonsterAnnihilator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID is Numbers.QuestIDShiftingMiRu or Numbers.QuestIDShiftingMiRuHistoric) >= Numbers.RequiredCompletionsMonsterAnnihilator)
                 {
                     return true;
                 }
@@ -1295,7 +1297,7 @@ public sealed class AchievementService : IAchievementService
                 }
 
             case 158:
-                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDShiftingMiRu) >= Numbers.RequiredCompletionsMonsterExterminator)
+                if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID is Numbers.QuestIDShiftingMiRu or Numbers.QuestIDShiftingMiRuHistoric) >= Numbers.RequiredCompletionsMonsterExterminator)
                 {
                     return true;
                 }
@@ -1305,7 +1307,7 @@ public sealed class AchievementService : IAchievementService
                 }
 
             case 159:
-                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDShiftingMiRu && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
+                return databaseManagerInstance.AllQuests.Any(quest => (quest.QuestID is Numbers.QuestIDShiftingMiRu or Numbers.QuestIDShiftingMiRuHistoric) && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Speedrun"));
             case 160:
                 return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID is Numbers.QuestIDBlinkingNargacugaForest or Numbers.QuestIDBlinkingNargacugaHistoric);
             case 161:
@@ -1339,7 +1341,7 @@ public sealed class AchievementService : IAchievementService
                 }
 
             case 164:
-                return databaseManagerInstance.AllQuests.Any(quest => (quest.QuestID == Numbers.QuestIDBlinkingNargacugaForest || quest.QuestID == Numbers.QuestIDBlinkingNargacugaHistoric) && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
+                return databaseManagerInstance.AllQuests.Any(quest => (quest.QuestID == Numbers.QuestIDBlinkingNargacugaForest || quest.QuestID == Numbers.QuestIDBlinkingNargacugaHistoric) && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Speedrun"));
             case 165:
                 return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID is Numbers.QuestIDHowlingZinogreForest or Numbers.QuestIDHowlingZinogreHistoric);
             case 166:
@@ -1373,7 +1375,7 @@ public sealed class AchievementService : IAchievementService
                 }
 
             case 169:
-                return databaseManagerInstance.AllQuests.Any(quest => (quest.QuestID == Numbers.QuestIDHowlingZinogreForest || quest.QuestID == Numbers.QuestIDHowlingZinogreHistoric) && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
+                return databaseManagerInstance.AllQuests.Any(quest => (quest.QuestID == Numbers.QuestIDHowlingZinogreForest || quest.QuestID == Numbers.QuestIDHowlingZinogreHistoric) && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Speedrun"));
             case 170:
                 return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID is Numbers.QuestIDStarvingDeviljhoArena or Numbers.QuestIDStarvingDeviljhoHistoric);
             case 171:
@@ -1407,7 +1409,7 @@ public sealed class AchievementService : IAchievementService
                 }
 
             case 174:
-                return databaseManagerInstance.AllQuests.Any(quest => (quest.QuestID == Numbers.QuestIDStarvingDeviljhoArena || quest.QuestID == Numbers.QuestIDStarvingDeviljhoHistoric) && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
+                return databaseManagerInstance.AllQuests.Any(quest => (quest.QuestID == Numbers.QuestIDStarvingDeviljhoArena || quest.QuestID == Numbers.QuestIDStarvingDeviljhoHistoric) && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Speedrun"));
             case 175:
                 return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID is Numbers.QuestIDSparklingZerureusu or Numbers.QuestIDSparklingZerureusuEvent);
             case 176:
@@ -1441,7 +1443,7 @@ public sealed class AchievementService : IAchievementService
                 }
 
             case 179:
-                return databaseManagerInstance.AllQuests.Any(quest => (quest.QuestID == Numbers.QuestIDSparklingZerureusu || quest.QuestID == Numbers.QuestIDSparklingZerureusuEvent) && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
+                return databaseManagerInstance.AllQuests.Any(quest => (quest.QuestID == Numbers.QuestIDSparklingZerureusu || quest.QuestID == Numbers.QuestIDSparklingZerureusuEvent) && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Speedrun"));
             case 180:
                 return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDArrogantDuremudira);
             case 181:
@@ -1475,7 +1477,7 @@ public sealed class AchievementService : IAchievementService
                 }
 
             case 184:
-                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDArrogantDuremudira && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDArrogantDuremudira && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Speedrun"));
             case 185:
                 return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDBlitzkriegBogabadorumu);
             case 186:
@@ -1509,7 +1511,7 @@ public sealed class AchievementService : IAchievementService
                 }
 
             case 189:
-                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDBlitzkriegBogabadorumu && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
+                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDBlitzkriegBogabadorumu && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Speedrun"));
             case 190:
                 return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID is Numbers.QuestIDBurningFreezingElzelionTower or Numbers.QuestIDBurningFreezingElzelionHistoric);
             case 191:
@@ -1543,7 +1545,7 @@ public sealed class AchievementService : IAchievementService
                 }
 
             case 194:
-                return databaseManagerInstance.AllQuests.Any(quest => (quest.QuestID == Numbers.QuestIDBurningFreezingElzelionTower || quest.QuestID == Numbers.QuestIDBurningFreezingElzelionHistoric) && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Time Attack" || quest.ActualOverlayMode.Contains("Freestyle")));
+                return databaseManagerInstance.AllQuests.Any(quest => (quest.QuestID == Numbers.QuestIDBurningFreezingElzelionTower || quest.QuestID == Numbers.QuestIDBurningFreezingElzelionHistoric) && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Speedrun"));
             case 195:
                 // Join quests and player inventories based on RunID
                 var completedQuests = from quest in databaseManagerInstance.AllQuests
@@ -1596,7 +1598,7 @@ public sealed class AchievementService : IAchievementService
             case 197:
                 return databaseManagerInstance.AllQuests.Any(quest =>
                 {
-                    if (quest.QuestID != Numbers.QuestIDShiftingMiRu || quest.KeyStrokesDictionary == null)
+                    if ((quest.QuestID != Numbers.QuestIDShiftingMiRu && quest.QuestID != Numbers.QuestIDShiftingMiRu) || quest.KeyStrokesDictionary == null)
                     {
                         return false;
                     }
@@ -2035,7 +2037,7 @@ public sealed class AchievementService : IAchievementService
             case 308:
                 return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDThirstyPariapuria && quest.FinalTimeValue < Numbers.Frames1Minute * 3);
             case 309:
-                return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDShiftingMiRu && quest.FinalTimeValue < Numbers.Frames1Minute * 5);
+                return databaseManagerInstance.AllQuests.Any(quest => (quest.QuestID is Numbers.QuestIDShiftingMiRu or Numbers.QuestIDShiftingMiRuHistoric) && quest.FinalTimeValue < Numbers.Frames1Minute * 5);
             case 310:
                 return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDRulingGuanzorumu && quest.FinalTimeValue < Numbers.Frames1Minute * 5);
             case 311:
@@ -2247,7 +2249,7 @@ public sealed class AchievementService : IAchievementService
                 }
 
             case 342:
-                if (dataLoader.Model.GetOverlayMode() is OverlayMode.Freestyle or OverlayMode.FreestyleSecretTech )
+                if (dataLoader.Model.GetOverlayMode() is OverlayMode.Speedrun)
                 {
                     return true;
                 }
@@ -2646,6 +2648,136 @@ public sealed class AchievementService : IAchievementService
                 {
                     return false;
                 }
+            case 441:
+                if (databaseManagerInstance.AllQuestsDiva.Count(questsDiva => questsDiva.DivaSongBuffOn > 0) >= 100)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            case 442:
+                if (databaseManagerInstance.AllQuestsDiva.Count(questsDiva => (questsDiva.DivaPrayerGemRedLevel > 0 && questsDiva.DivaPrayerGemRedSkill > 0) || (questsDiva.DivaPrayerGemYellowLevel > 0 && questsDiva.DivaPrayerGemYellowSkill > 0) || (questsDiva.DivaPrayerGemGreenLevel > 0 && questsDiva.DivaPrayerGemGreenSkill > 0) || (questsDiva.DivaPrayerGemBlueLevel > 0 && questsDiva.DivaPrayerGemBlueSkill > 0)) >= 777)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            case 443:
+                if (databaseManagerInstance.AllQuestsGuildPoogie.Count(questsGuildPoogie => questsGuildPoogie.GuildPoogie1Skill > 0 || questsGuildPoogie.GuildPoogie2Skill > 0 || questsGuildPoogie.GuildPoogie3Skill > 0) >= 100)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            case 444:
+                return databaseManagerInstance.AllQuestsHalk.Any(quest => quest.HalkLevel == 3);
+            case 445:
+                // Initialize the array with zeros
+                int[] weaponUsageArray = new int[14];
+
+                foreach (var playerGear in databaseManagerInstance.AllPlayerGear)
+                {
+                    // Find the corresponding active feature for the run
+                    var activeFeature = databaseManagerInstance.AllQuestsActiveFeature.FirstOrDefault(af => af.RunID == playerGear.RunID);
+
+                    // If an active feature is found, update the array based on the weapon type
+                    if (activeFeature != null)
+                    {
+                        var weaponType = (FrontierWeaponType)playerGear.WeaponTypeID;
+
+                        if (activeFeature.ActiveFeature == null)
+                        {
+                            activeFeature.ActiveFeature = 0;
+                        }
+
+                        //if (dataLoader.Model.HasBitfieldFlag((uint)activeFeature.ActiveFeature, (ActiveFeature)weaponType, (uint)ActiveFeature.All))
+                        if (dataLoader.Model.IsActiveFeatureOn((long)activeFeature.ActiveFeature, playerGear.WeaponTypeID))
+                        {
+                            weaponUsageArray[(int)weaponType] = 1;
+                        }
+                    }
+                }
+
+                return weaponUsageArray.All(n => n == 1);
+            case 446:
+                var maxTrueRaw = 8_000;
+
+                var foundQuestData = from quest in databaseManagerInstance.AllQuests
+                                where (quest.AttackBuffDictionary != null &&
+                                JsonConvert.DeserializeObject<Dictionary<int, int>>(quest.AttackBuffDictionary) != null)
+                                select quest;
+
+                if (foundQuestData == null)
+                {
+                    return false;
+                }
+
+                var foundMaxTrueRaw = from quest in databaseManagerInstance.AllQuests
+                                where (quest.AttackBuffDictionary != null && JsonConvert.DeserializeObject<Dictionary<int, int>>(quest.AttackBuffDictionary)?.Values.Max() >= maxTrueRaw)
+                                select quest;
+
+                if (foundMaxTrueRaw != null && foundMaxTrueRaw.Any())
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            case 447:
+                return dataLoader.Model.RoadTotalStagesMultiplayer() >= 10_000;
+            case 448: // TODO test
+                var foundQuest = from quest in databaseManagerInstance.AllQuests
+                                     where (quest.PartySize == 1 &&
+                                     quest.QuestID == 23_349 &&
+                                     (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Speedrun") && quest.FinalTimeValue < Numbers.Frames1Minute * 5)
+                                     select quest;
+
+                if (foundQuest.Count() == 0)
+                {
+                    return false;
+                }
+
+                if (databaseManagerInstance.AllQuestsToggleMode.Any(q => q.RunID == foundQuest.First().RunID && q.QuestToggleMode == 3))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            case 449:
+                return databaseManagerInstance.AllQuestAttempts.Any(q => q.RunBuffs >= (long)RunBuff.All);
+            case 450:
+                var questsWithCarts = from quest in databaseManagerInstance.AllQuests
+                                      where (quest.CartsDictionary != null && JsonConvert.DeserializeObject<Dictionary<int, int>>(quest.CartsDictionary)?.Count >= 1)
+                                      select quest;
+                var totalCarts = 0;
+
+                if (questsWithCarts == null || questsWithCarts.Count() == 0)
+                {
+                    return false;
+                }
+
+                foreach (var quest in questsWithCarts)
+                {
+                    if (quest.CartsDictionary == null)
+                    {
+                        continue;
+                    }
+                    var questCartsCount = JsonConvert.DeserializeObject<Dictionary<int, int>>(quest.CartsDictionary)?.Count ?? 0;
+                    totalCarts += questCartsCount;
+                }
+
+                return totalCarts >= 100;
+            case 451:
+                return databaseManagerInstance.TotalOverlaySessions >= 1_000;
         }
     }
 

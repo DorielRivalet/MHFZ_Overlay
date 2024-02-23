@@ -17,7 +17,7 @@ public sealed class RecentRuns
 
     public long QuestID { get; set; }
 
-    public string YoutubeID { get; set; } = Messages.RickRollID;
+    public string YouTubeID { get; set; } = Messages.RickRollID;
 
     public string FinalTimeDisplay { get; set; } = Messages.MaximumTimerPlaceholder;
 
@@ -26,4 +26,7 @@ public sealed class RecentRuns
     public string ActualOverlayMode { get; set; } = Messages.OverlayModePlaceholder;
 
     public long PartySize { get; set; }
+
+    public long RunBuffs { get; set; }
+
 }

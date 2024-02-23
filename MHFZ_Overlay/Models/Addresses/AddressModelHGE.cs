@@ -456,7 +456,10 @@ public sealed class AddressModelHGE : AddressModel
     public override int GZenny() => this.M.ReadInt("mhfo-hd.dll+ED3ACB4");
 
     /// <inheritdoc/>
-    public override int GuildFoodSkill() => this.M.Read2Byte("mhfo-hd.dll+E7FED00");
+    /// public override int GuildFoodSkill() => this.M.Read2Byte("mhfo-hd.dll+E7FED00");
+    /// 
+    /// <inheritdoc/>
+    public override int GuildFoodSkill() => this.M.Read2Byte("mhfo-hd.dll+E6CCD9E");
 
     /// <inheritdoc/>
     public override int GalleryEvaluationScore() => this.M.ReadInt("mhfo-hd.dll+ED3D9F0");
@@ -526,6 +529,60 @@ public sealed class AddressModelHGE : AddressModel
 
     /// <inheritdoc/>
     public override int HalkFullness() => this.M.ReadByte("mhfo-hd.dll+ED3C123");
+
+    /// <inheritdoc/>
+    public override int HalkLevel() => this.M.ReadByte("mhfo-hd.dll+ED3C124");
+
+    /// <inheritdoc/>
+    public override int HalkIntimacy() => this.M.ReadByte("mhfo-hd.dll+ED3C125");
+
+    /// <inheritdoc/>
+    public override int HalkHealth() => this.M.ReadByte("mhfo-hd.dll+ED3C126");
+
+    /// <inheritdoc/>
+    public override int HalkAttack() => this.M.ReadByte("mhfo-hd.dll+ED3C127");
+
+    /// <inheritdoc/>
+    public override int HalkDefense() => this.M.ReadByte("mhfo-hd.dll+ED3C128");
+
+    /// <inheritdoc/>
+    public override int HalkIntellect() => this.M.ReadByte("mhfo-hd.dll+ED3C129");
+
+    /// <inheritdoc/>
+    public override int HalkSkill1() => this.M.ReadByte("mhfo-hd.dll+ED3C12A");
+
+    /// <inheritdoc/>
+    public override int HalkSkill2() => this.M.ReadByte("mhfo-hd.dll+ED3C12B");
+
+    /// <inheritdoc/>
+    public override int HalkSkill3() => this.M.ReadByte("mhfo-hd.dll+ED3C12C");
+
+    /// <inheritdoc/>
+    public override int HalkElementNone() => this.M.ReadByte("mhfo-hd.dll+ED3C12E");
+
+    /// <inheritdoc/>
+    public override int HalkFire() => this.M.ReadByte("mhfo-hd.dll+ED3C12F");
+
+    /// <inheritdoc/>
+    public override int HalkThunder() => this.M.ReadByte("mhfo-hd.dll+ED3C130");
+
+    /// <inheritdoc/>
+    public override int HalkWater() => this.M.ReadByte("mhfo-hd.dll+ED3C131");
+
+    /// <inheritdoc/>
+    public override int HalkIce() => this.M.ReadByte("mhfo-hd.dll+ED3C132");
+
+    /// <inheritdoc/>
+    public override int HalkDragon() => this.M.ReadByte("mhfo-hd.dll+ED3C133");
+
+    /// <inheritdoc/>
+    public override int HalkSleep() => this.M.ReadByte("mhfo-hd.dll+ED3C134");
+
+    /// <inheritdoc/>
+    public override int HalkParalysis() => this.M.ReadByte("mhfo-hd.dll+ED3C135");
+
+    /// <inheritdoc/>
+    public override int HalkPoison() => this.M.ReadByte("mhfo-hd.dll+ED3C136");
 
     /// <inheritdoc/>
     public override int RankBand() => this.M.ReadByte("mhfo-hd.dll+2AFA788");
@@ -632,7 +689,7 @@ public sealed class AddressModelHGE : AddressModel
     public override int AlternativeMonster1Part10() => 1;
 
     /// <inheritdoc/>
-    public override int DivaSkill() => this.M.ReadByte("mhfo-hd.dll+ED3EB08");
+    public override int DivaSkill() => this.M.ReadByte("mhfo-hd.dll+E6CCF24"); // also "mhfo-hd.dll"+ED8BE60
 
     /// <inheritdoc/>
     public override int StarGrades() => this.M.ReadByte("mhfo-hd.dll+E774CAE");
@@ -661,12 +718,12 @@ public sealed class AddressModelHGE : AddressModel
     public override int CaravanScore() => this.M.ReadInt("mhfo-hd.dll+ED8F764");
 
     /// <inheritdoc/>
-    public override int CaravanMonster1ID() => this.M.ReadByte("mhfo-hd.dll+2AFA834");
+    public override int AlternativeQuestMonster1ID() => this.M.ReadByte("mhfo-hd.dll+2AFA834");
 
     // unsure
 
     /// <inheritdoc/>
-    public override int CaravanMonster2ID() => this.M.ReadByte("mhfo-hd.dll+1C41D12");
+    public override int AlternativeQuestMonster2ID() => this.M.ReadByte("mhfo-hd.dll+1C41D12");
 
     /// <inheritdoc/>
     public override int BlademasterWeaponID() => this.M.Read2Byte("mhfo-hd.dll+DC6BB52");
@@ -1748,4 +1805,107 @@ public sealed class AddressModelHGE : AddressModel
 
     /// <inheritdoc/>
     public override int QuestToggleMonsterMode() => this.M.ReadByte("mhfo-hd.dll+E73D7B6");
+
+    /// <inheritdoc/>
+    public override int Rights() => this.M.Read2Byte("mhfo-hd.dll+EABD3C4");
+
+    /// <inheritdoc/>
+    public override decimal PlayerPositionX() => (decimal)this.M.ReadFloat("mhfo-hd.dll+E8E6640", string.Empty, false);
+
+    /// <inheritdoc/>
+    public override decimal PlayerPositionY() => (decimal)this.M.ReadFloat("mhfo-hd.dll+E8E6644", string.Empty, false);
+
+    /// <inheritdoc/>
+    public override decimal PlayerPositionZ() => (decimal)this.M.ReadFloat("mhfo-hd.dll+E8E6648", string.Empty, false);
+
+    /// <inheritdoc/>
+    public override decimal PlayerPositionInQuestX() => (decimal)this.M.ReadFloat("mhfo-hd.dll+21B3530", string.Empty, false);
+
+    /// <inheritdoc/>
+    public override decimal PlayerPositionInQuestY() => (decimal)this.M.ReadFloat("mhfo-hd.dll+21B3534", string.Empty, false);
+
+    /// <inheritdoc/>
+    public override decimal PlayerPositionInQuestZ() => (decimal)this.M.ReadFloat("mhfo-hd.dll+21B3538", string.Empty, false);
+
+    /// <inheritdoc/>
+    public override int ActiveFeature1() => this.M.Read2Byte("mhfo-hd.dll+1C2AB0C");
+
+    /// <inheritdoc/>
+    public override int ActiveFeature2() => this.M.Read2Byte("mhfo-hd.dll+1C2AB14");
+
+    /// <inheritdoc/>
+    public override int ActiveFeature3() => this.M.Read2Byte("mhfo-hd.dll+E41A2A8");
+
+    /// <inheritdoc/>
+    public override int ServerHeartbeatLandMain() => this.M.ReadInt("mhfo-hd.dll+EABD4F0");
+
+    /// <inheritdoc/>
+    public override int ServerHeartbeatLandAlternative() => this.M.ReadInt("mhfo-hd.dll+E9D1EB0");
+
+    /// <inheritdoc/>
+    public override int LandSlot() => this.M.ReadInt("mhfo-hd.dll+EDFB940");
+
+    /// <inheritdoc/>
+    public override int GuildFoodStart() => this.M.ReadInt("mhfo-hd.dll+E7FED08");
+
+    /// <inheritdoc/>
+    public override int DivaSongStart() => this.M.ReadInt("mhfo-hd.dll+ED3DB50");
+
+    /// <inheritdoc/>
+    //public override int DivaPrayerGemStart() => this.M.ReadInt("mhfo-hd.dll+E820DF8");
+
+    /// <inheritdoc/>
+    public override int GuildPoogie1Skill() => this.M.ReadByte("mhfo-hd.dll+E76BBDB");
+
+    /// <inheritdoc/>
+    public override int GuildPoogie2Skill() => this.M.ReadByte("mhfo-hd.dll+E76BBEB");
+
+    /// <inheritdoc/>
+    public override int GuildPoogie3Skill() => this.M.ReadByte("mhfo-hd.dll+E76BBFB");
+
+    /// <inheritdoc/>
+    public override int DivaPrayerGemRedSkill() => this.M.Read2Byte("mhfo-hd.dll+E6CCF14");
+
+    /// <inheritdoc/>
+    public override int DivaPrayerGemRedLevel() => this.M.Read2Byte("mhfo-hd.dll+E6CCF16");
+
+    /// <inheritdoc/>
+    public override int DivaPrayerGemYellowSkill() => this.M.Read2Byte("mhfo-hd.dll+E6CCF18");
+
+    /// <inheritdoc/>
+    public override int DivaPrayerGemYellowLevel() => this.M.Read2Byte("mhfo-hd.dll+E6CCF1A");
+
+    /// <inheritdoc/>
+    public override int DivaPrayerGemGreenSkill() => this.M.Read2Byte("mhfo-hd.dll+E6CCF1C");
+
+    /// <inheritdoc/>
+    public override int DivaPrayerGemGreenLevel() => this.M.Read2Byte("mhfo-hd.dll+E6CCF1E");
+
+    /// <inheritdoc/>
+    public override int DivaPrayerGemBlueSkill() => this.M.Read2Byte("mhfo-hd.dll+E6CCF20");
+
+    /// <inheritdoc/>
+    public override int DivaPrayerGemBlueLevel() => this.M.Read2Byte("mhfo-hd.dll+E6CCF22");
+
+    /// <inheritdoc/>
+    public override bool HalkOn() => this.M.ReadByte("mhfo-hd.dll+E7FE233") > 0 ? true : false;
+
+    /// <inheritdoc/>
+    public override bool HalkPotEffectOn() => this.M.ReadByte("mhfo-hd.dll+DC6C524") > 0 ? true : false;
+
+    /// <inheritdoc/>
+    public override int DivaSongFromGuildStart() => this.M.ReadInt("mhfo-hd.dll+ED3EB24");
+
+    /// <inheritdoc/>
+    public override int QuestVariant1() => this.M.ReadByte("mhfo-hd.dll+2AFA897");
+
+    /// <inheritdoc/>
+    public override int QuestVariant2() => this.M.ReadByte("mhfo-hd.dll+2AFA898");
+
+    /// <inheritdoc/>
+    public override int QuestVariant3() => this.M.ReadByte("mhfo-hd.dll+2AFA899");
+
+    /// <inheritdoc/>
+    public override int QuestVariant4() => this.M.ReadByte("mhfo-hd.dll+2AFA89A");
+
 }

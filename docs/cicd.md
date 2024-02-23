@@ -29,7 +29,7 @@ Our development process follows the best practices of Continuous Integration and
 - **Version Control**: *Git* with commitlint and *CircleCI* for enforcing commit message style.
 - **Build and Automation**: *GitHub Actions* for building and testing the software automatically.
 - **Code Integrity/Quality**: *SonarCloud* for code analysis, code coverage and quality checks. *Dependabot* alerts for vulnerability issues mainly relating to package-lock.json.
-- **Packaging**: *clow.squirrel* for creating installers/packages.
+- **Packaging**: *Velopack* for creating installers/packages.
 - **Testing**: *XUnit* for writing and executing unit tests.
 - **Release Management**: *GitHub Releases* for creating versioned releases with release notes and documentation.
 - **Development Environment**: C# with *Visual Studio* and .NET 6.0 for developing the software.

@@ -12,7 +12,7 @@ namespace MHFZ_Overlay {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.7.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.8.0.0")]
     public sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -3944,6 +3944,162 @@ namespace MHFZ_Overlay {
             }
             set {
                 this["QuestToggleMonsterModeShown"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool EnableAttemptsPerPersonalBest {
+            get {
+                return ((bool)(this["EnableAttemptsPerPersonalBest"]));
+            }
+            set {
+                this["EnableAttemptsPerPersonalBest"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool PlayerPositionShown {
+            get {
+                return ((bool)(this["PlayerPositionShown"]));
+            }
+            set {
+                this["PlayerPositionShown"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("5")]
+        public double PlayerPositionX {
+            get {
+                return ((double)(this["PlayerPositionX"]));
+            }
+            set {
+                this["PlayerPositionX"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("140")]
+        public double PlayerPositionY {
+            get {
+                return ((double)(this["PlayerPositionY"]));
+            }
+            set {
+                this["PlayerPositionY"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Automatic")]
+        public string PlayerPositionMode {
+            get {
+                return ((string)(this["PlayerPositionMode"]));
+            }
+            set {
+                this["PlayerPositionMode"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool DivaSongTimerShown {
+            get {
+                return ((bool)(this["DivaSongTimerShown"]));
+            }
+            set {
+                this["DivaSongTimerShown"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("5")]
+        public double DivaSongTimerX {
+            get {
+                return ((double)(this["DivaSongTimerX"]));
+            }
+            set {
+                this["DivaSongTimerX"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("100")]
+        public double DivaSongTimerY {
+            get {
+                return ((double)(this["DivaSongTimerY"]));
+            }
+            set {
+                this["DivaSongTimerY"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool GuildFoodTimerShown {
+            get {
+                return ((bool)(this["GuildFoodTimerShown"]));
+            }
+            set {
+                this["GuildFoodTimerShown"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("5")]
+        public double GuildFoodTimerX {
+            get {
+                return ((double)(this["GuildFoodTimerX"]));
+            }
+            set {
+                this["GuildFoodTimerX"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("60")]
+        public double GuildFoodTimerY {
+            get {
+                return ((double)(this["GuildFoodTimerY"]));
+            }
+            set {
+                this["GuildFoodTimerY"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.2")]
+        public double PlayerInputUnpressedOpacity {
+            get {
+                return ((double)(this["PlayerInputUnpressedOpacity"]));
+            }
+            set {
+                this["PlayerInputUnpressedOpacity"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.5")]
+        public double PlayerInputPressedOpacity {
+            get {
+                return ((double)(this["PlayerInputPressedOpacity"]));
+            }
+            set {
+                this["PlayerInputPressedOpacity"] = value;
             }
         }
     }

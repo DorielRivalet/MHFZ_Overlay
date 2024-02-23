@@ -471,9 +471,7 @@ public enum OverlayMode
     NoGame,
     MainMenu,
     WorldSelect,
-    TimeAttack,
-    FreestyleSecretTech,
-    Freestyle,
+    Speedrun,
     Zen,
 }
 
@@ -514,4 +512,375 @@ public enum FrontierMonsterType
     FangedBeast,
     Leviathan,
     FangedWyvern,
+}
+
+/// <summary>
+/// Weapon and armor.
+/// </summary>
+public enum EquipmentSlot
+{
+    None,
+    One,
+    Two,
+    Three
+}
+
+/// <summary>
+/// <see href="https://github.com/var-username/Monster-Hunter-Frontier-Patterns/"/>
+/// </summary>
+public enum FrontierEquipmentType
+{
+    Legs,
+    Unk1,
+    Head,
+    Chest,
+    Arms,
+    Waist,
+    Melee,
+    Ranged,
+}
+
+/// <summary>
+/// <see href="https://github.com/var-username/Monster-Hunter-Frontier-Patterns/"/>
+/// </summary>
+public enum FrontierItemIcon : uint
+{
+    SMOKE = 0x00,           // Ex: Farcaster, Smoke Bomb
+    ORB = 0x01,             // Ex: Paintball, Flash Bomb
+    BOMB = 0x02,            // Ex: Small Barrel Bomb
+    MEAT = 0x03,            // Ex: Raw Meat, Burnt Steak
+    FISH_BAIT = 0x04,       // Ex: Cricket, Worm, Tuna Bait
+    FISH = 0x05,            // Ex: Gormet Fish
+    BOX = 0x06,             // Ex: Trap Kit
+    WHETSTONE = 0x07,       // Ex: Whetstone
+    DUNG = 0x08,            // Ex: Dung, Dung Bomb
+    MONSTER = 0x09,         // Ex: Bullfango Head
+    BONES = 0x0A,           // Ex: Sm Monster Bone
+    BINOCULARS = 0x0B,      // Ex: Binoculars
+    MUSHROOM = 0x0C,        // Ex: Blue Mushroom
+    BUGNET = 0x0D,          // Ex: Bugnet
+    PELT = 0x0E,            // Ex: Mosswine Hide, Bullfango Pelt
+    LEAF = 0x0F,            // Ex: Herb
+    PICKAXE = 0x10,         // Ex: Iron Pickaxe
+    BARREL = 0x11,          // Ex: Small Barrel, Large Barrel
+    SEED = 0x12,            // Ex: Paintberry, Power Seed, Scatternut
+    BBQ_SPIT = 0x13,        // Ex: BBQ Spit
+    INSECT = 0x14,          // Ex: Insect Husk, Thunderbug
+    TRAP = 0x15,            // Ex: Pitfall Trap, Shock Trap
+    NET = 0x16,             // Ex: Web, Net
+    SCALE = 0x17,           // Ex: Broken Shell, Kut-Ku Scale
+    DRINK = 0x18,           // Ex: Potion, Cold Drink, Demondrug
+    EGG = 0x19,             // Ex: Monster Egg, Round Egg
+    AMMO = 0x1A,            // Ex: Normal S LV1
+    STONE = 0x1B,           // Ex: Stone, Iron Ore
+    HUSK = 0x1C,            // Ex: Huskberry, Bone Husks
+    MAP = 0x1D,             // Ex: Map
+    FLUTE = 0x1E,           // Ex: Flute
+    FANG = 0x1F,            // Ex: Wyvern Fang, Wyvern Claw
+    GRID = 0x20,            // Ex: Honey
+    QUESTION_MARK = 0x21,   // Ex: Garbage
+    COIN = 0x22,            // Ex: N Medal, Hunting Medal
+    SAC = 0x23,             // Ex: Catalyst, Screamer Sac, Might Pill
+    BOOK = 0x24,            // Ex: Book of Combos
+    TICKET = 0x25,          // Ex: Guild Ticket, Commendation, 30k Cheque
+    KNIFE = 0x26,           // Ex: Throwing Knife
+    MUSIC_SHEET = 0x29,     // Ex: HH Info
+    JEWEL = 0x2B,           // Ex: Aquaglow Jewel, Attack 1 Deco
+    HOUSE = 0x2C,           // Ex: House Expansion 1
+    PlANT = 0x2D,           // Ex: Green Onion
+    MOCHA = 0x2F,           // Ex: Mocha Green
+    POT = 0x30,             // Ex: Mocha Pot
+    BOOMERANG = 0x31,       // Ex: Boomerang
+    COATING = 0x32,         // Ex: Power Coating, Poison Coating
+    EMPTY_BOTTLE = 0x33,    // Ex: Empty Bottle
+    CARAPACE = 0x34,        // Ex: Small LobsterShl, Hermitaur Shell
+    /* Probably wrong
+	COMPASS = 0x35,			// Datamined
+	QUARTER_CIRCLE = 0x36,	// Datamined
+	CROSS = 0x37,			// Datamined
+	CROSSED_OUT = 0x3C,		// Datamined
+	MYSTERY_WEAPON = 0x3D,	// Datamined
+	GREATSWORD = 0x3E,		// Datamined
+	HEAVY_BOWGUN = 0x3F,	// Datamined
+	HAMMER = 0x40,			// Datamined
+	LANCE = 0x41,			// Datamined
+	SWORD_SHIELD = 0x42,	// Datamined
+	LIGHT_BOWGUN = 0x43,	// Datamined
+	DUAL_BLADES = 0x44,		// Datamined
+	LONGSWORD = 0x45,		// Datamined
+	HUNTING_HORN = 0x46, 	// Datamined
+	GUNLANCE = 0x47,		// Datamined
+	BOW = 0x48,				// Datamined
+	LEGWEAR = 0x49,			// Datamined
+	EQUIPED_MARKER = 0x4A,	// Datamined
+	HEADWEAR = 0x4B,		// Datamined
+	BODYWEAR = 0x4C,		// Datamined
+	ARMWEAR = 0x4D,			// Datamined
+	WAISTWEAR = 0x4E,		// Datamined
+	*/
+    SWORD_CRYSTAL = 0x4F,   // Ex: Bomb S.Crystal
+    POTION = 0x50,          // Ex: Halk Pot
+    FRUIT = 0x52,           // Ex: Shiriagari Fruit
+    /* Definitely wrong
+	SIGIL = 0x54,			// Datamined
+	G_RANK_MARKER = 0x58,	// Datamined
+	CAMERA = 0x5B,			// Datamined
+	CORNER_ARROWS = 0x5C,	// Datamined
+	TONFAS = 0x5D,			// Datamined
+	TREASURE = 0x5E,		// Datamined
+	PARTNYA_SWORD = 0x60,	// Datamined
+	PARTNYA_CLUB = 0x61,	// Datamined
+	PARTNYA_HELM = 0x62,	// Datamined
+	PARTNYA_CHEST = 0x63,	// Datamined
+	PARTNYA_HEAD = 0x64,	// Datamined
+	PARTNYA_CROWN = 0x65,	// Datamined
+	PARTNYA_MARKER = 0x66,	// Datamined
+	TOWER_MARKER = 0x67,	// Datamined
+	*/
+    TOWER_W_SIGIL = 0x56,   // Ex: (SnS) Beam Slash
+    TOWER_A_SIGIL = 0x5B,   // Ex: Skill UP Sigil
+    MANTLE = 0x5C,          // Ex: Narga Mantle
+    ARMOR_SPHERE = 0x5D,	// Ex: Armor Sphere
+};
+
+/// <summary>
+/// <see href="https://github.com/var-username/Monster-Hunter-Frontier-Patterns/"/>
+/// </summary>
+public enum FrontierElement
+{
+    None,
+    Fire,
+	Water,
+	Thunder,
+	Dragon,
+	Ice,
+	Flame,
+	Light,
+	ThunderPole,
+	Tenshou,
+	Okiko,
+	BlackFlame,
+	Kanade,
+	Darkness,
+	CrimsonDemon,
+	Wind,
+	Sound,
+	BurningZero,
+	EmperorsRoar,
+}
+
+/// <summary>
+/// <see href="https://github.com/var-username/Monster-Hunter-Frontier-Patterns/"/>
+/// </summary>
+public enum FrontierStatusAilment
+{
+    None,
+    Poison,
+	Paralysis,
+    Sleep,
+    Blast,
+}
+
+/// <summary>
+/// <see href="https://github.com/var-username/Monster-Hunter-Frontier-Patterns/"/>
+/// </summary>
+public enum FrontierMap : uint
+{
+    Siege_Fortress_Day = 1,
+    Forest_and_Hills_Day = 2,
+    Desert_Day = 3,
+    Swamp_Day = 4,
+    Volcano_Day = 5,
+    Jungle_Day = 6,
+    Castle_Schrade = 7,
+    Crimson_Battleground = 8,
+    Arena_with_Ledge_Day = 9,
+    Arena_with_Pillar_Day = 10,
+    Snowy_Mountains_Day = 11,
+    Town_Siege_Day = 12,
+    Tower_1 = 13,
+    Tower_2 = 14,
+    Tower_3 = 15,
+    Forest_and_Hills_Night = 16,
+    Desert_Night = 17,
+    Swamp_Night = 18,
+    Volcano_Night = 19,
+    Jungle_Night = 20,
+    Snowy_Mountains_Night = 21,
+    Town_Siege_night = 22,
+    Siege_Fortress_Night = 23,
+    Arena_with_Ledge_Night = 24,
+    Arena_with_Pillar_Night = 25,
+    Great_Forest_Day = 26,
+    Great_Forest_Night = 27,
+    Volcano_2_Day = 28,
+    Volcano_2_Night = 29,
+    Jungle_Dream = 30,
+    Gorge_Day = 31,
+    Gorge_Night = 32,
+    Battlefield_Day = 35,
+    Top_of_Great_Forest = 44,
+    Caravan_Balloon_Day = 45,
+    Caravan_Balloon_Night = 46,
+    Solitude_Isle_1 = 47,
+    Solitude_Isle_2 = 48,
+    Solitude_Isle_3 = 49,
+    Highlands_Day = 50,
+    Highlands_Night = 51,
+    Tower_with_Nesthole = 52,
+    Arena_with_Moat_Day = 53,
+    Arena_with_Moat_Night = 54,
+    Fortress_Day = 55,
+    Fortress_Night = 56,
+    Tidal_Island_Day = 57,
+    Tidal_Island_Night = 58,
+    Polar_Sea_Day = 60,
+    Polar_Sea_Night = 61,
+    Worlds_End = 62,
+    Large_Airship = 63,
+    Flower_Field_Day = 64,
+    Flower_Field_Night = 65,
+    Deep_Crater = 66,
+    Bamboo_Forest_Day = 67,
+    Bamboo_Forest_Night = 68,
+    Battlefield_2_Day = 69,
+    Unimplemented_map = 70,
+    Ist_Dist_Tower_1 = 71,
+    Ist_Dist_Tower_2 = 72,
+    Tnd_Dist_Tower_1 = 73,
+    Tnd_Dist_Tower_2 = 74,
+    Urgent_Tower = 75,
+    n3rd_Dist_Tower = 76,
+    n3rd_Dist_Tower_2 = 77,
+    n4th_Dist_Tower = 78,
+    White_Lake_Day = 79,
+    White_Lake_Night = 80,
+    Solitude_Depths_Slay_1 = 81,
+    Solitude_Depths_Slay_2 = 82,
+    Solitude_Depths_Slay_3 = 83,
+    Solitude_Depths_Slay_4 = 84,
+    Solitude_Depths_Slay_5 = 85,
+    Solitude_Depths_Support_1 = 86,
+    Solitude_Depths_Support_2 = 87,
+    Solitude_Depths_Support_3 = 88,
+    Solitude_Depths_Support_4 = 89,
+    Solitude_Depths_Support_5 = 90,
+    Cloud_Viewing_Fortress = 91,
+    Painted_Falls_Day = 92,
+    Painted_Falls_Night = 93,
+    Sanctuary = 94,
+    Hunters_Road = 95,
+    Sacred_Pinnacle = 96,
+    Historic_Site = 97
+};
+
+/// <summary>
+/// <see href="https://github.com/var-username/Monster-Hunter-Frontier-Patterns/"/>
+/// </summary>
+public enum FrontierIconColor
+{
+    White = 0,
+    Red = 1,
+    Green = 2,
+    Blue = 3,
+    Yellow = 4,
+    Purple = 5,
+    LightBlue = 6,
+    Unk1 = 7,
+    Pink = 8,
+    Unk2 = 9,
+    Gray = 10,
+}
+
+/// <summary>
+/// <see href="https://github.com/var-username/Monster-Hunter-Frontier-Patterns/"/>
+/// </summary>
+public enum FrontierMonsterRank
+{
+    Unk1 = -1,
+    LowRank = 0,
+    HighRank = 1,
+    Gou = 3,
+    GRank = 7,
+}
+
+public enum DivaPrayerGemType
+{
+    None = 0,
+    WindStorm = 1,
+    Agility = 2,
+    SeveringPower = 3,
+    Elegance = 4,
+    Earth = 5,
+    Heaven = 6,
+    Tempest = 7,
+    CuttingEdge = 8,
+    Striking = 9,
+    RisingBullet = 10,
+    StatusLength = 11,
+    Abnormality = 12,
+    Lethality = 13,
+    HeavyThunder = 14,
+    Unshakable = 15,
+    Ringing = 16,
+    Mobilisation = 17,
+    Protection = 18,
+    PowerfulStrikes = 19,
+    Fireproof = 20,
+    Waterproof = 21,
+    Iceproof = 22,
+    Dragonproof = 23,
+    Thunderproof = 24,
+    Immunity = 25,
+}
+
+public enum DivaPrayerGemColor
+{
+    None,
+    Red,
+    Yellow,
+    Green,
+    Blue,
+}
+
+/// <summary>
+/// Creator, origin or purpose.
+/// </summary>
+public enum GamePatch
+{
+    Vanilla,
+    Seph,
+    Ezemania,
+    Otyav1_1,
+    Tenrou,
+    Mezelounge,
+    /// <summary>
+    /// TODO
+    /// </summary>
+    Standard,
+    FiveMusous,
+}
+
+/// <summary>
+/// https://en.wikipedia.org/wiki/List_of_ISO_639_language_codes. Could also describe the origin rather than language.
+/// </summary>
+public enum GamePatchLanguage
+{
+    JA,
+    EN,
+    FR,
+    ZH,
+    ES,
+    PT,
+    RU,
+    EL,
+    DE,
+}
+
+public enum GamePatchFile
+{
+    dat,
+    emd,
+    dll,
+    hddll,
 }

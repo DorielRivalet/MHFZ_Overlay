@@ -17,9 +17,11 @@ public sealed class FastestRun
 
     public long QuestID { get; set; }
 
-    public string YoutubeID { get; set; } = Messages.RickRollID;
+    public string YouTubeID { get; set; } = Messages.RickRollID;
 
     public string FinalTimeDisplay { get; set; } = Messages.MaximumTimerPlaceholder;
 
     public DateTime Date { get; set; }
+
+    public long RunBuffs { get; set; }
 }

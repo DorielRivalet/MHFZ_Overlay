@@ -22,9 +22,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using MHFZ_Overlay.Services;
 using MHFZ_Overlay.ViewModels.Windows;
-using Wpf.Ui.Contracts;
 using Wpf.Ui.Controls;
-using Wpf.Ui.Services;
+using Wpf.Ui;
 
 /// <summary>
 /// Interaction logic for Window1.xaml

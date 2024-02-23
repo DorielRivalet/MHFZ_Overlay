@@ -20,7 +20,7 @@ using CsvHelper;
 using MHFZ_Overlay.Models;
 using MHFZ_Overlay.Models.Constant;
 using Newtonsoft.Json;
-using Wpf.Ui.Common;
+using Wpf.Ui;
 using Wpf.Ui.Controls;
 using Application = System.Windows.Application;
 using Clipboard = System.Windows.Clipboard;

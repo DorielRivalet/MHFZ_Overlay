@@ -2,9 +2,15 @@
 // Use of this source code is governed by a MIT license that can be
 // found in the LICENSE file.
 
+using NLog;
+using System.Data.SQLite;
+using System.Transactions;
+using System;
+
 namespace MHFZ_Overlay.Services;
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
@@ -32,12 +38,14 @@ using MHFZ_Overlay.Models.Collections;
 using MHFZ_Overlay.Models.Constant;
 using MHFZ_Overlay.Models.Messengers;
 using MHFZ_Overlay.Models.Structures;
+using MHFZ_Overlay.ViewModels.Windows;
 using MHFZ_Overlay.Views.Windows;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NLog;
 using Octokit;
-using Wpf.Ui.Common;
+
+using Wpf.Ui;
 using Wpf.Ui.Controls;
 using Formatting = Newtonsoft.Json.Formatting;
 using MessageBox = System.Windows.MessageBox;
@@ -85,6 +93,16 @@ public sealed class DatabaseService
     public HashSet<PlayerInventory> AllPlayerInventories { get; set; }
 
     public HashSet<QuestsToggleMode> AllQuestsToggleMode { get; set; }
+
+    public HashSet<QuestsActiveFeature> AllQuestsActiveFeature { get; set; }
+
+    public HashSet<QuestsHalk> AllQuestsHalk { get; set; }
+
+    public HashSet<QuestsDiva> AllQuestsDiva { get; set; }
+
+    public HashSet<QuestsGuildPoogie> AllQuestsGuildPoogie { get; set; }
+
+    public long TotalOverlaySessions { get; set; }
 
     public TimeSpan SnackbarTimeOut { get; set; } = TimeSpan.FromSeconds(5);
 
@@ -197,7 +215,7 @@ public sealed class DatabaseService
 
     private static string previousVersion = string.Empty;
 
-    private readonly List<string> validTableNames = new ()
+    private readonly List<string> validTableNames = new()
     {
         "RankName",
         "ObjectiveType",
@@ -452,18 +470,31 @@ public sealed class DatabaseService
         var runID = 0;
         var questID = dataLoader.Model.QuestID();
         var actualOverlayMode = string.Empty;
+        long runBuffs = (long)dataLoader.Model.GetRunBuffs();
         dataLoader.Model.ShowSaveIcon = true;
         var timeLeft = dataLoader.Model.TimeInt();
+        var monster1ID = dataLoader.Model.IsAlternativeQuestName() || dataLoader.Model.IsDure() ? dataLoader.Model.AlternativeQuestMonster1ID() : dataLoader.Model.LargeMonster1ID();
+        var monster2ID = dataLoader.Model.IsAlternativeQuestName() || dataLoader.Model.IsDure() ? dataLoader.Model.AlternativeQuestMonster2ID() : dataLoader.Model.LargeMonster2ID();
+
+        var s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
+
+        var gameFolderPathStatus = s.GameFolderPath == @"C:\Program Files (x86)\CAPCOM\Monster Hunter Frontier Online" ? "Standard" : "Custom";
+        var mhfdatHash = CalculateFileHash(s.GameFolderPath, @"\dat\mhfdat.bin");
+        var mhfemdHash = CalculateFileHash(s.GameFolderPath, @"\dat\mhfemd.bin");
+        var mhfinfHash = CalculateFileHash(s.GameFolderPath, @"\dat\mhfinf.bin");
+        var mhfsqdHash = CalculateFileHash(s.GameFolderPath, @"\dat\mhfsqd.bin");
+        var mhfodllHash = CalculateFileHash(s.GameFolderPath, @"\mhfo.dll");
+        var mhfohddllHash = CalculateFileHash(s.GameFolderPath, @"\mhfo-hd.dll");
+        var mhfexeHash = CalculateFileHash(s.GameFolderPath, @"\mhf.exe");
 
         // TODO dure timedefint address
+        // TODO arrogant is different?
         var timeDefIint = questID != Numbers.QuestIDFirstDistrictDuremudira && questID != Numbers.QuestIDSecondDistrictDuremudira ? dataLoader.Model.TimeDefInt() : Numbers.DuremudiraTimeLimitFrames;
 
         var finalTimeValue = timeDefIint - timeLeft;
 
         // Calculate the elapsed time of the quest
         var finalTimeDisplay = TimeService.GetMinutesSecondsMillisecondsFromFrames((long)finalTimeValue);
-
-        var s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
 
         if (!ViewModels.Windows.AddressModel.ValidateGameFolder() || !s.EnableQuestLogging || !dataLoader.Model.QuestCleared)
         {
@@ -484,6 +515,7 @@ public sealed class DatabaseService
             var createdAt = DateTime.UtcNow;
             var createdBy = ViewModels.Windows.AddressModel.GetFullCurrentProgramVersion();
             var playerID = 1;
+            var partySize = dataLoader.Model.PartySize();
 
             using (var transaction = conn.BeginTransaction())
             {
@@ -611,15 +643,15 @@ public sealed class DatabaseService
                         // Convert the elapsed time to a DateTime object
                         string objectiveImage;
 
-                        // Gathering/etc
-                        if ((dataLoader.Model.ObjectiveType() == 0x0 || dataLoader.Model.ObjectiveType() == 0x02 || dataLoader.Model.ObjectiveType() == 0x1002) && dataLoader.Model.QuestID() != 23527 && dataLoader.Model.QuestID() != 23628 && dataLoader.Model.QuestID() != 21749 && dataLoader.Model.QuestID() != 21750 && dataLoader.Model.QuestID() != Numbers.QuestIDFirstDistrictDuremudira && dataLoader.Model.QuestID() != Numbers.QuestIDSecondDistrictDuremudira)
+                        if (dataLoader.Model.QuestID() == Numbers.QuestIDSecondDistrictDuremudira || dataLoader.Model.QuestID() == Numbers.QuestIDFirstDistrictDuremudira || dataLoader.Model.QuestID() == Numbers.QuestIDArrogantDuremudiraRepel || dataLoader.Model.QuestID() == Numbers.QuestIDArrogantDuremudira)
                         {
-                            objectiveImage = ViewModels.Windows.AddressModel.GetAreaIconFromID(dataLoader.Model.AreaID());
+                            objectiveImage = dataLoader.Model.GetDuremudiraIcon(dataLoader.Model.QuestID());
                         }
 
-                        else if (dataLoader.Model.QuestID() == Numbers.QuestIDSecondDistrictDuremudira || dataLoader.Model.QuestID() == Numbers.QuestIDFirstDistrictDuremudira)
+                        // Gathering/etc
+                        else if ((dataLoader.Model.ObjectiveType() == 0x0 || dataLoader.Model.ObjectiveType() == 0x02 || dataLoader.Model.ObjectiveType() == 0x1002) && dataLoader.Model.QuestID() != 23527 && dataLoader.Model.QuestID() != 23628 && dataLoader.Model.QuestID() != 21749 && dataLoader.Model.QuestID() != 21750)
                         {
-                            objectiveImage = dataLoader.Model.GetMonsterIcon(132);
+                            objectiveImage = ViewModels.Windows.AddressModel.GetAreaIconFromID(dataLoader.Model.AreaID());
                         }
 
                         // Tenrou Sky Corridor areas
@@ -634,26 +666,20 @@ public sealed class DatabaseService
                             objectiveImage = ViewModels.Windows.AddressModel.GetAreaIconFromID(dataLoader.Model.AreaID());
                         }
 
-                        // Duremudira Arena
-                        else if (dataLoader.Model.AreaID() == 398)
-                        {
-                            objectiveImage = dataLoader.Model.GetMonsterIcon(dataLoader.Model.LargeMonster1ID());
-                        }
-
                         // Hunter's Road Base Camp
                         else if (dataLoader.Model.AreaID() == 459)
                         {
                             objectiveImage = ViewModels.Windows.AddressModel.GetAreaIconFromID(dataLoader.Model.AreaID());
                         }
 
-                        // Raviente
-                        else if (dataLoader.Model.AreaID() is 309 or(>= 311 and <= 321) or(>= 417 and <= 422) or 437 or(>= 440 and <= 444))
+                        // TODO test Raviente
+                        else if (dataLoader.Model.AreaID() is 309 or (>= 311 and <= 321) or (>= 417 and <= 422) or 437 or (>= 440 and <= 444))
                         {
-                            objectiveImage = dataLoader.Model.GetMonsterIcon(dataLoader.Model.LargeMonster1ID());
+                            objectiveImage = dataLoader.Model.GetMonsterIcon(monster1ID);
                         }
                         else
                         {
-                            objectiveImage = dataLoader.Model.GetMonsterIcon(dataLoader.Model.LargeMonster1ID());
+                            objectiveImage = dataLoader.Model.GetMonsterIcon(monster1ID);
                         }
 
                         var objectiveTypeID = model.ObjectiveType();
@@ -707,8 +733,6 @@ public sealed class DatabaseService
                         var overlayModeDictionary = dataLoader.Model.OverlayModeDictionary;
 
                         actualOverlayMode = GetActualOverlayMode(dataLoader);
-
-                        var partySize = dataLoader.Model.PartySize();
 
                         var monster1HPDictionary = dataLoader.Model.Monster1HPDictionary;
                         var monster2HPDictionary = dataLoader.Model.Monster2HPDictionary;
@@ -806,82 +830,94 @@ public sealed class DatabaseService
                         runID = Convert.ToInt32(cmd.ExecuteScalar(), CultureInfo.InvariantCulture);
                     }
 
-                    if (dataLoader.Model.PartySize() == 1)
+                    long personalBest = 0;
+                    var weaponType = dataLoader.Model.WeaponType();
+                    var improvedPersonalBest = false;
+
+                    using (var cmd = new SQLiteCommand(
+                    @"SELECT 
+                            TimeLeft, 
+                            FinalTimeValue,
+                            FinalTimeDisplay,
+                            q.ActualOverlayMode,
+                            q.PartySize,
+                            pg.WeaponTypeID,
+                            qrb.RunBuffs
+                        FROM 
+                            Quests q
+                        JOIN
+                            PlayerGear pg ON q.RunID = pg.RunID
+                        JOIN
+                            QuestsRunBuffs qrb ON q.RunID = qrb.RunID
+                        WHERE 
+                            q.QuestID = @questID
+                            AND pg.WeaponTypeID = @weaponTypeID
+                            AND q.ActualOverlayMode = @category
+                            AND q.PartySize = @partySize
+                            AND qrb.RunBuffs = @runBuffs
+                        ORDER BY 
+                            FinalTimeValue ASC
+                        LIMIT 1", conn))
                     {
-                        long personalBest = 0;
-                        var weaponType = dataLoader.Model.WeaponType();
-                        var improvedPersonalBest = false;
+                        cmd.Parameters.AddWithValue("@questID", questID);
+                        cmd.Parameters.AddWithValue("@weaponTypeID", weaponType);
+                        cmd.Parameters.AddWithValue("@category", actualOverlayMode);
+                        cmd.Parameters.AddWithValue("@partySize", partySize);
+                        cmd.Parameters.AddWithValue("@runBuffs", runBuffs);
 
-                        using (var cmd = new SQLiteCommand(
-                        @"SELECT 
-                                TimeLeft, 
-                                FinalTimeValue,
-                                FinalTimeDisplay,
-                                ActualOverlayMode,
-                                pg.WeaponTypeID
-                            FROM 
-                                Quests q
-                            JOIN
-                                PlayerGear pg ON q.RunID = pg.RunID
-                            WHERE 
-                                QuestID = @questID
-                                AND pg.WeaponTypeID = @weaponTypeID
-                                AND ActualOverlayMode = @category
-                                AND PartySize = 1
-                            ORDER BY 
-                                FinalTimeValue ASC
-                            LIMIT 1", conn))
+                        var reader = cmd.ExecuteReader();
+                        if (reader.Read())
                         {
-                            cmd.Parameters.AddWithValue("@questID", questID);
-                            cmd.Parameters.AddWithValue("@weaponTypeID", weaponType);
-                            cmd.Parameters.AddWithValue("@category", actualOverlayMode);
-
-                            var reader = cmd.ExecuteReader();
-                            if (reader.Read())
-                            {
-                                long time = 0;
-                                time = reader.GetInt64(reader.GetOrdinal("FinalTimeValue"));
-                                personalBest = time;
-                            }
+                            long time = 0;
+                            time = reader.GetInt64(reader.GetOrdinal("FinalTimeValue"));
+                            personalBest = time;
                         }
+                    }
 
-                        sql = @"INSERT INTO PersonalBests(
-                            RunID,
-                            Attempts
-                            ) VALUES (
-                            @RunID,
-                            @Attempts)";
+                    sql = @"INSERT INTO PersonalBests(
+                        RunID,
+                        Attempts,
+                        PartySize,
+                        RunBuffs
+                        ) VALUES (
+                        @RunID,
+                        @Attempts,
+                        @PartySize,
+                        @RunBuffs)";
+                    using (var cmd = new SQLiteCommand(sql, conn))
+                    {
+                        if (finalTimeValue < personalBest || personalBest == 0)
+                        {
+                            improvedPersonalBest = true;
+                            cmd.Parameters.AddWithValue("@RunID", runID);
+                            cmd.Parameters.AddWithValue("@Attempts", attempts);
+                            cmd.Parameters.AddWithValue("@PartySize", partySize);
+                            cmd.Parameters.AddWithValue("@RunBuffs", runBuffs);
+
+                            // Execute the stored procedure
+                            cmd.ExecuteNonQuery();
+                            Logger.Debug("Inserted into PersonalBests table");
+                        }
+                    }
+
+                    if (improvedPersonalBest)
+                    {
+                        sql = @"UPDATE PersonalBestAttempts 
+                                SET 
+                                    Attempts = 0 
+                                WHERE 
+                                    (QuestID, WeaponTypeID, ActualOverlayMode, PartySize, RunBuffs) = (@QuestID, @WeaponTypeID, @ActualOverlayMode, @PartySize, @RunBuffs)";
                         using (var cmd = new SQLiteCommand(sql, conn))
                         {
-                            if (finalTimeValue < personalBest || personalBest == 0)
-                            {
-                                improvedPersonalBest = true;
-                                cmd.Parameters.AddWithValue("@RunID", runID);
-                                cmd.Parameters.AddWithValue("@Attempts", attempts);
+                            cmd.Parameters.AddWithValue("@QuestID", questID);
+                            cmd.Parameters.AddWithValue("@WeaponTypeID", weaponType);
+                            cmd.Parameters.AddWithValue("@ActualOverlayMode", actualOverlayMode);
+                            cmd.Parameters.AddWithValue("@PartySize", partySize);
+                            cmd.Parameters.AddWithValue("@RunBuffs", runBuffs);
 
-                                // Execute the stored procedure
-                                cmd.ExecuteNonQuery();
-                                Logger.Debug("Inserted into PersonalBests table");
-                            }
-                        }
-
-                        if (improvedPersonalBest)
-                        {
-                            sql = @"UPDATE PersonalBestAttempts 
-                                    SET 
-                                        Attempts = 0 
-                                    WHERE 
-                                        (QuestID, WeaponTypeID, ActualOverlayMode) = (@QuestID, @WeaponTypeID, @ActualOverlayMode)";
-                            using (var cmd = new SQLiteCommand(sql, conn))
-                            {
-                                cmd.Parameters.AddWithValue("@QuestID", questID);
-                                cmd.Parameters.AddWithValue("@WeaponTypeID", weaponType);
-                                cmd.Parameters.AddWithValue("@ActualOverlayMode", actualOverlayMode);
-
-                                // Execute the stored procedure
-                                cmd.ExecuteNonQuery();
-                                Logger.Debug("Updated PersonalBestAttempts table");
-                            }
+                            // Execute the stored procedure
+                            cmd.ExecuteNonQuery();
+                            Logger.Debug("Updated PersonalBestAttempts table");
                         }
                     }
 
@@ -914,19 +950,10 @@ public sealed class DatabaseService
 
                     using (var cmd = new SQLiteCommand(sql, conn))
                     {
-                        var gameFolderPath = s.GameFolderPath;
-                        var mhfdatHash = CalculateFileHash(gameFolderPath, @"\dat\mhfdat.bin");
-                        var mhfemdHash = CalculateFileHash(gameFolderPath, @"\dat\mhfemd.bin");
-                        var mhfinfHash = CalculateFileHash(gameFolderPath, @"\dat\mhfinf.bin");
-                        var mhfsqdHash = CalculateFileHash(gameFolderPath, @"\dat\mhfsqd.bin");
-                        var mhfodllHash = CalculateFileHash(gameFolderPath, @"\mhfo.dll");
-                        var mhfohddllHash = CalculateFileHash(gameFolderPath, @"\mhfo-hd.dll");
-                        var mhfexeHash = CalculateFileHash(gameFolderPath, @"\mhf.exe");
-
                         var gameFolderData = string.Format(CultureInfo.InvariantCulture,
                             "{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}",
                             createdAt, createdBy, runID,
-                            gameFolderPath, mhfdatHash, mhfemdHash,
+                            gameFolderPathStatus, mhfdatHash, mhfemdHash,
                             mhfinfHash, mhfsqdHash, mhfodllHash,
                             mhfohddllHash, mhfexeHash);
                         var gameFolderHash = CalculateStringHash(gameFolderData);
@@ -935,7 +962,7 @@ public sealed class DatabaseService
                         cmd.Parameters.AddWithValue("@CreatedAt", createdAt);
                         cmd.Parameters.AddWithValue("@CreatedBy", createdBy);
                         cmd.Parameters.AddWithValue("@RunID", runID);
-                        cmd.Parameters.AddWithValue("@GameFolderPath", gameFolderPath);
+                        cmd.Parameters.AddWithValue("@GameFolderPath", gameFolderPathStatus);
                         cmd.Parameters.AddWithValue("@mhfdatHash", mhfdatHash);
                         cmd.Parameters.AddWithValue("@mhfemdHash", mhfemdHash);
                         cmd.Parameters.AddWithValue("@mhfinfHash", mhfinfHash);
@@ -1802,7 +1829,7 @@ public sealed class DatabaseService
 
                     using (var cmd = new SQLiteCommand(sql, conn))
                     {
-                        var questToggleMode = model.QuestToggleMonsterMode();         
+                        var questToggleMode = model.QuestToggleMonsterMode();
 
                         cmd.Parameters.AddWithValue("@QuestToggleMode", questToggleMode);
                         cmd.Parameters.AddWithValue("@RunID", runID);
@@ -1810,6 +1837,284 @@ public sealed class DatabaseService
                     }
 
                     Logger.Debug("Inserted into QuestsToggleMode table");
+
+                    sql = @"INSERT INTO QuestsCourse (
+                        Rights,
+                        RunID
+                        ) VALUES (
+                        @Rights,
+                        @RunID
+                        )";
+
+                    using (var cmd = new SQLiteCommand(sql, conn))
+                    {
+                        var rights = model.Rights();
+
+                        cmd.Parameters.AddWithValue("@Rights", rights);
+                        cmd.Parameters.AddWithValue("@RunID", runID);
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    Logger.Debug("Inserted into QuestsCourse table");
+
+                    sql = @"INSERT INTO QuestsOverlayHash (
+                        OverlayHash,
+                        RunID
+                        ) VALUES (
+                        @OverlayHash,
+                        @RunID
+                        )";
+
+                    using (var cmd = new SQLiteCommand(sql, conn))
+                    {
+                        var hash = GetOverlayHash();
+
+                        cmd.Parameters.AddWithValue("@OverlayHash", hash);
+                        cmd.Parameters.AddWithValue("@RunID", runID);
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    Logger.Debug("Inserted into QuestsOverlayHash table");
+
+                    sql = @"INSERT INTO QuestsActiveFeature (
+                        ActiveFeature,
+                        RunID
+                        ) VALUES (
+                        @ActiveFeature,
+                        @RunID
+                        )";
+
+                    using (var cmd = new SQLiteCommand(sql, conn))
+                    {
+                        var activeFeature = dataLoader.Model.GetActiveFeature();
+
+                        cmd.Parameters.AddWithValue("@ActiveFeature", activeFeature);
+                        cmd.Parameters.AddWithValue("@RunID", runID);
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    Logger.Debug("Inserted into QuestsActiveFeature table");
+
+                    sql = @"INSERT INTO QuestsGuildPoogie (
+                        GuildPoogie1Skill,
+                        GuildPoogie2Skill,
+                        GuildPoogie3Skill,
+                        RunID
+                        ) VALUES (
+                        @GuildPoogie1Skill,
+                        @GuildPoogie2Skill,
+                        @GuildPoogie3Skill,
+                        @RunID
+                        )";
+
+                    using (var cmd = new SQLiteCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@GuildPoogie1Skill", model.GuildPoogie1Skill());
+                        cmd.Parameters.AddWithValue("@GuildPoogie2Skill", model.GuildPoogie2Skill());
+                        cmd.Parameters.AddWithValue("@GuildPoogie3Skill", model.GuildPoogie3Skill());
+                        cmd.Parameters.AddWithValue("@RunID", runID);
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    Logger.Debug("Inserted into QuestsGuildPoogie table");
+
+                    sql = @"INSERT INTO QuestsHalk (
+                        HalkOn,
+                        HalkPotEffectOn,
+                        HalkFullness,
+                        HalkLevel,
+                        HalkIntimacy,
+                        HalkHealth,
+                        HalkAttack,
+                        HalkDefense,
+                        HalkIntellect,
+                        HalkSkill1,
+                        HalkSkill2,
+                        HalkSkill3,
+                        HalkElementNone,
+                        HalkFire,
+                        HalkThunder,
+                        HalkWater,
+                        HalkIce,
+                        HalkDragon,
+                        HalkSleep,
+                        HalkParalysis,
+                        HalkPoison,
+                        RunID
+                        ) VALUES (
+                        @HalkOn,
+                        @HalkPotEffectOn,
+                        @HalkFullness,
+                        @HalkLevel,
+                        @HalkIntimacy,
+                        @HalkHealth,
+                        @HalkAttack,
+                        @HalkDefense,
+                        @HalkIntellect,
+                        @HalkSkill1,
+                        @HalkSkill2,
+                        @HalkSkill3,
+                        @HalkElementNone,
+                        @HalkFire,
+                        @HalkThunder,
+                        @HalkWater,
+                        @HalkIce,
+                        @HalkDragon,
+                        @HalkSleep,
+                        @HalkParalysis,
+                        @HalkPoison,
+                        @RunID
+                        )";
+
+                    using (var cmd = new SQLiteCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@HalkOn", model.HalkOn());
+                        cmd.Parameters.AddWithValue("@HalkPotEffectOn", model.HalkPotEffectOn() || model.IsHalkPotEquipped());
+                        cmd.Parameters.AddWithValue("@HalkFullness", model.HalkFullness());
+                        cmd.Parameters.AddWithValue("@HalkLevel", model.HalkLevel());
+                        cmd.Parameters.AddWithValue("@HalkIntimacy", model.HalkIntimacy());
+                        cmd.Parameters.AddWithValue("@HalkHealth", model.HalkHealth());
+                        cmd.Parameters.AddWithValue("@HalkAttack", model.HalkAttack());
+                        cmd.Parameters.AddWithValue("@HalkDefense", model.HalkDefense());
+                        cmd.Parameters.AddWithValue("@HalkIntellect", model.HalkIntellect());
+                        cmd.Parameters.AddWithValue("@HalkSkill1", model.HalkSkill1());
+                        cmd.Parameters.AddWithValue("@HalkSkill2", model.HalkSkill2());
+                        cmd.Parameters.AddWithValue("@HalkSkill3", model.HalkSkill3());
+                        cmd.Parameters.AddWithValue("@HalkElementNone", model.HalkElementNone());
+                        cmd.Parameters.AddWithValue("@HalkFire", model.HalkFire());
+                        cmd.Parameters.AddWithValue("@HalkThunder", model.HalkThunder());
+                        cmd.Parameters.AddWithValue("@HalkWater", model.HalkWater());
+                        cmd.Parameters.AddWithValue("@HalkIce", model.HalkIce());
+                        cmd.Parameters.AddWithValue("@HalkDragon", model.HalkDragon());
+                        cmd.Parameters.AddWithValue("@HalkSleep", model.HalkSleep());
+                        cmd.Parameters.AddWithValue("@HalkParalysis", model.HalkParalysis());
+                        cmd.Parameters.AddWithValue("@HalkPoison", model.HalkPoison());
+                        cmd.Parameters.AddWithValue("@RunID", runID);
+
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    Logger.Debug("Inserted into QuestsHalk table");
+
+                    sql = @"INSERT INTO QuestsDiva (
+                        DivaSongBuffOn,
+                        DivaPrayerGemRedSkill,
+                        DivaPrayerGemRedLevel,
+                        DivaPrayerGemYellowSkill,
+                        DivaPrayerGemYellowLevel,
+                        DivaPrayerGemGreenSkill,
+                        DivaPrayerGemGreenLevel,
+                        DivaPrayerGemBlueSkill,
+                        DivaPrayerGemBlueLevel,
+                        RunID
+                        ) VALUES (
+                        @DivaSongBuffOn,
+                        @DivaPrayerGemRedSkill,
+                        @DivaPrayerGemRedLevel,
+                        @DivaPrayerGemYellowSkill,
+                        @DivaPrayerGemYellowLevel,
+                        @DivaPrayerGemGreenSkill,
+                        @DivaPrayerGemGreenLevel,
+                        @DivaPrayerGemBlueSkill,
+                        @DivaPrayerGemBlueLevel,
+                        @RunID
+                        )";
+
+                    using (var cmd = new SQLiteCommand(sql, conn))
+                    {
+                        // TODO test
+                        cmd.Parameters.AddWithValue("@DivaSongBuffOn", model.DivaSongActive);
+                        cmd.Parameters.AddWithValue("@DivaPrayerGemRedSkill", model.DivaPrayerGemRedSkill());
+                        cmd.Parameters.AddWithValue("@DivaPrayerGemRedLevel", model.DivaPrayerGemRedLevel());
+                        cmd.Parameters.AddWithValue("@DivaPrayerGemYellowSkill", model.DivaPrayerGemYellowSkill());
+                        cmd.Parameters.AddWithValue("@DivaPrayerGemYellowLevel", model.DivaPrayerGemYellowLevel());
+                        cmd.Parameters.AddWithValue("@DivaPrayerGemGreenSkill", model.DivaPrayerGemGreenSkill());
+                        cmd.Parameters.AddWithValue("@DivaPrayerGemGreenLevel", model.DivaPrayerGemGreenLevel());
+                        cmd.Parameters.AddWithValue("@DivaPrayerGemBlueSkill", model.DivaPrayerGemBlueSkill());
+                        cmd.Parameters.AddWithValue("@DivaPrayerGemBlueLevel", model.DivaPrayerGemBlueLevel());
+                        cmd.Parameters.AddWithValue("@RunID", runID);
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    Logger.Debug("Inserted into QuestsDiva table");
+
+                    sql = @"INSERT INTO QuestsRunBuffs (
+                        RunBuffs,
+                        RunBuffsTag,
+                        RunID
+                        ) VALUES (
+                        @RunBuffs,
+                        @RunBuffsTag,
+                        @RunID
+                        )";
+
+                    using (var cmd = new SQLiteCommand(sql, conn))
+                    {
+                        // TODO test
+                        cmd.Parameters.AddWithValue("@RunBuffs", runBuffs);
+                        cmd.Parameters.AddWithValue("@RunBuffsTag", dataLoader.Model.GetRunBuffsTag((RunBuff)runBuffs, (QuestVariant2)dataLoader.Model.QuestVariant2(), (QuestVariant3)dataLoader.Model.QuestVariant3()));
+                        cmd.Parameters.AddWithValue("@RunID", runID);
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    Logger.Debug("Inserted into QuestsRunBuffs table");
+
+                    sql = @"INSERT INTO QuestsQuestVariant (
+                        QuestVariant1,
+                        QuestVariant2,
+                        QuestVariant3,
+                        QuestVariant4,
+                        RunID
+                        ) VALUES (
+                        @QuestVariant1,
+                        @QuestVariant2,
+                        @QuestVariant3,
+                        @QuestVariant4,
+                        @RunID
+                        )";
+
+                    using (var cmd = new SQLiteCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@QuestVariant1", model.QuestVariant1());
+                        cmd.Parameters.AddWithValue("@QuestVariant2", model.QuestVariant2());
+                        cmd.Parameters.AddWithValue("@QuestVariant3", model.QuestVariant3());
+                        cmd.Parameters.AddWithValue("@QuestVariant4", model.QuestVariant4());
+                        cmd.Parameters.AddWithValue("@RunID", runID);
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    Logger.Debug("Inserted into QuestsQuestVariant table");
+
+                    sql = @"INSERT INTO QuestsGamePatch (
+                        mhfdatInfo,
+                        mhfemdInfo,
+                        mhfodllInfo,
+                        mhfohddllInfo,
+                        RunID
+                        ) VALUES (
+                        @mhfdatInfo,
+                        @mhfemdInfo,
+                        @mhfodllInfo,
+                        @mhfohddllInfo,
+                        @RunID
+                        )";
+
+                    using (var cmd = new SQLiteCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@mhfdatInfo", model.GetGamePatchInfo(GamePatchFile.dat, mhfdatHash));
+                        cmd.Parameters.AddWithValue("@mhfemdInfo", model.GetGamePatchInfo(GamePatchFile.emd, mhfemdHash));
+                        cmd.Parameters.AddWithValue("@mhfodllInfo", model.GetGamePatchInfo(GamePatchFile.dll, mhfodllHash));
+                        cmd.Parameters.AddWithValue("@mhfohddllInfo", model.GetGamePatchInfo(GamePatchFile.hddll, mhfohddllHash));
+                        cmd.Parameters.AddWithValue("@RunID", runID);
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    Logger.Debug("Inserted into QuestsGamePatch table");
+
+
+                    // TODO more tables
+
+
 
                     var gearName = s.GearDescriptionExport;
                     if (string.IsNullOrEmpty(gearName))
@@ -1819,9 +2124,9 @@ public sealed class DatabaseService
 
                     var weaponTypeID = model.WeaponType();
                     var weaponClassID = weaponTypeID;
-                    var weaponSlot1 = model.GetDecoName(model.WeaponDeco1ID(), 1); // no sigils in database ig
-                    var weaponSlot2 = model.GetDecoName(model.WeaponDeco2ID(), 2);
-                    var weaponSlot3 = model.GetDecoName(model.WeaponDeco3ID(), 3);
+                    var weaponSlot1 = model.GetDecoName(model.WeaponDeco1ID(), EquipmentSlot.One); // no sigils in database ig
+                    var weaponSlot2 = model.GetDecoName(model.WeaponDeco2ID(), EquipmentSlot.Two);
+                    var weaponSlot3 = model.GetDecoName(model.WeaponDeco3ID(), EquipmentSlot.Three);
                     var headID = model.ArmorHeadID();
                     var headSlot1 = model.ArmorHeadDeco1ID();
                     var headSlot2 = model.ArmorHeadDeco2ID();
@@ -1846,7 +2151,7 @@ public sealed class DatabaseService
                     var cuffSlot2 = model.Cuff2ID();
                     var styleID = model.WeaponStyle();
                     var weaponIconID = weaponTypeID;
-                    var divaSkillID = model.DivaSkill();
+                    var divaSkillID = model.DivaSkillUsesLeft() > 0 ? model.DivaSkill() : 0;
                     var guildFoodID = model.GuildFoodSkill();
                     var poogieItemID = model.PoogieItemUseID();
 
@@ -2251,6 +2556,10 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
         var lastGachaCard = this.GetLastGachaCard(conn);
         var lastPlayerInventory = this.GetLastPlayerInventory(conn);
         var lastQuestsToggleMode = this.GetLastQuestsToggleMode(conn);
+        var lastQuestsActiveFeature = this.GetLastQuestsActiveFeature(conn);
+        var lastQuestsDiva = this.GetLastQuestsDiva(conn);
+        var lastQuestsHalk = this.GetLastQuestsHalk(conn);
+        var lastQuestsGuildPoogie = this.GetLastQuestsGuildPoogie(conn);
 
         if (lastQuest.RunID != 0)
         {
@@ -2386,6 +2695,42 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
                 Logger.Warn(CultureInfo.InvariantCulture, "Last quests toggle mode already found in hash set");
             }
         }
+
+        if (lastQuestsHalk.QuestsHalkID != 0)
+        {
+            var questsHalkAdded = this.AllQuestsHalk.Add(lastQuestsHalk);
+            if (!questsHalkAdded)
+            {
+                Logger.Warn(CultureInfo.InvariantCulture, "Last quests halk already found in hash set");
+            }
+        }
+
+        if (lastQuestsDiva.QuestsDivaID != 0)
+        {
+            var questsDivaAdded = this.AllQuestsDiva.Add(lastQuestsDiva);
+            if (!questsDivaAdded)
+            {
+                Logger.Warn(CultureInfo.InvariantCulture, "Last quests diva already found in hash set");
+            }
+        }
+
+        if (lastQuestsActiveFeature.QuestsActiveFeatureID != 0)
+        {
+            var questsActiveFeatureAdded = this.AllQuestsActiveFeature.Add(lastQuestsActiveFeature);
+            if (!questsActiveFeatureAdded)
+            {
+                Logger.Warn(CultureInfo.InvariantCulture, "Last quests active feature already found in hash set");
+            }
+        }
+
+        if (lastQuestsGuildPoogie.QuestsGuildPoogieID != 0)
+        {
+            var questsGuildPoogieAdded = this.AllQuestsGuildPoogie.Add(lastQuestsGuildPoogie);
+            if (!questsGuildPoogieAdded)
+            {
+                Logger.Warn(CultureInfo.InvariantCulture, "Last quests guild poogie already found in hash set");
+            }
+        }
     }
 
     private void CreateDatabaseTriggers(SQLiteConnection conn)
@@ -2409,6 +2754,7 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
                 // bingo
                 // mezfesminigames
                 // mezfes
+                // run buffs tables: prayer gem, guild poogie, halk, active feature, etc.
                 using (var cmd = new SQLiteCommand(conn))
                 {
                     cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_audit_deletion
@@ -2651,6 +2997,206 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
 
                 using (var cmd = new SQLiteCommand(conn))
                 {
+                    cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_quests_course_updates
+                        AFTER UPDATE ON QuestsCourse
+                        BEGIN
+                          SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
+                        END;";
+                    cmd.ExecuteNonQuery();
+                }
+
+                using (var cmd = new SQLiteCommand(conn))
+                {
+                    cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_quests_course_deletion
+                        AFTER DELETE ON QuestsCourse
+                        BEGIN
+                          SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
+                        END;";
+                    cmd.ExecuteNonQuery();
+                }
+
+                using (var cmd = new SQLiteCommand(conn))
+                {
+                    cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_quests_toggle_mode_updates
+                        AFTER UPDATE ON QuestsToggleMode
+                        BEGIN
+                          SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
+                        END;";
+                    cmd.ExecuteNonQuery();
+                }
+
+                using (var cmd = new SQLiteCommand(conn))
+                {
+                    cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_quests_toggle_mode_deletion
+                        AFTER DELETE ON QuestsToggleMode
+                        BEGIN
+                          SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
+                        END;";
+                    cmd.ExecuteNonQuery();
+                }
+
+                using (var cmd = new SQLiteCommand(conn))
+                {
+                    cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_quests_overlay_hash_updates
+                        AFTER UPDATE ON QuestsOverlayHash
+                        BEGIN
+                          SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
+                        END;";
+                    cmd.ExecuteNonQuery();
+                }
+
+                using (var cmd = new SQLiteCommand(conn))
+                {
+                    cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_quests_overlay_hash_deletion
+                        AFTER DELETE ON QuestsOverlayHash
+                        BEGIN
+                          SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
+                        END;";
+                    cmd.ExecuteNonQuery();
+                }
+
+                using (var cmd = new SQLiteCommand(conn))
+                {
+                    cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_quests_diva_updates
+                        AFTER UPDATE ON QuestsDiva
+                        BEGIN
+                          SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
+                        END;";
+                    cmd.ExecuteNonQuery();
+                }
+
+                using (var cmd = new SQLiteCommand(conn))
+                {
+                    cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_quests_diva_deletion
+                        AFTER DELETE ON QuestsDiva
+                        BEGIN
+                          SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
+                        END;";
+                    cmd.ExecuteNonQuery();
+                }
+
+                using (var cmd = new SQLiteCommand(conn))
+                {
+                    cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_quests_halk_updates
+                        AFTER UPDATE ON QuestsHalk
+                        BEGIN
+                          SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
+                        END;";
+                    cmd.ExecuteNonQuery();
+                }
+
+                using (var cmd = new SQLiteCommand(conn))
+                {
+                    cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_quests_halk_deletion
+                        AFTER DELETE ON QuestsHalk
+                        BEGIN
+                          SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
+                        END;";
+                    cmd.ExecuteNonQuery();
+                }
+
+                using (var cmd = new SQLiteCommand(conn))
+                {
+                    cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_quests_active_feature_updates
+                        AFTER UPDATE ON QuestsActiveFeature
+                        BEGIN
+                          SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
+                        END;";
+                    cmd.ExecuteNonQuery();
+                }
+
+                using (var cmd = new SQLiteCommand(conn))
+                {
+                    cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_quests_active_feature_deletion
+                        AFTER DELETE ON QuestsActiveFeature
+                        BEGIN
+                          SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
+                        END;";
+                    cmd.ExecuteNonQuery();
+                }
+
+                using (var cmd = new SQLiteCommand(conn))
+                {
+                    cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_quests_guild_poogie_updates
+                        AFTER UPDATE ON QuestsGuildPoogie
+                        BEGIN
+                          SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
+                        END;";
+                    cmd.ExecuteNonQuery();
+                }
+
+                using (var cmd = new SQLiteCommand(conn))
+                {
+                    cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_quests_guild_poogie_deletion
+                        AFTER DELETE ON QuestsGuildPoogie
+                        BEGIN
+                          SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
+                        END;";
+                    cmd.ExecuteNonQuery();
+                }
+
+                using (var cmd = new SQLiteCommand(conn))
+                {
+                    cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_quests_run_buffs_updates
+                        AFTER UPDATE ON QuestsRunBuffs
+                        BEGIN
+                          SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
+                        END;";
+                    cmd.ExecuteNonQuery();
+                }
+
+                using (var cmd = new SQLiteCommand(conn))
+                {
+                    cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_quests_run_buffs_deletion
+                        AFTER DELETE ON QuestsRunBuffs
+                        BEGIN
+                          SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
+                        END;";
+                    cmd.ExecuteNonQuery();
+                }
+
+                using (var cmd = new SQLiteCommand(conn))
+                {
+                    cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_quests_quest_variant_updates
+                        AFTER UPDATE ON QuestsQuestVariant
+                        BEGIN
+                          SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
+                        END;";
+                    cmd.ExecuteNonQuery();
+                }
+
+                using (var cmd = new SQLiteCommand(conn))
+                {
+                    cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_quests_quest_variant_deletion
+                        AFTER DELETE ON QuestsQuestVariant
+                        BEGIN
+                          SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
+                        END;";
+                    cmd.ExecuteNonQuery();
+                }
+
+                using (var cmd = new SQLiteCommand(conn))
+                {
+                    cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_quests_game_patch_updates
+                        AFTER UPDATE ON QuestsGamePatch
+                        BEGIN
+                          SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
+                        END;";
+                    cmd.ExecuteNonQuery();
+                }
+
+                using (var cmd = new SQLiteCommand(conn))
+                {
+                    cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_quests_game_patch_deletion
+                        AFTER DELETE ON QuestsGamePatch
+                        BEGIN
+                          SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
+                        END;";
+                    cmd.ExecuteNonQuery();
+                }
+
+                using (var cmd = new SQLiteCommand(conn))
+                {
                     cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_bingo_updates
                         AFTER UPDATE ON Bingo
                         BEGIN
@@ -2841,7 +3387,7 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
                     cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_quest_updates
                         AFTER UPDATE ON Quests
                         FOR EACH ROW
-                        WHEN NEW.YoutubeID = OLD.YoutubeID
+                        WHEN NEW.YouTubeID = OLD.YouTubeID
                         BEGIN
                             SELECT RAISE(ABORT, 'Cannot update quest fields');
                         END;";
@@ -2931,12 +3477,379 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
         // Roll back the transaction
         if (transaction != null)
         {
-            serverVersion = transaction.Connection.ServerVersion;
+            serverVersion = transaction.Connection?.ServerVersion ?? "null";
             transaction.Rollback();
         }
 
         // Handle the exception and show an error message to the user
         LoggingService.WriteCrashLog(ex, $"SQLite error (version: {serverVersion})");
+    }
+
+    public int UpsertRunBuffs(SQLiteConnection conn, DataLoader dataLoader)
+    {
+        var updatedRows = 0;
+
+        if (string.IsNullOrEmpty(this.dataSource))
+        {
+            Logger.Warn(CultureInfo.InvariantCulture, "Cannot upsert run buffs. dataSource: {0}", this.dataSource);
+            return updatedRows;
+        }
+
+        // Start a transaction
+        using (var transaction = conn.BeginTransaction())
+        {
+            try
+            {
+
+                using (var cmd0 = new SQLiteCommand(conn))
+                {
+                    cmd0.CommandText = @"DROP TRIGGER IF EXISTS prevent_quests_run_buffs_updates";
+                    cmd0.ExecuteNonQuery();
+                }
+
+                using (var cmd = new SQLiteCommand(conn))
+                {
+                    cmd.CommandText = @"SELECT
+                                            q.*, qrb.RunBuffs
+                                    FROM Quests q
+                                    LEFT JOIN QuestsRunBuffs qrb ON q.RunID = qrb.RunID";
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            var actualOverlayMode = reader["ActualOverlayMode"].ToString();
+                            var runID = long.Parse(reader["RunID"]?.ToString() ?? "0", CultureInfo.InvariantCulture);
+                            var questID = long.Parse(reader["QuestID"]?.ToString() ?? "0", CultureInfo.InvariantCulture);
+
+                            if (actualOverlayMode == null || runID == 0)
+                            {
+                                continue;
+                            }
+
+                            string? runBuffsString = reader["RunBuffs"].ToString();
+                            RunBuff runBuffs = RunBuff.None;
+
+                            using (var cmd2 = new SQLiteCommand(conn))
+                            {
+                                // Check if the row exists
+                                if (runBuffsString != null && runBuffsString != string.Empty) // >=v0.35
+                                {
+                                    // Row exists, so update it
+                                    cmd2.CommandText = @"UPDATE QuestsRunBuffs SET RunBuffs = @RunBuffs, RunBuffsTag = @RunBuffsTag WHERE RunID = @RunID";
+                                    updatedRows++;
+
+                                    runBuffs = (RunBuff)long.Parse(reader["RunBuffs"]?.ToString() ?? "0", CultureInfo.InvariantCulture);
+                                }
+                                else // <v0.35
+                                {
+                                    // Row doesn't exist, so insert it
+                                    cmd2.CommandText = @"INSERT INTO QuestsRunBuffs(RunBuffs, RunBuffsTag, RunID) VALUES (@RunBuffs, @RunBuffsTag, @RunID)";
+                                }
+
+                                cmd2.Parameters.AddWithValue("@RunBuffs", dataLoader.Model.GetRunBuffs(questID, actualOverlayMode, GetBaseRunBuffs(actualOverlayMode, (long)runBuffs)));
+                                cmd2.Parameters.AddWithValue("@RunBuffsTag", dataLoader.Model.GetRunBuffsTag(dataLoader.Model.GetRunBuffs(questID, actualOverlayMode, GetBaseRunBuffs(actualOverlayMode, (long)runBuffs)), (QuestVariant2)dataLoader.Model.QuestVariant2(), (QuestVariant3)dataLoader.Model.QuestVariant3()));
+                                cmd2.Parameters.AddWithValue("@RunID", runID);
+
+                                cmd2.ExecuteNonQuery();
+                            }
+                        }
+                    }
+                }
+
+                using (var cmd = new SQLiteCommand(conn))
+                {
+                    cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_quests_run_buffs_updates
+                        AFTER UPDATE ON QuestsRunBuffs
+                        BEGIN
+                          SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
+                        END;";
+                    cmd.ExecuteNonQuery();
+                }
+
+                // Commit the transaction
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                transaction.Rollback();
+                HandleError(transaction, ex);
+            }
+        }
+
+        Logger.Debug("Updated run buffs table");
+        return updatedRows;
+    }
+
+    /// <summary>
+    /// TODO test
+    /// </summary>
+    /// <param name="conn"></param>
+    /// <param name="dataLoader"></param>
+    public void UpdatePersonalBestsRunBuffs(SQLiteConnection conn, DataLoader dataLoader)
+    {
+        if (string.IsNullOrEmpty(this.dataSource))
+        {
+            Logger.Warn(CultureInfo.InvariantCulture, "Cannot update run buffs for personal bests. dataSource: {0}", this.dataSource);
+            return;
+        }
+
+        // Start a transaction
+        using (var transaction = conn.BeginTransaction())
+        {
+            try
+            {
+                string sql = @"
+                SELECT pb.*, q.ActualOverlayMode, q.QuestID
+                FROM PersonalBests pb
+                LEFT JOIN Quests q ON pb.RunID = q.RunID";
+
+                using (var cmd = new SQLiteCommand(sql, conn))
+                {
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            var runID = long.Parse(reader["RunID"]?.ToString() ?? "0", CultureInfo.InvariantCulture);
+                            var questID = long.Parse(reader["QuestID"]?.ToString() ?? "0", CultureInfo.InvariantCulture);
+                            var actualOverlayMode = reader["ActualOverlayMode"].ToString();
+                            var runBuffs = long.Parse(reader["RunBuffs"]?.ToString() ?? "0", CultureInfo.InvariantCulture);
+
+                            if (runID == 0 || actualOverlayMode == null)
+                            {
+                                continue;
+                            }
+
+                            // Separate command for the insert operation
+                            using (var cmd2 = new SQLiteCommand(conn))
+                            {
+                                cmd2.CommandText = "UPDATE PersonalBests SET RunBuffs = @RunBuffs WHERE RunID = @RunID";
+                                cmd2.Parameters.AddWithValue("@RunBuffs", dataLoader.Model.GetRunBuffs(questID, actualOverlayMode, GetBaseRunBuffs(actualOverlayMode, runBuffs)));
+                                cmd2.Parameters.AddWithValue("@RunID", runID);
+
+                                cmd2.ExecuteNonQuery();
+                            }
+                        }
+                    }
+                }
+
+                // Commit the transaction
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                HandleError(transaction, ex);
+            }
+        }
+
+        Logger.Debug("Updated run buffs for PersonalBests table");
+    }
+
+    private RunBuff GetBaseRunBuffs(string mode, long buffs)
+    {
+        return mode switch
+        {
+            Messages.OverlayModeTimeAttack => RunBuff.TimeAttack,
+            Messages.OverlayModeFreestyleNoSecretTech => RunBuff.FreestyleNoSecretTech,
+            Messages.OverlayModeFreestyleWithSecretTech => RunBuff.FreestyleWithSecretTech,
+            _ => (RunBuff)buffs,
+        };
+    }
+
+    public void UpdateTableRunBuffs(string tableName, SQLiteConnection conn, DataLoader dataLoader)
+    {
+        if (string.IsNullOrEmpty(this.dataSource))
+        {
+            Logger.Warn(CultureInfo.InvariantCulture, "Cannot update run buffs for {0} table. dataSource: {1}", tableName, this.dataSource);
+            return;
+        }
+
+        // Start a transaction
+        using (var transaction = conn.BeginTransaction())
+        {
+            try
+            {
+                string sql = $"SELECT * FROM {tableName}";
+                HashSet<long> processedRowIds = new HashSet<long>();
+
+                using (var cmd = new SQLiteCommand(sql, conn))
+                {
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            var oldActualOverlayMode = reader["ActualOverlayMode"].ToString();
+                            var rowID = long.Parse(reader[$"{tableName}ID"]?.ToString() ?? "0", CultureInfo.InvariantCulture);
+                            var oldQuestID = long.Parse(reader["QuestID"]?.ToString() ?? "0", CultureInfo.InvariantCulture);
+                            var oldWeaponTypeID = long.Parse(reader["WeaponTypeID"]?.ToString() ?? "0", CultureInfo.InvariantCulture);
+                            var oldPartySize = long.Parse(reader["PartySize"]?.ToString() ?? "0", CultureInfo.InvariantCulture);
+                            var oldRunBuffs = long.Parse(reader["RunBuffs"]?.ToString() ?? "0", CultureInfo.InvariantCulture);
+                            var oldAttempts = long.Parse(reader["Attempts"]?.ToString() ?? "0", CultureInfo.InvariantCulture);
+
+                            // Skip if the row has already been processed
+                            if (processedRowIds.Contains(rowID))
+                            {
+                                continue;
+                            }
+
+                            if (oldActualOverlayMode == null || rowID == 0)
+                            {
+                                processedRowIds.Add(rowID);
+                                continue;
+                            }
+
+                            if (oldRunBuffs == 0 && oldActualOverlayMode != Messages.OverlayModeFreestyleNoSecretTech && oldActualOverlayMode != Messages.OverlayModeFreestyleWithSecretTech && oldActualOverlayMode != Messages.OverlayModeTimeAttack && oldActualOverlayMode != Messages.OverlayModeSpeedrun)
+                            {
+                                // After successful processing, add the row ID to the list of processed IDs
+                                processedRowIds.Add(rowID);
+                                continue;
+                            }
+
+                            long newRunBuffs = (long)dataLoader.Model.GetRunBuffs(oldQuestID, oldActualOverlayMode, GetBaseRunBuffs(oldActualOverlayMode, oldRunBuffs));
+
+                            if (oldRunBuffs == newRunBuffs || (oldRunBuffs > 0 && newRunBuffs == 0))
+                            {
+                                processedRowIds.Add(rowID);
+                                continue;
+                            }
+
+                            // Step  2: Search for a row with the same field values except for RunBuffs
+                            using (var cmdSearch = new SQLiteCommand(conn))
+                            {
+                                cmdSearch.CommandText = $@"
+                                SELECT * FROM {tableName}
+                                WHERE QuestID = @QuestID AND WeaponTypeID = @WeaponTypeID AND ActualOverlayMode = @ActualOverlayMode AND PartySize = @PartySize AND RunBuffs = @NewRunBuffs";
+                                cmdSearch.Parameters.AddWithValue("@QuestID", oldQuestID);
+                                cmdSearch.Parameters.AddWithValue("@WeaponTypeID", oldWeaponTypeID);
+                                cmdSearch.Parameters.AddWithValue("@ActualOverlayMode", oldActualOverlayMode);
+                                cmdSearch.Parameters.AddWithValue("@PartySize", oldPartySize);
+                                cmdSearch.Parameters.AddWithValue("@NewRunBuffs", newRunBuffs);
+
+                                using (var searchReader = cmdSearch.ExecuteReader())
+                                {
+                                    if (searchReader.HasRows)
+                                    {
+                                        Logger.Debug($"Found potential unique constraint violation. oldRunBuffs: {oldRunBuffs}, newRunBuffs: {newRunBuffs}");
+
+                                        // Step  3: Potential unique constraint violation detected
+                                        while (searchReader.Read())
+                                        {
+                                            var newAttempts = long.Parse(searchReader["Attempts"]?.ToString() ?? "0", CultureInfo.InvariantCulture);
+
+                                            // Step  4: Delete the old row and insert a new one
+                                            using (var cmdDelete = new SQLiteCommand(conn))
+                                            {
+                                                cmdDelete.CommandText = $"DELETE FROM {tableName} WHERE {tableName}ID = @OldRowID";
+                                                cmdDelete.Parameters.AddWithValue("@OldRowID", rowID);
+                                                cmdDelete.ExecuteNonQuery();
+                                            }
+
+                                            Logger.Debug($"Deleted old row {rowID} from {tableName}");
+
+                                            using (var cmdInsert = new SQLiteCommand(conn))
+                                            {
+                                                cmdInsert.CommandText = $@"
+                                        INSERT INTO {tableName} (QuestID, WeaponTypeID, ActualOverlayMode, PartySize, RunBuffs, Attempts)
+                                        VALUES (@QuestID, @WeaponTypeID, @ActualOverlayMode, @PartySize, @NewRunBuffs, @NewAttempts)";
+                                                cmdInsert.Parameters.AddWithValue("@QuestID", oldQuestID);
+                                                cmdInsert.Parameters.AddWithValue("@WeaponTypeID", oldWeaponTypeID);
+                                                cmdInsert.Parameters.AddWithValue("@ActualOverlayMode", oldActualOverlayMode);
+                                                cmdInsert.Parameters.AddWithValue("@PartySize", oldPartySize);
+                                                cmdInsert.Parameters.AddWithValue("@NewRunBuffs", newRunBuffs);
+                                                cmdInsert.Parameters.AddWithValue("@NewAttempts", Math.Max(oldAttempts, newAttempts));
+                                                cmdInsert.ExecuteNonQuery();
+                                            }
+
+                                            var lastInsertSql = "SELECT LAST_INSERT_ROWID()";
+                                            long newRowID = 0;
+
+                                            using (var lastInsertCmd = new SQLiteCommand(lastInsertSql, conn))
+                                            {
+                                                newRowID = Convert.ToInt32(lastInsertCmd.ExecuteScalar(), CultureInfo.InvariantCulture);
+                                            }
+
+                                            // Add the new row ID to the processed IDs set
+                                            processedRowIds.Add(newRowID);
+
+                                            Logger.Debug($"Inserted into {tableName}. oldAttempts: {oldAttempts}, newAttempts: {newAttempts}, newRowID: {newRowID}.");
+
+                                        }
+                                    }
+                                    else
+                                    {
+                                        // No conflict, just update the row
+                                        using (var cmdUpdate = new SQLiteCommand(conn))
+                                        {
+                                            cmdUpdate.CommandText = $"UPDATE {tableName} SET RunBuffs = @NewRunBuffs WHERE {tableName}ID = @rowID";
+                                            cmdUpdate.Parameters.AddWithValue("@NewRunBuffs", newRunBuffs);
+                                            cmdUpdate.Parameters.AddWithValue("@rowID", rowID);
+                                            cmdUpdate.ExecuteNonQuery();
+                                        }
+
+                                        Logger.Debug($"Updated row {rowID} of {tableName}. oldRunBuffs: {oldRunBuffs}, newRunBuffs: {newRunBuffs}.");
+                                    }
+                                }
+                            }
+
+                            // After successful processing, add the row ID to the list of processed IDs
+                            processedRowIds.Add(rowID);
+                        }
+                    }
+                }
+
+                // Commit the transaction
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                HandleError(transaction, ex);
+            }
+        }
+
+        Logger.Debug($"Updated run buffs for {tableName} table");
+    }
+
+    public string GetOverlayHash()
+    {
+        var overlayHash = string.Empty;
+
+        // Find the path of the first found process with the name "MHFZ_Overlay.exe"
+        var exeName = "MHFZ_Overlay.exe";
+        var processes = Process.GetProcessesByName(Path.GetFileNameWithoutExtension(exeName));
+        var exePath = string.Empty;
+        if (processes.Length > 0)
+        {
+            var module = processes[0].MainModule;
+            if (module == null)
+            {
+                return string.Empty;
+            }
+            else
+            {
+                exePath = module.FileName;
+            }
+        }
+        else
+        {
+            exePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, exeName);
+        }
+
+        if (exePath == null)
+        {
+            return string.Empty;
+        }
+
+        // Calculate the SHA256 hash of the executable
+        using (var sha256 = SHA256.Create())
+        {
+            using (var stream = File.OpenRead(exePath))
+            {
+                var hash = sha256.ComputeHash(stream);
+                overlayHash = BitConverter.ToString(hash).Replace("-", string.Empty);
+            }
+        }
+
+        return overlayHash;
     }
 
     /// <summary>
@@ -2985,8 +3898,7 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
             using (var stream = File.OpenRead(exePath))
             {
                 var hash = sha256.ComputeHash(stream);
-                var hashString = BitConverter.ToString(hash).Replace("-", string.Empty);
-                overlayHash = hashString;
+                overlayHash = BitConverter.ToString(hash).Replace("-", string.Empty);
 
                 // Store the hash in the "Overlay" table of the SQLite database
                 using (var conn = new SQLiteConnection(this.dataSource))
@@ -2999,7 +3911,7 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
                             var sql = "INSERT INTO Overlay (Hash) VALUES (@hash)";
                             using (var cmd = new SQLiteCommand(sql, conn))
                             {
-                                cmd.Parameters.AddWithValue("@hash", hashString);
+                                cmd.Parameters.AddWithValue("@hash", overlayHash);
                                 cmd.ExecuteNonQuery();
                             }
 
@@ -3374,7 +4286,7 @@ Message: {7}",
                                         // Initialize the schema entry for the table if it doesn't exist
                                         if (tableName != null && !schema.ContainsKey(tableName))
                                         {
-                                            schema[tableName] = new ();
+                                            schema[tableName] = new();
                                         }
 
                                         if (tableName != null)
@@ -3398,7 +4310,7 @@ Message: {7}",
                                     // Initialize the schema entry for the table if it doesn't exist
                                     if (tableName != null && !schema.ContainsKey(tableName))
                                     {
-                                        schema[tableName] = new ();
+                                        schema[tableName] = new();
                                     }
 
                                     if (tableName != null)
@@ -3424,7 +4336,7 @@ Message: {7}",
                                     // Initialize the schema entry for the table if it doesn't exist
                                     if (tableName != null && !schema.ContainsKey(tableName))
                                     {
-                                        schema[tableName] = new ();
+                                        schema[tableName] = new();
                                     }
 
                                     if (tableName != null)
@@ -4901,12 +5813,14 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
                 sql = @"CREATE TABLE IF NOT EXISTS QuestAttempts(
                     QuestAttemptsID INTEGER PRIMARY KEY AUTOINCREMENT,
-                    QuestID INTEGER NOT NULL,
-                    WeaponTypeID INTEGER NOT NULL,
-                    ActualOverlayMode TEXT NOT NULL,
-                    Attempts INTEGER NOT NULL,
+                    QuestID INTEGER NOT NULL CHECK (QuestID >= 0) DEFAULT 0, 
+                    WeaponTypeID INTEGER NOT NULL DEFAULT 0,
+                    ActualOverlayMode TEXT NOT NULL DEFAULT 'Standard',
+                    Attempts INTEGER NOT NULL DEFAULT 1,
+                    PartySize INTEGER NOT NULL DEFAULT 1,
+                    RunBuffs INTEGER NOT NULL DEFAULT 0,
                     FOREIGN KEY(WeaponTypeID) REFERENCES WeaponType(WeaponTypeID),
-                    UNIQUE (QuestID, WeaponTypeID, ActualOverlayMode)
+                    UNIQUE (QuestID, WeaponTypeID, ActualOverlayMode, PartySize, RunBuffs)
                     )
                     ";
                 using (var cmd = new SQLiteCommand(sql, conn))
@@ -4916,9 +5830,13 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
                 sql = @"CREATE TABLE IF NOT EXISTS PersonalBests(
                     PersonalBestsID INTEGER PRIMARY KEY AUTOINCREMENT,
-                    RunID INTEGER NOT NULL,
-                    Attempts INTEGER NOT NULL,
-                    FOREIGN KEY(RunID) REFERENCES Quests(RunID))";
+                    RunID INTEGER NOT NULL DEFAULT 0,
+                    Attempts INTEGER NOT NULL DEFAULT 1,
+                    PartySize INTEGER NOT NULL DEFAULT 1,
+                    RunBuffs INTEGER NOT NULL DEFAULT 0,
+                    FOREIGN KEY(RunID) REFERENCES Quests(RunID)
+                    )
+                    ";
                 using (var cmd = new SQLiteCommand(sql, conn))
                 {
                     cmd.ExecuteNonQuery();
@@ -4984,14 +5902,15 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
                 sql = @"CREATE TABLE IF NOT EXISTS PersonalBestAttempts(
                     PersonalBestAttemptsID INTEGER PRIMARY KEY AUTOINCREMENT,
-                    QuestID INTEGER NOT NULL,
-                    WeaponTypeID INTEGER NOT NULL,
-                    ActualOverlayMode TEXT NOT NULL,
-                    Attempts INTEGER NOT NULL,
+                    QuestID INTEGER NOT NULL CHECK (QuestID >= 0) DEFAULT 0, 
+                    WeaponTypeID INTEGER NOT NULL DEFAULT 0,
+                    ActualOverlayMode TEXT NOT NULL DEFAULT 'Standard',
+                    Attempts INTEGER NOT NULL DEFAULT 0,
+                    PartySize INTEGER NOT NULL DEFAULT 1,
+                    RunBuffs INTEGER NOT NULL DEFAULT 0,
                     FOREIGN KEY(WeaponTypeID) REFERENCES WeaponType(WeaponTypeID),
-                    UNIQUE (QuestID, WeaponTypeID, ActualOverlayMode)
-                    )
-                    ";
+                    UNIQUE (QuestID, WeaponTypeID, ActualOverlayMode, PartySize, RunBuffs)
+                    )";
                 using (var cmd = new SQLiteCommand(sql, conn))
                 {
                     cmd.ExecuteNonQuery();
@@ -5168,6 +6087,143 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                 sql = @"CREATE TABLE IF NOT EXISTS QuestsToggleMode(
                 QuestsToggleModeID INTEGER PRIMARY KEY AUTOINCREMENT,
                 QuestToggleMode INTEGER NOT NULL DEFAULT 0,
+                RunID INTEGER NOT NULL,
+                FOREIGN KEY(RunID) REFERENCES Quests(RunID)
+                )";
+                using (var cmd = new SQLiteCommand(sql, conn))
+                {
+                    cmd.ExecuteNonQuery();
+                }
+
+                sql = @"CREATE TABLE IF NOT EXISTS QuestsCourse(
+                QuestsCourseID INTEGER PRIMARY KEY AUTOINCREMENT,
+                Rights INTEGER NOT NULL DEFAULT 0,
+                RunID INTEGER NOT NULL,
+                FOREIGN KEY(RunID) REFERENCES Quests(RunID)
+                )";
+                using (var cmd = new SQLiteCommand(sql, conn))
+                {
+                    cmd.ExecuteNonQuery();
+                }
+
+                sql = @"CREATE TABLE IF NOT EXISTS QuestsOverlayHash(
+                QuestsOverlayHashID INTEGER PRIMARY KEY AUTOINCREMENT,
+                OverlayHash TEXT NOT NULL DEFAULT '',
+                RunID INTEGER NOT NULL,
+                FOREIGN KEY(RunID) REFERENCES Quests(RunID)
+                )";
+                using (var cmd = new SQLiteCommand(sql, conn))
+                {
+                    cmd.ExecuteNonQuery();
+                }
+
+                sql = @"CREATE TABLE IF NOT EXISTS QuestsActiveFeature(
+                QuestsActiveFeatureID INTEGER PRIMARY KEY AUTOINCREMENT,
+                ActiveFeature INTEGER NOT NULL DEFAULT 0,
+                RunID INTEGER NOT NULL,
+                FOREIGN KEY(RunID) REFERENCES Quests(RunID)
+                )";
+                using (var cmd = new SQLiteCommand(sql, conn))
+                {
+                    cmd.ExecuteNonQuery();
+                }
+
+                sql = @"CREATE TABLE IF NOT EXISTS QuestsGuildPoogie(
+                QuestsGuildPoogieID INTEGER PRIMARY KEY AUTOINCREMENT,
+                GuildPoogie1Skill INTEGER NOT NULL DEFAULT 0,
+                GuildPoogie2Skill INTEGER NOT NULL DEFAULT 0,
+                GuildPoogie3Skill INTEGER NOT NULL DEFAULT 0,
+                RunID INTEGER NOT NULL,
+                FOREIGN KEY(RunID) REFERENCES Quests(RunID)
+                )";
+                using (var cmd = new SQLiteCommand(sql, conn))
+                {
+                    cmd.ExecuteNonQuery();
+                }
+
+                sql = @"CREATE TABLE IF NOT EXISTS QuestsHalk(
+                QuestsHalkID INTEGER PRIMARY KEY AUTOINCREMENT,
+                HalkOn INTEGER NOT NULL DEFAULT 0,
+                HalkPotEffectOn INTEGER NOT NULL DEFAULT 0,
+                HalkFullness INTEGER NOT NULL DEFAULT 0,
+                HalkLevel INTEGER NOT NULL DEFAULT 0,
+                HalkIntimacy INTEGER NOT NULL DEFAULT 0,
+                HalkHealth INTEGER NOT NULL DEFAULT 0,
+                HalkAttack INTEGER NOT NULL DEFAULT 0,
+                HalkDefense INTEGER NOT NULL DEFAULT 0,
+                HalkIntellect INTEGER NOT NULL DEFAULT 0,
+                HalkSkill1 INTEGER NOT NULL DEFAULT 0,
+                HalkSkill2 INTEGER NOT NULL DEFAULT 0,
+                HalkSkill3 INTEGER NOT NULL DEFAULT 0,
+                HalkElementNone INTEGER NOT NULL DEFAULT 0,
+                HalkFire INTEGER NOT NULL DEFAULT 0,
+                HalkThunder INTEGER NOT NULL DEFAULT 0,
+                HalkWater INTEGER NOT NULL DEFAULT 0,
+                HalkIce INTEGER NOT NULL DEFAULT 0,
+                HalkDragon INTEGER NOT NULL DEFAULT 0,
+                HalkSleep INTEGER NOT NULL DEFAULT 0,
+                HalkParalysis INTEGER NOT NULL DEFAULT 0,
+                HalkPoison INTEGER NOT NULL DEFAULT 0,
+                RunID INTEGER NOT NULL,
+                FOREIGN KEY(RunID) REFERENCES Quests(RunID)
+                )";
+                using (var cmd = new SQLiteCommand(sql, conn))
+                {
+                    cmd.ExecuteNonQuery();
+                }
+
+                sql = @"CREATE TABLE IF NOT EXISTS QuestsDiva(
+                QuestsDivaID INTEGER PRIMARY KEY AUTOINCREMENT,
+                DivaSongBuffOn INTEGER NOT NULL DEFAULT 0,
+                DivaPrayerGemRedSkill INTEGER NOT NULL DEFAULT 0,
+                DivaPrayerGemRedLevel INTEGER NOT NULL DEFAULT 0,
+                DivaPrayerGemYellowSkill INTEGER NOT NULL DEFAULT 0,
+                DivaPrayerGemYellowLevel INTEGER NOT NULL DEFAULT 0,
+                DivaPrayerGemGreenSkill INTEGER NOT NULL DEFAULT 0,
+                DivaPrayerGemGreenLevel INTEGER NOT NULL DEFAULT 0,
+                DivaPrayerGemBlueSkill INTEGER NOT NULL DEFAULT 0,
+                DivaPrayerGemBlueLevel INTEGER NOT NULL DEFAULT 0,
+                RunID INTEGER NOT NULL,
+                FOREIGN KEY(RunID) REFERENCES Quests(RunID)
+                )";
+                using (var cmd = new SQLiteCommand(sql, conn))
+                {
+                    cmd.ExecuteNonQuery();
+                }
+
+                // TODO extra tables
+                sql = @"CREATE TABLE IF NOT EXISTS QuestsRunBuffs(
+                QuestsRunBuffsID INTEGER PRIMARY KEY AUTOINCREMENT,
+                RunBuffs INTEGER NOT NULL DEFAULT 0,
+                RunBuffsTag TEXT NOT NULL DEFAULT '',
+                RunID INTEGER NOT NULL,
+                FOREIGN KEY(RunID) REFERENCES Quests(RunID)
+                )";
+                using (var cmd = new SQLiteCommand(sql, conn))
+                {
+                    cmd.ExecuteNonQuery();
+                }
+
+                sql = @"CREATE TABLE IF NOT EXISTS QuestsQuestVariant(
+                QuestsQuestVariantID INTEGER PRIMARY KEY AUTOINCREMENT,
+                QuestVariant1 INTEGER NOT NULL DEFAULT 0,
+                QuestVariant2 INTEGER NOT NULL DEFAULT 0,
+                QuestVariant3 INTEGER NOT NULL DEFAULT 0,
+                QuestVariant4 INTEGER NOT NULL DEFAULT 0,
+                RunID INTEGER NOT NULL,
+                FOREIGN KEY(RunID) REFERENCES Quests(RunID)
+                )";
+                using (var cmd = new SQLiteCommand(sql, conn))
+                {
+                    cmd.ExecuteNonQuery();
+                }
+
+                sql = @"CREATE TABLE IF NOT EXISTS QuestsGamePatch(
+                QuestsGamePatchID INTEGER PRIMARY KEY AUTOINCREMENT,
+                mhfdatInfo TEXT NOT NULL DEFAULT '',
+                mhfemdInfo TEXT NOT NULL DEFAULT '',
+                mhfodllInfo TEXT NOT NULL DEFAULT '',
+                mhfohddllInfo TEXT NOT NULL DEFAULT '',
                 RunID INTEGER NOT NULL,
                 FOREIGN KEY(RunID) REFERENCES Quests(RunID)
                 )";
@@ -5643,7 +6699,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
             {
                 try
                 {
-                    using (var cmd = new SQLiteCommand("SELECT YoutubeID FROM Quests WHERE RunID = @runID", conn))
+                    using (var cmd = new SQLiteCommand("SELECT YouTubeID FROM Quests WHERE RunID = @runID", conn))
                     {
                         cmd.Parameters.AddWithValue("@runID", runID);
 
@@ -5651,7 +6707,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                         {
                             if (reader.Read())
                             {
-                                youtubeLink = (string)reader["YoutubeID"];
+                                youtubeLink = (string)reader["YouTubeID"];
                             }
                             else
                             {
@@ -5697,7 +6753,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                         var count = (long)cmd.ExecuteScalar();
                         if (count > 0)
                         {
-                            using (var cmd2 = new SQLiteCommand("UPDATE Quests SET YoutubeID = @youtubeLink WHERE RunID = @runID", conn))
+                            using (var cmd2 = new SQLiteCommand("UPDATE Quests SET YouTubeID = @youtubeLink WHERE RunID = @runID", conn))
                             {
                                 cmd2.Parameters.AddWithValue("@youtubeLink", youtubeLink);
                                 cmd2.Parameters.AddWithValue("@runID", runID);
@@ -5725,7 +6781,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
         return success;
     }
 
-    public long GetPersonalBestElapsedTimeValue(long questID, int weaponTypeID, string category)
+    public long GetPersonalBestElapsedTimeValue(long questID, int weaponTypeID, string category, uint runBuffs)
     {
         if (string.IsNullOrEmpty(this.dataSource))
         {
@@ -5787,7 +6843,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
         return personalBest;
     }
 
-    public string GetPersonalBest(long questID, int weaponTypeID, string category, string timerMode, DataLoader dataLoader)
+    public string GetPersonalBest(long questID, int weaponTypeID, string category, string timerMode, DataLoader dataLoader, long partySize, long runBuffs)
     {
         var personalBest = Messages.TimerNotLoaded;
         if (string.IsNullOrEmpty(this.dataSource))
@@ -5808,17 +6864,20 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                                 TimeLeft, 
                                 FinalTimeValue,
                                 FinalTimeDisplay,
-                                ActualOverlayMode,
+                                q.ActualOverlayMode,
                                 pg.WeaponTypeID
                             FROM 
                                 Quests q
                             JOIN
                                 PlayerGear pg ON q.RunID = pg.RunID
+                            JOIN
+                                QuestsRunBuffs qrb ON q.RunID = qrb.RunID
                             WHERE 
                                 QuestID = @questID
                                 AND pg.WeaponTypeID = @weaponTypeID
-                                AND ActualOverlayMode = @category
-                                AND PartySize = 1
+                                AND q.ActualOverlayMode = @category
+                                AND q.PartySize = @partySize
+                                AND qrb.RunBuffs = @runBuffs
                             ORDER BY 
                                 FinalTimeValue ASC
                             LIMIT 1", conn))
@@ -5826,6 +6885,8 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                         cmd.Parameters.AddWithValue("@questID", questID);
                         cmd.Parameters.AddWithValue("@weaponTypeID", weaponTypeID);
                         cmd.Parameters.AddWithValue("@category", category);
+                        cmd.Parameters.AddWithValue("@partySize", partySize);
+                        cmd.Parameters.AddWithValue("@runBuffs", runBuffs);
 
                         var reader = cmd.ExecuteReader();
                         if (reader.Read())
@@ -5860,7 +6921,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
         return personalBest;
     }
 
-    public async Task<string> GetPersonalBestAsync(long questID, int weaponTypeID, string category, string timerMode, DataLoader dataLoader)
+    public async Task<string> GetPersonalBestAsync(long questID, int weaponTypeID, string category, string timerMode, DataLoader dataLoader, uint runBuffs)
     {
         var personalBest = Messages.TimerNotLoaded;
         if (string.IsNullOrEmpty(this.dataSource))
@@ -5951,9 +7012,9 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
         return personalBest;
     }
 
-    public Dictionary<DateTime, long> GetPersonalBestsByDate(long questID, int weaponTypeID, string category)
+    public Dictionary<DateTime, long> GetPersonalBestsByDate(long questID, int weaponTypeID, string category, uint runBuffs)
     {
-        Dictionary<DateTime, long> personalBests = new ();
+        Dictionary<DateTime, long> personalBests = new();
         if (string.IsNullOrEmpty(this.dataSource))
         {
             Logger.Warn(CultureInfo.InvariantCulture, "Cannot get personal bests by date. dataSource: {0}", this.dataSource);
@@ -5973,16 +7034,20 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                         q.ActualOverlayMode,
                         pg.WeaponTypeID,
                         q.CreatedAt,
-                        q.RunID
+                        q.RunID,
+                        qrb.RunBuffs
                     FROM 
                         Quests q
                     JOIN
                         PlayerGear pg ON q.RunID = pg.RunID
+                    JOIN
+                        QuestsRunBuffs qrb ON q.RunID = qrb.RunID
                     WHERE 
                         q.QuestID = @questID
                         AND pg.WeaponTypeID = @weaponTypeID
                         AND q.ActualOverlayMode = @category
                         AND q.PartySize = 1
+                        AND qrb.RunBuffs = @runBuffs
                     ORDER BY 
                         q.CreatedAt ASC",
                         conn))
@@ -5990,9 +7055,10 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                         cmd.Parameters.AddWithValue("@questID", questID);
                         cmd.Parameters.AddWithValue("@weaponTypeID", weaponTypeID);
                         cmd.Parameters.AddWithValue("@category", category);
+                        cmd.Parameters.AddWithValue("@runBuffs", runBuffs);
 
                         var reader = cmd.ExecuteReader();
-                        Dictionary<DateTime, long> personalBestTimes = new ();
+                        Dictionary<DateTime, long> personalBestTimes = new();
 
                         while (reader.Read())
                         {
@@ -6052,9 +7118,9 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
     }
 
     // Get personal best times by attempts
-    public Dictionary<long, long> GetPersonalBestsByAttempts(long questID, int weaponTypeID, string category)
+    public Dictionary<long, long> GetPersonalBestsByAttempts(long questID, int weaponTypeID, string category, uint runBuffs)
     {
-        Dictionary<long, long> personalBests = new ();
+        Dictionary<long, long> personalBests = new();
         if (string.IsNullOrEmpty(this.dataSource))
         {
             Logger.Warn(CultureInfo.InvariantCulture, "Cannot get personal bests by attempts. dataSource: {0}", this.dataSource);
@@ -6071,7 +7137,8 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                     using (var cmd = new SQLiteCommand(
                         @"SELECT 
                                 pb.Attempts,
-                                q.FinalTimeValue
+                                q.FinalTimeValue,
+                                pb.RunBuffs
                             FROM 
                                 PersonalBests pb
                             JOIN
@@ -6082,6 +7149,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                                 q.QuestID = @questID
                                 AND pg.WeaponTypeID = @weaponTypeID
                                 AND q.ActualOverlayMode = @category
+                                AND pb.RunBuffs = @runBuffs
                                 AND q.PartySize = 1
                             ORDER BY 
                                 pb.Attempts ASC",
@@ -6090,6 +7158,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                         cmd.Parameters.AddWithValue("@questID", questID);
                         cmd.Parameters.AddWithValue("@weaponTypeID", weaponTypeID);
                         cmd.Parameters.AddWithValue("@category", category);
+                        cmd.Parameters.AddWithValue("@runBuffs", runBuffs);
 
                         var reader = cmd.ExecuteReader();
 
@@ -6139,7 +7208,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
         return personalBests;
     }
 
-    public int UpsertQuestAttempts(long questID, int weaponTypeID, string category)
+    public int UpsertQuestAttempts(long questID, int weaponTypeID, string category, long partySize, long runBuffs)
     {
         var attempts = 0;
         if (string.IsNullOrEmpty(this.dataSource))
@@ -6163,11 +7232,11 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                         {
                             command.CommandText =
                                 @"INSERT INTO 
-                            QuestAttempts (QuestID, WeaponTypeID, ActualOverlayMode, Attempts)
+                            QuestAttempts (QuestID, WeaponTypeID, ActualOverlayMode, Attempts, PartySize, RunBuffs)
                         VALUES 
-                            (@QuestID, @WeaponTypeID, @ActualOverlayMode, 1)
+                            (@QuestID, @WeaponTypeID, @ActualOverlayMode, 1, @PartySize, @RunBuffs)
                         ON CONFLICT 
-                            (QuestID, WeaponTypeID, ActualOverlayMode) 
+                            (QuestID, WeaponTypeID, ActualOverlayMode, PartySize, RunBuffs) 
                         DO UPDATE
                         SET 
                             Attempts = Attempts + 1
@@ -6177,6 +7246,8 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                             command.Parameters.AddWithValue("@QuestID", questID);
                             command.Parameters.AddWithValue("@WeaponTypeID", weaponTypeID);
                             command.Parameters.AddWithValue("@ActualOverlayMode", category);
+                            command.Parameters.AddWithValue("@PartySize", partySize);
+                            command.Parameters.AddWithValue("@RunBuffs", runBuffs);
 
                             attempts = Convert.ToInt32(command.ExecuteScalar(), CultureInfo.InvariantCulture);
                         }
@@ -6207,7 +7278,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
         return attempts;
     }
 
-    public int UpsertPersonalBestAttempts(long questID, int weaponTypeID, string category)
+    public int UpsertPersonalBestAttempts(long questID, int weaponTypeID, string category, long partySize, long runBuffs)
     {
         var attempts = 0;
         if (string.IsNullOrEmpty(this.dataSource))
@@ -6231,11 +7302,11 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                         {
                             command.CommandText =
                                 @"INSERT INTO 
-                            PersonalBestAttempts (QuestID, WeaponTypeID, ActualOverlayMode, Attempts)
+                            PersonalBestAttempts (QuestID, WeaponTypeID, ActualOverlayMode, Attempts, PartySize, RunBuffs)
                         VALUES 
-                            (@QuestID, @WeaponTypeID, @ActualOverlayMode, 1)
+                            (@QuestID, @WeaponTypeID, @ActualOverlayMode, 1, @PartySize, @RunBuffs)
                         ON CONFLICT 
-                            (QuestID, WeaponTypeID, ActualOverlayMode) 
+                            (QuestID, WeaponTypeID, ActualOverlayMode, PartySize, RunBuffs) 
                         DO UPDATE
                         SET 
                             Attempts = Attempts + 1
@@ -6245,6 +7316,8 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                             command.Parameters.AddWithValue("@QuestID", questID);
                             command.Parameters.AddWithValue("@WeaponTypeID", weaponTypeID);
                             command.Parameters.AddWithValue("@ActualOverlayMode", category);
+                            command.Parameters.AddWithValue("@PartySize", partySize);
+                            command.Parameters.AddWithValue("@RunBuffs", runBuffs);
 
                             attempts = Convert.ToInt32(command.ExecuteScalar(), CultureInfo.InvariantCulture);
                         }
@@ -6275,7 +7348,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
         return attempts;
     }
 
-    public async Task<int> UpsertQuestAttemptsAsync(long questID, int weaponTypeID, string category)
+    public async Task<int> UpsertQuestAttemptsAsync(long questID, int weaponTypeID, string category, uint runBuffs)
     {
         var attempts = 0;
         if (string.IsNullOrEmpty(this.dataSource))
@@ -6343,7 +7416,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
         return attempts;
     }
 
-    public async Task<int> UpsertPersonalBestAttemptsAsync(long questID, int weaponTypeID, string category)
+    public async Task<int> UpsertPersonalBestAttemptsAsync(long questID, int weaponTypeID, string category, uint runBuffs)
     {
         var attempts = 0;
         if (string.IsNullOrEmpty(this.dataSource))
@@ -6412,7 +7485,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
     }
 
     // TODO test
-    public long GetQuestAttempts(long questID, int weaponTypeID, string category)
+    public long GetQuestAttempts(long questID, int weaponTypeID, string category, uint runBuffs)
     {
         long attempts = 0;
         if (string.IsNullOrEmpty(this.dataSource))
@@ -6437,11 +7510,13 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                         WHERE 
                             QuestID = @questID
                             AND WeaponTypeID = @weaponTypeID
-                            AND ActualOverlayMode = @category", conn))
+                            AND ActualOverlayMode = @category
+                            AND RunBuffs = @runBuffs", conn))
                     {
                         cmd.Parameters.Add("@questID", DbType.Int64).Value = questID;
                         cmd.Parameters.Add("@weaponTypeID", DbType.Int32).Value = weaponTypeID;
                         cmd.Parameters.Add("@category", DbType.String).Value = category;
+                        cmd.Parameters.Add("@runBuffs", DbType.Int32).Value = runBuffs;
 
                         var result = cmd.ExecuteScalar();
                         if (result != null)
@@ -6617,7 +7692,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
     public Quest GetQuest(long runID)
     {
-        Quest quest = new ();
+        Quest quest = new();
         if (string.IsNullOrEmpty(this.dataSource))
         {
             Logger.Warn(CultureInfo.InvariantCulture, "Cannot get quest. dataSource: {0}", this.dataSource);
@@ -6697,9 +7772,531 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
         return quest;
     }
 
+    public QuestsDiva GetDiva(long runID)
+    {
+        QuestsDiva questsDiva = new();
+        if (string.IsNullOrEmpty(this.dataSource))
+        {
+            Logger.Warn(CultureInfo.InvariantCulture, "Cannot get diva. dataSource: {0}", this.dataSource);
+            return questsDiva;
+        }
+
+        // Use a SQL query to retrieve the Quest for the specific RunID from the database
+        using (var conn = new SQLiteConnection(this.dataSource))
+        {
+            conn.Open();
+            using (var transaction = conn.BeginTransaction())
+            {
+                try
+                {
+                    using (var cmd = new SQLiteCommand("SELECT * FROM QuestsDiva WHERE RunID = @runID", conn))
+                    {
+                        cmd.Parameters.AddWithValue("@runID", runID);
+
+                        using (var reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                questsDiva = new QuestsDiva
+                                {
+                                    QuestsDivaID = long.Parse(reader["QuestsDivaID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    DivaSongBuffOn = long.Parse(reader["DivaSongBuffOn"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    DivaPrayerGemRedSkill = long.Parse(reader["DivaPrayerGemRedSkill"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    DivaPrayerGemRedLevel = long.Parse(reader["DivaPrayerGemRedLevel"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    DivaPrayerGemYellowSkill = long.Parse(reader["DivaPrayerGemYellowSkill"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    DivaPrayerGemYellowLevel = long.Parse(reader["DivaPrayerGemYellowLevel"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    DivaPrayerGemGreenSkill = long.Parse(reader["DivaPrayerGemGreenSkill"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    DivaPrayerGemGreenLevel = long.Parse(reader["DivaPrayerGemGreenLevel"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    DivaPrayerGemBlueSkill = long.Parse(reader["DivaPrayerGemBlueSkill"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    DivaPrayerGemBlueLevel = long.Parse(reader["DivaPrayerGemBlueLevel"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    RunID = long.Parse(reader["RunID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                };
+                            }
+                        }
+                    }
+
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    HandleError(transaction, ex);
+                }
+            }
+        }
+
+        return questsDiva;
+    }
+
+    public QuestsActiveFeature GetActiveFeature(long runID)
+    {
+        QuestsActiveFeature data = new();
+        if (string.IsNullOrEmpty(this.dataSource))
+        {
+            Logger.Warn(CultureInfo.InvariantCulture, "Cannot get active feature. dataSource: {0}", this.dataSource);
+            return data;
+        }
+
+        // Use a SQL query to retrieve the Quest for the specific RunID from the database
+        using (var conn = new SQLiteConnection(this.dataSource))
+        {
+            conn.Open();
+            using (var transaction = conn.BeginTransaction())
+            {
+                try
+                {
+                    using (var cmd = new SQLiteCommand("SELECT * FROM QuestsActiveFeature WHERE RunID = @runID", conn))
+                    {
+                        cmd.Parameters.AddWithValue("@runID", runID);
+
+                        using (var reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                data = new QuestsActiveFeature
+                                {
+                                    QuestsActiveFeatureID = long.Parse(reader["QuestsActiveFeatureID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    ActiveFeature = long.Parse(reader["ActiveFeature"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    RunID = long.Parse(reader["RunID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                };
+                            }
+                        }
+                    }
+
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    HandleError(transaction, ex);
+                }
+            }
+        }
+
+        return data;
+    }
+
+    public QuestsCourse GetCourses(long runID)
+    {
+        QuestsCourse data = new();
+        if (string.IsNullOrEmpty(this.dataSource))
+        {
+            Logger.Warn(CultureInfo.InvariantCulture, "Cannot get courses. dataSource: {0}", this.dataSource);
+            return data;
+        }
+
+        // Use a SQL query to retrieve the Quest for the specific RunID from the database
+        using (var conn = new SQLiteConnection(this.dataSource))
+        {
+            conn.Open();
+            using (var transaction = conn.BeginTransaction())
+            {
+                try
+                {
+                    using (var cmd = new SQLiteCommand("SELECT * FROM QuestsCourse WHERE RunID = @runID", conn))
+                    {
+                        cmd.Parameters.AddWithValue("@runID", runID);
+
+                        using (var reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                data = new QuestsCourse
+                                {
+                                    QuestsCourseID = long.Parse(reader["QuestsCourseID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    Rights = long.Parse(reader["Rights"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    RunID = long.Parse(reader["RunID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                };
+                            }
+                        }
+                    }
+
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    HandleError(transaction, ex);
+                }
+            }
+        }
+
+        return data;
+    }
+
+    public QuestsGuildPoogie GetGuildPoogie(long runID)
+    {
+        QuestsGuildPoogie data = new();
+        if (string.IsNullOrEmpty(this.dataSource))
+        {
+            Logger.Warn(CultureInfo.InvariantCulture, "Cannot get guild poogie. dataSource: {0}", this.dataSource);
+            return data;
+        }
+
+        // Use a SQL query to retrieve the Quest for the specific RunID from the database
+        using (var conn = new SQLiteConnection(this.dataSource))
+        {
+            conn.Open();
+            using (var transaction = conn.BeginTransaction())
+            {
+                try
+                {
+                    using (var cmd = new SQLiteCommand("SELECT * FROM QuestsGuildPoogie WHERE RunID = @runID", conn))
+                    {
+                        cmd.Parameters.AddWithValue("@runID", runID);
+
+                        using (var reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                data = new QuestsGuildPoogie
+                                {
+                                    QuestsGuildPoogieID = long.Parse(reader["QuestsGuildPoogieID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    GuildPoogie1Skill = long.Parse(reader["GuildPoogie1Skill"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    GuildPoogie2Skill = long.Parse(reader["GuildPoogie2Skill"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    GuildPoogie3Skill = long.Parse(reader["GuildPoogie3Skill"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    RunID = long.Parse(reader["RunID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                };
+                            }
+                        }
+                    }
+
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    HandleError(transaction, ex);
+                }
+            }
+        }
+
+        return data;
+    }
+
+    public QuestsHalk GetHalk(long runID)
+    {
+        QuestsHalk data = new();
+        if (string.IsNullOrEmpty(this.dataSource))
+        {
+            Logger.Warn(CultureInfo.InvariantCulture, "Cannot get halk. dataSource: {0}", this.dataSource);
+            return data;
+        }
+
+        // Use a SQL query to retrieve the Quest for the specific RunID from the database
+        using (var conn = new SQLiteConnection(this.dataSource))
+        {
+            conn.Open();
+            using (var transaction = conn.BeginTransaction())
+            {
+                try
+                {
+                    using (var cmd = new SQLiteCommand("SELECT * FROM QuestsHalk WHERE RunID = @runID", conn))
+                    {
+                        cmd.Parameters.AddWithValue("@runID", runID);
+
+                        using (var reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                data = new QuestsHalk
+                                {
+                                    QuestsHalkID = long.Parse(reader["QuestsHalkID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    HalkOn = long.Parse(reader["HalkOn"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    HalkPotEffectOn = long.Parse(reader["HalkPotEffectOn"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    HalkFullness = long.Parse(reader["HalkFullness"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    HalkLevel = long.Parse(reader["HalkLevel"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    HalkIntimacy = long.Parse(reader["HalkIntimacy"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    HalkHealth = long.Parse(reader["HalkHealth"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    HalkAttack = long.Parse(reader["HalkAttack"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    HalkDefense = long.Parse(reader["HalkDefense"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    HalkIntellect = long.Parse(reader["HalkIntellect"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    HalkSkill1 = long.Parse(reader["HalkSkill1"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    HalkSkill2 = long.Parse(reader["HalkSkill2"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    HalkSkill3 = long.Parse(reader["HalkSkill3"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    HalkElementNone = long.Parse(reader["HalkElementNone"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    HalkFire = long.Parse(reader["HalkFire"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    HalkThunder = long.Parse(reader["HalkThunder"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    HalkWater = long.Parse(reader["HalkWater"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    HalkIce = long.Parse(reader["HalkIce"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    HalkDragon = long.Parse(reader["HalkDragon"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    HalkSleep = long.Parse(reader["HalkSleep"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    HalkParalysis = long.Parse(reader["HalkParalysis"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    HalkPoison = long.Parse(reader["HalkPoison"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    RunID = long.Parse(reader["RunID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                };
+                            }
+                        }
+                    }
+
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    HandleError(transaction, ex);
+                }
+            }
+        }
+
+        return data;
+    }
+
+    public QuestsToggleMode GetQuestToggleMode(long runID)
+    {
+        QuestsToggleMode data = new();
+        if (string.IsNullOrEmpty(this.dataSource))
+        {
+            Logger.Warn(CultureInfo.InvariantCulture, "Cannot get quest toggle mode. dataSource: {0}", this.dataSource);
+            return data;
+        }
+
+        // Use a SQL query to retrieve the Quest for the specific RunID from the database
+        using (var conn = new SQLiteConnection(this.dataSource))
+        {
+            conn.Open();
+            using (var transaction = conn.BeginTransaction())
+            {
+                try
+                {
+                    using (var cmd = new SQLiteCommand("SELECT * FROM QuestsToggleMode WHERE RunID = @runID", conn))
+                    {
+                        cmd.Parameters.AddWithValue("@runID", runID);
+
+                        using (var reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                data = new QuestsToggleMode
+                                {
+                                    QuestsToggleModeID = long.Parse(reader["QuestsToggleModeID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    QuestToggleMode = long.Parse(reader["QuestToggleMode"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    RunID = long.Parse(reader["RunID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                };
+                            }
+                        }
+                    }
+
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    HandleError(transaction, ex);
+                }
+            }
+        }
+
+        return data;
+    }
+
+    public QuestsOverlayHash GetOverlayHash(long runID)
+    {
+        QuestsOverlayHash data = new();
+        if (string.IsNullOrEmpty(this.dataSource))
+        {
+            Logger.Warn(CultureInfo.InvariantCulture, "Cannot get overlay hash. dataSource: {0}", this.dataSource);
+            return data;
+        }
+
+        // Use a SQL query to retrieve the Quest for the specific RunID from the database
+        using (var conn = new SQLiteConnection(this.dataSource))
+        {
+            conn.Open();
+            using (var transaction = conn.BeginTransaction())
+            {
+                try
+                {
+                    using (var cmd = new SQLiteCommand("SELECT * FROM QuestsOverlayHash WHERE RunID = @runID", conn))
+                    {
+                        cmd.Parameters.AddWithValue("@runID", runID);
+
+                        using (var reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                data = new QuestsOverlayHash
+                                {
+                                    QuestsOverlayHashID = long.Parse(reader["QuestsOverlayHashID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    OverlayHash = reader["OverlayHash"]?.ToString() ?? "0",
+                                    RunID = long.Parse(reader["RunID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                };
+                            }
+                        }
+                    }
+
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    HandleError(transaction, ex);
+                }
+            }
+        }
+
+        return data;
+    }
+
+    public QuestsGamePatch GetQuestsGamePatch(long runID)
+    {
+        QuestsGamePatch data = new();
+        if (string.IsNullOrEmpty(this.dataSource))
+        {
+            Logger.Warn(CultureInfo.InvariantCulture, "Cannot get game patch. dataSource: {0}", this.dataSource);
+            return data;
+        }
+
+        // Use a SQL query to retrieve the Quest for the specific RunID from the database
+        using (var conn = new SQLiteConnection(this.dataSource))
+        {
+            conn.Open();
+            using (var transaction = conn.BeginTransaction())
+            {
+                try
+                {
+                    using (var cmd = new SQLiteCommand("SELECT * FROM QuestsGamePatch WHERE RunID = @runID", conn))
+                    {
+                        cmd.Parameters.AddWithValue("@runID", runID);
+
+                        using (var reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                data = new QuestsGamePatch
+                                {
+                                    QuestsGamePatchID = long.Parse(reader["QuestsGamePatchID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    mhfdatInfo = reader["mhfdatInfo"]?.ToString() ?? "Unknown",
+                                    mhfemdInfo = reader["mhfemdInfo"]?.ToString() ?? "Unknown",
+                                    mhfodllInfo = reader["mhfodllInfo"]?.ToString() ?? "Unknown",
+                                    mhfohddllInfo = reader["mhfohddllInfo"]?.ToString() ?? "Unknown",
+                                    RunID = long.Parse(reader["RunID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                };
+                            }
+                        }
+                    }
+
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    HandleError(transaction, ex);
+                }
+            }
+        }
+
+        return data;
+    }
+
+    public QuestRestriction GetQuestRestrictions(long runID)
+    {
+        QuestRestriction data = new();
+        if (string.IsNullOrEmpty(this.dataSource))
+        {
+            Logger.Warn(CultureInfo.InvariantCulture, "Cannot get quest restrictions. dataSource: {0}", this.dataSource);
+            return data;
+        }
+
+        // Use a SQL query to retrieve the Quest for the specific RunID from the database
+        using (var conn = new SQLiteConnection(this.dataSource))
+        {
+            conn.Open();
+            using (var transaction = conn.BeginTransaction())
+            {
+                try
+                {
+                    using (var cmd = new SQLiteCommand("SELECT * FROM QuestsQuestVariant WHERE RunID = @runID", conn))
+                    {
+                        cmd.Parameters.AddWithValue("@runID", runID);
+
+                        using (var reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                var questVariant2 = long.Parse(reader["QuestVariant2"]?.ToString() ?? "0", CultureInfo.InvariantCulture);
+                                var questVariant3 = long.Parse(reader["QuestVariant3"]?.ToString() ?? "0", CultureInfo.InvariantCulture);
+
+                                data = GetQuestRestrictions((QuestVariant2)questVariant2, (QuestVariant3)questVariant3);
+                            }
+                        }
+                    }
+
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    HandleError(transaction, ex);
+                }
+            }
+        }
+
+        return data;
+    }
+
+    private QuestRestriction GetQuestRestrictions(QuestVariant2 questVariant2, QuestVariant3 questVariant3)
+    {
+        QuestRestriction restrictions = new();
+
+        if (questVariant2.HasFlag(QuestVariant2.DisableHalkPoogieCuff))
+        {
+            restrictions.HalkPot = true;
+            restrictions.CourseAttack = true;
+        }
+
+        if (questVariant2.HasFlag(QuestVariant2.DisableHalkPoogieCuff))
+        {
+            restrictions.Halk = true;
+            restrictions.PoogieCuff = true;
+        }
+
+        if (questVariant2.HasFlag(QuestVariant2.DisableActiveFeature))
+        {
+            restrictions.ActiveFeature = true;
+        }
+
+        if (questVariant2.HasFlag(QuestVariant2.Level9999))
+        {
+            restrictions.SecretTechnique = true;
+            restrictions.Transcend = true;
+            restrictions.HalkPot = true;
+            restrictions.CourseAttack = true;
+            restrictions.DivaPrayerGem = true;
+            restrictions.TwinHiden = true;
+        }
+
+        if (questVariant2.HasFlag(QuestVariant2.Road))
+        {
+            restrictions.Rasta = true;
+            restrictions.Partner = true;
+            restrictions.Partnya = true;
+            restrictions.Halk = true;
+            restrictions.SoulRevival = true;
+            restrictions.HalkPot = true;
+            restrictions.DivaSkill = true;
+            restrictions.DivaPrayerGem = true;
+        }
+
+        if (questVariant3.HasFlag(QuestVariant3.DisableRewardBonus))
+        {
+            restrictions.QuestBonusReward = true;
+        }
+
+        if (questVariant3.HasFlag(QuestVariant3.NoSimpleMode))
+        {
+            restrictions.SimpleMode = true;
+        }
+
+        if (questVariant3.HasFlag(QuestVariant3.NoGPSkills))
+        {
+            restrictions.Transcend = true;
+            restrictions.GPSkill = true;
+            restrictions.DivaSkill = true;
+        }
+
+        if (questVariant3.HasFlag(QuestVariant3.DisabledSigil))
+        {
+            restrictions.Sigil = true;
+        }
+
+        return restrictions;
+    }
+
     private Quest GetLastQuest(SQLiteConnection conn)
     {
-        Quest quest = new ();
+        Quest quest = new();
         using (var transaction = conn.BeginTransaction())
         {
             try
@@ -6768,7 +8365,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
     private MezFes GetLastMezFes(SQLiteConnection conn)
     {
-        MezFes last = new ();
+        MezFes last = new();
         using (var transaction = conn.BeginTransaction())
         {
             try
@@ -6804,7 +8401,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
     private Bingo GetLastBingo(SQLiteConnection conn)
     {
-        Bingo last = new ();
+        Bingo last = new();
         using (var transaction = conn.BeginTransaction())
         {
             try
@@ -6935,7 +8532,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
     private ZenithGauntlet GetLastZenithGauntlet(SQLiteConnection conn)
     {
-        ZenithGauntlet last = new ();
+        ZenithGauntlet last = new();
         using (var transaction = conn.BeginTransaction())
         {
             try
@@ -6994,7 +8591,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
     private SolsticeGauntlet GetLastSolsticeGauntlet(SQLiteConnection conn)
     {
-        SolsticeGauntlet last = new ();
+        SolsticeGauntlet last = new();
         using (var transaction = conn.BeginTransaction())
         {
             try
@@ -7036,7 +8633,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
     private MusouGauntlet GetLastMusouGauntlet(SQLiteConnection conn)
     {
-        MusouGauntlet last = new ();
+        MusouGauntlet last = new();
         using (var transaction = conn.BeginTransaction())
         {
             try
@@ -7082,7 +8679,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
     private PersonalBestAttempts GetLastPersonalBestAttempt(SQLiteConnection conn)
     {
-        PersonalBestAttempts last = new ();
+        PersonalBestAttempts last = new();
         using (var transaction = conn.BeginTransaction())
         {
             try
@@ -7100,6 +8697,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                                 WeaponTypeID = long.Parse(reader["WeaponTypeID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
                                 ActualOverlayMode = reader["ActualOverlayMode"]?.ToString() ?? "0",
                                 Attempts = long.Parse(reader["Attempts"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                RunBuffs = long.Parse(reader["RunBuffs"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
                             };
                         }
                     }
@@ -7118,7 +8716,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
     private QuestAttempts GetLastQuestAttempt(SQLiteConnection conn)
     {
-        QuestAttempts last = new ();
+        QuestAttempts last = new();
         using (var transaction = conn.BeginTransaction())
         {
             try
@@ -7136,6 +8734,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                                 WeaponTypeID = long.Parse(reader["WeaponTypeID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
                                 ActualOverlayMode = reader["ActualOverlayMode"]?.ToString() ?? "0",
                                 Attempts = long.Parse(reader["Attempts"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                RunBuffs = long.Parse(reader["RunBuffs"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
                             };
                         }
                     }
@@ -7154,7 +8753,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
     private PlayerGear GetLastPlayerGear(SQLiteConnection conn)
     {
-        PlayerGear last = new ();
+        PlayerGear last = new();
         using (var transaction = conn.BeginTransaction())
         {
             try
@@ -7238,7 +8837,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
     private ActiveSkills GetLastActiveSkills(SQLiteConnection conn)
     {
-        ActiveSkills last = new ();
+        ActiveSkills last = new();
         using (var transaction = conn.BeginTransaction())
         {
             try
@@ -7334,7 +8933,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
     private StyleRankSkills GetLastStyleRankSkills(SQLiteConnection conn)
     {
-        StyleRankSkills last = new ();
+        StyleRankSkills last = new();
         using (var transaction = conn.BeginTransaction())
         {
             try
@@ -7371,7 +8970,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
     private GachaCardInventory GetLastGachaCard(SQLiteConnection conn)
     {
-        GachaCardInventory last = new ();
+        GachaCardInventory last = new();
         using (var transaction = conn.BeginTransaction())
         {
             try
@@ -7404,7 +9003,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
     private PlayerInventory GetLastPlayerInventory(SQLiteConnection conn)
     {
-        PlayerInventory last = new ();
+        PlayerInventory last = new();
         using (var transaction = conn.BeginTransaction())
         {
             try
@@ -7511,6 +9110,172 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
         return last;
     }
 
+    private QuestsActiveFeature GetLastQuestsActiveFeature(SQLiteConnection conn)
+    {
+        QuestsActiveFeature last = new();
+        using (var transaction = conn.BeginTransaction())
+        {
+            try
+            {
+                using (var cmd = new SQLiteCommand("SELECT * FROM QuestsActiveFeature ORDER BY QuestsActiveFeatureID DESC LIMIT 1", conn))
+                {
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            last = new QuestsActiveFeature
+                            {
+                                QuestsActiveFeatureID = long.Parse(reader["QuestsActiveFeatureID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                ActiveFeature = long.Parse(reader["ActiveFeature"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                RunID = long.Parse(reader["RunID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                            };
+                        }
+                    }
+                }
+
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                HandleError(transaction, ex);
+            }
+        }
+
+        return last;
+    }
+
+    private QuestsGuildPoogie GetLastQuestsGuildPoogie(SQLiteConnection conn)
+    {
+        QuestsGuildPoogie last = new();
+        using (var transaction = conn.BeginTransaction())
+        {
+            try
+            {
+                using (var cmd = new SQLiteCommand("SELECT * FROM QuestsGuildPoogie ORDER BY QuestsGuildPoogieID DESC LIMIT 1", conn))
+                {
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            last = new QuestsGuildPoogie
+                            {
+                                QuestsGuildPoogieID = long.Parse(reader["QuestsGuildPoogieID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                GuildPoogie1Skill = long.Parse(reader["GuildPoogie1Skill"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                GuildPoogie2Skill = long.Parse(reader["GuildPoogie2Skill"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                GuildPoogie3Skill = long.Parse(reader["GuildPoogie3Skill"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                RunID = long.Parse(reader["RunID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                            };
+                        }
+                    }
+                }
+
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                HandleError(transaction, ex);
+            }
+        }
+
+        return last;
+    }
+
+    private QuestsDiva GetLastQuestsDiva(SQLiteConnection conn)
+    {
+        QuestsDiva last = new();
+        using (var transaction = conn.BeginTransaction())
+        {
+            try
+            {
+                using (var cmd = new SQLiteCommand("SELECT * FROM QuestsDiva ORDER BY QuestsDivaID DESC LIMIT 1", conn))
+                {
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            last = new QuestsDiva
+                            {
+                                QuestsDivaID = long.Parse(reader["QuestsDivaID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                DivaSongBuffOn = long.Parse(reader["DivaSongBuffOn"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                DivaPrayerGemRedSkill = long.Parse(reader["DivaPrayerGemRedSkill"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                DivaPrayerGemRedLevel = long.Parse(reader["DivaPrayerGemRedLevel"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                DivaPrayerGemYellowSkill = long.Parse(reader["DivaPrayerGemYellowSkill"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                DivaPrayerGemYellowLevel = long.Parse(reader["DivaPrayerGemYellowLevel"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                DivaPrayerGemGreenSkill = long.Parse(reader["DivaPrayerGemGreenSkill"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                DivaPrayerGemGreenLevel = long.Parse(reader["DivaPrayerGemGreenLevel"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                DivaPrayerGemBlueSkill = long.Parse(reader["DivaPrayerGemBlueSkill"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                DivaPrayerGemBlueLevel = long.Parse(reader["DivaPrayerGemBlueLevel"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                RunID = long.Parse(reader["RunID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                            };
+                        }
+                    }
+                }
+
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                HandleError(transaction, ex);
+            }
+        }
+
+        return last;
+    }
+
+    private QuestsHalk GetLastQuestsHalk(SQLiteConnection conn)
+    {
+        QuestsHalk last = new();
+        using (var transaction = conn.BeginTransaction())
+        {
+            try
+            {
+                using (var cmd = new SQLiteCommand("SELECT * FROM QuestsHalk ORDER BY QuestsHalkID DESC LIMIT 1", conn))
+                {
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            last = new QuestsHalk
+                            {
+                                QuestsHalkID = long.Parse(reader["QuestsHalkID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                HalkOn = long.Parse(reader["HalkOn"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                HalkPotEffectOn = long.Parse(reader["HalkPotEffectOn"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                HalkFullness = long.Parse(reader["HalkFullness"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                HalkLevel = long.Parse(reader["HalkLevel"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                HalkIntimacy = long.Parse(reader["HalkIntimacy"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                HalkHealth = long.Parse(reader["HalkHealth"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                HalkAttack = long.Parse(reader["HalkAttack"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                HalkDefense = long.Parse(reader["HalkDefense"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                HalkIntellect = long.Parse(reader["HalkIntellect"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                HalkSkill1 = long.Parse(reader["HalkSkill1"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                HalkSkill2 = long.Parse(reader["HalkSkill2"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                HalkSkill3 = long.Parse(reader["HalkSkill3"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                HalkElementNone = long.Parse(reader["HalkElementNone"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                HalkFire = long.Parse(reader["HalkFire"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                HalkThunder = long.Parse(reader["HalkThunder"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                HalkWater = long.Parse(reader["HalkWater"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                HalkIce = long.Parse(reader["HalkIce"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                HalkDragon = long.Parse(reader["HalkDragon"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                HalkSleep = long.Parse(reader["HalkSleep"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                HalkParalysis = long.Parse(reader["HalkParalysis"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                HalkPoison = long.Parse(reader["HalkPoison"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                RunID = long.Parse(reader["RunID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                            };
+                        }
+                    }
+                }
+
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                HandleError(transaction, ex);
+            }
+        }
+
+        return last;
+    }
+
     /// <summary>
     /// Loads the database data into hash sets. This is used to avoid querying the database when checking for achievement unlocks.
     /// When inserting into these hashsets, the database must also be updated, and viceversa.
@@ -7546,6 +9311,12 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                 this.AllGachaCards = this.GetAllGachaCards(conn);
                 this.AllPlayerInventories = this.GetAllPlayerInventories(conn);
                 this.AllQuestsToggleMode = this.GetAllQuestsToggleMode(conn);
+                this.AllQuestsActiveFeature = this.GetAllQuestsActiveFeature(conn);
+                this.AllQuestsGuildPoogie = this.GetAllQuestsGuildPoogie(conn);
+                this.AllQuestsDiva = this.GetAllQuestsDiva(conn);
+                this.AllQuestsHalk = this.GetAllQuestsHalk(conn);
+                TotalOverlaySessions = GetTableRowCount("SessionID", "Session", conn);
+
             }
         }
         catch (Exception ex)
@@ -7555,6 +9326,8 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
         dataLoader.Model.ShowSaveIcon = false;
     }
+
+
 
     public RoadDureSkills GetRoadDureSkills(long runID)
     {
@@ -7609,7 +9382,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
     private HashSet<PlayerInventory> GetAllPlayerInventories(SQLiteConnection conn)
     {
-        HashSet<PlayerInventory> hashSet = new ();
+        HashSet<PlayerInventory> hashSet = new();
         using (var transaction = conn.BeginTransaction())
         {
             try
@@ -7620,7 +9393,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                     {
                         while (reader.Read())
                         {
-                            PlayerInventory data = new ()
+                            PlayerInventory data = new()
                             {
                                 PlayerInventoryID = long.Parse(reader["PlayerInventoryID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
                                 CreatedAt = DateTime.Parse(reader["CreatedAt"]?.ToString() ?? DateTime.UnixEpoch.ToString(CultureInfo.InvariantCulture), CultureInfo.InvariantCulture),
@@ -7720,9 +9493,188 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
         return hashSet;
     }
 
+    private HashSet<QuestsActiveFeature> GetAllQuestsActiveFeature(SQLiteConnection conn)
+    {
+        HashSet<QuestsActiveFeature> hashSet = new HashSet<QuestsActiveFeature>();
+
+        using (var transaction = conn.BeginTransaction())
+        {
+            try
+            {
+                using (var cmd = new SQLiteCommand(@"SELECT * FROM QuestsActiveFeature", conn))
+                {
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            QuestsActiveFeature data = new QuestsActiveFeature
+                            {
+                                QuestsActiveFeatureID = long.Parse(reader["QuestsActiveFeatureID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                ActiveFeature = long.Parse(reader["ActiveFeature"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                RunID = long.Parse(reader["RunID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                            };
+
+                            hashSet.Add(data);
+                        }
+                    }
+                }
+
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                HandleError(transaction, ex);
+            }
+        }
+
+        return hashSet;
+    }
+
+    private HashSet<QuestsGuildPoogie> GetAllQuestsGuildPoogie(SQLiteConnection conn)
+    {
+        HashSet<QuestsGuildPoogie> hashSet = new HashSet<QuestsGuildPoogie>();
+
+        using (var transaction = conn.BeginTransaction())
+        {
+            try
+            {
+                using (var cmd = new SQLiteCommand(@"SELECT * FROM QuestsGuildPoogie", conn))
+                {
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            QuestsGuildPoogie data = new QuestsGuildPoogie
+                            {
+                                QuestsGuildPoogieID = long.Parse(reader["QuestsGuildPoogieID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                GuildPoogie1Skill = long.Parse(reader["GuildPoogie1Skill"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                GuildPoogie2Skill = long.Parse(reader["GuildPoogie2Skill"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                GuildPoogie3Skill = long.Parse(reader["GuildPoogie3Skill"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                RunID = long.Parse(reader["RunID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                            };
+
+                            hashSet.Add(data);
+                        }
+                    }
+                }
+
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                HandleError(transaction, ex);
+            }
+        }
+
+        return hashSet;
+    }
+
+    private HashSet<QuestsDiva> GetAllQuestsDiva(SQLiteConnection conn)
+    {
+        HashSet<QuestsDiva> hashSet = new HashSet<QuestsDiva>();
+
+        using (var transaction = conn.BeginTransaction())
+        {
+            try
+            {
+                using (var cmd = new SQLiteCommand(@"SELECT * FROM QuestsDiva", conn))
+                {
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            QuestsDiva data = new QuestsDiva
+                            {
+                                QuestsDivaID = long.Parse(reader["QuestsDivaID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                DivaSongBuffOn = long.Parse(reader["DivaSongBuffOn"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                DivaPrayerGemRedSkill = long.Parse(reader["DivaPrayerGemRedSkill"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                DivaPrayerGemRedLevel = long.Parse(reader["DivaPrayerGemRedLevel"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                DivaPrayerGemYellowSkill = long.Parse(reader["DivaPrayerGemYellowSkill"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                DivaPrayerGemYellowLevel = long.Parse(reader["DivaPrayerGemYellowLevel"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                DivaPrayerGemGreenSkill = long.Parse(reader["DivaPrayerGemGreenSkill"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                DivaPrayerGemGreenLevel = long.Parse(reader["DivaPrayerGemGreenLevel"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                DivaPrayerGemBlueSkill = long.Parse(reader["DivaPrayerGemBlueSkill"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                DivaPrayerGemBlueLevel = long.Parse(reader["DivaPrayerGemBlueLevel"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                RunID = long.Parse(reader["RunID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                            };
+
+                            hashSet.Add(data);
+                        }
+                    }
+                }
+
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                HandleError(transaction, ex);
+            }
+        }
+
+        return hashSet;
+    }
+
+    private HashSet<QuestsHalk> GetAllQuestsHalk(SQLiteConnection conn)
+    {
+        HashSet<QuestsHalk> hashSet = new HashSet<QuestsHalk>();
+
+        using (var transaction = conn.BeginTransaction())
+        {
+            try
+            {
+                using (var cmd = new SQLiteCommand(@"SELECT * FROM QuestsHalk", conn))
+                {
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            QuestsHalk data = new QuestsHalk
+                            {
+                                QuestsHalkID = long.Parse(reader["QuestsHalkID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                HalkOn = long.Parse(reader["HalkOn"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                HalkPotEffectOn = long.Parse(reader["HalkPotEffectOn"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                HalkFullness = long.Parse(reader["HalkFullness"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                HalkLevel = long.Parse(reader["HalkLevel"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                HalkIntimacy = long.Parse(reader["HalkIntimacy"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                HalkHealth = long.Parse(reader["HalkHealth"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                HalkAttack = long.Parse(reader["HalkAttack"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                HalkDefense = long.Parse(reader["HalkDefense"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                HalkIntellect = long.Parse(reader["HalkIntellect"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                HalkSkill1 = long.Parse(reader["HalkSkill1"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                HalkSkill2 = long.Parse(reader["HalkSkill2"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                HalkSkill3 = long.Parse(reader["HalkSkill3"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                HalkElementNone = long.Parse(reader["HalkElementNone"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                HalkFire = long.Parse(reader["HalkFire"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                HalkThunder = long.Parse(reader["HalkThunder"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                HalkWater = long.Parse(reader["HalkWater"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                HalkIce = long.Parse(reader["HalkIce"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                HalkDragon = long.Parse(reader["HalkDragon"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                HalkSleep = long.Parse(reader["HalkSleep"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                HalkParalysis = long.Parse(reader["HalkParalysis"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                HalkPoison = long.Parse(reader["HalkPoison"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                RunID = long.Parse(reader["RunID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                            };
+
+                            hashSet.Add(data);
+                        }
+                    }
+                }
+
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                HandleError(transaction, ex);
+            }
+        }
+
+        return hashSet;
+    }
+
+
     private HashSet<GachaCardInventory> GetAllGachaCards(SQLiteConnection conn)
     {
-        HashSet<GachaCardInventory> hashSet = new ();
+        HashSet<GachaCardInventory> hashSet = new();
         using (var transaction = conn.BeginTransaction())
         {
             try
@@ -7733,7 +9685,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                     {
                         while (reader.Read())
                         {
-                            GachaCardInventory data = new ()
+                            GachaCardInventory data = new()
                             {
                                 GachaCardInventoryID = long.Parse(reader["GachaCardInventoryID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
                                 GachaCardID = long.Parse(reader["GachaCardID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
@@ -7757,7 +9709,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
     private HashSet<QuestAttempts> GetAllQuestAttempts(SQLiteConnection conn)
     {
-        HashSet<QuestAttempts> hashSet = new ();
+        HashSet<QuestAttempts> hashSet = new();
         using (var transaction = conn.BeginTransaction())
         {
             try
@@ -7768,13 +9720,14 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                     {
                         while (reader.Read())
                         {
-                            QuestAttempts data = new ()
+                            QuestAttempts data = new()
                             {
                                 QuestAttemptsID = long.Parse(reader["QuestAttemptsID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
                                 QuestID = long.Parse(reader["QuestID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
                                 WeaponTypeID = long.Parse(reader["WeaponTypeID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
                                 ActualOverlayMode = reader["ActualOverlayMode"]?.ToString() ?? "0",
                                 Attempts = long.Parse(reader["Attempts"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                RunBuffs = long.Parse(reader["RunBuffs"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
                             };
 
                             hashSet.Add(data);
@@ -7795,7 +9748,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
     private HashSet<PlayerGear> GetAllPlayerGear(SQLiteConnection conn)
     {
-        HashSet<PlayerGear> hashSet = new ();
+        HashSet<PlayerGear> hashSet = new();
         using (var transaction = conn.BeginTransaction())
         {
             try
@@ -7806,7 +9759,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                     {
                         while (reader.Read())
                         {
-                            PlayerGear data = new ()
+                            PlayerGear data = new()
                             {
                                 PlayerGearHash = reader["PlayerGearHash"]?.ToString() ?? "0",
                                 CreatedAt = DateTime.Parse(reader["CreatedAt"]?.ToString() ?? DateTime.UnixEpoch.ToString(CultureInfo.InvariantCulture), CultureInfo.InvariantCulture),
@@ -7887,7 +9840,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
     private HashSet<ActiveSkills> GetAllActiveSkills(SQLiteConnection conn)
     {
-        HashSet<ActiveSkills> hashSet = new ();
+        HashSet<ActiveSkills> hashSet = new();
         using (var transaction = conn.BeginTransaction())
         {
             try
@@ -7898,7 +9851,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                     {
                         while (reader.Read())
                         {
-                            ActiveSkills data = new ()
+                            ActiveSkills data = new()
                             {
                                 ActiveSkillsID = long.Parse(reader["ActiveSkillsID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
                                 CreatedAt = DateTime.Parse(reader["CreatedAt"]?.ToString() ?? DateTime.UnixEpoch.ToString(CultureInfo.InvariantCulture), CultureInfo.InvariantCulture),
@@ -7987,7 +9940,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
     private HashSet<StyleRankSkills> GetAllStyleRankSkills(SQLiteConnection conn)
     {
-        HashSet<StyleRankSkills> hashSet = new ();
+        HashSet<StyleRankSkills> hashSet = new();
         using (var transaction = conn.BeginTransaction())
         {
             try
@@ -7998,7 +9951,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                     {
                         while (reader.Read())
                         {
-                            StyleRankSkills data = new ()
+                            StyleRankSkills data = new()
                             {
                                 StyleRankSkillsID = long.Parse(reader["StyleRankSkillsID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
                                 CreatedAt = DateTime.Parse(reader["CreatedAt"]?.ToString() ?? DateTime.UnixEpoch.ToString(CultureInfo.InvariantCulture), CultureInfo.InvariantCulture),
@@ -8026,7 +9979,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
     private HashSet<PersonalBestAttempts> GetAllPersonalBestAttempts(SQLiteConnection conn)
     {
-        HashSet<PersonalBestAttempts> hashSet = new ();
+        HashSet<PersonalBestAttempts> hashSet = new();
         using (var transaction = conn.BeginTransaction())
         {
             try
@@ -8037,13 +9990,14 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                     {
                         while (reader.Read())
                         {
-                            PersonalBestAttempts data = new ()
+                            PersonalBestAttempts data = new()
                             {
                                 PersonalBestAttemptsID = long.Parse(reader["PersonalBestAttemptsID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
                                 QuestID = long.Parse(reader["QuestID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
                                 WeaponTypeID = long.Parse(reader["WeaponTypeID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
                                 ActualOverlayMode = reader["ActualOverlayMode"]?.ToString() ?? "0",
                                 Attempts = long.Parse(reader["Attempts"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                RunBuffs = long.Parse(reader["RunBuffs"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
                             };
 
                             hashSet.Add(data);
@@ -8064,7 +10018,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
     private HashSet<MusouGauntlet> GetAllMusouGauntlets(SQLiteConnection conn)
     {
-        HashSet<MusouGauntlet> hashSet = new ();
+        HashSet<MusouGauntlet> hashSet = new();
         using (var transaction = conn.BeginTransaction())
         {
             try
@@ -8075,7 +10029,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                     {
                         while (reader.Read())
                         {
-                            MusouGauntlet data = new ()
+                            MusouGauntlet data = new()
                             {
                                 MusouGauntletID = long.Parse(reader["MusouGauntletID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
                                 WeaponType = reader["WeaponType"]?.ToString() ?? "0",
@@ -8112,7 +10066,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
     private HashSet<SolsticeGauntlet> GetAllSolsticeGauntlets(SQLiteConnection conn)
     {
-        HashSet<SolsticeGauntlet> hashSet = new ();
+        HashSet<SolsticeGauntlet> hashSet = new();
         using (var transaction = conn.BeginTransaction())
         {
             try
@@ -8123,7 +10077,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                     {
                         while (reader.Read())
                         {
-                            SolsticeGauntlet data = new ()
+                            SolsticeGauntlet data = new()
                             {
                                 SolsticeGauntletID = long.Parse(reader["SolsticeGauntletID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
                                 WeaponType = reader["WeaponType"]?.ToString() ?? "0",
@@ -8156,7 +10110,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
     private HashSet<ZenithGauntlet> GetAllZenithGauntlets(SQLiteConnection conn)
     {
-        HashSet<ZenithGauntlet> hashSet = new ();
+        HashSet<ZenithGauntlet> hashSet = new();
         using (var transaction = conn.BeginTransaction())
         {
             try
@@ -8167,7 +10121,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                     {
                         while (reader.Read())
                         {
-                            ZenithGauntlet data = new ()
+                            ZenithGauntlet data = new()
                             {
                                 ZenithGauntletID = long.Parse(reader["ZenithGauntletID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
                                 WeaponType = reader["WeaponType"]?.ToString() ?? "0",
@@ -8217,7 +10171,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
     private HashSet<Bingo> GetAllBingo(SQLiteConnection conn)
     {
-        HashSet<Bingo> hashSet = new ();
+        HashSet<Bingo> hashSet = new();
         using (var transaction = conn.BeginTransaction())
         {
             try
@@ -8228,7 +10182,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                     {
                         while (reader.Read())
                         {
-                            Bingo data = new ()
+                            Bingo data = new()
                             {
                                 BingoID = long.Parse(reader["BingoID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
                                 CreatedAt = DateTime.Parse(reader["CreatedAt"]?.ToString() ?? DateTime.UnixEpoch.ToString(CultureInfo.InvariantCulture), CultureInfo.InvariantCulture),
@@ -8260,7 +10214,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
     private HashSet<MezFes> GetAllMezFes(SQLiteConnection conn)
     {
-        HashSet<MezFes> hashSet = new ();
+        HashSet<MezFes> hashSet = new();
         using (var transaction = conn.BeginTransaction())
         {
             try
@@ -8271,7 +10225,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                     {
                         while (reader.Read())
                         {
-                            MezFes data = new ()
+                            MezFes data = new()
                             {
                                 MezFesID = long.Parse(reader["MezFesID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
                                 CreatedAt = DateTime.Parse(reader["CreatedAt"]?.ToString() ?? DateTime.UnixEpoch.ToString(CultureInfo.InvariantCulture), CultureInfo.InvariantCulture),
@@ -8298,7 +10252,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
     private HashSet<Quest> GetAllQuests(SQLiteConnection conn)
     {
-        HashSet<Quest> quests = new ();
+        HashSet<Quest> quests = new();
         using (var transaction = conn.BeginTransaction())
         {
             try
@@ -8569,7 +10523,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
     public Dictionary<int, int> GetAttackBuffDictionary(long runID)
     {
-        Dictionary<int, int> attackBuffDictionary = new ();
+        Dictionary<int, int> attackBuffDictionary = new();
         if (string.IsNullOrEmpty(this.dataSource))
         {
             Logger.Warn(CultureInfo.InvariantCulture, "Cannot get attack buff dictionary. dataSource: {0}", this.dataSource);
@@ -8615,7 +10569,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
     public Dictionary<int, int> GetHitCountDictionary(long runID)
     {
-        Dictionary<int, int> dictionary = new ();
+        Dictionary<int, int> dictionary = new();
         if (string.IsNullOrEmpty(this.dataSource))
         {
             Logger.Warn(CultureInfo.InvariantCulture, "Cannot get hit count dictionary. dataSource: {0}", this.dataSource);
@@ -8661,7 +10615,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
     public Dictionary<int, double> GetHitsPerSecondDictionary(long runID)
     {
-        Dictionary<int, double> dictionary = new ();
+        Dictionary<int, double> dictionary = new();
         if (string.IsNullOrEmpty(this.dataSource))
         {
             Logger.Warn(CultureInfo.InvariantCulture, "Cannot get hits per second dictionary. dataSource: {0}", this.dataSource);
@@ -8707,7 +10661,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
     public Dictionary<int, int> GetDamageDealtDictionary(long runID)
     {
-        Dictionary<int, int> dictionary = new ();
+        Dictionary<int, int> dictionary = new();
         if (string.IsNullOrEmpty(this.dataSource))
         {
             Logger.Warn(CultureInfo.InvariantCulture, "Cannot get damage dealt dictionary. dataSource: {0}", this.dataSource);
@@ -8753,7 +10707,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
     public Dictionary<int, double> GetDamagePerSecondDictionary(long runID)
     {
-        Dictionary<int, double> dictionary = new ();
+        Dictionary<int, double> dictionary = new();
         if (string.IsNullOrEmpty(this.dataSource))
         {
             Logger.Warn(CultureInfo.InvariantCulture, "Cannot get damage per second dictionary. dataSource: {0}", this.dataSource);
@@ -8799,7 +10753,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
     public Dictionary<int, int> GetAreaChangesDictionary(long runID)
     {
-        Dictionary<int, int> dictionary = new ();
+        Dictionary<int, int> dictionary = new();
         if (string.IsNullOrEmpty(this.dataSource))
         {
             Logger.Warn(CultureInfo.InvariantCulture, "Cannot get area changes dictionary. dataSource: {0}", this.dataSource);
@@ -8845,7 +10799,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
     public Dictionary<int, int> GetCartsDictionary(long runID)
     {
-        Dictionary<int, int> dictionary = new ();
+        Dictionary<int, int> dictionary = new();
         if (string.IsNullOrEmpty(this.dataSource))
         {
             Logger.Warn(CultureInfo.InvariantCulture, "Cannot get carts dictionary. dataSource: {0}", this.dataSource);
@@ -8891,7 +10845,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
     public Dictionary<int, Dictionary<int, int>> GetMonster1HPDictionary(long runID)
     {
-        Dictionary<int, Dictionary<int, int>> dictionary = new ();
+        Dictionary<int, Dictionary<int, int>> dictionary = new();
         if (string.IsNullOrEmpty(this.dataSource))
         {
             Logger.Warn(CultureInfo.InvariantCulture, "Cannot get monster 1 HP dictionary. dataSource: {0}", this.dataSource);
@@ -8937,7 +10891,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
     public Dictionary<int, Dictionary<int, int>> GetMonster2HPDictionary(long runID)
     {
-        Dictionary<int, Dictionary<int, int>> dictionary = new ();
+        Dictionary<int, Dictionary<int, int>> dictionary = new();
         if (string.IsNullOrEmpty(this.dataSource))
         {
             Logger.Warn(CultureInfo.InvariantCulture, "Cannot get monster 2 HP dictionary. dataSource: {0}", this.dataSource);
@@ -8983,7 +10937,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
     public Dictionary<int, Dictionary<int, int>> GetMonster3HPDictionary(long runID)
     {
-        Dictionary<int, Dictionary<int, int>> dictionary = new ();
+        Dictionary<int, Dictionary<int, int>> dictionary = new();
         if (string.IsNullOrEmpty(this.dataSource))
         {
             Logger.Warn(CultureInfo.InvariantCulture, "Cannot get monster 3 HP dictionary. dataSource: {0}", this.dataSource);
@@ -9029,7 +10983,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
     public Dictionary<int, Dictionary<int, int>> GetMonster4HPDictionary(long runID)
     {
-        Dictionary<int, Dictionary<int, int>> dictionary = new ();
+        Dictionary<int, Dictionary<int, int>> dictionary = new();
         if (string.IsNullOrEmpty(this.dataSource))
         {
             Logger.Warn(CultureInfo.InvariantCulture, "Cannot get monster 4 HP dictionary. dataSource: {0}", this.dataSource);
@@ -9075,7 +11029,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
     public Dictionary<int, Dictionary<int, double>> GetMonster1AttackMultiplierDictionary(long runID)
     {
-        Dictionary<int, Dictionary<int, double>> dictionary = new ();
+        Dictionary<int, Dictionary<int, double>> dictionary = new();
         if (string.IsNullOrEmpty(this.dataSource))
         {
             Logger.Warn(CultureInfo.InvariantCulture, "Cannot get monster 1 attack multiplier dictionary. dataSource: {0}", this.dataSource);
@@ -9121,7 +11075,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
     public Dictionary<int, Dictionary<int, double>> GetMonster1DefenseRateDictionary(long runID)
     {
-        Dictionary<int, Dictionary<int, double>> dictionary = new ();
+        Dictionary<int, Dictionary<int, double>> dictionary = new();
         if (string.IsNullOrEmpty(this.dataSource))
         {
             Logger.Warn(CultureInfo.InvariantCulture, "Cannot get monster 1 defense rate dictionary. dataSource: {0}", this.dataSource);
@@ -9213,7 +11167,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
     public Dictionary<int, Dictionary<int, int>> GetMonster1SleepThresholdDictionary(long runID)
     {
-        Dictionary<int, Dictionary<int, int>> dictionary = new ();
+        Dictionary<int, Dictionary<int, int>> dictionary = new();
         if (string.IsNullOrEmpty(this.dataSource))
         {
             Logger.Warn(CultureInfo.InvariantCulture, "Cannot get monster 1 sleep threshold dictionary. dataSource: {0}", this.dataSource);
@@ -9259,7 +11213,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
     public Dictionary<int, Dictionary<int, int>> GetMonster1ParalysisThresholdDictionary(long runID)
     {
-        Dictionary<int, Dictionary<int, int>> dictionary = new ();
+        Dictionary<int, Dictionary<int, int>> dictionary = new();
         if (string.IsNullOrEmpty(this.dataSource))
         {
             Logger.Warn(CultureInfo.InvariantCulture, "Cannot get monster 1 paralysis threshold dictionary. dataSource: {0}", this.dataSource);
@@ -9305,7 +11259,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
     public Dictionary<int, Dictionary<int, int>> GetMonster1BlastThresholdDictionary(long runID)
     {
-        Dictionary<int, Dictionary<int, int>> dictionary = new ();
+        Dictionary<int, Dictionary<int, int>> dictionary = new();
         if (string.IsNullOrEmpty(this.dataSource))
         {
             Logger.Warn(CultureInfo.InvariantCulture, "Cannot get monster 1 blast threshold dictionary. dataSource: {0}", this.dataSource);
@@ -9351,7 +11305,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
     public Dictionary<int, Dictionary<int, int>> GetMonster1StunThresholdDictionary(long runID)
     {
-        Dictionary<int, Dictionary<int, int>> dictionary = new ();
+        Dictionary<int, Dictionary<int, int>> dictionary = new();
         if (string.IsNullOrEmpty(this.dataSource))
         {
             Logger.Warn(CultureInfo.InvariantCulture, "Cannot get monster 1 stun threshold dictionary. dataSource: {0}", this.dataSource);
@@ -9397,7 +11351,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
     public Dictionary<int, List<Dictionary<int, int>>> GetPlayerInventoryDictionary(long runID)
     {
-        Dictionary<int, List<Dictionary<int, int>>> dictionary = new ();
+        Dictionary<int, List<Dictionary<int, int>>> dictionary = new();
         if (string.IsNullOrEmpty(this.dataSource))
         {
             Logger.Warn(CultureInfo.InvariantCulture, "Cannot get player inventory dictionary. dataSource: {0}", this.dataSource);
@@ -9443,7 +11397,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
     public Dictionary<int, List<Dictionary<int, int>>> GetAmmoDictionary(long runID)
     {
-        Dictionary<int, List<Dictionary<int, int>>> dictionary = new ();
+        Dictionary<int, List<Dictionary<int, int>>> dictionary = new();
         if (string.IsNullOrEmpty(this.dataSource))
         {
             Logger.Warn(CultureInfo.InvariantCulture, "Cannot get ammo dictionary. dataSource: {0}", this.dataSource);
@@ -9489,7 +11443,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
     public Dictionary<int, List<Dictionary<int, int>>> GetPartnyaBagDictionary(long runID)
     {
-        Dictionary<int, List<Dictionary<int, int>>> dictionary = new ();
+        Dictionary<int, List<Dictionary<int, int>>> dictionary = new();
         if (string.IsNullOrEmpty(this.dataSource))
         {
             Logger.Warn(CultureInfo.InvariantCulture, "Cannot get partnya bag dictionary. dataSource: {0}", this.dataSource);
@@ -9535,7 +11489,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
     public Dictionary<int, Dictionary<int, int>> GetHitsTakenBlockedDictionary(long runID)
     {
-        Dictionary<int, Dictionary<int, int>> dictionary = new ();
+        Dictionary<int, Dictionary<int, int>> dictionary = new();
         if (string.IsNullOrEmpty(this.dataSource))
         {
             Logger.Warn(CultureInfo.InvariantCulture, "Cannot get hits taken/blocked dictionary. dataSource: {0}", this.dataSource);
@@ -9581,7 +11535,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
     public Dictionary<int, double> GetHitsTakenBlockedPerSecondDictionary(long runID)
     {
-        Dictionary<int, double> dictionary = new ();
+        Dictionary<int, double> dictionary = new();
         if (string.IsNullOrEmpty(this.dataSource))
         {
             Logger.Warn(CultureInfo.InvariantCulture, "Cannot get hits taken/blocked per second dictionary. dataSource: {0}", this.dataSource);
@@ -9627,7 +11581,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
     public Dictionary<int, int> GetPlayerHPDictionary(long runID)
     {
-        Dictionary<int, int> dictionary = new ();
+        Dictionary<int, int> dictionary = new();
         if (string.IsNullOrEmpty(this.dataSource))
         {
             Logger.Warn(CultureInfo.InvariantCulture, "Cannot get player HP dictionary. dataSource: {0}", this.dataSource);
@@ -9673,7 +11627,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
     public Dictionary<int, int> GetPlayerStaminaDictionary(long runID)
     {
-        Dictionary<int, int> dictionary = new ();
+        Dictionary<int, int> dictionary = new();
         if (string.IsNullOrEmpty(this.dataSource))
         {
             Logger.Warn(CultureInfo.InvariantCulture, "Cannot get player stamina dictionary. dataSource: {0}", this.dataSource);
@@ -9719,7 +11673,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
     public Dictionary<int, string> GetKeystrokesDictionary(long runID)
     {
-        Dictionary<int, string> dictionary = new ();
+        Dictionary<int, string> dictionary = new();
         if (string.IsNullOrEmpty(this.dataSource))
         {
             Logger.Warn(CultureInfo.InvariantCulture, "Cannot get keystrokes dictionary. dataSource: {0}", this.dataSource);
@@ -9765,7 +11719,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
     public Dictionary<int, string> GetMouseInputDictionary(long runID)
     {
-        Dictionary<int, string> dictionary = new ();
+        Dictionary<int, string> dictionary = new();
         if (string.IsNullOrEmpty(this.dataSource))
         {
             Logger.Warn(CultureInfo.InvariantCulture, "Cannot get mouse input dictionary. dataSource: {0}", this.dataSource);
@@ -9811,7 +11765,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
     public Dictionary<int, string> GetGamepadInputDictionary(long runID)
     {
-        Dictionary<int, string> dictionary = new ();
+        Dictionary<int, string> dictionary = new();
         if (string.IsNullOrEmpty(this.dataSource))
         {
             Logger.Warn(CultureInfo.InvariantCulture, "Cannot get gamepad input dictionary. dataSource: {0}", this.dataSource);
@@ -9857,7 +11811,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
     public Dictionary<int, double> GetActionsPerMinuteDictionary(long runID)
     {
-        Dictionary<int, double> dictionary = new ();
+        Dictionary<int, double> dictionary = new();
         if (string.IsNullOrEmpty(this.dataSource))
         {
             Logger.Warn(CultureInfo.InvariantCulture, "Cannot get actions per minute dictionary. dataSource: {0}", this.dataSource);
@@ -9903,7 +11857,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
     public Dictionary<string, int> GetMostCommonCategory()
     {
-        Dictionary<string, int> fieldCounts = new ();
+        Dictionary<string, int> fieldCounts = new();
         if (string.IsNullOrEmpty(this.dataSource))
         {
             Logger.Warn(CultureInfo.InvariantCulture, "Cannot get most common category. dataSource: {0}", this.dataSource);
@@ -10110,7 +12064,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
     }
 
     // TODO add check if there are runs for the quest id?
-    public List<FastestRun> GetFastestRuns(ConfigWindow configWindow, string weaponName = "All Weapons")
+    public List<FastestRun> GetFastestRuns(ConfigWindow configWindow, uint selectedRunBuffs, string weaponName = "All Weapons")
     {
         var fastestRuns = new List<FastestRun>();
         if (string.IsNullOrEmpty(this.dataSource))
@@ -10138,19 +12092,23 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                                             qn.QuestNameName, 
                                             q.RunID, 
                                             QuestID, 
-                                            YoutubeID, 
+                                            YouTubeID, 
                                             FinalTimeDisplay, 
                                             Date, 
                                             ActualOverlayMode, 
-                                            PartySize
+                                            PartySize,
+                                            qrb.RunBuffs
                                         FROM 
                                             Quests q
                                         JOIN 
                                             QuestName qn ON q.QuestID = qn.QuestNameID
+                                        JOIN 
+                                            QuestsRunBuffs qrb ON q.RunID = qrb.RunID
                                         WHERE 
                                             q.QuestID = @questID 
                                             AND q.PartySize = 1
                                             AND q.ActualOverlayMode = @SelectedOverlayMode
+                                            AND qrb.RunBuffs = @SelectedRunBuffs
                                         ORDER BY 
                                             FinalTimeValue ASC
                                         LIMIT 20";
@@ -10162,23 +12120,27 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                                             qn.QuestNameName, 
                                             q.RunID, 
                                             QuestID, 
-                                            YoutubeID, 
+                                            YouTubeID, 
                                             FinalTimeDisplay, 
                                             Date, 
                                             ActualOverlayMode, 
                                             PartySize,
-                                            pg.WeaponTypeID
+                                            pg.WeaponTypeID,
+                                            qrb.RunBuffs
                                         FROM 
                                             Quests q
                                         JOIN 
                                             QuestName qn ON q.QuestID = qn.QuestNameID
                                         JOIN
                                             PlayerGear pg ON q.RunID =  pg.RunID
+                                        JOIN
+                                            QuestsRunBuffs qrb ON q.RunID =  qrb.RunID
                                         WHERE 
                                             q.QuestID = @questID 
                                             AND q.PartySize = 1
                                             AND q.ActualOverlayMode = @SelectedOverlayMode
                                             AND pg.WeaponTypeID = @SelectedWeaponTypeID
+                                            AND qrb.RunBuffs = @SelectedRunBuffs
                                         ORDER BY 
                                             FinalTimeValue ASC
                                         LIMIT 20";
@@ -10188,7 +12150,6 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                         using (var cmd = new SQLiteCommand(sql, conn))
                         {
                             var selectedOverlayMode = ((ComboBoxItem)configWindow.OverlayModeComboBox.SelectedItem).Content.ToString();
-
                             // idk if this is needed
                             if (string.IsNullOrEmpty(selectedOverlayMode))
                             {
@@ -10197,6 +12158,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
                             cmd.Parameters.AddWithValue("@questID", questID);
                             cmd.Parameters.AddWithValue("@SelectedOverlayMode", selectedOverlayMode);
+                            cmd.Parameters.AddWithValue("@SelectedRunBuffs", selectedRunBuffs);
 
                             if (weaponName != "All Weapons")
                             {
@@ -10220,9 +12182,10 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                                             QuestName = (string)reader["QuestNameName"],
                                             RunID = (long)reader["RunID"],
                                             QuestID = (long)reader["QuestID"],
-                                            YoutubeID = (string)reader["YoutubeID"],
+                                            YouTubeID = (string)reader["YouTubeID"],
                                             FinalTimeDisplay = (string)reader["FinalTimeDisplay"],
                                             Date = DateTime.Parse((string)reader["Date"], CultureInfo.InvariantCulture),
+                                            RunBuffs = long.Parse(reader["RunBuffs"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
                                         });
                                     }
                                 }
@@ -10240,6 +12203,93 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         return fastestRuns;
+    }
+
+    /// <summary>
+    /// TODO: Filter by run buffs and overlay mode speedrun. Speedruns only.
+    /// </summary>
+    /// <param name="configWindow"></param>
+    /// <param name="weaponName"></param>
+    /// <returns></returns>
+    public List<FastestRun> GetUneditedYouTubeLinkRuns()
+    {
+        var runs = new List<FastestRun>();
+        if (string.IsNullOrEmpty(this.dataSource))
+        {
+            Logger.Warn(CultureInfo.InvariantCulture, "Cannot get unedited youtube link runs. dataSource: {0}", this.dataSource);
+            return runs;
+        }
+
+        using (var conn = new SQLiteConnection(this.dataSource))
+        {
+            conn.Open();
+            using (var transaction = conn.BeginTransaction())
+            {
+                try
+                {
+                    var sql = @"SELECT 
+                                    ObjectiveImage, 
+                                    qn.QuestNameName, 
+                                    q.RunID, 
+                                    QuestID, 
+                                    YouTubeID, 
+                                    FinalTimeDisplay, 
+                                    Date, 
+                                    ActualOverlayMode, 
+                                    PartySize,
+                                    qrb.RunBuffs
+                                FROM 
+                                    Quests q
+                                JOIN 
+                                    QuestName qn ON q.QuestID = qn.QuestNameID
+                                JOIN 
+                                    QuestsRunBuffs qrb ON q.RunID = qrb.RunID
+                                WHERE
+                                    q.PartySize = 1
+                                    AND q.YouTubeID = 'dQw4w9WgXcQ'
+                                    AND q.ActualOverlayMode != 'Standard'
+                                ORDER BY 
+                                    q.RunID DESC";
+
+                    using (var cmd = new SQLiteCommand(sql, conn))
+                    {
+                        using (var reader = cmd.ExecuteReader())
+                        {
+                            if (reader == null || !reader.HasRows)
+                            {
+                                return runs;
+                            }
+
+                            if (reader.HasRows)
+                            {
+                                while (reader.Read())
+                                {
+                                    runs.Add(new FastestRun
+                                    {
+                                        ObjectiveImage = (string)reader["ObjectiveImage"],
+                                        QuestName = (string)reader["QuestNameName"],
+                                        RunID = (long)reader["RunID"],
+                                        QuestID = (long)reader["QuestID"],
+                                        YouTubeID = (string)reader["YouTubeID"],
+                                        FinalTimeDisplay = (string)reader["FinalTimeDisplay"],
+                                        Date = DateTime.Parse((string)reader["Date"], CultureInfo.InvariantCulture),
+                                        RunBuffs = long.Parse(reader["RunBuffs"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    });
+                                }
+                            }
+                        }
+                    }
+
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    HandleError(transaction, ex);
+                }
+            }
+        }
+
+        return runs;
     }
 
     /// <summary>
@@ -10399,17 +12449,20 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                     @"SELECT 
                             ObjectiveImage, 
                             qn.QuestNameName, 
-                            RunID, 
+                            q.RunID, 
                             QuestID, 
-                            YoutubeID, 
+                            YouTubeID, 
                             FinalTimeDisplay, 
                             Date, 
                             ActualOverlayMode, 
-                            PartySize
+                            PartySize,
+                            qrb.RunBuffs
                         FROM 
                             Quests q
                         JOIN
                             QuestName qn ON q.QuestID = qn.QuestNameID
+                        JOIN
+                            QuestsRunBuffs qrb ON q.RunID = qrb.RunID
                         ORDER BY 
                             Date DESC
                         LIMIT 10", conn))
@@ -10431,11 +12484,12 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                                         QuestName = (string)reader["QuestNameName"],
                                         RunID = (long)reader["RunID"],
                                         QuestID = (long)reader["QuestID"],
-                                        YoutubeID = (string)reader["YoutubeID"],
+                                        YouTubeID = (string)reader["YouTubeID"],
                                         FinalTimeDisplay = (string)reader["FinalTimeDisplay"],
                                         Date = DateTime.Parse((string)reader["Date"], CultureInfo.InvariantCulture),
                                         ActualOverlayMode = (string)reader["ActualOverlayMode"],
                                         PartySize = (long)reader["PartySize"],
+                                        RunBuffs = long.Parse(reader["RunBuffs"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
                                     };
                                     recentRuns.Add(recentRun);
                                 }
@@ -10480,21 +12534,24 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                     @"SELECT 
                         ObjectiveImage, 
                         qn.QuestNameName, 
-                        RunID, 
+                        q.RunID, 
                         QuestID, 
-                        YoutubeID, 
+                        YouTubeID, 
                         FinalTimeDisplay, 
                         Date, 
                         ActualOverlayMode, 
-                        PartySize
+                        PartySize,
+                        qrb.RunBuffs
                     FROM 
                         Quests q
                     JOIN
                         QuestName qn ON q.QuestID = qn.QuestNameID
+                    JOIN
+                        QuestsRunBuffs qrb ON q.RunID = qrb.RunID
                     WHERE
                         DATE(Date) = DATE(@SelectedDate)
                     ORDER BY 
-                        RunID ASC", conn))
+                        q.RunID ASC", conn))
                     {
                         cmd.Parameters.AddWithValue("@SelectedDate", selectedDate.Value.Date);
                         using (var reader = cmd.ExecuteReader())
@@ -10514,11 +12571,12 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                                         QuestName = (string)reader["QuestNameName"],
                                         RunID = (long)reader["RunID"],
                                         QuestID = (long)reader["QuestID"],
-                                        YoutubeID = (string)reader["YoutubeID"],
+                                        YouTubeID = (string)reader["YouTubeID"],
                                         FinalTimeDisplay = (string)reader["FinalTimeDisplay"],
                                         Date = DateTime.Parse((string)reader["Date"], CultureInfo.InvariantCulture),
                                         ActualOverlayMode = (string)reader["ActualOverlayMode"],
                                         PartySize = (long)reader["PartySize"],
+                                        RunBuffs = long.Parse(reader["RunBuffs"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
                                     };
                                     recentRuns.Add(recentRun);
                                 }
@@ -10638,7 +12696,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
         return weaponUsageData;
     }
 
-    public void QuestIDButtonClick(object sender, RoutedEventArgs e, ConfigWindow configWindow)
+    public void QuestIDButtonClick(object sender, RoutedEventArgs e, ConfigWindow configWindow, uint selectedRunBuffs)
     {
         if (string.IsNullOrEmpty(this.dataSource))
         {
@@ -10665,7 +12723,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                 try
                 {
                     using (var cmd = new SQLiteCommand(
-                    @"SELECT 
+                    @"SELECT
                             q.ObjectiveImage,
                             q.ObjectiveTypeID,
                             q.ObjectiveQuantity,
@@ -10687,7 +12745,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                         {
                             if (!reader.HasRows)
                             {
-                                var message = string.Format(CultureInfo.InvariantCulture, "Quest ID not found. Please use the Quest ID option in Settings and go into a quest in order to view the ID needed to search. You may also not have completed any runs for the selected Quest ID or for the selected category.\n\nQuest ID: {0}\nOverlay Mode: {1}\n{2}", questID, selectedOverlayMode, reader.ToString());
+                                var message = string.Format(CultureInfo.InvariantCulture, "Quest ID not found. Please use the Quest ID option in Settings and go into a quest in order to view the ID needed to search. You may also not have completed any runs for the selected Quest ID or for the selected category.\n\nQuest ID: {0}\nOverlay Mode: {1}\nRun Buffs: {2}\n{3}", questID, selectedOverlayMode, selectedRunBuffs, reader.ToString());
                                 var snackbar = new Snackbar(configWindow.ConfigWindowSnackBarPresenter)
                                 {
                                     Style = (Style)configWindow.FindResource("CatppuccinMochaSnackBar"),
@@ -10716,27 +12774,32 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                     @"SELECT 
                                 pg.WeaponTypeID, 
                                 MIN(q.FinalTimeValue) as BestTime, 
-                                q.RunID
+                                q.RunID,
+                                qrb.RunBuffs
                             FROM 
                                 Quests q 
                             JOIN 
-                                PlayerGear pg ON q.RunID = pg.RunID 
+                                PlayerGear pg ON q.RunID = pg.RunID
+                            JOIN 
+                                QuestsRunBuffs qrb ON q.RunID = qrb.RunID 
                             WHERE 
                                 q.QuestID = @QuestID 
                                 AND q.PartySize = 1 
                                 AND q.ActualOverlayMode = @SelectedOverlayMode
+                                AND qrb.RunBuffs = @SelectedRunBuffs
                             GROUP BY 
                                 pg.WeaponTypeID
                             ", conn))
                     {
                         cmd.Parameters.AddWithValue("@QuestID", questID);
                         cmd.Parameters.AddWithValue("@SelectedOverlayMode", selectedOverlayMode);
+                        cmd.Parameters.AddWithValue("@SelectedRunBuffs", selectedRunBuffs);
 
                         using (var reader = cmd.ExecuteReader())
                         {
                             if (!reader.HasRows)
                             {
-                                var message = string.Format(CultureInfo.InvariantCulture, "Quest ID not found. Please use the Quest ID option in Settings and go into a quest in order to view the ID needed to search. You may also not have completed any runs for the selected Quest ID or for the selected category.\n\nQuest ID: {0}\nOverlay Mode: {1}\n{2}", questID, selectedOverlayMode, reader.ToString());
+                                var message = string.Format(CultureInfo.InvariantCulture, "Quest ID not found. Please use the Quest ID option in Settings and go into a quest in order to view the ID needed to search. You may also not have completed any runs for the selected Quest ID or for the selected category.\n\nQuest ID: {0}\nOverlay Mode: {1}\nRun Buffs: {2}\n{3}", questID, selectedOverlayMode, selectedRunBuffs, reader.ToString());
                                 var snackbar = new Snackbar(configWindow.ConfigWindowSnackBarPresenter)
                                 {
                                     Style = (Style)configWindow.FindResource("CatppuccinMochaSnackBar"),
@@ -10854,7 +12917,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
     public Dictionary<int, int> GetMostQuestCompletions()
     {
-        Dictionary<int, int> questCompletions = new ();
+        Dictionary<int, int> questCompletions = new();
         if (string.IsNullOrEmpty(this.dataSource))
         {
             Logger.Warn(CultureInfo.InvariantCulture, "Cannot get most quest completions. dataSource: {0}", this.dataSource);
@@ -10902,7 +12965,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
         return questCompletions;
     }
 
-    public string GetQuestCompletions(long questID, string actualOverlayMode, int weaponTypeID)
+    public string GetQuestCompletions(long questID, string actualOverlayMode, int weaponTypeID, long partySize, long runBuffs)
     {
         var questCompletions = "0";
         if (string.IsNullOrEmpty(this.dataSource))
@@ -10925,15 +12988,21 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                             Quests q
                         JOIN 
                             PlayerGear pg ON q.RunID = pg.RunID
+                        JOIN
+                            QuestsRunBuffs qrb ON q.RunID = qrb.RunID
                         WHERE 
                             q.QuestID = @QuestID
                         AND q.ActualOverlayMode = @ActualOverlayMode
-                        AND pg.WeaponTypeID = @WeaponTypeID";
+                        AND pg.WeaponTypeID = @WeaponTypeID
+                        AND q.PartySize = @PartySize
+                        AND qrb.RunBuffs = @RunBuffs";
                     using (var cmd = new SQLiteCommand(sql, conn))
                     {
                         cmd.Parameters.AddWithValue("@QuestID", questID);
                         cmd.Parameters.AddWithValue("@ActualOverlayMode", actualOverlayMode);
                         cmd.Parameters.AddWithValue("@WeaponTypeID", weaponTypeID);
+                        cmd.Parameters.AddWithValue("@PartySize", partySize);
+                        cmd.Parameters.AddWithValue("@RunBuffs", runBuffs);
 
                         using (var reader = cmd.ExecuteReader())
                         {
@@ -11010,9 +13079,331 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
         return questCompletions;
     }
 
+    public async Task<string> GetQuestAttemptsAsync(long questID, string actualOverlayMode, int weaponTypeID, uint runBuffs)
+    {
+        var questAttempts = "0";
+        if (string.IsNullOrEmpty(this.dataSource))
+        {
+            Logger.Warn(CultureInfo.InvariantCulture, "Cannot get quest attempts. dataSource: {0}", this.dataSource);
+            return questAttempts;
+        }
+
+        using (var conn = new SQLiteConnection(this.dataSource))
+        {
+            await conn.OpenAsync();
+            using (var transaction = conn.BeginTransaction())
+            {
+                try
+                {
+                    var sql =
+                        @"SELECT 
+                        Attempts
+                    FROM 
+                        QuestAttempts qa
+                    WHERE 
+                        qa.QuestID = @QuestID
+                    AND qa.ActualOverlayMode = @ActualOverlayMode
+                    AND qa.WeaponTypeID = @WeaponTypeID";
+                    using (var cmd = new SQLiteCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@QuestID", questID);
+                        cmd.Parameters.AddWithValue("@ActualOverlayMode", actualOverlayMode);
+                        cmd.Parameters.AddWithValue("@WeaponTypeID", weaponTypeID);
+
+                        using (var reader = await cmd.ExecuteReaderAsync())
+                        {
+                            if (reader is SQLiteDataReader sqliteReader && await sqliteReader.ReadAsync())
+                            {
+                                questAttempts = Convert.ToInt64(sqliteReader["Attempts"], CultureInfo.InvariantCulture).ToString(CultureInfo.InvariantCulture);
+                            }
+                        }
+                    }
+
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    HandleError(transaction, ex);
+                }
+            }
+        }
+
+        return questAttempts;
+    }
+
+    public async Task<double> GetQuestAttemptsPerPersonalBestAsync(long questID, int weaponTypeID, string actualOverlayMode, uint runBuffs)
+    {
+        var attemptsPerPersonalBest = 0.0;
+        if (string.IsNullOrEmpty(this.dataSource))
+        {
+            Logger.Warn(CultureInfo.InvariantCulture, "Cannot get quest attempts per personal best. dataSource: {0}", this.dataSource);
+            return attemptsPerPersonalBest;
+        }
+
+        var questAttempts = await GetQuestAttemptsAsync(questID, actualOverlayMode, weaponTypeID, runBuffs);
+        var personalBestCount = await GetPersonalBestsCountAsync(questID, weaponTypeID, actualOverlayMode, runBuffs);
+        if (personalBestCount > 0)
+        {
+            attemptsPerPersonalBest = double.Parse(questAttempts, CultureInfo.InvariantCulture) / personalBestCount;
+        }
+
+        return attemptsPerPersonalBest;
+    }
+
+    public double GetQuestAttemptsPerPersonalBest(long questID, int weaponTypeID, string actualOverlayMode, string questAttempts, long partySize, long runBuffs)
+    {
+        var attemptsPerPersonalBest = 0.0;
+        if (string.IsNullOrEmpty(this.dataSource))
+        {
+            Logger.Warn(CultureInfo.InvariantCulture, "Cannot get quest attempts per personal best. dataSource: {0}", this.dataSource);
+            return attemptsPerPersonalBest;
+        }
+
+        var personalBestCount = GetPersonalBestsCount(questID, weaponTypeID, actualOverlayMode, partySize, runBuffs);
+        if (personalBestCount > 0)
+        {
+            attemptsPerPersonalBest = double.Parse(questAttempts, CultureInfo.InvariantCulture) / personalBestCount;
+        }
+
+        return attemptsPerPersonalBest;
+    }
+
+    public async Task<int> GetPersonalBestsCountAsync(long questID, int weaponTypeID, string category, uint runBuffs)
+    {
+        int personalBestCount = 0;
+        long? previousBestTime = null;
+        if (string.IsNullOrEmpty(this.dataSource))
+        {
+            Logger.Warn(CultureInfo.InvariantCulture, "Cannot get personal bests count. dataSource: {0}", this.dataSource);
+            return personalBestCount;
+        }
+
+        using (var conn = new SQLiteConnection(this.dataSource))
+        {
+            await conn.OpenAsync().ConfigureAwait(false);
+            using (var transaction = conn.BeginTransaction())
+            {
+                try
+                {
+                    using (var cmd = new SQLiteCommand(
+                        @"SELECT
+                            q.RunID, q.FinalTimeValue
+                        FROM
+                            Quests q
+                        JOIN
+                            PlayerGear pg ON q.RunID = pg.RunID
+                        WHERE
+                            q.QuestID = @questID AND
+                            q.ActualOverlayMode = @category AND
+                            pg.WeaponTypeID = @weaponTypeID
+                        ORDER BY q.RunID ASC", conn))
+                    {
+                        cmd.Parameters.AddWithValue("@questID", questID);
+                        cmd.Parameters.AddWithValue("@weaponTypeID", weaponTypeID);
+                        cmd.Parameters.AddWithValue("@category", category);
+
+                        using (var reader = await cmd.ExecuteReaderAsync().ConfigureAwait(false))
+                        {
+                            while (await reader.ReadAsync().ConfigureAwait(false))
+                            {
+                                var finalTimeValue = reader.GetInt64(reader.GetOrdinal("FinalTimeValue"));
+
+                                // If this is the first run or the time is less than the previous best, it's a new personal best.
+                                if (!previousBestTime.HasValue || finalTimeValue < previousBestTime.Value)
+                                {
+                                    personalBestCount++;
+                                    previousBestTime = finalTimeValue;
+                                }
+                            }
+                        }
+                    }
+
+                    await transaction.CommitAsync().ConfigureAwait(false);
+                }
+                catch (Exception ex)
+                {
+                    HandleError(transaction, ex);
+                }
+            }
+        }
+
+        return personalBestCount;
+    }
+
+    public int GetPersonalBestsCount(long questID, int weaponTypeID, string category, long partySize, long runBuffs)
+    {
+        int personalBestCount = 0;
+        long? previousBestTime = null;
+        if (string.IsNullOrEmpty(this.dataSource))
+        {
+            Logger.Warn(CultureInfo.InvariantCulture, "Cannot get personal bests count. dataSource: {0}", this.dataSource);
+            return personalBestCount;
+        }
+
+        using (var conn = new SQLiteConnection(this.dataSource))
+        {
+            conn.Open();
+            using (var transaction = conn.BeginTransaction())
+            {
+                try
+                {
+                    using (var cmd = new SQLiteCommand(
+                        @"SELECT
+                            q.RunID, q.FinalTimeValue
+                        FROM
+                            Quests q
+                        JOIN
+                            PlayerGear pg ON q.RunID = pg.RunID
+                        JOIN
+                            QuestsRunBuffs qrb ON q.RunID = qrb.RunID
+                        WHERE
+                            q.QuestID = @questID AND
+                            q.ActualOverlayMode = @category AND
+                            pg.WeaponTypeID = @weaponTypeID AND
+                            q.PartySize = @partySize AND
+                            qrb.RunBuffs = @runBuffs
+                        ORDER BY q.RunID ASC", conn))
+                    {
+                        cmd.Parameters.AddWithValue("@questID", questID);
+                        cmd.Parameters.AddWithValue("@weaponTypeID", weaponTypeID);
+                        cmd.Parameters.AddWithValue("@category", category);
+                        cmd.Parameters.AddWithValue("@partySize", partySize);
+                        cmd.Parameters.AddWithValue("@runBuffs", runBuffs);
+
+                        using (var reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                var finalTimeValue = reader.GetInt64(reader.GetOrdinal("FinalTimeValue"));
+
+                                // If this is the first run or the time is less than the previous best, it's a new personal best.
+                                if (!previousBestTime.HasValue || finalTimeValue < previousBestTime.Value)
+                                {
+                                    personalBestCount++;
+                                    previousBestTime = finalTimeValue;
+                                }
+                            }
+                        }
+                    }
+
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    HandleError(transaction, ex);
+                }
+            }
+        }
+
+        return personalBestCount;
+    }
+
+    public List<Quest> GetQuests(long questID, string weaponName, string actualOverlayMode, uint runBuffs)
+    {
+        List<Quest> quests = new();
+        if (string.IsNullOrEmpty(this.dataSource))
+        {
+            Logger.Warn(CultureInfo.InvariantCulture, "Cannot get quests. dataSource: {0}", this.dataSource);
+            return quests;
+        }
+
+        var weaponTypeID = EZlion.Mapper.WeaponType.IDName.FirstOrDefault(x => x.Value == weaponName).Key;
+
+        using (var conn = new SQLiteConnection(this.dataSource))
+        {
+            conn.Open();
+            using (var transaction = conn.BeginTransaction())
+            {
+                try
+                {
+                    var sql =
+                        @"SELECT 
+                            *
+                        FROM 
+                            Quests q
+                        JOIN 
+                            PlayerGear pg ON q.RunID = pg.RunID
+                        JOIN 
+                            QuestsRunBuffs qrb ON q.RunID = qrb.RunID
+                        WHERE 
+                            q.QuestID = @QuestID
+                        AND q.ActualOverlayMode = @ActualOverlayMode
+                        AND pg.WeaponTypeID = @WeaponTypeID
+                        AND qrb.RunBuffs = @RunBuffs
+                        ORDER BY RunID ASC";
+                    using (var cmd = new SQLiteCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@QuestID", questID);
+                        cmd.Parameters.AddWithValue("@ActualOverlayMode", actualOverlayMode);
+                        cmd.Parameters.AddWithValue("@WeaponTypeID", weaponTypeID);
+                        cmd.Parameters.AddWithValue("@RunBuffs", runBuffs);
+
+                        using (var reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                var quest = new Quest
+                                {
+                                    QuestHash = reader["QuestHash"].ToString(),
+                                    CreatedAt = DateTime.Parse(reader["CreatedAt"]?.ToString() ?? DateTime.UnixEpoch.ToString(CultureInfo.InvariantCulture), CultureInfo.InvariantCulture),
+                                    CreatedBy = reader["CreatedBy"].ToString(),
+                                    RunID = long.Parse(reader["RunID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    QuestID = long.Parse(reader["QuestID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    TimeLeft = long.Parse(reader["TimeLeft"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    FinalTimeValue = long.Parse(reader["FinalTimeValue"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    FinalTimeDisplay = reader["FinalTimeDisplay"].ToString(),
+                                    ObjectiveImage = reader["ObjectiveImage"].ToString(),
+                                    ObjectiveTypeID = long.Parse(reader["ObjectiveTypeID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    ObjectiveQuantity = long.Parse(reader["ObjectiveQuantity"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    StarGrade = long.Parse(reader["StarGrade"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    RankName = reader["RankName"].ToString(),
+                                    ObjectiveName = reader["ObjectiveName"].ToString(),
+                                    Date = DateTime.Parse(reader["Date"]?.ToString() ?? DateTime.UnixEpoch.ToString(CultureInfo.InvariantCulture), CultureInfo.InvariantCulture),
+                                    YouTubeID = reader["YouTubeID"].ToString(),
+                                    AttackBuffDictionary = reader["AttackBuffDictionary"].ToString(),
+                                    HitCountDictionary = reader["HitCountDictionary"].ToString(),
+                                    HitsPerSecondDictionary = reader["HitsPerSecondDictionary"].ToString(),
+                                    DamageDealtDictionary = reader["DamageDealtDictionary"].ToString(),
+                                    DamagePerSecondDictionary = reader["DamagePerSecondDictionary"].ToString(),
+                                    AreaChangesDictionary = reader["AreaChangesDictionary"].ToString(),
+                                    CartsDictionary = reader["CartsDictionary"].ToString(),
+                                    Monster1HPDictionary = reader["Monster1HPDictionary"].ToString(),
+                                    Monster2HPDictionary = reader["Monster2HPDictionary"].ToString(),
+                                    Monster3HPDictionary = reader["Monster3HPDictionary"].ToString(),
+                                    Monster4HPDictionary = reader["Monster4HPDictionary"].ToString(),
+                                    HitsTakenBlockedDictionary = reader["HitsTakenBlockedDictionary"].ToString(),
+                                    HitsTakenBlockedPerSecondDictionary = reader["HitsTakenBlockedPerSecondDictionary"].ToString(),
+                                    PlayerHPDictionary = reader["PlayerHPDictionary"].ToString(),
+                                    PlayerStaminaDictionary = reader["PlayerStaminaDictionary"].ToString(),
+                                    KeyStrokesDictionary = reader["KeyStrokesDictionary"].ToString(),
+                                    MouseInputDictionary = reader["MouseInputDictionary"].ToString(),
+                                    GamepadInputDictionary = reader["GamepadInputDictionary"].ToString(),
+                                    ActionsPerMinuteDictionary = reader["ActionsPerMinuteDictionary"].ToString(),
+                                    OverlayModeDictionary = reader["OverlayModeDictionary"].ToString(),
+                                    ActualOverlayMode = reader["ActualOverlayMode"].ToString(),
+                                    PartySize = long.Parse(reader["PartySize"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                };
+
+                                quests.Add(quest);
+                            }
+                        }
+                    }
+
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    HandleError(transaction, ex);
+                }
+            }
+        }
+
+        return quests;
+    }
+
     public Dictionary<string, int> GetMostCommonObjectiveTypes()
     {
-        Dictionary<string, int> objectiveCounts = new ();
+        Dictionary<string, int> objectiveCounts = new();
         if (string.IsNullOrEmpty(this.dataSource))
         {
             Logger.Warn(CultureInfo.InvariantCulture, "Cannot get most common objective types. dataSource: {0}", this.dataSource);
@@ -11063,7 +13454,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
     public Dictionary<int, int> GetMostCommonStarGrades()
     {
-        Dictionary<int, int> fieldCounts = new ();
+        Dictionary<int, int> fieldCounts = new();
         if (string.IsNullOrEmpty(this.dataSource))
         {
             Logger.Warn(CultureInfo.InvariantCulture, "Cannot get most common star grades. dataSource: {0}", this.dataSource);
@@ -11113,7 +13504,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
     public Dictionary<string, int> GetMostCommonHeadPieces()
     {
-        Dictionary<string, int> fieldCounts = new ();
+        Dictionary<string, int> fieldCounts = new();
         if (string.IsNullOrEmpty(this.dataSource))
         {
             Logger.Warn(CultureInfo.InvariantCulture, "Cannot get most common head pieces. dataSource: {0}", this.dataSource);
@@ -11164,7 +13555,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
     public Dictionary<string, int> GetMostCommonChestPieces()
     {
-        Dictionary<string, int> fieldCounts = new ();
+        Dictionary<string, int> fieldCounts = new();
         if (string.IsNullOrEmpty(this.dataSource))
         {
             Logger.Warn(CultureInfo.InvariantCulture, "Cannot get most common chest pieces. dataSource: {0}", this.dataSource);
@@ -11196,6 +13587,8 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                                 var field = reader.GetInt32(0);
                                 var count = reader.GetInt32(1);
                                 var pieceName = ArmorChest.IDName[field];
+                                if (fieldCounts.ContainsKey(pieceName))
+                                    continue;
                                 fieldCounts.Add(pieceName, count);
                             }
                         }
@@ -11215,7 +13608,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
     public Dictionary<string, int> GetMostCommonArmsPieces()
     {
-        Dictionary<string, int> fieldCounts = new ();
+        Dictionary<string, int> fieldCounts = new();
         if (string.IsNullOrEmpty(this.dataSource))
         {
             Logger.Warn(CultureInfo.InvariantCulture, "Cannot get most common arms pieces. dataSource: {0}", this.dataSource);
@@ -11266,7 +13659,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
     public Dictionary<string, int> GetMostCommonWaistPieces()
     {
-        Dictionary<string, int> fieldCounts = new ();
+        Dictionary<string, int> fieldCounts = new();
         if (string.IsNullOrEmpty(this.dataSource))
         {
             Logger.Warn(CultureInfo.InvariantCulture, "Cannot get most common waist pieces. dataSource: {0}", this.dataSource);
@@ -11317,7 +13710,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
     public Dictionary<string, int> GetMostCommonLegsPieces()
     {
-        Dictionary<string, int> fieldCounts = new ();
+        Dictionary<string, int> fieldCounts = new();
         if (string.IsNullOrEmpty(this.dataSource))
         {
             Logger.Warn(CultureInfo.InvariantCulture, "Cannot get most common legs pieces. dataSource: {0}", this.dataSource);
@@ -11368,7 +13761,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
     public Dictionary<string, int> GetMostCommonDivaSkill()
     {
-        Dictionary<string, int> fieldCounts = new ();
+        Dictionary<string, int> fieldCounts = new();
         if (string.IsNullOrEmpty(this.dataSource))
         {
             Logger.Warn(CultureInfo.InvariantCulture, "Cannot get most common diva skill. dataSource: {0}", this.dataSource);
@@ -11419,7 +13812,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
     public Dictionary<string, int> GetMostCommonGuildFood()
     {
-        Dictionary<string, int> fieldCounts = new ();
+        Dictionary<string, int> fieldCounts = new();
         if (string.IsNullOrEmpty(this.dataSource))
         {
             Logger.Warn(CultureInfo.InvariantCulture, "Cannot get most common guild food. dataSource: {0}", this.dataSource);
@@ -11470,7 +13863,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
     public Dictionary<string, int> GetMostCommonRankBands()
     {
-        Dictionary<string, int> fieldCounts = new ();
+        Dictionary<string, int> fieldCounts = new();
         if (string.IsNullOrEmpty(this.dataSource))
         {
             Logger.Warn(CultureInfo.InvariantCulture, "Cannot get most common rank bands. dataSource: {0}", this.dataSource);
@@ -11520,7 +13913,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
     public Dictionary<string, int> GetMostCommonObjectives()
     {
-        Dictionary<string, int> fieldCounts = new ();
+        Dictionary<string, int> fieldCounts = new();
         if (string.IsNullOrEmpty(this.dataSource))
         {
             Logger.Warn(CultureInfo.InvariantCulture, "Cannot get most common objectives. dataSource: {0}", this.dataSource);
@@ -11570,7 +13963,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
     public Dictionary<string, int> GetMostCommonSetNames()
     {
-        Dictionary<string, int> fieldCounts = new ();
+        Dictionary<string, int> fieldCounts = new();
         if (string.IsNullOrEmpty(this.dataSource))
         {
             Logger.Warn(CultureInfo.InvariantCulture, "Cannot get most common set names. dataSource: {0}", this.dataSource);
@@ -11620,7 +14013,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
     public Dictionary<DateTime, int> GetQuestsCompletedByDate()
     {
-        Dictionary<DateTime, int> questsCompletedByDate = new ();
+        Dictionary<DateTime, int> questsCompletedByDate = new();
         if (string.IsNullOrEmpty(this.dataSource))
         {
             Logger.Warn(CultureInfo.InvariantCulture, "Cannot get quests completed by date. dataSource: {0}", this.dataSource);
@@ -11670,7 +14063,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
     public Dictionary<string, int> GetMostCommonWeaponNames()
     {
-        Dictionary<string, int> weaponCounts = new ();
+        Dictionary<string, int> weaponCounts = new();
         if (string.IsNullOrEmpty(this.dataSource))
         {
             Logger.Warn(CultureInfo.InvariantCulture, "Cannot get most common weapon names. dataSource: {0}", this.dataSource);
@@ -11735,7 +14128,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
     public Dictionary<string, int> GetMostCommonStyleRankSkills()
     {
-        Dictionary<string, int> skillCounts = new ();
+        Dictionary<string, int> skillCounts = new();
         if (string.IsNullOrEmpty(this.dataSource))
         {
             Logger.Warn(CultureInfo.InvariantCulture, "Cannot get most common style rank skills. dataSource: {0}", this.dataSource);
@@ -11801,7 +14194,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
     public Dictionary<string, int> GetMostCommonCaravanSkills()
     {
-        Dictionary<string, int> skillCounts = new ();
+        Dictionary<string, int> skillCounts = new();
         if (string.IsNullOrEmpty(this.dataSource))
         {
             Logger.Warn(CultureInfo.InvariantCulture, "Cannot get most common caravan skills. dataSource: {0}", this.dataSource);
@@ -11875,7 +14268,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
     public Dictionary<int, int> GetMostCommonPartySize()
     {
-        Dictionary<int, int> fieldCounts = new ();
+        Dictionary<int, int> fieldCounts = new();
         if (string.IsNullOrEmpty(this.dataSource))
         {
             Logger.Warn(CultureInfo.InvariantCulture, "Cannot get most common party size. dataSource: {0}", this.dataSource);
@@ -11929,7 +14322,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
     /// <returns></returns>
     public Dictionary<int, int> GetTotalTimeSpentInQuests()
     {
-        Dictionary<int, int> questTimeSpent = new ();
+        Dictionary<int, int> questTimeSpent = new();
         if (string.IsNullOrEmpty(this.dataSource))
         {
             Logger.Warn(CultureInfo.InvariantCulture, "Cannot get total time spent in quests. dataSource: {0}", this.dataSource);
@@ -12170,7 +14563,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                     questCompendium.TotalCartsInQuest = finalCartValues.Sum();
 
                     // Initialize dictionary to hold the total carts for each quest ID
-                    Dictionary<int, int> questTotalCarts = new ();
+                    Dictionary<int, int> questTotalCarts = new();
 
                     // Query to get carts dictionary for all quests with non-empty carts dictionary
                     query = @"SELECT QuestId, CartsDictionary FROM Quests WHERE CartsDictionary IS NOT NULL AND CartsDictionary != '{}'";
@@ -12301,6 +14694,68 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                     var skillFruitUsagePercentage = skillFruitUsageCount * 100.0 / GetTableRowCount("RunID", "Quests", conn);
 
                     questCompendium.PercentOfSkillFruit = skillFruitUsagePercentage;
+
+                    query = @"
+                        SELECT 
+                            RunBuffs
+                        FROM QuestsRunBuffs";
+
+                    var totalQuests = 0;
+                    List<RunBuff> runBuffsList = new();
+
+                    using (var cmd = new SQLiteCommand(query, conn))
+                    {
+                        using (var reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                var runBuffs = (long)reader["RunBuffs"];
+                                runBuffsList.Add((RunBuff)runBuffs);
+                                totalQuests++;
+                            }
+                        }
+                    }
+
+                    var runBuffCount = new Dictionary<RunBuff, int>()
+                    {
+                        { RunBuff.Halk, 0 },
+                        { RunBuff.PoogieItem, 0 },
+                        { RunBuff.DivaSong, 0 },
+                        { RunBuff.HalkPotEffect, 0 },
+                        { RunBuff.Bento, 0 },
+                        { RunBuff.GuildPoogie, 0 },
+                        { RunBuff.ActiveFeature, 0 },
+                        { RunBuff.GuildFood, 0 },
+                        { RunBuff.DivaSkill, 0 },
+                        { RunBuff.SecretTechnique, 0 },
+                        { RunBuff.DivaPrayerGem, 0 },
+                        { RunBuff.CourseAttackBoost, 0 },
+                    };
+
+                    foreach (var runBuff in runBuffsList)
+                    {
+                        foreach (var kvp in runBuffCount)
+                        {
+                            if (runBuff.HasFlag(kvp.Key))
+                            {
+                                runBuffCount[kvp.Key]++;
+                                break;
+                            }
+                        }
+                    }
+                 
+                    if (totalQuests > 0)
+                    {
+                        questCompendium.PercentOfActiveFeature = runBuffCount[RunBuff.ActiveFeature] * 100.0 / totalQuests;
+                        questCompendium.PercentOfDivaSong = runBuffCount[RunBuff.DivaSong] * 100.0 / totalQuests;
+                        questCompendium.PercentOfDivaPrayerGem = runBuffCount[RunBuff.DivaPrayerGem] * 100.0 / totalQuests;
+                        questCompendium.PercentOfGuildPoogie = runBuffCount[RunBuff.GuildPoogie] * 100.0 / totalQuests;
+                        questCompendium.PercentOfHalkOn = runBuffCount[RunBuff.Halk] * 100.0 / totalQuests;
+                        questCompendium.PercentOfHalkPotEffectOn = runBuffCount[RunBuff.HalkPotEffect] * 100.0 / totalQuests;
+                        questCompendium.PercentOfCourseAttackBoost = runBuffCount[RunBuff.CourseAttackBoost] * 100.0 / totalQuests;
+                    }
+
+                    questCompendium.MostCommonGuildPoogie = GetMostCommonGuildPoogie(conn);
 
                     transaction.Commit();
                 }
@@ -12931,6 +15386,52 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
         }
     }
 
+    private static long GetMostCommonGuildPoogie(SQLiteConnection conn)
+    {
+        var guildPoogies = new List<long>();
+        var query = @"SELECT
+                        GuildPoogie1Skill, GuildPoogie2Skill, GuildPoogie3Skill
+                    FROM
+                        QuestsGuildPoogie";
+        using (var cmd = new SQLiteCommand(query, conn))
+        {
+            using (var reader = cmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    var skill1 = (long)reader["GuildPoogie1Skill"];
+                    var skill2 = (long)reader["GuildPoogie2Skill"];
+                    var skill3 = (long)reader["GuildPoogie3Skill"];
+
+                    if (skill1 > 0)
+                    {
+                        guildPoogies.Add(skill1);
+                        continue;
+                    }
+
+                    if (skill2 > 0)
+                    {
+                        guildPoogies.Add(skill2);
+                        continue;
+                    }
+
+                    if (skill3 > 0)
+                    {
+                        guildPoogies.Add(skill3);
+                        continue;
+                    }
+                }
+            }
+        }
+
+        var mostCommonGuildPoogie = guildPoogies
+            .GroupBy(n => n) // Group the numbers
+            .OrderByDescending(g => g.Count()) // Order the groups by their count
+            .FirstOrDefault()?.Key; // Get the key of the first group (most common number)
+
+        return (long)(mostCommonGuildPoogie == null ? 0 : mostCommonGuildPoogie);
+    }
+
     /// <summary>
     /// Gets the maximum value with WHERE clause.
     /// </summary>
@@ -13064,7 +15565,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
     /// <returns></returns>
     private static long GetMostCommonDecorationID(SQLiteConnection conn)
     {
-        Dictionary<long, long> decorationCounts = new ();
+        Dictionary<long, long> decorationCounts = new();
 
         var query = @"
                         SELECT HeadSlot1ID, HeadSlot2ID, HeadSlot3ID, 
@@ -13134,7 +15635,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                         FROM ActiveSkills
                         ";
 
-        Dictionary<long, long> skillCounts = new ();
+        Dictionary<long, long> skillCounts = new();
 
         using (var cmd = new SQLiteCommand(query, conn))
         {
@@ -13924,7 +16425,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
     12. If foreign keys constraints were originally enabled, re-enable them now.
      */
-    private void MigrateToSchemaFromVersion(SQLiteConnection conn, int fromVersion)
+    private void MigrateToSchemaFromVersion(SQLiteConnection conn, int fromVersion, DataLoader dataLoader)
     {
         // Keep in mind if you manually change the user_version to 0 and then perform the updates to for example v0.25.0, you
         // will lose the data for the fields that got updated to v0.25.0, because the program assumes that you are in
@@ -13968,16 +16469,16 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 @"No new schema updates found! Schema version: {0}", fromVersion),
                             string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} to {1})",
                             previousVersion,
-                            App.CurrentProgramVersion),
+                            Program.CurrentProgramVersion),
                             MessageBoxButton.OK,
                             MessageBoxImage.Information);
                         break;
                     case 0: // v0.22.0 or older (TODO: does this work with older or just v0.22.0?)
-                           // change pin type to mode 'pin' for keyboard handling changes
-                           // removing types from previous schema
-                           // sqlite3_exec(db, "DELETE FROM types;", NULL, NULL, NULL);
-                           // NSLog(@"installing current types");
-                           // [self loadInitialData];
+                            // change pin type to mode 'pin' for keyboard handling changes
+                            // removing types from previous schema
+                            // sqlite3_exec(db, "DELETE FROM types;", NULL, NULL, NULL);
+                            // NSLog(@"installing current types");
+                            // [self loadInitialData];
                     {
                         this.PerformUpdateToVersion_0_23_0(conn);
                         newVersion++;
@@ -13986,18 +16487,38 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                     }
 
                     case 1: // v0.25.0
-                           // adds support for recent view tracking
-                           // sqlite3_exec(db, "ALTER TABLE entries ADD COLUMN touched_at TEXT;", NULL, NULL, NULL);
+                            // adds support for recent view tracking
+                            // sqlite3_exec(db, "ALTER TABLE entries ADD COLUMN touched_at TEXT;", NULL, NULL, NULL);
                     {
                         this.PerformUpdateToVersion_0_25_0(conn);
-                        this.EnforceForeignKeys(conn);
+                        // this.EnforceForeignKeys(conn);
                         newVersion++;
                         Logger.Info(CultureInfo.InvariantCulture, "Updated schema to version v0.25.0. newVersion {0}", newVersion);
+                        goto case 2;
+                    }
+                    case 2: // 0.34.0
+                        // fix attempts and pb attempts, set partysize default to 1 for the extra attempts from 2p/3p/4p.
+                        this.PerformUpdateToVersion_0_34_0(conn);
+                        // this.EnforceForeignKeys(conn);
+                        newVersion++;
+                        Logger.Info(CultureInfo.InvariantCulture, "Updated schema to version v0.34.0. newVersion {0}", newVersion);
+                        goto case 3;
+                    case 3: // 0.35.0
+                    {
+                        this.PerformUpdateToVersion_0_35_0(conn, dataLoader);
+                        // this.EnforceForeignKeys(conn);
+                        newVersion++;
+                        Logger.Info(CultureInfo.InvariantCulture, "Updated schema to version v0.35.0. newVersion {0}", newVersion);
+                        goto case 4;
+                    }
+                    case 4:// 0.37.0
+                    {
+                        this.PerformUpdateToVersion_0_37_0(conn, dataLoader);
+                        this.EnforceForeignKeys(conn);
+                        newVersion++;
+                        Logger.Info(CultureInfo.InvariantCulture, "Updated schema to version v0.37.0. newVersion {0}", newVersion);
                         break;
                     }
-
-                    // goto case 2;
-                    // }
                     // case 2://v0.24.0
                     // sqlite3_exec(db, "ALTER TABLE categories ADD COLUMN image TEXT;", NULL, NULL, NULL);
                     // sqlite3_exec(db, "ALTER TABLE categories ADD COLUMN entry_count INTEGER;", NULL, NULL, NULL);
@@ -14063,9 +16584,9 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                 var currentUserVersion = this.GetUserVersion(connection);
 
                 // this will always run the next time the user runs the program after a fresh install. So it always runs at least once.
-                if (App.IsClowdSquirrelUpdating == false && ((App.CurrentProgramVersion != null && App.CurrentProgramVersion.Trim() != previousVersion.Trim()) || currentUserVersion == 0))
+                if (Program.IsVelopackUpdating == false && ((Program.CurrentProgramVersion != null && Program.CurrentProgramVersion.Trim() != previousVersion.Trim()) || currentUserVersion == 0))
                 {
-                    Logger.Info(CultureInfo.InvariantCulture, "Found different program version or userVersion 0. Current: {0}, Previous: {1}, userVersion: {2}", App.CurrentProgramVersion, previousVersion, currentUserVersion);
+                    Logger.Info(CultureInfo.InvariantCulture, "Found different program version or userVersion 0. Current: {0}, Previous: {1}, userVersion: {2}", Program.CurrentProgramVersion, previousVersion, currentUserVersion);
 
                     var result = MessageBox.Show(
 @"A new version of the program has been installed.
@@ -14073,7 +16594,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 Do you want to perform the necessary database updates? A backup of your current MHFZ_Overlay.sqlite file will be done if you accept.
 
 Updating the database structure may take some time, it will transport all of your current data straight to the latest database structure, regardless of the previous database version.",
-string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} to {1})", previousVersion, App.CurrentProgramVersion), MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
+string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} to {1})", previousVersion, Program.CurrentProgramVersion), MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
                     if (result == MessageBoxResult.Yes)
                     {
                         this.UpdateDatabaseSchema(connection, dataLoader, currentUserVersion);
@@ -14255,7 +16776,7 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
             ApplicationService.HandleShutdown();
         }
 
-        this.MigrateToSchemaFromVersion(connection, currentUserVersion);
+        this.MigrateToSchemaFromVersion(connection, currentUserVersion, dataLoader);
         var referenceSchemaFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "MHFZ_Overlay\\reference_schema.json");
         FileService.DeleteFile(referenceSchemaFilePath);
 
@@ -14281,131 +16802,7 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
         // Perform database updates for version 0.23.0
         // Since we already ran the previous functions as described in the docblock,
         // we can skip most table creation and only focus on tables/views/indexes that need a modified schema.
-        var sql = string.Empty;
-
-        // sql = @"ALTER TABLE Quests
-        //                    MODIFY COLUMN Monster1HPDictionary TEXT NOT NULL AFTER PartySize,
-        //                    MODIFY COLUMN Monster2HPDictionary TEXT NOT NULL AFTER Monster1HPDictionary,
-        //                    MODIFY COLUMN Monster3HPDictionary TEXT NOT NULL AFTER Monster2HPDictionary,
-        //                    MODIFY COLUMN Monster4HPDictionary TEXT NOT NULL AFTER Monster3HPDictionary,
-        //                    MODIFY COLUMN Monster1AttackMultiplierDictionary TEXT NOT NULL AFTER Monster4HPDictionary,
-        //                    MODIFY COLUMN Monster1DefenseRateDictionary TEXT NOT NULL AFTER Monster1AttackMultiplierDictionary,
-        //                    MODIFY COLUMN Monster1SizeMultiplierDictionary TEXT NOT NULL AFTER Monster1DefenseRateDictionary,
-        //                    MODIFY COLUMN Monster1PoisonThresholdDictionary TEXT NOT NULL AFTER Monster1SizeMultiplierDictionary,
-        //                    MODIFY COLUMN Monster1SleepThresholdDictionary TEXT NOT NULL AFTER Monster1PoisonThresholdDictionary,
-        //                    MODIFY COLUMN Monster1ParalysisThresholdDictionary TEXT NOT NULL AFTER Monster1SleepThresholdDictionary,
-        //                    MODIFY COLUMN Monster1BlastThresholdDictionary TEXT NOT NULL AFTER Monster1ParalysisThresholdDictionary,
-        //                    MODIFY COLUMN Monster1StunThresholdDictionary TEXT NOT NULL AFTER Monster1BlastThresholdDictionary;
-        //                    MODIFY COLUMN IsHighGradeEdition INTEGER NOT NULL CHECK (IsHighGradeEdition IN (0, 1)) AFTER Monster1StunThresholdDictionary;
-        //                    MODIFY COLUMN RefreshRate INTEGER NOT NULL CHECK (RefreshRate IN (1, 30)) AFTER IsHighGradeEdition;
-        // ";
-        //            using (SQLiteCommand cmd = new SQLiteCommand(sql, connection))
-        //            {
-        //                cmd.ExecuteNonQuery();
-        //            }
-        sql = @"CREATE TABLE IF NOT EXISTS new_Quests
-                    (
-                    QuestHash TEXT NOT NULL DEFAULT '',
-                    CreatedAt TEXT NOT NULL DEFAULT '',
-                    CreatedBy TEXT NOT NULL DEFAULT '',
-                    RunID INTEGER PRIMARY KEY AUTOINCREMENT, 
-                    QuestID INTEGER NOT NULL CHECK (QuestID >= 0) DEFAULT 0, 
-                    TimeLeft INTEGER NOT NULL DEFAULT 0,
-                    FinalTimeValue INTEGER NOT NULL DEFAULT 0,
-                    FinalTimeDisplay TEXT NOT NULL DEFAULT '', 
-                    ObjectiveImage TEXT NOT NULL DEFAULT '',
-                    ObjectiveTypeID INTEGER NOT NULL CHECK (ObjectiveTypeID >= 0) DEFAULT 0, 
-                    ObjectiveQuantity INTEGER NOT NULL DEFAULT 0, 
-                    StarGrade INTEGER NOT NULL DEFAULT 0, 
-                    RankName TEXT NOT NULL DEFAULT '', 
-                    ObjectiveName TEXT NOT NULL DEFAULT '', 
-                    Date TEXT NOT NULL DEFAULT '',
-                    YouTubeID TEXT DEFAULT 'dQw4w9WgXcQ', -- default value for YouTubeID is a Rick Roll video
-                    -- DpsData TEXT NOT NULL DEFAULT '',
-                    AttackBuffDictionary TEXT NOT NULL DEFAULT '{}',
-                    HitCountDictionary TEXT NOT NULL DEFAULT '{}',
-                    HitsPerSecondDictionary TEXT NOT NULL DEFAULT '{}',
-                    DamageDealtDictionary TEXT NOT NULL DEFAULT '{}',
-                    DamagePerSecondDictionary TEXT NOT NULL DEFAULT '{}',
-                    AreaChangesDictionary TEXT NOT NULL DEFAULT '{}',
-                    CartsDictionary TEXT NOT NULL DEFAULT '{}',
-                    HitsTakenBlockedDictionary TEXT NOT NULL DEFAULT '{}',
-                    HitsTakenBlockedPerSecondDictionary TEXT NOT NULL DEFAULT '{}',
-                    PlayerHPDictionary TEXT NOT NULL DEFAULT '{}',
-                    PlayerStaminaDictionary TEXT NOT NULL DEFAULT '{}',
-                    KeystrokesDictionary TEXT NOT NULL DEFAULT '{}',
-                    MouseInputDictionary TEXT NOT NULL DEFAULT '{}',
-                    GamepadInputDictionary TEXT NOT NULL DEFAULT '{}',
-                    ActionsPerMinuteDictionary TEXT NOT NULL DEFAULT '{}',
-                    OverlayModeDictionary TEXT NOT NULL DEFAULT '{}',
-                    ActualOverlayMode TEXT NOT NULL DEFAULT 'Standard',
-                    PartySize INTEGER NOT NULL DEFAULT 0,
-                    Monster1HPDictionary TEXT NOT NULL DEFAULT '{}',
-                    Monster2HPDictionary TEXT NOT NULL DEFAULT '{}',
-                    Monster3HPDictionary TEXT NOT NULL DEFAULT '{}',
-                    Monster4HPDictionary TEXT NOT NULL DEFAULT '{}',
-                    Monster1AttackMultiplierDictionary TEXT NOT NULL DEFAULT '{}',
-                    Monster1DefenseRateDictionary TEXT NOT NULL DEFAULT '{}',
-                    Monster1SizeMultiplierDictionary TEXT NOT NULL DEFAULT '{}',
-                    Monster1PoisonThresholdDictionary TEXT NOT NULL DEFAULT '{}',
-                    Monster1SleepThresholdDictionary TEXT NOT NULL DEFAULT '{}',
-                    Monster1ParalysisThresholdDictionary TEXT NOT NULL DEFAULT '{}',
-                    Monster1BlastThresholdDictionary TEXT NOT NULL DEFAULT '{}',
-                    Monster1StunThresholdDictionary TEXT NOT NULL DEFAULT '{}',
-                    Monster1PartThresholdDictionary TEXT NOT NULL DEFAULT '{}',
-                    Monster2PartThresholdDictionary TEXT NOT NULL DEFAULT '{}',
-                    IsHighGradeEdition INTEGER NOT NULL CHECK (IsHighGradeEdition IN (0, 1)) DEFAULT 0,
-                    RefreshRate INTEGER NOT NULL CHECK (RefreshRate >= 1 AND RefreshRate <= 30) DEFAULT 30,
-                    FOREIGN KEY(ObjectiveTypeID) REFERENCES ObjectiveType(ObjectiveTypeID)
-                    -- FOREIGN KEY(RankNameID) REFERENCES RankName(RankNameID)
-                    )";
-
-        var updateQuery = @"
-        UPDATE new_Quests
-        SET QuestHash = (SELECT QuestHash FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            CreatedAt = (SELECT CreatedAt FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            CreatedBy = (SELECT CreatedBy FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            QuestID = (SELECT QuestID FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            TimeLeft = (SELECT TimeLeft FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            FinalTimeValue = (SELECT FinalTimeValue FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            FinalTimeDisplay = (SELECT FinalTimeDisplay FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            ObjectiveImage = (SELECT ObjectiveImage FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            ObjectiveTypeID = (SELECT ObjectiveTypeID FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            ObjectiveQuantity = (SELECT ObjectiveQuantity FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            StarGrade = (SELECT StarGrade FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            RankName = (SELECT RankName FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            ObjectiveName = (SELECT ObjectiveName FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            Date = (SELECT Date FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            YouTubeID = (SELECT YouTubeID FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            AttackBuffDictionary = (SELECT AttackBuffDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            HitCountDictionary = (SELECT HitCountDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            HitsPerSecondDictionary = (SELECT HitsPerSecondDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            DamageDealtDictionary = (SELECT DamageDealtDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            DamagePerSecondDictionary = (SELECT DamagePerSecondDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            AreaChangesDictionary = (SELECT AreaChangesDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            CartsDictionary = (SELECT CartsDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            HitsTakenBlockedDictionary = (SELECT HitsTakenBlockedDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            HitsTakenBlockedPerSecondDictionary = (SELECT HitsTakenBlockedPerSecondDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            PlayerHPDictionary = (SELECT PlayerHPDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            PlayerStaminaDictionary = (SELECT PlayerStaminaDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            KeystrokesDictionary = (SELECT KeystrokesDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            MouseInputDictionary = (SELECT MouseInputDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            GamepadInputDictionary = (SELECT GamepadInputDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            ActionsPerMinuteDictionary = (SELECT ActionsPerMinuteDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            OverlayModeDictionary = (SELECT OverlayModeDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            ActualOverlayMode = (SELECT ActualOverlayMode FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            PartySize = (SELECT PartySize FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            Monster1HPDictionary = (SELECT Monster1HPDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            Monster2HPDictionary = (SELECT Monster2HPDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            Monster3HPDictionary = (SELECT Monster3HPDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            Monster4HPDictionary = (SELECT Monster4HPDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID)
-            WHERE EXISTS (SELECT 1 FROM Quests WHERE Quests.RunID = new_Quests.RunID)"
-        ;
-
-        // Transfer content from X into new_X using a statement like: INSERT INTO new_X SELECT ... FROM X.
-        AlterTableQuests(connection, sql, updateQuery);
-
-        sql = @"
+        var sql = @"
                     CREATE TABLE IF NOT EXISTS new_GameFolder (
                     GameFolderHash TEXT NOT NULL DEFAULT '',
                     CreatedAt TEXT NOT NULL DEFAULT '',
@@ -14431,71 +16828,224 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
         // without having to recreate the table and manually transfer all the data.
     }
 
-    // Define a function that takes a connection string, the name of the table to alter (X), and the new schema for the table (as a SQL string)
-    private static void AlterTableQuests(SQLiteConnection connection, string newSchema, string updateQuery)
+    private static void AlterTablePersonalBestAttempts(SQLiteConnection connection, string newSchema, string transferDataSql)
     {
-        /*
-         *sql = @"CREATE TABLE IF NOT EXISTS new_Quests
-                (
-                QuestHash TEXT NOT NULL DEFAULT '',
-                CreatedAt TEXT NOT NULL DEFAULT '',
-                CreatedBy TEXT NOT NULL DEFAULT '',
-                RunID INTEGER PRIMARY KEY AUTOINCREMENT,
-                QuestID INTEGER NOT NULL CHECK (QuestID >= 0) DEFAULT 0,
-                TimeLeft INTEGER NOT NULL DEFAULT 0,
-                FinalTimeValue INTEGER NOT NULL DEFAULT 0,
-                FinalTimeDisplay TEXT NOT NULL DEFAULT '',
-                ObjectiveImage TEXT NOT NULL DEFAULT '',
-                ObjectiveTypeID INTEGER NOT NULL CHECK (ObjectiveTypeID >= 0) DEFAULT 0,
-                ObjectiveQuantity INTEGER NOT NULL DEFAULT 0,
-                StarGrade INTEGER NOT NULL DEFAULT 0,
-                RankName TEXT NOT NULL DEFAULT '',
-                ObjectiveName TEXT NOT NULL DEFAULT '',
-                Date TEXT NOT NULL DEFAULT '',
-                YouTubeID TEXT DEFAULT 'dQw4w9WgXcQ', -- default value for YouTubeID is a Rick Roll video
-                -- DpsData TEXT NOT NULL DEFAULT '',
-                AttackBuffDictionary TEXT NOT NULL DEFAULT '{}',
-                HitCountDictionary TEXT NOT NULL DEFAULT '{}',
-                HitsPerSecondDictionary TEXT NOT NULL DEFAULT '{}',
-                DamageDealtDictionary TEXT NOT NULL DEFAULT '{}',
-                DamagePerSecondDictionary TEXT NOT NULL DEFAULT '{}',
-                AreaChangesDictionary TEXT NOT NULL DEFAULT '{}',
-                CartsDictionary TEXT NOT NULL DEFAULT '{}',
-                HitsTakenBlockedDictionary TEXT NOT NULL DEFAULT '{}',
-                HitsTakenBlockedPerSecondDictionary TEXT NOT NULL DEFAULT '{}',
-                PlayerHPDictionary TEXT NOT NULL DEFAULT '{}',
-                PlayerStaminaDictionary TEXT NOT NULL DEFAULT '{}',
-                KeystrokesDictionary TEXT NOT NULL DEFAULT '{}',
-                MouseInputDictionary TEXT NOT NULL DEFAULT '{}',
-                GamepadInputDictionary TEXT NOT NULL DEFAULT '{}',
-                ActionsPerMinuteDictionary TEXT NOT NULL DEFAULT '{}',
-                OverlayModeDictionary TEXT NOT NULL DEFAULT '{}',
-                ActualOverlayMode TEXT NOT NULL DEFAULT 'Standard',
-                PartySize INTEGER NOT NULL DEFAULT 0,
-                Monster1HPDictionary TEXT NOT NULL DEFAULT '{}',
-                Monster2HPDictionary TEXT NOT NULL DEFAULT '{}',
-                Monster3HPDictionary TEXT NOT NULL DEFAULT '{}',
-                Monster4HPDictionary TEXT NOT NULL DEFAULT '{}',
-                Monster1AttackMultiplierDictionary TEXT NOT NULL DEFAULT '{}',
-                Monster1DefenseRateDictionary TEXT NOT NULL DEFAULT '{}',
-                Monster1SizeMultiplierDictionary TEXT NOT NULL DEFAULT '{}',
-                Monster1PoisonThresholdDictionary TEXT NOT NULL DEFAULT '{}',
-                Monster1SleepThresholdDictionary TEXT NOT NULL DEFAULT '{}',
-                Monster1ParalysisThresholdDictionary TEXT NOT NULL DEFAULT '{}',
-                Monster1BlastThresholdDictionary TEXT NOT NULL DEFAULT '{}',
-                Monster1StunThresholdDictionary TEXT NOT NULL DEFAULT '{}',
-                Monster1PartThresholdDictionary TEXT NOT NULL DEFAULT '{}',
-                Monster2PartThresholdDictionary TEXT NOT NULL DEFAULT '{}',
-                IsHighGradeEdition INTEGER NOT NULL CHECK (IsHighGradeEdition IN (0, 1)) DEFAULT 0,
-                RefreshRate INTEGER NOT NULL CHECK (RefreshRate >= 1 AND RefreshRate <= 30) DEFAULT 30,
+        Logger.Info(CultureInfo.InvariantCulture, "Altering PersonalBestAttempts table");
 
-                FOREIGN KEY(ObjectiveTypeID) REFERENCES ObjectiveType(ObjectiveTypeID)
-                -- FOREIGN KEY(RankNameID) REFERENCES RankName(RankNameID)
-                )";
-         */
-        Logger.Info(CultureInfo.InvariantCulture, "Altering Quests table");
+        var tableName = "PersonalBestAttempts";
 
-        var tableName = "Quests";
+        try
+        {
+            // 4. Use CREATE TABLE to construct a new table "new_X" that is in the desired revised format of table X. Make sure that the name "new_X" does not collide with any existing table name, of course.
+            // Use CREATE TABLE to construct a new table "new_X" that is in the desired revised format of table X
+            using (var createTable = new SQLiteCommand(newSchema, connection))
+            {
+                createTable.ExecuteNonQuery();
+            }
+
+            Logger.Debug(CultureInfo.InvariantCulture, "Created table if not exists new_{0}", tableName);
+
+            // 5. Transfer content from X into new_X using a statement like: INSERT INTO new_X SELECT ... FROM X.
+            // Transfer content from X into new_X using a statement like: INSERT INTO new_X SELECT ... FROM X
+
+            // Transfer data from the old table "PersonalBestAttempts" to the new table "new_PersonalBestAttempts".
+            using (var transferDataCmd = new SQLiteCommand(transferDataSql, connection))
+            {
+                transferDataCmd.ExecuteNonQuery();
+            }
+
+            Logger.Debug(CultureInfo.InvariantCulture, "Transferred data from {0} to new_{1}", tableName, tableName);
+
+            // 6. Drop the old table X: DROP TABLE X.
+            // Drop the old table X
+            using (var dropTable = new SQLiteCommand("DROP TABLE " + tableName + ";", connection))
+            {
+                dropTable.ExecuteNonQuery();
+            }
+
+            Logger.Debug(CultureInfo.InvariantCulture, "Deleted table {0}", tableName);
+
+            // 7. Change the name of new_X to X using: ALTER TABLE new_X RENAME TO X.
+            // Change the name of new_X to X using: ALTER TABLE new_X RENAME TO X
+            using (var renameTable = new SQLiteCommand("ALTER TABLE new_" + tableName + " RENAME TO " + tableName + ";", connection))
+            {
+                renameTable.ExecuteNonQuery();
+            }
+
+            Logger.Debug(CultureInfo.InvariantCulture, "Renamed new_{0} to {1}", tableName, tableName);
+
+            // 8. Use CREATE INDEX, CREATE TRIGGER, and CREATE VIEW to reconstruct indexes, triggers, and views associated with table X. Perhaps use the old format of the triggers, indexes, and views saved from step 3 above as a guide, making changes as appropriate for the alteration.
+            // Recreate indexes, triggers, and views associated with the original table "QuestAttempts".
+            // (Assuming you have stored the CREATE statements for indexes, triggers, and views separately)
+
+            // TODO: since im not using any views this still needs testing in case i make views someday.
+            // 9. If any views refer to table X in a way that is affected by the schema change, then drop those views using DROP VIEW and recreate them with whatever changes are necessary to accommodate the schema change using CREATE VIEW.
+            // using (SQLite
+            // Check if any views refer to table X in a way that is affected by the schema change
+
+            // Drop those views using DROP VIEW
+
+            // TODO: test
+            // Recreate views with whatever changes are necessary to accommodate the schema change using CREATE VIEW
+            Logger.Info(CultureInfo.InvariantCulture, "Altered table {0} successfully", tableName);
+        }
+        catch (Exception ex)
+        {
+            // Roll back the transaction if any errors occur
+            Logger.Error(ex, "Could not alter table {0}", tableName);
+            LoggingService.WriteCrashLog(ex, string.Format(CultureInfo.InvariantCulture, "Could not alter table {0}", tableName));
+        }
+    }
+
+    private static void AlterTableQuestAttempts(SQLiteConnection connection, string newSchema, string transferDataSql)
+    {
+        Logger.Info(CultureInfo.InvariantCulture, "Altering QuestAttempts table");
+
+        var tableName = "QuestAttempts";
+
+        try
+        {
+            // 4. Use CREATE TABLE to construct a new table "new_X" that is in the desired revised format of table X. Make sure that the name "new_X" does not collide with any existing table name, of course.
+            // Use CREATE TABLE to construct a new table "new_X" that is in the desired revised format of table X
+            using (var createTable = new SQLiteCommand(newSchema, connection))
+            {
+                createTable.ExecuteNonQuery();
+            }
+
+            Logger.Debug(CultureInfo.InvariantCulture, "Created table if not exists new_{0}", tableName);
+
+            // 5. Transfer content from X into new_X using a statement like: INSERT INTO new_X SELECT ... FROM X.
+            // Transfer content from X into new_X using a statement like: INSERT INTO new_X SELECT ... FROM X
+
+            // Transfer data from the old table "QuestAttempts" to the new table "new_QuestAttempts".
+            using (var transferDataCmd = new SQLiteCommand(transferDataSql, connection))
+            {
+                transferDataCmd.ExecuteNonQuery();
+            }
+
+            Logger.Debug("Transferred data from {0} to new_{1}", tableName, tableName);
+
+            // 6. Drop the old table X: DROP TABLE X.
+            // Drop the old table X
+            using (var dropTable = new SQLiteCommand("DROP TABLE " + tableName + ";", connection))
+            {
+                dropTable.ExecuteNonQuery();
+            }
+
+            Logger.Debug(CultureInfo.InvariantCulture, "Deleted table {0}", tableName);
+
+            // 7. Change the name of new_X to X using: ALTER TABLE new_X RENAME TO X.
+            // Change the name of new_X to X using: ALTER TABLE new_X RENAME TO X
+            using (var renameTable = new SQLiteCommand("ALTER TABLE new_" + tableName + " RENAME TO " + tableName + ";", connection))
+            {
+                renameTable.ExecuteNonQuery();
+            }
+
+            Logger.Debug("Renamed new_{0} to {1}", tableName, tableName);
+
+            // 8. Use CREATE INDEX, CREATE TRIGGER, and CREATE VIEW to reconstruct indexes, triggers, and views associated with table X. Perhaps use the old format of the triggers, indexes, and views saved from step 3 above as a guide, making changes as appropriate for the alteration.
+            // Recreate indexes, triggers, and views associated with the original table "QuestAttempts".
+            // (Assuming you have stored the CREATE statements for indexes, triggers, and views separately)
+
+            // TODO: since im not using any views this still needs testing in case i make views someday.
+            // 9. If any views refer to table X in a way that is affected by the schema change, then drop those views using DROP VIEW and recreate them with whatever changes are necessary to accommodate the schema change using CREATE VIEW.
+            // using (SQLite
+            // Check if any views refer to table X in a way that is affected by the schema change
+
+            // Drop those views using DROP VIEW
+
+            // TODO: test
+            // Recreate views with whatever changes are necessary to accommodate the schema change using CREATE VIEW
+            Logger.Info(CultureInfo.InvariantCulture, "Altered table {0} successfully", tableName);
+        }
+        catch (Exception ex)
+        {
+            // Roll back the transaction if any errors occur
+            Logger.Error(ex, "Could not alter table {0}", tableName);
+            LoggingService.WriteCrashLog(ex, string.Format(CultureInfo.InvariantCulture, "Could not alter table {0}", tableName));
+        }
+    }
+
+    private static void AlterTablePersonalBests(SQLiteConnection connection, string newSchema, string transferDataSql)
+    {
+        Logger.Info(CultureInfo.InvariantCulture, "Altering PersonalBests table");
+
+        var tableName = "PersonalBests";
+
+        try
+        {
+            // 4. Use CREATE TABLE to construct a new table "new_X" that is in the desired revised format of table X. Make sure that the name "new_X" does not collide with any existing table name, of course.
+            // Use CREATE TABLE to construct a new table "new_X" that is in the desired revised format of table X
+            using (var createTable = new SQLiteCommand(newSchema, connection))
+            {
+                createTable.ExecuteNonQuery();
+            }
+
+            Logger.Debug(CultureInfo.InvariantCulture, "Created table if not exists new_{0}", tableName);
+
+            // 5. Transfer content from X into new_X using a statement like: INSERT INTO new_X SELECT ... FROM X.
+            // Transfer content from X into new_X using a statement like: INSERT INTO new_X SELECT ... FROM X
+
+            // Transfer data from the old table "QuestAttempts" to the new table "new_QuestAttempts".
+            using (var transferDataCmd = new SQLiteCommand(transferDataSql, connection))
+            {
+                transferDataCmd.ExecuteNonQuery();
+            }
+
+            Logger.Debug("Transferred data from {0} to new_{1}", tableName, tableName);
+
+            // 6. Drop the old table X: DROP TABLE X.
+            // Drop the old table X
+            using (var dropTable = new SQLiteCommand("DROP TABLE " + tableName + ";", connection))
+            {
+                dropTable.ExecuteNonQuery();
+            }
+
+            Logger.Debug(CultureInfo.InvariantCulture, "Deleted table {0}", tableName);
+
+            // 7. Change the name of new_X to X using: ALTER TABLE new_X RENAME TO X.
+            // Change the name of new_X to X using: ALTER TABLE new_X RENAME TO X
+            using (var renameTable = new SQLiteCommand("ALTER TABLE new_" + tableName + " RENAME TO " + tableName + ";", connection))
+            {
+                renameTable.ExecuteNonQuery();
+            }
+
+            Logger.Debug("Renamed new_{0} to {1}", tableName, tableName);
+
+            // 8. Use CREATE INDEX, CREATE TRIGGER, and CREATE VIEW to reconstruct indexes, triggers, and views associated with table X. Perhaps use the old format of the triggers, indexes, and views saved from step 3 above as a guide, making changes as appropriate for the alteration.
+            // Recreate indexes, triggers, and views associated with the original table "QuestAttempts".
+            // (Assuming you have stored the CREATE statements for indexes, triggers, and views separately)
+
+            // TODO: since im not using any views this still needs testing in case i make views someday.
+            // 9. If any views refer to table X in a way that is affected by the schema change, then drop those views using DROP VIEW and recreate them with whatever changes are necessary to accommodate the schema change using CREATE VIEW.
+            // using (SQLite
+            // Check if any views refer to table X in a way that is affected by the schema change
+
+            // Drop those views using DROP VIEW
+
+            // TODO: test
+            // Recreate views with whatever changes are necessary to accommodate the schema change using CREATE VIEW
+            Logger.Info(CultureInfo.InvariantCulture, "Altered table {0} successfully", tableName);
+        }
+        catch (Exception ex)
+        {
+            // Roll back the transaction if any errors occur
+            Logger.Error(ex, "Could not alter table {0}", tableName);
+            LoggingService.WriteCrashLog(ex, string.Format(CultureInfo.InvariantCulture, "Could not alter table {0}", tableName));
+        }
+    }
+
+    // Define a function that takes a connection string, the name of the table to alter (X), and the new schema for the table (as a SQL string)
+    /// <summary>
+    ///  TODO: Test. Alters table schema and fills it with default values. Does not support tables that have UNIQUE constraint, etc.
+    /// </summary>
+    /// <param name="connection"></param>
+    /// <param name="newSchema"></param>
+    /// <param name="updateQuery"></param>
+    /// <param name="tableName"></param>
+    private static void AlterTableData(SQLiteConnection connection, string newSchema, string updateQuery, string tableName)
+    {
+        Logger.Info(CultureInfo.InvariantCulture, $"Altering {tableName} table");
 
         try
         {
@@ -14510,7 +17060,21 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
             while (reader.Read())
             {
                 var type = reader.GetString(0);
-                var sql = reader.GetString(1);
+                var sql = string.Empty;
+                try
+                {
+                    sql = reader.GetString(1);
+                }
+                catch
+                {
+                    Logger.Info($"Table {tableName} does not contain type {type}");
+                }
+
+                if (sql == string.Empty)
+                {
+                    continue;
+                }
+
                 if (type == "index")
                 {
                     indexSqls.Add(sql);
@@ -14540,15 +17104,15 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
             // Transfer content from X into new_X using a statement like: INSERT INTO new_X SELECT ... FROM X
 
             // Get the number of rows in the Quests table
-            var countQuery = "SELECT COUNT(*) FROM Quests";
+            var countQuery = $"SELECT COUNT(*) FROM {tableName}";
             using (var command = new SQLiteCommand(countQuery, connection))
             {
                 var rowCount = Convert.ToInt32(command.ExecuteScalar(), CultureInfo.InvariantCulture);
 
-                Logger.Debug(CultureInfo.InvariantCulture, "Inserting default values into new_Quests");
+                Logger.Debug(CultureInfo.InvariantCulture, $"Inserting default values into new_{tableName}");
 
                 // Insert rows with default values into new_Quests
-                var insertQuery = $"INSERT INTO new_Quests DEFAULT VALUES";
+                var insertQuery = $"INSERT INTO new_{tableName} DEFAULT VALUES";
                 for (var i = 0; i < rowCount; i++)
                 {
                     using (var insertCommand = new SQLiteCommand(insertQuery, connection))
@@ -14557,7 +17121,7 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
                     }
                 }
 
-                Logger.Debug("Inserted default values into new_Quests");
+                Logger.Debug($"Inserted default values into new_{tableName}");
 
                 // Update values from Quests to new_Quests
                 /*
@@ -14673,147 +17237,6 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
 
             Logger.Debug(CultureInfo.InvariantCulture, "Views affected: {0}", viewSqlsModified.Count);
 
-            Logger.Info(CultureInfo.InvariantCulture, "Altered table {0} successfully", tableName);
-        }
-        catch (Exception ex)
-        {
-            // Roll back the transaction if any errors occur
-            Logger.Error(ex, "Could not alter table {0}", tableName);
-        }
-    }
-
-    private static void AlterTablePersonalBestAttempts(SQLiteConnection connection, string newSchema)
-    {
-        Logger.Info(CultureInfo.InvariantCulture, "Altering PersonalBestAttempts table");
-
-        var tableName = "PersonalBestAttempts";
-
-        try
-        {
-            // 4. Use CREATE TABLE to construct a new table "new_X" that is in the desired revised format of table X. Make sure that the name "new_X" does not collide with any existing table name, of course.
-            // Use CREATE TABLE to construct a new table "new_X" that is in the desired revised format of table X
-            using (var createTable = new SQLiteCommand(newSchema, connection))
-            {
-                createTable.ExecuteNonQuery();
-            }
-
-            Logger.Debug(CultureInfo.InvariantCulture, "Created table if not exists new_{0}", tableName);
-
-            // 5. Transfer content from X into new_X using a statement like: INSERT INTO new_X SELECT ... FROM X.
-            // Transfer content from X into new_X using a statement like: INSERT INTO new_X SELECT ... FROM X
-
-            // Transfer data from the old table "PersonalBestAttempts" to the new table "new_PersonalBestAttempts".
-            var transferDataSql = @"INSERT INTO new_PersonalBestAttempts (QuestID, WeaponTypeID, ActualOverlayMode, Attempts)
-                                SELECT QuestID, WeaponTypeID, ActualOverlayMode, Attempts FROM PersonalBestAttempts;";
-            using (var transferDataCmd = new SQLiteCommand(transferDataSql, connection))
-            {
-                transferDataCmd.ExecuteNonQuery();
-            }
-
-            Logger.Debug(CultureInfo.InvariantCulture, "Transferred data from {0} to new_{1}", tableName, tableName);
-
-            // 6. Drop the old table X: DROP TABLE X.
-            // Drop the old table X
-            using (var dropTable = new SQLiteCommand("DROP TABLE " + tableName + ";", connection))
-            {
-                dropTable.ExecuteNonQuery();
-            }
-
-            Logger.Debug(CultureInfo.InvariantCulture, "Deleted table {0}", tableName);
-
-            // 7. Change the name of new_X to X using: ALTER TABLE new_X RENAME TO X.
-            // Change the name of new_X to X using: ALTER TABLE new_X RENAME TO X
-            using (var renameTable = new SQLiteCommand("ALTER TABLE new_" + tableName + " RENAME TO " + tableName + ";", connection))
-            {
-                renameTable.ExecuteNonQuery();
-            }
-
-            Logger.Debug(CultureInfo.InvariantCulture, "Renamed new_{0} to {1}", tableName, tableName);
-
-            // 8. Use CREATE INDEX, CREATE TRIGGER, and CREATE VIEW to reconstruct indexes, triggers, and views associated with table X. Perhaps use the old format of the triggers, indexes, and views saved from step 3 above as a guide, making changes as appropriate for the alteration.
-            // Recreate indexes, triggers, and views associated with the original table "QuestAttempts".
-            // (Assuming you have stored the CREATE statements for indexes, triggers, and views separately)
-
-            // TODO: since im not using any views this still needs testing in case i make views someday.
-            // 9. If any views refer to table X in a way that is affected by the schema change, then drop those views using DROP VIEW and recreate them with whatever changes are necessary to accommodate the schema change using CREATE VIEW.
-            // using (SQLite
-            // Check if any views refer to table X in a way that is affected by the schema change
-
-            // Drop those views using DROP VIEW
-
-            // TODO: test
-            // Recreate views with whatever changes are necessary to accommodate the schema change using CREATE VIEW
-            Logger.Info(CultureInfo.InvariantCulture, "Altered table {0} successfully", tableName);
-        }
-        catch (Exception ex)
-        {
-            // Roll back the transaction if any errors occur
-            Logger.Error(ex, "Could not alter table {0}", tableName);
-            LoggingService.WriteCrashLog(ex, string.Format(CultureInfo.InvariantCulture, "Could not alter table {0}", tableName));
-        }
-    }
-
-    private static void AlterTableQuestAttempts(SQLiteConnection connection, string newSchema)
-    {
-        Logger.Info(CultureInfo.InvariantCulture, "Altering QuestAttempts table");
-
-        var tableName = "QuestAttempts";
-
-        try
-        {
-            // 4. Use CREATE TABLE to construct a new table "new_X" that is in the desired revised format of table X. Make sure that the name "new_X" does not collide with any existing table name, of course.
-            // Use CREATE TABLE to construct a new table "new_X" that is in the desired revised format of table X
-            using (var createTable = new SQLiteCommand(newSchema, connection))
-            {
-                createTable.ExecuteNonQuery();
-            }
-
-            Logger.Debug(CultureInfo.InvariantCulture, "Created table if not exists new_{0}", tableName);
-
-            // 5. Transfer content from X into new_X using a statement like: INSERT INTO new_X SELECT ... FROM X.
-            // Transfer content from X into new_X using a statement like: INSERT INTO new_X SELECT ... FROM X
-
-            // Transfer data from the old table "QuestAttempts" to the new table "new_QuestAttempts".
-            var transferDataSql = @"INSERT INTO new_QuestAttempts (QuestID, WeaponTypeID, ActualOverlayMode, Attempts)
-                                SELECT QuestID, WeaponTypeID, ActualOverlayMode, Attempts FROM QuestAttempts;";
-            using (var transferDataCmd = new SQLiteCommand(transferDataSql, connection))
-            {
-                transferDataCmd.ExecuteNonQuery();
-            }
-
-            Logger.Debug("Transferred data from {0} to new_{1}", tableName, tableName);
-
-            // 6. Drop the old table X: DROP TABLE X.
-            // Drop the old table X
-            using (var dropTable = new SQLiteCommand("DROP TABLE " + tableName + ";", connection))
-            {
-                dropTable.ExecuteNonQuery();
-            }
-
-            Logger.Debug(CultureInfo.InvariantCulture, "Deleted table {0}", tableName);
-
-            // 7. Change the name of new_X to X using: ALTER TABLE new_X RENAME TO X.
-            // Change the name of new_X to X using: ALTER TABLE new_X RENAME TO X
-            using (var renameTable = new SQLiteCommand("ALTER TABLE new_" + tableName + " RENAME TO " + tableName + ";", connection))
-            {
-                renameTable.ExecuteNonQuery();
-            }
-
-            Logger.Debug("Renamed new_{0} to {1}", tableName, tableName);
-
-            // 8. Use CREATE INDEX, CREATE TRIGGER, and CREATE VIEW to reconstruct indexes, triggers, and views associated with table X. Perhaps use the old format of the triggers, indexes, and views saved from step 3 above as a guide, making changes as appropriate for the alteration.
-            // Recreate indexes, triggers, and views associated with the original table "QuestAttempts".
-            // (Assuming you have stored the CREATE statements for indexes, triggers, and views separately)
-
-            // TODO: since im not using any views this still needs testing in case i make views someday.
-            // 9. If any views refer to table X in a way that is affected by the schema change, then drop those views using DROP VIEW and recreate them with whatever changes are necessary to accommodate the schema change using CREATE VIEW.
-            // using (SQLite
-            // Check if any views refer to table X in a way that is affected by the schema change
-
-            // Drop those views using DROP VIEW
-
-            // TODO: test
-            // Recreate views with whatever changes are necessary to accommodate the schema change using CREATE VIEW
             Logger.Info(CultureInfo.InvariantCulture, "Altered table {0} successfully", tableName);
         }
         catch (Exception ex)
@@ -15027,9 +17450,9 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
             var rememberFormat = new SQLiteCommand("SELECT type, sql FROM sqlite_schema WHERE tbl_name=@tableName;", connection);
             rememberFormat.Parameters.AddWithValue("@tableName", tableName);
             var reader = rememberFormat.ExecuteReader();
-            List<string> indexSqls = new ();
-            List<string> triggerSqls = new ();
-            List<string> viewSqls = new ();
+            List<string> indexSqls = new();
+            List<string> triggerSqls = new();
+            List<string> viewSqls = new();
             while (reader.Read())
             {
                 var type = reader.GetString(0);
@@ -15121,8 +17544,8 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
             // Check if any views refer to table X in a way that is affected by the schema change
             var findViews = new SQLiteCommand("SELECT name, sql FROM sqlite_master WHERE type='view' AND sql LIKE '% " + tableName + " %';", connection);
             var viewReader = findViews.ExecuteReader();
-            List<string> viewNames = new ();
-            List<string> viewSqlsModified = new ();
+            List<string> viewNames = new();
+            List<string> viewSqlsModified = new();
             while (viewReader.Read())
             {
                 viewNames.Add(viewReader.GetString(0));
@@ -15331,41 +17754,7 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
             WHERE EXISTS (SELECT 1 FROM Quests WHERE Quests.RunID = new_Quests.RunID)"
                ;
 
-        AlterTableQuests(connection, sql, updateQuery);
-
-        sql = @"CREATE TABLE IF NOT EXISTS new_QuestAttempts(
-                    QuestAttemptsID INTEGER PRIMARY KEY AUTOINCREMENT,
-                    QuestID INTEGER NOT NULL,
-                    WeaponTypeID INTEGER NOT NULL,
-                    ActualOverlayMode TEXT NOT NULL,
-                    Attempts INTEGER NOT NULL,
-                    FOREIGN KEY(WeaponTypeID) REFERENCES WeaponType(WeaponTypeID),
-                    UNIQUE (QuestID, WeaponTypeID, ActualOverlayMode)
-                    )
-                    ";
-        using (var cmd = new SQLiteCommand(sql, connection))
-        {
-            cmd.ExecuteNonQuery();
-        }
-
-        AlterTableQuestAttempts(connection, sql);
-
-        sql = @"CREATE TABLE IF NOT EXISTS new_PersonalBestAttempts(
-                    PersonalBestAttemptsID INTEGER PRIMARY KEY AUTOINCREMENT,
-                    QuestID INTEGER NOT NULL,
-                    WeaponTypeID INTEGER NOT NULL,
-                    ActualOverlayMode TEXT NOT NULL,
-                    Attempts INTEGER NOT NULL,
-                    FOREIGN KEY(WeaponTypeID) REFERENCES WeaponType(WeaponTypeID),
-                    UNIQUE (QuestID, WeaponTypeID, ActualOverlayMode)
-                    )
-                    ";
-        using (var cmd = new SQLiteCommand(sql, connection))
-        {
-            cmd.ExecuteNonQuery();
-        }
-
-        AlterTablePersonalBestAttempts(connection, sql);
+        AlterTableData(connection, sql, updateQuery, "Quests");
 
         sql = @"DROP TABLE GachaCard";
         using (var cmd = new SQLiteCommand(sql, connection))
@@ -15417,6 +17806,863 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
         Logger.Debug("Recreated Bingo table");
     }
 
+    /// <summary>
+    /// Performs the update to version 0 25 0.
+    /// </summary>
+    /// <param name="connection">The connection.</param>
+    private void PerformUpdateToVersion_0_34_0(SQLiteConnection connection)
+    {
+        var sql = @"CREATE TABLE IF NOT EXISTS new_PersonalBestAttempts
+                    (
+                    PersonalBestAttemptsID INTEGER PRIMARY KEY AUTOINCREMENT,
+                    QuestID INTEGER NOT NULL CHECK (QuestID >= 0) DEFAULT 0, 
+                    WeaponTypeID INTEGER NOT NULL DEFAULT 0,
+                    ActualOverlayMode TEXT NOT NULL DEFAULT 'Standard',
+                    Attempts INTEGER NOT NULL DEFAULT 0,
+                    PartySize INTEGER NOT NULL DEFAULT 1,
+                    FOREIGN KEY(WeaponTypeID) REFERENCES WeaponType(WeaponTypeID),
+                    UNIQUE (QuestID, WeaponTypeID, ActualOverlayMode, PartySize)
+                    )";
+        using (var cmd = new SQLiteCommand(sql, connection))
+        {
+            cmd.ExecuteNonQuery();
+        }
+
+        var transferDataSql = @"INSERT INTO new_PersonalBestAttempts (QuestID, WeaponTypeID, ActualOverlayMode, Attempts, PartySize)
+                                SELECT QuestID, WeaponTypeID, ActualOverlayMode, Attempts, 1 FROM PersonalBestAttempts;";
+
+        AlterTablePersonalBestAttempts(connection, sql, transferDataSql);
+
+        sql = @"CREATE TABLE IF NOT EXISTS new_QuestAttempts(
+                    QuestAttemptsID INTEGER PRIMARY KEY AUTOINCREMENT,
+                    QuestID INTEGER NOT NULL CHECK (QuestID >= 0) DEFAULT 0, 
+                    WeaponTypeID INTEGER NOT NULL DEFAULT 0,
+                    ActualOverlayMode TEXT NOT NULL DEFAULT 'Standard',
+                    Attempts INTEGER NOT NULL DEFAULT 1,
+                    PartySize INTEGER NOT NULL DEFAULT 1,
+                    FOREIGN KEY(WeaponTypeID) REFERENCES WeaponType(WeaponTypeID),
+                    UNIQUE (QuestID, WeaponTypeID, ActualOverlayMode, PartySize)
+                    )
+                    ";
+        using (var cmd = new SQLiteCommand(sql, connection))
+        {
+            cmd.ExecuteNonQuery();
+        }
+
+        transferDataSql = @"INSERT INTO new_QuestAttempts (QuestID, WeaponTypeID, ActualOverlayMode, Attempts, PartySize)
+                                SELECT QuestID, WeaponTypeID, ActualOverlayMode, Attempts, 1 FROM QuestAttempts;";
+
+        AlterTableQuestAttempts(connection, sql, transferDataSql);
+
+        sql = @"CREATE TABLE IF NOT EXISTS new_PersonalBests(
+                    PersonalBestsID INTEGER PRIMARY KEY AUTOINCREMENT,
+                    RunID INTEGER NOT NULL DEFAULT 0,
+                    Attempts INTEGER NOT NULL DEFAULT 1,
+                    PartySize INTEGER NOT NULL DEFAULT 1,
+                    FOREIGN KEY(RunID) REFERENCES Quests(RunID)
+                    )
+                    ";
+        using (var cmd = new SQLiteCommand(sql, connection))
+        {
+            cmd.ExecuteNonQuery();
+        }
+
+        transferDataSql = @"INSERT INTO new_PersonalBests (RunID, Attempts, PartySize)
+               SELECT PersonalBests.RunID, PersonalBests.Attempts, Quests.PartySize
+               FROM PersonalBests
+               INNER JOIN Quests ON PersonalBests.RunID = Quests.RunID";
+
+        AlterTablePersonalBests(connection, sql, transferDataSql);
+    }
+
+    private void PerformUpdateToVersion_0_35_0(SQLiteConnection connection, DataLoader dataLoader)
+    {
+        var sql = @"CREATE TABLE IF NOT EXISTS new_PersonalBestAttempts
+                    (
+                    PersonalBestAttemptsID INTEGER PRIMARY KEY AUTOINCREMENT,
+                    QuestID INTEGER NOT NULL CHECK (QuestID >= 0) DEFAULT 0, 
+                    WeaponTypeID INTEGER NOT NULL DEFAULT 0,
+                    ActualOverlayMode TEXT NOT NULL DEFAULT 'Standard',
+                    Attempts INTEGER NOT NULL DEFAULT 0,
+                    PartySize INTEGER NOT NULL DEFAULT 1,
+                    RunBuffs INTEGER NOT NULL DEFAULT 0,
+                    FOREIGN KEY(WeaponTypeID) REFERENCES WeaponType(WeaponTypeID),
+                    UNIQUE (QuestID, WeaponTypeID, ActualOverlayMode, PartySize, RunBuffs)
+                    )";
+        using (var cmd = new SQLiteCommand(sql, connection))
+        {
+            cmd.ExecuteNonQuery();
+        }
+
+        var transferDataSql = @"INSERT INTO new_PersonalBestAttempts (QuestID, WeaponTypeID, ActualOverlayMode, Attempts, PartySize, RunBuffs)
+                                SELECT QuestID, WeaponTypeID, ActualOverlayMode, Attempts, PartySize, 0 FROM PersonalBestAttempts;";
+
+        AlterTablePersonalBestAttempts(connection, sql, transferDataSql);
+
+        sql = @"CREATE TABLE IF NOT EXISTS new_QuestAttempts(
+                    QuestAttemptsID INTEGER PRIMARY KEY AUTOINCREMENT,
+                    QuestID INTEGER NOT NULL CHECK (QuestID >= 0) DEFAULT 0, 
+                    WeaponTypeID INTEGER NOT NULL DEFAULT 0,
+                    ActualOverlayMode TEXT NOT NULL DEFAULT 'Standard',
+                    Attempts INTEGER NOT NULL DEFAULT 1,
+                    PartySize INTEGER NOT NULL DEFAULT 1,
+                    RunBuffs INTEGER NOT NULL DEFAULT 0,
+                    FOREIGN KEY(WeaponTypeID) REFERENCES WeaponType(WeaponTypeID),
+                    UNIQUE (QuestID, WeaponTypeID, ActualOverlayMode, PartySize, RunBuffs)
+                    )
+                    ";
+        using (var cmd = new SQLiteCommand(sql, connection))
+        {
+            cmd.ExecuteNonQuery();
+        }
+
+        transferDataSql = @"INSERT INTO new_QuestAttempts (QuestID, WeaponTypeID, ActualOverlayMode, Attempts, PartySize, RunBuffs)
+                                SELECT QuestID, WeaponTypeID, ActualOverlayMode, Attempts, PartySize, 0 FROM QuestAttempts;";
+
+        AlterTableQuestAttempts(connection, sql, transferDataSql);
+
+        sql = @"CREATE TABLE IF NOT EXISTS new_PersonalBests(
+                    PersonalBestsID INTEGER PRIMARY KEY AUTOINCREMENT,
+                    RunID INTEGER NOT NULL DEFAULT 0,
+                    Attempts INTEGER NOT NULL DEFAULT 1,
+                    PartySize INTEGER NOT NULL DEFAULT 1,
+                    RunBuffs INTEGER NOT NULL DEFAULT 0,
+                    FOREIGN KEY(RunID) REFERENCES Quests(RunID)
+                    )
+                    ";
+        using (var cmd = new SQLiteCommand(sql, connection))
+        {
+            cmd.ExecuteNonQuery();
+        }
+
+        transferDataSql = @"INSERT INTO new_PersonalBests (RunID, Attempts, PartySize, RunBuffs)
+               SELECT PersonalBests.RunID, PersonalBests.Attempts, Quests.PartySize, 0
+               FROM PersonalBests
+               INNER JOIN Quests ON PersonalBests.RunID = Quests.RunID";
+
+        AlterTablePersonalBests(connection, sql, transferDataSql);
+    }
+
+    private void PerformUpdateToVersion_0_37_0(SQLiteConnection connection, DataLoader dataLoader)
+    {
+        // TODO replace actualoverlaymode speedruns and runbuffs at 0. first do the runbuffs.
+        UpdateRunBuffs(connection, dataLoader);
+        UpdateQuestsActualOverlayMode(connection);
+        UpdateTableActualOverlayMode("PersonalBestAttempts", connection);
+        UpdateTableActualOverlayMode("QuestAttempts", connection);
+
+        UpdateQuestsObjectiveImage(connection);
+        UpdateQuestsMonsterDictionaries(connection, dataLoader);
+        FillQuestsGamePatch(connection, dataLoader);
+
+        // for privacy
+        ChangeGameFolderPath(connection);
+    }
+
+    private void ChangeGameFolderPath(SQLiteConnection conn)
+    {
+        if (string.IsNullOrEmpty(this.dataSource))
+        {
+            Logger.Warn(CultureInfo.InvariantCulture, "Cannot change game folder path. dataSource: {0}", this.dataSource);
+            return;
+        }
+
+        // Start a transaction
+        using (var transaction = conn.BeginTransaction())
+        {
+            try
+            {
+                using (var cmd0 = new SQLiteCommand(conn))
+                {
+                    cmd0.CommandText = @"DROP TRIGGER IF EXISTS prevent_game_folder_updates";
+                    cmd0.ExecuteNonQuery();
+                }
+
+                using (var cmd = new SQLiteCommand(conn))
+                {
+                    cmd.CommandText = "SELECT * FROM GameFolder";
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            var path = reader["GameFolderPath"]?.ToString() ?? string.Empty;
+                            var runID = long.Parse(reader["RunID"]?.ToString() ?? "0", CultureInfo.InvariantCulture);
+
+                            if (path == string.Empty || path == null || runID == 0)
+                            {
+                                continue;
+                            }
+
+                            var newPath = path == @"C:\Program Files (x86)\CAPCOM\Monster Hunter Frontier Online" ? "Standard" : "Custom";
+
+                            using (var cmd2 = new SQLiteCommand(conn))
+                            {
+                                cmd2.CommandText =
+                                @"UPDATE GameFolder SET GameFolderPath = @GameFolderPath WHERE RunID = @RunID";
+                                cmd2.Parameters.AddWithValue("@RunID", runID);
+                                cmd2.Parameters.AddWithValue("@GameFolderPath", newPath);
+
+                                cmd2.ExecuteNonQuery();
+                            }
+                        }
+                    }
+                }
+
+                using (var cmd1 = new SQLiteCommand(conn))
+                {
+                    cmd1.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_game_folder_updates
+                        AFTER UPDATE ON GameFolder
+                        BEGIN
+                          SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
+                        END;";
+                    cmd1.ExecuteNonQuery();
+                }
+
+                // Commit the transaction
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                HandleError(transaction, ex);
+            }
+        }
+
+        Logger.Debug("Changed game folder paths in GameFolder table");
+    }
+
+    private void FillQuestsGamePatch(SQLiteConnection conn, DataLoader dataLoader)
+    {
+        if (string.IsNullOrEmpty(this.dataSource))
+        {
+            Logger.Warn(CultureInfo.InvariantCulture, "Cannot fill game patch. dataSource: {0}", this.dataSource);
+            return;
+        }
+
+        // Start a transaction
+        using (var transaction = conn.BeginTransaction())
+        {
+            try
+            {
+                using (var cmd0 = new SQLiteCommand(conn))
+                {
+                    cmd0.CommandText = @"DROP TRIGGER IF EXISTS prevent_quests_game_patch_updates";
+                    cmd0.ExecuteNonQuery();
+                }
+
+                using (var cmd = new SQLiteCommand(conn))
+                {
+                    cmd.CommandText = "SELECT * FROM GameFolder";
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            var runID = long.Parse(reader["RunID"]?.ToString() ?? "0", CultureInfo.InvariantCulture);
+                            var dat = reader["mhfdatHash"]?.ToString() ?? "0";
+                            var emd = reader["mhfemdHash"]?.ToString() ?? "0";
+                            var mhfodll = reader["mhfodllHash"]?.ToString() ?? "0";
+                            var mhfohddll = reader["mhfohddllHash"]?.ToString() ?? "0";
+
+                            if (runID == 0)
+                            {
+                                continue;
+                            }
+
+                            using (var cmd2 = new SQLiteCommand(conn))
+                            {
+                                cmd2.CommandText =
+                                @"INSERT INTO
+                                    QuestsGamePatch(RunID, mhfdatInfo, mhfemdInfo, mhfodllInfo, mhfohddllInfo)
+                                VALUES
+                                    (
+                                    @RunID,
+                                    @mhfdatInfo,
+                                    @mhfemdInfo,
+                                    @mhfodllInfo,
+                                    @mhfohddllInfo
+                                    )";
+                                cmd2.Parameters.AddWithValue("@RunID", runID);
+                                cmd2.Parameters.AddWithValue("@mhfdatInfo", dataLoader.Model.GetGamePatchInfo(GamePatchFile.dat, dat));
+                                cmd2.Parameters.AddWithValue("@mhfemdInfo", dataLoader.Model.GetGamePatchInfo(GamePatchFile.emd, emd));
+                                cmd2.Parameters.AddWithValue("@mhfodllInfo", dataLoader.Model.GetGamePatchInfo(GamePatchFile.dll, mhfodll));
+                                cmd2.Parameters.AddWithValue("@mhfohddllInfo", dataLoader.Model.GetGamePatchInfo(GamePatchFile.hddll, mhfohddll));
+
+                                cmd2.ExecuteNonQuery();
+                            }
+                        }
+                    }
+                }
+
+                using (var cmd1 = new SQLiteCommand(conn))
+                {
+                    cmd1.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_quests_game_patch_updates
+                        AFTER UPDATE ON QuestsGamePatch
+                        BEGIN
+                          SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
+                        END;";
+                    cmd1.ExecuteNonQuery();
+                }
+
+                // Commit the transaction
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                HandleError(transaction, ex);
+            }
+        }
+
+        Logger.Debug("Filled game patches values in table");
+    }
+
+    /// <summary>
+    /// Updates objective images.
+    /// </summary>
+    /// <param name="conn"></param>
+    private void UpdateQuestsObjectiveImage(SQLiteConnection conn)
+    {
+        if (string.IsNullOrEmpty(this.dataSource))
+        {
+            Logger.Warn(CultureInfo.InvariantCulture, "Cannot update objective images for quests table. dataSource: {0}", this.dataSource);
+            return;
+        }
+
+        // Start a transaction
+        using (var transaction = conn.BeginTransaction())
+        {
+            try
+            {
+                using (var cmd0 = new SQLiteCommand(conn))
+                {
+                    cmd0.CommandText = @"DROP TRIGGER IF EXISTS prevent_quest_updates";
+                    cmd0.ExecuteNonQuery();
+                }
+
+                using (var cmd = new SQLiteCommand(conn))
+                {
+                    cmd.CommandText = "SELECT * FROM Quests";
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            var img = reader["ObjectiveImage"].ToString();
+                            var runID = long.Parse(reader["RunID"]?.ToString() ?? "0", CultureInfo.InvariantCulture);
+                            var questID = long.Parse(reader["QuestID"]?.ToString() ?? "0", CultureInfo.InvariantCulture);
+
+                            if (runID == 0 || img == "" || img == null || questID == 0)
+                            {
+                                continue;
+                            }
+
+                            var newImg = questID == Numbers.QuestIDFirstDistrictDuremudira || questID == Numbers.QuestIDSecondDistrictDuremudira ? MonsterImages.MonsterImageID[132] : img.Replace(Messages.MonsterImageBaseLinkGitHub, Messages.MonsterImageBaseLinkApp);
+
+                            if (newImg == img)
+                            {
+                                continue;
+                            }
+
+                            using (var cmd2 = new SQLiteCommand(conn))
+                            {
+                                cmd2.CommandText = "UPDATE Quests SET ObjectiveImage = @newImg WHERE RunID = @RunID";
+                                cmd2.Parameters.AddWithValue("@RunID", runID);
+                                cmd2.Parameters.AddWithValue("@newImg", newImg);
+
+                                cmd2.ExecuteNonQuery();
+                            }
+                        }
+                    }
+                }
+
+                using (var cmd1 = new SQLiteCommand(conn))
+                {
+                    cmd1.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_quest_updates
+                        AFTER UPDATE ON Quests
+                        FOR EACH ROW
+                        WHEN NEW.YouTubeID = OLD.YouTubeID
+                        BEGIN
+                            SELECT RAISE(ABORT, 'Cannot update quest fields');
+                        END;";
+                    cmd1.ExecuteNonQuery();
+                }
+
+                // Commit the transaction
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                HandleError(transaction, ex);
+            }
+        }
+
+        Logger.Debug("Updated objective images in quests table");
+    }
+
+    /// <summary>
+    /// For dures/ravi/etc.
+    /// </summary>
+    /// <param name="conn"></param>
+    private void UpdateQuestsMonsterDictionaries(SQLiteConnection conn, DataLoader dataLoader)
+    {
+        if (string.IsNullOrEmpty(this.dataSource))
+        {
+            Logger.Warn(CultureInfo.InvariantCulture, "Cannot update monster dictionaries for quests table. dataSource: {0}", this.dataSource);
+            return;
+        }
+
+        // Start a transaction
+        using (var transaction = conn.BeginTransaction())
+        {
+            try
+            {
+                using (var cmd0 = new SQLiteCommand(conn))
+                {
+                    cmd0.CommandText = @"DROP TRIGGER IF EXISTS prevent_quest_updates";
+                    cmd0.ExecuteNonQuery();
+                }
+
+                using (var cmd = new SQLiteCommand(conn))
+                {
+                    cmd.CommandText = "SELECT * FROM Quests";
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            var questID = long.Parse(reader["QuestID"]?.ToString() ?? "0", CultureInfo.InvariantCulture);
+
+                            if (questID != Numbers.QuestIDFirstDistrictDuremudira && questID != Numbers.QuestIDSecondDistrictDuremudira && questID != Numbers.QuestIDArrogantDuremudira && questID != Numbers.QuestIDArrogantDuremudiraRepel)
+                            {
+                                continue;
+                            }
+
+                            string monster1HPString = reader["Monster1HPDictionary"].ToString() ?? "{}";
+
+                            if (monster1HPString == string.Empty || monster1HPString == "{}")
+                            {
+                                continue;
+                            }
+
+                            string monster1AttackMultiplierString = reader["Monster1AttackMultiplierDictionary"].ToString() ?? "{}";
+                            string monster1DefenseRateString = reader["Monster1DefenseRateDictionary"].ToString() ?? "{}";
+                            string monster1SizeMultiplierString = reader["Monster1SizeMultiplierDictionary"].ToString() ?? "{}";
+                            string monster1StunThresholdString = reader["Monster1StunThresholdDictionary"].ToString() ?? "{}";
+                            string monster1PartThresholdString = reader["Monster1PartThresholdDictionary"].ToString() ?? "{}";
+
+                            var runID = long.Parse(reader["RunID"]?.ToString() ?? "0", CultureInfo.InvariantCulture);
+
+                            var monster1HPDictionary = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int, int>>>(monster1HPString);
+                            var monster1AttackMultiplierDictionary = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int, double>>>(monster1AttackMultiplierString);
+                            var monster1DefenseRateDictionary = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int, double>>>(monster1DefenseRateString);
+                            var monster1SizeMultiplierDictionary = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int, double>>>(monster1SizeMultiplierString);
+                            var monster1StunThresholdDictionary = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int, int>>>(monster1StunThresholdString);
+                            var monster1PartThresholdDictionary = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int, List<int>>>>(monster1PartThresholdString);
+
+                            if (monster1HPDictionary == null || runID == 0 || monster1HPDictionary.Count == 0 || questID == 0)
+                            {
+                                continue;
+                            }
+
+                            Dictionary<int, Dictionary<int, int>> newMonster1HPDictionary = new();
+                            Dictionary<int, Dictionary<int, double>> newMonster1AttackMultiplierDictionary = new();
+                            Dictionary<int, Dictionary<int, double>> newMonster1DefenseRateDictionary = new();
+                            Dictionary<int, Dictionary<int, double>> newMonster1SizeMultiplierDictionary = new();
+                            Dictionary<int, Dictionary<int, int>> newMonster1StunThresholdDictionary = new();
+                            Dictionary<int, Dictionary<int, List<int>>> newMonster1PartThresholdDictionary = new();
+
+                            // check if its dure or alt quest
+                            // if it is, change it
+                            // TODO ravi?
+                            foreach (var entry in monster1HPDictionary)
+                            {
+                                var monsterID = entry.Value.FirstOrDefault().Key;
+
+                                if (dataLoader.Model.IsDure((int)questID) || dataLoader.Model.IsAlternativeQuestName((int)questID))
+                                {
+                                    switch (questID)
+                                    {
+                                        case Numbers.QuestIDArrogantDuremudira:
+                                        case Numbers.QuestIDArrogantDuremudiraRepel:
+                                            monsterID = 167;
+                                            break;
+                                        case Numbers.QuestIDFirstDistrictDuremudira:
+                                        case Numbers.QuestIDSecondDistrictDuremudira:
+                                            monsterID = 132;
+                                            break;
+                                    }
+                                }
+
+                                Dictionary<int, int> monsterEntry = new Dictionary<int, int>()
+                                {
+                                    {monsterID, entry.Value.FirstOrDefault().Value},
+                                };
+
+                                newMonster1HPDictionary.Add(entry.Key, monsterEntry);
+                            }
+
+                            if (monster1AttackMultiplierDictionary != null)
+                            {
+                                foreach (var entry in monster1AttackMultiplierDictionary)
+                                {
+                                    var monsterID = entry.Value.FirstOrDefault().Key;
+
+                                    if (dataLoader.Model.IsDure((int)questID) || dataLoader.Model.IsAlternativeQuestName((int)questID))
+                                    {
+                                        switch (questID)
+                                        {
+                                            case Numbers.QuestIDArrogantDuremudira:
+                                            case Numbers.QuestIDArrogantDuremudiraRepel:
+                                                monsterID = 167;
+                                                break;
+                                            case Numbers.QuestIDFirstDistrictDuremudira:
+                                            case Numbers.QuestIDSecondDistrictDuremudira:
+                                                monsterID = 132;
+                                                break;
+                                        }
+                                    }
+
+                                    Dictionary<int, double> monsterEntry = new Dictionary<int, double>()
+                                {
+                                    {monsterID, entry.Value.FirstOrDefault().Value},
+                                };
+
+                                    newMonster1AttackMultiplierDictionary.Add(entry.Key, monsterEntry);
+                                }
+                            }
+
+                            if (monster1DefenseRateDictionary != null)
+                            {
+                                foreach (var entry in monster1DefenseRateDictionary)
+                                {
+                                    var monsterID = entry.Value.FirstOrDefault().Key;
+
+                                    if (dataLoader.Model.IsDure((int)questID) || dataLoader.Model.IsAlternativeQuestName((int)questID))
+                                    {
+                                        switch (questID)
+                                        {
+                                            case Numbers.QuestIDArrogantDuremudira:
+                                            case Numbers.QuestIDArrogantDuremudiraRepel:
+                                                monsterID = 167;
+                                                break;
+                                            case Numbers.QuestIDFirstDistrictDuremudira:
+                                            case Numbers.QuestIDSecondDistrictDuremudira:
+                                                monsterID = 132;
+                                                break;
+                                        }
+                                    }
+
+                                    Dictionary<int, double> monsterEntry = new Dictionary<int, double>()
+                                {
+                                    {monsterID, entry.Value.FirstOrDefault().Value},
+                                };
+
+                                    newMonster1DefenseRateDictionary.Add(entry.Key, monsterEntry);
+                                }
+                            }
+
+                            if (monster1SizeMultiplierDictionary != null)
+                            {
+                                foreach (var entry in monster1SizeMultiplierDictionary)
+                                {
+                                    var monsterID = entry.Value.FirstOrDefault().Key;
+
+                                    if (dataLoader.Model.IsDure((int)questID) || dataLoader.Model.IsAlternativeQuestName((int)questID))
+                                    {
+                                        switch (questID)
+                                        {
+                                            case Numbers.QuestIDArrogantDuremudira:
+                                            case Numbers.QuestIDArrogantDuremudiraRepel:
+                                                monsterID = 167;
+                                                break;
+                                            case Numbers.QuestIDFirstDistrictDuremudira:
+                                            case Numbers.QuestIDSecondDistrictDuremudira:
+                                                monsterID = 132;
+                                                break;
+                                        }
+                                    }
+
+                                    Dictionary<int, double> monsterEntry = new Dictionary<int, double>()
+                                {
+                                    {monsterID, entry.Value.FirstOrDefault().Value},
+                                };
+
+                                    newMonster1SizeMultiplierDictionary.Add(entry.Key, monsterEntry);
+                                }
+                            }
+
+                            if (monster1StunThresholdDictionary != null)
+                            {
+                                foreach (var entry in monster1StunThresholdDictionary)
+                                {
+                                    var monsterID = entry.Value.FirstOrDefault().Key;
+
+                                    if (dataLoader.Model.IsDure((int)questID) || dataLoader.Model.IsAlternativeQuestName((int)questID))
+                                    {
+                                        switch (questID)
+                                        {
+                                            case Numbers.QuestIDArrogantDuremudira:
+                                            case Numbers.QuestIDArrogantDuremudiraRepel:
+                                                monsterID = 167;
+                                                break;
+                                            case Numbers.QuestIDFirstDistrictDuremudira:
+                                            case Numbers.QuestIDSecondDistrictDuremudira:
+                                                monsterID = 132;
+                                                break;
+                                        }
+                                    }
+
+                                    Dictionary<int, int> monsterEntry = new Dictionary<int, int>()
+                                {
+                                    {monsterID, entry.Value.FirstOrDefault().Value},
+                                };
+
+                                    newMonster1StunThresholdDictionary.Add(entry.Key, monsterEntry);
+                                }
+                            }
+
+                            if (monster1PartThresholdDictionary != null)
+                            {
+                                foreach (var entry in monster1PartThresholdDictionary)
+                                {
+                                    var monsterID = entry.Value.FirstOrDefault().Key;
+
+                                    if (dataLoader.Model.IsDure((int)questID) || dataLoader.Model.IsAlternativeQuestName((int)questID))
+                                    {
+                                        switch (questID)
+                                        {
+                                            case Numbers.QuestIDArrogantDuremudira:
+                                            case Numbers.QuestIDArrogantDuremudiraRepel:
+                                                monsterID = 167;
+                                                break;
+                                            case Numbers.QuestIDFirstDistrictDuremudira:
+                                            case Numbers.QuestIDSecondDistrictDuremudira:
+                                                monsterID = 132;
+                                                break;
+                                        }
+                                    }
+
+                                    Dictionary<int, List<int>> monsterEntry = new Dictionary<int, List<int>>()
+                                {
+                                    {monsterID, entry.Value.FirstOrDefault().Value},
+                                };
+
+                                    newMonster1PartThresholdDictionary.Add(entry.Key, monsterEntry);
+                                }
+                            }
+
+                            using (var cmd2 = new SQLiteCommand(conn))
+                            {
+                                cmd2.CommandText = @"UPDATE
+                                                        Quests
+                                                    SET
+                                                        Monster1HPDictionary = @Monster1HPDictionary,
+                                                        Monster1AttackMultiplierDictionary = @Monster1AttackMultiplierDictionary,
+                                                        Monster1DefenseRateDictionary = @Monster1DefenseRateDictionary,
+                                                        Monster1SizeMultiplierDictionary = @Monster1SizeMultiplierDictionary,
+                                                        Monster1StunThresholdDictionary = @Monster1StunThresholdDictionary,
+                                                        Monster1PartThresholdDictionary = @Monster1PartThresholdDictionary                          WHERE
+                                                        RunID = @RunID";
+                                cmd2.Parameters.AddWithValue("@RunID", runID);
+                                cmd2.Parameters.AddWithValue("@Monster1HPDictionary", JsonConvert.SerializeObject(newMonster1HPDictionary));
+                                cmd2.Parameters.AddWithValue("@Monster1AttackMultiplierDictionary", JsonConvert.SerializeObject(newMonster1AttackMultiplierDictionary));
+                                cmd2.Parameters.AddWithValue("@Monster1DefenseRateDictionary", JsonConvert.SerializeObject(newMonster1DefenseRateDictionary));
+                                cmd2.Parameters.AddWithValue("@Monster1SizeMultiplierDictionary", JsonConvert.SerializeObject(newMonster1SizeMultiplierDictionary));
+                                cmd2.Parameters.AddWithValue("@Monster1StunThresholdDictionary", JsonConvert.SerializeObject(newMonster1StunThresholdDictionary));
+                                cmd2.Parameters.AddWithValue("@Monster1PartThresholdDictionary", JsonConvert.SerializeObject(newMonster1PartThresholdDictionary));
+
+                                cmd2.ExecuteNonQuery();
+                            }
+                        }
+                    }
+                }
+
+                using (var cmd1 = new SQLiteCommand(conn))
+                {
+                    cmd1.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_quest_updates
+                        AFTER UPDATE ON Quests
+                        FOR EACH ROW
+                        WHEN NEW.YouTubeID = OLD.YouTubeID
+                        BEGIN
+                            SELECT RAISE(ABORT, 'Cannot update quest fields');
+                        END;";
+                    cmd1.ExecuteNonQuery();
+                }
+
+                // Commit the transaction
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                HandleError(transaction, ex);
+            }
+        }
+
+        Logger.Debug("Updated monster dictionaries in quests table");
+    }
+
+    private void UpdateQuestsActualOverlayMode(SQLiteConnection conn)
+    {
+        if (string.IsNullOrEmpty(this.dataSource))
+        {
+            Logger.Warn(CultureInfo.InvariantCulture, "Cannot update speedrun modes for quests table. dataSource: {0}", this.dataSource);
+            return;
+        }
+
+        // Start a transaction
+        using (var transaction = conn.BeginTransaction())
+        {
+            try
+            {
+                using (var cmd0 = new SQLiteCommand(conn))
+                {
+                    cmd0.CommandText = @"DROP TRIGGER IF EXISTS prevent_quest_updates";
+                    cmd0.ExecuteNonQuery();
+                }
+
+                using (var cmd = new SQLiteCommand(conn))
+                {
+                    cmd.CommandText = "SELECT * FROM Quests";
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            var actualOverlayMode = reader["ActualOverlayMode"].ToString();
+                            var runID = long.Parse(reader["RunID"]?.ToString() ?? "0", CultureInfo.InvariantCulture);
+
+                            if (actualOverlayMode == null || runID == 0)
+                            {
+                                continue;
+                            }
+
+                            var newActualOverlayMode = actualOverlayMode == Messages.OverlayModeTimeAttack || actualOverlayMode == Messages.OverlayModeFreestyleNoSecretTech || actualOverlayMode == Messages.OverlayModeFreestyleWithSecretTech ? Messages.OverlayModeSpeedrun : actualOverlayMode;
+
+                            using (var cmd2 = new SQLiteCommand(conn))
+                            {
+                                cmd2.CommandText = "UPDATE Quests SET ActualOverlayMode = @new_ActualOverlayMode WHERE RunID = @RunID";
+                                cmd2.Parameters.AddWithValue("@RunID", runID);
+                                cmd2.Parameters.AddWithValue("@new_ActualOverlayMode", newActualOverlayMode);
+
+                                cmd2.ExecuteNonQuery();
+                            }
+                        }
+                    }
+                }
+
+                using (var cmd1 = new SQLiteCommand(conn))
+                {
+                    cmd1.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_quest_updates
+                        AFTER UPDATE ON Quests
+                        FOR EACH ROW
+                        WHEN NEW.YouTubeID = OLD.YouTubeID
+                        BEGIN
+                            SELECT RAISE(ABORT, 'Cannot update quest fields');
+                        END;";
+                    cmd1.ExecuteNonQuery();
+                }
+
+                // Commit the transaction
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                HandleError(transaction, ex);
+            }
+        }
+
+        Logger.Debug("Updated speedrun modes in quests table");
+    }
+
+    private void UpdateTableActualOverlayMode(string tableName, SQLiteConnection conn)
+    {
+        if (string.IsNullOrEmpty(this.dataSource))
+        {
+            Logger.Warn(CultureInfo.InvariantCulture, "Cannot update speedrun modes for {0} table. dataSource: {1}", tableName, this.dataSource);
+            return;
+        }
+
+        // Start a transaction
+        using (var transaction = conn.BeginTransaction())
+        {
+            try
+            {
+                using (var cmd = new SQLiteCommand(conn))
+                {
+                    cmd.CommandText = $"SELECT * FROM {tableName}";
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            var actualOverlayMode = reader["ActualOverlayMode"].ToString();
+                            var rowID = long.Parse(reader[$"{tableName}ID"]?.ToString() ?? "0", CultureInfo.InvariantCulture);
+
+                            if (actualOverlayMode == null || rowID == 0)
+                            {
+                                continue;
+                            }
+
+                            var newActualOverlayMode = actualOverlayMode == Messages.OverlayModeTimeAttack || actualOverlayMode == Messages.OverlayModeFreestyleNoSecretTech || actualOverlayMode == Messages.OverlayModeFreestyleWithSecretTech ? Messages.OverlayModeSpeedrun : actualOverlayMode;
+
+                            using (var cmd2 = new SQLiteCommand(conn))
+                            {
+                                cmd2.CommandText = $"UPDATE {tableName} SET ActualOverlayMode = @new_ActualOverlayMode WHERE {tableName}ID = @RowID";
+                                cmd2.Parameters.AddWithValue("@RowID", rowID);
+                                cmd2.Parameters.AddWithValue("@new_ActualOverlayMode", newActualOverlayMode);
+
+                                cmd2.ExecuteNonQuery();
+                            }
+                        }
+                    }
+                }
+
+                // Commit the transaction
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                HandleError(transaction, ex);
+            }
+        }
+
+        Logger.Debug($"Updated speedrun modes in {tableName} table");
+    }
+
+    /// <summary>
+    /// Fills run buffs table and updates runbuffs fields with new values.
+    /// </summary>
+    /// <param name="connection"></param>
+    private void UpdateRunBuffs(SQLiteConnection connection, DataLoader dataLoader)
+    {
+        // 2. for every row in quests table, add a row to runbuffs table:
+        // runid taken from quests table
+        // runbuffs from GetRunBuffs(string actualoverlaymode from quests table)
+        var updatedRows = UpsertRunBuffs(connection, dataLoader);
+
+        // 3. for every row in personalbests, update personalbests.runbuffs:
+        // get actualoverlaymode by doing personalbests.RunID = quests.RunID, then quests.ActualOverlayMode.
+        // if quests.ActualOverlayMode = "Freestyle No Secret Tech" then update personalbests.runbuffs to (Enum) RunBuff.FreestyleNoSecretTech.
+        // else if quests.ActualOverlayMode = "Freestyle w/ Secret Tech" then update personalbests.runbuffs to (Enum) RunBuff.FreestyleWithSecretTech.
+        // else if quests.ActualOverlayMode = "TimeAttack" then update personalbests.runbuffs to (Enum) RunBuff.TimeAttack.
+        UpdatePersonalBestsRunBuffs(connection, dataLoader);
+
+        // 4. for every row in personalbestattempts, update personalbestattempts.runbuffs:
+        // if personalbestattempts.ActualOverlayMode = "Freestyle No Secret Tech" then update personalbestattempts.runbuffs to (Enum) RunBuff.FreestyleNoSecretTech.
+        // else if personalbestattempts.ActualOverlayMode = "Freestyle w/ Secret Tech" then update personalbestattempts.runbuffs to (Enum) RunBuff.FreestyleWithSecretTech.
+        // else if personalbestattempts.ActualOverlayMode = "TimeAttack" then update personalbestattempts.runbuffs to (Enum) RunBuff.TimeAttack.
+        UpdateTableRunBuffs("PersonalBestAttempts", connection, dataLoader);
+
+        // 5. for every row in questattempts, update questattempts.runbuffs:
+        // if questattempts.ActualOverlayMode = "Freestyle No Secret Tech" then update questattempts.runbuffs to (Enum) RunBuff.FreestyleNoSecretTech.
+        // else if questattempts.ActualOverlayMode = "Freestyle w/ Secret Tech" then update questattempts.runbuffs to (Enum) RunBuff.FreestyleWithSecretTech.
+        // else if questattempts.ActualOverlayMode = "TimeAttack" then update questattempts.runbuffs to (Enum) RunBuff.TimeAttack.
+
+        UpdateTableRunBuffs("QuestAttempts", connection, dataLoader);
+
+        Logger.Debug($"Updated QuestsRunBuffs rows: {updatedRows}");
+    }
+
     // TODO: should i put this in FileManager?
     private static void CheckPreviousVersionFile()
     {
@@ -15437,7 +18683,7 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
                 if (string.IsNullOrEmpty(previousVersion))
                 {
                     Logger.Info(CultureInfo.InvariantCulture, "previousVersionFilePath contents are empty, writing to file");
-                    if (App.CurrentProgramVersion == null)
+                    if (Program.CurrentProgramVersion == null)
                     {
                         Logger.Fatal(CultureInfo.InvariantCulture, "CurrentProgramVersion does not exist");
                         MessageBox.Show("Current Program Version not found.");
@@ -15445,7 +18691,7 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
                         return;
                     }
 
-                    previousVersion = App.CurrentProgramVersion.Trim();
+                    previousVersion = Program.CurrentProgramVersion.Trim();
                     File.WriteAllText(previousVersionFilePath, previousVersion);
                     Logger.Info(CultureInfo.InvariantCulture, "Writing previous version {0} to file {1}", previousVersion, previousVersionFilePath);
                 }
@@ -15457,7 +18703,7 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
             else
             {
                 Logger.Info(CultureInfo.InvariantCulture, "previousVersionFilePath does not exist, creating file");
-                if (App.CurrentProgramVersion == null)
+                if (Program.CurrentProgramVersion == null)
                 {
                     Logger.Fatal(CultureInfo.InvariantCulture, "CurrentProgramVersion does not exist");
                     MessageBox.Show("Current Program Version not found.");
@@ -15465,7 +18711,7 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
                     return;
                 }
 
-                previousVersion = App.CurrentProgramVersion.Trim();
+                previousVersion = Program.CurrentProgramVersion.Trim();
                 File.WriteAllText(previousVersionFilePath, previousVersion);
                 Logger.Info(CultureInfo.InvariantCulture, "Writing previous version {0} to file {1}", previousVersion, previousVersionFilePath);
             }
@@ -15493,7 +18739,7 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
                     versionInFile = "Fresh Install";
                 }
 
-                if (App.CurrentProgramVersion == null)
+                if (Program.CurrentProgramVersion == null)
                 {
                     Logger.Fatal(CultureInfo.InvariantCulture, "CurrentProgramVersion does not exist");
                     MessageBox.Show("Current Program Version not found.");
@@ -15501,7 +18747,7 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
                     return;
                 }
 
-                previousVersion = App.CurrentProgramVersion.Trim();
+                previousVersion = Program.CurrentProgramVersion.Trim();
                 File.WriteAllText(previousVersionFilePath, previousVersion);
                 Logger.Info(CultureInfo.InvariantCulture, "previousVersionFilePath found, writing new version number from {0} to {1}", versionInFile, previousVersion);
             }

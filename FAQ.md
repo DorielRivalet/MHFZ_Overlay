@@ -3,6 +3,7 @@
 - [Frequently Asked Questions](#frequently-asked-questions)
   - [How to Enable Discord Rich Presence?](#how-to-enable-discord-rich-presence)
   - [How to Enable Speedrun Categories \& Zen Mode?](#how-to-enable-speedrun-categories--zen-mode)
+  - [What are Run Buffs in the Quest Logs section?](#what-are-run-buffs-in-the-quest-logs-section)
   - [How to Record Videos with the Overlay?](#how-to-record-videos-with-the-overlay)
   - [My game slows down when recording with the Overlay, what should I do?](#my-game-slows-down-when-recording-with-the-overlay-what-should-i-do)
   - [How to Enable Quest Logging?](#how-to-enable-quest-logging)
@@ -52,10 +53,7 @@
 
 Use the preset option found in the General tab. Keep reading if you want to know how to do it manually.
 
-- Speedrun Mode Categories: SOLO ONLY. Enable the required settings in the Quest Logs section, disable **everything** else, including Quest Pace Color (Monster Icon, Quest Timer + Percentage, KBM Layout, Personal Best and Discord Rich Presence optional)
-
-- Time Attack: Do not use diva skills.
-- Freestyle: Use diva skills with/without Secret Technique Style Rank Skill.
+- Speedrun Mode Categories: Enable the required settings in the Quest Logs section, disable **everything** else, including Quest Pace Color (Monster Icon, Quest Timer + Percentage, KBM Layout, Personal Best and Discord Rich Presence optional)
 
 **Important**: It is recommended to make a backup of the `MHFZ_Overlay.sqlite` file periodically. The file is located inside the database folder, which is inside your game folder. Don't lose your speedrun records!
 
@@ -65,7 +63,48 @@ Use the preset option found in the General tab. Keep reading if you want to know
 
 ![Discord Rich Presence](./demo/discord11.png)
 
-~~Congrats, now you won't be accused of cheating~~
+## What are Run Buffs in the Quest Logs section?
+
+Run Buffs are the buffs that you can filter by when searching for quests:
+
+| Name                      | Value |
+|---------------------------|-------|
+| Halk                      |  1     |
+| Poogie Item                |  2     |
+| Diva Song                  |  4     |
+| Halk Pot Effect             |  8     |
+| Bento                     |  16    |
+| Guild Poogie               |  32    |
+| Active Feature             |  64    |
+| Guild Food                 |  128   |
+| Diva Skill                 |  256   |
+| Secret Technique           |  512   |
+| Diva Prayer Gem             |  1024  |
+| Course Attack Boost         |  2048  |
+| All                       |  4095  |
+| Time Attack                |  183     |
+| Freestyle No Secret Tech     |  1527  |
+| Freestyle With Secret Tech   |  2039  |
+
+If you had the old categories in your runs, these are their run buffs equivalents:
+
+- Time Attack: Halk + Poogie Item + Diva Song + Bento + Guild Poogie + Guild Food.
+- Freestyle No Secret Tech: Time Attack buffs + Active Feature + Diva Skill + Diva Prayer Gem.
+- Freestyle With Secret Tech: Freestyle No Secret Tech buffs + Secret Technique.
+
+When you set the overlay mode to Speedrun, the run buffs value or tag will be displayed on watermark in parentheses. Tags that are submitted to leaderboard will be:
+
+|Name|Tag|Value|Buffs|
+|-|-|-|-|
+|Time Attack|TA|183|Halk + Poogie Item + Diva Song + Bento + Guild Poogie + Guild Food|
+|Freestyle Diva Skill|FDS|503|TA + Diva Skill + Active Feature|
+|Freestyle Diva Prayer Gem|FDP|1527|FDS + Diva Prayer Gem|
+|Freestyle Secret Tech|FST|2039|FDP + Secret Technique|
+|Freestyle Course Attack Boost|FCA|4095|FST + Course Attack Boost + Halk Pot Effect|
+
+On quests where you cannot use diva skills but you use active feature, it counts as TA, making it a requirement.
+
+Bento is currently required in all runs.
 
 ## How to Record Videos with the Overlay?
 
@@ -158,6 +197,8 @@ This way, there are no lost settings when updating, and you don't have to make t
 
 The location of any previous settings are in the subfolders of `%LocalAppData%/Doriel_Rivalet`. Recommended to sort by date modified.
 
+If after updating at overlay startup your settings did not transfer over, try restarting the overlay again without saving or changing any settings. Alternatively, find the old settings file by going into the parent folder when clicking the settings folder option.
+
 ## How to check the downloaded file hashes?
 
 ### Graphical User Interface
@@ -239,6 +280,8 @@ If DS4Windows does not work for you, you can search for alternatives, but it is 
 |Personal Best Attempts|✔️|❌|❌|
 |Completions Counter|✔️|❌|❌|
 |Run Pace|✔️ Color|❌|❌|
+|Quest Pace Graph|✔️|❌|❌|
+|Player Coordinates|✔️|❌|❌|
 |Settings Save on Update|✔️|❌|❌|
 |Save Stats to File|✔️|❌|❌|
 |Copy Stats to Clipboard|✔️|❌|❌|
@@ -247,9 +290,9 @@ If DS4Windows does not work for you, you can search for alternatives, but it is 
 |Database Backups|✔️ Local|❌|❌|
 |Past Quests Info|✔️|❌|❌|
 |Achievements|✔️|❌|❌|
-|Show Quest Change|✔️|❌|❌
+|Show Quest Change|✔️|❌|❌|
 |Show Area Change|✔️|❌|❌|
-|KBM Layout|✔️|❌|❌
+|KBM Layout|✔️|❌|❌|
 |Gamepad Layout|✔️|❌|❌|
 |Input Logs|✔️|❌|❌|
 |Quest ID|✔️|❌|❌|
@@ -268,7 +311,7 @@ If DS4Windows does not work for you, you can search for alternatives, but it is 
 |Logging|✔️|❌|❌|
 |Logging Options|✔️|❌|❌|
 |Color Options|✔️|✔️|✔️|
-|Buff Icons |❌|❌|❌
+|Buff Icons |✔️|❌|❌|
 |Debuff Icons |❌|❌|❌|
 |Hub Activities|❌|❌|❌|
 |Settings Search|❌|❌|❌|
@@ -299,7 +342,7 @@ If DS4Windows does not work for you, you can search for alternatives, but it is 
 
 As an added bonus:
 
-|    | mhf-z overlay v0.25.0 (DorielRivalet) | HunterPie v2.8.0 (HunterPie) |
+|    | mhf-z overlay v0.34.0 (DorielRivalet) | HunterPie v2.8.0 (HunterPie) |
 |:----------|:---------:|:---------:|
 |Discord Rich Presence|✔️|✔️|
 |Rich Presence Quest Name|✔️|❌|
@@ -313,7 +356,7 @@ As an added bonus:
 |Monster Ailments|✔️|✔️|
 |Timer Options|✔️|❌|
 |Sharpness Number|✔️|✔️|
-|Damage Numbers|✔️|❌ Not in World, Built-in in Rise|
+|Damage Numbers|✔️|Built-in by Rise/World|
 |Damage Numbers Options|✔️|❌|
 |DPS Graph|✔️|✔️ Multiplayer|
 |Actions per Minute Graph|✔️|❌|
@@ -331,6 +374,8 @@ As an added bonus:
 |Personal Best Attempts|✔️|❌|
 |Completions Counter|✔️|❌|
 |Run Pace|✔️ Color|❌|
+|Quest Pace Graph|✔️|❌|
+|Player Coordinates|✔️|❌|
 |Settings Save on Update|✔️|✔️|
 |Save Stats to File|✔️|❌|
 |Copy Stats to Clipboard|✔️|❌|
@@ -360,7 +405,7 @@ As an added bonus:
 |Logging|✔️ File|✔️ Console|
 |Logging Options|✔️|❌|
 |Color Options|✔️|❌|
-|Buff Icons |❌|✔️|
+|Buff Icons |✔️|✔️|
 |Debuff Icons |❌|✔️|
 |Hub Activities|❌|✔️|
 |Settings Search|❌|✔️ by Section|
@@ -429,7 +474,9 @@ The performance of features such as the database and websites were measured with
 
 See in more detail the performance of the overlay in [the documentation](./docs/performance.md).
 
-For the system requirements, see [here](./README.md#system-requirements)
+For the system requirements, see [here](./README.md#system-requirements).
+
+Remember to close programs (such as Steam Overlay) for optimal performance.
 
 ## Is the overlay malware?
 

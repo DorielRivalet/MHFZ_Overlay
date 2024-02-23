@@ -95,6 +95,7 @@ public static class Numbers
 
     TODO replace the numbers in source code as necessary
      */
+    public const int QuestIDKeoaruboru = 58043;
 
     public const int QuestIDZ4AkuraVashimu = 23539;
 
@@ -154,35 +155,73 @@ public static class Numbers
 
     public const int QuestIDUpperShitenDisufiroa = 23603;
 
+    public const int QuestIDLowerShitenUnknown = 23604;
+
+    public const int QuestIDLowerShitenDisufiroa = 23602;
+
     public const int QuestIDThirstyPariapuria = 55532;
 
     public const int QuestIDRulingGuanzorumu = 55529;
 
+    public const int QuestIDRulingGuanzorumu5m = 56126;
+
     public const int QuestIDShiftingMiRu = 55531;
+
+    public const int QuestIDShiftingMiRuHistoric = 55920;
 
     public const int QuestIDBlinkingNargacugaForest = 55534;
 
     public const int QuestIDBlinkingNargacugaHistoric = 55922;
 
+    public const int QuestIDBlinkingNargacugaHistoric20m = 55921;
+
+    public const int QuestIDBlinkingNargacugaHistoric5m = 56130;
+
     public const int QuestIDHowlingZinogreForest = 55535;
 
     public const int QuestIDHowlingZinogreHistoric = 55919;
 
+    public const int QuestIDHowlingZinogreHistoricRepel = 55918;
+
+    public const int QuestIDHowlingZinogreHistoric5m = 56131;
+
     public const int QuestIDSparklingZerureusu = 55951;
+
+    public const int QuestIDSparklingZerureusuRepel = 55950;
 
     public const int QuestIDSparklingZerureusuEvent = 56106;
 
+    public const int QuestIDSparklingZerureusu5m = 56127;
+
     public const int QuestIDArrogantDuremudira = 23649;
+
+    public const int QuestIDArrogantDuremudiraRepel = 23648;
 
     public const int QuestIDStarvingDeviljhoArena = 55530;
 
     public const int QuestIDStarvingDeviljhoHistoric = 55917;
 
+    public const int QuestIDStarvingDeviljhoHistoric20m = 55916;
+
     public const int QuestIDBlitzkriegBogabadorumu = 55949;
+
+    public const int QuestIDBlitzkriegBogabadorumuRepel = 55948;
+
+    public const int QuestIDBlitzkriegBogabadorumu5m = 56128;
+
+    public const int QuestIDBlitzkriegBogabadorumu3m = 56152;
 
     public const int QuestIDBurningFreezingElzelionTower = 55714;
 
     public const int QuestIDBurningFreezingElzelionHistoric = 55936;
+
+    public const int QuestIDBurningFreezingElzelionHistoricRepel = 55935;
+
+    public const int QuestIDBurningFreezingElzelionHistoric5m = 56133;
+
+    public const int QuestIDBurningFreezingElzelionTower3m = 56153;
+
+    public const int QuestIDBurningFreezingElzelionTowerUltimate = 56158;
 
     public const int QuestIDVeggieElderLove = 53189;
 

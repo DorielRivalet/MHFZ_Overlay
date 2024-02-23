@@ -4,6 +4,8 @@
 
 namespace MHFZ_Overlay.Models.Constant;
 
+using System.Windows.Forms;
+
 /// <summary>
 /// Static messages and placeholder strings.
 /// </summary>
@@ -39,6 +41,10 @@ public static class Messages
 
     public const string MonsterImageNotLoaded = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/none.png";
 
+    public const string MonsterImageBaseLinkGitHub = @"https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/";
+
+    public const string MonsterImageBaseLinkApp = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/";
+
     public const string SecretAchievement = "???";
 
     public const string UnknownMonsterIcon = "https://i.imgur.com/3pQEtzw.png";
@@ -46,4 +52,17 @@ public static class Messages
     public const string EmptyImage = "https://i.imgur.com/aAcPJGb.png";
 
     public const string CustomQuestName = "Custom Quest";
+
+    public const string OverlayModeTimeAttack = "Time Attack";
+
+    public const string OverlayModeStandard = "Standard";
+
+    public const string OverlayModeFreestyleNoSecretTech = "Freestyle No Secret Tech";
+
+    public const string OverlayModeFreestyleWithSecretTech = "Freestyle w/ Secret Tech";
+
+    public const string OverlayModeConfiguring = "Configuring";
+
+    public const string OverlayModeSpeedrun = "Speedrun";
+
 }
