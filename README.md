@@ -8,11 +8,12 @@
 
 ---
 
-**[<kbd> <br> :rocket: Install <br> </kbd>](#installation)** 
-**[<kbd> <br> 📘 Hotkeys<br> </kbd>](#hotkeys)** 
-**[<kbd> <br> 🕹 Features <br> </kbd>](#features)** 
+**[<kbd> <br> 🚀 Install <br> </kbd>](#installation)**
+**[<kbd> <br> 📘 Hotkeys<br> </kbd>](#hotkeys)**
+**[<kbd> <br> 🕹 Features <br> </kbd>](#features)**
 
 ---
+
 </div>
 
 - [Monster Hunter Frontier Z Overlay](#monster-hunter-frontier-z-overlay)
@@ -63,7 +64,7 @@ We hope you find this overlay useful and enjoyable, and we welcome any feedback 
 ### Minimum
 
 - OS: Windows 10 (64-bit)
-- Processor:  Intel® Core™ i3-4130 or Core™ i5-3470
+- Processor: Intel® Core™ i3-4130 or Core™ i5-3470
 - Memory: 6 GB RAM
 - Storage: 500 MB available space
 - Additional Notes: 1080p/30fps when refresh rate is set to 1. System requirements subject to change during software development.
@@ -82,8 +83,8 @@ If you record and/or stream with the overlay, the recommended processor is Intel
 
 ## Installation
 
-1. [Download the latest version from the *Releases*](https://github.com/DorielRivalet/mhfz-overlay/releases/latest/download/MHFZ_Overlay-win-Setup.exe).
-2. Make sure *Windows* or your antivirus did not delete the file (because it reads the game's memory, *Windows* might detect it as a trojan, so you might have to get it out of quarantine).
+1. [Download the latest version from the _Releases_](https://github.com/DorielRivalet/mhfz-overlay/releases/latest/download/MHFZ_Overlay-win-Setup.exe).
+2. Make sure _Windows_ or your antivirus did not delete the file (because it reads the game's memory, _Windows_ might detect it as a trojan, so you might have to get it out of quarantine).
 3. Run `MHFZ_Overlay-win-Setup.exe` **as Administrator**.
 4. [Bonk monsters!](https://c.tenor.com/60Tr3Zeg6RkAAAAd/fumo-bonk.gif)
 5. [Be sure to leave some feedback here!](https://forms.gle/hrAVWMcYS5HEo1v7A)
@@ -147,11 +148,11 @@ As an alternative to hotkeys, you can use the system tray options by right-click
 
 - If the overlay doesn't seem to load values properly, restart it. If that didn't fix the issue, [please send information here](https://github.com/DorielRivalet/mhfz-overlay/issues).
 
-- Additionally, if information from the overlay is wrong or inaccurate (*e.g.* monster parts labels), feel free to send an issue.
+- Additionally, if information from the overlay is wrong or inaccurate (_e.g._ monster parts labels), feel free to send an issue.
 
 ## Features
 
-- [x] Monster Effective HP Bars (*e.g.* Burning Freezing Elzelion's 1,000,000 HP!).
+- [x] Monster Effective HP Bars (_e.g._ Burning Freezing Elzelion's 1,000,000 HP!).
 
 You can also see the monster icons or renders, and there is an option for automatic bar colors depending on the monster. You can adjust the font size, color, family and weight; in addition to that you can hide/show any sub-component. Includes Hardcore and Unlimited icons.
 
@@ -165,7 +166,7 @@ You can also see the monster icons or renders, and there is an option for automa
 ![Sharpness Numbers 3](./demo/sharpness3.png)
 
 - [x] Quest Timer (Two modes: elapsed time and time left. Down to the milliseconds in accuracy!).
-- [x] Hit Count (counts *Reflect*, *Stylish Up*, Heatblade, *Fencing+2* and more!).
+- [x] Hit Count (counts _Reflect_, _Stylish Up_, Heatblade, _Fencing+2_ and more!).
 
 ![Player Stats](./demo/playerstat1.png)
 
@@ -330,7 +331,7 @@ Some sections have context menus where you can save the section contents to a fi
 - With Monster EHP enabled, if you cart, the max EHP turns into the current EHP, along with some other stats max values.
 - Sometimes when exiting Drag and Drop the monster HP information disappears.
 - Spawning in the same area as the monster doesn't load the information properly. Fix: re-enter area.
-- Duremudira/Road/Raviente HP not showing. Fix: enable *Always Show Monster Info*, load another quest showing the HP bars (not just the numbers), then retry.
+- Duremudira/Road/Raviente HP not showing. Fix: enable _Always Show Monster Info_, load another quest showing the HP bars (not just the numbers), then retry.
 - Monster size values not shown correctly.
 - Monster HP values are less than the actual values when not loading properly.
 - Damage numbers over 1000 not working.
@@ -422,10 +423,10 @@ We recommend consulting the appropriate documentation file based on your needs. 
 
 ## Acknowledgements
 
-- This project is directly inspired from the overlay created by [*suzaku01*](https://github.com/suzaku01/mhf_displayer).
-- The theme and color palette used for the application is [*Catppuccin Mocha*](https://github.com/catppuccin/catppuccin).
-- The design and icons used in this project are part of [*Segoe Fluent Icons*](https://learn.microsoft.com/en-us/windows/apps/design/style/segoe-fluent-icons-font) and [WPF UI](https://github.com/lepoco/wpfui).
-- The fonts used is the in-game one, *MS Gothic*. For monospaced, the application uses Source Code Pro and MesloLGM NF. This project also uses Font Awesome's fonts. The Monster Hunter font made by XMitsarugiX comes from [here](https://www.deviantart.com/xmitsarugix/art/Monster-Hunter-Font-Type-1-and-2-380816151).
+- This project is directly inspired from the overlay created by [_suzaku01_](https://github.com/suzaku01/mhf_displayer).
+- The theme and color palette used for the application is [_Catppuccin Mocha_](https://github.com/catppuccin/catppuccin).
+- The design and icons used in this project are part of [_Segoe Fluent Icons_](https://learn.microsoft.com/en-us/windows/apps/design/style/segoe-fluent-icons-font) and [WPF UI](https://github.com/lepoco/wpfui).
+- The fonts used is the in-game one, _MS Gothic_. For monospaced, the application uses Source Code Pro and MesloLGM NF. This project also uses Font Awesome's fonts. The Monster Hunter font made by XMitsarugiX comes from [here](https://www.deviantart.com/xmitsarugix/art/Monster-Hunter-Font-Type-1-and-2-380816151).
 - Thanks to [Kairi](https://www.youtube.com/@kairi_mhfz) and [Sera](https://www.youtube.com/@Sera9145) for extensive beta testing and early support.
 - The combo element icons are made by [Narwhaler](https://fanonmonsterhunter.fandom.com/wiki/User:Narwhaler).
 - Additional icons can be found [here](https://fanonmonsterhunter.fandom.com/wiki/Category:Icon).
@@ -435,4 +436,4 @@ We recommend consulting the appropriate documentation file based on your needs. 
 <a href="https://github.com/Catppuccin"><img style="border-radius: 50% !important;" alt="Avatar" src="https://raw.githubusercontent.com/catppuccin/catppuccin/main/assets/logos/exports/1544x1544_circle.png" width="64px" height="auto" ></a>
 <a href="https://github.com/lepoco/wpfui"><img style="background-color:#eff1f5" alt="Avatar" src="https://avatars.githubusercontent.com/u/87412094?s=200&v=4" width="64px" height="auto" ></a>
 <a href="https://www.youtube.com/@kairi_mhfz"><img style="border-radius: 50% !important;" alt="Avatar" src="https://yt3.googleusercontent.com/ytc/AOPolaQWKx3GIOgWWRu9YCHBI7lrkFjT2NxLP45IlnSM=s176-c-k-c0x00ffffff-no-rj" width="64px" height="auto" ></a>
-<a href="https://www.youtube.com/@Sera9145"><img style="border-radius: 50% !important;" alt="Avatar" src="https://yt3.googleusercontent.com/wf-Z4qoC9sCtf6b7Kp1SOfGAK9z2Ptneb8xfYwRNljvsQDd-8jaUNWeogBUDAFkMuohzLh6nEK4=s176-c-k-c0x00ffffff-no-rj" width="64px" height="auto" ></a>
+<a href="https://www.youtube.com/@Sera9145"><img style="border-radius: 50% !important;" alt="Avatar" src="https://yt3.googleusercontent.com/2PmblC16_LZtoziuCn9ZMbivRpkLXi60t44bhp3WSl3KB_ShbDvvek-hRfZgfbf2HDOYetDP=s176-c-k-c0x00ffffff-no-rj" width="64px" height="auto" ></a>

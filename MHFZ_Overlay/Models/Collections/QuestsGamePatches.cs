@@ -61,12 +61,12 @@ public static class QuestsGamePatches
         },
         { "5B70CE51EC6F95337B615C76C8BE8A0C42B16B14ED698739ADC097C4C507503E", new Dictionary<GamePatch, GamePatchLanguage>()
             {
-                { GamePatch.Vanilla, GamePatchLanguage.JA }
+                { GamePatch.Otyav1_1, GamePatchLanguage.JA }
             }
         },
         { "1755B8C5DA0D488901BF4FC7179E0B036AC6F9C936C7CA5911C693119173F8E5", new Dictionary<GamePatch, GamePatchLanguage>()
             {
-                { GamePatch.Vanilla, GamePatchLanguage.JA }
+                { GamePatch.Mezelounge, GamePatchLanguage.EN }
             }
         },
         { "A90B90E6A66F1983C1807DB1298EF2BF94BFD05681021307C8F4213BBE31B890", new Dictionary<GamePatch, GamePatchLanguage>()

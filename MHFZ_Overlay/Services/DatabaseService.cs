@@ -16491,7 +16491,6 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                             // sqlite3_exec(db, "ALTER TABLE entries ADD COLUMN touched_at TEXT;", NULL, NULL, NULL);
                     {
                         this.PerformUpdateToVersion_0_25_0(conn);
-                        // this.EnforceForeignKeys(conn);
                         newVersion++;
                         Logger.Info(CultureInfo.InvariantCulture, "Updated schema to version v0.25.0. newVersion {0}", newVersion);
                         goto case 2;
@@ -16499,14 +16498,12 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                     case 2: // 0.34.0
                         // fix attempts and pb attempts, set partysize default to 1 for the extra attempts from 2p/3p/4p.
                         this.PerformUpdateToVersion_0_34_0(conn);
-                        // this.EnforceForeignKeys(conn);
                         newVersion++;
                         Logger.Info(CultureInfo.InvariantCulture, "Updated schema to version v0.34.0. newVersion {0}", newVersion);
                         goto case 3;
                     case 3: // 0.35.0
                     {
                         this.PerformUpdateToVersion_0_35_0(conn, dataLoader);
-                        // this.EnforceForeignKeys(conn);
                         newVersion++;
                         Logger.Info(CultureInfo.InvariantCulture, "Updated schema to version v0.35.0. newVersion {0}", newVersion);
                         goto case 4;
@@ -16514,9 +16511,16 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                     case 4:// 0.37.0
                     {
                         this.PerformUpdateToVersion_0_37_0(conn, dataLoader);
-                        this.EnforceForeignKeys(conn);
                         newVersion++;
                         Logger.Info(CultureInfo.InvariantCulture, "Updated schema to version v0.37.0. newVersion {0}", newVersion);
+                        goto case 5;
+                    }
+                    case 5: // 0.37.1
+                    {
+                        this.PerformUpdateToVersion_0_37_1(conn, dataLoader);
+                        this.EnforceForeignKeys(conn);
+                        newVersion++;
+                        Logger.Info(CultureInfo.InvariantCulture, "Updated schema to version v0.37.1. newVersion {0}", newVersion);
                         break;
                     }
                     // case 2://v0.24.0
@@ -17953,10 +17957,14 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
 
         UpdateQuestsObjectiveImage(connection);
         UpdateQuestsMonsterDictionaries(connection, dataLoader);
-        FillQuestsGamePatch(connection, dataLoader);
 
         // for privacy
         ChangeGameFolderPath(connection);
+    }
+
+    private void PerformUpdateToVersion_0_37_1(SQLiteConnection connection, DataLoader dataLoader)
+    {
+        FillQuestsGamePatch(connection, dataLoader);
     }
 
     private void ChangeGameFolderPath(SQLiteConnection conn)
@@ -18048,6 +18056,26 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
                 {
                     cmd0.CommandText = @"DROP TRIGGER IF EXISTS prevent_quests_game_patch_updates";
                     cmd0.ExecuteNonQuery();
+                }
+
+                using (var cmd0 = new SQLiteCommand(conn))
+                {
+                    cmd0.CommandText = @"DROP TABLE IF EXISTS QuestsGamePatch";
+                    cmd0.ExecuteNonQuery();
+                }
+
+                var sql0 = @"CREATE TABLE IF NOT EXISTS QuestsGamePatch(
+                QuestsGamePatchID INTEGER PRIMARY KEY AUTOINCREMENT,
+                mhfdatInfo TEXT NOT NULL DEFAULT '',
+                mhfemdInfo TEXT NOT NULL DEFAULT '',
+                mhfodllInfo TEXT NOT NULL DEFAULT '',
+                mhfohddllInfo TEXT NOT NULL DEFAULT '',
+                RunID INTEGER NOT NULL,
+                FOREIGN KEY(RunID) REFERENCES Quests(RunID)
+                )";
+                using (var cmd = new SQLiteCommand(sql0, conn))
+                {
+                    cmd.ExecuteNonQuery();
                 }
 
                 using (var cmd = new SQLiteCommand(conn))
