@@ -1,5 +1,20 @@
 
 
+## [0.37.1](https://github.com/DorielRivalet/MHFZ_Overlay/compare/v0.37.0...v0.37.1) (2024-02-28)
+
+
+### Bug Fixes
+
+* game patches ([4dab1a4](https://github.com/DorielRivalet/MHFZ_Overlay/commit/4dab1a46c2b8c6af78c1431eb496a8212803dc9b))
+
+
+### For Developers
+
+* bump version ([5786589](https://github.com/DorielRivalet/MHFZ_Overlay/commit/57865899e80b0de24be75a20f46973b0ce1ecc8f))
+* update FAQ.md ([ac1918a](https://github.com/DorielRivalet/MHFZ_Overlay/commit/ac1918aac18b798e29dae3f9fddf15c3cb297199))
+* update FAQ.md ([8ba94fb](https://github.com/DorielRivalet/MHFZ_Overlay/commit/8ba94fbff3f7e845ce9d1c42e7a31af7f748b548))
+* update README.md ([873d7d7](https://github.com/DorielRivalet/MHFZ_Overlay/commit/873d7d731e6bb20117e41a5f380c32aee6e1e3d7))
+
 ## [0.37.0](https://github.com/DorielRivalet/MHFZ_Overlay/compare/v0.36.1...v0.37.0) (2024-02-22)
 
 
