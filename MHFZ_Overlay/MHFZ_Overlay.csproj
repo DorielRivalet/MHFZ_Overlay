@@ -21,7 +21,7 @@
     <Product>MHFZ Overlay</Product>
     <Copyright>Doriel Rivalet</Copyright>
     <Authors>Doriel Rivalet</Authors>
-    <Version>0.37.0</Version>
+    <Version>0.37.1</Version>
     <PackageProjectUrl>https://github.com/DorielRivalet/mhfz-overlay</PackageProjectUrl>
     <RepositoryUrl>https://github.com/DorielRivalet/mhfz-overlay.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
@@ -1949,7 +1949,7 @@
     <PackageReference Include="Memory.dll.x86" Version="1.2.26" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyModel" Version="8.0.0" />
-    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2277.86" />
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2365.46" />
     <PackageReference Include="MouseKeyHook" Version="5.7.1" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="NLog" Version="5.2.8" />
@@ -1967,7 +1967,7 @@
     </PackageReference>
     <PackageReference Include="System.Data.SQLite.Core" Version="1.0.118" />
     <PackageReference Include="System.Drawing.Common" Version="8.0.2" />
-    <PackageReference Include="Velopack" Version="0.0.332" />
+    <PackageReference Include="Velopack" Version="0.0.340" />
     <PackageReference Include="VirtualizingWrapPanel" Version="2.0.5" />
     <PackageReference Include="WPF-UI" Version="3.0.0" />
     <PackageReference Include="WPF-UI.Tray" Version="3.0.0-preview.11" />

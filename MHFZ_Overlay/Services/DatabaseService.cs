@@ -17967,7 +17967,7 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
         FillQuestsGamePatch(connection, dataLoader);
     }
 
-private void ChangeGameFolderPath(SQLiteConnection conn)
+    private void ChangeGameFolderPath(SQLiteConnection conn)
     {
         if (string.IsNullOrEmpty(this.dataSource))
         {
