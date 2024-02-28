@@ -1958,7 +1958,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Octokit" Version="9.1.2" />
+    <PackageReference Include="Octokit" Version="10.0.0" />
     <PackageReference Include="RESTCountries.NET" Version="3.1.0" />
     <PackageReference Include="ShowMeTheXAML.MSBuild" Version="2.0.0" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
@@ -1967,7 +1967,7 @@
     </PackageReference>
     <PackageReference Include="System.Data.SQLite.Core" Version="1.0.118" />
     <PackageReference Include="System.Drawing.Common" Version="8.0.2" />
-    <PackageReference Include="Velopack" Version="0.0.327" />
+    <PackageReference Include="Velopack" Version="0.0.332" />
     <PackageReference Include="VirtualizingWrapPanel" Version="2.0.5" />
     <PackageReference Include="WPF-UI" Version="3.0.0" />
     <PackageReference Include="WPF-UI.Tray" Version="3.0.0-preview.11" />
