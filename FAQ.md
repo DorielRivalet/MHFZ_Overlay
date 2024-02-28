@@ -500,6 +500,8 @@ For the system requirements, see [here](./README.md#system-requirements)
 
 No. The overlay does read memory addresses, but it never writes (i.e. modifies values) to them. It is more likely that the local files of the game or the server files are affecting the game, both of which are unrelated to the overlay.
 
+**The overlay is not a mod.**
+
 ## My question isn't answered here, how can I contact the developers?
 
 First, you may want to check the issues that have already been reported [here](https://github.com/DorielRivalet/mhfz-overlay/issues)
