@@ -1,5 +1,34 @@
 
 
+## [0.38.0](https://github.com/DorielRivalet/MHFZ_Overlay/compare/v0.37.1...v0.38.0) (2024-04-05)
+
+
+### Features
+
+* update splash image ([73a8778](https://github.com/DorielRivalet/MHFZ_Overlay/commit/73a87781dc46ac7741c86bc9272aef0163d4ced8))
+
+
+### Bug Fixes
+
+* crash after quest completion ([ec603e7](https://github.com/DorielRivalet/MHFZ_Overlay/commit/ec603e70d6718ab79ae274a365bb928bf5e474bc))
+
+
+### Performance Improvements
+
+* replace count with any in achievements search ([cc11a96](https://github.com/DorielRivalet/MHFZ_Overlay/commit/cc11a963cd4bd31d4daaa54ef1156c95322504a3))
+
+
+### For Developers
+
+* **bot:** update git statistics images ([5b415af](https://github.com/DorielRivalet/MHFZ_Overlay/commit/5b415af7ee66b53117cba818e7767b93f15b651e))
+* bump version ([62b9dd0](https://github.com/DorielRivalet/MHFZ_Overlay/commit/62b9dd040c20a63e63b5b3440ec52efe79dff79c))
+* **deps-dev:** bump @commitlint/cli from 18.6.1 to 19.2.1 ([e607ad0](https://github.com/DorielRivalet/MHFZ_Overlay/commit/e607ad060054f184f828b1c60c8820994b39c848))
+* **deps-dev:** bump @commitlint/config-conventional ([b61099a](https://github.com/DorielRivalet/MHFZ_Overlay/commit/b61099afee1792c50013a8f3f87b5a8b680069b8))
+* **deps-dev:** bump husky from 9.0.10 to 9.0.11 ([7f2be2e](https://github.com/DorielRivalet/MHFZ_Overlay/commit/7f2be2e6e4a82d4ad4237ba3464fdd73c51bc82c))
+* **deps:** bump release-it from 17.0.3 to 17.1.1 ([da514db](https://github.com/DorielRivalet/MHFZ_Overlay/commit/da514dbb157a0b946464a72f444d31e3a4d9026a))
+* update deps ([6eaa094](https://github.com/DorielRivalet/MHFZ_Overlay/commit/6eaa0940e6d1eca0cbc9640f3a8074ef1eb3c405))
+* update project exclusions ([02e5208](https://github.com/DorielRivalet/MHFZ_Overlay/commit/02e5208728c77a346ebfafe6b829cf443be6074b))
+
 ## [0.37.1](https://github.com/DorielRivalet/MHFZ_Overlay/compare/v0.37.0...v0.37.1) (2024-02-28)
 
 
