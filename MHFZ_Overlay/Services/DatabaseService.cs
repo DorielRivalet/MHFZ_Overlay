@@ -15009,7 +15009,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                         return (highestValue, highestValueRunID);
                     }
 
-                    var maxValueInField = valueDictionary.Values.Max();
+                    var maxValueInField = valueDictionary.Values.DefaultIfEmpty(0).Max();
 
                     if (maxValueInField > highestValue)
                     {
