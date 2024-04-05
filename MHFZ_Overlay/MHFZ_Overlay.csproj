@@ -1939,9 +1939,9 @@
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
     <PackageReference Include="CompiledBindings.WPF" Version="1.0.17.6" />
-    <PackageReference Include="CsvHelper" Version="31.0.0" />
+    <PackageReference Include="CsvHelper" Version="31.0.3" />
     <PackageReference Include="DiscordRichPresence" Version="1.2.1.24" />
-    <PackageReference Include="DotNetProjects.Extended.Wpf.Toolkit" Version="5.0.113" />
+    <PackageReference Include="DotNetProjects.Extended.Wpf.Toolkit" Version="5.0.115" />
     <PackageReference Include="EZlion" Version="7.0.0-beta" />
     <PackageReference Include="FontAwesome.Sharp" Version="6.3.0" />
     <PackageReference Include="LiveChartsCore.SkiaSharpView.WPF" Version="2.0.0-beta.920" />
@@ -1949,7 +1949,7 @@
     <PackageReference Include="Memory.dll.x86" Version="1.2.26" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyModel" Version="8.0.0" />
-    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2365.46" />
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2420.47" />
     <PackageReference Include="MouseKeyHook" Version="5.7.1" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="NLog" Version="5.2.8" />
@@ -1966,11 +1966,11 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="System.Data.SQLite.Core" Version="1.0.118" />
-    <PackageReference Include="System.Drawing.Common" Version="8.0.2" />
-    <PackageReference Include="Velopack" Version="0.0.340" />
+    <PackageReference Include="System.Drawing.Common" Version="8.0.3" />
+    <PackageReference Include="Velopack" Version="0.0.359" />
     <PackageReference Include="VirtualizingWrapPanel" Version="2.0.5" />
-    <PackageReference Include="WPF-UI" Version="3.0.0" />
-    <PackageReference Include="WPF-UI.Tray" Version="3.0.0-preview.11" />
+    <PackageReference Include="WPF-UI" Version="3.0.3" />
+    <PackageReference Include="WPF-UI.Tray" Version="3.0.3" />
     <PackageReference Include="WpfAnimatedGif" Version="2.0.2" />
     <PackageReference Include="XamlAnimatedGif" Version="2.2.3" />
     <PackageReference Include="XInputium" Version="1.2.0" />
