@@ -2741,7 +2741,7 @@ public sealed class AchievementService : IAchievementService
                                      (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Speedrun") && quest.FinalTimeValue < Numbers.Frames1Minute * 5)
                                      select quest;
 
-                    if (foundQuest.Count() == 0)
+                    if (!foundQuest.Any())
                     {
                         return false;
                     }
@@ -2762,7 +2762,7 @@ public sealed class AchievementService : IAchievementService
                                           select quest;
                     var totalCarts = 0;
 
-                    if (questsWithCarts == null || questsWithCarts.Count() == 0)
+                    if (questsWithCarts == null || !questsWithCarts.Any())
                     {
                         return false;
                     }
