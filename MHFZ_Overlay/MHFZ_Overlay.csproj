@@ -21,7 +21,7 @@
     <Product>MHFZ Overlay</Product>
     <Copyright>Doriel Rivalet</Copyright>
     <Authors>Doriel Rivalet</Authors>
-    <Version>0.37.1</Version>
+    <Version>0.38.0</Version>
     <PackageProjectUrl>https://github.com/DorielRivalet/mhfz-overlay</PackageProjectUrl>
     <RepositoryUrl>https://github.com/DorielRivalet/mhfz-overlay.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
