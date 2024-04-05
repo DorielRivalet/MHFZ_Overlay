@@ -39,12 +39,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="publish\**" />
+    <Compile Remove="Releases\**" />
     <Compile Remove="Samples\**" />
     <Compile Remove="UI\**" />
+    <EmbeddedResource Remove="publish\**" />
+    <EmbeddedResource Remove="Releases\**" />
     <EmbeddedResource Remove="Samples\**" />
     <EmbeddedResource Remove="UI\**" />
+    <None Remove="publish\**" />
+    <None Remove="Releases\**" />
     <None Remove="Samples\**" />
     <None Remove="UI\**" />
+    <Page Remove="publish\**" />
+    <Page Remove="Releases\**" />
     <Page Remove="Samples\**" />
     <Page Remove="UI\**" />
   </ItemGroup>
@@ -816,6 +824,7 @@
     <None Remove="Assets\Sounds\select.wav" />
     <None Remove="Assets\Sounds\victory.wav" />
     <None Remove="NLog.config" />
+    <None Remove="Update.exe" />
   </ItemGroup>
 
   <ItemGroup>
@@ -1993,9 +2002,6 @@
     <None Update="Settings.settings">
       <Generator>PublicSettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-    <None Update="Update.exe">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 
