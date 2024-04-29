@@ -1983,7 +1983,7 @@
     <PackageReference Include="WpfAnimatedGif" Version="2.0.2" />
     <PackageReference Include="XamlAnimatedGif" Version="2.2.3" />
     <PackageReference Include="XInputium" Version="1.2.0" />
-    <PackageReference Include="xunit" Version="2.7.0" />
+    <PackageReference Include="xunit" Version="2.8.0" />
   </ItemGroup>
 
   <ItemGroup>
