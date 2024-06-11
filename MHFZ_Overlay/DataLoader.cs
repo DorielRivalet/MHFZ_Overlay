@@ -246,7 +246,7 @@ public sealed class DataLoader
 
     private readonly List<string> bannedFolders = new ()
     {
-        "scripts", "plugins", "script", "plugin", "localize-dat",
+        "scripts", "plugins", "script", "plugin", "localize-dat", "mods",
     };
 
     private readonly List<string> allowedProcesses = new ()
