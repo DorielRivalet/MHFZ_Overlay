@@ -6052,7 +6052,7 @@ During the travel to your destination, the top of the Great Forest, you notice t
             Description = string.Empty,
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/weapon/Dual_Blades_Icon_White.png",
-            Objective = "Defeat Burning Freezing Elzelion solo with Dual Blades without dropping the combo (maximum sharpening buff, Speedrun mode).",
+            Objective = "Defeat Burning Freezing Elzelion solo with Dual Swords without dropping the combo (maximum sharpening buff, Speedrun mode).",
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -6065,7 +6065,7 @@ During the travel to your destination, the top of the Great Forest, you notice t
             Description = string.Empty,
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/weapon/Dual_Blades_Icon_White.png",
-            Objective = "Defeat Arrogant Duremudira solo with Dual Blades without dropping the combo (maximum sharpening buff, Speedrun mode).",
+            Objective = "Defeat Arrogant Duremudira solo with Dual Swords without dropping the combo (maximum sharpening buff, Speedrun mode).",
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -6078,7 +6078,7 @@ During the travel to your destination, the top of the Great Forest, you notice t
             Description = string.Empty,
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/weapon/Dual_Blades_Icon_White.png",
-            Objective = "Defeat Golden Deviljho solo with Dual Blades without dropping the combo (maximum sharpening buff, Speedrun mode).",
+            Objective = "Defeat Golden Deviljho solo with Dual Swords without dropping the combo (maximum sharpening buff, Speedrun mode).",
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -6091,7 +6091,7 @@ During the travel to your destination, the top of the Great Forest, you notice t
             Description = string.Empty,
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/weapon/Dual_Blades_Icon_White.png",
-            Objective = "Defeat Howling Zinogre solo with Dual Blades without dropping the combo (maximum sharpening buff, Speedrun mode).",
+            Objective = "Defeat Howling Zinogre solo with Dual Swords without dropping the combo (maximum sharpening buff, Speedrun mode).",
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -6104,7 +6104,7 @@ During the travel to your destination, the top of the Great Forest, you notice t
             Description = string.Empty,
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/weapon/Dual_Blades_Icon_White.png",
-            Objective = "Defeat Bombardier Bogabadorumu solo with Dual Blades without dropping the combo (maximum sharpening buff, Speedrun mode).",
+            Objective = "Defeat Bombardier Bogabadorumu solo with Dual Swords without dropping the combo (maximum sharpening buff, Speedrun mode).",
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -6117,7 +6117,7 @@ During the travel to your destination, the top of the Great Forest, you notice t
             Description = string.Empty,
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/weapon/Dual_Blades_Icon_White.png",
-            Objective = "Defeat Burning Freezing Elzelion solo with Dual Blades without dropping the combo (maximum sharpening buff, Speedrun mode).",
+            Objective = "Defeat Burning Freezing Elzelion solo with Dual Swords without dropping the combo (maximum sharpening buff, Speedrun mode).",
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -6130,7 +6130,7 @@ During the travel to your destination, the top of the Great Forest, you notice t
             Description = string.Empty,
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/weapon/Dual_Blades_Icon_White.png",
-            Objective = "Defeat Ruling Guanzorumu solo with Dual Blades without dropping the combo (maximum sharpening buff, Speedrun mode).",
+            Objective = "Defeat Ruling Guanzorumu solo with Dual Swords without dropping the combo (maximum sharpening buff, Speedrun mode).",
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -6143,7 +6143,7 @@ During the travel to your destination, the top of the Great Forest, you notice t
             Description = string.Empty,
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/weapon/Dual_Blades_Icon_White.png",
-            Objective = "Defeat Shifting Mi Ru solo with Dual Blades without dropping the combo (maximum sharpening buff, Speedrun mode).",
+            Objective = "Defeat Shifting Mi Ru solo with Dual Swords without dropping the combo (maximum sharpening buff, Speedrun mode).",
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -6156,7 +6156,7 @@ During the travel to your destination, the top of the Great Forest, you notice t
             Description = string.Empty,
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/weapon/Dual_Blades_Icon_White.png",
-            Objective = "Defeat Thirsty Pariapuria solo with Dual Blades without dropping the combo (maximum sharpening buff, Speedrun mode).",
+            Objective = "Defeat Thirsty Pariapuria solo with Dual Swords without dropping the combo (maximum sharpening buff, Speedrun mode).",
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -6169,7 +6169,7 @@ During the travel to your destination, the top of the Great Forest, you notice t
             Description = string.Empty,
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/weapon/Dual_Blades_Icon_White.png",
-            Objective = "Defeat Sparkling Zerureusu solo with Dual Blades without dropping the combo (maximum sharpening buff, Speedrun mode), with less than 50 sharpens.",
+            Objective = "Defeat Sparkling Zerureusu solo with Dual Swords without dropping the combo (maximum sharpening buff, Speedrun mode).",
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -6182,7 +6182,7 @@ During the travel to your destination, the top of the Great Forest, you notice t
             Description = string.Empty,
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/weapon/Dual_Blades_Icon_White.png",
-            Objective = "Defeat Sparkling Zerureusu solo with Dual Blades without dropping the combo (maximum sharpening buff, Speedrun mode), with less than 50 sharpens under 6 minutes.",
+            Objective = "Defeat Sparkling Zerureusu solo with Dual Swords without dropping the combo (maximum sharpening buff, Speedrun mode) under 6 minutes.",
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -6195,7 +6195,7 @@ During the travel to your destination, the top of the Great Forest, you notice t
             Description = string.Empty,
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/weapon/Dual_Blades_Icon_White.png",
-            Objective = "Defeat Sparkling Zerureusu solo with Dual Blades without dropping the combo (maximum sharpening buff, Speedrun mode), without prayer gems and less than 50 sharpens under 6 minutes.",
+            Objective = "Defeat Sparkling Zerureusu solo with Dual Swords without dropping the combo (maximum sharpening buff, Speedrun mode), without prayer gems and under 6 minutes.",
             IsSecret = false,
             Hint = string.Empty,
             }
