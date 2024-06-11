@@ -870,6 +870,7 @@
                                 <ComboBoxItem>(Run ID) Monster Attack Multiplier</ComboBoxItem>
                                 <ComboBoxItem>(Run ID) Monster Defense Rate</ComboBoxItem>
                                 <ComboBoxItem>(Run ID) Monster Status Ailments Thresholds</ComboBoxItem>
+                                <ComboBoxItem>(Run ID) Dual Swords Sharpens</ComboBoxItem>
                             </ComboBox>
 
                             <TextBlock Padding="10,0,10,0" Text="Compare with Run ID" HorizontalAlignment="Center" VerticalAlignment="Center"/>

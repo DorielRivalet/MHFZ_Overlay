@@ -8351,6 +8351,9 @@ dat: {GetGamePatchInfo(GamePatchFile.dat, mhfdatHash)}
 emd: {GetGamePatchInfo(GamePatchFile.emd, mhfemdHash)}
 dll: {GetGamePatchInfo(GamePatchFile.dll, mhfodllHash)}
 hddll: {GetGamePatchInfo(GamePatchFile.hddll, mhfohddllHash)}
+
+Weapon Specific:
+Dual Swords dropped combos: {this.DualSwordsSharpensDictionary.Count((e) => e.Value == 0)}
 ");
             this.SavedGearStats = stats;
             var formattedStats = string.Format(
@@ -8432,6 +8435,9 @@ dat: {GetGamePatchInfo(GamePatchFile.dat, mhfdatHash)}
 emd: {GetGamePatchInfo(GamePatchFile.emd, mhfemdHash)}
 dll: {GetGamePatchInfo(GamePatchFile.dll, mhfodllHash)}
 hddll: {GetGamePatchInfo(GamePatchFile.hddll, mhfohddllHash)}
+
+Weapon Specific:
+Dual Swords dropped combos: {this.DualSwordsSharpensDictionary.Count((e) => e.Value == 0)}
 ");
             this.MarkdownSavedGearStats = formattedStats;
             return stats;
@@ -8458,7 +8464,6 @@ hddll: {GetGamePatchInfo(GamePatchFile.hddll, mhfohddllHash)}
             var activeFeature = DatabaseManagerInstance.GetActiveFeature((long)runID);
             var courses = DatabaseManagerInstance.GetCourses((long)runID);
             var guildPoogie = DatabaseManagerInstance.GetGuildPoogie((long)runID);
-            // TODO
             var weaponBuffs = DatabaseManagerInstance.GetQuestsWeaponBuffs((long)runID);
             var halk = DatabaseManagerInstance.GetHalk((long)runID);
             var toggleMode = DatabaseManagerInstance.GetQuestToggleMode((long)runID);
@@ -8600,6 +8605,9 @@ dat: {patchInfo.mhfdatInfo}
 emd: {patchInfo.mhfemdInfo}
 dll: {patchInfo.mhfodllInfo}
 hddll: {patchInfo.mhfohddllInfo}
+
+Weapon Specific:
+Dual Swords dropped combos: {weaponBuffs.DualSwordsSharpensDictionary.Count((e) => e.Value == 0)}
 ");
         }
     }

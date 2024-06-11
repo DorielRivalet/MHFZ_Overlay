@@ -3790,6 +3790,86 @@ Run IDs with best paces for each HP% Dealt:
         this.personalBestChart.YAxes = this.PersonalBestYAxes;
     }
 
+    private void SetStepLineSeriesForDictionaryIntInt(Dictionary<int, int> data, Dictionary<int, int>? extraData)
+    {
+        if (this.graphChart == null)
+        {
+            return;
+        }
+
+        List<ISeries> series = new();
+        ObservableCollection<ObservablePoint> collection = new();
+
+        var newData = GetElapsedTime(data);
+
+        foreach (var entry in newData)
+        {
+            collection.Add(new ObservablePoint(entry.Key, entry.Value));
+        }
+
+        series.Add(new StepLineSeries<ObservablePoint>
+        {
+            Values = collection,
+            GeometrySize = 0,
+            Stroke = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#fff38ba8"))) { StrokeThickness = 2 },
+            Fill = new LinearGradientPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#fff38ba8", "7f")), new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#fff38ba8", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
+        });
+
+        if (extraData != null)
+        {
+            ObservableCollection<ObservablePoint> collection2 = new();
+
+            var newData2 = GetElapsedTime(extraData);
+
+            foreach (var entry in newData2)
+            {
+                collection2.Add(new ObservablePoint(entry.Key, entry.Value));
+            }
+
+            series.Add(new StepLineSeries<ObservablePoint>
+            {
+                Values = collection2,
+                GeometrySize = 0,
+                Stroke = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#ff89b4fa"))) { StrokeThickness = 2 },
+                Fill = new LinearGradientPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#ff89b4fa", "7f")), new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#ff89b4fa", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
+            });
+
+            if (this.runIDComparisonTextBlock != null && this.extraRunIDTextBox != null)
+            {
+                var runComparisonPercentage = CalculateBetterLinePercentage(newData, newData2);
+                var betterRun = runComparisonPercentage >= 0.0 ? RunIDTextBox.Text : extraRunIDTextBox.Text;
+                this.runIDComparisonTextBlock.Text = string.Format(CultureInfo.InvariantCulture, "Run {0} is higher by around {1:0.##}%", betterRun, Math.Abs(runComparisonPercentage));
+            }
+        }
+
+        this.XAxes = new Axis[]
+        {
+            new Axis
+            {
+                TextSize = 12,
+                Labeler = (value) => TimeService.GetMinutesSecondsFromFrames(value),
+                NamePaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
+                LabelsPaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
+            },
+        };
+
+        this.YAxes = new Axis[]
+        {
+            new Axis
+            {
+                NameTextSize = 12,
+                TextSize = 12,
+                NamePadding = new LiveChartsCore.Drawing.Padding(0),
+                NamePaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
+                LabelsPaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
+            },
+        };
+
+        this.graphChart.Series = series;
+        this.graphChart.XAxes = this.XAxes;
+        this.graphChart.YAxes = this.YAxes;
+    }
+
     private void SetStepLineSeriesForPersonalBestByDate(Dictionary<DateTime, long> data)
     {
         if (this.personalBestChart == null)
@@ -4910,6 +4990,9 @@ Run IDs with best paces for each HP% Dealt:
                         DatabaseManager.GetMonster1BlastThresholdDictionary(runID)),
                     CalculateMonsterStatusAilmentThresholds(
                         DatabaseManager.GetMonster1StunThresholdDictionary(runID)));
+                return;
+            case "(Run ID) Dual Swords Sharpens":
+                this.SetStepLineSeriesForDictionaryIntInt(DatabaseManager.GetDualSwordsSharpensDictionary(runID), DatabaseManager.GetDualSwordsSharpensDictionary(extraRunID));
                 return;
             default:
                 this.graphChart.Series = this.Series ?? Array.Empty<ISeries>(); // TODO test
