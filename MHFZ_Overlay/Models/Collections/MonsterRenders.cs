@@ -166,7 +166,7 @@ public static class MonsterRenders
         { @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/espinas.png", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/render/espinas.png" },
         { @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/zenith_akura_vashimu.gif", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/render/zenith_akura_vashimu.png" },
         { @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/akura_vashimu.png", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/render/akura_vashimu.png" },
-        { @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/thirsty_pariapuria.png", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/render/thirsty_pariapuria.png" },
+        //{ @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/thirsty_pariapuria.png", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/render/thirsty_pariapuria.png" },
         { @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/pariapuria.png", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/render/pariapuria.png" },
         { @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/zenith_doragyurosu.gif", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/render/zenith_doragyurosu.png" },
         { @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/supremacy_doragyurosu.png", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/render/supremacy_doragyurosu.png" },
@@ -177,7 +177,7 @@ public static class MonsterRenders
         { @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/unknown.png", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/render/unknown.png" },
         { @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/zenith_taikun_zamuza.gif", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/render/zenith_taikun_zamuza.png" },
         { @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/taikun_zamuza.png", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/render/taikun_zamuza.png" },
-        { @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/odibatorasu.png", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/render/supremacy_odibatorasu.png" },
+        //{ @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/supremacy_odibatorasu.png", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/render/supremacy_odibatorasu.png" },
         { @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/odibatorasu.png", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/render/odibatorasu.png" },
         { @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/shiten_disufiroa.png", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/render/shiten_disufiroa.png" },
         { @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/disufiroa.png", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/render/disufiroa.png" },
@@ -212,6 +212,6 @@ public static class MonsterRenders
         { @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/burning_freezing_elzelion.png", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/render/burning_freezing_elzelion.png" },
         { @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/elzelion.png", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/render/elzelion.png" },
         { @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/thirsty_pariapuria.png", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/render/thirsty_pariapuria.png" },
-        { @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/unknown.png", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/render/supremacy_unknown.png" },
+        //{ @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/unknown.png", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/render/supremacy_unknown.png" },
     });
 }

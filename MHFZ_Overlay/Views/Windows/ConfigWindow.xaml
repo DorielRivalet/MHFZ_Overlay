@@ -3427,7 +3427,7 @@ Thunder Clad, Vigorous, Hunter Valhalla, Assistance" Text="{Binding GetActiveSki
                                         <Grid>
                                             <DockPanel Margin="5">
                                                 <ScrollViewer CanContentScroll="True" IsDeferredScrollingEnabled="True" VerticalScrollBarVisibility="Visible">
-                                                    <Grid Background="Transparent" Style="{StaticResource ConfigSingleGrid}" x:Name="MotionValuesGrid" Margin="5">
+                                                    <Grid Background="Transparent" Style="{StaticResource ConfigSingleGrid}" Margin="5">
                                                         <Grid.ColumnDefinitions>
                                                             <ColumnDefinition Width="2*"/>
                                                             <ColumnDefinition Width="1*"/>
@@ -3436,28 +3436,9 @@ Thunder Clad, Vigorous, Hunter Valhalla, Assistance" Text="{Binding GetActiveSki
                                                             <RowDefinition Height="40"/>
                                                             <RowDefinition Height="1*"/>
                                                         </Grid.RowDefinitions>
-                                                        <TextBlock Margin="5" ToolTip="Select Weapon Type" Style="{StaticResource ConfigTextBox}" Grid.Row="0" Grid.Column="0"  Text="Weapon Type"/>
-                                                        <ComboBox Grid.Column="1" Grid.Row="0" SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=MotionValuesInfo}">
-                                                            <ComboBoxItem>Sword and Shield</ComboBoxItem>
-                                                            <ComboBoxItem>Dual Swords</ComboBoxItem>
-                                                            <ComboBoxItem>Great Sword</ComboBoxItem>
-                                                            <ComboBoxItem>Long Sword</ComboBoxItem>
-                                                            <ComboBoxItem>Hammer</ComboBoxItem>
-                                                            <ComboBoxItem>Hunting Horn</ComboBoxItem>
-                                                            <ComboBoxItem>Lance</ComboBoxItem>
-                                                            <ComboBoxItem>Gunlance</ComboBoxItem>
-                                                            <ComboBoxItem>Tonfa</ComboBoxItem>
-                                                            <ComboBoxItem>Switch Axe F</ComboBoxItem>
-                                                            <ComboBoxItem>Magnet Spike</ComboBoxItem>
-                                                            <ComboBoxItem>Light Bowgun</ComboBoxItem>
-                                                            <ComboBoxItem>Heavy Bowgun</ComboBoxItem>
-                                                            <ComboBoxItem>Bow</ComboBoxItem>
-                                                        </ComboBox>
-                                                            <TextBlock Grid.Row="1" Grid.ColumnSpan="2" ToolTip="Right-click for more options" Text="{Binding GetGameMotionValues}" TextWrapping="Wrap">
-                                                                <TextBlock.ContextMenu>
-                                                                    <StaticResource ResourceKey="HunterNotesContextMenu" />
-                                                                </TextBlock.ContextMenu>
-                                                            </TextBlock>
+                                                        <TextBlock Margin="5" Style="{StaticResource ConfigTextBox}" Grid.Row="0" Grid.Column="0"  Text="Please check Wycademy tab for updated motion values."/>
+                                                        
+                                                       
                                                         </Grid>
                                                 </ScrollViewer>
                                             </DockPanel>
@@ -3495,11 +3476,11 @@ Thunder Clad, Vigorous, Hunter Valhalla, Assistance" Text="{Binding GetActiveSki
                                                         </Grid.ColumnDefinitions>
                                                         <Grid.RowDefinitions>
                                                             <RowDefinition Height="40"/>
-                                                            <RowDefinition Height="1*"/>
+                                                                <RowDefinition Height="Auto"/>
+                                                                <RowDefinition Height="1*"/>
                                                         </Grid.RowDefinitions>
                                                         <TextBlock Margin="5" ToolTip="Select option" Style="{StaticResource ConfigTextBox}" Grid.Row="0" Grid.Column="0"  Text="Option"/>
                                                         <ComboBox Grid.Column="1" Grid.Row="0" SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=WeaponTypeInfo}">
-                                                            <ComboBoxItem>Element/Status/Bloat</ComboBoxItem>
                                                             <ComboBoxItem>Sword and Shield</ComboBoxItem>
                                                             <ComboBoxItem>Dual Swords</ComboBoxItem>
                                                             <ComboBoxItem>Great Sword</ComboBoxItem>
@@ -3517,14 +3498,16 @@ Thunder Clad, Vigorous, Hunter Valhalla, Assistance" Text="{Binding GetActiveSki
                                                             <ComboBoxItem>Melee Stats</ComboBoxItem>
                                                             <ComboBoxItem>Bowgun Stats</ComboBoxItem>
                                                             <ComboBoxItem>Bow Stats</ComboBoxItem>
-                                                            <ComboBoxItem>Active Feature</ComboBoxItem>
                                                             <ComboBoxItem>Sword Crystals</ComboBoxItem>
                                                             <ComboBoxItem>Types</ComboBoxItem>
                                                             <ComboBoxItem>Sharpness</ComboBoxItem>
                                                             <ComboBoxItem>Damage Formula</ComboBoxItem>
                                                             <ComboBoxItem>Unlocks</ComboBoxItem>
                                                         </ComboBox>
-                                                            <TextBlock Grid.Row="1" Grid.ColumnSpan="2" ToolTip="Right-click for more options" Text="{Binding GetGameWeaponInformation}" TextWrapping="Wrap">
+                                                            <ui:InfoBar Grid.Row="1" Grid.ColumnSpan="2" Foreground="{StaticResource Text}" Title="Update" 
+                            Message="The information here may be out of date. Please refer to Wycademy tab." 
+                            IsClosable="True" IsOpen="True" Severity="Warning"/>
+                                                            <TextBlock Grid.Row="2" Grid.ColumnSpan="2" ToolTip="Right-click for more options" Text="{Binding GetGameWeaponInformation}" TextWrapping="Wrap">
                                                                 <TextBlock.ContextMenu>
                                                                     <StaticResource ResourceKey="HunterNotesContextMenu" />
                                                                 </TextBlock.ContextMenu>
@@ -4355,7 +4338,40 @@ Thunder Clad, Vigorous, Hunter Valhalla, Assistance" Text="{Binding GetActiveSki
                     <customcontrols:MainConfigurationActions Grid.Row="1" Grid.ColumnSpan="1" Loaded="MainConfigurationActions_Loaded" Unloaded="MainConfigurationActions_Unloaded"/>
                 </Grid>
             </TabItem>
-            <TabItem ToolTip="Monster information" Background="{StaticResource Mantle}" Foreground="{StaticResource Text}">
+                <TabItem ToolTip="Wycademy" Background="{StaticResource Mantle}" Foreground="{StaticResource Text}">
+                    <TabItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/wycademy-logo.png" Width="32" Height="32"/>
+                            <TextBlock Foreground="#f5c2e7" Text="Wycademy" Margin="4,0,0,0" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </TabItem.Header>
+                    <Grid>
+                        <DockPanel Margin="5">
+                            <Grid Background="Transparent" Style="{StaticResource ConfigSingleGrid}" Margin="5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="1*"/>
+                                </Grid.RowDefinitions>
+                                <DockPanel>
+                                    <DockPanel DockPanel.Dock="Top">
+                                        <ui:Button Appearance="Secondary" DockPanel.Dock="Left" Click="WycademyNavigationCommandsBrowseBack" Content="Back"/>
+                                        <ui:Button Appearance="Secondary" DockPanel.Dock="Left" Click="WycademyNavigationCommandsBrowseForward" Content="Forward"/>
+                                        <ui:Button Appearance="Secondary" DockPanel.Dock="Left" Click="WycademyNavigationCommandsRefresh" Content="Reload"/>
+                                        <ui:Button Appearance="Secondary" DockPanel.Dock="Left" Click="WycademyNavigationCommandsBrowseStop" Content="Cancel"/>
+                                        <ui:Button Appearance="Primary" DockPanel.Dock="Right" Click="WycademyNavigationCommandsGoToPage" Content="Go"/>
+                                        <!-- We want the address bar to update based on the WebView's Source, but we don't want the WebView to navigate just from the user typing into the address bar.   Therefore we use the OneWay binding mode. -->
+                                        <ui:TextBox Name="WycademyURL" Text="{Binding ElementName=webViewWycademy,Path=Source,Mode=OneWay}"/>
+                                    </DockPanel>
+                                    <wv2:WebView2 Name="webViewWycademy"
+               					Source="https://wycademy.pages.dev/arena#damage-calculator" DefaultBackgroundColor="#f5e0dc"/>
+                                </DockPanel>
+                            </Grid>
+                        </DockPanel>
+                    </Grid>
+                </TabItem>
+                <TabItem ToolTip="Monster information" Background="{StaticResource Mantle}" Foreground="{StaticResource Text}">
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
                         <Image Name="monsterinfoimg" Source="../../Assets/Icons/png/monster_info.png" Width="32" Height="32"/>
@@ -4377,6 +4393,7 @@ Thunder Clad, Vigorous, Hunter Valhalla, Assistance" Text="{Binding GetActiveSki
                         <!--<TextBlock Margin="5" ToolTip="Select option. Image based on cutting damage" Style="{StaticResource ConfigTextBox}" Grid.Row="0" Grid.Column="0"  Text="Option"/>-->
                         <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="Select option" Grid.Row="0" Grid.Column="0" ToolTip="Select option"/>
                         <ComboBox SelectedIndex="0" SelectionChanged="MonsterInfoSource_SelectionChanged" Name="MonsterInfoViewOptionComboBox" Grid.Column="1" Grid.Row="0">
+                            <ComboBoxItem>Wycademy</ComboBoxItem>
                             <ComboBoxItem>Ferias</ComboBoxItem>
                             <ComboBoxItem>Wiki</ComboBoxItem>
                             <ComboBoxItem>YouTube</ComboBoxItem>
@@ -4400,7 +4417,7 @@ Thunder Clad, Vigorous, Hunter Valhalla, Assistance" Text="{Binding GetActiveSki
                         </ComboBox>
                         <DockPanel Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="4" x:Name="DockPanelMonsterInfo" Width="Auto" Height="Auto">
                             <wv2:WebView2 Name="webViewMonsterInfo" ToolTip="Monster info"
-                  					    Source="https://dorielrivalet.github.io/mhfz-ferias-english-project/img/monszones/rathianhr5.png"
+                  					    Source="https://wycademy.pages.dev/bestiary"
   							    />
                         </DockPanel>
                     </Grid>
@@ -4415,7 +4432,7 @@ Thunder Clad, Vigorous, Hunter Valhalla, Assistance" Text="{Binding GetActiveSki
                 </TabItem.Header>
                 <Grid>
                     <DockPanel Margin="5">
-                        <Grid Background="Transparent" Style="{StaticResource ConfigSingleGrid}" x:Name="GameInfoGrid" Margin="5">
+                        <Grid Background="Transparent" Style="{StaticResource ConfigSingleGrid}" Margin="5">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="1*"/>
                             </Grid.ColumnDefinitions>
@@ -4439,30 +4456,7 @@ Thunder Clad, Vigorous, Hunter Valhalla, Assistance" Text="{Binding GetActiveSki
                     </DockPanel>
                 </Grid>
             </TabItem>
-            <TabItem ToolTip="Damage Calculator" Background="{StaticResource Mantle}" Foreground="{StaticResource Text}">
-                <TabItem.Header>
-                    <StackPanel Orientation="Horizontal">
-                        <Image Source="https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/icon/crystal_sapphire.png" Width="32" Height="32"/>
-                        <TextBlock Foreground="#74c7ec" Text="Damage Calculator" Margin="4,0,0,0" VerticalAlignment="Center" />
-                    </StackPanel>
-                </TabItem.Header>
-                <Grid>
-                    <DockPanel Margin="5">
-                        <Grid Background="Transparent" Style="{StaticResource ConfigSingleGrid}" x:Name="DamageCalculatorGrid" Margin="5">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1*"/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="1*"/>
-                            </Grid.RowDefinitions>
-                            <DockPanel>
-                                <wv2:WebView2 Name="webViewDamageCalculator" 
-                  					Source="https://dorielrivalet.github.io/mhfz-damage-calculator" DefaultBackgroundColor="#f5e0dc"/>
-                            </DockPanel>
-                        </Grid>
-                    </DockPanel>
-                </Grid>
-            </TabItem>
+            
 
             <!--TODO: ID Viewer (select id FROM table)-->
             <TabItem ToolTip="Developers and program information" Background="{StaticResource Mantle}" Foreground="{StaticResource Text}">

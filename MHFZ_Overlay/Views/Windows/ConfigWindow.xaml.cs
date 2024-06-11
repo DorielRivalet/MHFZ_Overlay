@@ -804,8 +804,8 @@ public partial class ConfigWindow : FluentWindow
     private void DisposeAllWebViews()
     {
         this.webViewFerias.Dispose();
-        this.webViewDamageCalculator.Dispose();
         this.webViewMonsterInfo.Dispose();
+        this.webViewWycademy.Dispose();
     }
 
     /// <summary>
@@ -1024,6 +1024,7 @@ public partial class ConfigWindow : FluentWindow
         Dictionary<string, string> monsterFeriasOptionDictionary = new();
         Dictionary<string, string> monsterWikiOptionDictionary = new();
         Dictionary<string, string> monsterVideoLinkOptionDictionary = new();
+        Dictionary<string, string> monsterWycademyOptionDictionary = new();
 
         for (var i = 0; i < this.monsterInfos.Count; i++)
         {
@@ -1033,6 +1034,7 @@ public partial class ConfigWindow : FluentWindow
             }
 
             monsterWikiOptionDictionary.Add(this.monsterInfos[i].Name, this.monsterInfos[i].WikiLink);
+            monsterWycademyOptionDictionary.Add(this.monsterInfos[i].Name, this.monsterInfos[i].WycademyLink);
             monsterFeriasOptionDictionary.Add(this.monsterInfos[i].Name, this.monsterInfos[i].FeriasLink);
         }
 
@@ -1059,19 +1061,22 @@ public partial class ConfigWindow : FluentWindow
         switch (this.MonsterInfoViewOptionComboBox.SelectedIndex)
         {
             default:
+                this.DockPanelMonsterInfo.Width = double.NaN; // Auto
+                this.DockPanelMonsterInfo.Height = double.NaN; // Auto
+                this.webViewMonsterInfo.CoreWebView2.Navigate(monsterWycademyOptionDictionary[this.MonsterNameComboBox.SelectedItem.ToString() + string.Empty]);
                 return;
-            case 0: // ferias
+            case 1: // ferias
                 // https://stackoverflow.com/questions/1265812/howto-define-the-auto-width-of-the-wpf-gridview-column-in-code
                 this.DockPanelMonsterInfo.Width = double.NaN; // Auto
                 this.DockPanelMonsterInfo.Height = double.NaN; // Auto
                 this.webViewMonsterInfo.CoreWebView2.Navigate(monsterFeriasOptionDictionary[this.MonsterNameComboBox.SelectedItem.ToString() + string.Empty]);
                 return;
-            case 1: // wiki
+            case 2: // wiki
                 this.DockPanelMonsterInfo.Width = double.NaN; // Auto
                 this.DockPanelMonsterInfo.Height = double.NaN; // Auto
                 this.webViewMonsterInfo.CoreWebView2.Navigate(monsterWikiOptionDictionary[this.MonsterNameComboBox.SelectedItem.ToString() + string.Empty]);
                 return;
-            case 2: // youtube
+            case 3: // youtube
                 if (monsterVideoLinkOptionDictionary.TryGetValue(selectedMatchup, out var videoval) && monsterVideoLinkOptionDictionary[selectedMatchup] != string.Empty)
                 {
                     this.DockPanelMonsterInfo.Width = 854;
@@ -5747,6 +5752,29 @@ Run IDs with best paces for each HP% Dealt:
             if (this.webViewFerias != null && this.webViewFerias.CoreWebView2 != null)
             {
                 this.webViewFerias.CoreWebView2.Navigate(this.GameInfoURL.Text);
+            }
+        }
+        catch
+        {
+            Logger.Error("Could not navigate in WebView2");
+        }
+    }
+
+    private void WycademyNavigationCommandsBrowseBack(object sender, RoutedEventArgs e) => this.webViewFerias.GoBack();
+
+    private void WycademyNavigationCommandsBrowseForward(object sender, RoutedEventArgs e) => this.webViewFerias.GoForward();
+
+    private void WycademyNavigationCommandsRefresh(object sender, RoutedEventArgs e) => this.webViewFerias.Reload();
+
+    private void WycademyNavigationCommandsBrowseStop(object sender, RoutedEventArgs e) => this.webViewFerias.Stop();
+
+    private void WycademyNavigationCommandsGoToPage(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            if (this.webViewWycademy != null && this.webViewWycademy.CoreWebView2 != null)
+            {
+                this.webViewWycademy.CoreWebView2.Navigate(this.WycademyURL.Text);
             }
         }
         catch
