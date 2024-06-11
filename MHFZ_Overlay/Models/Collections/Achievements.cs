@@ -2437,7 +2437,7 @@ public static class Achievements
             Description = string.Empty,
             Rank = AchievementRank.Bronze,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_red2.jpg",
-            Objective = "Complete 1 Blitzkrieg Bogabadorumu True Slay quest.",
+            Objective = "Complete 1 Bombardier Bogabadorumu True Slay quest.",
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -2450,7 +2450,7 @@ public static class Achievements
             Description = string.Empty,
             Rank = AchievementRank.Bronze,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_red2.jpg",
-            Objective = "Complete 10 Blitzkrieg Bogabadorumu True Slay quests.",
+            Objective = "Complete 10 Bombardier Bogabadorumu True Slay quests.",
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -2463,7 +2463,7 @@ public static class Achievements
             Description = string.Empty,
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_white2.jpg",
-            Objective = "Complete 25 Blitzkrieg Bogabadorumu True Slay quests.",
+            Objective = "Complete 25 Bombardier Bogabadorumu True Slay quests.",
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -2476,7 +2476,7 @@ public static class Achievements
             Description = string.Empty,
             Rank = AchievementRank.Gold,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_yellow.jpg",
-            Objective = "Complete 50 Blitzkrieg Bogabadorumu True Slay quests.",
+            Objective = "Complete 50 Bombardier Bogabadorumu True Slay quests.",
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -2489,7 +2489,7 @@ public static class Achievements
             Description = string.Empty,
             Rank = AchievementRank.Silver,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_white2.jpg",
-            Objective = "Complete 1 Blitzkrieg Bogabadorumu True Slay quest solo (Speedrun/Zen).",
+            Objective = "Complete 1 Bombardier Bogabadorumu True Slay quest solo (Speedrun/Zen).",
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -2645,7 +2645,7 @@ public static class Achievements
             Description = string.Empty,
             Rank = AchievementRank.Bronze,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/monster_red2.jpg",
-            Objective = "Complete a Blitzkrieg Bogabadorumu True Slay quest with a Large Barrel Bomb in your inventory.",
+            Objective = "Complete a Bombardier Bogabadorumu True Slay quest with a Large Barrel Bomb in your inventory.",
             IsSecret = true,
             Hint = "We are going to need bigger bombs for this guy...",
             }
@@ -4140,7 +4140,7 @@ public static class Achievements
             Description = string.Empty,
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/achievement/clock.jpg",
-            Objective = "Complete 1 Blitzkrieg Bogabadorumu True Slay quest under 9 minutes.",
+            Objective = "Complete 1 Bombardier Bogabadorumu True Slay quest under 9 minutes.",
             IsSecret = false,
             Hint = string.Empty,
             }

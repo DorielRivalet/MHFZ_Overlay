@@ -1149,7 +1149,7 @@ public abstract class AddressModel : INotifyPropertyChanged
 
     public abstract int GoreMagalaHunted();
 
-    public abstract int BlitzkriegBogabadorumuHunted();
+    public abstract int BombardierBogabadorumuHunted();
 
     public abstract int SparklingZerureusuHunted();
 
@@ -4446,7 +4446,7 @@ TreeScope.Children, condition);
     {
         if (this.Configuring)
         {
-            return "Blitzkrieg Bogabadorumu";
+            return "Bombardier Bogabadorumu";
         }
 
         if (id == 0)
@@ -9079,7 +9079,7 @@ hddll: {patchInfo.mhfohddllInfo}
             this.ArrogantDuremudiraHunted() +
             this.SeregiosHunted() +
             this.BogabadorumuHunted() +
-            this.BlitzkriegBogabadorumuHunted() +
+            this.BombardierBogabadorumuHunted() +
             this.SparklingZerureusuHunted() +
             this.KingShakalakaHunted();
 
@@ -10900,7 +10900,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             case 65:
                 if (this.RankBand() == 32)
                 {
-                    return pathContext + "supremacy_teostra.gif";
+                    return pathContext + "supremacy_teostra.png";
                 }
                 else
                 {
@@ -10964,7 +10964,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 }
                 else if (this.RankBand() == 32)
                 {
-                    return pathContext + "supremacy_pariapuria.gif";
+                    return pathContext + "thirsty_pariapuria.png";
                 }
                 else
                 {
@@ -10978,7 +10978,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 }
                 else if (this.RankBand() == 32)
                 {
-                    return pathContext + "supremacy_doragyurosu.gif";
+                    return pathContext + "supremacy_doragyurosu.png";
                 }
                 else
                 {
@@ -11002,7 +11002,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 }
                 else if (this.RankBand() == 46)
                 {
-                    return pathContext + "supremacy_unknown.gif";
+                    return pathContext + "unknown.png";
                 }
                 else
                 {
@@ -11022,7 +11022,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
             case 106:
                 if (this.RankBand() == 32)
                 {
-                    return pathContext + "supremacy_odibatorasu.gif";
+                    return pathContext + "odibatorasu.png";
                 }
                 else
                 {

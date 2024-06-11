@@ -365,6 +365,7 @@
     <None Remove="Assets\Icons\png\monster\blinking_nargacuga.png" />
     <None Remove="Assets\Icons\png\monster\blitzkrieg_bogabadorumu.png" />
     <None Remove="Assets\Icons\png\monster\blue_yian_kut-ku.png" />
+    <None Remove="Assets\Icons\png\monster\bombardier_bogabadorumu.png" />
     <None Remove="Assets\Icons\png\monster\brachydios.png" />
     <None Remove="Assets\Icons\png\monster\bright_hypnoc.png" />
     <None Remove="Assets\Icons\png\monster\bulldrome.png" />
@@ -1429,8 +1430,8 @@
     <Resource Include="Assets\Icons\png\monster\blango.png" />
     <Resource Include="Assets\Icons\png\monster\blangonga.png" />
     <Resource Include="Assets\Icons\png\monster\blinking_nargacuga.png" />
-    <Resource Include="Assets\Icons\png\monster\blitzkrieg_bogabadorumu.png" />
     <Resource Include="Assets\Icons\png\monster\blue_yian_kut-ku.png" />
+    <Resource Include="Assets\Icons\png\monster\bombardier_bogabadorumu.png" />
     <Resource Include="Assets\Icons\png\monster\brachydios.png" />
     <Resource Include="Assets\Icons\png\monster\bright_hypnoc.png" />
     <Resource Include="Assets\Icons\png\monster\bulldrome.png" />
@@ -1556,7 +1557,6 @@
     <Resource Include="Assets\Icons\png\monster\render\blango.png" />
     <Resource Include="Assets\Icons\png\monster\render\blangonga.png" />
     <Resource Include="Assets\Icons\png\monster\render\blinking_nargacuga.png" />
-    <Resource Include="Assets\Icons\png\monster\render\blitzkrieg_bogabadorumu.png" />
     <Resource Include="Assets\Icons\png\monster\render\blue_yian_kut-ku.png" />
     <Resource Include="Assets\Icons\png\monster\render\brachydios.png" />
     <Resource Include="Assets\Icons\png\monster\render\bright_hypnoc.png" />
@@ -1747,17 +1747,8 @@
     <Resource Include="Assets\Icons\png\monster\sparkling_zerureusu.png" />
     <Resource Include="Assets\Icons\png\monster\starving_deviljho.png" />
     <Resource Include="Assets\Icons\png\monster\stygian_zinogre.png" />
-    <Resource Include="Assets\Icons\png\monster\supremacy.png" />
-    <Resource Include="Assets\Icons\png\monster\supremacy_aruganosu.gif" />
-    <Resource Include="Assets\Icons\png\monster\supremacy_doragyurosu.gif" />
     <Resource Include="Assets\Icons\png\monster\supremacy_doragyurosu.png" />
-    <Resource Include="Assets\Icons\png\monster\supremacy_goruganosu.gif" />
-    <Resource Include="Assets\Icons\png\monster\supremacy_odibatorasu.gif" />
-    <Resource Include="Assets\Icons\png\monster\supremacy_odibatorasu.png" />
-    <Resource Include="Assets\Icons\png\monster\supremacy_pariapuria.gif" />
-    <Resource Include="Assets\Icons\png\monster\supremacy_teostra.gif" />
     <Resource Include="Assets\Icons\png\monster\supremacy_teostra.png" />
-    <Resource Include="Assets\Icons\png\monster\supremacy_unknown.gif" />
     <Resource Include="Assets\Icons\png\monster\taikun_zamuza.png" />
     <Resource Include="Assets\Icons\png\monster\teostra.png" />
     <Resource Include="Assets\Icons\png\monster\thirsty_pariapuria.png" />

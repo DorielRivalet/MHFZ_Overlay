@@ -61,7 +61,7 @@ public static class MonsterInfos
             "https://monsterhunter.fandom.com/wiki/Blinking_Nargacuga"),
 
         new MonsterInfo(
-            "[Musou] Blitzkrieg Bogabadorumu",
+            "[Musou] Bombardier Bogabadorumu",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/bogaK_n.htm",
             new Dictionary<string, string>()
             {

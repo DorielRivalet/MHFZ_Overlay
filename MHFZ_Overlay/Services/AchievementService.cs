@@ -1481,9 +1481,9 @@ public sealed class AchievementService : IAchievementService
                 case 184:
                     return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDArrogantDuremudira && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Speedrun"));
                 case 185:
-                    return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDBlitzkriegBogabadorumu);
+                    return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDBombardierBogabadorumu);
                 case 186:
-                    if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDBlitzkriegBogabadorumu) >= Numbers.RequiredCompletionsMonsterSlayer)
+                    if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDBombardierBogabadorumu) >= Numbers.RequiredCompletionsMonsterSlayer)
                     {
                         return true;
                     }
@@ -1493,7 +1493,7 @@ public sealed class AchievementService : IAchievementService
                     }
 
                 case 187:
-                    if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDBlitzkriegBogabadorumu) >= Numbers.RequiredCompletionsMonsterAnnihilator)
+                    if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDBombardierBogabadorumu) >= Numbers.RequiredCompletionsMonsterAnnihilator)
                     {
                         return true;
                     }
@@ -1503,7 +1503,7 @@ public sealed class AchievementService : IAchievementService
                     }
 
                 case 188:
-                    if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDBlitzkriegBogabadorumu) >= Numbers.RequiredCompletionsMonsterExterminator)
+                    if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDBombardierBogabadorumu) >= Numbers.RequiredCompletionsMonsterExterminator)
                     {
                         return true;
                     }
@@ -1513,7 +1513,7 @@ public sealed class AchievementService : IAchievementService
                     }
 
                 case 189:
-                    return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDBlitzkriegBogabadorumu && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Speedrun"));
+                    return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDBombardierBogabadorumu && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Speedrun"));
                 case 190:
                     return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID is Numbers.QuestIDBurningFreezingElzelionTower or Numbers.QuestIDBurningFreezingElzelionHistoric);
                 case 191:
@@ -1681,7 +1681,7 @@ public sealed class AchievementService : IAchievementService
                 case 201:
                     completedQuests = from quest in databaseManagerInstance.AllQuests
                                       join playerInventory in databaseManagerInstance.AllPlayerInventories on quest.RunID equals playerInventory.RunID
-                                      where quest.QuestID == Numbers.QuestIDBlitzkriegBogabadorumu &&
+                                      where quest.QuestID == Numbers.QuestIDBombardierBogabadorumu &&
                                             (playerInventory.Item1ID == 93 ||
                                              playerInventory.Item2ID == 93 ||
                                              playerInventory.Item3ID == 93 ||
@@ -2053,7 +2053,7 @@ public sealed class AchievementService : IAchievementService
                 case 315:
                     return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDArrogantDuremudira && quest.FinalTimeValue < Numbers.Frames1Minute * 9);
                 case 316:
-                    return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDBlitzkriegBogabadorumu && quest.FinalTimeValue < Numbers.Frames1Minute * 9);
+                    return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDBombardierBogabadorumu && quest.FinalTimeValue < Numbers.Frames1Minute * 9);
                 case 317:
                     return databaseManagerInstance.AllQuests.Any(quest => (quest.QuestID == Numbers.QuestIDBurningFreezingElzelionHistoric || quest.QuestID == Numbers.QuestIDBurningFreezingElzelionTower) && quest.FinalTimeValue < Numbers.Frames1Minute * 9);
                 case 318:
