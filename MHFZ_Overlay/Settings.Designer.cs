@@ -4102,5 +4102,41 @@ namespace MHFZ_Overlay {
                 this["PlayerInputPressedOpacity"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool DualSwordsSharpensShown {
+            get {
+                return ((bool)(this["DualSwordsSharpensShown"]));
+            }
+            set {
+                this["DualSwordsSharpensShown"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("105")]
+        public double DualSwordsSharpensX {
+            get {
+                return ((double)(this["DualSwordsSharpensX"]));
+            }
+            set {
+                this["DualSwordsSharpensX"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("102")]
+        public double DualSwordsSharpensY {
+            get {
+                return ((double)(this["DualSwordsSharpensY"]));
+            }
+            set {
+                this["DualSwordsSharpensY"] = value;
+            }
+        }
     }
 }

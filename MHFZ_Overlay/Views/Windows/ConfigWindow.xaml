@@ -2439,6 +2439,8 @@
                                 <RowDefinition Height="40"/>
                                 <RowDefinition Height="40"/>
                                 <RowDefinition Height="40"/>
+                                <RowDefinition Height="40"/>
+                                <RowDefinition Height="40"/>
                             </Grid.RowDefinitions>
 
                             <StackPanel Margin="5" Orientation="Horizontal" Grid.Row="0" Grid.Column="0" ToolTip="Show Timer">
@@ -2836,7 +2838,19 @@
                                 <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="X" Text="{Binding Source={StaticResource Settings},Path=GuildFoodTimerX}"  PreviewTextInput="ValidateNumber"/>
                                 <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="Y" Margin="5,0,0,0" Text="{Binding Source={StaticResource Settings},Path=GuildFoodTimerY}"  PreviewTextInput="ValidateNumber"/>
                             </StackPanel>
-                        </Grid>
+
+                                <StackPanel Margin="5" Orientation="Horizontal" Grid.Row="75" Grid.Column="0" ToolTip="Show Dual Swords Sharpen Streak Count">
+                                    <Image Source="../../Assets/Icons/png/whetstone.png" Margin="0,0,5,0"/>
+                                    <TextBlock Style="{StaticResource ConfigTextBox}" Text="Dual Swords Sharpens" />
+                                </StackPanel>
+                                <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="75" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=DualSwordsSharpensShown}"/>
+
+                                <TextBlock Margin="5" Style="{StaticResource ConfigTextBox}" Grid.Row="76" Grid.Column="0"  Text="Dual Swords Sharpens Position"/>
+                                <StackPanel Orientation="Horizontal" Grid.Row="76" Grid.Column="1" HorizontalAlignment="Center">
+                                    <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="X" Text="{Binding Source={StaticResource Settings},Path=DualSwordsSharpensX}"  PreviewTextInput="ValidateNumber"/>
+                                    <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="Y" Text="{Binding Source={StaticResource Settings},Path=DualSwordsSharpensY}"  PreviewTextInput="ValidateNumber"/>
+                                </StackPanel>
+                            </Grid>
                     </ScrollViewer>
                     <customcontrols:MainConfigurationActions Grid.Row="1" Grid.ColumnSpan="1" Loaded="MainConfigurationActions_Loaded" Unloaded="MainConfigurationActions_Unloaded"/>
                 </Grid>

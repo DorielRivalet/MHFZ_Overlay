@@ -1827,4 +1827,8 @@ public sealed class AddressModelNotHGE : AddressModel
     /// <inheritdoc/>
     public override int QuestVariant4() => this.M.ReadByte("mhfo.dll+28C2CEA");
 
+    /// <inheritdoc/>
+    public override int DualSwordsSharpens() => this.M.ReadByte("mhfo.dll+50346B8");
+
+
 }

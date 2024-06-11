@@ -1022,5 +1022,14 @@
     <Setting Name="PlayerInputPressedOpacity" Type="System.Double" Scope="User">
       <Value Profile="(Default)">0.5</Value>
     </Setting>
+    <Setting Name="DualSwordsSharpensShown" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="DualSwordsSharpensX" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">105</Value>
+    </Setting>
+    <Setting Name="DualSwordsSharpensY" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">102</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

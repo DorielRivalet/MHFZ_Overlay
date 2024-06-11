@@ -1327,6 +1327,9 @@ The process may take some time, as the program attempts to download from GitHub 
         this.DataLoader.Model.ShowQuestAttemptsInfo = v && s.QuestAttemptsShown;
         this.DataLoader.Model.ShowPersonalBestTimePercentInfo = v && s.PersonalBestTimePercentShown;
         this.DataLoader.Model.ShowPersonalBestAttemptsInfo = v && s.PersonalBestAttemptsShown;
+
+        this.DataLoader.Model.ShowDualSwordsSharpens = v && s.DualSwordsSharpensShown && DataLoader.Model.CurrentWeaponName == "Dual Swords";
+
     }
 
     private double? yOffset { get; set; }
@@ -1457,6 +1460,10 @@ The process may take some time, as the program attempts to download from GitHub 
             case "MapImage":
                 s.MapX = (double)(pos.X - this.xOffset);
                 s.MapY = (double)(pos.Y - this.yOffset);
+                break;
+            case "DualSwordsSharpensInfo":
+                s.DualSwordsSharpensX = (double)(pos.X - this.xOffset);
+                s.DualSwordsSharpensY = (double)(pos.Y - this.yOffset);
                 break;
 
             // case "OverlayModeWatermark":
@@ -1712,6 +1719,7 @@ The process may take some time, as the program attempts to download from GitHub 
         this.PlayerDPSGraphGridBorder.BorderThickness = thickness;
         this.PlayerHitsPerSecondGraphGridBorder.BorderThickness = thickness;
         this.TitleBarBorder.BorderThickness = thickness;
+        this.DualSwordsSharpensBorder.BorderThickness = thickness;
     }
 
     private void ToggleClickThrough()

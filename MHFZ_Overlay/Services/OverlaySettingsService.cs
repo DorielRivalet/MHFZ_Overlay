@@ -73,6 +73,7 @@ public sealed class OverlaySettingsService
                 s.PersonalBestTimePercentShown = false;
                 s.EnablePersonalBestPaceColor = false;
                 s.PlayerPositionShown = false;
+                s.DualSwordsSharpensShown = false;
 
                 s.TimerInfoShown = true;
                 s.EnableInputLogging = true;
@@ -109,7 +110,7 @@ public sealed class OverlaySettingsService
                 s.EnableInputLogging = false;
                 s.EnableMap = false;
                 s.PlayerPositionShown = false;
-
+                s.DualSwordsSharpensShown = false;
                 s.OverlayModeWatermarkShown = false;
 
                 s.Monster1IconShown = true;
@@ -140,6 +141,7 @@ public sealed class OverlaySettingsService
                 s.ActionsPerMinuteShown = false;
                 s.PersonalBestShown = false;
                 s.PlayerPositionShown = false;
+                s.DualSwordsSharpensShown = false;
 
                 s.OverlayModeWatermarkShown = false;
 
@@ -179,6 +181,7 @@ public sealed class OverlaySettingsService
                 s.TimerInfoShown = true;
                 s.EnableInputLogging = true;
                 s.EnableMap = true;
+                s.DualSwordsSharpensShown = true;
 
                 s.OverlayModeWatermarkShown = true;
 

@@ -799,6 +799,7 @@
     <None Remove="Assets\Icons\png\true_transcend.png" />
     <None Remove="Assets\Icons\png\unknown.png" />
     <None Remove="Assets\Icons\png\whetstone.png" />
+    <None Remove="Assets\Icons\png\whetstone_red.png" />
     <None Remove="Assets\Icons\png\world.png" />
     <None Remove="Assets\Icons\touhou\fumo1.png" />
     <None Remove="Assets\Icons\touhou\fumo10.png" />
@@ -1855,6 +1856,7 @@
     <Resource Include="Assets\Icons\png\true_transcend.png" />
     <Resource Include="Assets\Icons\png\unknown.png" />
     <Resource Include="Assets\Icons\png\whetstone.png" />
+    <Resource Include="Assets\Icons\png\whetstone_red.png" />
     <Resource Include="Assets\Icons\png\world.png" />
     <Resource Include="Assets\Icons\Sac_Icon_White.xaml" />
     <Resource Include="Assets\Icons\Scale_Icon_White.xaml" />

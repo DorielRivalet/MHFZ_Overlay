@@ -1908,4 +1908,7 @@ public sealed class AddressModelHGE : AddressModel
     /// <inheritdoc/>
     public override int QuestVariant4() => this.M.ReadByte("mhfo-hd.dll+2AFA89A");
 
+    /// <inheritdoc/>
+    public override int DualSwordsSharpens() => this.M.ReadByte("mhfo-hd.dll+DC6C278");
+
 }

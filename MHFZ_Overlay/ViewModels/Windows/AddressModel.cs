@@ -118,6 +118,8 @@ public abstract class AddressModel : INotifyPropertyChanged
 
     public bool ShowPersonalBestAttemptsInfo { get; set; }
 
+    public bool ShowDualSwordsSharpens { get; set; }
+
     public bool ShowMonster1HPBar { get; set; }
 
     public bool ShowMonster2HPBar { get; set; }
@@ -1393,6 +1395,8 @@ public abstract class AddressModel : INotifyPropertyChanged
     /// <returns></returns>
     public abstract int QuestVariant4();
 
+    public abstract int DualSwordsSharpens();
+
     /// <summary>
     /// Updates every 11 seconds
     /// </summary>
@@ -1816,7 +1820,8 @@ TreeScope.Children, condition);
             || s.EnableMap
             || s.PersonalBestTimePercentShown
             || s.EnablePersonalBestPaceColor
-            || s.PlayerPositionShown) // TODO monster 1 overview? and update README
+            || s.PlayerPositionShown
+            || s.DualSwordsSharpensShown) // TODO monster 1 overview? and update README
         {
             return OverlayMode.Standard;
         }
@@ -3278,6 +3283,8 @@ TreeScope.Children, condition);
 
     public string DivaSongIcon { get; set; } = "../../Assets/Icons/png/diva_fountain.png";
 
+    public string DualSwordsSharpensIcon { get; set; } = "../../Assets/Icons/png/whetstone.png";
+
     public string GuildFoodIcon { get; set; } = "../../Assets/Icons/png/guild_hall.png";
 
     /// <summary>
@@ -3338,6 +3345,32 @@ TreeScope.Children, condition);
         }
     }
 
+    public string DualSwordsSharpensColor
+    {
+        get
+        {
+            var count = this.DualSwordsSharpens();
+            if (count >= 4)
+            {
+                this.DualSwordsSharpensIcon = "../../Assets/Icons/png/whetstone_red.png";
+            }
+            else
+            {
+                this.DualSwordsSharpensIcon = "../../Assets/Icons/png/whetstone.png";
+            }
+
+            return count switch
+            {
+                4 => "#cba6f7", // Mauve
+                3 => "#f38ba8", // Red
+                2 => "#fab387", // Peach    
+                1 => "#f9e2af", // Yellow
+                0 => "#f5e0dc", // Rosewater
+                _ => "#cdd6f4",
+            };
+        }
+    }
+
     /// <summary>
     /// Gets the color of the sharpness.
     /// </summary>
@@ -3385,6 +3418,15 @@ TreeScope.Children, condition);
         }
     }
 
+    public string DualSwordsSharpensCount
+    {
+        get
+        {
+            var count = this.DualSwordsSharpens();
+            return count.ToString(CultureInfo.InvariantCulture);
+        }
+    }
+
     /// <summary>
     /// Gets the current weapon multiplier.
     /// </summary>
@@ -3401,7 +3443,7 @@ TreeScope.Children, condition);
     }
 
     /// <summary>
-    /// Gets the name of the current weapon.
+    /// Gets the name of the current weapon. This refers to the weapon type name.
     /// </summary>
     /// <value>
     /// The name of the current weapon.

@@ -130,7 +130,20 @@
 
                 <customcontrols:OutlinedTextBlock HorizontalAlignment="Left" Text="{x:Bind DataLoader.Model.SharpnessNumber}" Grid.Column="0" Grid.Row="0"  FontSize="{Binding Path=PrimaryFontSize, Source={StaticResource Settings}}" FontFamily="{Binding Path=PrimaryFontFamily, Source={StaticResource Settings}}" FontWeight="{Binding Path=PrimaryFontWeight, Source={StaticResource Settings}}" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding SharpnessColor}"/>
             </Grid>
-            <Grid x:Name="SessionTimeInfo" Canvas.Left="{Binding Source={StaticResource Settings},Path=SessionTimeX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=SessionTimeY}" Width="Auto" Height="Auto" MouseLeftButtonDown="ElementMouseLeftButtonDown" Background="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}" Visibility="{Binding ElementName=Window, Path=DataLoader.Model.ShowSessionTimeInfo, Converter={StaticResource BoolToVis}}">
+                <Grid x:Name=
+                      "DualSwordsSharpensInfo" Canvas.Left="{Binding Source={StaticResource Settings},Path=DualSwordsSharpensX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=DualSwordsSharpensY}" Width="Auto" Height="Auto" MouseLeftButtonDown="ElementMouseLeftButtonDown" Background="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}"  Visibility="{Binding ElementName=Window, Path=DataLoader.Model.ShowDualSwordsSharpens, Converter={StaticResource BoolToVis}}">
+                    <Grid.ColumnDefinitions >
+                        <ColumnDefinition  Width="2*" />
+                        <ColumnDefinition  Width="4*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+                    <Border x:Name="DualSwordsSharpensBorder" BorderBrush="{StaticResource Red}" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" BorderThickness="0"/>
+                    <Image Height="30" VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Column="0" Source="{Binding DualSwordsSharpensIcon}" d:Source="../../Assets/Icons/png/whetstone.png"/>
+                    <customcontrols:OutlinedTextBlock d:Text="4" d:Fill="{Binding Source={StaticResource Settings},Path=TextColor}" VerticalAlignment="Center"  HorizontalAlignment="Left"  Text="{x:Bind DataLoader.Model.DualSwordsSharpensCount}" Grid.Column="1" Grid.Row="0"  FontSize="{Binding Path=PrimaryFontSize, Source={StaticResource Settings}}" FontFamily="{Binding Path=PrimaryFontFamily, Source={StaticResource Settings}}" FontWeight="{Binding Path=PrimaryFontWeight, Source={StaticResource Settings}}" StrokeThickness="4" Stroke="#1e1e2e" Fill="{Binding DualSwordsSharpensColor}" Margin="4,0,0,0"/>
+                </Grid>
+                <Grid x:Name="SessionTimeInfo" Canvas.Left="{Binding Source={StaticResource Settings},Path=SessionTimeX}" Canvas.Top="{Binding Source={StaticResource Settings},Path=SessionTimeY}" Width="Auto" Height="Auto" MouseLeftButtonDown="ElementMouseLeftButtonDown" Background="{Binding Source={StaticResource Settings},Path=TextBackGroundColor}" Visibility="{Binding ElementName=Window, Path=DataLoader.Model.ShowSessionTimeInfo, Converter={StaticResource BoolToVis}}">
             <Grid.ColumnDefinitions >
                 <ColumnDefinition  Width="2*" />
                 <ColumnDefinition  Width="4*"/>
