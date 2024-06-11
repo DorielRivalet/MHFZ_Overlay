@@ -6117,7 +6117,7 @@ During the travel to your destination, the top of the Great Forest, you notice t
             Description = string.Empty,
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/weapon/Dual_Blades_Icon_White.png",
-            Objective = "Defeat Burning Freezing Elzelion solo with Dual Swords without dropping the combo (maximum sharpening buff, Speedrun mode).",
+            Objective = "Defeat Blinking Nargacuga solo with Dual Swords without dropping the combo (maximum sharpening buff, Speedrun mode).",
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -6222,6 +6222,71 @@ During the travel to your destination, the top of the Great Forest, you notice t
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/knife.png",
             Objective = "Hunt a total of 10,000 large monsters.",
+            IsSecret = false,
+            Hint = string.Empty,
+            }
+        },
+        {
+            466, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "The King in Black",
+            Description = string.Empty,
+            Rank = AchievementRank.Platinum,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/weapon/Dual_Blades_Icon_White.png",
+            Objective = "Defeat Lv9999 Conquest Fatalis solo with Dual Swords without dropping the combo (maximum sharpening buff, Speedrun mode).",
+            IsSecret = false,
+            Hint = string.Empty,
+            }
+        },
+        {
+            467, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Dragon Slayer",
+            Description = string.Empty,
+            Rank = AchievementRank.Platinum,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/weapon/Dual_Blades_Icon_White.png",
+            Objective = "Defeat Lv9999 Conquest Crimson Fatalis solo with Dual Swords without dropping the combo (maximum sharpening buff, Speedrun mode).",
+            IsSecret = false,
+            Hint = string.Empty,
+            }
+        },
+        {
+            468, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Blazing Majesty",
+            Description = string.Empty,
+            Rank = AchievementRank.Platinum,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/weapon/Dual_Blades_Icon_White.png",
+            Objective = "Defeat Lv9999 Conquest Shantien solo with Dual Swords without dropping the combo (maximum sharpening buff, Speedrun mode).",
+            IsSecret = false,
+            Hint = string.Empty,
+            }
+        },
+        {
+            469, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Incognito",
+            Description = string.Empty,
+            Rank = AchievementRank.Platinum,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/weapon/Dual_Blades_Icon_White.png",
+            Objective = "Defeat Upper Shiten Unknown solo with Dual Swords without dropping the combo (maximum sharpening buff, Speedrun mode).",
+            IsSecret = false,
+            Hint = string.Empty,
+            }
+        },
+        {
+            470, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Exsanguination",
+            Description = string.Empty,
+            Rank = AchievementRank.Platinum,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/weapon/Dual_Blades_Icon_White.png",
+            Objective = "Defeat Upper Shiten Disufiroa solo with Dual Swords without dropping the combo (maximum sharpening buff, Speedrun mode).",
             IsSecret = false,
             Hint = string.Empty,
             }
