@@ -5351,7 +5351,17 @@ Run IDs with best paces for each HP% Dealt:
     {
         this.achievementsListView = (ListView)sender;
         this.MainWindow.DataLoader.Model.PlayerAchievements = DatabaseManager.GetPlayerAchievements();
-        this.achievementsListView.ItemsSource = this.MainWindow.DataLoader.Model.PlayerAchievements;
+        List<Achievement> usableAchievements = new();
+
+        foreach (var achievement in this.MainWindow.DataLoader.Model.PlayerAchievements)
+        {
+            if (Achievements.IDAchievement.Any((e) => e.Value.Title == achievement.Title && e.Value.Unused == false))
+            {
+                usableAchievements.Add(achievement);
+            }
+        }
+
+        this.achievementsListView.ItemsSource = usableAchievements;
         this.achievementsListView.Items.Refresh();
         this.UpdateAchievementsProgress();
     }
@@ -5401,17 +5411,17 @@ Run IDs with best paces for each HP% Dealt:
 
     private void UpdateAchievementsProgress()
     {
-        var totalAchievements = this.MainWindow.DataLoader.Model.PlayerAchievements.Count(a => a.IsSecret == false);
+        var totalAchievements = this.MainWindow.DataLoader.Model.PlayerAchievements.Count(a => a.IsSecret == false && a.Unused == false);
         var obtainedAchievements = this.MainWindow.DataLoader.Model.PlayerAchievements.Count(a => a.CompletionDate != DateTime.UnixEpoch);
         var obtainedSecretAchievements = this.MainWindow.DataLoader.Model.PlayerAchievements.Count(a => a.CompletionDate != DateTime.UnixEpoch && a.IsSecret);
         var totalSecretAchievements = this.MainWindow.DataLoader.Model.PlayerAchievements.Count(a => a.IsSecret);
         var progressPercentage = (obtainedAchievements * 100.0 / totalAchievements) == 100 ? (obtainedAchievements * 100.0 / totalAchievements) + (obtainedSecretAchievements / totalSecretAchievements) : (obtainedAchievements * 100.0 / totalAchievements);
         this.AchievementsProgressBar.Value = progressPercentage;
 
-        var totalBronzeAchievements = this.MainWindow.DataLoader.Model.PlayerAchievements.Count(a => a.IsSecret == false && a.Rank == AchievementRank.Bronze);
-        var totalSilverAchievements = this.MainWindow.DataLoader.Model.PlayerAchievements.Count(a => a.IsSecret == false && a.Rank == AchievementRank.Silver);
-        var totalGoldAchievements = this.MainWindow.DataLoader.Model.PlayerAchievements.Count(a => a.IsSecret == false && a.Rank == AchievementRank.Gold);
-        var totalPlatinumAchievements = this.MainWindow.DataLoader.Model.PlayerAchievements.Count(a => a.IsSecret == false && a.Rank == AchievementRank.Platinum);
+        var totalBronzeAchievements = this.MainWindow.DataLoader.Model.PlayerAchievements.Count(a => a.IsSecret == false && a.Rank == AchievementRank.Bronze && a.Unused == false);
+        var totalSilverAchievements = this.MainWindow.DataLoader.Model.PlayerAchievements.Count(a => a.IsSecret == false && a.Rank == AchievementRank.Silver && a.Unused == false);
+        var totalGoldAchievements = this.MainWindow.DataLoader.Model.PlayerAchievements.Count(a => a.IsSecret == false && a.Rank == AchievementRank.Gold && a.Unused == false);
+        var totalPlatinumAchievements = this.MainWindow.DataLoader.Model.PlayerAchievements.Count(a => a.IsSecret == false && a.Rank == AchievementRank.Platinum && a.Unused == false);
 
         var obtainedBronzeAchievements = this.MainWindow.DataLoader.Model.PlayerAchievements.Count(a => a.CompletionDate != DateTime.UnixEpoch && a.Rank == AchievementRank.Bronze);
         var obtainedSilverAchievements = this.MainWindow.DataLoader.Model.PlayerAchievements.Count(a => a.CompletionDate != DateTime.UnixEpoch && a.Rank == AchievementRank.Silver);

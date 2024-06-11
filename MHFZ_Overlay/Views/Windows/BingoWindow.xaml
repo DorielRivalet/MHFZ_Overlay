@@ -173,7 +173,7 @@
                                         </ui:Button>
                                     <ui:Button HorizontalAlignment="Center" Grid.Row="14" Grid.ColumnSpan="2" d:Content="Select weapon order (9999 Bingo Points)"  Content="Select weapon order (9999 Bingo Points)" Foreground="{StaticResource Crust}" Background="{StaticResource Blue}" Command="{Binding SelectWeaponOrderCommand}">
                                             <ui:Button.Icon>
-                                            <ui:ImageIcon Height="20" Source="pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/small_gs.png"/>
+                                            <ui:ImageIcon Height="20" Source="pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/weapon/small_gs.png"/>
                                             </ui:Button.Icon>
                                         </ui:Button>
                                     <ui:Button HorizontalAlignment="Center" Grid.Row="15" Grid.ColumnSpan="2" d:Content="Select cells order (10 left)" Content="Select cells order (10 left)" Foreground="{StaticResource Crust}" Background="{StaticResource Blue}" Command="{Binding SelectCellsOrderCommand}">

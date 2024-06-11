@@ -2780,6 +2780,35 @@ public sealed class AchievementService : IAchievementService
                     return totalCarts >= 100;
                 case 451:
                     return databaseManagerInstance.TotalOverlaySessions >= 1_000;
+                case 452:
+                    return false;
+                case 453:
+                    return false;
+                case 454:
+                    return false;
+                case 455:
+                    return false;
+                case 456:
+                    return false;
+                case 457:
+                    return false;
+                case 458:
+                    return false;
+                case 459:
+                    return false;
+                case 460:
+                    return false;
+                case 461:
+                    return false;
+                case 462:
+                    return false;
+                case 463:
+                    return false;
+                case 464:
+                    return false;
+                case 465:
+                    return false;
+               
             }
         } catch (Exception ex)
         {

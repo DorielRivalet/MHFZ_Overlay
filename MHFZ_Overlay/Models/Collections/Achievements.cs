@@ -2650,7 +2650,7 @@ public static class Achievements
             Hint = "We are going to need bigger bombs for this guy...",
             }
         },
-        {
+        {// TODO test if this works
             202, new Achievement()
             {
             CompletionDate = DateTime.UnixEpoch,
@@ -4195,6 +4195,7 @@ public static class Achievements
             Objective = "Complete Bingo (Easy).",
             IsSecret = false,
             Hint = string.Empty,
+            Unused = true,
             }
         },
         {
@@ -4208,6 +4209,7 @@ public static class Achievements
             Objective = "Complete Bingo (Medium).",
             IsSecret = false,
             Hint = string.Empty,
+            Unused = true,
             }
         },
         {
@@ -4221,6 +4223,7 @@ public static class Achievements
             Objective = "Complete Bingo (Hard).",
             IsSecret = false,
             Hint = string.Empty,
+            Unused = true,
             }
         },
         {
@@ -4234,6 +4237,7 @@ public static class Achievements
             Objective = "Complete Bingo (Extreme).",
             IsSecret = false,
             Hint = string.Empty,
+            Unused = true,
             }
         },
         {
@@ -4247,6 +4251,7 @@ public static class Achievements
             Objective = "Obtain a Gacha Card.",
             IsSecret = false,
             Hint = string.Empty,
+            Unused = true,
             }
         },
         {
@@ -4260,6 +4265,7 @@ public static class Achievements
             Objective = "Obtain 100 Gacha Cards.",
             IsSecret = false,
             Hint = string.Empty,
+            Unused = true,
             }
         },
         {
@@ -4273,6 +4279,7 @@ public static class Achievements
             Objective = "Obtain 1000 Gacha Cards.",
             IsSecret = false,
             Hint = string.Empty,
+            Unused = true,
             }
         },
         {
@@ -4286,6 +4293,7 @@ public static class Achievements
             Objective = "Obtain all Gacha Cards.",
             IsSecret = false,
             Hint = string.Empty,
+            Unused = true,
             }
         },
         {
@@ -4299,6 +4307,7 @@ public static class Achievements
             Objective = "Complete 1 Zenith Gauntlet.",
             IsSecret = false,
             Hint = string.Empty,
+            Unused = true,
             }
         },
         {
@@ -4312,6 +4321,7 @@ public static class Achievements
             Objective = "Complete 10 Zenith Gauntlets.",
             IsSecret = false,
             Hint = string.Empty,
+            Unused = true,
             }
         },
         {
@@ -4325,6 +4335,7 @@ public static class Achievements
             Objective = "Complete 25 Zenith Gauntlets.",
             IsSecret = false,
             Hint = string.Empty,
+            Unused = true,
             }
         },
         {
@@ -4338,6 +4349,7 @@ public static class Achievements
             Objective = "Complete a Zenith Gauntlet under 4 hours.",
             IsSecret = false,
             Hint = string.Empty,
+            Unused = true,
             }
         },
         {
@@ -4351,6 +4363,7 @@ public static class Achievements
             Objective = "Complete 1 Solstice Gauntlet.",
             IsSecret = false,
             Hint = string.Empty,
+            Unused = true,
             }
         },
         {
@@ -4364,6 +4377,7 @@ public static class Achievements
             Objective = "Complete 10 Solstice Gauntlets.",
             IsSecret = false,
             Hint = string.Empty,
+            Unused = true,
             }
         },
         {
@@ -4377,6 +4391,7 @@ public static class Achievements
             Objective = "Complete 25 Solstice Gauntlets.",
             IsSecret = false,
             Hint = string.Empty,
+            Unused = true,
             }
         },
         {
@@ -4390,6 +4405,7 @@ public static class Achievements
             Objective = "Complete a Solstice Gauntlet under an hour.",
             IsSecret = false,
             Hint = string.Empty,
+            Unused = true,
             }
         },
         {
@@ -4403,6 +4419,7 @@ public static class Achievements
             Objective = "Complete 1 Musou Gauntlet.",
             IsSecret = false,
             Hint = string.Empty,
+            Unused = true,
             }
         },
         {
@@ -4416,6 +4433,7 @@ public static class Achievements
             Objective = "Complete 10 Musou Gauntlets.",
             IsSecret = false,
             Hint = string.Empty,
+            Unused = true,
             }
         },
         {
@@ -4429,6 +4447,7 @@ public static class Achievements
             Objective = "Complete 25 Musou Gauntlets.",
             IsSecret = false,
             Hint = string.Empty,
+            Unused = true,
             }
         },
         {
@@ -4442,6 +4461,7 @@ public static class Achievements
             Objective = "Complete a Musou Gauntlet under 100 minutes.",
             IsSecret = false,
             Hint = string.Empty,
+            Unused = true,
             }
         },
         {
@@ -4663,6 +4683,7 @@ public static class Achievements
             Objective = "Complete a bingo run without fainting and with 4 lines being crossed at once.",
             IsSecret = false,
             Hint = string.Empty,
+            Unused = true,
             }
         },
         {
@@ -4676,6 +4697,7 @@ public static class Achievements
             Objective = "Complete a bingo card.",
             IsSecret = false,
             Hint = string.Empty,
+            Unused = true,
             }
         },
         {
@@ -4689,6 +4711,7 @@ public static class Achievements
             Objective = "Complete 10 bingo cards.",
             IsSecret = false,
             Hint = string.Empty,
+            Unused = true,
             }
         },
         {
@@ -4702,6 +4725,7 @@ public static class Achievements
             Objective = "Complete 25 bingo cards.",
             IsSecret = false,
             Hint = string.Empty,
+            Unused = true,
             }
         },
         {
@@ -4715,6 +4739,7 @@ public static class Achievements
             Objective = "Complete 50 bingo cards.",
             IsSecret = false,
             Hint = string.Empty,
+            Unused = true,
             }
         },
         {
@@ -4728,6 +4753,7 @@ public static class Achievements
             Objective = "Generate 1 gacha pull.",
             IsSecret = false,
             Hint = string.Empty,
+            Unused = true,
             }
         },
         {
@@ -4741,6 +4767,7 @@ public static class Achievements
             Objective = "Generate 10 gacha pulls.",
             IsSecret = false,
             Hint = string.Empty,
+            Unused = true,
             }
         },
         {
@@ -4754,6 +4781,7 @@ public static class Achievements
             Objective = "Generate 100 gacha pulls.",
             IsSecret = false,
             Hint = string.Empty,
+            Unused = true,
             }
         },
         {
@@ -4767,6 +4795,7 @@ public static class Achievements
             Objective = "Generate 1000 gacha pulls.",
             IsSecret = false,
             Hint = string.Empty,
+            Unused = true,
             }
         },
         {
@@ -4780,6 +4809,7 @@ public static class Achievements
             Objective = "Generate 10,000 gacha pulls.",
             IsSecret = false,
             Hint = string.Empty,
+            Unused = true,
             }
         },
         {
@@ -4793,6 +4823,7 @@ public static class Achievements
             Objective = "Generate a gacha pull using gacha bonus coins.",
             IsSecret = false,
             Hint = string.Empty,
+            Unused = true,
             }
         },
         {
@@ -4806,6 +4837,7 @@ public static class Achievements
             Objective = "Generate a gacha pull using gacha prismatic coins.",
             IsSecret = false,
             Hint = string.Empty,
+            Unused = true,
             }
         },
         {
@@ -4819,6 +4851,7 @@ public static class Achievements
             Objective = "Obtain all gacha cards from MH1, MH1G and MHF1.",
             IsSecret = false,
             Hint = string.Empty,
+            Unused = true,
             }
         },
         {
@@ -4832,6 +4865,7 @@ public static class Achievements
             Objective = "Obtain all gacha cards from MH2, MHF2 and MHFU.",
             IsSecret = false,
             Hint = string.Empty,
+            Unused = true,
             }
         },
         {
@@ -4845,6 +4879,7 @@ public static class Achievements
             Objective = "Obtain all gacha cards from MH3, MHP3 and MH3U.",
             IsSecret = false,
             Hint = string.Empty,
+            Unused = true,
             }
         },
         {
@@ -4858,6 +4893,7 @@ public static class Achievements
             Objective = "Obtain all gacha cards from MH4, MH4U, MHG and MHGU.",
             IsSecret = false,
             Hint = string.Empty,
+            Unused = true,
             }
         },
         {
@@ -4871,6 +4907,7 @@ public static class Achievements
             Objective = "Obtain all gacha cards from MHW, MHWI, MHR and MHRS.",
             IsSecret = false,
             Hint = string.Empty,
+            Unused = true,
             }
         },
         {
@@ -4884,6 +4921,7 @@ public static class Achievements
             Objective = "Obtain all gacha cards from MHXR, MHST and MHST2.",
             IsSecret = false,
             Hint = string.Empty,
+            Unused = true,
             }
         },
         {
@@ -4897,6 +4935,7 @@ public static class Achievements
             Objective = "Obtain all gacha cards from Monster Hunter Online.",
             IsSecret = false,
             Hint = string.Empty,
+            Unused = true,
             }
         },
         {
@@ -4910,6 +4949,7 @@ public static class Achievements
             Objective = "Obtain all gacha cards from Monster Hunter Frontier",
             IsSecret = false,
             Hint = string.Empty,
+            Unused = true,
             }
         },
         {
@@ -4923,6 +4963,7 @@ public static class Achievements
             Objective = "Obtain a ★1 gacha card.",
             IsSecret = false,
             Hint = string.Empty,
+            Unused = true,
             }
         },
         {
@@ -4936,6 +4977,7 @@ public static class Achievements
             Objective = "Obtain 2 ★2 gacha cards.",
             IsSecret = false,
             Hint = string.Empty,
+            Unused = true,
             }
         },
         {
@@ -4949,6 +4991,7 @@ public static class Achievements
             Objective = "Obtain 3 ★3 gacha cards.",
             IsSecret = false,
             Hint = string.Empty,
+            Unused = true,
             }
         },
         {
@@ -4962,6 +5005,7 @@ public static class Achievements
             Objective = "Obtain 4 ★4 gacha cards.",
             IsSecret = false,
             Hint = string.Empty,
+            Unused = true,
             }
         },
         {
@@ -4975,6 +5019,7 @@ public static class Achievements
             Objective = "Obtain 5 ★5 gacha cards.",
             IsSecret = false,
             Hint = string.Empty,
+            Unused = true,
             }
         },
         {
@@ -4988,6 +5033,7 @@ public static class Achievements
             Objective = "Obtain 6 ★6 gacha cards.",
             IsSecret = false,
             Hint = string.Empty,
+            Unused = true,
             }
         },
         {
@@ -5001,6 +5047,7 @@ public static class Achievements
             Objective = "Obtain 7 ★7 gacha cards.",
             IsSecret = false,
             Hint = string.Empty,
+            Unused = true,
             }
         },
         {
@@ -5014,6 +5061,7 @@ public static class Achievements
             Objective = "Obtain 8 ★8 gacha cards.",
             IsSecret = false,
             Hint = string.Empty,
+            Unused = true,
             }
         },
         {
@@ -5027,6 +5075,7 @@ public static class Achievements
             Objective = "Obtain 9 ★9 gacha cards.",
             IsSecret = false,
             Hint = string.Empty,
+            Unused = true,
             }
         },
         {
@@ -5040,6 +5089,7 @@ public static class Achievements
             Objective = "Obtain 10 ★10 gacha cards.",
             IsSecret = false,
             Hint = string.Empty,
+            Unused = true,
             }
         },
         {
@@ -5053,6 +5103,7 @@ public static class Achievements
             Objective = "Obtain 11 ★11 gacha cards.",
             IsSecret = false,
             Hint = string.Empty,
+            Unused = true,
             }
         },
         {
@@ -5066,6 +5117,7 @@ public static class Achievements
             Objective = "Obtain 12 ★12 gacha cards.",
             IsSecret = false,
             Hint = string.Empty,
+            Unused = true,
             }
         },
         {
@@ -5079,6 +5131,7 @@ public static class Achievements
             Objective = "Obtain all ★1 gacha cards.",
             IsSecret = false,
             Hint = string.Empty,
+            Unused = true,
             }
         },
         {
@@ -5092,6 +5145,7 @@ public static class Achievements
             Objective = "Obtain all ★2 gacha cards.",
             IsSecret = false,
             Hint = string.Empty,
+            Unused = true,
             }
         },
         {
@@ -5105,6 +5159,7 @@ public static class Achievements
             Objective = "Obtain all ★3 gacha cards.",
             IsSecret = false,
             Hint = string.Empty,
+            Unused = true,
             }
         },
         {
@@ -5118,6 +5173,7 @@ public static class Achievements
             Objective = "Obtain all ★4 gacha cards.",
             IsSecret = false,
             Hint = string.Empty,
+            Unused = true,
             }
         },
         {
@@ -5131,6 +5187,7 @@ public static class Achievements
             Objective = "Obtain all ★5 gacha cards.",
             IsSecret = false,
             Hint = string.Empty,
+            Unused = true,
             }
         },
         {
@@ -5144,6 +5201,7 @@ public static class Achievements
             Objective = "Obtain all ★6 gacha cards.",
             IsSecret = false,
             Hint = string.Empty,
+            Unused = true,
             }
         },
         {
@@ -5157,6 +5215,7 @@ public static class Achievements
             Objective = "Obtain all ★7 gacha cards.",
             IsSecret = false,
             Hint = string.Empty,
+            Unused = true,
             }
         },
         {
@@ -5170,6 +5229,7 @@ public static class Achievements
             Objective = "Obtain all ★8 gacha cards.",
             IsSecret = false,
             Hint = string.Empty,
+            Unused = true,
             }
         },
         {
@@ -5183,6 +5243,7 @@ public static class Achievements
             Objective = "Obtain all ★9 gacha cards.",
             IsSecret = false,
             Hint = string.Empty,
+            Unused = true,
             }
         },
         {
@@ -5196,6 +5257,7 @@ public static class Achievements
             Objective = "Obtain all ★10 gacha cards.",
             IsSecret = false,
             Hint = string.Empty,
+            Unused = true,
             }
         },
         {
@@ -5209,6 +5271,7 @@ public static class Achievements
             Objective = "Obtain all ★11 gacha cards.",
             IsSecret = false,
             Hint = string.Empty,
+            Unused = true,
             }
         },
         {
@@ -5222,6 +5285,7 @@ public static class Achievements
             Objective = "Obtain all ★12 gacha cards.",
             IsSecret = false,
             Hint = string.Empty,
+            Unused = true,
             }
         },
         {
@@ -5235,6 +5299,7 @@ public static class Achievements
             Objective = "Complete a gacha bonus quest.",
             IsSecret = false,
             Hint = string.Empty,
+            Unused = true,
             }
         },
         {
@@ -5248,6 +5313,7 @@ public static class Achievements
             Objective = "Complete a Zenith Gauntlet without fainting.",
             IsSecret = false,
             Hint = string.Empty,
+            Unused = true,
             }
         },
         {
@@ -5261,6 +5327,7 @@ public static class Achievements
             Objective = "Complete a Solstice Gauntlet without fainting.",
             IsSecret = false,
             Hint = string.Empty,
+            Unused = true,
             }
         },
         {
@@ -5274,6 +5341,7 @@ public static class Achievements
             Objective = "Complete a Musou Gauntlet without fainting.",
             IsSecret = false,
             Hint = string.Empty,
+            Unused = true,
             }
         },
         {
@@ -5325,6 +5393,7 @@ Just now, reduced to ashes",
             Objective = "Obtain a Special Gacha Card with all chance boosters active.",
             IsSecret = false,
             Hint = string.Empty,
+            Unused = true,
             }
         },
         {
@@ -5351,6 +5420,7 @@ Just now, reduced to ashes",
             Objective = "Accept a rare gacha challenge.",
             IsSecret = false,
             Hint = string.Empty,
+            Unused = true,
             }
         },
         {
@@ -5474,6 +5544,7 @@ During the travel to your destination, the top of the Great Forest, you notice t
             Objective = "Start a bingo run with all gauntlet boosts active.",
             IsSecret = false,
             Hint = string.Empty,
+            Unused = true,
             }
         },
         {
@@ -5487,6 +5558,7 @@ During the travel to your destination, the top of the Great Forest, you notice t
             Objective = "Buy all Bingo challenge upgrades.",
             IsSecret = false,
             Hint = string.Empty,
+            Unused = true,
             }
         },
         {
@@ -5500,6 +5572,7 @@ During the travel to your destination, the top of the Great Forest, you notice t
             Objective = "Buy all Sky Corridor challenge upgrades.",
             IsSecret = false,
             Hint = string.Empty,
+            Unused = true,
             }
         },
         {
@@ -5513,8 +5586,9 @@ During the travel to your destination, the top of the Great Forest, you notice t
             Objective = "Buy all Gacha challenge upgrades.",
             IsSecret = false,
             Hint = string.Empty,
+            Unused = true,
             }
-        },  
+        },
         {
             419, new Achievement()
             {
@@ -5531,6 +5605,7 @@ During the travel to your destination, the top of the Great Forest, you notice t
 [] [] [M] [] []
 [] [U] [] [] []
 [F] [] [] [] []",
+            Unused = true,
             }
         },
         {
@@ -5544,6 +5619,7 @@ During the travel to your destination, the top of the Great Forest, you notice t
             Objective = "Click a fumo in Gacha challenge. Or not, it's probably a scam.",
             IsSecret = true,
             Hint = "Fumo is very expensive.",
+            Unused = true,
             }
         },
         {
@@ -5557,6 +5633,7 @@ During the travel to your destination, the top of the Great Forest, you notice t
             Objective = "Click a fumo in Sky Corridor challenge. Looks like it underestimated your power.",
             IsSecret = true,
             Hint = "Fumo says it's over, it has the high ground.",
+            Unused = true,
             }
         },
         {
@@ -5570,6 +5647,7 @@ During the travel to your destination, the top of the Great Forest, you notice t
             Objective = "Click a fumo in Frontier Compendium website and follow the hints.",
             IsSecret = true,
             Hint = "Get a hint from a fumo, not here!",
+            Unused = true,
             }
         },
         {
@@ -5583,6 +5661,7 @@ During the travel to your destination, the top of the Great Forest, you notice t
             Objective = "Fully transcend once in a Bingo challenge.",
             IsSecret = true,
             Hint = "There's more to bingo than meets the eye.",
+            Unused = true,
             }
         },
         {
@@ -5596,6 +5675,7 @@ During the travel to your destination, the top of the Great Forest, you notice t
             Objective = "Use the ancient gauntlet to get an infinite amount of points in Sky Corridor. Or at least, try to.",
             IsSecret = true,
             Hint = "There's not one, but multiple gauntlets.",
+            Unused = true,
             }
         },
         {
@@ -5609,6 +5689,7 @@ During the travel to your destination, the top of the Great Forest, you notice t
             Objective = "Complete Tome I of the Book of Secrets (Challenge).",
             IsSecret = false,
             Hint = string.Empty,
+            Unused = true,
             }
         },
         {
@@ -5622,6 +5703,7 @@ During the travel to your destination, the top of the Great Forest, you notice t
             Objective = "Complete Tome II of the Book of Secrets (Challenge).",
             IsSecret = false,
             Hint = string.Empty,
+            Unused = true,
             }
         },
         {
@@ -5635,6 +5717,7 @@ During the travel to your destination, the top of the Great Forest, you notice t
             Objective = "Complete Tome III of the Book of Secrets (Challenge).",
             IsSecret = false,
             Hint = string.Empty,
+            Unused = true,
             }
         },
         {
@@ -5648,6 +5731,7 @@ During the travel to your destination, the top of the Great Forest, you notice t
             Objective = "Complete Tome IV of the Book of Secrets (Challenge).",
             IsSecret = false,
             Hint = string.Empty,
+            Unused = true,
             }
         },
         {
@@ -5661,6 +5745,7 @@ During the travel to your destination, the top of the Great Forest, you notice t
             Objective = "Click a fumo in a chest.",
             IsSecret = true,
             Hint = "These chests can hold many hidden treasures.",
+            Unused = true,
             }
         },
         {
@@ -5674,6 +5759,7 @@ During the travel to your destination, the top of the Great Forest, you notice t
             Objective = "Click a fumo in a box.",
             IsSecret = true,
             Hint = "These boxes can have more than just ammo.",
+            Unused = true,
             }
         },
         {
@@ -5687,6 +5773,7 @@ During the travel to your destination, the top of the Great Forest, you notice t
             Objective = "Click a fumo near a monster.",
             IsSecret = true,
             Hint = "This fumo reminds me of a certain fanged beast.",
+            Unused = true,
             }
         },
         {
@@ -5700,6 +5787,7 @@ During the travel to your destination, the top of the Great Forest, you notice t
             Objective = "Click a fumo inside a wooden chest.",
             IsSecret = true,
             Hint = "Why was it hiding inside a wooden chest?",
+            Unused = true,
             }
         },
         {
@@ -5713,6 +5801,7 @@ During the travel to your destination, the top of the Great Forest, you notice t
             Objective = "Click a fumo in the starry sky.",
             IsSecret = true,
             Hint = "You saw a comet and asked for a wish.",
+            Unused = true,
             }
         },
         {
@@ -5726,6 +5815,7 @@ During the travel to your destination, the top of the Great Forest, you notice t
             Objective = "Click a fumo near a knife.",
             IsSecret = true,
             Hint = "I wonder why we use transcend burst with the carving knife.",
+            Unused = true,
             }
         },
         {
@@ -5739,6 +5829,7 @@ During the travel to your destination, the top of the Great Forest, you notice t
             Objective = "Click a fumo near a frog.",
             IsSecret = true,
             Hint = "This frog was hiding a secret!",
+            Unused = true,
             }
         },
         {
@@ -5752,6 +5843,7 @@ During the travel to your destination, the top of the Great Forest, you notice t
             Objective = "Click a fumo near a monster's eye.",
             IsSecret = true,
             Hint = "We might find something if we go where these eyes are pointing.",
+            Unused = true,
             }
         },
         {
@@ -5765,6 +5857,7 @@ During the travel to your destination, the top of the Great Forest, you notice t
             Objective = "Click a fumo in Frontier Compendium website and follow the hints.",
             IsSecret = true,
             Hint = "Get a hint from a fumo, not here!",
+            Unused = true,
             }
         },
         {
@@ -5778,6 +5871,7 @@ During the travel to your destination, the top of the Great Forest, you notice t
             Objective = "Click a fumo in Sky Corridor Headquarters Entrance.",
             IsSecret = true,
             Hint = "Get a hint from a fumo, not here!",
+            Unused = true,
             }
         },
         {
@@ -5791,8 +5885,9 @@ During the travel to your destination, the top of the Great Forest, you notice t
             Objective = "Help Marisa go back to her universe.",
             IsSecret = true,
             Hint = "Hopefully we don't have any more dimensional shenanigans.",
+            Unused = true,
             }
-        },  
+        },
         {
             440, new Achievement()
             {
@@ -5865,7 +5960,7 @@ During the travel to your destination, the top of the Great Forest, you notice t
             Title = "Active Hunter",
             Description = string.Empty,
             Rank = AchievementRank.Silver,
-            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/small_gs.png",
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/weapon/Great_Sword_Icon_White.png",
             Objective = "Use the active features of all weapon types.",
             IsSecret = false,
             Hint = string.Empty,
@@ -5948,6 +6043,188 @@ During the travel to your destination, the top of the Great Forest, you notice t
             IsSecret = false,
             Hint = string.Empty,
             }
-        }
+        },
+        {
+            452, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "The King of Hell",
+            Description = string.Empty,
+            Rank = AchievementRank.Platinum,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/weapon/Dual_Blades_Icon_White.png",
+            Objective = "Defeat Burning Freezing Elzelion solo with Dual Blades without dropping the combo (maximum sharpening buff, Speedrun mode).",
+            IsSecret = false,
+            Hint = string.Empty,
+            }
+        },
+        {
+            453, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Guardian of Tartarus",
+            Description = string.Empty,
+            Rank = AchievementRank.Platinum,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/weapon/Dual_Blades_Icon_White.png",
+            Objective = "Defeat Arrogant Duremudira solo with Dual Blades without dropping the combo (maximum sharpening buff, Speedrun mode).",
+            IsSecret = false,
+            Hint = string.Empty,
+            }
+        },
+        {
+            454, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Twin Demons",
+            Description = string.Empty,
+            Rank = AchievementRank.Platinum,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/weapon/Dual_Blades_Icon_White.png",
+            Objective = "Defeat Golden Deviljho solo with Dual Blades without dropping the combo (maximum sharpening buff, Speedrun mode).",
+            IsSecret = false,
+            Hint = string.Empty,
+            }
+        },
+        {
+            455, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Cerberus",
+            Description = string.Empty,
+            Rank = AchievementRank.Platinum,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/weapon/Dual_Blades_Icon_White.png",
+            Objective = "Defeat Howling Zinogre solo with Dual Blades without dropping the combo (maximum sharpening buff, Speedrun mode).",
+            IsSecret = false,
+            Hint = string.Empty,
+            }
+        },
+        {
+            456, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Rush Up",
+            Description = string.Empty,
+            Rank = AchievementRank.Platinum,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/weapon/Dual_Blades_Icon_White.png",
+            Objective = "Defeat Bombardier Bogabadorumu solo with Dual Blades without dropping the combo (maximum sharpening buff, Speedrun mode).",
+            IsSecret = false,
+            Hint = string.Empty,
+            }
+        },
+        {
+            457, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Wyvern Specter",
+            Description = string.Empty,
+            Rank = AchievementRank.Platinum,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/weapon/Dual_Blades_Icon_White.png",
+            Objective = "Defeat Burning Freezing Elzelion solo with Dual Blades without dropping the combo (maximum sharpening buff, Speedrun mode).",
+            IsSecret = false,
+            Hint = string.Empty,
+            }
+        },
+        {
+            458, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Draconian",
+            Description = string.Empty,
+            Rank = AchievementRank.Platinum,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/weapon/Dual_Blades_Icon_White.png",
+            Objective = "Defeat Ruling Guanzorumu solo with Dual Blades without dropping the combo (maximum sharpening buff, Speedrun mode).",
+            IsSecret = false,
+            Hint = string.Empty,
+            }
+        },
+        {
+            459, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Metamorphosis",
+            Description = string.Empty,
+            Rank = AchievementRank.Platinum,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/weapon/Dual_Blades_Icon_White.png",
+            Objective = "Defeat Shifting Mi Ru solo with Dual Blades without dropping the combo (maximum sharpening buff, Speedrun mode).",
+            IsSecret = false,
+            Hint = string.Empty,
+            }
+        },
+        {
+            460, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Olé!",
+            Description = string.Empty,
+            Rank = AchievementRank.Platinum,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/weapon/Dual_Blades_Icon_White.png",
+            Objective = "Defeat Thirsty Pariapuria solo with Dual Blades without dropping the combo (maximum sharpening buff, Speedrun mode).",
+            IsSecret = false,
+            Hint = string.Empty,
+            }
+        },
+        {
+            461, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Sparking!",
+            Description = string.Empty,
+            Rank = AchievementRank.Platinum,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/weapon/Dual_Blades_Icon_White.png",
+            Objective = "Defeat Sparkling Zerureusu solo with Dual Blades without dropping the combo (maximum sharpening buff, Speedrun mode), with less than 50 sharpens.",
+            IsSecret = false,
+            Hint = string.Empty,
+            }
+        },
+        {
+            462, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Sparking! Meteor",
+            Description = string.Empty,
+            Rank = AchievementRank.Platinum,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/weapon/Dual_Blades_Icon_White.png",
+            Objective = "Defeat Sparkling Zerureusu solo with Dual Blades without dropping the combo (maximum sharpening buff, Speedrun mode), with less than 50 sharpens under 6 minutes.",
+            IsSecret = false,
+            Hint = string.Empty,
+            }
+        },
+        {
+            463, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Sparking! Zero",
+            Description = string.Empty,
+            Rank = AchievementRank.Platinum,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/weapon/Dual_Blades_Icon_White.png",
+            Objective = "Defeat Sparkling Zerureusu solo with Dual Blades without dropping the combo (maximum sharpening buff, Speedrun mode), without prayer gems and less than 50 sharpens under 6 minutes.",
+            IsSecret = false,
+            Hint = string.Empty,
+            }
+        },
+        {
+            464, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "High Voltage",
+            Description = string.Empty,
+            Rank = AchievementRank.Platinum,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/weapon/Hunting_Horn_Icon_White.png",
+            Objective = "Defeat Howling Zinogre solo with Hunting Horn without getting hit (Speedrun mode).",
+            IsSecret = false,
+            Hint = string.Empty,
+            }
+        },
+        {
+            465, new Achievement()
+            {
+            CompletionDate = DateTime.UnixEpoch,
+            Title = "Absolute Carnage",
+            Description = string.Empty,
+            Rank = AchievementRank.Platinum,
+            Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/knife.png",
+            Objective = "Hunt a total of 10,000 large monsters.",
+            IsSecret = false,
+            Hint = string.Empty,
+            }
+        },
     });
 }
