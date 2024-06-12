@@ -306,7 +306,7 @@ Some sections have context menus where you can save the section contents to a fi
 
 ![Config7](./demo/config7.png)
 
-The damage calculator comes from [Wycademy](https://wycademy.pages.dev/), a compendium of resources for Monster Hunter Frontier Z made by DorielRivalet. Check it out! Here are some examples of the website:
+The damage calculator comes from [Wycademy](https://wycademy.vercel.app/), a compendium of resources for Monster Hunter Frontier Z made by DorielRivalet. Check it out! Here are some examples of the website:
 
 ### Monster Info
 

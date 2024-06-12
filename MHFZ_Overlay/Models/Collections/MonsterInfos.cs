@@ -37,7 +37,7 @@ public static class MonsterInfos
                 { "Bow", "https://www.youtube.com/embed/9UVFdkZT6SQ" },
             },
             "https://monsterhunter.fandom.com/wiki/Arrogant_Duremudira",
-		"https://wycademy.pages.dev/bestiary/Arrogant_Duremudira".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Arrogant_Duremudira".Replace("_","-").ToLowerInvariant()),
 
         new MonsterInfo(
             "[Musou] Blinking Nargacuga",
@@ -60,7 +60,7 @@ public static class MonsterInfos
                 { "Bow", "https://www.youtube.com/embed/pXPh2uqvFD8" },
             },
             "https://monsterhunter.fandom.com/wiki/Blinking_Nargacuga",
-		"https://wycademy.pages.dev/bestiary/Blinking_Nargacuga".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Blinking_Nargacuga".Replace("_","-").ToLowerInvariant()),
 
         new MonsterInfo(
             "[Musou] Bombardier Bogabadorumu",
@@ -83,7 +83,7 @@ public static class MonsterInfos
                 { "Bow", "https://www.youtube.com/embed/3aHSjPo90Vc" },
             },
             "https://monsterhunter.fandom.com/wiki/Bombardier_Bogabadorumu",
-		"https://wycademy.pages.dev/bestiary/Bombardier_Bogabadorumu".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Bombardier_Bogabadorumu".Replace("_","-").ToLowerInvariant()),
 
         new MonsterInfo(
             "[Musou] Burning Freezing Elzelion",
@@ -106,7 +106,7 @@ public static class MonsterInfos
                 { "Bow", string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Burning_Freezing_Eruzerion",
-		"https://wycademy.pages.dev/bestiary/Burning_Freezing_Elzelion".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Burning_Freezing_Elzelion".Replace("_","-").ToLowerInvariant()),
 
         new MonsterInfo(
             "[Musou] Howling Zinogre",
@@ -129,7 +129,7 @@ public static class MonsterInfos
                 { "Bow", "https://www.youtube.com/embed/GqMh_KUJx4E" },
             },
             "https://monsterhunter.fandom.com/wiki/Howling_Zinogre",
-		"https://wycademy.pages.dev/bestiary/Howling_Zinogre".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Howling_Zinogre".Replace("_","-").ToLowerInvariant()),
 
         new MonsterInfo(
             "[Musou] Ruling Guanzorumu",
@@ -152,7 +152,7 @@ public static class MonsterInfos
                 { "Bow", "https://www.youtube.com/embed/DXjkOqzyll8" },
             },
             "https://monsterhunter.fandom.com/wiki/Ruler_Guanzorumu",
-		"https://wycademy.pages.dev/bestiary/Ruling_Guanzorumu".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Ruling_Guanzorumu".Replace("_","-").ToLowerInvariant()),
 
         new MonsterInfo(
             "[Musou] Shifting Mi Ru",
@@ -175,7 +175,7 @@ public static class MonsterInfos
                 { "Bow", "https://www.youtube.com/embed/6UPpgA1V2n8" },
             },
             "https://monsterhunter.fandom.com/wiki/Mysterious_Mi_Ru",
-		"https://wycademy.pages.dev/bestiary/Shifting_Mi_Ru".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Shifting_Mi_Ru".Replace("_","-").ToLowerInvariant()),
 
         new MonsterInfo(
             "[Musou] Sparkling Zerureusu",
@@ -198,7 +198,7 @@ public static class MonsterInfos
                 { "Bow", "https://www.youtube.com/embed/w3tjb5NNHQA" },
             },
             "https://monsterhunter.fandom.com/wiki/Sparkling_Zerureusu",
-		"https://wycademy.pages.dev/bestiary/Sparkling_Zerureusu".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Sparkling_Zerureusu".Replace("_","-").ToLowerInvariant()),
 
         new MonsterInfo(
             "[Musou] Starving Deviljho",
@@ -221,7 +221,7 @@ public static class MonsterInfos
                 { "Bow", string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Starving_Deviljho",
-		"https://wycademy.pages.dev/bestiary/Starving_Deviljho".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Starving_Deviljho".Replace("_","-").ToLowerInvariant()),
 
         new MonsterInfo(
             "[Musou] Thirsty Pariapuria",
@@ -244,7 +244,7 @@ public static class MonsterInfos
                 { "Bow", "https://www.youtube.com/embed/Y3YY1v4afJA" },
             },
             "https://monsterhunter.fandom.com/wiki/Thirsty_Pariapuria",
-		"https://wycademy.pages.dev/bestiary/Thirsty_Pariapuria".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Thirsty_Pariapuria".Replace("_","-").ToLowerInvariant()),
 
         new MonsterInfo(
             "Zenith Akura Vashimu",
@@ -267,7 +267,7 @@ public static class MonsterInfos
                 { "Bow", string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Zenith_Akura_Vashimu",
-		"https://wycademy.pages.dev/bestiary/Zenith_Akura_Vashimu".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Zenith_Akura_Vashimu".Replace("_","-").ToLowerInvariant()),
 
         new MonsterInfo(
             "Zenith Anorupatisu",
@@ -290,7 +290,7 @@ public static class MonsterInfos
                 { "Bow", string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Zenith_Anorupatisu",
-		"https://wycademy.pages.dev/bestiary/Zenith_Anorupatisu".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Zenith_Anorupatisu".Replace("_","-").ToLowerInvariant()),
 
         new MonsterInfo(
             "Zenith Baruragaru",
@@ -313,7 +313,7 @@ public static class MonsterInfos
                 { "Bow", string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Zenith_Baruragaru",
-		"https://wycademy.pages.dev/bestiary/Zenith_Baruragaru".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Zenith_Baruragaru".Replace("_","-").ToLowerInvariant()),
 
         new MonsterInfo(
             "Zenith Blangonga",
@@ -336,7 +336,7 @@ public static class MonsterInfos
                 { "Bow", string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Zenith_Blangonga",
-		"https://wycademy.pages.dev/bestiary/Zenith_Blangonga".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Zenith_Blangonga".Replace("_","-").ToLowerInvariant()),
 
         new MonsterInfo(
             "Zenith Daimyo Hermitaur",
@@ -359,7 +359,7 @@ public static class MonsterInfos
                 { "Bow", string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Zenith_Daimyo_Hermitaur",
-		"https://wycademy.pages.dev/bestiary/Zenith_Daimyo_Hermitaur".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Zenith_Daimyo_Hermitaur".Replace("_","-").ToLowerInvariant()),
 
         new MonsterInfo(
             "Zenith Doragyurosu",
@@ -382,7 +382,7 @@ public static class MonsterInfos
                 { "Bow", string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Zenith_Doragyurosu",
-		"https://wycademy.pages.dev/bestiary/Zenith_Doragyurosu".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Zenith_Doragyurosu".Replace("_","-").ToLowerInvariant()),
 
         new MonsterInfo(
             "Zenith Espinas",
@@ -405,7 +405,7 @@ public static class MonsterInfos
                 { "Bow", string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Zenith_Espinas",
-		"https://wycademy.pages.dev/bestiary/Zenith_Espinas".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Zenith_Espinas".Replace("_","-").ToLowerInvariant()),
 
         new MonsterInfo(
             "Zenith Gasurabazura",
@@ -428,7 +428,7 @@ public static class MonsterInfos
                 { "Bow", string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Zenith_Gasurabazura",
-		"https://wycademy.pages.dev/bestiary/Zenith_Gasurabazura".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Zenith_Gasurabazura".Replace("_","-").ToLowerInvariant()),
 
         new MonsterInfo(
             "Zenith Giaorugu",
@@ -451,7 +451,7 @@ public static class MonsterInfos
                 { "Bow", string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Zenith_Giaorugu",
-		"https://wycademy.pages.dev/bestiary/Zenith_Giaorugu".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Zenith_Giaorugu".Replace("_","-").ToLowerInvariant()),
 
         new MonsterInfo(
             "Zenith Gravios",
@@ -474,7 +474,7 @@ public static class MonsterInfos
                 { "Bow", string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Zenith_Gravios",
-		"https://wycademy.pages.dev/bestiary/Zenith_Gravios".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Zenith_Gravios".Replace("_","-").ToLowerInvariant()),
 
         new MonsterInfo(
             "Zenith Harudomerugu",
@@ -497,7 +497,7 @@ public static class MonsterInfos
                 { "Bow", string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Zenith_Harudomerugu",
-		"https://wycademy.pages.dev/bestiary/Zenith_Harudomerugu".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Zenith_Harudomerugu".Replace("_","-").ToLowerInvariant()),
 
         new MonsterInfo(
             "Zenith Hypnoc",
@@ -520,7 +520,7 @@ public static class MonsterInfos
                 { "Bow", string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Zenith_Hypnocatrice",
-		"https://wycademy.pages.dev/bestiary/Zenith_Hypnocatrice".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Zenith_Hypnocatrice".Replace("_","-").ToLowerInvariant()),
 
         new MonsterInfo(
             "Zenith Hyujikiki",
@@ -543,7 +543,7 @@ public static class MonsterInfos
                 { "Bow", string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Zenith_Hyujikiki",
-		"https://wycademy.pages.dev/bestiary/Zenith_Hyujikiki".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Zenith_Hyujikiki".Replace("_","-").ToLowerInvariant()),
 
         new MonsterInfo(
             "Zenith Inagami",
@@ -566,7 +566,7 @@ public static class MonsterInfos
                 { "Bow", string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Zenith_Inagami",
-		"https://wycademy.pages.dev/bestiary/Zenith_Inagami".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Zenith_Inagami".Replace("_","-").ToLowerInvariant()),
 
         new MonsterInfo(
             "Zenith Khezu",
@@ -589,7 +589,7 @@ public static class MonsterInfos
                 { "Bow", string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Zenith_Khezu",
-		"https://wycademy.pages.dev/bestiary/Zenith_Khezu".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Zenith_Khezu".Replace("_","-").ToLowerInvariant()),
 
         new MonsterInfo(
             "Zenith Midogaron",
@@ -612,7 +612,7 @@ public static class MonsterInfos
                 { "Bow", string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Zenith_Midogaron",
-		"https://wycademy.pages.dev/bestiary/Zenith_Midogaron".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Zenith_Midogaron".Replace("_","-").ToLowerInvariant()),
 
         new MonsterInfo(
             "Zenith Plesioth",
@@ -635,7 +635,7 @@ public static class MonsterInfos
                 { "Bow", string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Zenith_Plesioth",
-		"https://wycademy.pages.dev/bestiary/Zenith_Plesioth".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Zenith_Plesioth".Replace("_","-").ToLowerInvariant()),
 
         new MonsterInfo(
             "Zenith Rathalos",
@@ -658,7 +658,7 @@ public static class MonsterInfos
                 { "Bow", "https://www.youtube.com/embed/bsQ-skmpe4Q" },
             },
             "https://monsterhunter.fandom.com/wiki/Rathalos",
-		"https://wycademy.pages.dev/bestiary/Rathalos".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Rathalos".Replace("_","-").ToLowerInvariant()),
 
         new MonsterInfo(
             "Zenith Rukodiora",
@@ -681,7 +681,7 @@ public static class MonsterInfos
                 { "Bow", string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Zenith_Rukodiora",
-		"https://wycademy.pages.dev/bestiary/Zenith_Rukodiora".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Zenith_Rukodiora".Replace("_","-").ToLowerInvariant()),
 
         new MonsterInfo(
             "Zenith Taikun Zamuza",
@@ -704,7 +704,7 @@ public static class MonsterInfos
                 { "Bow", string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Zenith_Taikun_Zamuza",
-		"https://wycademy.pages.dev/bestiary/Zenith_Taikun_Zamuza".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Zenith_Taikun_Zamuza".Replace("_","-").ToLowerInvariant()),
 
         new MonsterInfo(
             "Zenith Tigrex",
@@ -727,7 +727,7 @@ public static class MonsterInfos
                 { "Bow", string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Zenith_Tigrex",
-		"https://wycademy.pages.dev/bestiary/Zenith_Tigrex".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Zenith_Tigrex".Replace("_","-").ToLowerInvariant()),
 
         new MonsterInfo(
             "Zenith Toridcless",
@@ -750,7 +750,7 @@ public static class MonsterInfos
                 { "Bow", string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Zenith_Toridcless",
-		"https://wycademy.pages.dev/bestiary/Zenith_Toridcless".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Zenith_Toridcless".Replace("_","-").ToLowerInvariant()),
 
         new MonsterInfo(
             "1st District Duremudira",
@@ -760,7 +760,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Duremudira",
-		"https://wycademy.pages.dev/bestiary/Duremudira".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Duremudira".Replace("_","-").ToLowerInvariant()),
 
         new MonsterInfo(
             "2nd District Duremudira",
@@ -770,7 +770,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Duremudira",
-		"https://wycademy.pages.dev/bestiary/Duremudira".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Duremudira".Replace("_","-").ToLowerInvariant()),
 
         new MonsterInfo(
             "Abiorugu",
@@ -780,7 +780,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Abiorugu",
-		"https://wycademy.pages.dev/bestiary/Abiorugu".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Abiorugu".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Akantor",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/akamu_n.htm",
@@ -789,7 +789,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Akantor",
-		"https://wycademy.pages.dev/bestiary/Akantor".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Akantor".Replace("_","-").ToLowerInvariant()),
 
         new MonsterInfo(
             "Akura Jebia",
@@ -799,7 +799,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Akura_Jebia",
-		"https://wycademy.pages.dev/bestiary/Akura_Jebia".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Akura_Jebia".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Akura Vashimu",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/aqura_n.htm",
@@ -808,7 +808,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Akura_Vashimu",
-		"https://wycademy.pages.dev/bestiary/Akura_Vashimu".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Akura_Vashimu".Replace("_","-").ToLowerInvariant()),
 
         new MonsterInfo(
             "Amatsu",
@@ -818,7 +818,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Amatsu",
-		"https://wycademy.pages.dev/bestiary/Amatsu".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Amatsu".Replace("_","-").ToLowerInvariant()),
 
         new MonsterInfo(
             "Anorupatisu",
@@ -828,7 +828,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Anorupatisu",
-		"https://wycademy.pages.dev/bestiary/Anorupatisu".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Anorupatisu".Replace("_","-").ToLowerInvariant()),
 
         new MonsterInfo(
             "Anteka",
@@ -838,7 +838,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Anteka",
-		"https://wycademy.pages.dev/bestiary/Anteka".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Anteka".Replace("_","-").ToLowerInvariant()),
 
         new MonsterInfo(
             "Apceros",
@@ -848,7 +848,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Apceros",
-		"https://wycademy.pages.dev/bestiary/Apceros".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Apceros".Replace("_","-").ToLowerInvariant()),
 
         new MonsterInfo(
             "Aptonoth",
@@ -858,7 +858,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Aptonoth",
-		"https://wycademy.pages.dev/bestiary/Aptonoth".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Aptonoth".Replace("_","-").ToLowerInvariant()),
 
         new MonsterInfo(
             "Aruganosu",
@@ -868,7 +868,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Aruganosu",
-		"https://wycademy.pages.dev/bestiary/Aruganosu".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Aruganosu".Replace("_","-").ToLowerInvariant()),
 
         new MonsterInfo(
             "Ashen Lao-Shan Lung",
@@ -878,7 +878,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Ashen_Lao-Shan_Lung",
-		"https://wycademy.pages.dev/bestiary/Ashen_Lao-Shan_Lung".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Ashen_Lao-Shan_Lung".Replace("_","-").ToLowerInvariant()),
 
         new MonsterInfo(
             "Azure Rathalos",
@@ -888,7 +888,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Azure_Rathalos",
-		"https://wycademy.pages.dev/bestiary/Azure_Rathalos".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Azure_Rathalos".Replace("_","-").ToLowerInvariant()),
 
         new MonsterInfo(
             "Barioth",
@@ -898,7 +898,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Barioth",
-		"https://wycademy.pages.dev/bestiary/Barioth".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Barioth".Replace("_","-").ToLowerInvariant()),
 
         new MonsterInfo(
             "Baruragaru",
@@ -908,7 +908,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Baruragaru",
-		"https://wycademy.pages.dev/bestiary/Baruragaru".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Baruragaru".Replace("_","-").ToLowerInvariant()),
 
         new MonsterInfo(
             "Basarios",
@@ -918,7 +918,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Basarios",
-		"https://wycademy.pages.dev/bestiary/Basarios".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Basarios".Replace("_","-").ToLowerInvariant()),
 
         new MonsterInfo(
             "Berserk Raviente",
@@ -928,7 +928,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Berserk_Raviente",
-		"https://wycademy.pages.dev/bestiary/Berserk_Raviente".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Berserk_Raviente".Replace("_","-").ToLowerInvariant()),
 
         new MonsterInfo(
             "Berukyurosu",
@@ -938,7 +938,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Berukyurosu",
-		"https://wycademy.pages.dev/bestiary/Berukyurosu".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Berukyurosu".Replace("_","-").ToLowerInvariant()),
 
         new MonsterInfo(
             "Black Diablos",
@@ -948,7 +948,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Black_Diablos",
-		"https://wycademy.pages.dev/bestiary/Black_Diablos".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Black_Diablos".Replace("_","-").ToLowerInvariant()),
 
         new MonsterInfo(
             "Black Gravios",
@@ -958,7 +958,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Black_Gravios",
-		"https://wycademy.pages.dev/bestiary/Black_Gravios".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Black_Gravios".Replace("_","-").ToLowerInvariant()),
 
         new MonsterInfo(
             "Blango",
@@ -968,7 +968,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Blango",
-		"https://wycademy.pages.dev/bestiary/Blango".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Blango".Replace("_","-").ToLowerInvariant()),
 
         new MonsterInfo(
             "Blangonga",
@@ -978,7 +978,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Blangonga",
-		"https://wycademy.pages.dev/bestiary/Blangonga".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Blangonga".Replace("_","-").ToLowerInvariant()),
 
         new MonsterInfo(
             "Blue Yian Kut-Ku",
@@ -988,7 +988,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Blue_Yian_Kut-Ku",
-		"https://wycademy.pages.dev/bestiary/Blue_Yian_Kut-Ku".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Blue_Yian_Kut-Ku".Replace("_","-").ToLowerInvariant()),
 
         new MonsterInfo(
             "Bogabadorumu",
@@ -998,7 +998,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Bogabadorumu",
-		"https://wycademy.pages.dev/bestiary/Bogabadorumu".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Bogabadorumu".Replace("_","-").ToLowerInvariant()),
 
         new MonsterInfo(
             "Brachydios",
@@ -1008,7 +1008,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Brachydios",
-		"https://wycademy.pages.dev/bestiary/Brachydios".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Brachydios".Replace("_","-").ToLowerInvariant()),
 
         new MonsterInfo(
             "Bright Hypnoc",
@@ -1018,7 +1018,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Breeding_Season_Hypnocatrice",
-		"https://wycademy.pages.dev/bestiary/bright-hypnoc".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/bright-hypnoc".Replace("_","-").ToLowerInvariant()),
 
         new MonsterInfo(
             "Bulldrome",
@@ -1028,7 +1028,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Bulldrome",
-		"https://wycademy.pages.dev/bestiary/Bulldrome".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Bulldrome".Replace("_","-").ToLowerInvariant()),
 
         new MonsterInfo(
             "Bullfango",
@@ -1038,7 +1038,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Bullfango",
-		"https://wycademy.pages.dev/bestiary/Bullfango".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Bullfango".Replace("_","-").ToLowerInvariant()),
 
         new MonsterInfo(
             "Burukku",
@@ -1048,7 +1048,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Burukku",
-		"https://wycademy.pages.dev/bestiary/Burukku".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Burukku".Replace("_","-").ToLowerInvariant()),
 
         new MonsterInfo(
             "Ceanataur",
@@ -1058,7 +1058,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Ceanataur",
-		"https://wycademy.pages.dev/bestiary/Ceanataur".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Ceanataur".Replace("_","-").ToLowerInvariant()),
 
         new MonsterInfo(
             "Cephadrome",
@@ -1068,7 +1068,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Cephadrome",
-		"https://wycademy.pages.dev/bestiary/Cephadrome".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Cephadrome".Replace("_","-").ToLowerInvariant()),
 
         new MonsterInfo(
             "Cephalos",
@@ -1078,7 +1078,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Cephalos",
-		"https://wycademy.pages.dev/bestiary/Cephalos".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Cephalos".Replace("_","-").ToLowerInvariant()),
 
         new MonsterInfo(
             "Chameleos",
@@ -1088,7 +1088,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Chameleos",
-		"https://wycademy.pages.dev/bestiary/Chameleos".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Chameleos".Replace("_","-").ToLowerInvariant()),
 
         new MonsterInfo(
             "Conga",
@@ -1098,7 +1098,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Conga",
-		"https://wycademy.pages.dev/bestiary/Conga".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Conga".Replace("_","-").ToLowerInvariant()),
 
         new MonsterInfo(
             "Congalala",
@@ -1108,7 +1108,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Congalala",
-		"https://wycademy.pages.dev/bestiary/Congalala".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Congalala".Replace("_","-").ToLowerInvariant()),
 
         new MonsterInfo(
             "Crimson Fatalis",
@@ -1118,7 +1118,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Crimson_Fatalis",
-		"https://wycademy.pages.dev/bestiary/Crimson_Fatalis".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Crimson_Fatalis".Replace("_","-").ToLowerInvariant()),
 
         new MonsterInfo(
             "Daimyo Hermitaur",
@@ -1128,7 +1128,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Daimyo_Hermitaur",
-		"https://wycademy.pages.dev/bestiary/Daimyo_Hermitaur".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Daimyo_Hermitaur".Replace("_","-").ToLowerInvariant()),
 
         new MonsterInfo(
             "Deviljho",
@@ -1138,7 +1138,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Deviljho",
-		"https://wycademy.pages.dev/bestiary/Deviljho".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Deviljho".Replace("_","-").ToLowerInvariant()),
 
         new MonsterInfo(
             "Diablos",
@@ -1148,7 +1148,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Diablos",
-		"https://wycademy.pages.dev/bestiary/Diablos".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Diablos".Replace("_","-").ToLowerInvariant()),
 
         new MonsterInfo(
             "Diorex",
@@ -1158,7 +1158,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Diorekkusu",
-		"https://wycademy.pages.dev/bestiary/Diorex".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Diorex".Replace("_","-").ToLowerInvariant()),
 
         new MonsterInfo(
             "Disufiroa",
@@ -1181,7 +1181,7 @@ public static class MonsterInfos
                 { "Bow", string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Disufiroa",
-		"https://wycademy.pages.dev/bestiary/Disufiroa".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Disufiroa".Replace("_","-").ToLowerInvariant()),
 
         new MonsterInfo(
             "Doragyurosu",
@@ -1191,7 +1191,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Doragyurosu",
-		"https://wycademy.pages.dev/bestiary/Doragyurosu".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Doragyurosu".Replace("_","-").ToLowerInvariant()),
 
         new MonsterInfo(
             "Dyuragaua",
@@ -1201,7 +1201,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Dyuragaua",
-		"https://wycademy.pages.dev/bestiary/Dyuragaua".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Dyuragaua".Replace("_","-").ToLowerInvariant()),
 
         new MonsterInfo(
             "Egyurasu",
@@ -1211,7 +1211,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Egyurasu",
-		"https://wycademy.pages.dev/bestiary".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary".Replace("_","-").ToLowerInvariant()),
 
         new MonsterInfo(
             "Elzelion",
@@ -1221,7 +1221,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Eruzerion",
-		"https://wycademy.pages.dev/bestiary/Elzelion".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Elzelion".Replace("_","-").ToLowerInvariant()),
 
         new MonsterInfo(
             "Erupe",
@@ -1231,7 +1231,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Erupe",
-		"https://wycademy.pages.dev/bestiary/Erupe".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Erupe".Replace("_","-").ToLowerInvariant()),
 
         new MonsterInfo(
             "Espinas",
@@ -1241,7 +1241,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Espinas",
-		"https://wycademy.pages.dev/bestiary/Espinas".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Espinas".Replace("_","-").ToLowerInvariant()),
 
         new MonsterInfo(
             "Farunokku",
@@ -1251,7 +1251,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Farunokku",
-		"https://wycademy.pages.dev/bestiary/Farunokku".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Farunokku".Replace("_","-").ToLowerInvariant()),
 
         new MonsterInfo(
             "Fatalis",
@@ -1261,7 +1261,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Fatalis",
-		"https://wycademy.pages.dev/bestiary/Fatalis".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Fatalis".Replace("_","-").ToLowerInvariant()),
 
         new MonsterInfo(
             "Felyne",
@@ -1271,7 +1271,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Felyne",
-		"https://wycademy.pages.dev/bestiary/Felyne".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Felyne".Replace("_","-").ToLowerInvariant()),
 
         new MonsterInfo(
             "Forokururu",
@@ -1281,7 +1281,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Forokururu",
-		"https://wycademy.pages.dev/bestiary/Forokururu".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Forokururu".Replace("_","-").ToLowerInvariant()),
 
         new MonsterInfo(
             "Garuba Daora",
@@ -1291,7 +1291,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Garuba_Daora",
-		"https://wycademy.pages.dev/bestiary/Garuba_Daora".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Garuba_Daora".Replace("_","-").ToLowerInvariant()),
 
         new MonsterInfo(
             "Gasurabazura",
@@ -1301,7 +1301,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Gasurabazura",
-		"https://wycademy.pages.dev/bestiary/Gasurabazura".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Gasurabazura".Replace("_","-").ToLowerInvariant()),
 
         new MonsterInfo(
             "Gendrome",
@@ -1311,7 +1311,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Gendrome",
-		"https://wycademy.pages.dev/bestiary/Gendrome".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Gendrome".Replace("_","-").ToLowerInvariant()),
 
         new MonsterInfo(
             "Genprey",
@@ -1321,7 +1321,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Genprey",
-		"https://wycademy.pages.dev/bestiary/Genprey".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Genprey".Replace("_","-").ToLowerInvariant()),
 
         new MonsterInfo(
             "Giaorugu",
@@ -1331,7 +1331,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Giaorugu",
-		"https://wycademy.pages.dev/bestiary/Giaorugu".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Giaorugu".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Giaprey",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/giano_n.htm",
@@ -1340,7 +1340,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Giaprey",
-		"https://wycademy.pages.dev/bestiary/Giaprey".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Giaprey".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Gogomoa",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/gogo_n.htm",
@@ -1349,7 +1349,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Gogomoa",
-		"https://wycademy.pages.dev/bestiary/Gogomoa".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Gogomoa".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Gold Rathian",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/reiakin_n.htm",
@@ -1358,7 +1358,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Gold_Rathian",
-		"https://wycademy.pages.dev/bestiary/Gold_Rathian".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Gold_Rathian".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Gore Magala",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/goa_n.htm",
@@ -1367,7 +1367,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Gore_Magala",
-		"https://wycademy.pages.dev/bestiary/Gore_Magala".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Gore_Magala".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Goruganosu",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/volkin_n.htm",
@@ -1376,7 +1376,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Goruganosu",
-		"https://wycademy.pages.dev/bestiary/Goruganosu".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Goruganosu".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Gougarf, Ray",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/goglf_r_n.htm",
@@ -1385,7 +1385,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Ray_Gougarf",
-		"https://wycademy.pages.dev/bestiary/Gougarf".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Gougarf".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Gougarf, Lolo",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/goglf_l_n.htm",
@@ -1394,7 +1394,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Lolo_Gougarf",
-		"https://wycademy.pages.dev/bestiary/Gougarf".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Gougarf".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Gravios",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/gura_n.htm",
@@ -1403,7 +1403,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Gravios",
-		"https://wycademy.pages.dev/bestiary/Gravios".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Gravios".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Great Thunderbug",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/raikou_n.htm",
@@ -1412,7 +1412,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Great_Thunderbug",
-		"https://wycademy.pages.dev/bestiary/Great_Thunderbug".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Great_Thunderbug".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Green Plesioth",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/ganomidori_n.htm",
@@ -1421,7 +1421,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Green_Plesioth",
-		"https://wycademy.pages.dev/bestiary/Green_Plesioth".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Green_Plesioth".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Guanzorumu",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/guan_n.htm",
@@ -1430,7 +1430,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Guanzorumu",
-		"https://wycademy.pages.dev/bestiary/Guanzorumu".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Guanzorumu".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Gureadomosu",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/glare_n.htm",
@@ -1439,7 +1439,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Gureadomosu",
-		"https://wycademy.pages.dev/bestiary/Gureadomosu".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Gureadomosu".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Gurenzeburu",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/guren_n.htm",
@@ -1448,7 +1448,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Gurenzeburu",
-		"https://wycademy.pages.dev/bestiary/Gurenzeburu".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Gurenzeburu".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Gypceros",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/geryo_n.htm",
@@ -1457,7 +1457,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Gypceros",
-		"https://wycademy.pages.dev/bestiary/Gypceros".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Gypceros".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Harudomerugu",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/hald_n.htm",
@@ -1466,7 +1466,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Harudomerugu",
-		"https://wycademy.pages.dev/bestiary/Harudomerugu".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Harudomerugu".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Hermitaur",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/gami_n.htm",
@@ -1475,7 +1475,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Hermitaur",
-		"https://wycademy.pages.dev/bestiary/Hermitaur".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Hermitaur".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Hornetaur",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/kanta_n.htm",
@@ -1484,7 +1484,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Hornetaur",
-		"https://wycademy.pages.dev/bestiary/Hornetaur".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Hornetaur".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Hypnoc",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/hipu_n.htm",
@@ -1493,7 +1493,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Hypnocatrice",
-		"https://wycademy.pages.dev/bestiary/Hypnocatrice".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Hypnocatrice".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Hyujikiki",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/hyuji_n.htm",
@@ -1502,7 +1502,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Hyujikiki",
-		"https://wycademy.pages.dev/bestiary/Hyujikiki".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Hyujikiki".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Inagami",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/ina_n.htm",
@@ -1511,7 +1511,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Inagami",
-		"https://wycademy.pages.dev/bestiary/Inagami".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Inagami".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Iodrome",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/dosios_n.htm",
@@ -1520,7 +1520,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Iodrome",
-		"https://wycademy.pages.dev/bestiary/Iodrome".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Iodrome".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Ioprey",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/ios_n.htm",
@@ -1529,7 +1529,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Ioprey",
-		"https://wycademy.pages.dev/bestiary/Ioprey".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Ioprey".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Kamu Orugaron",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/olgk_n.htm",
@@ -1538,7 +1538,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Kamu_Orugaron",
-		"https://wycademy.pages.dev/bestiary/Kamu_Orugaron".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Kamu_Orugaron".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Kelbi",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/kerubi_n.htm",
@@ -1547,7 +1547,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Kelbi",
-		"https://wycademy.pages.dev/bestiary/Kelbi".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Kelbi".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Keoaruboru",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/keoa_n.htm",
@@ -1556,7 +1556,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Keoaruboru",
-		"https://wycademy.pages.dev/bestiary/Keoaruboru".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Keoaruboru".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Khezu",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/furu_n.htm",
@@ -1565,7 +1565,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Khezu",
-		"https://wycademy.pages.dev/bestiary/Khezu".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Khezu".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "King Shakalaka",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/cyacyaKing_n.htm",
@@ -1574,7 +1574,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/King_Shakalaka",
-		"https://wycademy.pages.dev/bestiary/King_Shakalaka".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/King_Shakalaka".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Kirin",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/kirin_n.htm",
@@ -1583,7 +1583,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Kirin",
-		"https://wycademy.pages.dev/bestiary/Kirin".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Kirin".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Kokomoa",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/koko_n.htm",
@@ -1592,7 +1592,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Gogomoa",
-		"https://wycademy.pages.dev/bestiary/Gogomoa".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Gogomoa".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Kuarusepusu",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/qual_n.htm",
@@ -1601,7 +1601,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Kuarusepusu",
-		"https://wycademy.pages.dev/bestiary/Kuarusepusu".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Kuarusepusu".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Kushala Daora",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/kusha_n.htm",
@@ -1610,7 +1610,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Kushala_Daora",
-		"https://wycademy.pages.dev/bestiary/Kushala_Daora".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Kushala_Daora".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Kusubami",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/kusb_n.htm",
@@ -1619,7 +1619,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Kusubami",
-		"https://wycademy.pages.dev/bestiary/Kusubami".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Kusubami".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Lao-Shan Lung",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/rao_n.htm",
@@ -1628,7 +1628,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Lao-Shan_Lung",
-		"https://wycademy.pages.dev/bestiary/Lao-Shan_Lung".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Lao-Shan_Lung".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Lavasioth",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/vol_n.htm",
@@ -1637,7 +1637,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Lavasioth",
-		"https://wycademy.pages.dev/bestiary/Lavasioth".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Lavasioth".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Lunastra",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/nana_n.htm",
@@ -1646,7 +1646,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Lunastra",
-		"https://wycademy.pages.dev/bestiary/Lunastra".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Lunastra".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Melynx",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/merura_n.htm",
@@ -1655,7 +1655,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Melynx",
-		"https://wycademy.pages.dev/bestiary/Melynx".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Melynx".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Meraginasu",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/mera_n.htm",
@@ -1664,7 +1664,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Meraginasu",
-		"https://wycademy.pages.dev/bestiary/Meraginasu".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Meraginasu".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Mi Ru",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/mi-ru_n.htm",
@@ -1673,7 +1673,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Mi_Ru",
-		"https://wycademy.pages.dev/bestiary/Mi_Ru".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Mi_Ru".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Midogaron",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/mido_n.htm",
@@ -1682,7 +1682,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Midogaron",
-		"https://wycademy.pages.dev/bestiary/Midogaron".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Midogaron".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Monoblos",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/mono_n.htm",
@@ -1691,7 +1691,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Monoblos",
-		"https://wycademy.pages.dev/bestiary/Monoblos".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Monoblos".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Mosswine",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/mos_n.htm",
@@ -1700,7 +1700,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Mosswine",
-		"https://wycademy.pages.dev/bestiary/Mosswine".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Mosswine".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Nargacuga",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/nalga_n.htm",
@@ -1709,7 +1709,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Nargacuga",
-		"https://wycademy.pages.dev/bestiary/Nargacuga".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Nargacuga".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Nono Orugaron",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/olgn_n.htm",
@@ -1718,7 +1718,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Nono_Orugaron",
-		"https://wycademy.pages.dev/bestiary/Nono_Orugaron".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Nono_Orugaron".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Odibatorasu",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/odiva_n.htm",
@@ -1727,7 +1727,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Odibatorasu",
-		"https://wycademy.pages.dev/bestiary/Odibatorasu".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Odibatorasu".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Orange Espinas",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/espcya_n.htm",
@@ -1736,7 +1736,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Flaming_Espinas",
-		"https://wycademy.pages.dev/bestiary/Orange_Espinas".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Orange_Espinas".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Pariapuria",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/paria_n.htm",
@@ -1745,7 +1745,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Pariapuria",
-		"https://wycademy.pages.dev/bestiary/Pariapuria".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Pariapuria".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Pink Rathian",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/reiasa_n.htm",
@@ -1754,7 +1754,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Pink_Rathian",
-		"https://wycademy.pages.dev/bestiary/Pink_Rathian".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Pink_Rathian".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Plesioth",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/gano_n.htm",
@@ -1763,7 +1763,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Plesioth",
-		"https://wycademy.pages.dev/bestiary/Plesioth".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Plesioth".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Poborubarumu",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/pobol_n.htm",
@@ -1772,7 +1772,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Poborubarumu",
-		"https://wycademy.pages.dev/bestiary/Poborubarumu".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Poborubarumu".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Pokara",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/pokara_n.htm",
@@ -1781,7 +1781,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Pokara",
-		"https://wycademy.pages.dev/bestiary/Pokara".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Pokara".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Pokaradon",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/pokaradon_n.htm",
@@ -1790,7 +1790,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Pokaradon",
-		"https://wycademy.pages.dev/bestiary/Pokaradon".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Pokaradon".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Popo",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/popo_n.htm",
@@ -1799,7 +1799,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Popo",
-		"https://wycademy.pages.dev/bestiary/Popo".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Popo".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "PSO2 Rappy",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/lappy_n.htm",
@@ -1807,7 +1807,7 @@ public static class MonsterInfos
             {
                 { string.Empty, string.Empty },
             },
-            RickRoll, "https://wycademy.pages.dev/bestiary"),
+            RickRoll, "https://wycademy.vercel.app/bestiary"),
         new MonsterInfo(
             "Purple Gypceros",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/geryoao_n.htm",
@@ -1816,7 +1816,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Purple_Gypceros",
-		"https://wycademy.pages.dev/bestiary/Purple_Gypceros".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Purple_Gypceros".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Rajang",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/ra_n.htm",
@@ -1825,7 +1825,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Rajang",
-		"https://wycademy.pages.dev/bestiary/Rajang".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Rajang".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Rathalos",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/reusu_n.htm",
@@ -1834,7 +1834,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Rathalos",
-		"https://wycademy.pages.dev/bestiary/Rathalos".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Rathalos".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Rathian",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/reia_n.htm",
@@ -1843,7 +1843,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Rathian",
-		"https://wycademy.pages.dev/bestiary/Rathian".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Rathian".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Raviente",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/lavie_n.htm",
@@ -1852,7 +1852,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Raviente",
-		"https://wycademy.pages.dev/bestiary/Raviente".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Raviente".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Rebidiora",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/levy_n.htm",
@@ -1861,7 +1861,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Rebidiora",
-		"https://wycademy.pages.dev/bestiary/Rebidiora".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Rebidiora".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Red Khezu",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/furuaka_n.htm",
@@ -1870,7 +1870,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Red_Khezu",
-		"https://wycademy.pages.dev/bestiary/Red_Khezu".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Red_Khezu".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Red Lavasioth",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/volaka_n.htm",
@@ -1879,7 +1879,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Red_Volganos",
-		"https://wycademy.pages.dev/bestiary/Red_Volganos".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Red_Volganos".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Remobra",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/gabu_n.htm",
@@ -1888,7 +1888,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Remobra",
-		"https://wycademy.pages.dev/bestiary/Remobra".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Remobra".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Rocks",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/iwa_n.htm",
@@ -1896,7 +1896,7 @@ public static class MonsterInfos
             {
                 { string.Empty, string.Empty },
             },
-            RickRoll,"https://wycademy.pages.dev/bestiary"),
+            RickRoll,"https://wycademy.vercel.app/bestiary"),
         new MonsterInfo(
             "Rukodiora",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/ruco_n.htm",
@@ -1905,7 +1905,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Rukodiora",
-		"https://wycademy.pages.dev/bestiary/Rukodiora".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Rukodiora".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Rusted Kushala Daora",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/kushasabi_n.htm",
@@ -1914,7 +1914,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Rusted_Kushala_Daora",
-		"https://wycademy.pages.dev/bestiary/Rusted_Kushala_Daora".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Rusted_Kushala_Daora".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Seregios",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/sell_n.htm",
@@ -1923,7 +1923,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Seregios",
-		"https://wycademy.pages.dev/bestiary/Seregios".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Seregios".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Shagaru Magala",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/shagal_nh.htm",
@@ -1932,7 +1932,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Shagaru_Magala",
-		"https://wycademy.pages.dev/bestiary/Shagaru_Magala".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Shagaru_Magala".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Shakalaka",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/cyacya_n.htm",
@@ -1941,7 +1941,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Shakalaka",
-		"https://wycademy.pages.dev/bestiary/Shakalaka".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Shakalaka".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Shantien",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/shan_n.htm",
@@ -1950,7 +1950,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Shantien",
-		"https://wycademy.pages.dev/bestiary/Shantien".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Shantien".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Shen Gaoren",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/shen_n.htm",
@@ -1959,7 +1959,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Rathian",
-		"https://wycademy.pages.dev/bestiary/Rathian".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Rathian".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Shogun Ceanataur",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/syougun_n.htm",
@@ -1968,7 +1968,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Shogun_Ceanataur",
-		"https://wycademy.pages.dev/bestiary/Shogun_Ceanataur".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Shogun_Ceanataur".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Silver Hypnoc",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/hipusiro_n.htm",
@@ -1977,7 +1977,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Silver_Hypnocatrice",
-		"https://wycademy.pages.dev/bestiary/Silver_Hypnoc".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Silver_Hypnoc".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Silver Rathalos",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/reusugin_n.htm",
@@ -1986,7 +1986,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Silver_Rathalos",
-		"https://wycademy.pages.dev/bestiary/Silver_Rathalos".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Silver_Rathalos".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Stygian Zinogre",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/zingoku_n.htm",
@@ -1995,7 +1995,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Stygian_Zinogre",
-		"https://wycademy.pages.dev/bestiary/Stygian_Zinogre".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Stygian_Zinogre".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Taikun Zamuza",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/taikun_n.htm",
@@ -2004,7 +2004,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Taikun_Zamuza",
-		"https://wycademy.pages.dev/bestiary/Taikun_Zamuza".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Taikun_Zamuza".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Teostra",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/teo_n.htm",
@@ -2013,7 +2013,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Teostra",
-		"https://wycademy.pages.dev/bestiary/Teostra".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Teostra".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Tigrex",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/tiga_n.htm",
@@ -2022,7 +2022,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Tigrex",
-		"https://wycademy.pages.dev/bestiary/Tigrex".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Tigrex".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Toa Tesukatora",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/toa_n.htm",
@@ -2031,7 +2031,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Toa_Tesukatora",
-		"https://wycademy.pages.dev/bestiary/Toa_Tesukatora".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Toa_Tesukatora".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Toridcless",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/torid_n.htm",
@@ -2040,7 +2040,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Toridcless",
-		"https://wycademy.pages.dev/bestiary/Toridcless".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Toridcless".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "UNKNOWN",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/ra-ro_n.htm",
@@ -2062,7 +2062,7 @@ public static class MonsterInfos
                 { "Bow", "https://www.youtube.com/embed/gp48Gk-y_JY" },
             },
             "https://monsterhunter.fandom.com/wiki/Unknown_(Black_Flying_Wyvern)",
-		"https://wycademy.pages.dev/bestiary/Unknown_(Black_Flying_Wyvern)".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Unknown_(Black_Flying_Wyvern)".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Uragaan",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/ura_n.htm",
@@ -2071,7 +2071,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Uragaan",
-		"https://wycademy.pages.dev/bestiary/Uragaan".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Uragaan".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Uruki",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/ulky_n.htm",
@@ -2080,7 +2080,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Uruki",
-		"https://wycademy.pages.dev/bestiary/Uruki".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Uruki".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Varusaburosu",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/valsa_n.htm",
@@ -2089,7 +2089,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Varusaburosu",
-		"https://wycademy.pages.dev/bestiary/Varusaburosu".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Varusaburosu".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Velocidrome",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/dosran_n.htm",
@@ -2098,7 +2098,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Velocidrome",
-		"https://wycademy.pages.dev/bestiary/Velocidrome".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Velocidrome".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Velociprey",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/ran_n.htm",
@@ -2107,7 +2107,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Velociprey",
-		"https://wycademy.pages.dev/bestiary/Velociprey".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Velociprey".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Vespoid",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/rango_n.htm",
@@ -2116,7 +2116,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Vespoid",
-		"https://wycademy.pages.dev/bestiary/Vespoid".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Vespoid".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Voljang",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/Vau_n.htm",
@@ -2125,7 +2125,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Voljang",
-		"https://wycademy.pages.dev/bestiary/Voljang".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Voljang".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "White Espinas",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/espsiro_n.htm",
@@ -2134,7 +2134,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Espinas_Rare_Species",
-		"https://wycademy.pages.dev/bestiary/Espinas_Rare_Species".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Espinas_Rare_Species".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "White Fatalis",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/miraru_n.htm",
@@ -2143,7 +2143,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/White_Fatalis",
-		"https://wycademy.pages.dev/bestiary/White_Fatalis".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/White_Fatalis".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "White Monoblos",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/monosiro_n.htm",
@@ -2152,7 +2152,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/White_Monoblos",
-		"https://wycademy.pages.dev/bestiary/White_Monoblos".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/White_Monoblos".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Yama Kurai",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/yamac_n.htm",
@@ -2161,7 +2161,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Yama_Kurai",
-		"https://wycademy.pages.dev/bestiary/Yama_Kurai".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Yama_Kurai".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Yama Tsukami",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/yama_n.htm",
@@ -2170,7 +2170,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Yama_Tsukami",
-		"https://wycademy.pages.dev/bestiary/Yama_Tsukami".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Yama_Tsukami".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Yian Garuga",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/garuru_n.htm",
@@ -2179,7 +2179,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Yian_Garuga",
-		"https://wycademy.pages.dev/bestiary/Yian_Garuga".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Yian_Garuga".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Yian Kut-Ku",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/kukku_n.htm",
@@ -2188,7 +2188,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Yian_Kut-Ku",
-		"https://wycademy.pages.dev/bestiary/Yian_Kut-Ku".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Yian_Kut-Ku".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Zenaserisu",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/zena_n.htm",
@@ -2197,7 +2197,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Zenaserisu",
-		"https://wycademy.pages.dev/bestiary/Zenaserisu".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Zenaserisu".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Zerureusu",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/zeru_n.htm",
@@ -2206,7 +2206,7 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Zerureusu",
-		"https://wycademy.pages.dev/bestiary/Zerureusu".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Zerureusu".Replace("_","-").ToLowerInvariant()),
         new MonsterInfo(
             "Zinogre",
             "https://dorielrivalet.github.io/mhfz-ferias-english-project/mons/zin_n.htm",
@@ -2215,6 +2215,6 @@ public static class MonsterInfos
                 { string.Empty, string.Empty },
             },
             "https://monsterhunter.fandom.com/wiki/Zinogre",
-		"https://wycademy.pages.dev/bestiary/Zinogre".Replace("_","-").ToLowerInvariant()),
+        "https://wycademy.vercel.app/bestiary/Zinogre".Replace("_","-").ToLowerInvariant()),
     };
 }

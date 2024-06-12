@@ -987,10 +987,10 @@
                 <Setter.Value>
                     <ControlTemplate>
                         <Grid x:Name="Grid">
-                            <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" 
+                            <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto"
                                            Height="Auto" Fill="Transparent"/>
-                            <Border x:Name="Rectangle1" CornerRadius="5 5 5 5" HorizontalAlignment="Stretch" 
-                                        VerticalAlignment="Stretch" Width="Auto" Height="Auto" 
+                            <Border x:Name="Rectangle1" CornerRadius="5 5 5 5" HorizontalAlignment="Stretch"
+                                        VerticalAlignment="Stretch" Width="Auto" Height="Auto"
                                         Background="{TemplateBinding Background}"/>
                         </Grid>
                         <ControlTemplate.Triggers>
@@ -1016,7 +1016,7 @@
                             <Grid x:Name="GridRoot" Width="8" Background="{StaticResource Crust}">
                                 <Track x:Name="PART_Track" Grid.Row="0" IsDirectionReversed="true" Focusable="False">
                                     <Track.Thumb>
-                                        <Thumb x:Name="Thumb" Background="{TemplateBinding Foreground}" 
+                                        <Thumb x:Name="Thumb" Background="{TemplateBinding Foreground}"
                                                    Style="{DynamicResource ScrollThumbs}"/>
                                     </Track.Thumb>
                                     <Track.IncreaseRepeatButton>
@@ -1030,7 +1030,7 @@
 
                             <ControlTemplate.Triggers>
                                 <Trigger SourceName="Thumb" Property="IsMouseOver" Value="true">
-                                    <Setter Value="#7f849c" 
+                                    <Setter Value="#7f849c"
                                                 TargetName="Thumb" Property="Background"/>
                                 </Trigger>
                                 <Trigger SourceName="Thumb" Property="IsDragging" Value="true">
@@ -1087,7 +1087,7 @@
                                 <Border Name="Border" BorderThickness=".5,.5,.5,0" BorderBrush="#b4befe" CornerRadius="4,4,0,0" Margin="2,0">
                                     <ContentPresenter x:Name="ContentSite"
                                         VerticalAlignment="Center"
-                                        
+
                                         ContentSource="Header"
                                         Margin="10,2"/>
                                 </Border>
@@ -1120,7 +1120,7 @@
                         </Grid.RowDefinitions>
                         <ScrollViewer CanContentScroll="True" IsDeferredScrollingEnabled="True" HorizontalScrollBarVisibility="Visible"  VerticalScrollBarVisibility="Hidden" >
                             <TabPanel x:Name="HeaderPanel"
-                        Panel.ZIndex ="1" 
+                        Panel.ZIndex ="1"
                         KeyboardNavigation.TabIndex="1"
                         Grid.Column="0"
                         Grid.Row="0"
@@ -1447,7 +1447,7 @@
                                             <Border Name="Border" BorderThickness=".5,.5,.5,0" BorderBrush="#b4befe" CornerRadius="4,4,0,0" Margin="2,0">
                                                 <ContentPresenter x:Name="ContentSite"
                                         VerticalAlignment="Center"
-                                        
+
                                         ContentSource="Header"
                                         Margin="10,2"/>
                                             </Border>
@@ -1478,7 +1478,7 @@
                                     </Grid.RowDefinitions>
                                     <ScrollViewer CanContentScroll="True" IsDeferredScrollingEnabled="True" HorizontalScrollBarVisibility="Hidden"  VerticalScrollBarVisibility="Hidden" >
                                         <TabPanel x:Name="HeaderPanel"
-                          Panel.ZIndex ="1" 
+                          Panel.ZIndex ="1"
                           KeyboardNavigation.TabIndex="1"
                           Grid.Column="0"
                           Grid.Row="0"
@@ -1709,7 +1709,7 @@
                                                     </Button.Content>
                                                 </ui:Button>
                                                 <ui:TextBox x:Name="QuestIDTextBox" IsUndoEnabled="False"  Grid.Row="0" Grid.Column="1" Text="0"  PreviewTextInput="ValidateNumber" Width="100" MaxLength="8"/>
-                                            
+
                                                 <TextBlock Padding="10,0,10,0" Text="Run ID" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                                 <ui:Button BorderThickness="0"  Background="Transparent" Width="48" Height="40">
                                                     <Button.Content>
@@ -2144,8 +2144,8 @@
                                     <ScrollViewer IsDeferredScrollingEnabled="True" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Disabled">
                                         <Grid Background="Transparent" Style="{StaticResource ConfigSingleGrid}" Margin="0" Height="Auto" Width="Auto">
                                             <StackPanel Orientation="Vertical">
-                                                <ui:InfoBar x:Name="ChallengesInfoBar" Grid.ColumnSpan="2" Foreground="{StaticResource Text}" Title="What are Challenges?" 
-                                Message="CURRENTLY IN DEVELOPMENT. Challenges are an optional endeavor where you are presented with various kinds of minigames/objectives.&#x0a;&#x0a;To start a challenge you need to have unlocked the challenge first.&#x0a;&#x0a;In order to unlock a challenge, check the required amount of trophies in the bottom right corner of each challenge section,&#x0a;along with having obtained the secret achievement needed by the challenge.&#x0a;&#x0a;If you close the challenge window, the challenge is canceled. Custom quests do not count towards any progress.&#x0a;&#x0a;Happy Hunting!" 
+                                                <ui:InfoBar x:Name="ChallengesInfoBar" Grid.ColumnSpan="2" Foreground="{StaticResource Text}" Title="What are Challenges?"
+                                Message="CURRENTLY IN DEVELOPMENT. Challenges are an optional endeavor where you are presented with various kinds of minigames/objectives.&#x0a;&#x0a;To start a challenge you need to have unlocked the challenge first.&#x0a;&#x0a;In order to unlock a challenge, check the required amount of trophies in the bottom right corner of each challenge section,&#x0a;along with having obtained the secret achievement needed by the challenge.&#x0a;&#x0a;If you close the challenge window, the challenge is canceled. Custom quests do not count towards any progress.&#x0a;&#x0a;Happy Hunting!"
                                 IsClosable="True" IsOpen="True" Severity="Informational" MouseDoubleClick="ChallengesInfoBar_MouseDoubleClick"/>
                                                 <ListBox Loaded="ChallengesListBox_Loaded" x:Name="ChallengesListBox" SelectionChanged="ChallengesListBox_SelectionChanged" SelectionMode="Single">
                                                     <ListBox.ItemTemplate>
@@ -2492,7 +2492,7 @@
         		///</summary>-->
                             <StackPanel Margin="5" Orientation="Horizontal" Grid.Row="9" Grid.Column="0" ToolTip="Show Player True Raw">
                                 <Image Source="../../Assets/Icons/png/attack_up.png" Margin="0,0,5,0"/>
-                                <TextBlock Style="{StaticResource ConfigTextBox}" Text="Attack Value" 
+                                <TextBlock Style="{StaticResource ConfigTextBox}" Text="Attack Value"
                                 ToolTipService.ToolTip="Player True Raw&#x0a;Attack addition is added as either Attack A or Attack B and is before or after Hunting Horn buffs respectively.&#x0a;Values that are known to reside in Attack B are Rush, Stylish Assault, Flash Conversion, Obscurity, Incitement, Rush, Vigorous Up and Partnyaa Attack Buffs.&#x0a;Final True  = ((Weapon True + Attack A) * HH Buff + Attack B) * Multipliers + Additional"/>
                             </StackPanel>
                             <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="9" Grid.Column="1"  IsChecked="{Binding Source={StaticResource Settings}, Path=PlayerAtkShown}"/>
@@ -2930,7 +2930,7 @@
                                                         <Border Name="Border" BorderThickness=".5,.5,.5,0" BorderBrush="#b4befe" CornerRadius="4,4,0,0" Margin="2,0">
                                                             <ContentPresenter x:Name="ContentSite"
                                         VerticalAlignment="Center"
-                                        
+
                                         ContentSource="Header"
                                         Margin="10,2"/>
                                                         </Border>
@@ -2961,7 +2961,7 @@
                                                 </Grid.RowDefinitions>
                                                 <ScrollViewer CanContentScroll="True" IsDeferredScrollingEnabled="True" HorizontalScrollBarVisibility="Visible"  VerticalScrollBarVisibility="Hidden" >
                                                     <TabPanel x:Name="HeaderPanel"
-                          Panel.ZIndex ="1" 
+                          Panel.ZIndex ="1"
                           KeyboardNavigation.TabIndex="1"
                           Grid.Column="0"
                           Grid.Row="0"
@@ -3288,7 +3288,7 @@ Thunder Clad, Vigorous, Hunter Valhalla, Assistance" Text="{Binding GetActiveSki
                                                                     <StaticResource ResourceKey="HunterNotesContextMenu" />
                                                                 </TextBlock.ContextMenu>
                                                             </TextBlock>
-                                                        
+
                                                         </Grid>
                                                 </ScrollViewer>
                                             </DockPanel>
@@ -3345,7 +3345,7 @@ Thunder Clad, Vigorous, Hunter Valhalla, Assistance" Text="{Binding GetActiveSki
                                                                 <StaticResource ResourceKey="HunterNotesContextMenu" />
                                                             </TextBlock.ContextMenu>
                                                         </TextBlock>
-                                                    
+
                                                     </ScrollViewer>
                                             </DockPanel>
                                         </Grid>
@@ -3437,8 +3437,8 @@ Thunder Clad, Vigorous, Hunter Valhalla, Assistance" Text="{Binding GetActiveSki
                                                             <RowDefinition Height="1*"/>
                                                         </Grid.RowDefinitions>
                                                         <TextBlock Margin="5" Style="{StaticResource ConfigTextBox}" Grid.Row="0" Grid.Column="0"  Text="Please check Wycademy tab for updated motion values."/>
-                                                        
-                                                       
+
+
                                                         </Grid>
                                                 </ScrollViewer>
                                             </DockPanel>
@@ -3504,8 +3504,8 @@ Thunder Clad, Vigorous, Hunter Valhalla, Assistance" Text="{Binding GetActiveSki
                                                             <ComboBoxItem>Damage Formula</ComboBoxItem>
                                                             <ComboBoxItem>Unlocks</ComboBoxItem>
                                                         </ComboBox>
-                                                            <ui:InfoBar Grid.Row="1" Grid.ColumnSpan="2" Foreground="{StaticResource Text}" Title="Update" 
-                            Message="The information here may be out of date. Please refer to Wycademy tab." 
+                                                            <ui:InfoBar Grid.Row="1" Grid.ColumnSpan="2" Foreground="{StaticResource Text}" Title="Update"
+                            Message="The information here may be out of date. Please refer to Wycademy tab."
                             IsClosable="True" IsOpen="True" Severity="Warning"/>
                                                             <TextBlock Grid.Row="2" Grid.ColumnSpan="2" ToolTip="Right-click for more options" Text="{Binding GetGameWeaponInformation}" TextWrapping="Wrap">
                                                                 <TextBlock.ContextMenu>
@@ -3924,8 +3924,8 @@ Thunder Clad, Vigorous, Hunter Valhalla, Assistance" Text="{Binding GetActiveSki
                                 <RowDefinition Height="40"/>
                                 <RowDefinition Height="40"/>
                             </Grid.RowDefinitions>
-                            <ui:InfoBar Grid.ColumnSpan="2" Foreground="{StaticResource Text}" Title="How Monster HP Works" 
-                            Message="Effective HP is the HP taking into account the monster's defense rate.&#x0a;Burning Freezing Elzelion has 1,000,000 EHP because his&#x0a;True HP is 30,000 and his defense rate is 0.03.&#x0a;&#x0a;Effective HP = True HP / Defense rate&#x0a;1,000,000 = 30,000 / 0.03&#x0a;&#x0a;True HP is the HP of the monster without taking into account the monster's defense rate." 
+                            <ui:InfoBar Grid.ColumnSpan="2" Foreground="{StaticResource Text}" Title="How Monster HP Works"
+                            Message="Effective HP is the HP taking into account the monster's defense rate.&#x0a;Burning Freezing Elzelion has 1,000,000 EHP because his&#x0a;True HP is 30,000 and his defense rate is 0.03.&#x0a;&#x0a;Effective HP = True HP / Defense rate&#x0a;1,000,000 = 30,000 / 0.03&#x0a;&#x0a;True HP is the HP of the monster without taking into account the monster's defense rate."
                             IsClosable="False" IsOpen="True" Severity="Informational"/>
                             <StackPanel Margin="5" Orientation="Horizontal" Grid.Row="1" Grid.Column="0">
                                 <ui:SymbolIcon Symbol="Info28" FontSize="28" Foreground="{StaticResource Yellow}" Margin="0,0,5,0" ToolTip="Overlay Restart Required"/>
@@ -3967,10 +3967,10 @@ Thunder Clad, Vigorous, Hunter Valhalla, Assistance" Text="{Binding GetActiveSki
                             <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="10" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterEHPDisplayCorrectorDefrateMinimumThreshold}"  PreviewTextInput="ValidateDecimalNumber" MaxLength="8"/>
                             <TextBlock Margin="5" Style="{StaticResource ConfigTextBox}" Grid.Row="11" Grid.Column="0"  Text="Effective HP Corrector Maximum Defrate Threshold"/>
                             <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="11" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterEHPDisplayCorrectorDefrateMaximumThreshold}"  PreviewTextInput="ValidateDecimalNumber" MaxLength="8"/>
-                            
+
                             <TextBlock Margin="5" ToolTip="Show Current HP Percentage over Max HP" Style="{StaticResource ConfigTextBox}" Grid.Row="12" Grid.Column="0"  Text="Current HP as Percentage"/>
                             <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="12" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=EnableCurrentHPPercentage}"/>
-                            
+
                             <TextBlock Margin="5" ToolTip="Show Monster 1 Part Hit Points (reach threshold a 2nd time to break a part)" Style="{StaticResource ConfigTextBox}" Grid.Row="13" Grid.Column="0"  Text="Monster 1 Part Threshold"/>
                             <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="13" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=PartThresholdShown}"/>
                             <TextBlock Margin="5" Style="{StaticResource ConfigTextBox}" Grid.Row="14" Grid.Column="0"  Text="Monster 1 Part Threshold Position"/>
@@ -4163,7 +4163,7 @@ Thunder Clad, Vigorous, Hunter Valhalla, Assistance" Text="{Binding GetActiveSki
                                 <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="Y" Margin="5,0,0,0" Text="{Binding Source={StaticResource Settings},Path=MonsterSleepY}"  PreviewTextInput="ValidateNumber"/>
                             </StackPanel>
                             <TextBlock Margin="5" Style="{StaticResource ConfigTextBox}" Grid.Row="14" Grid.Column="0" Text="Sleep Bar Color"/>
-                            <xctk:ColorPicker Grid.Column="1" Grid.Row="14" Style="{StaticResource ConfigColorPicker}" 
+                            <xctk:ColorPicker Grid.Column="1" Grid.Row="14" Style="{StaticResource ConfigColorPicker}"
                                 SelectedColor="{Binding Source={StaticResource Settings},Path=MonsterSleepBarColor}"/>
                             <TextBlock Margin="5" Style="{StaticResource ConfigTextBox}" Grid.Row="15" Grid.Column="0" Text="Sleep Bar Border Color"/>
                             <xctk:ColorPicker Grid.Column="1" Grid.Row="15" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=MonsterSleepBarBorderColor}"/>
@@ -4179,7 +4179,7 @@ Thunder Clad, Vigorous, Hunter Valhalla, Assistance" Text="{Binding GetActiveSki
                                 <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="Y" Margin="5,0,0,0" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=MonsterParaY}"  PreviewTextInput="ValidateNumber"/>
                             </StackPanel>
                             <TextBlock Margin="5" Style="{StaticResource ConfigTextBox}" Grid.Row="18" Grid.Column="0" Text="Paralysis Bar Color"/>
-                            <xctk:ColorPicker Grid.Column="1" Grid.Row="18" Style="{StaticResource ConfigColorPicker}" 
+                            <xctk:ColorPicker Grid.Column="1" Grid.Row="18" Style="{StaticResource ConfigColorPicker}"
                                       SelectedColor="{Binding Source={StaticResource Settings},Path=MonsterParaBarColor}"/>
                             <TextBlock Margin="5" Style="{StaticResource ConfigTextBox}" Grid.Row="19" Grid.Column="0" Text="Paralysis Bar Border Color"/>
                             <xctk:ColorPicker Grid.Column="1" Grid.Row="19" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=MonsterParalysisBarBorderColor}"/>
@@ -4195,11 +4195,11 @@ Thunder Clad, Vigorous, Hunter Valhalla, Assistance" Text="{Binding GetActiveSki
                                 <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="Y" Margin="5,0,0,0" Text="{Binding Source={StaticResource Settings},Path=MonsterBlastY}"  PreviewTextInput="ValidateNumber"/>
                             </StackPanel>
                             <TextBlock Margin="5" Style="{StaticResource ConfigTextBox}" Grid.Row="22" Grid.Column="0" Text="Blast Bar Color"/>
-                            <xctk:ColorPicker Grid.Column="1" Grid.Row="22" Style="{StaticResource ConfigColorPicker}" 
+                            <xctk:ColorPicker Grid.Column="1" Grid.Row="22" Style="{StaticResource ConfigColorPicker}"
                                 SelectedColor="{Binding Source={StaticResource Settings},Path=MonsterBlastBarColor}"/>
                             <TextBlock Margin="5" Style="{StaticResource ConfigTextBox}" Grid.Row="23" Grid.Column="0" Text="Blast Bar Border Color"/>
                             <xctk:ColorPicker Grid.Column="1" Grid.Row="23" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=MonsterBlastBarBorderColor}"/>
-                            
+
                             <StackPanel Margin="5" Orientation="Horizontal" Grid.Row="24" Grid.Column="0" ToolTip="Show Monster Stun Threshold">
                                 <Image Source="../../Assets/Icons/png/stun.png" Margin="0,0,5,0"/>
                                 <TextBlock Style="{StaticResource ConfigTextBox}" Text="Monster Stun Threshold"/>
@@ -4211,7 +4211,7 @@ Thunder Clad, Vigorous, Hunter Valhalla, Assistance" Text="{Binding GetActiveSki
                                 <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  PlaceholderText="Y" Margin="5,0,0,0" Text="{Binding Source={StaticResource Settings},Path=MonsterStunY}"  PreviewTextInput="ValidateNumber"/>
                             </StackPanel>
                             <TextBlock Margin="5" Style="{StaticResource ConfigTextBox}" Grid.Row="26" Grid.Column="0" Text="Stun Bar Color"/>
-                            <xctk:ColorPicker Grid.Column="1" Grid.Row="26" Style="{StaticResource ConfigColorPicker}" 
+                            <xctk:ColorPicker Grid.Column="1" Grid.Row="26" Style="{StaticResource ConfigColorPicker}"
                                 SelectedColor="{Binding Source={StaticResource Settings},Path=MonsterStunBarColor}"/>
                             <TextBlock Margin="5" Style="{StaticResource ConfigTextBox}" Grid.Row="27" Grid.Column="0" Text="Stun Bar Border Color"/>
                             <xctk:ColorPicker Grid.Column="1" Grid.Row="27" Style="{StaticResource ConfigColorPicker}" SelectedColor="{Binding Source={StaticResource Settings},Path=MonsterStunBarBorderColor}"/>
@@ -4280,8 +4280,8 @@ Thunder Clad, Vigorous, Hunter Valhalla, Assistance" Text="{Binding GetActiveSki
                                        The ID also shows up in OAuth2 section as Client ID
                             </TextBlock>-->
                             <!--https://stackoverflow.com/questions/183406/newline-in-string-attribute-->
-                            <ui:InfoBar Grid.ColumnSpan="2" Foreground="{StaticResource Text}" Title="How to enable Discord Rich Presence" 
-                                Message="1. My Account -> Activity Privacy -> Check 'Display current activity as a status message'&#x0a;2. Discord Developer Portal (https://discord.com/developers/applications) -> New Application -> Name it 'MONSTER HUNTER FRONTIER Z'&#x0a;3. General Information -> Copy Application ID -> Paste into Overlay Settings Discord Rich Presence Application/Client ID&#x0a;The ID also shows up in OAuth2 section as Client ID" 
+                            <ui:InfoBar Grid.ColumnSpan="2" Foreground="{StaticResource Text}" Title="How to enable Discord Rich Presence"
+                                Message="1. My Account -> Activity Privacy -> Check 'Display current activity as a status message'&#x0a;2. Discord Developer Portal (https://discord.com/developers/applications) -> New Application -> Name it 'MONSTER HUNTER FRONTIER Z'&#x0a;3. General Information -> Copy Application ID -> Paste into Overlay Settings Discord Rich Presence Application/Client ID&#x0a;The ID also shows up in OAuth2 section as Client ID"
                                 IsClosable="False" IsOpen="True" Severity="Informational"/>
                             <StackPanel Margin="5" Orientation="Horizontal" Grid.Row="2" Grid.Column="0" >
                                 <ui:SymbolIcon Symbol="Info28" FontSize="28" Foreground="{StaticResource Yellow}" Margin="0,0,5,0" ToolTip="Overlay Restart Required"/>
@@ -4365,7 +4365,7 @@ Thunder Clad, Vigorous, Hunter Valhalla, Assistance" Text="{Binding GetActiveSki
                                         <ui:TextBox Name="WycademyURL" Text="{Binding ElementName=webViewWycademy,Path=Source,Mode=OneWay}"/>
                                     </DockPanel>
                                     <wv2:WebView2 Name="webViewWycademy"
-               					Source="https://wycademy.pages.dev/arena#damage-calculator" DefaultBackgroundColor="#f5e0dc"/>
+               					Source="https://wycademy.vercel.app/arena#damage-calculator" DefaultBackgroundColor="#f5e0dc"/>
                                 </DockPanel>
                             </Grid>
                         </DockPanel>
@@ -4417,7 +4417,7 @@ Thunder Clad, Vigorous, Hunter Valhalla, Assistance" Text="{Binding GetActiveSki
                         </ComboBox>
                         <DockPanel Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="4" x:Name="DockPanelMonsterInfo" Width="Auto" Height="Auto">
                             <wv2:WebView2 Name="webViewMonsterInfo" ToolTip="Monster info"
-                  					    Source="https://wycademy.pages.dev/bestiary"
+                  					    Source="https://wycademy.vercel.app/bestiary"
   							    />
                         </DockPanel>
                     </Grid>
@@ -4456,7 +4456,7 @@ Thunder Clad, Vigorous, Hunter Valhalla, Assistance" Text="{Binding GetActiveSki
                     </DockPanel>
                 </Grid>
             </TabItem>
-            
+
 
             <!--TODO: ID Viewer (select id FROM table)-->
             <TabItem ToolTip="Developers and program information" Background="{StaticResource Mantle}" Foreground="{StaticResource Text}">
@@ -4499,21 +4499,21 @@ Thunder Clad, Vigorous, Hunter Valhalla, Assistance" Text="{Binding GetActiveSki
                             <Image Width="128" Height="128" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="1" x:Name="myImg3"  Source="https://avatars.githubusercontent.com/u/89909040?v=4" Margin="10,0,0,10"/>
                             <Image Width="128" Height="128" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="1" x:Name="myImg2" Source="https://avatars.githubusercontent.com/u/100863878?v=4" Margin="10,0,0,10"/>
                             <TextBlock Margin="10,0,0,10" Grid.Column="2" Grid.Row="0" Grid.ColumnSpan="1" Name="txtbFooterRight">
-                        <Hyperlink Name="lnkImg" TextDecorations="None" 
-                            NavigateUri="https://github.com/Imulion" 
+                        <Hyperlink Name="lnkImg" TextDecorations="None"
+                            NavigateUri="https://github.com/Imulion"
                             ToolTip="Navigate to GitHub profile" RequestNavigate="LnkImg_RequestNavigate">
                             <Image Width="180" Source="https://cdn-icons-png.flaticon.com/512/733/733553.png" />
                         </Hyperlink>
                             </TextBlock>
                             <TextBlock Margin="10,0,0,10" Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="1" Name="txtbFooterRight2">
-                        <Hyperlink Name="lnkImg2" TextDecorations="None" 
+                        <Hyperlink Name="lnkImg2" TextDecorations="None"
                             NavigateUri="https://github.com/suzaku01"
                             ToolTip="Navigate to GitHub profile" RequestNavigate="LnkImg_RequestNavigate">
                             <Image Width="180" Source="https://cdn-icons-png.flaticon.com/512/733/733553.png" />
                         </Hyperlink>
                             </TextBlock>
                             <TextBlock Margin="10,0,0,10" Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="1" Name="txtbFooterRight3">
-                        <Hyperlink Name="lnkImg3" TextDecorations="None" 
+                        <Hyperlink Name="lnkImg3" TextDecorations="None"
                             NavigateUri="https://github.com/DorielRivalet"
                             ToolTip="Navigate to GitHub profile" RequestNavigate="LnkImg_RequestNavigate">
                             <Image Width="180" Source="https://cdn-icons-png.flaticon.com/512/733/733553.png" />
