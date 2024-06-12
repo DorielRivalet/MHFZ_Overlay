@@ -16832,7 +16832,7 @@ Do you want to perform the necessary database updates? A backup of your current 
 
 Updating the database structure may take some time, it will transport all of your current data straight to the latest database structure, regardless of the previous database version.
 
-Release notes: https://wycademy.vercel.app/overlay/release-notes (clicking yes will open the browser with the mentioned link)",
+Release notes: https://wycademy.vercel.app/overlay/release-notes (clicking ""Yes"" will open the browser with the mentioned link)",
 string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} to {1})", previousVersion, Program.CurrentProgramVersion), MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
                     if (result == MessageBoxResult.Yes)
                     {
