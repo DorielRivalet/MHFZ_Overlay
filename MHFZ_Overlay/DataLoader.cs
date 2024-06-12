@@ -111,7 +111,7 @@ public sealed class DataLoader
 
             // first we check if there are duplicate mhf.exe
             this.CheckForExternalProcesses();
-            this.CheckForIllegalModifications(this);
+            this.CheckForIllegalModifications();
 
             // if there aren't then this runs and sets the game folder and also the database folder if needed
             GetMHFFolderLocation();
@@ -341,7 +341,7 @@ public sealed class DataLoader
 
     // This checks for illegal folders or files in the game folder
     // TODO: test
-    public void CheckForIllegalModifications(DataLoader? dataLoader)
+    public void CheckForIllegalModifications(DataLoader? dataLoader = null)
     {
         if (Program.IsVelopackUpdating)
         {

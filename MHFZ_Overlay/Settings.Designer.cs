@@ -4150,5 +4150,17 @@ namespace MHFZ_Overlay {
                 this["FrontierServerOption"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool EnableAchievementsTracking {
+            get {
+                return ((bool)(this["EnableAchievementsTracking"]));
+            }
+            set {
+                this["EnableAchievementsTracking"] = value;
+            }
+        }
     }
 }

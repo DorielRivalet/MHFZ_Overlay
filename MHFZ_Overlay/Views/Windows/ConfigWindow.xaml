@@ -1544,7 +1544,9 @@
                                             <RowDefinition Height="40"/>
                                             <RowDefinition Height="40"/>
                                             <RowDefinition Height="40"/>
-                                        </Grid.RowDefinitions>
+                                                <RowDefinition Height="40"/>
+
+                                           </Grid.RowDefinitions>
                                         <TextBlock Margin="5" ToolTip="{Binding Source={StaticResource Settings}, Path=GameFolderPath}" Style="{StaticResource ConfigTextBox}" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" Grid.ColumnSpan="2" Text="Hover to view game folder path (automatically set by checking the folder location of the current mhf.exe at overlay startup)"/>
                                         <TextBlock Margin="5" ToolTip="{Binding Source={StaticResource Settings}, Path=DatabaseFilePath}" Style="{StaticResource ConfigTextBox}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" Text="Hover to view database file path"/>
                                         <StackPanel Margin="5" Orientation="Horizontal" Grid.Row="2" Grid.Column="0" >
@@ -1672,6 +1674,8 @@
                                         <TextBlock Margin="5" Style="{StaticResource ConfigTextBox}" Grid.Row="21" Grid.Column="0"  Text="Quest Completions Counter" ToolTip="Show quest completions next to the attempts"/>
                                         <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="21" Grid.Column="1" IsChecked="{Binding Source={StaticResource Settings}, Path=EnableQuestCompletionsCounter}"/>
                                         <!--TODO: speedrun mode in overlay takes into account these settings + other things-->
+                                        <TextBlock Margin="5" Grid.Row="22" Grid.Column="0" Style="{StaticResource ConfigTextBox}" Text="Achievements Tracking" ToolTip="If disabled, you won't be able to obtain achievements" />
+                                        <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="22" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=EnableAchievementsTracking}"/>
                                     </Grid>
                                 </ScrollViewer>
                                 <customcontrols:MainConfigurationActions Grid.Row="1" Grid.ColumnSpan="1" Loaded="MainConfigurationActions_Loaded" Unloaded="MainConfigurationActions_Unloaded"/>

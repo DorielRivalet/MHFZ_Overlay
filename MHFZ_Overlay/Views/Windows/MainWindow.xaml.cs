@@ -376,7 +376,7 @@ public partial class MainWindow : Window
             this.HideMonsterInfoWhenNotInQuest();
             this.HidePlayerInfoWhenNotInQuest();
             this.DataLoader.CheckForExternalProcesses();
-            this.DataLoader.CheckForIllegalModifications();
+            this.DataLoader.CheckForIllegalModifications(this.DataLoader);
         }
         catch (Exception ex)
         {
@@ -655,7 +655,7 @@ The process may take some time, as the program attempts to download from GitHub 
         try
         {
             this.DataLoader.CheckForExternalProcesses();
-            this.DataLoader.CheckForIllegalModifications();
+            this.DataLoader.CheckForIllegalModifications(this.DataLoader);
         }
         catch (Exception ex)
         {
@@ -1657,7 +1657,7 @@ The process may take some time, as the program attempts to download from GitHub 
         try
         {
             this.DataLoader.CheckForExternalProcesses();
-            this.DataLoader.CheckForIllegalModifications();
+            this.DataLoader.CheckForIllegalModifications(this.DataLoader);
         }
         catch (Exception ex)
         {

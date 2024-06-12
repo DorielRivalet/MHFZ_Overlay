@@ -16821,7 +16821,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                 var currentUserVersion = this.GetUserVersion(connection);
 
                 // this will always run the next time the user runs the program after a fresh install. So it always runs at least once.
-                if (true == true || Program.IsVelopackUpdating == false && ((Program.CurrentProgramVersion != null && Program.CurrentProgramVersion.Trim() != previousVersion.Trim()) || currentUserVersion == 0))
+                if (Program.IsVelopackUpdating == false && ((Program.CurrentProgramVersion != null && Program.CurrentProgramVersion.Trim() != previousVersion.Trim()) || currentUserVersion == 0))
                 {
                     Logger.Info(CultureInfo.InvariantCulture, "Found different program version or userVersion 0. Current: {0}, Previous: {1}, userVersion: {2}", Program.CurrentProgramVersion, previousVersion, currentUserVersion);
 

@@ -13,6 +13,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Media;
 using EZlion.Mapper;
+using FontAwesome.Sharp;
 using MHFZ_Overlay;
 using MHFZ_Overlay.Models;
 using MHFZ_Overlay.Models.Collections;
@@ -144,6 +145,11 @@ public sealed class AchievementService : IAchievementService
     /// <inheritdoc/>
     public void CheckForAchievements(SnackbarPresenter snackbarPresenter, DataLoader dataLoader, DatabaseService databaseManagerInstance, Settings s, Style style)
     {
+        if (!s.EnableAchievementsTracking)
+        {
+            return;
+        }
+
         var newAchievements = this.GetNewlyObtainedAchievements(dataLoader, databaseManagerInstance, s);
 
         if (newAchievements.Count > 0)
@@ -161,6 +167,13 @@ public sealed class AchievementService : IAchievementService
     /// <inheritdoc/>
     public void RewardAchievement(int achievementID, Snackbar snackbar, Style style)
     {
+        var s = (Settings)Application.Current.TryFindResource("Settings");
+
+        if (!s.EnableAchievementsTracking)
+        {
+            return;
+        }
+
         Achievements.IDAchievement.TryGetValue(achievementID, out var achievement);
         if (achievement == null)
         {
