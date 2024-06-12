@@ -30,6 +30,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media.Imaging;
+using System.Windows.Threading;
 using CommunityToolkit.Mvvm.Messaging;
 using EZlion.Mapper;
 using MHFZ_Overlay;
@@ -16820,7 +16821,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                 var currentUserVersion = this.GetUserVersion(connection);
 
                 // this will always run the next time the user runs the program after a fresh install. So it always runs at least once.
-                if (Program.IsVelopackUpdating == false && ((Program.CurrentProgramVersion != null && Program.CurrentProgramVersion.Trim() != previousVersion.Trim()) || currentUserVersion == 0))
+                if (true == true || Program.IsVelopackUpdating == false && ((Program.CurrentProgramVersion != null && Program.CurrentProgramVersion.Trim() != previousVersion.Trim()) || currentUserVersion == 0))
                 {
                     Logger.Info(CultureInfo.InvariantCulture, "Found different program version or userVersion 0. Current: {0}, Previous: {1}, userVersion: {2}", Program.CurrentProgramVersion, previousVersion, currentUserVersion);
 
@@ -16829,10 +16830,17 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
 Do you want to perform the necessary database updates? A backup of your current MHFZ_Overlay.sqlite file will be done if you accept.
 
-Updating the database structure may take some time, it will transport all of your current data straight to the latest database structure, regardless of the previous database version.",
+Updating the database structure may take some time, it will transport all of your current data straight to the latest database structure, regardless of the previous database version.
+
+Release notes: https://wycademy.vercel.app/overlay/release-notes (clicking yes will open the browser with the mentioned link)",
 string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} to {1})", previousVersion, Program.CurrentProgramVersion), MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
                     if (result == MessageBoxResult.Yes)
                     {
+                        System.Diagnostics.Process.Start(new ProcessStartInfo
+                        {
+                            FileName = "https://wycademy.vercel.app/overlay/release-notes",
+                            UseShellExecute = true
+                        });
                         this.UpdateDatabaseSchema(connection, dataLoader, currentUserVersion);
                     }
                     else
