@@ -4581,7 +4581,13 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                             var s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
                             playerName = s.HunterName;
                             guildName = s.GuildName;
-                            discordServerID = s.DiscordServerID;
+                            discordServerID = 0;
+                            var foundServer = DiscordServers.DiscordServerInfo.Any(e => e.Value.Name == s.FrontierServerOption);
+                            if (foundServer) 
+                            {
+                                var elementFound = DiscordServers.DiscordServerInfo.Values.Where((e) => e.Name == s.FrontierServerOption).FirstOrDefault();
+                                discordServerID = elementFound?.ID ?? 0;
+                            }
                             gender = s.GenderExport;
 
                             // TODO test

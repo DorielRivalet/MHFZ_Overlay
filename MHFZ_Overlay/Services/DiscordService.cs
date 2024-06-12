@@ -7,10 +7,13 @@ namespace MHFZ_Overlay.Services;
 using System;
 using System.Diagnostics;
 using System.Globalization;
+using System.Linq;
+using System.Security.Policy;
 using System.Windows;
 using DiscordRPC;
 using EZlion.Mapper;
 using MHFZ_Overlay;
+using MHFZ_Overlay.Models;
 using MHFZ_Overlay.Models.Collections;
 using MHFZ_Overlay.Models.Constant;
 using MHFZ_Overlay.Models.Structures;
@@ -119,14 +122,14 @@ public sealed class DiscordService
             // Set Presence
             PresenceTemplate.Timestamps = Timestamps.Now;
 
-            if (GetHunterName != string.Empty && GetGuildName != string.Empty && GetServerName != string.Empty)
+            if (GetHunterName != string.Empty && GetGuildName != string.Empty && GetDiscordServerName != string.Empty)
             {
                 PresenceTemplate.Assets = new Assets()
                 {
                     LargeImageKey = "cattleya",
                     LargeImageText = "Please Wait",
                     SmallImageKey = "https://i.imgur.com/9OkLYAz.png",
-                    SmallImageText = GetHunterName + " | " + GetGuildName + " | " + GetServerName,
+                    SmallImageText = GetHunterName + " | " + GetGuildName + " | " + GetDiscordServerName,
                 };
             }
 
@@ -148,6 +151,7 @@ public sealed class DiscordService
 
             if (GetDiscordServerInvite != string.Empty)
             {
+                var name = GetDiscordServerName;
                 PresenceTemplate.Buttons = Array.Empty<Button>();
                 PresenceTemplate.Buttons = new Button[]
                 {
@@ -158,8 +162,8 @@ public sealed class DiscordService
                     },
                     new Button()
                     {
-                        Label = "Join Discord Server",
-                        Url = string.Format(CultureInfo.InvariantCulture, "https://discord.com/invite/{0}", GetDiscordServerInvite),
+                        Label = "Join Frontier Server",
+                        Url = GetDiscordServerInvite,
                     },
                 };
             }
@@ -625,9 +629,9 @@ public sealed class DiscordService
         // SmallInfo
         PresenceTemplate.Assets.SmallImageKey = GetWeaponIconFromID(dataLoader.Model.WeaponType(), dataLoader);
 
-        if (GetHunterName != string.Empty && GetGuildName != string.Empty && GetServerName != string.Empty)
+        if (GetHunterName != string.Empty && GetGuildName != string.Empty && GetDiscordServerName != string.Empty)
         {
-            smallImageTextString = string.Format(CultureInfo.InvariantCulture, "{0} | {1} | {2} | GSR: {3} | {4} Style | Caravan Skills: {5}", GetHunterName, GetGuildName, GetServerName, dataLoader.Model.GSR(), ViewModels.Windows.AddressModel.GetWeaponStyleFromID(dataLoader.Model.WeaponStyle()), ViewModels.Windows.AddressModel.GetCaravanSkillsWithoutMarkdown(dataLoader));
+            smallImageTextString = string.Format(CultureInfo.InvariantCulture, "{0} | {1} | {2} | GSR: {3} | {4} Style | Caravan Skills: {5}", GetHunterName, GetGuildName, GetDiscordServerName, dataLoader.Model.GSR(), ViewModels.Windows.AddressModel.GetWeaponStyleFromID(dataLoader.Model.WeaponStyle()), ViewModels.Windows.AddressModel.GetCaravanSkillsWithoutMarkdown(dataLoader));
             PresenceTemplate.Assets.SmallImageText = smallImageTextString.Length <= MaxDiscordRPCStringLength ? smallImageTextString : string.Concat(smallImageTextString.AsSpan(0, MaxDiscordRPCStringLength - 3), "...");
         }
 
@@ -728,14 +732,20 @@ public sealed class DiscordService
         get
         {
             var s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
-            if (s.DiscordServerInvite.Length is >= 8 and <= 64)
-            {
-                return s.DiscordServerInvite;
-            }
-            else
-            {
-                return string.Empty;
-            }
+            var foundLink = DiscordServers.DiscordServerInfo.FirstOrDefault((e) => e.Value.Name == s.FrontierServerOption).Value.InviteLink;
+           
+            return foundLink;
+        }
+    }
+
+    private static string GetDiscordServerName
+    {
+        get
+        {
+            var s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
+            var foundLink = DiscordServers.DiscordServerInfo.FirstOrDefault((e) => e.Value.Name == s.FrontierServerOption).Value.Name;
+
+            return foundLink;
         }
     }
 
@@ -779,23 +789,6 @@ public sealed class DiscordService
             else
             {
                 return "Guild Name";
-            }
-        }
-    }
-
-    private static string GetServerName
-    {
-        get
-        {
-            var s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
-            var serverNameFound = DiscordServers.DiscordServerID.TryGetValue(s.DiscordServerID, out var value);
-            if (serverNameFound && value != null)
-            {
-                return value;
-            }
-            else
-            {
-                return "Unknown Server";
             }
         }
     }

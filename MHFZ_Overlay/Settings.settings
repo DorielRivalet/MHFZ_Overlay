@@ -1031,5 +1031,8 @@
     <Setting Name="DualSwordsSharpensY" Type="System.Double" Scope="User">
       <Value Profile="(Default)">102</Value>
     </Setting>
+    <Setting Name="FrontierServerOption" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Local</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

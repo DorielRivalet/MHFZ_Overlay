@@ -4294,41 +4294,51 @@ Thunder Clad, Vigorous, Hunter Valhalla, Assistance" Text="{Binding GetActiveSki
                                 ToolTipService.ToolTip="1. My Account -> Activity Privacy -> Check 'Display current activity as a status message'&#x0a;2. Discord Developer Portal (https://discord.com/developers/applications) -> New Application -> Name it 'MONSTER HUNTER FRONTIER Z'&#x0a;3. General Information -> Copy Application ID -> Paste into Overlay Settings Discord Rich Presence Application/Client ID&#x0a;The ID also shows up in OAuth2 section as Client ID"/>
                             </StackPanel>
                             <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="3" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=DiscordClientID}"  PreviewTextInput="ValidateNumber" MaxLength="19"/>
-                            <TextBlock Margin="5" ToolTip="The server you play on (e.g. https://discord.gg/y8mF6amH, enter only the ID, not the whole link)" Style="{StaticResource ConfigTextBox}" Grid.Row="4" Grid.Column="0"  Text="Discord Server Invite ID"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="4" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=DiscordServerInvite}"  PreviewTextInput="ValidateName" MaxLength="10"/>
+
+                            <StackPanel Margin="5" Orientation="Horizontal" Grid.Row="4" Grid.Column="0" >
+                                <ui:SymbolIcon Symbol="Info28" FontSize="28" Foreground="{StaticResource Yellow}" Margin="0,0,5,0" ToolTip="Overlay Restart Required"/>
+                                <TextBlock ToolTip="Select the server you play on" Style="{StaticResource ConfigTextBox}" Text="Frontier Server" />
+                            </StackPanel>
+                            <ComboBox Grid.Column="1" Grid.Row="4" SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=FrontierServerOption}">
+                                <ComboBoxItem>Local</ComboBoxItem>
+                                <ComboBoxItem>Monster Hunter Frontier: Renewal</ComboBoxItem>
+                                <ComboBoxItem>Rain Frontier Server</ComboBoxItem>
+                                <ComboBoxItem>MHF-Z Server Ancient</ComboBoxItem>
+                                <ComboBoxItem>MezeLounge</ComboBoxItem>
+                                <ComboBoxItem>Arca</ComboBoxItem>
+                            </ComboBox>
                             <TextBlock Margin="5" ToolTip="Your hunter name to display on. Gets logged on database along with the other names." Style="{StaticResource ConfigTextBox}" Grid.Row="5" Grid.Column="0"  Text="Hunter Name"/>
                             <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="5" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=HunterName}"  PreviewTextInput="ValidateName" MaxLength="12"/>
                             <TextBlock Margin="5" ToolTip="Your guild (in-game) name to display on" Style="{StaticResource ConfigTextBox}" Grid.Row="6" Grid.Column="0"  Text="Guild Name"/>
                             <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="6" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=GuildName}"  PreviewTextInput="ValidateName" MaxLength="16"/>
-                            <TextBlock Margin="5" ToolTip="The Discord Server ID that you play on. (Enable Developer Mode in Discord Advanced settings, right click server icon and select Copy ID). This is used to get the server name and store the ID in leaderboards. Put 0 for Local server." Style="{StaticResource ConfigTextBox}" Grid.Row="7" Grid.Column="0"  Text="Discord Server ID"/>
-                            <ui:TextBox IsUndoEnabled="False" TextAlignment="Center"  Grid.Row="7" Grid.Column="1" Text="{Binding Source={StaticResource Settings},Path=DiscordServerID}"  PreviewTextInput="ValidateNumber"/>
-                            <TextBlock Margin="5" ToolTip="Select Quest Timing Mode (Real-Time)" Style="{StaticResource ConfigTextBox}" Grid.Row="8" Grid.Column="0"  Text="Quest Timing Mode"/>
-                            <ComboBox Grid.Column="1" Grid.Row="8" SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=DiscordTimerMode}">
+                            
+                            <TextBlock Margin="5" ToolTip="Select Quest Timing Mode (Real-Time)" Style="{StaticResource ConfigTextBox}" Grid.Row="7" Grid.Column="0"  Text="Quest Timing Mode"/>
+                            <ComboBox Grid.Column="1" Grid.Row="7" SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=DiscordTimerMode}">
                                 <ComboBoxItem>Time Left</ComboBoxItem>
                                 <ComboBoxItem>Time Elapsed</ComboBoxItem>
                             </ComboBox>
-                            <TextBlock Margin="5" ToolTip="Reset Time on Floor change (Real-Time)" Style="{StaticResource ConfigTextBox}" Grid.Row="9" Grid.Column="0"  Text="Road Timer Reset per Floor"/>
-                            <ComboBox Grid.Column="1" Grid.Row="9" SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=DiscordRoadTimerReset}">
+                            <TextBlock Margin="5" ToolTip="Reset Time on Floor change (Real-Time)" Style="{StaticResource ConfigTextBox}" Grid.Row="8" Grid.Column="0"  Text="Road Timer Reset per Floor"/>
+                            <ComboBox Grid.Column="1" Grid.Row="8" SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=DiscordRoadTimerReset}">
                                 <ComboBoxItem>Never</ComboBoxItem>
                                 <ComboBoxItem>Always</ComboBoxItem>
                             </ComboBox>
-                            <TextBlock Margin="5" ToolTip="Show Quest Name (some are untranslated. Replaces Objective and Monster information and puts it into the large image text tooltip)" Style="{StaticResource ConfigTextBox}" Grid.Row="10" Grid.Column="0"  Text="Quest Name"/>
-                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="10" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=DiscordQuestNameShown}"/>
-                            <TextBlock Margin="5" ToolTip="Show Caravan Score (meant to be used in tandem with Caravan Override)" Style="{StaticResource ConfigTextBox}" Grid.Row="11" Grid.Column="0"  Text="Caravan Score"/>
-                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="11" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=EnableCaravanScore}"/>
+                            <TextBlock Margin="5" ToolTip="Show Quest Name (some are untranslated. Replaces Objective and Monster information and puts it into the large image text tooltip)" Style="{StaticResource ConfigTextBox}" Grid.Row="9" Grid.Column="0"  Text="Quest Name"/>
+                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="9" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=DiscordQuestNameShown}"/>
+                            <TextBlock Margin="5" ToolTip="Show Caravan Score (meant to be used in tandem with Caravan Override)" Style="{StaticResource ConfigTextBox}" Grid.Row="10" Grid.Column="0"  Text="Caravan Score"/>
+                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="10" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=EnableCaravanScore}"/>
 
-                            <TextBlock Margin="5" ToolTip="Max carts override" Style="{StaticResource ConfigTextBox}" Grid.Row="12" Grid.Column="0"  Text="Max Faints Override"/>
-                            <ComboBox Grid.Column="1" Grid.Row="12" SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=MaxFaintsOverride}">
+                            <TextBlock Margin="5" ToolTip="Max carts override" Style="{StaticResource ConfigTextBox}" Grid.Row="11" Grid.Column="0"  Text="Max Faints Override"/>
+                            <ComboBox Grid.Column="1" Grid.Row="11" SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=MaxFaintsOverride}">
                                 <ComboBoxItem>Automatic</ComboBoxItem>
                                 <ComboBoxItem>Normal Quests</ComboBoxItem>
                                 <ComboBoxItem>Shiten/Conquest/Pioneer/Daily/Caravan/Interception Quests</ComboBoxItem>
                             </ComboBox>
 
-                            <TextBlock Margin="5" ToolTip="Show Overlay Mode" Style="{StaticResource ConfigTextBox}" Grid.Row="13" Grid.Column="0"  Text="Overlay Mode"/>
-                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="13" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=ShowDiscordRPCOverlayMode}"/>
+                            <TextBlock Margin="5" ToolTip="Show Overlay Mode" Style="{StaticResource ConfigTextBox}" Grid.Row="12" Grid.Column="0"  Text="Overlay Mode"/>
+                            <ui:ToggleSwitch HorizontalAlignment="Center" Grid.Row="12" Grid.Column="1"   IsChecked="{Binding Source={StaticResource Settings}, Path=ShowDiscordRPCOverlayMode}"/>
 
-                            <TextBlock Margin="5" ToolTip="Set Overlay Mode Option. Current: the current mode. Final: the mode that would be stored in database. Automatic: changes depending on overlay mode option found in the Quest Logs settings tab." Style="{StaticResource ConfigTextBox}" Grid.Row="14" Grid.Column="0"  Text="Overlay Mode Option"/>
-                            <ComboBox Grid.Column="1" Grid.Row="14" SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=DiscordOverlayMode}">
+                            <TextBlock Margin="5" ToolTip="Set Overlay Mode Option. Current: the current mode. Final: the mode that would be stored in database. Automatic: changes depending on overlay mode option found in the Quest Logs settings tab." Style="{StaticResource ConfigTextBox}" Grid.Row="13" Grid.Column="0"  Text="Overlay Mode Option"/>
+                            <ComboBox Grid.Column="1" Grid.Row="13" SelectedValuePath="Content" SelectedValue="{Binding Source={StaticResource Settings}, Path=DiscordOverlayMode}">
                                 <ComboBoxItem>Automatic</ComboBoxItem>
                                 <ComboBoxItem>Current</ComboBoxItem>
                                 <ComboBoxItem>Final</ComboBoxItem>
@@ -4342,7 +4352,7 @@ Thunder Clad, Vigorous, Hunter Valhalla, Assistance" Text="{Binding GetActiveSki
                     <TabItem.Header>
                         <StackPanel Orientation="Horizontal">
                             <Image Source="pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/wycademy-logo.png" Width="32" Height="32"/>
-                            <TextBlock Foreground="#f5c2e7" Text="Wycademy" Margin="4,0,0,0" VerticalAlignment="Center" />
+                            <TextBlock Foreground="#cdd6f4" Text="Wycademy" Margin="4,0,0,0" VerticalAlignment="Center" />
                         </StackPanel>
                     </TabItem.Header>
                     <Grid>
@@ -4491,7 +4501,9 @@ Thunder Clad, Vigorous, Hunter Valhalla, Assistance" Text="{Binding GetActiveSki
                                 <RowDefinition Height="128"/>
                                 <RowDefinition Height="128"/>
                                 <RowDefinition Height="128"/>
-                            </Grid.RowDefinitions>
+                                    <RowDefinition Height="128"/>
+
+                               </Grid.RowDefinitions>
                             <TextBlock FontSize="32" Foreground="{StaticResource Sky}" Margin="10,0,0,10" TextAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="1" Text="Imulion"  HorizontalAlignment="Center"/>
                             <TextBlock FontSize="32" Foreground="{StaticResource Blue}" Margin="10,0,0,10" VerticalAlignment="Center" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="1" Text="suzaku01"   HorizontalAlignment="Center"/>
                             <TextBlock FontSize="32" Foreground="{StaticResource Red}" Margin="10,0,0,10" VerticalAlignment="Center" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="1" Text="Doriel Rivalet"   HorizontalAlignment="Center"/>
@@ -4535,9 +4547,9 @@ Thunder Clad, Vigorous, Hunter Valhalla, Assistance" Text="{Binding GetActiveSki
                                 <TextBlock FontSize="32" Text="Loading..." x:Name="IssuesTextBlock" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                             </Grid>
                             <Button ToolTip="Thank You!" BorderBrush="Transparent" Background="Transparent" Width="128" Height="128" Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="1" Margin="10,0,0,10">
-                                <Button.Content>
-                                    <ui:SymbolIcon Symbol="Heart48" Foreground="{StaticResource Red}" FontSize="96"/>
-                                </Button.Content>
+                            <Button.Content>
+                                <ui:SymbolIcon Symbol="Heart48" Foreground="{StaticResource Red}" FontSize="96"/>
+                            </Button.Content>
                             </Button>
                             <Grid Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="1">
                                 <TextBlock FontSize="32" Text="Thanks for using the overlay!" x:Name="ThankYouTextBlock" VerticalAlignment="Center" HorizontalAlignment="Center"/>
@@ -4548,9 +4560,18 @@ Thunder Clad, Vigorous, Hunter Valhalla, Assistance" Text="{Binding GetActiveSki
                             <TextBlock TextWrapping="Wrap" Grid.RowSpan="2" Grid.Row="7" FontSize="32" Grid.ColumnSpan="3" Text="Loading..." x:Name="OctokitInfo"/>
 
                             <!--https://stackoverflow.com/questions/10238694/example-using-hyperlink-in-wpf-->
-                            <TextBlock ToolTip="View Changelog" Grid.Row="8" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="32"><Hyperlink Foreground="{StaticResource Blue}" NavigateUri="https://github.com/DorielRivalet/mhfz-overlay/blob/main/CHANGELOG.md" RequestNavigate="LnkImg_RequestNavigate">View Changelog</Hyperlink></TextBlock>
-                            <TextBlock ToolTip="View Releases Statistics (Put DorielRivalet as GitHub Username and MHFZ_Overlay as Repository Name)" Grid.Row="8" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="32"><Hyperlink Foreground="{StaticResource Blue}" NavigateUri="https://somsubhra.github.io/github-release-stats/" RequestNavigate="LnkImg_RequestNavigate">View Releases Statistics</Hyperlink></TextBlock>
-                            <TextBlock ToolTip="Go to GitHub Releases page" Grid.Row="8" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="32"><Hyperlink Foreground="{StaticResource Blue}" NavigateUri="https://github.com/DorielRivalet/mhfz-overlay/releases/latest" RequestNavigate="LnkImg_RequestNavigate">Get latest version</Hyperlink></TextBlock>
+                            <Grid Grid.ColumnSpan="3" Grid.Row="8">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock ToolTip="View Release Notes"  Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24"><Hyperlink Foreground="{StaticResource Blue}" NavigateUri="https://github.com/DorielRivalet/mhfz-overlay/blob/main/CHANGELOG.md" RequestNavigate="LnkImg_RequestNavigate">View Changelog</Hyperlink></TextBlock>
+                                <TextBlock ToolTip="View Changelog"  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24"><Hyperlink Foreground="{StaticResource Blue}" NavigateUri="https://wycademy.vercel.app/overlay/release-notes" RequestNavigate="LnkImg_RequestNavigate">View Release Notes</Hyperlink></TextBlock>
+                                <TextBlock ToolTip="View Releases Statistics (Put DorielRivalet as GitHub Username and MHFZ_Overlay as Repository Name)" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24"><Hyperlink Foreground="{StaticResource Blue}" NavigateUri="https://somsubhra.github.io/github-release-stats/" RequestNavigate="LnkImg_RequestNavigate">View Releases Statistics</Hyperlink></TextBlock>
+                                <TextBlock ToolTip="Go to GitHub Releases page"  Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24"><Hyperlink Foreground="{StaticResource Blue}" NavigateUri="https://github.com/DorielRivalet/mhfz-overlay/releases/latest" RequestNavigate="LnkImg_RequestNavigate">Get latest version</Hyperlink></TextBlock>
+                            </Grid>
                             <TextBlock ToolTip="Total Program Usage Time" Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="3" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="32" Text="{Binding TotalTimeSpent, StringFormat=hh\\:mm\\:ss, Mode=OneTime}"/>
                         </Grid>
                     </ScrollViewer>

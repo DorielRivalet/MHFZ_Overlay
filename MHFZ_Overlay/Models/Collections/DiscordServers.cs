@@ -12,14 +12,14 @@ using System.Collections.ObjectModel;
 /// </summary>
 public static class DiscordServers
 {
-    public static ReadOnlyDictionary<long, string> DiscordServerID { get; } = new (new Dictionary<long, string>
+    public static ReadOnlyDictionary<long, DiscordServer> DiscordServerInfo { get; } = new (new Dictionary<long, DiscordServer>
     {
-        { 0, "Local" },
-        { 932246672392740917, "Monster Hunter Frontier: Renewal" },
-        { 937230168223789066, "Rain Frontier Server" },
-        { 759022449743495170, "Monster Hunter [Ancient_Warriors]" },
-        { 973963573619486740, "MezeLounge" },
-        { 288170871908990976, "Hunsterverse" },
-        { 967058504403808356, "Arca" },
+        { 0, new DiscordServer {Name = "Local", ID=0, InviteLink="" } },
+        { 1, new DiscordServer {Name = "Monster Hunter Frontier: Renewal", ID=932246672392740917, InviteLink="https://discord.gg/U4pjzmzUVx" } },
+        { 2, new DiscordServer {Name = "Rain Frontier Server", ID=937230168223789066, InviteLink="https://discord.gg/TcpkpUpeGw" } },
+        { 3, new DiscordServer {Name = "MHF-Z Server Ancient", ID=759022449743495170, InviteLink="https://discord.gg/csR8RPg" } },
+        { 4, new DiscordServer {Name = "MezeLounge", ID=973963573619486740, InviteLink="https://discord.gg/uE3rZMSbnZ" } },
+        //{ 5, new DiscordServer {Name = "Hunsterverse", ID=288170871908990976, InviteLink="" } }, // they dont accept random invites
+        { 6, new DiscordServer {Name = "Arca", ID=967058504403808356, InviteLink="https://discord.gg/MCYGFWHcDK" } },
     });
 }
