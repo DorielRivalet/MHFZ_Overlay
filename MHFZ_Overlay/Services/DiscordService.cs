@@ -9,6 +9,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Security.Policy;
+using System.Text;
 using System.Windows;
 using DiscordRPC;
 using EZlion.Mapper;
@@ -64,6 +65,27 @@ public sealed class DiscordService
     // extreme support 5 55606
     // extreme carve 55607
     private const int MaxDiscordRPCStringLength = 127; // or any other maximum length specified by Discord
+
+    private static string GetTruncatedString(string input, int maxLength)
+    {
+        if (Encoding.UTF8.GetByteCount(input) <= maxLength)
+        {
+            return input;
+        }
+
+        int byteCount = 0;
+        int charCount = 0;
+        while (charCount < input.Length && byteCount < maxLength - 3)
+        {
+            byteCount += Encoding.UTF8.GetByteCount(new[] { input[charCount] });
+            if (byteCount < maxLength - 3)
+            {
+                charCount++;
+            }
+        }
+
+        return string.Concat(input.AsSpan(0, charCount), "...");
+    }
 
     private static readonly NLog.Logger LoggerInstance = NLog.LogManager.GetCurrentClassLogger();
 
@@ -242,21 +264,21 @@ public sealed class DiscordService
             {
                 case 23527: // Hunter's Road Multiplayer
                     stateString = string.Format(CultureInfo.InvariantCulture, "Multiplayer Floor: {0} ({1}/{2} Max/Total) | RP: {3} | White Fatalis: {4}/{5} (Slain/Encounters)", dataLoader.Model.RoadFloor() + 1, dataLoader.Model.RoadMaxStagesMultiplayer(), dataLoader.Model.RoadTotalStagesMultiplayer(), dataLoader.Model.RoadPoints(), dataLoader.Model.RoadFatalisSlain(), dataLoader.Model.RoadFatalisEncounters());
-                    PresenceTemplate.State = stateString.Length <= MaxDiscordRPCStringLength ? stateString : string.Concat(stateString.AsSpan(0, MaxDiscordRPCStringLength - 3), "...");
+                    PresenceTemplate.State = GetTruncatedString(stateString, MaxDiscordRPCStringLength);
                     break;
                 case 23628: // solo road
                     stateString = string.Format(CultureInfo.InvariantCulture, "Solo Floor: {0} ({1}/{2} Max/Total) | RP: {3} | White Fatalis: {4}/{5} (Slain/Encounters)", dataLoader.Model.RoadFloor() + 1, dataLoader.Model.RoadMaxStagesSolo(), dataLoader.Model.RoadTotalStagesSolo(), dataLoader.Model.RoadPoints(), dataLoader.Model.RoadFatalisSlain(), dataLoader.Model.RoadFatalisEncounters());
-                    PresenceTemplate.State = stateString.Length <= MaxDiscordRPCStringLength ? stateString : string.Concat(stateString.AsSpan(0, MaxDiscordRPCStringLength - 3), "...");
+                    PresenceTemplate.State = GetTruncatedString(stateString, MaxDiscordRPCStringLength);
                     break;
                 case 21731: // 1st district dure
                 case 21749: // sky corridor version
                     stateString = string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}{3}{4}{5} | Slain: {6} | Encounters: {7}", ViewModels.Windows.AddressModel.GetDiscordQuestNameFromID(dataLoader.Model.QuestID()), ViewModels.Windows.AddressModel.GetObjectiveNameFromID(dataLoader.Model.ObjectiveType()), string.Empty, dataLoader.Model.GetObjective1Quantity(), dataLoader.Model.GetRankNameFromID(dataLoader.Model.RankBand()), dataLoader.Model.GetRealMonsterName(), dataLoader.Model.FirstDistrictDuremudiraSlays(), dataLoader.Model.FirstDistrictDuremudiraEncounters());
-                    PresenceTemplate.State = stateString.Length <= MaxDiscordRPCStringLength ? stateString : string.Concat(stateString.AsSpan(0, MaxDiscordRPCStringLength - 3), "...");
+                    PresenceTemplate.State = GetTruncatedString(stateString, MaxDiscordRPCStringLength);
                     break;
                 case 21746: // 2nd district dure
                 case 21750: // sky corridor version
                     stateString = string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}{3}{4}{5} | Slain: {6} | Encounters: {7}", ViewModels.Windows.AddressModel.GetDiscordQuestNameFromID(dataLoader.Model.QuestID()), ViewModels.Windows.AddressModel.GetObjectiveNameFromID(dataLoader.Model.ObjectiveType()), string.Empty, dataLoader.Model.GetObjective1Quantity(), dataLoader.Model.GetRankNameFromID(dataLoader.Model.RankBand()), dataLoader.Model.GetRealMonsterName(), dataLoader.Model.SecondDistrictDuremudiraSlays(), dataLoader.Model.SecondDistrictDuremudiraEncounters());
-                    PresenceTemplate.State = stateString.Length <= MaxDiscordRPCStringLength ? stateString : string.Concat(stateString.AsSpan(0, MaxDiscordRPCStringLength - 3), "...");
+                    PresenceTemplate.State = GetTruncatedString(stateString, MaxDiscordRPCStringLength);
                     break;
                 case 62105: // raviente quests
                 case 62108:
@@ -284,20 +306,20 @@ public sealed class DiscordService
                 case 55606:
                 case 55607:
                     stateString = string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}{3}{4}{5}{6} | True Raw: {7} (Max {8}) | Hits: {9}", ViewModels.Windows.AddressModel.GetDiscordQuestNameFromID(dataLoader.Model.QuestID()), ViewModels.Windows.AddressModel.GetObjectiveNameFromID(dataLoader.Model.ObjectiveType()), string.Empty, dataLoader.Model.GetObjective1Quantity(), dataLoader.Model.GetRankNameFromID(dataLoader.Model.RankBand()), dataLoader.Model.GetStarGrade(), dataLoader.Model.GetRealMonsterName(), dataLoader.Model.ATK, dataLoader.Model.HighestAtk, dataLoader.Model.HitCountInt());
-                    PresenceTemplate.State = stateString.Length <= MaxDiscordRPCStringLength ? stateString : string.Concat(stateString.AsSpan(0, MaxDiscordRPCStringLength - 3), "...");
+                    PresenceTemplate.State = GetTruncatedString(stateString, MaxDiscordRPCStringLength);
 
                     break;
                 default:
                     if ((dataLoader.Model.ObjectiveType() == 0x0 || dataLoader.Model.ObjectiveType() == 0x02 || dataLoader.Model.ObjectiveType() == 0x1002 || dataLoader.Model.ObjectiveType() == 0x10) && dataLoader.Model.QuestID() != 23527 && dataLoader.Model.QuestID() != 23628 && dataLoader.Model.QuestID() != 21731 && dataLoader.Model.QuestID() != 21749 && dataLoader.Model.QuestID() != 21746 && dataLoader.Model.QuestID() != 21750)
                     {
                         stateString = string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}{3}{4}{5}{6} | True Raw: {7} (Max {8}) | Hits: {9}", ViewModels.Windows.AddressModel.GetDiscordQuestNameFromID(dataLoader.Model.QuestID()), ViewModels.Windows.AddressModel.GetObjectiveNameFromID(dataLoader.Model.ObjectiveType()), dataLoader.Model.GetObjective1CurrentQuantity(), dataLoader.Model.GetObjective1Quantity(), dataLoader.Model.GetRankNameFromID(dataLoader.Model.RankBand()), dataLoader.Model.GetStarGrade(), ViewModels.Windows.AddressModel.GetObjective1Name(dataLoader.Model.Objective1ID()), dataLoader.Model.ATK, dataLoader.Model.HighestAtk, dataLoader.Model.HitCountInt());
-                        PresenceTemplate.State = stateString.Length <= MaxDiscordRPCStringLength ? stateString : string.Concat(stateString.AsSpan(0, MaxDiscordRPCStringLength - 3), "...");
+                        PresenceTemplate.State = GetTruncatedString(stateString, MaxDiscordRPCStringLength);
                     }
                     else
                     {
                         var questToggleMonsterMode = ShowDiscordQuestNames() ? string.Empty : GetQuestToggleMode(dataLoader.Model.QuestToggleMonsterMode()).TrimStart();
                         stateString = string.Format(CultureInfo.InvariantCulture, "{0}{1}{2}{3}{4}{5}{6} | True Raw: {7} (Max {8}) | Hits: {9}", ViewModels.Windows.AddressModel.GetDiscordQuestNameFromID(dataLoader.Model.QuestID()), ViewModels.Windows.AddressModel.GetObjectiveNameFromID(dataLoader.Model.ObjectiveType()), dataLoader.Model.GetObjective1Quantity(), dataLoader.Model.GetRankNameFromID(dataLoader.Model.RankBand()), questToggleMonsterMode, dataLoader.Model.GetStarGrade(), dataLoader.Model.GetRealMonsterName(), dataLoader.Model.ATK, dataLoader.Model.HighestAtk, dataLoader.Model.HitCountInt());
-                        PresenceTemplate.State = stateString.Length <= MaxDiscordRPCStringLength ? stateString : string.Concat(stateString.AsSpan(0, MaxDiscordRPCStringLength - 3), "...");
+                        PresenceTemplate.State = GetTruncatedString(stateString, MaxDiscordRPCStringLength);
                     }
 
                     break;
@@ -308,7 +330,7 @@ public sealed class DiscordService
             {
                 largeImageTextString = string.Format(CultureInfo.InvariantCulture, "{0}{1}", GetQuestInformation(dataLoader), dataLoader.Model.GetAreaName(dataLoader.Model.AreaID()));
                 PresenceTemplate.Assets.LargeImageKey = ViewModels.Windows.AddressModel.GetAreaIconFromID(dataLoader.Model.AreaID(), true);
-                PresenceTemplate.Assets.LargeImageText = largeImageTextString.Length <= MaxDiscordRPCStringLength ? largeImageTextString : largeImageTextString[.. (MaxDiscordRPCStringLength - 3)] + "...";
+                PresenceTemplate.Assets.LargeImageText = GetTruncatedString(largeImageTextString, MaxDiscordRPCStringLength);
             }
 
             // Tenrou Sky Corridor areas
@@ -316,7 +338,7 @@ public sealed class DiscordService
             {
                 largeImageTextString = string.Format(CultureInfo.InvariantCulture, "{0}{1}", GetQuestInformation(dataLoader), dataLoader.Model.GetAreaName(dataLoader.Model.AreaID()));
                 PresenceTemplate.Assets.LargeImageKey = ViewModels.Windows.AddressModel.GetAreaIconFromID(dataLoader.Model.AreaID(), true);
-                PresenceTemplate.Assets.LargeImageText = largeImageTextString.Length <= MaxDiscordRPCStringLength ? largeImageTextString : largeImageTextString[.. (MaxDiscordRPCStringLength - 3)] + "...";
+                PresenceTemplate.Assets.LargeImageText = GetTruncatedString(largeImageTextString, MaxDiscordRPCStringLength);
             }
 
             // Duremudira Doors
@@ -324,7 +346,7 @@ public sealed class DiscordService
             {
                 PresenceTemplate.Assets.LargeImageKey = ViewModels.Windows.AddressModel.GetAreaIconFromID(dataLoader.Model.AreaID(), true);
                 largeImageTextString = string.Format(CultureInfo.InvariantCulture, "{0}{1}", GetQuestInformation(dataLoader), dataLoader.Model.GetAreaName(dataLoader.Model.AreaID()));
-                PresenceTemplate.Assets.LargeImageText = largeImageTextString.Length <= MaxDiscordRPCStringLength ? largeImageTextString : largeImageTextString[.. (MaxDiscordRPCStringLength - 3)] + "...";
+                PresenceTemplate.Assets.LargeImageText = GetTruncatedString(largeImageTextString, MaxDiscordRPCStringLength);
             }
 
             // Duremudira Arena
@@ -332,7 +354,7 @@ public sealed class DiscordService
             {
                 PresenceTemplate.Assets.LargeImageKey = dataLoader.Model.GetMonsterIcon(dataLoader.Model.LargeMonster1ID(), true);
                 largeImageTextString = string.Format(CultureInfo.InvariantCulture, "{0}{1}/{2}{3}", GetQuestInformation(dataLoader), dataLoader.Model.GetMonster1EHP(), dataLoader.Model.GetMonster1MaxEHP(), dataLoader.Model.GetMonster1EHPPercent());
-                PresenceTemplate.Assets.LargeImageText = largeImageTextString.Length <= MaxDiscordRPCStringLength ? largeImageTextString : largeImageTextString[.. (MaxDiscordRPCStringLength - 3)] + "...";
+                PresenceTemplate.Assets.LargeImageText = GetTruncatedString(largeImageTextString, MaxDiscordRPCStringLength);
             }
 
             // Hunter's Road Base Camp
@@ -340,7 +362,7 @@ public sealed class DiscordService
             {
                 PresenceTemplate.Assets.LargeImageKey = ViewModels.Windows.AddressModel.GetAreaIconFromID(dataLoader.Model.AreaID(), true);
                 largeImageTextString = string.Format(CultureInfo.InvariantCulture, "{0}{1} | Faints: {2}/{3}", GetQuestInformation(dataLoader), dataLoader.Model.GetAreaName(dataLoader.Model.AreaID()), dataLoader.Model.CurrentFaints(), dataLoader.Model.GetMaxFaints());
-                PresenceTemplate.Assets.LargeImageText = largeImageTextString.Length <= MaxDiscordRPCStringLength ? largeImageTextString : largeImageTextString[.. (MaxDiscordRPCStringLength - 3)] + "...";
+                PresenceTemplate.Assets.LargeImageText = GetTruncatedString(largeImageTextString, MaxDiscordRPCStringLength);
             }
 
             // Raviente
@@ -348,13 +370,13 @@ public sealed class DiscordService
             {
                 PresenceTemplate.Assets.LargeImageKey = dataLoader.Model.GetMonsterIcon(dataLoader.Model.LargeMonster1ID(), true);
                 largeImageTextString = string.Format(CultureInfo.InvariantCulture, "{0}{1}/{2}{3} | Faints: {4}/{5} | Points: {6} | {7}", GetQuestInformation(dataLoader), dataLoader.Model.GetMonster1EHP(), dataLoader.Model.GetMonster1MaxEHP(), dataLoader.Model.GetMonster1EHPPercent(), dataLoader.Model.CurrentFaints(), dataLoader.Model.GetMaxFaints(), dataLoader.Model.GreatSlayingPoints(), GetRavienteEvent(dataLoader.Model.RavienteTriggeredEvent(), dataLoader));
-                PresenceTemplate.Assets.LargeImageText = largeImageTextString.Length <= MaxDiscordRPCStringLength ? largeImageTextString : largeImageTextString[.. (MaxDiscordRPCStringLength - 3)] + "...";
+                PresenceTemplate.Assets.LargeImageText = GetTruncatedString(largeImageTextString, MaxDiscordRPCStringLength);
             }
             else
             {
                 PresenceTemplate.Assets.LargeImageKey = dataLoader.Model.GetMonsterIcon(dataLoader.Model.LargeMonster1ID(), true);
                 largeImageTextString = string.Format(CultureInfo.InvariantCulture, "{0}{1}/{2}{3} | Faints: {4}/{5}", GetQuestInformation(dataLoader), dataLoader.Model.GetMonster1EHP(), dataLoader.Model.GetMonster1MaxEHP(), dataLoader.Model.GetMonster1EHPPercent(), dataLoader.Model.CurrentFaints(), dataLoader.Model.GetMaxFaints());
-                PresenceTemplate.Assets.LargeImageText = largeImageTextString.Length <= MaxDiscordRPCStringLength ? largeImageTextString : largeImageTextString[.. (MaxDiscordRPCStringLength - 3)] + "...";
+                PresenceTemplate.Assets.LargeImageText = GetTruncatedString(largeImageTextString, MaxDiscordRPCStringLength);
             }
         }
         else if (dataLoader.Model.QuestID() == 0)
@@ -383,22 +405,22 @@ public sealed class DiscordService
                 case 341:
                 case 397: // Mezeporta Dupe(non-HD)
                     stateString = string.Format(CultureInfo.InvariantCulture, "GR: {0} | GCP: {1} | Guild Food: {2} | Diva Skill: {3} ({4} Left) | Poogie Item: {5}", dataLoader.Model.GRankNumber(), dataLoader.Model.GCP(), ViewModels.Windows.AddressModel.GetArmorSkillWithNull(dataLoader.Model.GuildFoodSkill()), ViewModels.Windows.AddressModel.GetDivaSkillNameFromID(dataLoader.Model.DivaSkill()), dataLoader.Model.DivaSkillUsesLeft(), ViewModels.Windows.AddressModel.GetItemName(dataLoader.Model.PoogieItemUseID()));
-                    PresenceTemplate.State = stateString.Length <= MaxDiscordRPCStringLength ? stateString : string.Concat(stateString.AsSpan(0, MaxDiscordRPCStringLength - 3), "...");
+                    PresenceTemplate.State = GetTruncatedString(stateString, MaxDiscordRPCStringLength);
                     break;
                 case 173: // My House (original)
                 case 175: // My House (MAX)
                     stateString = string.Format(CultureInfo.InvariantCulture, "GR: {0} | Partner Lv: {1} | Armor Color: {2} | GCP: {3}", dataLoader.Model.GRankNumber(), dataLoader.Model.PartnerLevel(), dataLoader.Model.GetArmorColor(), dataLoader.Model.GCP());
-                    PresenceTemplate.State = stateString.Length <= MaxDiscordRPCStringLength ? stateString : string.Concat(stateString.AsSpan(0, MaxDiscordRPCStringLength - 3), "...");
+                    PresenceTemplate.State = GetTruncatedString(stateString, MaxDiscordRPCStringLength);
                     break;
                 case 202: // Guild Halls
                 case 203:
                 case 204:
                     stateString = string.Format(CultureInfo.InvariantCulture, "GR: {0} | GCP: {1} | Guild Food: {2} | Poogie Item: {3}", dataLoader.Model.GRankNumber(), dataLoader.Model.GCP(), ViewModels.Windows.AddressModel.GetArmorSkill(dataLoader.Model.GuildFoodSkill()), ViewModels.Windows.AddressModel.GetItemName(dataLoader.Model.PoogieItemUseID()));
-                    PresenceTemplate.State = stateString.Length <= MaxDiscordRPCStringLength ? stateString : string.Concat(stateString.AsSpan(0, MaxDiscordRPCStringLength - 3), "...");
+                    PresenceTemplate.State = GetTruncatedString(stateString, MaxDiscordRPCStringLength);
                     break;
                 case 205: // Poogie Farm
                     stateString = string.Format(CultureInfo.InvariantCulture, "GR: {0} | Poogie Points: {1} | Poogie Clothes: {2} | Poogie Item: {3}", dataLoader.Model.GRankNumber(), dataLoader.Model.PoogiePoints(), ViewModels.Windows.AddressModel.GetPoogieClothes(dataLoader.Model.PoogieCostume()), ViewModels.Windows.AddressModel.GetItemName(dataLoader.Model.PoogieItemUseID()));
-                    PresenceTemplate.State = stateString.Length <= MaxDiscordRPCStringLength ? stateString : string.Concat(stateString.AsSpan(0, MaxDiscordRPCStringLength - 3), "...");
+                    PresenceTemplate.State = GetTruncatedString(stateString, MaxDiscordRPCStringLength);
                     break;
                 case 256: // Caravan Areas
                 case 260:
@@ -406,68 +428,68 @@ public sealed class DiscordService
                 case 262:
                 case 263:
                     stateString = string.Format(CultureInfo.InvariantCulture, "CP: {0} | Gg: {1} | g: {2} | Gem Lv: {3} | Great Slaying Points: {4}", dataLoader.Model.CaravanPoints(), dataLoader.Model.RaviGg(), dataLoader.Model.Ravig(), dataLoader.Model.CaravenGemLevel() + 1, dataLoader.Model.GreatSlayingPointsSaved());
-                    PresenceTemplate.State = stateString.Length <= MaxDiscordRPCStringLength ? stateString : string.Concat(stateString.AsSpan(0, MaxDiscordRPCStringLength - 3), "...");
+                    PresenceTemplate.State = GetTruncatedString(stateString, MaxDiscordRPCStringLength);
                     break;
                 case 257: // Blacksmith
                     stateString = string.Format(CultureInfo.InvariantCulture, "GR: {0} | GCP: {1} | Guild Food: {2} | GZenny: {3}", dataLoader.Model.GRankNumber(), dataLoader.Model.GCP(), ViewModels.Windows.AddressModel.GetArmorSkill(dataLoader.Model.GuildFoodSkill()), dataLoader.Model.GZenny());
-                    PresenceTemplate.State = stateString.Length <= MaxDiscordRPCStringLength ? stateString : string.Concat(stateString.AsSpan(0, MaxDiscordRPCStringLength - 3), "...");
+                    PresenceTemplate.State = GetTruncatedString(stateString, MaxDiscordRPCStringLength);
                     break;
                 case 264: // Gallery
                     stateString = string.Format(CultureInfo.InvariantCulture, "GR: {0} | GCP: {1} | Guild Food: {2} | Score: {3}", dataLoader.Model.GRankNumber(), dataLoader.Model.GCP(), ViewModels.Windows.AddressModel.GetArmorSkill(dataLoader.Model.GuildFoodSkill()), dataLoader.Model.GalleryEvaluationScore());
-                    PresenceTemplate.State = stateString.Length <= MaxDiscordRPCStringLength ? stateString : string.Concat(stateString.AsSpan(0, MaxDiscordRPCStringLength - 3), "...");
+                    PresenceTemplate.State = GetTruncatedString(stateString, MaxDiscordRPCStringLength);
                     break;
                 case 265: // Guuku Farm
                     stateString = string.Format(CultureInfo.InvariantCulture, "GR: {0} | GCP: {1} | Guild Food: {2} | Poogie Item: {3}", dataLoader.Model.GRankNumber(), dataLoader.Model.GCP(), ViewModels.Windows.AddressModel.GetArmorSkill(dataLoader.Model.GuildFoodSkill()), ViewModels.Windows.AddressModel.GetItemName(dataLoader.Model.PoogieItemUseID()));
-                    PresenceTemplate.State = stateString.Length <= MaxDiscordRPCStringLength ? stateString : string.Concat(stateString.AsSpan(0, MaxDiscordRPCStringLength - 3), "...");
+                    PresenceTemplate.State = GetTruncatedString(stateString, MaxDiscordRPCStringLength);
                     break;
                 case 283: // Halk Area TODO partnya lv
                     stateString = string.Format(CultureInfo.InvariantCulture, "GR: {0} | GCP: {1} | PNRP: {2} | Halk Fullness: {3}", dataLoader.Model.GRankNumber(), dataLoader.Model.GCP(), dataLoader.Model.PartnyaRankPoints(), dataLoader.Model.HalkFullness());
-                    PresenceTemplate.State = stateString.Length <= MaxDiscordRPCStringLength ? stateString : string.Concat(stateString.AsSpan(0, MaxDiscordRPCStringLength - 3), "...");
+                    PresenceTemplate.State = GetTruncatedString(stateString, MaxDiscordRPCStringLength);
                     break;
                 case 286: // PvP Room
                     stateString = string.Format(CultureInfo.InvariantCulture, "GR: {0} | GCP: {1} | Guild Food: {2} | Poogie Item: {3}", dataLoader.Model.GRankNumber(), dataLoader.Model.GCP(), ViewModels.Windows.AddressModel.GetArmorSkill(dataLoader.Model.GuildFoodSkill()), ViewModels.Windows.AddressModel.GetItemName(dataLoader.Model.PoogieItemUseID()));
-                    PresenceTemplate.State = stateString.Length <= MaxDiscordRPCStringLength ? stateString : string.Concat(stateString.AsSpan(0, MaxDiscordRPCStringLength - 3), "...");
+                    PresenceTemplate.State = GetTruncatedString(stateString, MaxDiscordRPCStringLength);
                     break;
                 case 379: // Diva Hall
                 case 445: // Guild Hall (Diva Event)
                     stateString = string.Format(CultureInfo.InvariantCulture, "GR: {0} | Diva Skill: {1} ({2} Left) | Diva Bond: {3} | Items Given: {4}", dataLoader.Model.GRankNumber(), ViewModels.Windows.AddressModel.GetDivaSkillNameFromID(dataLoader.Model.DivaSkill()), dataLoader.Model.DivaSkillUsesLeft(), dataLoader.Model.DivaBond(), dataLoader.Model.DivaItemsGiven());
-                    PresenceTemplate.State = stateString.Length <= MaxDiscordRPCStringLength ? stateString : string.Concat(stateString.AsSpan(0, MaxDiscordRPCStringLength - 3), "...");
+                    PresenceTemplate.State = GetTruncatedString(stateString, MaxDiscordRPCStringLength);
                     break;
                 case 462: // MezFez Entrance
                 case 463: // Volpkun Together
                 case 465: // MezFez Minigame
                     stateString = string.Format(CultureInfo.InvariantCulture, "GR: {0} | MezFes Points: {1} | Guild Food: {2} | Poogie Item: {3}", dataLoader.Model.GRankNumber(), dataLoader.Model.MezeportaFestivalPoints(), ViewModels.Windows.AddressModel.GetArmorSkill(dataLoader.Model.GuildFoodSkill()), ViewModels.Windows.AddressModel.GetItemName(dataLoader.Model.PoogieItemUseID()));
-                    PresenceTemplate.State = stateString.Length <= MaxDiscordRPCStringLength ? stateString : string.Concat(stateString.AsSpan(0, MaxDiscordRPCStringLength - 3), "...");
+                    PresenceTemplate.State = GetTruncatedString(stateString, MaxDiscordRPCStringLength);
                     break;
                 case 464: // Uruki Pachinko
                     stateString = string.Format(CultureInfo.InvariantCulture, "Score: {0} | Chain: {1} | Fish: {2} | Mushroom: {3} | Seed: {4} | Meat: {5}", dataLoader.Model.UrukiPachinkoScore() + dataLoader.Model.UrukiPachinkoBonusScore(), dataLoader.Model.UrukiPachinkoChain(), dataLoader.Model.UrukiPachinkoFish(), dataLoader.Model.UrukiPachinkoMushroom(), dataLoader.Model.UrukiPachinkoSeed(), dataLoader.Model.UrukiPachinkoMeat());
-                    PresenceTemplate.State = stateString.Length <= MaxDiscordRPCStringLength ? stateString : string.Concat(stateString.AsSpan(0, MaxDiscordRPCStringLength - 3), "...");
+                    PresenceTemplate.State = GetTruncatedString(stateString, MaxDiscordRPCStringLength);
                     break;
                 case 466: // Guuku Scoop
                     stateString = string.Format(CultureInfo.InvariantCulture, "Score: {0} | Small Guuku: {1} | Medium Guuku: {2} | Large Guuku: {3} | Golden Guuku: {4}", dataLoader.Model.GuukuScoopScore(), dataLoader.Model.GuukuScoopSmall(), dataLoader.Model.GuukuScoopMedium(), dataLoader.Model.GuukuScoopLarge(), dataLoader.Model.GuukuScoopGolden());
-                    PresenceTemplate.State = stateString.Length <= MaxDiscordRPCStringLength ? stateString : string.Concat(stateString.AsSpan(0, MaxDiscordRPCStringLength - 3), "...");
+                    PresenceTemplate.State = GetTruncatedString(stateString, MaxDiscordRPCStringLength);
                     break;
                 case 467: // Nyanrendo
                     stateString = string.Format(CultureInfo.InvariantCulture, "Score: {0}", dataLoader.Model.NyanrendoScore());
-                    PresenceTemplate.State = stateString.Length <= MaxDiscordRPCStringLength ? stateString : string.Concat(stateString.AsSpan(0, MaxDiscordRPCStringLength - 3), "...");
+                    PresenceTemplate.State = GetTruncatedString(stateString, MaxDiscordRPCStringLength);
                     break;
                 case 468: // Panic Honey
                     stateString = string.Format(CultureInfo.InvariantCulture, "Honey: {0}", dataLoader.Model.PanicHoneyScore());
-                    PresenceTemplate.State = stateString.Length <= MaxDiscordRPCStringLength ? stateString : string.Concat(stateString.AsSpan(0, MaxDiscordRPCStringLength - 3), "...");
+                    PresenceTemplate.State = GetTruncatedString(stateString, MaxDiscordRPCStringLength);
                     break;
                 case 469: // Dokkan Battle Cats
                     stateString = string.Format(CultureInfo.InvariantCulture, "Score: {0} | Scale: {1} | Shell: {2} | Camp: {3}", dataLoader.Model.DokkanBattleCatsScore(), dataLoader.Model.DokkanBattleCatsScale(), dataLoader.Model.DokkanBattleCatsShell(), dataLoader.Model.DokkanBattleCatsCamp());
-                    PresenceTemplate.State = stateString.Length <= MaxDiscordRPCStringLength ? stateString : string.Concat(stateString.AsSpan(0, MaxDiscordRPCStringLength - 3), "...");
+                    PresenceTemplate.State = GetTruncatedString(stateString, MaxDiscordRPCStringLength);
                     break;
                 default: // same as Mezeporta
                     stateString = string.Format(CultureInfo.InvariantCulture, "GR: {0} | GCP: {1} | Guild Food: {2} | Poogie Item: {3}", dataLoader.Model.GRankNumber(), dataLoader.Model.GCP(), ViewModels.Windows.AddressModel.GetArmorSkill(dataLoader.Model.GuildFoodSkill()), ViewModels.Windows.AddressModel.GetItemName(dataLoader.Model.PoogieItemUseID()));
-                    PresenceTemplate.State = stateString.Length <= MaxDiscordRPCStringLength ? stateString : string.Concat(stateString.AsSpan(0, MaxDiscordRPCStringLength - 3), "...");
+                    PresenceTemplate.State = GetTruncatedString(stateString, MaxDiscordRPCStringLength);
                     break;
             }
 
             PresenceTemplate.Assets.LargeImageKey = ViewModels.Windows.AddressModel.GetAreaIconFromID(dataLoader.Model.AreaID(), true);
             largeImageTextString = dataLoader.Model.GetAreaName(dataLoader.Model.AreaID());
-            PresenceTemplate.Assets.LargeImageText = largeImageTextString.Length <= MaxDiscordRPCStringLength ? largeImageTextString : string.Concat(largeImageTextString.AsSpan(0, MaxDiscordRPCStringLength - 3), "...");
+            PresenceTemplate.Assets.LargeImageText = GetTruncatedString(largeImageTextString, MaxDiscordRPCStringLength);
         }
 
         // Timer
@@ -632,7 +654,7 @@ public sealed class DiscordService
         if (GetHunterName != string.Empty && GetGuildName != string.Empty && GetDiscordServerName != string.Empty)
         {
             smallImageTextString = string.Format(CultureInfo.InvariantCulture, "{0} | {1} | {2} | GSR: {3} | {4} Style | Caravan Skills: {5}", GetHunterName, GetGuildName, GetDiscordServerName, dataLoader.Model.GSR(), ViewModels.Windows.AddressModel.GetWeaponStyleFromID(dataLoader.Model.WeaponStyle()), ViewModels.Windows.AddressModel.GetCaravanSkillsWithoutMarkdown(dataLoader));
-            PresenceTemplate.Assets.SmallImageText = smallImageTextString.Length <= MaxDiscordRPCStringLength ? smallImageTextString : string.Concat(smallImageTextString.AsSpan(0, MaxDiscordRPCStringLength - 3), "...");
+            PresenceTemplate.Assets.SmallImageText = GetTruncatedString(smallImageTextString, MaxDiscordRPCStringLength);
         }
 
         discordRPCClient?.SetPresence(PresenceTemplate);
