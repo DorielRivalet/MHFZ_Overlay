@@ -27,6 +27,7 @@
   - [Is the overlay malware?](#is-the-overlay-malware)
   - [What is the database used for?](#what-is-the-database-used-for)
   - [Does the overlay affect the game?](#does-the-overlay-affect-the-game)
+  - [Why does the overlay need Administrator privileges?](#why-does-the-overlay-need-administrator-privileges)
   - [My question isn't answered here, how can I contact the developers?](#my-question-isnt-answered-here-how-can-i-contact-the-developers)
 
 ## How to Enable Discord Rich Presence?
@@ -501,6 +502,10 @@ For the system requirements, see [here](./README.md#system-requirements)
 No. The overlay does read memory addresses, but it never writes (i.e. modifies values) to them. It is more likely that the local files of the game or the server files are affecting the game, both of which are unrelated to the overlay.
 
 **The overlay is not a mod.**
+
+## Why does the overlay need Administrator privileges?
+
+It's due to `memory.dll` needing to read the game's memory. See more information about the library we use in their [documentation](https://github.com/erfg12/memory.dll/wiki/Administrative-Privileges).
 
 ## My question isn't answered here, how can I contact the developers?
 
