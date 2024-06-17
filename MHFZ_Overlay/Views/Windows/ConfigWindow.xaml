@@ -1945,7 +1945,7 @@
                                                         <ui:SymbolIcon Symbol="Search32" Foreground="{StaticResource Green}" FontSize="24"/>
                                                     </Button.Content>
                                                 </ui:Button>
-                                                <ComboBox DisplayMemberPath="Title" IsTextSearchEnabled="True" IsTextSearchCaseSensitive="False" Grid.Column="1" x:Name="AchievementsSearchComboBox" ItemsSource="{Binding PlayerAchievements, Mode=OneWay}" IsEditable="True" Text="Search achievement title..."/>
+                                                <ComboBox DisplayMemberPath="Title" IsTextSearchEnabled="True" IsTextSearchCaseSensitive="False" Grid.Column="1" x:Name="AchievementsSearchComboBox" ItemsSource="{Binding ObtainablePlayerAchievements, Mode=OneWay}" IsEditable="True" Text="Search achievement title..."/>
                                             </Grid>
                                         </Grid>
                                         <ListView BorderThickness="0" Background="Transparent" SelectionMode="Single" Margin="5" x:Name="AchievementsListView" Grid.RowSpan="3" Grid.ColumnSpan="2" Loaded="AchievementsListView_Loaded" SelectionChanged="AchievementsListView_SelectionChanged"

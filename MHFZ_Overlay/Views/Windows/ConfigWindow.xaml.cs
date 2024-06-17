@@ -5439,17 +5439,9 @@ Run IDs with best paces for each HP% Dealt:
     {
         this.achievementsListView = (ListView)sender;
         this.MainWindow.DataLoader.Model.PlayerAchievements = DatabaseManager.GetPlayerAchievements();
-        List<Achievement> usableAchievements = new();
+        this.MainWindow.DataLoader.Model.ObtainablePlayerAchievements = this.MainWindow.DataLoader.Model.PlayerAchievements.Where((e) => e.Unused is false or null).ToList();
 
-        foreach (var achievement in this.MainWindow.DataLoader.Model.PlayerAchievements)
-        {
-            if (Achievements.IDAchievement.Any((e) => e.Value.Title == achievement.Title && e.Value.Unused == false))
-            {
-                usableAchievements.Add(achievement);
-            }
-        }
-
-        this.achievementsListView.ItemsSource = usableAchievements;
+        this.achievementsListView.ItemsSource = this.MainWindow.DataLoader.Model.ObtainablePlayerAchievements;
         this.achievementsListView.Items.Refresh();
         this.UpdateAchievementsProgress();
     }
@@ -5499,17 +5491,17 @@ Run IDs with best paces for each HP% Dealt:
 
     private void UpdateAchievementsProgress()
     {
-        var totalAchievements = this.MainWindow.DataLoader.Model.PlayerAchievements.Count(a => a.IsSecret == false && a.Unused == false);
+        var totalAchievements = this.MainWindow.DataLoader.Model.PlayerAchievements.Count(a => a.IsSecret == false && (a.Unused is false or null));
         var obtainedAchievements = this.MainWindow.DataLoader.Model.PlayerAchievements.Count(a => a.CompletionDate != DateTime.UnixEpoch);
         var obtainedSecretAchievements = this.MainWindow.DataLoader.Model.PlayerAchievements.Count(a => a.CompletionDate != DateTime.UnixEpoch && a.IsSecret);
         var totalSecretAchievements = this.MainWindow.DataLoader.Model.PlayerAchievements.Count(a => a.IsSecret);
         var progressPercentage = (obtainedAchievements * 100.0 / totalAchievements) == 100 ? (obtainedAchievements * 100.0 / totalAchievements) + (obtainedSecretAchievements / totalSecretAchievements) : (obtainedAchievements * 100.0 / totalAchievements);
         this.AchievementsProgressBar.Value = progressPercentage;
 
-        var totalBronzeAchievements = this.MainWindow.DataLoader.Model.PlayerAchievements.Count(a => a.IsSecret == false && a.Rank == AchievementRank.Bronze && a.Unused == false);
-        var totalSilverAchievements = this.MainWindow.DataLoader.Model.PlayerAchievements.Count(a => a.IsSecret == false && a.Rank == AchievementRank.Silver && a.Unused == false);
-        var totalGoldAchievements = this.MainWindow.DataLoader.Model.PlayerAchievements.Count(a => a.IsSecret == false && a.Rank == AchievementRank.Gold && a.Unused == false);
-        var totalPlatinumAchievements = this.MainWindow.DataLoader.Model.PlayerAchievements.Count(a => a.IsSecret == false && a.Rank == AchievementRank.Platinum && a.Unused == false);
+        var totalBronzeAchievements = this.MainWindow.DataLoader.Model.PlayerAchievements.Count(a => a.IsSecret == false && a.Rank == AchievementRank.Bronze && (a.Unused is false or null));
+        var totalSilverAchievements = this.MainWindow.DataLoader.Model.PlayerAchievements.Count(a => a.IsSecret == false && a.Rank == AchievementRank.Silver && (a.Unused is false or null));
+        var totalGoldAchievements = this.MainWindow.DataLoader.Model.PlayerAchievements.Count(a => a.IsSecret == false && a.Rank == AchievementRank.Gold && (a.Unused is false or null));
+        var totalPlatinumAchievements = this.MainWindow.DataLoader.Model.PlayerAchievements.Count(a => a.IsSecret == false && a.Rank == AchievementRank.Platinum && (a.Unused is false or null));
 
         var obtainedBronzeAchievements = this.MainWindow.DataLoader.Model.PlayerAchievements.Count(a => a.CompletionDate != DateTime.UnixEpoch && a.Rank == AchievementRank.Bronze);
         var obtainedSilverAchievements = this.MainWindow.DataLoader.Model.PlayerAchievements.Count(a => a.CompletionDate != DateTime.UnixEpoch && a.Rank == AchievementRank.Silver);
@@ -5705,7 +5697,8 @@ Run IDs with best paces for each HP% Dealt:
         if (string.IsNullOrWhiteSpace(this.AchievementsSearchComboBox.Text))
         {
             // If the text is empty, show the original list in the ListView
-            this.AchievementsListView.ItemsSource = this.MainWindow.DataLoader.Model.PlayerAchievements;
+            this.AchievementsListView.ItemsSource = this.MainWindow.DataLoader.Model.PlayerAchievements.Where(achievement => (achievement.Unused is false or null))
+                .ToList();
         }
         else
         {
@@ -5715,7 +5708,7 @@ Run IDs with best paces for each HP% Dealt:
             // Then, set the ItemsSource back to the filtered achievements list based on the user's input
             var userInput = this.AchievementsSearchComboBox.Text;
             var filteredAchievements = this.MainWindow.DataLoader.Model.PlayerAchievements
-                .Where(achievement => achievement.Title.Contains(userInput, StringComparison.OrdinalIgnoreCase))
+                .Where(achievement => achievement.Title.Contains(userInput, StringComparison.OrdinalIgnoreCase) && (achievement.Unused is false or null))
                 .ToList();
             this.AchievementsListView.ItemsSource = filteredAchievements;
         }

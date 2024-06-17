@@ -12575,18 +12575,21 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                             {
                                 while (reader.Read())
                                 {
+                                    var title = reader.GetString(reader.GetOrdinal("Title"));
+
                                     achievements.Add(new Achievement
                                     {
                                         CompletionDate = reader.IsDBNull(reader.GetOrdinal("CompletionDate"))
                                     ? DateTime.UnixEpoch
                                     : DateTime.Parse(reader.GetString(reader.GetOrdinal("CompletionDate")), CultureInfo.InvariantCulture),
-                                        Title = reader.GetString(reader.GetOrdinal("Title")),
+                                        Title = title,
                                         Description = reader.GetString(reader.GetOrdinal("Description")),
                                         Rank = AchievementService.ConvertToAchievementRank(reader.GetInt64(reader.GetOrdinal("Rank"))),
                                         Image = reader.GetString(reader.GetOrdinal("Image")),
                                         Objective = reader.GetString(reader.GetOrdinal("Objective")),
                                         IsSecret = reader.GetBoolean(reader.GetOrdinal("IsSecret")),
                                         Hint = reader.GetString(reader.GetOrdinal("Hint")),
+                                        Unused = Achievements.IDAchievement.Values.FirstOrDefault(a => a.Title == title)?.Unused,
                                     });
                                 }
                             }
