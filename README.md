@@ -46,7 +46,9 @@
   - [Bugs](#bugs)
   - [Frequently Asked Questions](#frequently-asked-questions)
   - [How to Uninstall](#how-to-uninstall)
+  - [Release Notes](#release-notes)
   - [Changelog](#changelog)
+  - [Website](#website)
   - [Documentation](#documentation)
   - [Contributing](#contributing)
   - [Project Development](#project-development)
@@ -378,9 +380,19 @@ Includes light theme!
 2. Search Monster Hunter Frontier Z Overlay.
 3. Click Uninstall. You can also delete the Desktop shortcut and Start Menu icon after uninstalling.
 
+## Release Notes
+
+[See our developer's notes about the latest changes](https://wycademy.vercel.app/overlay/release-notes).
+
 ## Changelog
 
-[Learn about the latest improvements](https://github.com/DorielRivalet/mhfz-overlay/blob/main/CHANGELOG.md).
+[Learn about the latest improvements in greater detail](https://github.com/DorielRivalet/mhfz-overlay/blob/main/CHANGELOG.md).
+
+## Website
+
+The overlay has it's own page in [Wycademy](https://wycademy.vercel.app/overlay).
+
+![Wycademy Overlay](./demo/wycademy6.png)
 
 ## Documentation
 
