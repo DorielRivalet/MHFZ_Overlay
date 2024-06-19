@@ -162,7 +162,7 @@ public sealed class DiscordService
                 new Button()
                 {
                     Label = "【MHF-Z】Overlay " + Program.CurrentProgramVersion,
-                    Url = "https://github.com/DorielRivalet/mhfz-overlay",
+                        Url = "https://wycademy.vercel.app/overlay",
                 },
                 new Button()
                 {
@@ -180,7 +180,7 @@ public sealed class DiscordService
                     new Button()
                     {
                         Label = "【MHF-Z】Overlay " + Program.CurrentProgramVersion,
-                        Url = "https://github.com/DorielRivalet/mhfz-overlay",
+                        Url = "https://wycademy.vercel.app/overlay",
                     },
                     new Button()
                     {
