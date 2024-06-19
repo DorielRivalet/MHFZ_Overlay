@@ -187,7 +187,7 @@ public static class Monsters
         { 169, "Seregios" },
         { 170, "Bogabadorumu" },
         { 171, "Unknown Blue Barrel" },
-        { 172, "Blitzkrieg Bogabadorumu" },
+        { 172, "Bombardier Bogabadorumu" },
         { 173, "Costumed Uruki" },
         { 174, "Sparkling Zerureusu" },
         { 175, "PSO2 Rappy" },

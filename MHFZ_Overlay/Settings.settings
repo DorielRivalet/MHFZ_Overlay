@@ -1022,5 +1022,20 @@
     <Setting Name="PlayerInputPressedOpacity" Type="System.Double" Scope="User">
       <Value Profile="(Default)">0.5</Value>
     </Setting>
+    <Setting Name="DualSwordsSharpensShown" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="DualSwordsSharpensX" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">105</Value>
+    </Setting>
+    <Setting Name="DualSwordsSharpensY" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">102</Value>
+    </Setting>
+    <Setting Name="FrontierServerOption" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Local</Value>
+    </Setting>
+    <Setting Name="EnableAchievementsTracking" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

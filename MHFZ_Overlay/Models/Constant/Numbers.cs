@@ -203,13 +203,13 @@ public static class Numbers
 
     public const int QuestIDStarvingDeviljhoHistoric20m = 55916;
 
-    public const int QuestIDBlitzkriegBogabadorumu = 55949;
+    public const int QuestIDBombardierBogabadorumu = 55949;
 
-    public const int QuestIDBlitzkriegBogabadorumuRepel = 55948;
+    public const int QuestIDBombardierBogabadorumuRepel = 55948;
 
-    public const int QuestIDBlitzkriegBogabadorumu5m = 56128;
+    public const int QuestIDBombardierBogabadorumu5m = 56128;
 
-    public const int QuestIDBlitzkriegBogabadorumu3m = 56152;
+    public const int QuestIDBombardierBogabadorumu3m = 56152;
 
     public const int QuestIDBurningFreezingElzelionTower = 55714;
 

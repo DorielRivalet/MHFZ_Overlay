@@ -1,5 +1,41 @@
 
 
+## [0.39.0](https://github.com/DorielRivalet/MHFZ_Overlay/compare/v0.38.0...v0.39.0) (2024-06-18)
+
+
+### Features
+
+* add achievements tracking option ([79e1d73](https://github.com/DorielRivalet/MHFZ_Overlay/commit/79e1d73576d6d1e0f729bb324aee887a96621cb7)), closes [DorielRivalet/mhfz-overlay#338](https://github.com/DorielRivalet/mhfz-overlay/issues/338)
+* add dual swords sharpens ([1846638](https://github.com/DorielRivalet/MHFZ_Overlay/commit/18466387def635347da2e9ceabddd584bf4f1f17))
+* add dual swords sharpens graphs ([84c01e0](https://github.com/DorielRivalet/MHFZ_Overlay/commit/84c01e02b8c0ae2c3df967a71b2fc48bfe41206f))
+* add dual swords sharpens stats ([75aca72](https://github.com/DorielRivalet/MHFZ_Overlay/commit/75aca72116371f8c5b67251ec9a908df6c44a5a9))
+* add release notes link ([3934e15](https://github.com/DorielRivalet/MHFZ_Overlay/commit/3934e15ff39cfa8b9c059a199e0f6721f1e4334b)), closes [DorielRivalet/mhfz-overlay#348](https://github.com/DorielRivalet/mhfz-overlay/issues/348)
+* add weapon specific achievements ([d40acdd](https://github.com/DorielRivalet/MHFZ_Overlay/commit/d40acdd1826d6807b3078f8da23aa72948598eba))
+* add wycademy links ([40d4bc4](https://github.com/DorielRivalet/MHFZ_Overlay/commit/40d4bc46e332d38a23fdaf85d748bf5d92d11132))
+* disallow mods in speedruns ([88af1fc](https://github.com/DorielRivalet/MHFZ_Overlay/commit/88af1fc2e4661a05036a3771680c7c394a4e51bd)), closes [DorielRivalet/mhfz-overlay#347](https://github.com/DorielRivalet/mhfz-overlay/issues/347)
+* hide unused achievements ([9220ddf](https://github.com/DorielRivalet/MHFZ_Overlay/commit/9220ddf36702b3f6a4331af22f24bb71af51d556))
+* update blacklisted folders ([e22fcb2](https://github.com/DorielRivalet/MHFZ_Overlay/commit/e22fcb2ba898f9712d97130411a808595e4aefc2))
+* update monster icons ([85de9f6](https://github.com/DorielRivalet/MHFZ_Overlay/commit/85de9f64e0d353adfd2316cd1fe705b8b961d72f))
+* update wycademy release notes links ([e37cb27](https://github.com/DorielRivalet/MHFZ_Overlay/commit/e37cb27974293e70b0e2e817faee1681f0914e59))
+* whitelist discord server invites ([ab3c4b5](https://github.com/DorielRivalet/MHFZ_Overlay/commit/ab3c4b5f42d3d2b760bf35612628cc5235984d91))
+
+
+### Bug Fixes
+
+* **achievements:** hide unused achievements ([134805f](https://github.com/DorielRivalet/MHFZ_Overlay/commit/134805fcb9b06c24b98c4f14afe863160c42ae10))
+* discord rich presence encoding ([60efb96](https://github.com/DorielRivalet/MHFZ_Overlay/commit/60efb96f9466e8ae5b3b7f74d1901d4453c89da5))
+* migrate cloudflare links to vercel ([05e1451](https://github.com/DorielRivalet/MHFZ_Overlay/commit/05e14511dc43791435bdddb4674718cafcdb0d26))
+
+
+### For Developers
+
+* bump version ([62c7637](https://github.com/DorielRivalet/MHFZ_Overlay/commit/62c763733597feb912ed1b828b77e0bf9f5f5c7d))
+* **deps-dev:** bump @commitlint/cli from 19.2.1 to 19.3.0 ([3339a91](https://github.com/DorielRivalet/MHFZ_Overlay/commit/3339a9110c7d75c36bb07addff5e2b512bc87a0b))
+* **nuget:** update deps ([42781e9](https://github.com/DorielRivalet/MHFZ_Overlay/commit/42781e990d701c52bf109570f8182ea1fbbc78bd))
+* update FAQ.md ([6743369](https://github.com/DorielRivalet/MHFZ_Overlay/commit/67433697e7d8844d0c9eb2867a477e4009cc0366))
+* update README.md ([318a3d0](https://github.com/DorielRivalet/MHFZ_Overlay/commit/318a3d06d88124c59753f7bffb05e2e68f0fdc7f))
+* update README.md ([b5cbdef](https://github.com/DorielRivalet/MHFZ_Overlay/commit/b5cbdef9350b9eaac4401b7ed595c466f030aaf0))
+
 ## [0.38.0](https://github.com/DorielRivalet/MHFZ_Overlay/compare/v0.37.1...v0.38.0) (2024-04-05)
 
 

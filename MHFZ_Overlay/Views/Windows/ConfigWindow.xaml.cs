@@ -265,7 +265,7 @@ public partial class ConfigWindow : FluentWindow
       new MonsterLog(169, "Seregios", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/seregios.png", 0, true),
       new MonsterLog(170, "Bogabadorumu", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/zenith_bogabadorumu.gif", 0, true),
       new MonsterLog(171, "Unknown Blue Barrel", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/random.png", 0),
-      new MonsterLog(172, "Blitzkrieg Bogabadorumu", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/blitzkrieg_bogabadorumu.png", 0, true),
+      new MonsterLog(172, "Bombardier Bogabadorumu", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/bombardier_bogabadorumu.png", 0, true),
       new MonsterLog(173, "Costumed Uruki", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/uruki.png", 0),
       new MonsterLog(174, "Sparkling Zerureusu", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/sparkling_zerureusu.png", 0, true),
       new MonsterLog(175, "PSO2 Rappy", @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/pso2_rappy.png", 0),
@@ -482,7 +482,7 @@ public partial class ConfigWindow : FluentWindow
             169 => dl.Model.SeregiosHunted(),
             170 => dl.Model.BogabadorumuHunted(),
             171 => 0,
-            172 => dl.Model.BlitzkriegBogabadorumuHunted(),
+            172 => dl.Model.BombardierBogabadorumuHunted(),
             173 => 0,
             174 => dl.Model.SparklingZerureusuHunted(),
             175 => dl.Model.PSO2RappyHunted(),
@@ -804,8 +804,8 @@ public partial class ConfigWindow : FluentWindow
     private void DisposeAllWebViews()
     {
         this.webViewFerias.Dispose();
-        this.webViewDamageCalculator.Dispose();
         this.webViewMonsterInfo.Dispose();
+        this.webViewWycademy.Dispose();
     }
 
     /// <summary>
@@ -1024,6 +1024,7 @@ public partial class ConfigWindow : FluentWindow
         Dictionary<string, string> monsterFeriasOptionDictionary = new();
         Dictionary<string, string> monsterWikiOptionDictionary = new();
         Dictionary<string, string> monsterVideoLinkOptionDictionary = new();
+        Dictionary<string, string> monsterWycademyOptionDictionary = new();
 
         for (var i = 0; i < this.monsterInfos.Count; i++)
         {
@@ -1033,6 +1034,7 @@ public partial class ConfigWindow : FluentWindow
             }
 
             monsterWikiOptionDictionary.Add(this.monsterInfos[i].Name, this.monsterInfos[i].WikiLink);
+            monsterWycademyOptionDictionary.Add(this.monsterInfos[i].Name, this.monsterInfos[i].WycademyLink);
             monsterFeriasOptionDictionary.Add(this.monsterInfos[i].Name, this.monsterInfos[i].FeriasLink);
         }
 
@@ -1059,19 +1061,22 @@ public partial class ConfigWindow : FluentWindow
         switch (this.MonsterInfoViewOptionComboBox.SelectedIndex)
         {
             default:
+                this.DockPanelMonsterInfo.Width = double.NaN; // Auto
+                this.DockPanelMonsterInfo.Height = double.NaN; // Auto
+                this.webViewMonsterInfo.CoreWebView2.Navigate(monsterWycademyOptionDictionary[this.MonsterNameComboBox.SelectedItem.ToString() + string.Empty]);
                 return;
-            case 0: // ferias
+            case 1: // ferias
                 // https://stackoverflow.com/questions/1265812/howto-define-the-auto-width-of-the-wpf-gridview-column-in-code
                 this.DockPanelMonsterInfo.Width = double.NaN; // Auto
                 this.DockPanelMonsterInfo.Height = double.NaN; // Auto
                 this.webViewMonsterInfo.CoreWebView2.Navigate(monsterFeriasOptionDictionary[this.MonsterNameComboBox.SelectedItem.ToString() + string.Empty]);
                 return;
-            case 1: // wiki
+            case 2: // wiki
                 this.DockPanelMonsterInfo.Width = double.NaN; // Auto
                 this.DockPanelMonsterInfo.Height = double.NaN; // Auto
                 this.webViewMonsterInfo.CoreWebView2.Navigate(monsterWikiOptionDictionary[this.MonsterNameComboBox.SelectedItem.ToString() + string.Empty]);
                 return;
-            case 2: // youtube
+            case 3: // youtube
                 if (monsterVideoLinkOptionDictionary.TryGetValue(selectedMatchup, out var videoval) && monsterVideoLinkOptionDictionary[selectedMatchup] != string.Empty)
                 {
                     this.DockPanelMonsterInfo.Width = 854;
@@ -3790,6 +3795,86 @@ Run IDs with best paces for each HP% Dealt:
         this.personalBestChart.YAxes = this.PersonalBestYAxes;
     }
 
+    private void SetStepLineSeriesForDictionaryIntInt(Dictionary<int, int> data, Dictionary<int, int>? extraData)
+    {
+        if (this.graphChart == null)
+        {
+            return;
+        }
+
+        List<ISeries> series = new();
+        ObservableCollection<ObservablePoint> collection = new();
+
+        var newData = GetElapsedTime(data);
+
+        foreach (var entry in newData)
+        {
+            collection.Add(new ObservablePoint(entry.Key, entry.Value));
+        }
+
+        series.Add(new StepLineSeries<ObservablePoint>
+        {
+            Values = collection,
+            GeometrySize = 0,
+            Stroke = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#fff38ba8"))) { StrokeThickness = 2 },
+            Fill = new LinearGradientPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#fff38ba8", "7f")), new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#fff38ba8", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
+        });
+
+        if (extraData != null)
+        {
+            ObservableCollection<ObservablePoint> collection2 = new();
+
+            var newData2 = GetElapsedTime(extraData);
+
+            foreach (var entry in newData2)
+            {
+                collection2.Add(new ObservablePoint(entry.Key, entry.Value));
+            }
+
+            series.Add(new StepLineSeries<ObservablePoint>
+            {
+                Values = collection2,
+                GeometrySize = 0,
+                Stroke = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#ff89b4fa"))) { StrokeThickness = 2 },
+                Fill = new LinearGradientPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#ff89b4fa", "7f")), new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#ff89b4fa", "00")), new SKPoint(0.5f, 0), new SKPoint(0.5f, 1)),
+            });
+
+            if (this.runIDComparisonTextBlock != null && this.extraRunIDTextBox != null)
+            {
+                var runComparisonPercentage = CalculateBetterLinePercentage(newData, newData2);
+                var betterRun = runComparisonPercentage >= 0.0 ? RunIDTextBox.Text : extraRunIDTextBox.Text;
+                this.runIDComparisonTextBlock.Text = string.Format(CultureInfo.InvariantCulture, "Run {0} is higher by around {1:0.##}%", betterRun, Math.Abs(runComparisonPercentage));
+            }
+        }
+
+        this.XAxes = new Axis[]
+        {
+            new Axis
+            {
+                TextSize = 12,
+                Labeler = (value) => TimeService.GetMinutesSecondsFromFrames(value),
+                NamePaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
+                LabelsPaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
+            },
+        };
+
+        this.YAxes = new Axis[]
+        {
+            new Axis
+            {
+                NameTextSize = 12,
+                TextSize = 12,
+                NamePadding = new LiveChartsCore.Drawing.Padding(0),
+                NamePaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
+                LabelsPaint = new SolidColorPaint(new SKColor(this.MainWindow.DataLoader.Model.HexColorToDecimal("#a6adc8"))),
+            },
+        };
+
+        this.graphChart.Series = series;
+        this.graphChart.XAxes = this.XAxes;
+        this.graphChart.YAxes = this.YAxes;
+    }
+
     private void SetStepLineSeriesForPersonalBestByDate(Dictionary<DateTime, long> data)
     {
         if (this.personalBestChart == null)
@@ -4911,6 +4996,9 @@ Run IDs with best paces for each HP% Dealt:
                     CalculateMonsterStatusAilmentThresholds(
                         DatabaseManager.GetMonster1StunThresholdDictionary(runID)));
                 return;
+            case "(Run ID) Dual Swords Sharpens":
+                this.SetStepLineSeriesForDictionaryIntInt(DatabaseManager.GetDualSwordsSharpensDictionary(runID), DatabaseManager.GetDualSwordsSharpensDictionary(extraRunID));
+                return;
             default:
                 this.graphChart.Series = this.Series ?? Array.Empty<ISeries>(); // TODO test
                 this.graphChart.XAxes = this.XAxes;
@@ -5351,7 +5439,9 @@ Run IDs with best paces for each HP% Dealt:
     {
         this.achievementsListView = (ListView)sender;
         this.MainWindow.DataLoader.Model.PlayerAchievements = DatabaseManager.GetPlayerAchievements();
-        this.achievementsListView.ItemsSource = this.MainWindow.DataLoader.Model.PlayerAchievements;
+        this.MainWindow.DataLoader.Model.ObtainablePlayerAchievements = this.MainWindow.DataLoader.Model.PlayerAchievements.Where((e) => e.Unused is false or null).ToList();
+
+        this.achievementsListView.ItemsSource = this.MainWindow.DataLoader.Model.ObtainablePlayerAchievements;
         this.achievementsListView.Items.Refresh();
         this.UpdateAchievementsProgress();
     }
@@ -5401,17 +5491,17 @@ Run IDs with best paces for each HP% Dealt:
 
     private void UpdateAchievementsProgress()
     {
-        var totalAchievements = this.MainWindow.DataLoader.Model.PlayerAchievements.Count(a => a.IsSecret == false);
+        var totalAchievements = this.MainWindow.DataLoader.Model.PlayerAchievements.Count(a => a.IsSecret == false && (a.Unused is false or null));
         var obtainedAchievements = this.MainWindow.DataLoader.Model.PlayerAchievements.Count(a => a.CompletionDate != DateTime.UnixEpoch);
         var obtainedSecretAchievements = this.MainWindow.DataLoader.Model.PlayerAchievements.Count(a => a.CompletionDate != DateTime.UnixEpoch && a.IsSecret);
         var totalSecretAchievements = this.MainWindow.DataLoader.Model.PlayerAchievements.Count(a => a.IsSecret);
         var progressPercentage = (obtainedAchievements * 100.0 / totalAchievements) == 100 ? (obtainedAchievements * 100.0 / totalAchievements) + (obtainedSecretAchievements / totalSecretAchievements) : (obtainedAchievements * 100.0 / totalAchievements);
         this.AchievementsProgressBar.Value = progressPercentage;
 
-        var totalBronzeAchievements = this.MainWindow.DataLoader.Model.PlayerAchievements.Count(a => a.IsSecret == false && a.Rank == AchievementRank.Bronze);
-        var totalSilverAchievements = this.MainWindow.DataLoader.Model.PlayerAchievements.Count(a => a.IsSecret == false && a.Rank == AchievementRank.Silver);
-        var totalGoldAchievements = this.MainWindow.DataLoader.Model.PlayerAchievements.Count(a => a.IsSecret == false && a.Rank == AchievementRank.Gold);
-        var totalPlatinumAchievements = this.MainWindow.DataLoader.Model.PlayerAchievements.Count(a => a.IsSecret == false && a.Rank == AchievementRank.Platinum);
+        var totalBronzeAchievements = this.MainWindow.DataLoader.Model.PlayerAchievements.Count(a => a.IsSecret == false && a.Rank == AchievementRank.Bronze && (a.Unused is false or null));
+        var totalSilverAchievements = this.MainWindow.DataLoader.Model.PlayerAchievements.Count(a => a.IsSecret == false && a.Rank == AchievementRank.Silver && (a.Unused is false or null));
+        var totalGoldAchievements = this.MainWindow.DataLoader.Model.PlayerAchievements.Count(a => a.IsSecret == false && a.Rank == AchievementRank.Gold && (a.Unused is false or null));
+        var totalPlatinumAchievements = this.MainWindow.DataLoader.Model.PlayerAchievements.Count(a => a.IsSecret == false && a.Rank == AchievementRank.Platinum && (a.Unused is false or null));
 
         var obtainedBronzeAchievements = this.MainWindow.DataLoader.Model.PlayerAchievements.Count(a => a.CompletionDate != DateTime.UnixEpoch && a.Rank == AchievementRank.Bronze);
         var obtainedSilverAchievements = this.MainWindow.DataLoader.Model.PlayerAchievements.Count(a => a.CompletionDate != DateTime.UnixEpoch && a.Rank == AchievementRank.Silver);
@@ -5607,7 +5697,8 @@ Run IDs with best paces for each HP% Dealt:
         if (string.IsNullOrWhiteSpace(this.AchievementsSearchComboBox.Text))
         {
             // If the text is empty, show the original list in the ListView
-            this.AchievementsListView.ItemsSource = this.MainWindow.DataLoader.Model.PlayerAchievements;
+            this.AchievementsListView.ItemsSource = this.MainWindow.DataLoader.Model.PlayerAchievements.Where(achievement => (achievement.Unused is false or null))
+                .ToList();
         }
         else
         {
@@ -5617,7 +5708,7 @@ Run IDs with best paces for each HP% Dealt:
             // Then, set the ItemsSource back to the filtered achievements list based on the user's input
             var userInput = this.AchievementsSearchComboBox.Text;
             var filteredAchievements = this.MainWindow.DataLoader.Model.PlayerAchievements
-                .Where(achievement => achievement.Title.Contains(userInput, StringComparison.OrdinalIgnoreCase))
+                .Where(achievement => achievement.Title.Contains(userInput, StringComparison.OrdinalIgnoreCase) && (achievement.Unused is false or null))
                 .ToList();
             this.AchievementsListView.ItemsSource = filteredAchievements;
         }
@@ -5654,6 +5745,29 @@ Run IDs with best paces for each HP% Dealt:
             if (this.webViewFerias != null && this.webViewFerias.CoreWebView2 != null)
             {
                 this.webViewFerias.CoreWebView2.Navigate(this.GameInfoURL.Text);
+            }
+        }
+        catch
+        {
+            Logger.Error("Could not navigate in WebView2");
+        }
+    }
+
+    private void WycademyNavigationCommandsBrowseBack(object sender, RoutedEventArgs e) => this.webViewFerias.GoBack();
+
+    private void WycademyNavigationCommandsBrowseForward(object sender, RoutedEventArgs e) => this.webViewFerias.GoForward();
+
+    private void WycademyNavigationCommandsRefresh(object sender, RoutedEventArgs e) => this.webViewFerias.Reload();
+
+    private void WycademyNavigationCommandsBrowseStop(object sender, RoutedEventArgs e) => this.webViewFerias.Stop();
+
+    private void WycademyNavigationCommandsGoToPage(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            if (this.webViewWycademy != null && this.webViewWycademy.CoreWebView2 != null)
+            {
+                this.webViewWycademy.CoreWebView2.Navigate(this.WycademyURL.Text);
             }
         }
         catch

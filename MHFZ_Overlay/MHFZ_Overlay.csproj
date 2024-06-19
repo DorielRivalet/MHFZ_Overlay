@@ -21,7 +21,7 @@
     <Product>MHFZ Overlay</Product>
     <Copyright>Doriel Rivalet</Copyright>
     <Authors>Doriel Rivalet</Authors>
-    <Version>0.38.0</Version>
+    <Version>0.39.0</Version>
     <PackageProjectUrl>https://github.com/DorielRivalet/mhfz-overlay</PackageProjectUrl>
     <RepositoryUrl>https://github.com/DorielRivalet/mhfz-overlay.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
@@ -303,6 +303,7 @@
     <None Remove="Assets\Icons\png\gauntlet_purple.png" />
     <None Remove="Assets\Icons\png\gauntlet_red.png" />
     <None Remove="Assets\Icons\png\gauntlet_white.png" />
+    <None Remove="Assets\Icons\png\grank.png" />
     <None Remove="Assets\Icons\png\guild_food.png" />
     <None Remove="Assets\Icons\png\guild_hall.png" />
     <None Remove="Assets\Icons\png\helm.png" />
@@ -365,6 +366,7 @@
     <None Remove="Assets\Icons\png\monster\blinking_nargacuga.png" />
     <None Remove="Assets\Icons\png\monster\blitzkrieg_bogabadorumu.png" />
     <None Remove="Assets\Icons\png\monster\blue_yian_kut-ku.png" />
+    <None Remove="Assets\Icons\png\monster\bombardier_bogabadorumu.png" />
     <None Remove="Assets\Icons\png\monster\brachydios.png" />
     <None Remove="Assets\Icons\png\monster\bright_hypnoc.png" />
     <None Remove="Assets\Icons\png\monster\bulldrome.png" />
@@ -797,8 +799,39 @@
     <None Remove="Assets\Icons\png\transcend_active.png" />
     <None Remove="Assets\Icons\png\true_transcend.png" />
     <None Remove="Assets\Icons\png\unknown.png" />
+    <None Remove="Assets\Icons\png\weapon\Accel_Axe_Icon_White.png" />
+    <None Remove="Assets\Icons\png\weapon\Bow_Icon_White.png" />
+    <None Remove="Assets\Icons\png\weapon\Cestus_Icon_White.png" />
+    <None Remove="Assets\Icons\png\weapon\Charge_Blade_Icon_White.png" />
+    <None Remove="Assets\Icons\png\weapon\Dual_Blades_Icon_White.png" />
+    <None Remove="Assets\Icons\png\weapon\Great_Sword_Icon_White.png" />
+    <None Remove="Assets\Icons\png\weapon\Gunlance_Icon_White.png" />
+    <None Remove="Assets\Icons\png\weapon\Hammer_Icon_White.png" />
+    <None Remove="Assets\Icons\png\weapon\Heavy_Bowgun_Icon_White.png" />
+    <None Remove="Assets\Icons\png\weapon\Hunting_Horn_Icon_White.png" />
+    <None Remove="Assets\Icons\png\weapon\Insect_Glaive_Icon_White.png" />
+    <None Remove="Assets\Icons\png\weapon\Kinsect_Blunt_Icon_White.png" />
+    <None Remove="Assets\Icons\png\weapon\Kinsect_Cutting_Icon_White.png" />
+    <None Remove="Assets\Icons\png\weapon\Lance_Icon_White.png" />
+    <None Remove="Assets\Icons\png\weapon\Light_Bowgun_Icon_White.png" />
+    <None Remove="Assets\Icons\png\weapon\Long_Sword_Icon_White.png" />
+    <None Remove="Assets\Icons\png\weapon\Magnet_Spike_Icon_White.png" />
+    <None Remove="Assets\Icons\png\weapon\Medium_Bowgun_Icon_White.png" />
+    <None Remove="Assets\Icons\png\weapon\Meownster_Hatchet_Icon_White.png" />
+    <None Remove="Assets\Icons\png\weapon\Palamute_Hammer_Icon_White.png" />
+    <None Remove="Assets\Icons\png\weapon\Palamute_Sword_Icon_White.png" />
+    <None Remove="Assets\Icons\png\weapon\Palico_Hammer_Icon_001_White.png" />
+    <None Remove="Assets\Icons\png\weapon\Palico_Hammer_Icon_002_White.png" />
+    <None Remove="Assets\Icons\png\weapon\Palico_Sword_Icon_001_White.png" />
+    <None Remove="Assets\Icons\png\weapon\Palico_Sword_Icon_002_White.png" />
+    <None Remove="Assets\Icons\png\weapon\Switch_Axe_Icon_White.png" />
+    <None Remove="Assets\Icons\png\weapon\Sword_and_Shield_Icon_White.png" />
+    <None Remove="Assets\Icons\png\weapon\Tonfa_Icon_White.png" />
     <None Remove="Assets\Icons\png\whetstone.png" />
+    <None Remove="Assets\Icons\png\whetstone_red.png" />
     <None Remove="Assets\Icons\png\world.png" />
+    <None Remove="Assets\Icons\png\wycademy-logo.png" />
+    <None Remove="Assets\Icons\png\zenith2.png" />
     <None Remove="Assets\Icons\touhou\fumo1.png" />
     <None Remove="Assets\Icons\touhou\fumo10.png" />
     <None Remove="Assets\Icons\touhou\fumo11.png" />
@@ -1369,6 +1402,7 @@
     <Resource Include="Assets\Icons\png\gauntlet_purple.png" />
     <Resource Include="Assets\Icons\png\gauntlet_red.png" />
     <Resource Include="Assets\Icons\png\gauntlet_white.png" />
+    <Resource Include="Assets\Icons\png\grank.png" />
     <Resource Include="Assets\Icons\png\guild_food.png" />
     <Resource Include="Assets\Icons\png\guild_hall.png" />
     <Resource Include="Assets\Icons\png\helm.png" />
@@ -1429,8 +1463,8 @@
     <Resource Include="Assets\Icons\png\monster\blango.png" />
     <Resource Include="Assets\Icons\png\monster\blangonga.png" />
     <Resource Include="Assets\Icons\png\monster\blinking_nargacuga.png" />
-    <Resource Include="Assets\Icons\png\monster\blitzkrieg_bogabadorumu.png" />
     <Resource Include="Assets\Icons\png\monster\blue_yian_kut-ku.png" />
+    <Resource Include="Assets\Icons\png\monster\bombardier_bogabadorumu.png" />
     <Resource Include="Assets\Icons\png\monster\brachydios.png" />
     <Resource Include="Assets\Icons\png\monster\bright_hypnoc.png" />
     <Resource Include="Assets\Icons\png\monster\bulldrome.png" />
@@ -1556,7 +1590,6 @@
     <Resource Include="Assets\Icons\png\monster\render\blango.png" />
     <Resource Include="Assets\Icons\png\monster\render\blangonga.png" />
     <Resource Include="Assets\Icons\png\monster\render\blinking_nargacuga.png" />
-    <Resource Include="Assets\Icons\png\monster\render\blitzkrieg_bogabadorumu.png" />
     <Resource Include="Assets\Icons\png\monster\render\blue_yian_kut-ku.png" />
     <Resource Include="Assets\Icons\png\monster\render\brachydios.png" />
     <Resource Include="Assets\Icons\png\monster\render\bright_hypnoc.png" />
@@ -1747,17 +1780,8 @@
     <Resource Include="Assets\Icons\png\monster\sparkling_zerureusu.png" />
     <Resource Include="Assets\Icons\png\monster\starving_deviljho.png" />
     <Resource Include="Assets\Icons\png\monster\stygian_zinogre.png" />
-    <Resource Include="Assets\Icons\png\monster\supremacy.png" />
-    <Resource Include="Assets\Icons\png\monster\supremacy_aruganosu.gif" />
-    <Resource Include="Assets\Icons\png\monster\supremacy_doragyurosu.gif" />
     <Resource Include="Assets\Icons\png\monster\supremacy_doragyurosu.png" />
-    <Resource Include="Assets\Icons\png\monster\supremacy_goruganosu.gif" />
-    <Resource Include="Assets\Icons\png\monster\supremacy_odibatorasu.gif" />
-    <Resource Include="Assets\Icons\png\monster\supremacy_odibatorasu.png" />
-    <Resource Include="Assets\Icons\png\monster\supremacy_pariapuria.gif" />
-    <Resource Include="Assets\Icons\png\monster\supremacy_teostra.gif" />
     <Resource Include="Assets\Icons\png\monster\supremacy_teostra.png" />
-    <Resource Include="Assets\Icons\png\monster\supremacy_unknown.gif" />
     <Resource Include="Assets\Icons\png\monster\taikun_zamuza.png" />
     <Resource Include="Assets\Icons\png\monster\teostra.png" />
     <Resource Include="Assets\Icons\png\monster\thirsty_pariapuria.png" />
@@ -1840,20 +1864,45 @@
     <Resource Include="Assets\Icons\png\sigils.png" />
     <Resource Include="Assets\Icons\png\skull.png" />
     <Resource Include="Assets\Icons\png\sleep.png" />
-    <Resource Include="Assets\Icons\png\small_bow.png" />
-    <Resource Include="Assets\Icons\png\small_ds.png" />
-    <Resource Include="Assets\Icons\png\small_gl.png" />
-    <Resource Include="Assets\Icons\png\small_gs.png" />
-    <Resource Include="Assets\Icons\png\small_hammer.png" />
-    <Resource Include="Assets\Icons\png\small_hbg.png" />
-    <Resource Include="Assets\Icons\png\small_hh.png" />
-    <Resource Include="Assets\Icons\png\small_lance.png" />
-    <Resource Include="Assets\Icons\png\small_lbg.png" />
-    <Resource Include="Assets\Icons\png\small_ls.png" />
-    <Resource Include="Assets\Icons\png\small_ms.png" />
-    <Resource Include="Assets\Icons\png\small_saf.png" />
-    <Resource Include="Assets\Icons\png\small_sns.png" />
-    <Resource Include="Assets\Icons\png\small_tonfa.png" />
+    <Resource Include="Assets\Icons\png\weapon\Accel_Axe_Icon_White.png" />
+    <Resource Include="Assets\Icons\png\weapon\Bow_Icon_White.png" />
+    <Resource Include="Assets\Icons\png\weapon\Cestus_Icon_White.png" />
+    <Resource Include="Assets\Icons\png\weapon\Charge_Blade_Icon_White.png" />
+    <Resource Include="Assets\Icons\png\weapon\Dual_Blades_Icon_White.png" />
+    <Resource Include="Assets\Icons\png\weapon\Great_Sword_Icon_White.png" />
+    <Resource Include="Assets\Icons\png\weapon\Gunlance_Icon_White.png" />
+    <Resource Include="Assets\Icons\png\weapon\Hammer_Icon_White.png" />
+    <Resource Include="Assets\Icons\png\weapon\Heavy_Bowgun_Icon_White.png" />
+    <Resource Include="Assets\Icons\png\weapon\Hunting_Horn_Icon_White.png" />
+    <Resource Include="Assets\Icons\png\weapon\Insect_Glaive_Icon_White.png" />
+    <Resource Include="Assets\Icons\png\weapon\Kinsect_Blunt_Icon_White.png" />
+    <Resource Include="Assets\Icons\png\weapon\Kinsect_Cutting_Icon_White.png" />
+    <Resource Include="Assets\Icons\png\weapon\Lance_Icon_White.png" />
+    <Resource Include="Assets\Icons\png\weapon\Light_Bowgun_Icon_White.png" />
+    <Resource Include="Assets\Icons\png\weapon\Long_Sword_Icon_White.png" />
+    <Resource Include="Assets\Icons\png\weapon\Magnet_Spike_Icon_White.png" />
+    <Resource Include="Assets\Icons\png\weapon\Medium_Bowgun_Icon_White.png" />
+    <Resource Include="Assets\Icons\png\weapon\Meownster_Hatchet_Icon_White.png" />
+    <Resource Include="Assets\Icons\png\weapon\Palamute_Hammer_Icon_White.png" />
+    <Resource Include="Assets\Icons\png\weapon\Palamute_Sword_Icon_White.png" />
+    <Resource Include="Assets\Icons\png\weapon\Palico_Hammer_Icon_001_White.png" />
+    <Resource Include="Assets\Icons\png\weapon\Palico_Hammer_Icon_002_White.png" />
+    <Resource Include="Assets\Icons\png\weapon\Palico_Sword_Icon_001_White.png" />
+    <Resource Include="Assets\Icons\png\weapon\Palico_Sword_Icon_002_White.png" />
+    <Resource Include="Assets\Icons\png\weapon\small_bow.png" />
+    <Resource Include="Assets\Icons\png\weapon\small_ds.png" />
+    <Resource Include="Assets\Icons\png\weapon\small_gl.png" />
+    <Resource Include="Assets\Icons\png\weapon\small_gs.png" />
+    <Resource Include="Assets\Icons\png\weapon\small_hammer.png" />
+    <Resource Include="Assets\Icons\png\weapon\small_hbg.png" />
+    <Resource Include="Assets\Icons\png\weapon\small_hh.png" />
+    <Resource Include="Assets\Icons\png\weapon\small_lance.png" />
+    <Resource Include="Assets\Icons\png\weapon\small_lbg.png" />
+    <Resource Include="Assets\Icons\png\weapon\small_ls.png" />
+    <Resource Include="Assets\Icons\png\weapon\small_ms.png" />
+    <Resource Include="Assets\Icons\png\weapon\small_saf.png" />
+    <Resource Include="Assets\Icons\png\weapon\small_sns.png" />
+    <Resource Include="Assets\Icons\png\weapon\small_tonfa.png" />
     <Resource Include="Assets\Icons\png\study.png" />
     <Resource Include="Assets\Icons\png\stun.png" />
     <Resource Include="Assets\Icons\png\tenrou.png" />
@@ -1863,8 +1912,14 @@
     <Resource Include="Assets\Icons\png\transcend_active.png" />
     <Resource Include="Assets\Icons\png\true_transcend.png" />
     <Resource Include="Assets\Icons\png\unknown.png" />
+    <Resource Include="Assets\Icons\png\weapon\Switch_Axe_Icon_White.png" />
+    <Resource Include="Assets\Icons\png\weapon\Sword_and_Shield_Icon_White.png" />
+    <Resource Include="Assets\Icons\png\weapon\Tonfa_Icon_White.png" />
     <Resource Include="Assets\Icons\png\whetstone.png" />
+    <Resource Include="Assets\Icons\png\whetstone_red.png" />
     <Resource Include="Assets\Icons\png\world.png" />
+    <Resource Include="Assets\Icons\png\wycademy-logo.png" />
+    <Resource Include="Assets\Icons\png\zenith2.png" />
     <Resource Include="Assets\Icons\Sac_Icon_White.xaml" />
     <Resource Include="Assets\Icons\Scale_Icon_White.xaml" />
     <Resource Include="Assets\Icons\Scrap_Icon_White.xaml" />
@@ -1947,27 +2002,27 @@
 
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
-    <PackageReference Include="CompiledBindings.WPF" Version="1.0.17.6" />
-    <PackageReference Include="CsvHelper" Version="31.0.3" />
+    <PackageReference Include="CompiledBindings.WPF" Version="1.0.18" />
+    <PackageReference Include="CsvHelper" Version="32.0.3" />
     <PackageReference Include="DiscordRichPresence" Version="1.2.1.24" />
     <PackageReference Include="DotNetProjects.Extended.Wpf.Toolkit" Version="5.0.115" />
-    <PackageReference Include="EZlion" Version="7.0.0-beta" />
+    <PackageReference Include="EZlion" Version="8.0.0" />
     <PackageReference Include="FontAwesome.Sharp" Version="6.3.0" />
     <PackageReference Include="LiveChartsCore.SkiaSharpView.WPF" Version="2.0.0-beta.920" />
     <PackageReference Include="MathNet.Numerics" Version="5.0.0" />
-    <PackageReference Include="Memory.dll.x86" Version="1.2.26" />
+    <PackageReference Include="Memory.dll.x86" Version="1.2.27" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyModel" Version="8.0.0" />
-    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2420.47" />
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2535.41" />
     <PackageReference Include="MouseKeyHook" Version="5.7.1" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="NLog" Version="5.2.8" />
-    <PackageReference Include="NLog.Extensions.Logging" Version="5.3.8" />
-    <PackageReference Include="NuGet.CommandLine" Version="6.9.1">
+    <PackageReference Include="NLog" Version="5.3.2" />
+    <PackageReference Include="NLog.Extensions.Logging" Version="5.3.11" />
+    <PackageReference Include="NuGet.CommandLine" Version="6.10.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Octokit" Version="10.0.0" />
+    <PackageReference Include="Octokit" Version="12.0.0" />
     <PackageReference Include="RESTCountries.NET" Version="3.1.0" />
     <PackageReference Include="ShowMeTheXAML.MSBuild" Version="2.0.0" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
@@ -1975,15 +2030,15 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="System.Data.SQLite.Core" Version="1.0.118" />
-    <PackageReference Include="System.Drawing.Common" Version="8.0.3" />
+    <PackageReference Include="System.Drawing.Common" Version="8.0.6" />
     <PackageReference Include="Velopack" Version="0.0.359" />
-    <PackageReference Include="VirtualizingWrapPanel" Version="2.0.5" />
-    <PackageReference Include="WPF-UI" Version="3.0.3" />
-    <PackageReference Include="WPF-UI.Tray" Version="3.0.3" />
+    <PackageReference Include="VirtualizingWrapPanel" Version="2.0.6" />
+    <PackageReference Include="WPF-UI" Version="3.0.4" />
+    <PackageReference Include="WPF-UI.Tray" Version="3.0.4" />
     <PackageReference Include="WpfAnimatedGif" Version="2.0.2" />
-    <PackageReference Include="XamlAnimatedGif" Version="2.2.3" />
+    <PackageReference Include="XamlAnimatedGif" Version="2.3.0" />
     <PackageReference Include="XInputium" Version="1.2.0" />
-    <PackageReference Include="xunit" Version="2.7.0" />
+    <PackageReference Include="xunit" Version="2.8.1" />
   </ItemGroup>
 
   <ItemGroup>

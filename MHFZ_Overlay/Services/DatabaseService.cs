@@ -30,6 +30,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media.Imaging;
+using System.Windows.Threading;
 using CommunityToolkit.Mvvm.Messaging;
 using EZlion.Mapper;
 using MHFZ_Overlay;
@@ -101,6 +102,8 @@ public sealed class DatabaseService
     public HashSet<QuestsDiva> AllQuestsDiva { get; set; }
 
     public HashSet<QuestsGuildPoogie> AllQuestsGuildPoogie { get; set; }
+
+    public HashSet<QuestsWeaponBuffs> AllQuestsWeaponBuffs { get; set; }
 
     public long TotalOverlaySessions { get; set; }
 
@@ -1918,6 +1921,24 @@ public sealed class DatabaseService
 
                     Logger.Debug("Inserted into QuestsGuildPoogie table");
 
+                    // TODO more weapon buffs
+                    sql = @"INSERT INTO QuestsWeaponBuffs (
+                        DualSwordsSharpensDictionary,
+                        RunID
+                        ) VALUES (
+                        @DualSwordsSharpensDictionary,
+                        @RunID
+                        )";
+
+                    using (var cmd = new SQLiteCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@DualSwordsSharpensDictionary", JsonConvert.SerializeObject(model.DualSwordsSharpensDictionary));
+                        cmd.Parameters.AddWithValue("@RunID", runID);
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    Logger.Debug("Inserted into QuestsWeaponBuffs table");
+
                     sql = @"INSERT INTO QuestsHalk (
                         HalkOn,
                         HalkPotEffectOn,
@@ -2560,6 +2581,7 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
         var lastQuestsDiva = this.GetLastQuestsDiva(conn);
         var lastQuestsHalk = this.GetLastQuestsHalk(conn);
         var lastQuestsGuildPoogie = this.GetLastQuestsGuildPoogie(conn);
+        var lastQuestsWeaponBuffs = this.GetLastQuestsWeaponBuffs(conn);
 
         if (lastQuest.RunID != 0)
         {
@@ -2729,6 +2751,15 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
             if (!questsGuildPoogieAdded)
             {
                 Logger.Warn(CultureInfo.InvariantCulture, "Last quests guild poogie already found in hash set");
+            }
+        }
+
+        if (lastQuestsWeaponBuffs.QuestsWeaponBuffsID != 0)
+        {
+            var questsWeaponBuffsAdded = this.AllQuestsWeaponBuffs.Add(lastQuestsWeaponBuffs);
+            if (!questsWeaponBuffsAdded)
+            {
+                Logger.Warn(CultureInfo.InvariantCulture, "Last quests weapon buffs already found in hash set");
             }
         }
     }
@@ -3129,6 +3160,26 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
                 {
                     cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_quests_guild_poogie_deletion
                         AFTER DELETE ON QuestsGuildPoogie
+                        BEGIN
+                          SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
+                        END;";
+                    cmd.ExecuteNonQuery();
+                }
+
+                using (var cmd = new SQLiteCommand(conn))
+                {
+                    cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_quests_weapon_buffs_updates
+                        AFTER UPDATE ON QuestsWeaponBuffs
+                        BEGIN
+                          SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
+                        END;";
+                    cmd.ExecuteNonQuery();
+                }
+
+                using (var cmd = new SQLiteCommand(conn))
+                {
+                    cmd.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_quests_weapon_buffs_deletion
+                        AFTER DELETE ON QuestsWeaponBuffs
                         BEGIN
                           SELECT RAISE(ROLLBACK, 'Updating rows is not allowed. Keep in mind that all attempted modifications are logged into the central database.');
                         END;";
@@ -4531,7 +4582,13 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                             var s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
                             playerName = s.HunterName;
                             guildName = s.GuildName;
-                            discordServerID = s.DiscordServerID;
+                            discordServerID = 0;
+                            var foundServer = DiscordServers.DiscordServerInfo.Any(e => e.Value.Name == s.FrontierServerOption);
+                            if (foundServer) 
+                            {
+                                var elementFound = DiscordServers.DiscordServerInfo.Values.Where((e) => e.Name == s.FrontierServerOption).FirstOrDefault();
+                                discordServerID = elementFound?.ID ?? 0;
+                            }
                             gender = s.GenderExport;
 
                             // TODO test
@@ -6224,6 +6281,17 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                 mhfemdInfo TEXT NOT NULL DEFAULT '',
                 mhfodllInfo TEXT NOT NULL DEFAULT '',
                 mhfohddllInfo TEXT NOT NULL DEFAULT '',
+                RunID INTEGER NOT NULL,
+                FOREIGN KEY(RunID) REFERENCES Quests(RunID)
+                )";
+                using (var cmd = new SQLiteCommand(sql, conn))
+                {
+                    cmd.ExecuteNonQuery();
+                }
+
+                sql = @"CREATE TABLE IF NOT EXISTS QuestsWeaponBuffs(
+                QuestsWeaponBuffsID INTEGER PRIMARY KEY AUTOINCREMENT,
+                DualSwordsSharpensDictionary TEXT NOT NULL DEFAULT '{}',
                 RunID INTEGER NOT NULL,
                 FOREIGN KEY(RunID) REFERENCES Quests(RunID)
                 )";
@@ -7970,6 +8038,52 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
         return data;
     }
 
+    public QuestsWeaponBuffs GetQuestsWeaponBuffs(long runID)
+    {
+        QuestsWeaponBuffs data = new();
+        if (string.IsNullOrEmpty(this.dataSource))
+        {
+            Logger.Warn(CultureInfo.InvariantCulture, "Cannot get quests weapon buffs. dataSource: {0}", this.dataSource);
+            return data;
+        }
+
+        using (var conn = new SQLiteConnection(this.dataSource))
+        {
+            conn.Open();
+            using (var transaction = conn.BeginTransaction())
+            {
+                try
+                {
+                    using (var cmd = new SQLiteCommand("SELECT * FROM QuestsWeaponBuffs WHERE RunID = @runID", conn))
+                    {
+                        cmd.Parameters.AddWithValue("@runID", runID);
+
+                        using (var reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                data = new QuestsWeaponBuffs
+                                {
+                                    QuestsWeaponBuffsID = long.Parse(reader["QuestsWeaponBuffsID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                    DualSwordsSharpensDictionary = JsonConvert.DeserializeObject<Dictionary<long, long>>(reader["DualSwordsSharpensDictionary"]?.ToString() ?? "{}") ?? new Dictionary<long, long> { },
+                                    RunID = long.Parse(reader["RunID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                };
+                            }
+                        }
+                    }
+
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    HandleError(transaction, ex);
+                }
+            }
+        }
+
+        return data;
+    }
+
     public QuestsHalk GetHalk(long runID)
     {
         QuestsHalk data = new();
@@ -9180,6 +9294,40 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
         return last;
     }
 
+    private QuestsWeaponBuffs GetLastQuestsWeaponBuffs(SQLiteConnection conn)
+    {
+        QuestsWeaponBuffs last = new();
+        using (var transaction = conn.BeginTransaction())
+        {
+            try
+            {
+                using (var cmd = new SQLiteCommand("SELECT * FROM QuestsWeaponBuffs ORDER BY QuestsWeaponBuffsID DESC LIMIT 1", conn))
+                {
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            last = new QuestsWeaponBuffs
+                            {
+                                QuestsWeaponBuffsID = long.Parse(reader["QuestsWeaponBuffsID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                DualSwordsSharpensDictionary = JsonConvert.DeserializeObject<Dictionary<long, long>>(reader["DualSwordsSharpensDictionary"]?.ToString() ?? "{}") ?? new Dictionary<long, long> { },
+                                RunID = long.Parse(reader["RunID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                            };
+                        }
+                    }
+                }
+
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                HandleError(transaction, ex);
+            }
+        }
+
+        return last;
+    }
+
     private QuestsDiva GetLastQuestsDiva(SQLiteConnection conn)
     {
         QuestsDiva last = new();
@@ -9315,6 +9463,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                 this.AllQuestsGuildPoogie = this.GetAllQuestsGuildPoogie(conn);
                 this.AllQuestsDiva = this.GetAllQuestsDiva(conn);
                 this.AllQuestsHalk = this.GetAllQuestsHalk(conn);
+                this.AllQuestsWeaponBuffs = this.GetAllQuestsWeaponBuffs(conn);
                 TotalOverlaySessions = GetTableRowCount("SessionID", "Session", conn);
 
             }
@@ -9550,6 +9699,43 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                                 GuildPoogie1Skill = long.Parse(reader["GuildPoogie1Skill"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
                                 GuildPoogie2Skill = long.Parse(reader["GuildPoogie2Skill"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
                                 GuildPoogie3Skill = long.Parse(reader["GuildPoogie3Skill"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                RunID = long.Parse(reader["RunID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                            };
+
+                            hashSet.Add(data);
+                        }
+                    }
+                }
+
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                HandleError(transaction, ex);
+            }
+        }
+
+        return hashSet;
+    }
+
+    private HashSet<QuestsWeaponBuffs> GetAllQuestsWeaponBuffs(SQLiteConnection conn)
+    {
+        HashSet<QuestsWeaponBuffs> hashSet = new HashSet<QuestsWeaponBuffs>();
+
+        using (var transaction = conn.BeginTransaction())
+        {
+            try
+            {
+                using (var cmd = new SQLiteCommand(@"SELECT * FROM QuestsWeaponBuffs", conn))
+                {
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            QuestsWeaponBuffs data = new QuestsWeaponBuffs
+                            {
+                                QuestsWeaponBuffsID = long.Parse(reader["QuestsWeaponBuffsID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
+                                DualSwordsSharpensDictionary = JsonConvert.DeserializeObject<Dictionary<long, long>>(reader["DualSwordsSharpensDictionary"]?.ToString() ?? "{}") ?? new Dictionary<long, long> { },
                                 RunID = long.Parse(reader["RunID"]?.ToString() ?? "0", CultureInfo.InvariantCulture),
                             };
 
@@ -10565,6 +10751,53 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         return attackBuffDictionary;
+    }
+
+    // TODO
+    public Dictionary<int, int> GetDualSwordsSharpensDictionary(long runID)
+    {
+        Dictionary<int, int> dualSwordsSharpensDictionary = new();
+        if (string.IsNullOrEmpty(this.dataSource))
+        {
+            Logger.Warn(CultureInfo.InvariantCulture, "Cannot get dual swords sharpens dictionary. dataSource: {0}", this.dataSource);
+            return dualSwordsSharpensDictionary;
+        }
+
+        using (var conn = new SQLiteConnection(this.dataSource))
+        {
+            conn.Open();
+            using (var transaction = conn.BeginTransaction())
+            {
+                try
+                {
+                    using (var cmd = new SQLiteCommand("SELECT DualSwordsSharpensDictionary FROM QuestsWeaponBuffs WHERE RunID = @runID", conn))
+                    {
+                        cmd.Parameters.AddWithValue("@runID", runID);
+
+                        var result = cmd.ExecuteScalar();
+
+                        if (result != null)
+                        {
+                            var obj = JsonConvert.DeserializeObject<Dictionary<int, int>>((string)result);
+                            if (obj == null)
+                            {
+                                return dualSwordsSharpensDictionary;
+                            }
+
+                            dualSwordsSharpensDictionary = obj;
+                        }
+                    }
+
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    HandleError(transaction, ex);
+                }
+            }
+        }
+
+        return dualSwordsSharpensDictionary;
     }
 
     public Dictionary<int, int> GetHitCountDictionary(long runID)
@@ -12342,18 +12575,21 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                             {
                                 while (reader.Read())
                                 {
+                                    var title = reader.GetString(reader.GetOrdinal("Title"));
+
                                     achievements.Add(new Achievement
                                     {
                                         CompletionDate = reader.IsDBNull(reader.GetOrdinal("CompletionDate"))
                                     ? DateTime.UnixEpoch
                                     : DateTime.Parse(reader.GetString(reader.GetOrdinal("CompletionDate")), CultureInfo.InvariantCulture),
-                                        Title = reader.GetString(reader.GetOrdinal("Title")),
+                                        Title = title,
                                         Description = reader.GetString(reader.GetOrdinal("Description")),
                                         Rank = AchievementService.ConvertToAchievementRank(reader.GetInt64(reader.GetOrdinal("Rank"))),
                                         Image = reader.GetString(reader.GetOrdinal("Image")),
                                         Objective = reader.GetString(reader.GetOrdinal("Objective")),
                                         IsSecret = reader.GetBoolean(reader.GetOrdinal("IsSecret")),
                                         Hint = reader.GetString(reader.GetOrdinal("Hint")),
+                                        Unused = Achievements.IDAchievement.Values.FirstOrDefault(a => a.Title == title)?.Unused,
                                     });
                                 }
                             }
@@ -16597,10 +16833,17 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
 Do you want to perform the necessary database updates? A backup of your current MHFZ_Overlay.sqlite file will be done if you accept.
 
-Updating the database structure may take some time, it will transport all of your current data straight to the latest database structure, regardless of the previous database version.",
+Updating the database structure may take some time, it will transport all of your current data straight to the latest database structure, regardless of the previous database version.
+
+Release notes: https://wycademy.vercel.app/overlay/release-notes/latest (clicking ""Yes"" will open the browser with the mentioned link)",
 string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} to {1})", previousVersion, Program.CurrentProgramVersion), MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
                     if (result == MessageBoxResult.Yes)
                     {
+                        System.Diagnostics.Process.Start(new ProcessStartInfo
+                        {
+                            FileName = "https://wycademy.vercel.app/overlay/release-notes/latest",
+                            UseShellExecute = true
+                        });
                         this.UpdateDatabaseSchema(connection, dataLoader, currentUserVersion);
                     }
                     else

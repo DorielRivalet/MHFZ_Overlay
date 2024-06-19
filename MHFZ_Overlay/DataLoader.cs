@@ -50,6 +50,7 @@ using System.Windows;
 using Memory;
 using MHFZ_Overlay.Models.Addresses;
 using MHFZ_Overlay.Models.Constant;
+using MHFZ_Overlay.Models.Structures;
 using MHFZ_Overlay.Services;
 using MHFZ_Overlay.ViewModels.Windows;
 
@@ -249,6 +250,11 @@ public sealed class DataLoader
         "scripts", "plugins", "script", "plugin", "localize-dat",
     };
 
+    private readonly List<string> bannedFoldersInSpeedruns = new()
+    {
+        "scripts", "plugins", "script", "plugin", "localize-dat", "mods"
+    };
+
     private readonly List<string> allowedProcesses = new ()
     {
         "LogiOverlay", // Logitech Bluetooth for mouse
@@ -335,7 +341,7 @@ public sealed class DataLoader
 
     // This checks for illegal folders or files in the game folder
     // TODO: test
-    public void CheckForIllegalModifications()
+    public void CheckForIllegalModifications(DataLoader? dataLoader = null)
     {
         if (Program.IsVelopackUpdating)
         {
@@ -379,7 +385,14 @@ public sealed class DataLoader
                 var files = Directory.GetFiles(mhfDirectory, "*", SearchOption.AllDirectories);
                 var folders = Directory.GetDirectories(mhfDirectory, "*", SearchOption.AllDirectories);
                 var isFatal = true;
-                FileService.CheckIfFileExtensionFolderExists(files, folders, this.bannedFiles, this.bannedFileExtensions, this.bannedFolders, isFatal);
+                if (dataLoader != null && dataLoader.Model.GetOverlayMode() is OverlayMode.Speedrun)
+                {
+                    FileService.CheckIfFileExtensionFolderExists(files, folders, this.bannedFiles, this.bannedFileExtensions, this.bannedFoldersInSpeedruns, isFatal);
+                }
+                else
+                {
+                    FileService.CheckIfFileExtensionFolderExists(files, folders, this.bannedFiles, this.bannedFileExtensions, this.bannedFolders, isFatal);
+                }
             }
             else
             {

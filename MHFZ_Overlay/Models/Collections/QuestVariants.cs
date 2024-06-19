@@ -60,7 +60,7 @@ public static class QuestVariants
                 Numbers.QuestIDBurningFreezingElzelionHistoric, new QuestsQuestVariant{QuestVariant1 = 8, QuestVariant2 = 34, QuestVariant3 = 5, QuestVariant4 = 0}
             },
             {
-                Numbers.QuestIDBlitzkriegBogabadorumu, new QuestsQuestVariant{QuestVariant1 = 8, QuestVariant2 = 34, QuestVariant3 = 5, QuestVariant4 = 0}
+                Numbers.QuestIDBombardierBogabadorumu, new QuestsQuestVariant{QuestVariant1 = 8, QuestVariant2 = 34, QuestVariant3 = 5, QuestVariant4 = 0}
             },
             {
                 Numbers.QuestIDSparklingZerureusu, new QuestsQuestVariant{QuestVariant1 = 8, QuestVariant2 = 34, QuestVariant3 = 5, QuestVariant4 = 0}

@@ -1159,9 +1159,9 @@ public static class BingoMonsters
                     Type = FrontierMonsterType.ElderDragon,
                     },
                 new BingoMonster {
-                    Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/blitzkrieg_bogabadorumu.png",
-                    Name = "Blitzkrieg Bogabadorumu",
-                    QuestIDs = new List<int> {  Numbers.QuestIDBlitzkriegBogabadorumu,  },
+                    Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/bombardier_bogabadorumu.png",
+                    Name = "Bombardier Bogabadorumu",
+                    QuestIDs = new List<int> {  Numbers.QuestIDBombardierBogabadorumu,  },
                     BaseScore = 110,
                     Type = FrontierMonsterType.FlyingWyvern,
                     },

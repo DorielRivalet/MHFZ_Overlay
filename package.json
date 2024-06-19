@@ -1,6 +1,6 @@
 {
   "name": "mhfz_overlay",
-  "version": "0.38.0",
+  "version": "0.39.0",
   "description": "[![Monster Hunter Frontier Z Overlay v0.21.0 Preview](./demo/youtubepreview1.jpg)](https://www.youtube.com/watch?v=A9ffbRICqZY \"Monster Hunter Frontier Z Overlay v0.21.0 Preview\")",
   "main": "MHFZ_Overlay.sln",
   "scripts": {
@@ -21,7 +21,7 @@
   "homepage": "https://github.com/DorielRivalet/MHFZ_Overlay#readme",
   "dependencies": {
     "@release-it/conventional-changelog": "^8.0.1",
-    "release-it": "^17.1.1"
+    "release-it": "^17.3.0"
   },
   "release-it": {
     "git": {
@@ -87,7 +87,7 @@
     }
   },
   "devDependencies": {
-    "@commitlint/cli": "^19.2.1",
+    "@commitlint/cli": "^19.3.0",
     "@commitlint/config-conventional": "^19.1.0",
     "alex": "^11.0.1",
     "husky": "^9.0.11"

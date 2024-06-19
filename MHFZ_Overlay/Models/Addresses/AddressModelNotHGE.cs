@@ -1485,7 +1485,7 @@ public sealed class AddressModelNotHGE : AddressModel
     public override int GoreMagalaHunted() => this.M.Read2Byte("mhfo.dll+6103B50");
 
     /// <inheritdoc/>
-    public override int BlitzkriegBogabadorumuHunted() => this.M.Read2Byte("mhfo.dll+6103B64");
+    public override int BombardierBogabadorumuHunted() => this.M.Read2Byte("mhfo.dll+6103B64");
 
     /// <inheritdoc/>
     public override int SparklingZerureusuHunted() => this.M.Read2Byte("mhfo.dll+6103B68");
@@ -1826,5 +1826,9 @@ public sealed class AddressModelNotHGE : AddressModel
 
     /// <inheritdoc/>
     public override int QuestVariant4() => this.M.ReadByte("mhfo.dll+28C2CEA");
+
+    /// <inheritdoc/>
+    public override int DualSwordsSharpens() => this.M.ReadByte("mhfo.dll+50346B8");
+
 
 }

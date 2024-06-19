@@ -34,14 +34,21 @@
     - [Ferias](#ferias)
     - [Guild Card](#guild-card)
     - [Hunter Sets (Image)](#hunter-sets-image)
-    - [Damage Calculator](#damage-calculator)
     - [Achievements](#achievements)
     - [Context Menus](#context-menus)
+    - [Damage Calculator](#damage-calculator)
+    - [Monster Info](#monster-info)
+    - [Tower Weapon Simulator](#tower-weapon-simulator)
+    - [Ice Age Damage](#ice-age-damage)
+    - [Critical Distance Graphs](#critical-distance-graphs)
+    - [Elements](#elements)
   - [Features not yet implemented](#features-not-yet-implemented)
   - [Bugs](#bugs)
   - [Frequently Asked Questions](#frequently-asked-questions)
   - [How to Uninstall](#how-to-uninstall)
+  - [Release Notes](#release-notes)
   - [Changelog](#changelog)
+  - [Website](#website)
   - [Documentation](#documentation)
   - [Contributing](#contributing)
   - [Project Development](#project-development)
@@ -282,10 +289,6 @@ These images don't show everything, find out what's missing by pressing `Shift+F
 
 ![Config6](./demo/config6.png)
 
-### Damage Calculator
-
-![Config7](./demo/config7.png)
-
 ### Achievements
 
 ![achievements](./demo/achievements.png)
@@ -300,6 +303,34 @@ Some sections have context menus where you can save the section contents to a fi
 ![contextmenu3](./demo/contextmenu3.png)
 ![contextmenu4](./demo/contextmenu4.png)
 ![contextmenu5](./demo/contextmenu5.png)
+
+### Damage Calculator
+
+![Config7](./demo/config7.png)
+
+The damage calculator comes from [Wycademy](https://wycademy.vercel.app/), a compendium of resources for Monster Hunter Frontier Z made by DorielRivalet. Check it out! Here are some examples of the website:
+
+### Monster Info
+
+![Wycademy1](./demo/wycademy1.png)
+
+### Tower Weapon Simulator
+
+![Wycademy2](./demo/wycademy2.png)
+
+### Ice Age Damage
+
+![Wycademy3](./demo/wycademy3.png)
+
+### Critical Distance Graphs
+
+![Wycademy4](./demo/wycademy4.png)
+
+### Elements
+
+Includes light theme!
+
+![Wycademy5](./demo/wycademy5.png)
 
 ## Features not yet implemented
 
@@ -349,9 +380,19 @@ Some sections have context menus where you can save the section contents to a fi
 2. Search Monster Hunter Frontier Z Overlay.
 3. Click Uninstall. You can also delete the Desktop shortcut and Start Menu icon after uninstalling.
 
+## Release Notes
+
+[See our developer's notes about the latest changes](https://wycademy.vercel.app/overlay/release-notes).
+
 ## Changelog
 
-[Learn about the latest improvements](https://github.com/DorielRivalet/mhfz-overlay/blob/main/CHANGELOG.md).
+[Learn about the latest improvements in greater detail](https://github.com/DorielRivalet/mhfz-overlay/blob/main/CHANGELOG.md).
+
+## Website
+
+The overlay has it's own page in [Wycademy](https://wycademy.vercel.app/overlay).
+
+![Wycademy Overlay](./demo/wycademy6.png)
 
 ## Documentation
 

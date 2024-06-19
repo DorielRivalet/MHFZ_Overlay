@@ -1607,7 +1607,7 @@ public sealed class AddressModelHGE : AddressModel
     public override int BogabadorumuHunted() => this.M.Read2Byte("mhfo-hd.dll+ED3E300");
 
     /// <inheritdoc/>
-    public override int BlitzkriegBogabadorumuHunted() => this.M.Read2Byte("mhfo-hd.dll+ED3E304");
+    public override int BombardierBogabadorumuHunted() => this.M.Read2Byte("mhfo-hd.dll+ED3E304");
 
     /// <inheritdoc/>
     public override int SparklingZerureusuHunted() => this.M.Read2Byte("mhfo-hd.dll+ED3E308");
@@ -1907,5 +1907,8 @@ public sealed class AddressModelHGE : AddressModel
 
     /// <inheritdoc/>
     public override int QuestVariant4() => this.M.ReadByte("mhfo-hd.dll+2AFA89A");
+
+    /// <inheritdoc/>
+    public override int DualSwordsSharpens() => this.M.ReadByte("mhfo-hd.dll+DC6C278");
 
 }

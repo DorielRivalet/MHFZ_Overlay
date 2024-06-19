@@ -13,6 +13,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Media;
 using EZlion.Mapper;
+using FontAwesome.Sharp;
 using MHFZ_Overlay;
 using MHFZ_Overlay.Models;
 using MHFZ_Overlay.Models.Collections;
@@ -144,6 +145,11 @@ public sealed class AchievementService : IAchievementService
     /// <inheritdoc/>
     public void CheckForAchievements(SnackbarPresenter snackbarPresenter, DataLoader dataLoader, DatabaseService databaseManagerInstance, Settings s, Style style)
     {
+        if (!s.EnableAchievementsTracking)
+        {
+            return;
+        }
+
         var newAchievements = this.GetNewlyObtainedAchievements(dataLoader, databaseManagerInstance, s);
 
         if (newAchievements.Count > 0)
@@ -161,6 +167,13 @@ public sealed class AchievementService : IAchievementService
     /// <inheritdoc/>
     public void RewardAchievement(int achievementID, Snackbar snackbar, Style style)
     {
+        var s = (Settings)Application.Current.TryFindResource("Settings");
+
+        if (!s.EnableAchievementsTracking)
+        {
+            return;
+        }
+
         Achievements.IDAchievement.TryGetValue(achievementID, out var achievement);
         if (achievement == null)
         {
@@ -1481,9 +1494,9 @@ public sealed class AchievementService : IAchievementService
                 case 184:
                     return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDArrogantDuremudira && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Speedrun"));
                 case 185:
-                    return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDBlitzkriegBogabadorumu);
+                    return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDBombardierBogabadorumu);
                 case 186:
-                    if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDBlitzkriegBogabadorumu) >= Numbers.RequiredCompletionsMonsterSlayer)
+                    if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDBombardierBogabadorumu) >= Numbers.RequiredCompletionsMonsterSlayer)
                     {
                         return true;
                     }
@@ -1493,7 +1506,7 @@ public sealed class AchievementService : IAchievementService
                     }
 
                 case 187:
-                    if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDBlitzkriegBogabadorumu) >= Numbers.RequiredCompletionsMonsterAnnihilator)
+                    if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDBombardierBogabadorumu) >= Numbers.RequiredCompletionsMonsterAnnihilator)
                     {
                         return true;
                     }
@@ -1503,7 +1516,7 @@ public sealed class AchievementService : IAchievementService
                     }
 
                 case 188:
-                    if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDBlitzkriegBogabadorumu) >= Numbers.RequiredCompletionsMonsterExterminator)
+                    if (databaseManagerInstance.AllQuests.Count(quest => quest.QuestID == Numbers.QuestIDBombardierBogabadorumu) >= Numbers.RequiredCompletionsMonsterExterminator)
                     {
                         return true;
                     }
@@ -1513,7 +1526,7 @@ public sealed class AchievementService : IAchievementService
                     }
 
                 case 189:
-                    return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDBlitzkriegBogabadorumu && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Speedrun"));
+                    return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDBombardierBogabadorumu && quest.PartySize == 1 && quest.ActualOverlayMode != null && (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Speedrun"));
                 case 190:
                     return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID is Numbers.QuestIDBurningFreezingElzelionTower or Numbers.QuestIDBurningFreezingElzelionHistoric);
                 case 191:
@@ -1681,7 +1694,7 @@ public sealed class AchievementService : IAchievementService
                 case 201:
                     completedQuests = from quest in databaseManagerInstance.AllQuests
                                       join playerInventory in databaseManagerInstance.AllPlayerInventories on quest.RunID equals playerInventory.RunID
-                                      where quest.QuestID == Numbers.QuestIDBlitzkriegBogabadorumu &&
+                                      where quest.QuestID == Numbers.QuestIDBombardierBogabadorumu &&
                                             (playerInventory.Item1ID == 93 ||
                                              playerInventory.Item2ID == 93 ||
                                              playerInventory.Item3ID == 93 ||
@@ -2053,7 +2066,7 @@ public sealed class AchievementService : IAchievementService
                 case 315:
                     return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDArrogantDuremudira && quest.FinalTimeValue < Numbers.Frames1Minute * 9);
                 case 316:
-                    return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDBlitzkriegBogabadorumu && quest.FinalTimeValue < Numbers.Frames1Minute * 9);
+                    return databaseManagerInstance.AllQuests.Any(quest => quest.QuestID == Numbers.QuestIDBombardierBogabadorumu && quest.FinalTimeValue < Numbers.Frames1Minute * 9);
                 case 317:
                     return databaseManagerInstance.AllQuests.Any(quest => (quest.QuestID == Numbers.QuestIDBurningFreezingElzelionHistoric || quest.QuestID == Numbers.QuestIDBurningFreezingElzelionTower) && quest.FinalTimeValue < Numbers.Frames1Minute * 9);
                 case 318:
@@ -2780,6 +2793,372 @@ public sealed class AchievementService : IAchievementService
                     return totalCarts >= 100;
                 case 451:
                     return databaseManagerInstance.TotalOverlaySessions >= 1_000;
+                case 452:
+                    var foundMusouElzelionQuest = from quest in databaseManagerInstance.AllQuests
+                                     where (quest.PartySize == 1 &&
+                                     (quest.QuestID == Numbers.QuestIDBurningFreezingElzelionHistoric || quest.QuestID == Numbers.QuestIDBurningFreezingElzelionTower) &&
+                                     (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Speedrun")) 
+                                     select quest;
+
+                    if (!foundMusouElzelionQuest.Any())
+                    {
+                        return false;
+                    }
+
+                    if (databaseManagerInstance.AllQuestsWeaponBuffs.Any(q => q.RunID == foundMusouElzelionQuest.First().RunID  && q.DualSwordsSharpensDictionary.Count == 4 && q.DualSwordsSharpensDictionary.Count((e) => e.Value == 0) == 0))
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                case 453:
+                    var foundMusouDuremudiraQuest = from quest in databaseManagerInstance.AllQuests
+                                                  where (quest.PartySize == 1 &&
+                                                  (quest.QuestID == Numbers.QuestIDArrogantDuremudira) &&
+                                                  (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Speedrun"))
+                                                  select quest;
+
+                    if (!foundMusouDuremudiraQuest.Any())
+                    {
+                        return false;
+                    }
+
+                    if (databaseManagerInstance.AllQuestsWeaponBuffs.Any(q => q.RunID == foundMusouDuremudiraQuest.First().RunID && q.DualSwordsSharpensDictionary.Count == 4 && q.DualSwordsSharpensDictionary.Count((e) => e.Value == 0) == 0))
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                case 454:
+                    var foundMusouDeviljhoQuest = from quest in databaseManagerInstance.AllQuests
+                                                    where (quest.PartySize == 1 &&
+                                                    (quest.QuestID == Numbers.QuestIDStarvingDeviljhoArena || quest.QuestID == Numbers.QuestIDStarvingDeviljhoHistoric) &&
+                                                    (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Speedrun"))
+                                                    select quest;
+
+                    if (!foundMusouDeviljhoQuest.Any())
+                    {
+                        return false;
+                    }
+
+                    if (databaseManagerInstance.AllQuestsWeaponBuffs.Any(q => q.RunID == foundMusouDeviljhoQuest.First().RunID && q.DualSwordsSharpensDictionary.Count == 4 && q.DualSwordsSharpensDictionary.Count((e) => e.Value == 0) == 0))
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                case 455:
+                    var foundMusouZinogreQuest = from quest in databaseManagerInstance.AllQuests
+                                                  where (quest.PartySize == 1 &&
+                                                  (quest.QuestID == Numbers.QuestIDHowlingZinogreForest || quest.QuestID == Numbers.QuestIDHowlingZinogreHistoric) &&
+                                                  (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Speedrun"))
+                                                  select quest;
+
+                    if (!foundMusouZinogreQuest.Any())
+                    {
+                        return false;
+                    }
+
+                    if (databaseManagerInstance.AllQuestsWeaponBuffs.Any(q => q.RunID == foundMusouZinogreQuest.First().RunID && q.DualSwordsSharpensDictionary.Count == 4 && q.DualSwordsSharpensDictionary.Count((e) => e.Value == 0) == 0))
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                case 456:
+                    var foundMusouBogabadorumuQuest = from quest in databaseManagerInstance.AllQuests
+                                                 where (quest.PartySize == 1 &&
+                                                 (quest.QuestID == Numbers.QuestIDBombardierBogabadorumu) &&
+                                                 (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Speedrun"))
+                                                 select quest;
+
+                    if (!foundMusouBogabadorumuQuest.Any())
+                    {
+                        return false;
+                    }
+
+                    if (databaseManagerInstance.AllQuestsWeaponBuffs.Any(q => q.RunID == foundMusouBogabadorumuQuest.First().RunID && q.DualSwordsSharpensDictionary.Count == 4 && q.DualSwordsSharpensDictionary.Count((e) => e.Value == 0) == 0))
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                case 457:
+                    var foundMusouNargacugaQuest = from quest in databaseManagerInstance.AllQuests
+                                                 where (quest.PartySize == 1 &&
+                                                 (quest.QuestID == Numbers.QuestIDBlinkingNargacugaForest || quest.QuestID == Numbers.QuestIDBlinkingNargacugaHistoric) &&
+                                                 (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Speedrun"))
+                                                 select quest;
+
+                    if (!foundMusouNargacugaQuest.Any())
+                    {
+                        return false;
+                    }
+
+                    if (databaseManagerInstance.AllQuestsWeaponBuffs.Any(q => q.RunID == foundMusouNargacugaQuest.First().RunID && q.DualSwordsSharpensDictionary.Count == 4 && q.DualSwordsSharpensDictionary.Count((e) => e.Value == 0) == 0))
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                case 458:
+                    var foundMusouGuanzorumuQuest = from quest in databaseManagerInstance.AllQuests
+                                                   where (quest.PartySize == 1 &&
+                                                   (quest.QuestID == Numbers.QuestIDRulingGuanzorumu) &&
+                                                   (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Speedrun"))
+                                                   select quest;
+
+                    if (!foundMusouGuanzorumuQuest.Any())
+                    {
+                        return false;
+                    }
+
+                    if (databaseManagerInstance.AllQuestsWeaponBuffs.Any(q => q.RunID == foundMusouGuanzorumuQuest.First().RunID && q.DualSwordsSharpensDictionary.Count == 4 && q.DualSwordsSharpensDictionary.Count((e) => e.Value == 0) == 0))
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                case 459:
+                    var foundMusouMiRuQuest = from quest in databaseManagerInstance.AllQuests
+                                                    where (quest.PartySize == 1 &&
+                                                    (quest.QuestID == Numbers.QuestIDShiftingMiRu || quest.QuestID == Numbers.QuestIDShiftingMiRuHistoric) &&
+                                                    (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Speedrun"))
+                                                    select quest;
+
+                    if (!foundMusouMiRuQuest.Any())
+                    {
+                        return false;
+                    }
+
+                    if (databaseManagerInstance.AllQuestsWeaponBuffs.Any(q => q.RunID == foundMusouMiRuQuest.First().RunID && q.DualSwordsSharpensDictionary.Count == 4 && q.DualSwordsSharpensDictionary.Count((e) => e.Value == 0) == 0))
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                case 460:
+                    var foundMusouPariapuriaQuest = from quest in databaseManagerInstance.AllQuests
+                                              where (quest.PartySize == 1 &&
+                                              (quest.QuestID == Numbers.QuestIDThirstyPariapuria) &&
+                                              (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Speedrun"))
+                                              select quest;
+
+                    if (!foundMusouPariapuriaQuest.Any())
+                    {
+                        return false;
+                    }
+
+                    if (databaseManagerInstance.AllQuestsWeaponBuffs.Any(q => q.RunID == foundMusouPariapuriaQuest.First().RunID && q.DualSwordsSharpensDictionary.Count == 4 && q.DualSwordsSharpensDictionary.Count((e) => e.Value == 0) == 0))
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                case 461:
+                    var foundMusouZerureusuQuest = from quest in databaseManagerInstance.AllQuests
+                                                    where (quest.PartySize == 1 &&
+                                                    (quest.QuestID == Numbers.QuestIDSparklingZerureusu) &&
+                                                    (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Speedrun"))
+                                                    select quest;
+
+                    if (!foundMusouZerureusuQuest.Any())
+                    {
+                        return false;
+                    }
+
+                    if (databaseManagerInstance.AllQuestsWeaponBuffs.Any(q => q.RunID == foundMusouZerureusuQuest.First().RunID && q.DualSwordsSharpensDictionary.Count == 4 && q.DualSwordsSharpensDictionary.Count((e) => e.Value == 0) == 0))
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                case 462:
+                    var foundMusouZerureusuFastQuest = from quest in databaseManagerInstance.AllQuests
+                                                   where (quest.PartySize == 1 &&
+                                                   (quest.QuestID == Numbers.QuestIDSparklingZerureusu) && quest.FinalTimeValue < Numbers.Frames1Minute * 6 &&
+                                                   (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Speedrun"))
+                                                   select quest;
+
+                    if (!foundMusouZerureusuFastQuest.Any())
+                    {
+                        return false;
+                    }
+
+                    if (databaseManagerInstance.AllQuestsWeaponBuffs.Any(q => q.RunID == foundMusouZerureusuFastQuest.First().RunID && q.DualSwordsSharpensDictionary.Count == 4 && q.DualSwordsSharpensDictionary.Count((e) => e.Value == 0) == 0))
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                case 463: // TODO test
+                    var foundMusouZerureusuFastNoDivaPrayerGemQuest = from quest in databaseManagerInstance.AllQuests
+                                                       where (quest.PartySize == 1 &&
+                                                       (quest.QuestID == Numbers.QuestIDSparklingZerureusu) && quest.FinalTimeValue < Numbers.Frames1Minute * 6 &&
+                                                       (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Speedrun"))
+                                                       select quest;
+
+                    if (!foundMusouZerureusuFastNoDivaPrayerGemQuest.Any())
+                    {
+                        return false;
+                    }
+
+                    if (databaseManagerInstance.AllQuestsDiva.Any(q => q.RunID == foundMusouZerureusuFastNoDivaPrayerGemQuest.First().RunID && q.DivaPrayerGemRedSkill == 0 && q.DivaPrayerGemRedLevel == 0 &&  q.DivaPrayerGemBlueSkill == 0 && q.DivaPrayerGemBlueLevel == 0 && q.DivaPrayerGemGreenSkill == 0 &&  q.DivaPrayerGemGreenLevel == 0 && q.DivaPrayerGemYellowSkill == 0 && q.DivaPrayerGemYellowLevel == 0) && databaseManagerInstance.AllQuestsWeaponBuffs.Any(q => q.RunID == foundMusouZerureusuFastNoDivaPrayerGemQuest.First().RunID && q.DualSwordsSharpensDictionary.Count == 4 && q.DualSwordsSharpensDictionary.Count((e) => e.Value == 0) == 0))
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                case 464:
+                    return databaseManagerInstance.AllQuests.Any(quest =>
+                    {
+                        if (quest.QuestID != Numbers.QuestIDHowlingZinogreForest && quest.QuestID != Numbers.QuestIDHowlingZinogreHistoric || quest.HitsTakenBlockedDictionary == null)
+                        {
+                            return false;
+                        }
+
+                        var hitsTaken = JsonConvert.DeserializeObject<Dictionary<int, Dictionary<int, int>>>(quest.HitsTakenBlockedDictionary);
+                        if (hitsTaken == null)
+                        {
+                            return false;
+                        }
+
+                        if (hitsTaken.Count == 0 && databaseManagerInstance.AllPlayerGear.Any(q => q.WeaponTypeID == 8 && q.RunID == quest.RunID))
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    });
+
+                case 465:
+                    return dataLoader.Model.CalculateTotalLargeMonstersHunted() >= 10_000;
+                case 466:
+                    var foundConquestFatalisQuest = from quest in databaseManagerInstance.AllQuests
+                                                    where (quest.PartySize == 1 &&
+                                                    (quest.QuestID == Numbers.QuestIDLV9999Fatalis) &&
+                                                    (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Speedrun"))
+                                                    select quest;
+
+                    if (!foundConquestFatalisQuest.Any())
+                    {
+                        return false;
+                    }
+
+                    if (databaseManagerInstance.AllQuestsWeaponBuffs.Any(q => q.RunID == foundConquestFatalisQuest.First().RunID && q.DualSwordsSharpensDictionary.Count == 4 && q.DualSwordsSharpensDictionary.Count((e) => e.Value == 0) == 0))
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                case 467:
+                    var foundConquestCrimsonFatalisQuest = from quest in databaseManagerInstance.AllQuests
+                                                    where (quest.PartySize == 1 &&
+                                                    (quest.QuestID == Numbers.QuestIDLV9999CrimsonFatalis) &&
+                                                    (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Speedrun"))
+                                                    select quest;
+
+                    if (!foundConquestCrimsonFatalisQuest.Any())
+                    {
+                        return false;
+                    }
+
+                    if (databaseManagerInstance.AllQuestsWeaponBuffs.Any(q => q.RunID == foundConquestCrimsonFatalisQuest.First().RunID && q.DualSwordsSharpensDictionary.Count == 4 && q.DualSwordsSharpensDictionary.Count((e) => e.Value == 0) == 0))
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                case 468:
+                    var foundConquestShantienQuest = from quest in databaseManagerInstance.AllQuests
+                                                           where (quest.PartySize == 1 &&
+                                                           (quest.QuestID == Numbers.QuestIDLV9999Shantien) &&
+                                                           (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Speedrun"))
+                                                           select quest;
+
+                    if (!foundConquestShantienQuest.Any())
+                    {
+                        return false;
+                    }
+
+                    if (databaseManagerInstance.AllQuestsWeaponBuffs.Any(q => q.RunID == foundConquestShantienQuest.First().RunID && q.DualSwordsSharpensDictionary.Count == 4 && q.DualSwordsSharpensDictionary.Count((e) => e.Value == 0) == 0))
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                case 469:
+                    var foundUpperShitenUnknownQuest = from quest in databaseManagerInstance.AllQuests
+                                                     where (quest.PartySize == 1 &&
+                                                     (quest.QuestID == Numbers.QuestIDUpperShitenUnknown) &&
+                                                     (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Speedrun"))
+                                                     select quest;
+
+                    if (!foundUpperShitenUnknownQuest.Any())
+                    {
+                        return false;
+                    }
+
+                    if (databaseManagerInstance.AllQuestsWeaponBuffs.Any(q => q.RunID == foundUpperShitenUnknownQuest.First().RunID && q.DualSwordsSharpensDictionary.Count == 4 && q.DualSwordsSharpensDictionary.Count((e) => e.Value == 0) == 0))
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                case 470:
+                    var foundUpperShitenDisufiroaQuest = from quest in databaseManagerInstance.AllQuests
+                                                     where (quest.PartySize == 1 &&
+                                                     (quest.QuestID == Numbers.QuestIDUpperShitenDisufiroa) &&
+                                                     (quest.ActualOverlayMode == "Zen" || quest.ActualOverlayMode == "Speedrun"))
+                                                     select quest;
+
+                    if (!foundUpperShitenDisufiroaQuest.Any())
+                    {
+                        return false;
+                    }
+
+                    if (databaseManagerInstance.AllQuestsWeaponBuffs.Any(q => q.RunID == foundUpperShitenDisufiroaQuest.First().RunID && q.DualSwordsSharpensDictionary.Count == 4 && q.DualSwordsSharpensDictionary.Count((e) => e.Value == 0) == 0))
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
             }
         } catch (Exception ex)
         {

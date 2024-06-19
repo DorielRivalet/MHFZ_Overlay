@@ -154,4 +154,9 @@ public sealed class Achievement
     /// The hint.
     /// </value>
     public string Hint { get; set; } = string.Empty;
+
+    /// <summary>
+    /// Whether the achievement is unused or not. Hidden in views and does not count towards progress.
+    /// </summary>
+    public bool? Unused { get; set; } = false;
 }
