@@ -107,7 +107,7 @@ public sealed class DiscordService
         },
         Buttons = new Button[]
             {
-                new Button() { Label = "【MHF-Z】Overlay " + Program.CurrentProgramVersion, Url = "https://github.com/DorielRivalet/mhfz-overlay" },
+                new Button() { Label = "【MHF-Z】Overlay " + Program.CurrentProgramVersion, Url = "https://wycademy.vercel.app/overlay" },
                 new Button() { Label = "Discord RPC C# Dev Site", Url = "https://lachee.dev/" },
             },
     };
