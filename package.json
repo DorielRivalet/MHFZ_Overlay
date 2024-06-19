@@ -1,6 +1,6 @@
 {
   "name": "mhfz_overlay",
-  "version": "0.39.0",
+  "version": "0.40.0",
   "description": "[![Monster Hunter Frontier Z Overlay v0.21.0 Preview](./demo/youtubepreview1.jpg)](https://www.youtube.com/watch?v=A9ffbRICqZY \"Monster Hunter Frontier Z Overlay v0.21.0 Preview\")",
   "main": "MHFZ_Overlay.sln",
   "scripts": {

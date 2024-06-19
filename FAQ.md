@@ -58,7 +58,7 @@ Use the preset option found in the General tab. Keep reading if you want to know
 
 **Important**: It is recommended to make a backup of the `MHFZ_Overlay.sqlite` file periodically. The file is located inside the database folder, which is inside your game folder. Don't lose your speedrun records!
 
-![Discord Rich Presence](./demo/discord8.png)
+![Discord Rich Presence](./demo/discord8.gif)
 
 - Zen Mode: Disable **everything** (Monster Icon and Discord Rich Presence optional)
 

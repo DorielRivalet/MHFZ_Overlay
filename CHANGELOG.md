@@ -1,5 +1,30 @@
 
 
+## [0.40.0](https://github.com/DorielRivalet/MHFZ_Overlay/compare/v0.39.1...v0.40.0) (2024-06-19)
+
+
+### Features
+
+* change discord button overlay link ([08bb19d](https://github.com/DorielRivalet/MHFZ_Overlay/commit/08bb19dc3ae829e70e3c532448875d3cb965b9bb))
+* update discord button link in template ([57e75bf](https://github.com/DorielRivalet/MHFZ_Overlay/commit/57e75bfb353e80583fb94e3050f39c5deffdd07e))
+
+
+### For Developers
+
+* update discord images ([756649b](https://github.com/DorielRivalet/MHFZ_Overlay/commit/756649b4432947208a24b6edd71e14c11dadf6cc))
+
+## [0.39.1](https://github.com/DorielRivalet/MHFZ_Overlay/compare/v0.39.0...v0.39.1) (2024-06-19)
+
+
+### Bug Fixes
+
+* discord alternative monster icons ([0d60f49](https://github.com/DorielRivalet/MHFZ_Overlay/commit/0d60f49633572b6da036690d059841cd4960225b))
+
+
+### For Developers
+
+* bump version ([b0d0800](https://github.com/DorielRivalet/MHFZ_Overlay/commit/b0d08000c1cee7194c6cbbbe32fc95ca99de7732))
+
 ## [0.39.0](https://github.com/DorielRivalet/MHFZ_Overlay/compare/v0.38.0...v0.39.0) (2024-06-18)
 
 

@@ -100,7 +100,7 @@ If you record and/or stream with the overlay, the recommended processor is Intel
 > It's recommended to start the overlay when you are done loading into Mezeporta.
 
 [View CHANGELOG.md](https://github.com/DorielRivalet/mhfz-overlay/blob/main/CHANGELOG.md).
-
+[View Release Notes](https://wycademy.vercel.app/overlay/release-notes).
 [View Release Statistics](https://somsubhra.github.io/github-release-stats/?username=DorielRivalet&repository=mhfz-overlay&page=1&per_page=30).
 
 ### DISCLAIMER
