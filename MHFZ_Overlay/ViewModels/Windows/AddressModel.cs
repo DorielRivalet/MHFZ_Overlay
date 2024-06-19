@@ -4954,7 +4954,7 @@ TreeScope.Children, condition);
             }
             else
             {
-                return this.GetAlternateMonsterImage(id);
+                return this.GetAlternateMonsterImage(id, forDiscord);
             }
         }
         else
@@ -10709,9 +10709,9 @@ After all that you’ve unlocked magnet spike! You should get a material to make
 
     public string GetPoogieItemForImage => GetItemName(this.PoogieItemUseID());
 
-    public string GetAlternateMonsterImage(int id)
+    public string GetAlternateMonsterImage(int id, bool forDiscord = false)
     {
-        var pathContext = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/";
+        var pathContext = forDiscord ? @"https://raw.githubusercontent.com/DorielRivalet/mhfz-overlay/main/img/monster/" : @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/monster/";
 
         switch (id)
         {
