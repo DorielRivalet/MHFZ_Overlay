@@ -38,7 +38,41 @@ public sealed class FileService
 
     public static TimeSpan SnackbarTimeOut { get; set; } = TimeSpan.FromSeconds(5);
 
-    public static bool OpenApplicationFolder(SnackbarPresenter snackbarPresenter, Style snackbarStyle, TimeSpan snackbarTimeout)
+    public static bool GenerateSpeedrunFiles(SnackbarPresenter snackbarPresenter, Style snackbarStyle, TimeSpan snackbarTimeout)
+    {
+        try
+        {
+            var snackbar = new Snackbar(snackbarPresenter)
+            {
+                Style = snackbarStyle,
+                Title = Messages.ErrorTitle,
+                Content = "Could not generate speedrun files",
+                Icon = new SymbolIcon(SymbolRegular.ErrorCircle24),
+                Appearance = ControlAppearance.Danger,
+                Timeout = snackbarTimeout,
+            };
+            snackbar.Show();
+            return true;
+        }
+        catch (Exception ex)
+        {
+            // TODO maybe a snackbar helper class?
+            Logger.Error(ex);
+            var snackbar = new Snackbar(snackbarPresenter)
+            {
+                Style = snackbarStyle,
+                Title = Messages.ErrorTitle,
+                Content = "Could not generate speedrun files",
+                Icon = new SymbolIcon(SymbolRegular.ErrorCircle24),
+                Appearance = ControlAppearance.Danger,
+                Timeout = snackbarTimeout,
+            };
+            snackbar.Show();
+            return false;
+        }
+    }
+
+        public static bool OpenApplicationFolder(SnackbarPresenter snackbarPresenter, Style snackbarStyle, TimeSpan snackbarTimeout)
     {
         try
         {
