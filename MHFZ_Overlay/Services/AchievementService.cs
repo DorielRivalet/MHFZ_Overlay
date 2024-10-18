@@ -3111,7 +3111,7 @@ public sealed class AchievementService : IAchievementService
                         return false;
                     }
 
-                    if (databaseManagerInstance.AllQuestsWeaponBuffs.Any(q => q.RunID == foundConquestShantienQuest.First().RunID && q.DualSwordsSharpensDictionary.Count == 4 && q.DualSwordsSharpensDictionary.Count((e) => e.Value == 0) == 0))
+                    if (databaseManagerInstance.AllQuestsWeaponBuffs.Any(q => q.RunID == foundConquestShantienQuest.First().RunID && q.DualSwordsSharpensDictionary.Count >= 4 && q.DualSwordsSharpensDictionary.Count((e) => e.Value == 0) <= 3))
                     {
                         return true;
                     }
@@ -3151,7 +3151,7 @@ public sealed class AchievementService : IAchievementService
                         return false;
                     }
 
-                    if (databaseManagerInstance.AllQuestsWeaponBuffs.Any(q => q.RunID == foundUpperShitenDisufiroaQuest.First().RunID && q.DualSwordsSharpensDictionary.Count == 4 && q.DualSwordsSharpensDictionary.Count((e) => e.Value == 0) == 0))
+                    if (databaseManagerInstance.AllQuestsWeaponBuffs.Any(q => q.RunID == foundUpperShitenDisufiroaQuest.First().RunID && q.DualSwordsSharpensDictionary.Count >= 4 && q.DualSwordsSharpensDictionary.Count((e) => e.Value == 0) <= 3))
                     {
                         return true;
                     }

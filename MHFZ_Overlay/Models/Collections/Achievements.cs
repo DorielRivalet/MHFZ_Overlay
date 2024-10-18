@@ -6260,7 +6260,7 @@ During the travel to your destination, the top of the Great Forest, you notice t
             Description = string.Empty,
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/weapon/Dual_Blades_Icon_White.png",
-            Objective = "Defeat Lv9999 Conquest Shantien solo with Dual Swords without dropping the combo (maximum sharpening buff, Speedrun mode).",
+            Objective = "Defeat Lv9999 Conquest Shantien solo with Dual Swords without dropping the combo more than 3 times (maximum sharpening buff, Speedrun mode).",
             IsSecret = false,
             Hint = string.Empty,
             }
@@ -6286,7 +6286,7 @@ During the travel to your destination, the top of the Great Forest, you notice t
             Description = string.Empty,
             Rank = AchievementRank.Platinum,
             Image = @"pack://application:,,,/MHFZ_Overlay;component/Assets/Icons/png/weapon/Dual_Blades_Icon_White.png",
-            Objective = "Defeat Upper Shiten Disufiroa solo with Dual Swords without dropping the combo (maximum sharpening buff, Speedrun mode).",
+            Objective = "Defeat Upper Shiten Disufiroa solo with Dual Swords without dropping the combo more than 3 times (maximum sharpening buff, Speedrun mode).",
             IsSecret = false,
             Hint = string.Empty,
             }
