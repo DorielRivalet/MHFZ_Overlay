@@ -4162,5 +4162,41 @@ namespace MHFZ_Overlay {
                 this["EnableAchievementsTracking"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Shift + F1")]
+        public string OpenSettingsHotkey {
+            get {
+                return ((string)(this["OpenSettingsHotkey"]));
+            }
+            set {
+                this["OpenSettingsHotkey"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Shift + F5")]
+        public string RestartProgramHotkey {
+            get {
+                return ((string)(this["RestartProgramHotkey"]));
+            }
+            set {
+                this["RestartProgramHotkey"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Shift + F6")]
+        public string CloseProgramHotkey {
+            get {
+                return ((string)(this["CloseProgramHotkey"]));
+            }
+            set {
+                this["CloseProgramHotkey"] = value;
+            }
+        }
     }
 }

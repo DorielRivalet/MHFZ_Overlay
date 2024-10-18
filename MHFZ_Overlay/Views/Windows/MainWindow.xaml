@@ -40,6 +40,11 @@
                 x:Name="MainWindowNotifyIcon">
                 <tray:NotifyIcon.Menu>
                     <ContextMenu>
+                        <ui:MenuItem ToolTip="Open the hotkeys window" Foreground="{StaticResource Text}" Header="Hotkeys" Tag="hotkeys" Click="OptionHotkeys_Click">
+                            <ui:MenuItem.Icon>
+                                <ui:SymbolIcon Symbol="Keyboard24" Foreground="{StaticResource Text}"/>
+                            </ui:MenuItem.Icon>
+                        </ui:MenuItem>
                         <ui:MenuItem ToolTip="Open the configuration window" Foreground="{StaticResource Green}" Header="Settings" Tag="settings" Click="OptionSettings_Click">
                             <ui:MenuItem.Icon>
                                 <ui:SymbolIcon Symbol="Settings24" Foreground="{StaticResource Green}"/>
