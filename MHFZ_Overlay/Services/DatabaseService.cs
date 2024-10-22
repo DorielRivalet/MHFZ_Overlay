@@ -148,9 +148,9 @@ public sealed class DatabaseService
     {
         var s = (Settings)System.Windows.Application.Current.TryFindResource("Settings");
 
-        if (string.IsNullOrEmpty(s.DatabaseFilePath) || !Directory.Exists(Path.GetDirectoryName(s.DatabaseFilePath)))
+        if (string.IsNullOrEmpty(s.DatabaseFilePath) || !Directory.Exists(System.IO.Path.GetDirectoryName(s.DatabaseFilePath)))
         {
-            this.connectionString = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "MHFZ_Overlay\\MHFZ_Overlay.sqlite");
+            this.connectionString = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "MHFZ_Overlay\\MHFZ_Overlay.sqlite");
 
             // Show warning to user that they should set a custom database path to prevent data loss on update
             Logger.Warn(CultureInfo.InvariantCulture, "The database file is being saved to the overlay default location");
@@ -325,6 +325,7 @@ public sealed class DatabaseService
                 this.CreateDatabaseIndexes(conn);
                 this.CreateDatabaseTriggers(conn);
                 this.CheckDatabaseVersion(conn, dataLoader);
+                this.VacuumDatabaseFile(conn);
 
                 // TODO: avoid using version files. find alternatives to IO.
                 WriteNewVersionToFile();
@@ -334,7 +335,7 @@ public sealed class DatabaseService
             {
                 conn.Open();
 
-                var referenceSchemaFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "MHFZ_Overlay\\reference_schema.json");
+                var referenceSchemaFilePath = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "MHFZ_Overlay\\reference_schema.json");
 
                 var doesReferenceSchemaFileExist = FileService.CheckIfFileExists(referenceSchemaFilePath, "Checking reference schema");
 
@@ -756,6 +757,12 @@ public sealed class DatabaseService
                         var isHighGradeEdition = dataLoader.IsHighGradeEdition ? 1 : 0;
                         var refreshRate = s.RefreshRate;
 
+                        hitsTakenBlockedPerSecondDictionary = TimeService.FilterFramesBySecond(hitsTakenBlockedPerSecondDictionary);
+                        damagePerSecondDictionary = TimeService.FilterFramesBySecond(damagePerSecondDictionary);
+                        hitsPerSecondDictionary = TimeService.FilterFramesBySecond(hitsPerSecondDictionary);
+                        actionsPerMinuteDictionary = TimeService.FilterFramesBySecond(actionsPerMinuteDictionary);
+
+                        // NOTE: 2024-10-22 v0.41 filtered certain fields to save space.
                         var questData = string.Format(CultureInfo.InvariantCulture,
                             "{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}{11}{12}{13}{14}{15}{16}{17}{18}{19}{20}{21}{22}{23}{24}{25}{26}{27}{28}{29}{30}{31}{32}{33}{34}{35}{36}{37}{38}{39}{40}{41}{42}{43}{44}{45}{46}{47}",
                             runID, createdAt, createdBy, questID, timeLeft,
@@ -3866,7 +3873,7 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
 
         // Find the path of the first found process with the name "MHFZ_Overlay.exe"
         var exeName = "MHFZ_Overlay.exe";
-        var processes = Process.GetProcessesByName(Path.GetFileNameWithoutExtension(exeName));
+        var processes = Process.GetProcessesByName(System.IO.Path.GetFileNameWithoutExtension(exeName));
         var exePath = string.Empty;
         if (processes.Length > 0)
         {
@@ -3882,7 +3889,7 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
         }
         else
         {
-            exePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, exeName);
+            exePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, exeName);
         }
 
         if (exePath == null)
@@ -3919,7 +3926,7 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
 
         // Find the path of the first found process with the name "MHFZ_Overlay.exe"
         var exeName = "MHFZ_Overlay.exe";
-        var processes = Process.GetProcessesByName(Path.GetFileNameWithoutExtension(exeName));
+        var processes = Process.GetProcessesByName(System.IO.Path.GetFileNameWithoutExtension(exeName));
         var exePath = string.Empty;
         if (processes.Length > 0)
         {
@@ -3935,7 +3942,7 @@ ex.SqlState, ex.HelpLink, ex.ResultCode, ex.ErrorCode, ex.Source, ex.StackTrace,
         }
         else
         {
-            exePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, exeName);
+            exePath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, exeName);
         }
 
         if (exePath == null)
@@ -4419,7 +4426,7 @@ Message: {7}",
         {
             // Serialize the schema dictionary to a JSON string
             var json = JsonConvert.SerializeObject(schema, Formatting.Indented);
-            var referenceSchemaFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "MHFZ_Overlay\\reference_schema.json");
+            var referenceSchemaFilePath = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "MHFZ_Overlay\\reference_schema.json");
 
             // Write the JSON string to the reference schema file
             FileService.WriteToFile(referenceSchemaFilePath, json);
@@ -4464,7 +4471,7 @@ The reference_schema.json file (in the current overlay directory) will be copied
 
 Restarting overlay after deleting the file.",
 Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
-            var referenceSchemaFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "MHFZ_Overlay\\reference_schema.json");
+            var referenceSchemaFilePath = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "MHFZ_Overlay\\reference_schema.json");
             var databaseFolder = this.GetDatabaseFolderPath();
 
             if (string.IsNullOrEmpty(databaseFolder))
@@ -4474,7 +4481,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
             }
 
             // Create the backups folder if it does not exist
-            var backupsFolderPath = Path.Combine(databaseFolder, BackupFolderName);
+            var backupsFolderPath = System.IO.Path.Combine(databaseFolder, BackupFolderName);
             if (!Directory.Exists(backupsFolderPath))
             {
                 Directory.CreateDirectory(backupsFolderPath);
@@ -4485,7 +4492,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
             var backupFileName = $"reference_schema_backup_{timestamp}.json";
 
             // Create the full path for the backup file
-            var backupFilePath = Path.Combine(backupsFolderPath, backupFileName);
+            var backupFilePath = System.IO.Path.Combine(backupsFolderPath, backupFileName);
             Logger.Info(CultureInfo.InvariantCulture, "Making reference schema backup. Reference schema file path: {0}. Backup file path: {1}", referenceSchemaFilePath, backupFilePath);
             FileService.CopyFileToDestination(referenceSchemaFilePath, backupFilePath);
             FileService.DeleteFile(referenceSchemaFilePath);
@@ -16754,9 +16761,16 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                     case 5: // 0.37.1
                     {
                         this.PerformUpdateToVersion_0_37_1(conn, dataLoader);
-                        this.EnforceForeignKeys(conn);
                         newVersion++;
                         Logger.Info(CultureInfo.InvariantCulture, "Updated schema to version v0.37.1. newVersion {0}", newVersion);
+                        goto case 6;
+                    }
+                    case 6: // 0.41.0
+                    {
+                        this.PerformUpdateToVersion_0_41_0(conn, dataLoader);
+                        this.EnforceForeignKeys(conn);
+                        newVersion++;
+                        Logger.Info(CultureInfo.InvariantCulture, "Updated schema to version v0.41.0. newVersion {0}", newVersion);
                         break;
                     }
                     // case 2://v0.24.0
@@ -16788,7 +16802,6 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
 
         // 12. If foreign keys constraints were originally enabled, re-enable them now.
         EnableForeignKeyConstraints(conn);
-
         // [self endTransaction];
         // Stop the stopwatch
         stopwatch.Stop();
@@ -17024,7 +17037,7 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
         }
 
         this.MigrateToSchemaFromVersion(connection, currentUserVersion, dataLoader);
-        var referenceSchemaFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "MHFZ_Overlay\\reference_schema.json");
+        var referenceSchemaFilePath = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "MHFZ_Overlay\\reference_schema.json");
         FileService.DeleteFile(referenceSchemaFilePath);
 
         // later on it creates it
@@ -18208,6 +18221,152 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
     private void PerformUpdateToVersion_0_37_1(SQLiteConnection connection, DataLoader dataLoader)
     {
         FillQuestsGamePatch(connection, dataLoader);
+    }
+
+    private void PerformUpdateToVersion_0_41_0(SQLiteConnection connection, DataLoader dataLoader)
+    {
+        UpdateQuestsDictionariesToFiltered(connection, dataLoader);
+    }
+
+    private void VacuumDatabaseFile(SQLiteConnection conn)
+    {
+        if (string.IsNullOrEmpty(this.dataSource))
+        {
+            Logger.Warn(CultureInfo.InvariantCulture, "Cannot vacuum database file. dataSource: {0}", this.dataSource);
+            return;
+        }
+
+        try
+        {
+            Logger.Info(CultureInfo.InvariantCulture, "Cleaning up database file: {0}", this.dataSource);
+
+            // First, force the completion of any pending operations
+            using (var pragmaCmd = new SQLiteCommand("PRAGMA schema_version;", conn))
+            {
+                pragmaCmd.ExecuteScalar();
+            }
+
+            // Now attempt the VACUUM
+            using (var vacuumCmd = new SQLiteCommand(conn))
+            {
+                // Create a new connection specifically for VACUUM
+                using (var vacuumConn = new SQLiteConnection(conn.ConnectionString))
+                {
+                    vacuumConn.Open();
+                    using (var cmd = new SQLiteCommand("VACUUM;", vacuumConn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+            }
+
+            Logger.Info(CultureInfo.InvariantCulture, "Vacuum command finished successfully.");
+        }
+        catch (SQLiteException ex)
+        {
+            Logger.Error(CultureInfo.InvariantCulture, "Failed to vacuum database: {0}", ex.Message);
+            throw;
+        }
+    }
+
+    private void UpdateQuestsDictionariesToFiltered(SQLiteConnection conn, DataLoader dataLoader)
+    {
+        if (string.IsNullOrEmpty(this.dataSource))
+        {
+            Logger.Warn(CultureInfo.InvariantCulture, "Cannot update quests dictionaries to filtered. dataSource: {0}", this.dataSource);
+            return;
+        }
+
+        // Start a transaction
+        using (var transaction = conn.BeginTransaction())
+        {
+            try
+            {
+                using (var cmd0 = new SQLiteCommand(conn))
+                {
+                    cmd0.CommandText = @"DROP TRIGGER IF EXISTS prevent_quest_updates";
+                    cmd0.ExecuteNonQuery();
+                }
+
+                using (var cmd = new SQLiteCommand(conn))
+                {
+                    cmd.CommandText = "SELECT * FROM Quests";
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            string hitsPerSecondString = reader["HitsPerSecondDictionary"].ToString() ?? "{}";
+                            string hitsTakenBlockedPerSecondString = reader["HitsTakenBlockedPerSecondDictionary"].ToString() ?? "{}";
+                            string damagePerSecondString = reader["DamagePerSecondDictionary"].ToString() ?? "{}";
+                            string actionsPerMinuteString = reader["ActionsPerMinuteDictionary"].ToString() ?? "{}";
+
+                            var runID = long.Parse(reader["RunID"]?.ToString() ?? "0", CultureInfo.InvariantCulture);
+
+                            if (runID == 0)
+                            {
+                                continue;
+                            }
+
+                            var hitsPerSecondDictionary = JsonConvert.DeserializeObject<Dictionary<int, double>>(hitsPerSecondString);
+                            var hitsTakenBlockedPerSecondDictionary = JsonConvert.DeserializeObject<Dictionary<int, double>>(hitsTakenBlockedPerSecondString);
+                            var damagePerSecondDictionary = JsonConvert.DeserializeObject<Dictionary<int, double>>(damagePerSecondString);
+                            var actionsPerMinuteDictionary = JsonConvert.DeserializeObject<Dictionary<int, double>>(actionsPerMinuteString);
+
+                            Dictionary<int, double> newHitsPerSecondDictionary = new();
+                            Dictionary<int, double> newHitsTakenBlockedPerSecondDictionary = new();
+                            Dictionary<int, double> newDamagePerSecondDictionary = new();
+                            Dictionary<int, double> newActionsPerMinuteDictionary = new();
+
+                            newHitsPerSecondDictionary = TimeService.FilterFramesBySecond(hitsPerSecondDictionary);
+                            newHitsTakenBlockedPerSecondDictionary = TimeService.FilterFramesBySecond(hitsTakenBlockedPerSecondDictionary);
+                            newDamagePerSecondDictionary = TimeService.FilterFramesBySecond(damagePerSecondDictionary);
+                            newActionsPerMinuteDictionary = TimeService.FilterFramesBySecond(actionsPerMinuteDictionary);
+
+                            using (var cmd2 = new SQLiteCommand(conn))
+                            {
+                                cmd2.CommandText = @"UPDATE
+                                                        Quests
+                                                    SET
+                                                        HitsPerSecondDictionary = @HitsPerSecondDictionary,
+                                                        HitsTakenBlockedPerSecondDictionary = @HitsTakenBlockedPerSecondDictionary,
+                                                        DamagePerSecondDictionary = @DamagePerSecondDictionary,
+                                                        ActionsPerMinuteDictionary = @ActionsPerMinuteDictionary                        WHERE
+                                                        RunID = @RunID";
+                                cmd2.Parameters.AddWithValue("@RunID", runID);
+                                cmd2.Parameters.AddWithValue("@HitsPerSecondDictionary", JsonConvert.SerializeObject(newHitsPerSecondDictionary));
+                                cmd2.Parameters.AddWithValue("@HitsTakenBlockedPerSecondDictionary", JsonConvert.SerializeObject(newHitsTakenBlockedPerSecondDictionary));
+                                cmd2.Parameters.AddWithValue("@DamagePerSecondDictionary", JsonConvert.SerializeObject(newDamagePerSecondDictionary));
+                                cmd2.Parameters.AddWithValue("@ActionsPerMinuteDictionary", JsonConvert.SerializeObject(newActionsPerMinuteDictionary));
+
+                                cmd2.ExecuteNonQuery();
+                            }
+                        }
+                    }
+                }
+
+                using (var cmd1 = new SQLiteCommand(conn))
+                {
+                    cmd1.CommandText = @"CREATE TRIGGER IF NOT EXISTS prevent_quest_updates
+                        AFTER UPDATE ON Quests
+                        FOR EACH ROW
+                        WHEN NEW.YouTubeID = OLD.YouTubeID
+                        BEGIN
+                            SELECT RAISE(ABORT, 'Cannot update quest fields');
+                        END;";
+                    cmd1.ExecuteNonQuery();
+                }
+
+                // Commit the transaction
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                HandleError(transaction, ex);
+            }
+        }
+
+        Logger.Debug("Updated dictionaries HitsTakenBlockedPerSecondDictionary, ActionsPerMinuteDictionary, DamagePerSecondDictionary and HitsPerSecondDictionary in Quests table");
     }
 
     private void ChangeGameFolderPath(SQLiteConnection conn)

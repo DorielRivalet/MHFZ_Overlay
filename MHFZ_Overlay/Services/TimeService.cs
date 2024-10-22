@@ -34,6 +34,27 @@ public static class TimeService
         return TimeSpan.FromSeconds((double)frames / (double)Numbers.FramesPerSecond);
     }
 
+    public static Dictionary<int, double> FilterFramesBySecond(Dictionary<int, double>? originalData, int framesPerSecond = (int)Numbers.FramesPerSecond)
+    {
+        if (originalData == null || !originalData.Any())
+            return new Dictionary<int, double>();
+
+        var firstFrame = originalData.Keys.Max();
+
+        return originalData
+            .OrderByDescending(x => x.Key)
+            .Aggregate(
+                new { LastFrame = firstFrame, Result = new Dictionary<int, double> { { firstFrame, originalData[firstFrame] } } },
+                (acc, curr) => curr.Key == firstFrame ? acc :
+                    (acc.LastFrame - curr.Key >= framesPerSecond ?
+                        new
+                        {
+                            LastFrame = curr.Key,
+                            Result = new Dictionary<int, double>(acc.Result) { [curr.Key] = curr.Value }
+                        } : acc),
+                acc => acc.Result);
+    }
+
     public static string GetTimeLeftPercent(decimal timeDefInt, decimal timeInt, bool isDure)
     {
         if (timeDefInt < timeInt || timeDefInt <= 0)
