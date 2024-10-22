@@ -129,6 +129,8 @@ As an alternative to hotkeys, you can use the system tray options by right-click
 
 ![System Tray options](./demo/systemtray.png)
 
+![Hotkeys options](./demo/hotkeys.png)
+
 ### Quick Troubleshooting
 
 - Use the Configuration Preset option for quickly setting up your configuration.
