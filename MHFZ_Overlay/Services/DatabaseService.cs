@@ -519,7 +519,7 @@ public sealed class DatabaseService
             var createdAt = DateTime.UtcNow;
             var createdBy = ViewModels.Windows.AddressModel.GetFullCurrentProgramVersion();
             var playerID = 1;
-            var partySize = dataLoader.Model.PartySize();
+            var partySize = dataLoader.Model.PartySizeDictionary.FirstOrDefault().Value;
 
             using (var transaction = conn.BeginTransaction())
             {
@@ -589,7 +589,8 @@ public sealed class DatabaseService
                         Monster1PartThresholdDictionary,
                         Monster2PartThresholdDictionary,
                         IsHighGradeEdition,
-                        RefreshRate
+                        RefreshRate,
+                        PartySizeDictionary
                         ) VALUES (
                         @QuestHash,
                         @CreatedAt,
@@ -639,7 +640,8 @@ public sealed class DatabaseService
                         @Monster1PartThresholdDictionary,
                         @Monster2PartThresholdDictionary,
                         @IsHighGradeEdition,
-                        @RefreshRate
+                        @RefreshRate,
+                        @PartySizeDictionary
                         )";
 
                     using (var cmd = new SQLiteCommand(sql, conn))
@@ -756,6 +758,7 @@ public sealed class DatabaseService
 
                         var isHighGradeEdition = dataLoader.IsHighGradeEdition ? 1 : 0;
                         var refreshRate = s.RefreshRate;
+                        var partySizeDictionary = dataLoader.Model.PartySizeDictionary;
 
                         hitsTakenBlockedPerSecondDictionary = TimeService.FilterFramesBySecond(hitsTakenBlockedPerSecondDictionary);
                         damagePerSecondDictionary = TimeService.FilterFramesBySecond(damagePerSecondDictionary);
@@ -764,7 +767,7 @@ public sealed class DatabaseService
 
                         // NOTE: 2024-10-22 v0.41 filtered certain fields to save space.
                         var questData = string.Format(CultureInfo.InvariantCulture,
-                            "{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}{11}{12}{13}{14}{15}{16}{17}{18}{19}{20}{21}{22}{23}{24}{25}{26}{27}{28}{29}{30}{31}{32}{33}{34}{35}{36}{37}{38}{39}{40}{41}{42}{43}{44}{45}{46}{47}",
+                            "{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}{11}{12}{13}{14}{15}{16}{17}{18}{19}{20}{21}{22}{23}{24}{25}{26}{27}{28}{29}{30}{31}{32}{33}{34}{35}{36}{37}{38}{39}{40}{41}{42}{43}{44}{45}{46}{47}{48}",
                             runID, createdAt, createdBy, questID, timeLeft,
                             finalTimeValue, finalTimeDisplay, objectiveImage, objectiveTypeID, objectiveQuantity,
                             starGrade, rankName, objectiveName, date, attackBuffDictionary,
@@ -774,7 +777,7 @@ public sealed class DatabaseService
                             actualOverlayMode, partySize, monster1HPDictionary, monster2HPDictionary, monster3HPDictionary,
                             monster4HPDictionary, monster1AttackMultiplierDictionary, monster1DefenseRateDictionary, monster1SizeMultiplierDictionary, monster1PoisonThresholdDictionary,
                             monster1SleepThresholdDictionary, monster1ParalysisThresholdDictionary, monster1BlastThresholdDictionary, monster1StunThresholdDictionary, monster1PartThresholdDictionary,
-                            monster2PartThresholdDictionary, isHighGradeEdition, refreshRate);
+                            monster2PartThresholdDictionary, isHighGradeEdition, refreshRate, partySizeDictionary);
 
                         // Calculate the hash value for the data in the row
                         var questHash = CalculateStringHash(questData); // concatenate the relevant data from the row
@@ -828,6 +831,7 @@ public sealed class DatabaseService
                         cmd.Parameters.AddWithValue("@Monster2PartThresholdDictionary", JsonConvert.SerializeObject(monster2PartThresholdDictionary));
                         cmd.Parameters.AddWithValue("@IsHighGradeEdition", isHighGradeEdition);
                         cmd.Parameters.AddWithValue("@RefreshRate", refreshRate);
+                        cmd.Parameters.AddWithValue("@PartySizeDictionary", JsonConvert.SerializeObject(partySizeDictionary));
 
                         cmd.ExecuteNonQuery();
                     }
@@ -5019,6 +5023,7 @@ Messages.InfoTitle, MessageBoxButton.OK, MessageBoxImage.Information);
                     Monster2PartThresholdDictionary TEXT NOT NULL DEFAULT '{}',
                     IsHighGradeEdition INTEGER NOT NULL CHECK (IsHighGradeEdition IN (0, 1)) DEFAULT 0,
                     RefreshRate INTEGER NOT NULL CHECK (RefreshRate >= 1 AND RefreshRate <= 30) DEFAULT 30,
+                    PartySizeDictionary TEXT NOT NULL DEFAULT '{}',
                     FOREIGN KEY(ObjectiveTypeID) REFERENCES ObjectiveType(ObjectiveTypeID)
                     -- FOREIGN KEY(RankNameID) REFERENCES RankName(RankNameID)
                     )";
@@ -17402,6 +17407,8 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
 
                 Monster1PartThresholdDictionary TEXT NOT NULL DEFAULT '{}',
                 Monster2PartThresholdDictionary TEXT NOT NULL DEFAULT '{}',
+
+                v0.41 adds PartySizeDictionary
                 */
 
                 using (var updateCommand = new SQLiteCommand(updateQuery, connection))
@@ -17952,6 +17959,7 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
                     Monster2PartThresholdDictionary TEXT NOT NULL DEFAULT '{}',
                     IsHighGradeEdition INTEGER NOT NULL CHECK (IsHighGradeEdition IN (0, 1)) DEFAULT 0,
                     RefreshRate INTEGER NOT NULL CHECK (RefreshRate >= 1 AND RefreshRate <= 30) DEFAULT 30,
+                    PartySizeDictionary TEXT NOT NULL DEFAULT '{}',
                     FOREIGN KEY(ObjectiveTypeID) REFERENCES ObjectiveType(ObjectiveTypeID)
                     -- FOREIGN KEY(RankNameID) REFERENCES RankName(RankNameID)
                     )";
@@ -18010,7 +18018,8 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
             Monster1PartThresholdDictionary = (SELECT Monster1PartThresholdDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
             Monster2PartThresholdDictionary = (SELECT Monster2PartThresholdDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
             IsHighGradeEdition = (SELECT IsHighGradeEdition FROM Quests WHERE Quests.RunID = new_Quests.RunID),
-            RefreshRate = (SELECT RefreshRate FROM Quests WHERE Quests.RunID = new_Quests.RunID)
+            RefreshRate = (SELECT RefreshRate FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            PartySizeDictionary = (SELECT PartySizeDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID)
             WHERE EXISTS (SELECT 1 FROM Quests WHERE Quests.RunID = new_Quests.RunID)"
                ;
 
@@ -18226,6 +18235,129 @@ string.Format(CultureInfo.InvariantCulture, "MHF-Z Overlay Database Update ({0} 
     private void PerformUpdateToVersion_0_41_0(SQLiteConnection connection, DataLoader dataLoader)
     {
         UpdateQuestsDictionariesToFiltered(connection, dataLoader);
+        UpdateTableQuests_0_41_0(connection);
+    }
+
+    private void UpdateTableQuests_0_41_0(SQLiteConnection connection)
+    {
+        var sql = @"CREATE TABLE IF NOT EXISTS new_Quests 
+                    (
+                    QuestHash TEXT NOT NULL DEFAULT '',
+                    CreatedAt TEXT NOT NULL DEFAULT '',
+                    CreatedBy TEXT NOT NULL DEFAULT '',
+                    RunID INTEGER PRIMARY KEY AUTOINCREMENT, 
+                    QuestID INTEGER NOT NULL CHECK (QuestID >= 0) DEFAULT 0, 
+                    TimeLeft INTEGER NOT NULL DEFAULT 0,
+                    FinalTimeValue INTEGER NOT NULL DEFAULT 0,
+                    FinalTimeDisplay TEXT NOT NULL DEFAULT '', 
+                    ObjectiveImage TEXT NOT NULL DEFAULT '',
+                    ObjectiveTypeID INTEGER NOT NULL CHECK (ObjectiveTypeID >= 0) DEFAULT 0, 
+                    ObjectiveQuantity INTEGER NOT NULL DEFAULT 0, 
+                    StarGrade INTEGER NOT NULL DEFAULT 0, 
+                    RankName TEXT NOT NULL DEFAULT '', 
+                    ObjectiveName TEXT NOT NULL DEFAULT '', 
+                    Date TEXT NOT NULL DEFAULT '',
+                    YouTubeID TEXT DEFAULT 'dQw4w9WgXcQ', -- default value for YouTubeID is a Rick Roll video
+                    -- DpsData TEXT NOT NULL DEFAULT '',
+                    AttackBuffDictionary TEXT NOT NULL DEFAULT '{}',
+                    HitCountDictionary TEXT NOT NULL DEFAULT '{}',
+                    HitsPerSecondDictionary TEXT NOT NULL DEFAULT '{}',
+                    DamageDealtDictionary TEXT NOT NULL DEFAULT '{}',
+                    DamagePerSecondDictionary TEXT NOT NULL DEFAULT '{}',
+                    AreaChangesDictionary TEXT NOT NULL DEFAULT '{}',
+                    CartsDictionary TEXT NOT NULL DEFAULT '{}',
+                    HitsTakenBlockedDictionary TEXT NOT NULL DEFAULT '{}',
+                    HitsTakenBlockedPerSecondDictionary TEXT NOT NULL DEFAULT '{}',
+                    PlayerHPDictionary TEXT NOT NULL DEFAULT '{}',
+                    PlayerStaminaDictionary TEXT NOT NULL DEFAULT '{}',
+                    KeystrokesDictionary TEXT NOT NULL DEFAULT '{}',
+                    MouseInputDictionary TEXT NOT NULL DEFAULT '{}',
+                    GamepadInputDictionary TEXT NOT NULL DEFAULT '{}',
+                    ActionsPerMinuteDictionary TEXT NOT NULL DEFAULT '{}',
+                    OverlayModeDictionary TEXT NOT NULL DEFAULT '{}',
+                    ActualOverlayMode TEXT NOT NULL DEFAULT 'Standard',
+                    PartySize INTEGER NOT NULL DEFAULT 0,
+                    Monster1HPDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster2HPDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster3HPDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster4HPDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster1AttackMultiplierDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster1DefenseRateDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster1SizeMultiplierDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster1PoisonThresholdDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster1SleepThresholdDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster1ParalysisThresholdDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster1BlastThresholdDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster1StunThresholdDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster1PartThresholdDictionary TEXT NOT NULL DEFAULT '{}',
+                    Monster2PartThresholdDictionary TEXT NOT NULL DEFAULT '{}',
+                    IsHighGradeEdition INTEGER NOT NULL CHECK (IsHighGradeEdition IN (0, 1)) DEFAULT 0,
+                    RefreshRate INTEGER NOT NULL CHECK (RefreshRate >= 1 AND RefreshRate <= 30) DEFAULT 30,
+                    PartySizeDictionary TEXT NOT NULL DEFAULT '{}',
+                    FOREIGN KEY(ObjectiveTypeID) REFERENCES ObjectiveType(ObjectiveTypeID)
+                    -- FOREIGN KEY(RankNameID) REFERENCES RankName(RankNameID)
+                    )";
+        using (var cmd = new SQLiteCommand(sql, connection))
+        {
+            cmd.ExecuteNonQuery();
+        }
+
+        var updateQuery = @"
+        UPDATE new_Quests
+        SET QuestHash = (SELECT QuestHash FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            CreatedAt = (SELECT CreatedAt FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            CreatedBy = (SELECT CreatedBy FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            QuestID = (SELECT QuestID FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            TimeLeft = (SELECT TimeLeft FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            FinalTimeValue = (SELECT FinalTimeValue FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            FinalTimeDisplay = (SELECT FinalTimeDisplay FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            ObjectiveImage = (SELECT ObjectiveImage FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            ObjectiveTypeID = (SELECT ObjectiveTypeID FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            ObjectiveQuantity = (SELECT ObjectiveQuantity FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            StarGrade = (SELECT StarGrade FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            RankName = (SELECT RankName FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            ObjectiveName = (SELECT ObjectiveName FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            Date = (SELECT Date FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            YouTubeID = (SELECT YouTubeID FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            AttackBuffDictionary = (SELECT AttackBuffDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            HitCountDictionary = (SELECT HitCountDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            HitsPerSecondDictionary = (SELECT HitsPerSecondDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            DamageDealtDictionary = (SELECT DamageDealtDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            DamagePerSecondDictionary = (SELECT DamagePerSecondDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            AreaChangesDictionary = (SELECT AreaChangesDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            CartsDictionary = (SELECT CartsDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            HitsTakenBlockedDictionary = (SELECT HitsTakenBlockedDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            HitsTakenBlockedPerSecondDictionary = (SELECT HitsTakenBlockedPerSecondDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            PlayerHPDictionary = (SELECT PlayerHPDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            PlayerStaminaDictionary = (SELECT PlayerStaminaDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            KeystrokesDictionary = (SELECT KeystrokesDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            MouseInputDictionary = (SELECT MouseInputDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            GamepadInputDictionary = (SELECT GamepadInputDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            ActionsPerMinuteDictionary = (SELECT ActionsPerMinuteDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            OverlayModeDictionary = (SELECT OverlayModeDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            ActualOverlayMode = (SELECT ActualOverlayMode FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            PartySize = (SELECT PartySize FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            Monster1HPDictionary = (SELECT Monster1HPDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            Monster2HPDictionary = (SELECT Monster2HPDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            Monster3HPDictionary = (SELECT Monster3HPDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            Monster4HPDictionary = (SELECT Monster4HPDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            Monster1AttackMultiplierDictionary = (SELECT Monster1AttackMultiplierDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            Monster1DefenseRateDictionary = (SELECT Monster1DefenseRateDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            Monster1SizeMultiplierDictionary = (SELECT Monster1SizeMultiplierDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            Monster1PoisonThresholdDictionary = (SELECT Monster1PoisonThresholdDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            Monster1SleepThresholdDictionary = (SELECT Monster1SleepThresholdDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            Monster1ParalysisThresholdDictionary = (SELECT Monster1ParalysisThresholdDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            Monster1BlastThresholdDictionary = (SELECT Monster1BlastThresholdDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            Monster1StunThresholdDictionary = (SELECT Monster1StunThresholdDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            Monster1PartThresholdDictionary = (SELECT Monster1PartThresholdDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            Monster2PartThresholdDictionary = (SELECT Monster2PartThresholdDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            IsHighGradeEdition = (SELECT IsHighGradeEdition FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            RefreshRate = (SELECT RefreshRate FROM Quests WHERE Quests.RunID = new_Quests.RunID),
+            PartySizeDictionary = (SELECT PartySizeDictionary FROM Quests WHERE Quests.RunID = new_Quests.RunID)
+            WHERE EXISTS (SELECT 1 FROM Quests WHERE Quests.RunID = new_Quests.RunID)"
+               ;
+
+        AlterTableData(connection, sql, updateQuery, "Quests");
     }
 
     private void VacuumDatabaseFile(SQLiteConnection conn)

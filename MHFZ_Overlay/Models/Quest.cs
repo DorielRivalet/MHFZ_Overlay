@@ -5,6 +5,7 @@
 namespace MHFZ_Overlay.Models;
 
 using System;
+using System.Collections.Generic;
 
 // TODO: ORM
 // get the graphs from here
@@ -85,5 +86,7 @@ public sealed class Quest
     public string? ActualOverlayMode { get; set; } = string.Empty;
 
     public long? PartySize { get; set; } = 0;
+
+    public string? PartySizeDictionary {  get; set; } = string.Empty;
 
 }
