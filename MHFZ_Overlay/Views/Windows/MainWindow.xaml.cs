@@ -128,9 +128,27 @@ public partial class MainWindow : Window
         _mainWindowNotifyIcon = this.MainWindowNotifyIcon;
     }
 
+    // Add method to open hotkey settings
+    private void OpenHotkeySettings()
+    {
+        var settingsWindow = new HotkeySettingsWindow(_hotkeyManager);
+        settingsWindow.Owner = this; // Make it a child window of MainWindow
+        settingsWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+        settingsWindow.ShowDialog();
+    }
+
+    // Ensure proper cleanup. TODO test
+    protected override void OnClosed(EventArgs e)
+    {
+        base.OnClosed(e);
+        _hotkeyManager?.Dispose();
+    }
+
     private void NotifyIcon_Click(object sender, RoutedEventArgs e) => this.OpenConfigButton_Key();
 
     private void OptionSettings_Click(object sender, RoutedEventArgs e) => this.OpenConfigButton_Key();
+
+    private void OptionHotkeys_Click(object sender, RoutedEventArgs e) => this.OpenHotkeySettings();
 
     private void OptionHelp_Click(object sender, RoutedEventArgs e) => OpenLink("https://github.com/DorielRivalet/mhfz-overlay/blob/main/FAQ.md");
 
@@ -270,6 +288,9 @@ public partial class MainWindow : Window
 
     private double? xOffset { get; set; }
 
+    private readonly HotkeyManager _hotkeyManager;
+
+
     /// <summary>
     /// Initializes a new instance of the <see cref="MainWindow"/> class.
     /// </summary>
@@ -280,6 +301,8 @@ public partial class MainWindow : Window
 
         // Start the stopwatch
         stopwatch.Start();
+
+        _hotkeyManager = new HotkeyManager();
 
         var splashScreen = new SplashScreen("../../Assets/Icons/png/loading.png");
 
@@ -304,9 +327,12 @@ public partial class MainWindow : Window
         ViewModels.Windows.AddressModel.ValidateGameFolder();
 
         this.DataContext = this.DataLoader.Model;
-        GlobalHotKey.RegisterHotKey("Shift + F1", () => this.OpenConfigButton_Key());
-        GlobalHotKey.RegisterHotKey("Shift + F5", () => ReloadButton_Key());
-        GlobalHotKey.RegisterHotKey("Shift + F6", () => CloseButton_Key());
+        // Replace your existing hotkey registration with this:
+        _hotkeyManager.RegisterHotkeys(
+            () => this.OpenConfigButton_Key(),
+            () => this.ReloadButton_Key(),
+            () => this.CloseButton_Key()
+        );
 
         DiscordService.InitializeDiscordRPC();
         this.CheckGameState();
@@ -1624,7 +1650,7 @@ The process may take some time, as the program attempts to download from GitHub 
     private void CloseButton_Click(object sender, RoutedEventArgs e) => ApplicationService.HandleShutdown();
 
     // https://stackoverflow.com/questions/4773632/how-do-i-restart-a-wpf-application
-    private static void ReloadButton_Key() => ApplicationService.HandleRestart();
+    private void ReloadButton_Key() => ApplicationService.HandleRestart();
 
     private void OpenConfigButton_Key()
     {
@@ -1665,7 +1691,7 @@ The process may take some time, as the program attempts to download from GitHub 
         }
     }
 
-    private static void CloseButton_Key() => ApplicationService.HandleShutdown();
+    private void CloseButton_Key() => ApplicationService.HandleShutdown();
 
     private void MainGrid_MouseMove(object sender, MouseEventArgs e) => DoDragDrop(this.movingObject);
 

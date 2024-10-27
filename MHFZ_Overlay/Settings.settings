@@ -1037,5 +1037,14 @@
     <Setting Name="EnableAchievementsTracking" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
+    <Setting Name="OpenSettingsHotkey" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Shift + F1</Value>
+    </Setting>
+    <Setting Name="RestartProgramHotkey" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Shift + F5</Value>
+    </Setting>
+    <Setting Name="CloseProgramHotkey" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Shift + F6</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

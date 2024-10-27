@@ -125,9 +125,11 @@ We strongly recommend that you verify the authenticity and integrity of the soft
 - `Shift+F5` Restart Overlay.
 - `Shift+F6` Exit.
 
-As an alternative to hotkeys, you can use the system tray options by right-clicking the icon.
+As an alternative to hotkeys, you can use the system tray options by right-clicking the icon. You can change the hotkeys by opening the Hotkeys window, found in the system tray menu.
 
 ![System Tray options](./demo/systemtray.png)
+
+![Hotkeys options](./demo/hotkeys.png)
 
 ### Quick Troubleshooting
 

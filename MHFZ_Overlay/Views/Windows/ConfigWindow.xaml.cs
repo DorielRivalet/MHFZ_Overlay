@@ -1148,6 +1148,8 @@ public partial class ConfigWindow : FluentWindow
 
     private void OpenOverlayFolder_Click(object sender, RoutedEventArgs e) => FileService.OpenApplicationFolder(this.ConfigWindowSnackBarPresenter, (Style)this.FindResource("CatppuccinMochaSnackBar"), this.SnackbarTimeOut);
 
+    private void GenerateSpeedrunFiles_Click(object sender, RoutedEventArgs e) => FileService.GenerateSpeedrunFiles(this.ConfigWindowSnackBarPresenter, (Style)this.FindResource("CatppuccinMochaSnackBar"), this.SnackbarTimeOut);
+
     private void OpenSettingsFolder_Click(object sender, RoutedEventArgs e)
     {
         try

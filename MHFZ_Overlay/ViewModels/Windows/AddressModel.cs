@@ -4314,7 +4314,7 @@ TreeScope.Children, condition);
     }
 
     /// <summary>
-    /// Gets the name of the rank.
+    /// Gets the name of the rank.TODO: In database the spaces are there.
     /// </summary>
     /// <param name="id">The identifier.</param>
     /// <returns></returns>
@@ -12204,6 +12204,10 @@ After all that you’ve unlocked magnet spike! You should get a material to make
 
     public int PreviousDualSwordsSharpens { get; set; }
 
+    public Dictionary<int,int> PartySizeDictionary { get; set; } = new();
+
+    public int PreviousPartySize { get; set; }
+
     // Get all countries
     public static IEnumerable<Country> Countries => RestCountriesService.GetAllCountries();
 
@@ -13289,6 +13293,19 @@ After all that you’ve unlocked magnet spike! You should get a material to make
                 LoggerInstance.Warn(ex, "Could not insert into DualSwordsSharpensDictionary");
             }
         }
+
+        if (this.PreviousPartySize != this.PartySize() && !this.PartySizeDictionary.ContainsKey(this.TimeInt()))
+        {
+            try
+            {
+                this.PreviousPartySize = this.PartySize();
+                this.PartySizeDictionary.Add(this.TimeInt(), this.PartySize());
+            }
+            catch (Exception ex)
+            {
+                LoggerInstance.Warn(ex, "Could not insert into PartySizeDictionary");
+            }
+        }
     }
 
     public void ResetQuestInfoVariables()
@@ -13426,6 +13443,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         this.PreviousMonster2Part9Threshold = 0;
         this.PreviousMonster2Part10Threshold = 0;
         this.PreviousDualSwordsSharpens = 0;
+        this.PreviousPartySize = 0;
     }
 
     public void ClearQuestInfoDictionaries()
@@ -13466,6 +13484,7 @@ After all that you’ve unlocked magnet spike! You should get a material to make
         this.Monster2PartThresholdDictionary.Clear();
 
         this.DualSwordsSharpensDictionary.Clear();
+        this.PartySizeDictionary.Clear();
     }
 
     public void ClearGraphCollections()
