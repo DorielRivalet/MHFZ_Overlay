@@ -1,5 +1,27 @@
 
 
+## [0.41.0](https://github.com/DorielRivalet/MHFZ_Overlay/compare/v0.40.0...v0.41.0) (2024-10-27)
+
+
+### Features
+
+* add hotkeys window ([d25af92](https://github.com/DorielRivalet/MHFZ_Overlay/commit/d25af927216c2561efe8ff352f26d4234d720eb7)), closes [#375](https://github.com/DorielRivalet/MHFZ_Overlay/issues/375)
+* **database:** add party size dictionary ([20f34ab](https://github.com/DorielRivalet/MHFZ_Overlay/commit/20f34abd3d9f8d7d8b939a91a950d3170f198aa1)), closes [#388](https://github.com/DorielRivalet/MHFZ_Overlay/issues/388)
+* **database:** reduce database size ([e30aacd](https://github.com/DorielRivalet/MHFZ_Overlay/commit/e30aacdcf5d9d4df46c78ab98dee54ba33cb3614)), closes [#389](https://github.com/DorielRivalet/MHFZ_Overlay/issues/389)
+* update monster images ([ed67b0e](https://github.com/DorielRivalet/MHFZ_Overlay/commit/ed67b0ea0146d468e02f9372671524e95ff3a33f))
+
+
+### Bug Fixes
+
+* **achievement:** fix ds achievements ([eb66abe](https://github.com/DorielRivalet/MHFZ_Overlay/commit/eb66abe45ae18ce93a1572fbe2bb2efdf89742d6)), closes [#390](https://github.com/DorielRivalet/MHFZ_Overlay/issues/390)
+
+
+### For Developers
+
+* bump version ([5c670a2](https://github.com/DorielRivalet/MHFZ_Overlay/commit/5c670a2f211656d8038200d26161034213be09ee))
+* **deps:** bump braces from 3.0.2 to 3.0.3 ([1c1bf79](https://github.com/DorielRivalet/MHFZ_Overlay/commit/1c1bf7994fafd172d208fb0525c8318f0e143fc3))
+* update README.md ([31b1db2](https://github.com/DorielRivalet/MHFZ_Overlay/commit/31b1db2299781a523c7ecac56866a6ef1a0afa2b))
+
 ## [0.40.0](https://github.com/DorielRivalet/MHFZ_Overlay/compare/v0.39.1...v0.40.0) (2024-06-19)
 
 
