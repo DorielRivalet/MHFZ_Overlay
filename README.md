@@ -472,7 +472,8 @@ We recommend consulting the appropriate documentation file based on your needs. 
 - The fonts used is the in-game one, _MS Gothic_. For monospaced, the application uses Source Code Pro and MesloLGM NF. This project also uses Font Awesome's fonts. The Monster Hunter font made by XMitsarugiX comes from [here](https://www.deviantart.com/xmitsarugix/art/Monster-Hunter-Font-Type-1-and-2-380816151).
 - Thanks to [Kairi](https://www.youtube.com/@kairi_mhfz) and [Sera](https://www.youtube.com/@Sera9145) for extensive beta testing and early support.
 - The combo element icons are made by [Narwhaler](https://fanonmonsterhunter.fandom.com/wiki/User:Narwhaler).
-- Additional icons can be found [here](https://fanonmonsterhunter.fandom.com/wiki/Category:Icon).
+- Additional game icons can be found [in the Fanon Wiki](https://fanonmonsterhunter.fandom.com/wiki/Category:Icon). Icons based on these are licensed under CC-BY-SA unless otherwise specified.
+- Monster icons (like Burning Freezing Elzelion, Shifting Mi Ru, Arrogant Duremudira, Ruling Guanzorumu, Blinking Nargacuga and Thirsty Pariapuria) are based on [MHFZZDatabase](https://github.com/theMaelstro/MHFZZDatabase) icons.
 
 <a href="https://github.com/suzaku01"><img style="border-radius: 50% !important;" alt="Avatar" src="https://avatars.githubusercontent.com/u/89909040?v=4" width="64px" height="auto" ></a>
 <a href="https://github.com/Imulion"><img style="border-radius: 50% !important;" alt="Avatar" src="https://avatars.githubusercontent.com/u/27354834?v=4" width="64px" height="auto" ></a>
