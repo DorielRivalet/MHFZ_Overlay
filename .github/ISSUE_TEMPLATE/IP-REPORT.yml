@@ -1,7 +1,7 @@
-name: ":scroll: Attribution & Intellectual Property Inquiry"
+name: "📜 Attribution & Intellectual Property Inquiry"
 description: Submit inquiries regarding attributions, copyrights, or licensing.
 title: "[IP] - title"
-labels: ["intellectual property", "question"]
+labels: ["IP", "question"]
 assignees:
   - DorielRivalet
 body:
