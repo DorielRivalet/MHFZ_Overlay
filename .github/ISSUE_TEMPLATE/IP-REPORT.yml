@@ -1,0 +1,33 @@
+name: ":scroll: Attribution & Intellectual Property Inquiry"
+description: Submit inquiries regarding attributions, copyrights, or licensing.
+title: "[IP] - title"
+labels: ["intellectual property", "question"]
+assignees:
+  - DorielRivalet
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for reaching out regarding attributions, copyrights, or intellectual property. Please provide as much detail as possible so we can address your concern efficiently.
+
+  - type: textarea
+    id: inquiry-details
+    attributes:
+      label: Inquiry Details
+      description: Explain your concern, including relevant links and any attributions you believe are missing.
+      placeholder: Provide context about your inquiry.
+    validations:
+      required: true
+
+  - type: checkboxes
+    attributes:
+      label: Have you reviewed our copyright page?
+      description: Before submitting, please check if your concern is already addressed on our [Copyright Page](https://wycademy.vercel.app/support/policies/copyright).
+      options:
+        - label: Yes, I have reviewed the copyright page.
+          required: true
+
+  - type: markdown
+    attributes:
+      value: |
+        We'll review your request and respond as soon as possible. Thanks for your patience!
